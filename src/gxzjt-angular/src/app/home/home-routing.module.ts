@@ -6,11 +6,8 @@ import { HomeIndexComponent } from './index/index.component'
 const routes: Routes = [
   {
     path: '',
-    component: HomeIndexComponent
-  },
-  {
-    path: 'index',
-    component: HomeIndexComponent
+    component: HomeIndexComponent,
+    pathMatch: 'full'
   },
 ];
 
