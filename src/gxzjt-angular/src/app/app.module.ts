@@ -16,8 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
     LayoutModule,
     SharedModule,
   ],
-  declarations: [
-  ],
+  declarations: [],
   entryComponents: [
   ],
   // providers: [LocalizationService, MenuService],

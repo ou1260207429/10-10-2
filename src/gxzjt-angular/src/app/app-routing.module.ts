@@ -14,12 +14,12 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'test',
+    path: '',
     component: LayoutDefaultComponent,
     canActivate: [AppRouteGuard],
-    data: { title: '测试页面' },
     children: [
-      { path: '', loadChildren: './pages/test/test.module#TestModule', canActivate: [AppRouteGuard], },
+      { path: 'test', loadChildren: './pages/test/test.module#TestModule' },
+      { path: 'formModuleComponent', loadChildren: './pages/work-matters/form-module/form-module.module#FormModuleModule' },
     ],
   },
 ];

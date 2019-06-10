@@ -12,5 +12,23 @@ export class AppMenus {
             // hide: true,  // 强制隐藏
             // ...还有更多选项，请查看 Menu成员
         },
+
+        {
+            text: "",
+            i18n: "工作事项",
+            icon: { type: "class", value: "iconfont  icon8636f874" },
+            children: [
+                {
+                    text: "",
+                    i18n: "测试",
+                    link: "/app/test",
+                },
+                {
+                    text: "",
+                    i18n: "表单",
+                    link: "/app/formModuleComponent",
+                },
+            ]
+        },
     ];
 }
