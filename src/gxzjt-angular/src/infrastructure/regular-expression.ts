@@ -257,43 +257,6 @@ export function onInputValueChanged(RegisterForm: FormGroup, formErrors: any, va
 }
 
 /**
- * 清空对象
- * @param params 对象
- */
-export function emptyObject(params: Object) {
-  if (typeof (params) === "object") {
-    for (let key in params) {
-      console.log(params[key]);
-      params[key] = null;
-    }
-  } else {
-    throw new Error('传入的类型错误');
-  }
-}
-
-/**
- * 对象赋值
- * @param params set 的值
- * @param defaults 默认值
- */
-export function setObject(params: Object, defaults: Object) {
-  if (typeof (params) == 'object' && typeof (defaults) == 'object') {
-    const para = Object.keys(params);
-    const defa = Object.keys(defaults);
-    for (let i in para) {
-      for (let a in defa) {
-        if (para[i] == defa[a]) {
-          params[para[i]] = defaults[para[i]];
-          break;
-        }
-      }
-    }
-  } else {
-    throw new Error('传入的类型错误');
-  }
-}
-
-/**
  * 数组中判断删除
  * @param array 数组
  * @param checkAttribute  判断的属性
