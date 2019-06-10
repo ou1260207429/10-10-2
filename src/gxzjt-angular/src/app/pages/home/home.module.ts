@@ -1,17 +1,16 @@
+import { HomeRoutingModule } from './home-routing.module';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { SharedModule } from '@shared/shared.module';
-import { FormModuleRoutingModule } from './form-module-routing.module';
-import { FormModuleComponent } from './form-module.component';
+import { SystemHomeComponent } from './system-home/system-home.component';
 
 const COMPONENTS = [];
 const COMPONENTS_NOROUNT = [
-  FormModuleComponent];
+  SystemHomeComponent];
 
 @NgModule({
   imports: [
     SharedModule,
-    FormModuleRoutingModule
+    HomeRoutingModule
   ],
   declarations: [
     ...COMPONENTS,
@@ -19,4 +18,4 @@ const COMPONENTS_NOROUNT = [
   ],
   entryComponents: COMPONENTS_NOROUNT
 })
-export class FormModuleModule { }
+export class HomeModule { }

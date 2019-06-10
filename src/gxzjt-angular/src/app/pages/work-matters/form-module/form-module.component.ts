@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+/**
+ * 表单页面
+ */
 @Component({
   selector: 'app-form-module',
   templateUrl: './form-module.component.html',
