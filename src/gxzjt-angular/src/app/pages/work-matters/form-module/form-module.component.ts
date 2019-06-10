@@ -137,6 +137,7 @@ listArr=[
 }]
  //类别
  radiotype="A";
+ radiotypeA="";
  checkOptionsOne={
    isAllChecked:false,
    data:[
@@ -166,6 +167,7 @@ checkOptionsFour = {
 ]};
 ngOnInit() {
   }
+  //附件上传全选
   checkAll(name){
     let objList = this[name];
     objList.isAllChecked=!objList.isAllChecked;
@@ -179,5 +181,11 @@ ngOnInit() {
 
       })
     
+  }
+  //类别单选框
+  getClass(){
+    if(this.radiotype!='B'){
+      this.radiotypeA="";
+    }
   }
 }

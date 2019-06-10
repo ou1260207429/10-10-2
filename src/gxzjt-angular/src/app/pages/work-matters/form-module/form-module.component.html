@@ -107,12 +107,12 @@
             <tr>
                 <td colspan='3' class="fontweight fontLeft leftTitle">类别： </td>
                 <td colspan="15" style="text-align: left;">
-                    <nz-radio-group [(ngModel)]="radiotype">
+                    <nz-radio-group [(ngModel)]="radiotype" (ngModelChange)="getClass()">
                         <label style="padding-right: 20px;" nz-radio nzValue="A">新建</label>
                         <label style="padding-right: 20px;" nz-radio nzValue="C">扩建</label>
                         <label nz-radio nzValue="B">改建</label>
                     </nz-radio-group>
-                    ( &nbsp; &nbsp; <nz-radio-group [(ngModel)]="radiotype" [nzDisabled]="radiotype!='B'">
+                    ( &nbsp; &nbsp; <nz-radio-group  [(ngModel)]="radiotypeA" [nzDisabled]="radiotype!='B'">
                         <label nz-radio nzValue="1">装修</label>
                         <label nz-radio nzValue="2">建筑保温</label>
                         <label nz-radio nzValue="3">改变用途</label>
