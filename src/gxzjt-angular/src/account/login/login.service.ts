@@ -98,7 +98,9 @@ export class LoginService {
       initialUrl = AppConsts.appBaseUrl;
     }
 
-    location.href = initialUrl;
+    // location.href = initialUrl;
+    /** 强制刷新导航栏url 跳转到首页 */
+    location.href = location.href.replace('#/account/login', '/#/app/test');
   }
 
   private clear(): void {
