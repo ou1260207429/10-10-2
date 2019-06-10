@@ -1,1 +1,326 @@
-表单
+<div nz-row>
+    <table class="tables" style="box-sizing: border-box;">
+        <thead>
+            <tr>
+                <td colspan='20' rowspan='1'>建设工程消防设计审查申报表 </td>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 基本信息 -->
+            <tr>
+                <td style="width: 37px;background-color: #ccd8ff;color: #8b68e9;font-weight: 600;" rowspan='12'>基本信息
+                </td>
+
+            </tr>
+            <tr>
+                <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">工程名称:</td>
+                <td rowspan='1' colspan='9'><input nz-input placeholder="请输入工程名称" /></td>
+                <td rowspan='1' class="fontweight fontLeft">预计开工时间:</td>
+                <td rowspan='1' colspan='2'>
+                    <nz-date-picker></nz-date-picker>
+                </td>
+            </tr>
+
+            <tr>
+                <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">工程地址:</td>
+                <td rowspan='1' colspan='9'><input nz-input placeholder="请输入工程地址" /></td>
+                <td rowspan='1' class="fontweight fontLeft">预计竣工时间</td>
+                <td rowspan='1' colspan='2'>
+                    <nz-date-picker></nz-date-picker>
+                </td>
+            </tr>
+            <tr class="title">
+                <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">单位类别</td>
+                <td rowspan='1' colspan='5' class="fontweight fontLeft">单位名称</td>
+                <td rowspan='1' colspan='3' class="fontweight fontLeft">资质等级</td>
+                <td rowspan='1' colspan='2' class="fontweight fontLeft">法定代表人/主要负责人</td>
+                <td rowspan='1' class="fontweight fontLeft">联系人</td>
+                <td rowspan='1'>联系电话</td>
+            </tr>
+            <tr>
+                <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">建设单位:</td>
+                <td rowspan='1' colspan='5'><input nz-input placeholder="请输入建设单位" /></td>
+                <td rowspan='1' colspan='3'><input nz-input placeholder="请输入资质等级" /></td>
+                <td rowspan='1' colspan='2'><input nz-input placeholder="请输入法定代表人" /></td>
+                <td rowspan='1'><input nz-input placeholder="请输入联系人" /></td>
+                <td rowspan='1'><input nz-input placeholder="请输入联系电话" /></td>
+            </tr>
+
+            <tr>
+                <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">设计单位:</td>
+                <td rowspan='1' colspan='5'><input nz-input placeholder="请输入设计单位" /></td>
+                <td rowspan='1' colspan='3'><input nz-input placeholder="请输入资质等级" /></td>
+                <td rowspan='1' colspan='2'><input nz-input placeholder="请输入法定代表人" /></td>
+                <td rowspan='1'><input nz-input placeholder="请输入联系人" /></td>
+                <td rowspan='1'><input nz-input placeholder="请输入联系电话" /></td>
+            </tr>
+            <tr>
+                <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">施工总承包单位:</td>
+                <td rowspan='1' colspan='5'><input nz-input placeholder="请输入施工总承包单位" /></td>
+                <td rowspan='1' colspan='3'><input nz-input placeholder="请输入资质等级" /></td>
+                <td rowspan='1' colspan='2'><input nz-input placeholder="请输入法定代表人" /></td>
+                <td rowspan='1'><input nz-input placeholder="请输入联系人" /></td>
+                <td rowspan='1'><input nz-input placeholder="请输入联系电话" /></td>
+            </tr>
+
+            <tr>
+                <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">监理单位:</td>
+                <td rowspan='1' colspan='5'><input nz-input placeholder="请输入监理单位" /></td>
+                <td rowspan='1' colspan='3'><input nz-input placeholder="请输入资质等级" /></td>
+                <td rowspan='1' colspan='2'><input nz-input placeholder="请输入法定代表人" /></td>
+                <td rowspan='1'><input nz-input placeholder="请输入联系人" /></td>
+                <td rowspan='1'><input nz-input placeholder="请输入联系电话" /></td>
+            </tr>
+            <tr>
+                <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">审图单位:</td>
+                <td rowspan='1' colspan='5'><input nz-input placeholder="请输入审图单位" /></td>
+                <td rowspan='1' colspan='3'><input nz-input placeholder="请输入资质等级" /></td>
+                <td rowspan='1' colspan='2'><input nz-input placeholder="请输入法定代表人" /></td>
+                <td rowspan='1'><input nz-input placeholder="请输入联系人" /></td>
+                <td rowspan='1'><input nz-input placeholder="请输入联系电话" /></td>
+            </tr>
+            <tr>
+                <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">
+                    审图编号
+                </td>
+                <td rowspan='1' colspan='12' >
+                    <input nz-input placeholder="请输入审图编号" />
+                </td>
+            </tr>
+
+            <!-- 使用性质 -->
+            <tr>
+                <td colspan='1' class="fontweight fontLeft leftTitle"
+                    style="width: 36px;background-color: #f8f8f8;text-align: center;"> 使用性质 </td>
+                <td colspan='2' class="fontweight fontLeft leftTitle" style="width: 110px;">特殊建设工程:</td>
+                <td colspan="15" style="text-align: left;">
+
+                    <div *ngFor="let item of listArr let index=index"
+                        style="width: 100%;overflow: hidden;margin-bottom: 10px">
+                        <p class="fontweight fontLeft" style="text-align: left;">{{index+1}}、{{item.title}}</p>
+                        <nz-radio-group [(ngModel)]="item.value">
+                                <label nz-radio [nzValue]="o.value" *ngFor="let o of item.arr">{{ o.name }}</label>
+                              </nz-radio-group>
+
+                    </div>
+            </tr>
+            <tr>
+                <td colspan='3' class="fontweight fontLeft leftTitle">类别： </td>
+                <td colspan="15" style="text-align: left;">
+                    <nz-radio-group [(ngModel)]="radiotype">
+                        <label style="padding-right: 20px;" nz-radio nzValue="A">新建</label>
+                        <label style="padding-right: 20px;" nz-radio nzValue="C">扩建</label>
+                        <label nz-radio nzValue="B">改建</label>
+                    </nz-radio-group>
+                    ( &nbsp; &nbsp; <nz-radio-group [(ngModel)]="radiotype" [nzDisabled]="radiotype!='B'">
+                        <label nz-radio nzValue="1">装修</label>
+                        <label nz-radio nzValue="2">建筑保温</label>
+                        <label nz-radio nzValue="3">改变用途</label>
+
+                    </nz-radio-group>)
+
+            </tr>
+
+
+
+            <div style="height: 6px;"></div>
+
+
+            <tr>
+                <td style="width: 37px;background-color: #d0e8fe;color: #5a95e9;font-weight: 600;border-right: 0;"
+                    rowspan='7'>工程基本情况
+                </td>
+
+
+            </tr>
+            <tr style="border-top: 1px solid #e2e2e2;">
+                <td colspan='3' rowspan="2" class="fontweight">单位建筑名称</td>
+                <td colspan='1' rowspan="2" class="fontweight">结构类型</td>
+                <td colspan='1' rowspan="2" class="fontweight">耐火等级</td>
+                <td colspan='2' rowspan="1" class="fontweight">层数</td>
+                <td colspan='1' rowspan="2" class="fontweight">建筑高度（m）</td>
+                <td colspan='1' rowspan="2" class="fontweight">建筑面积（m<sup>2</sup>）</td>
+                <td colspan='1' rowspan="2" class="fontweight">占地面积（m<sup>2</sup>）</td>
+                <td colspan='2' rowspan="1" class="fontweight">防火分区</td>
+                <td colspan='2' rowspan="1" class="fontweight">防烟分区</td>
+                <td colspan='1' rowspan="2" class="fontweight">火灾危险性</td>
+            </tr>
+            <tr>
+                <td colspan='1' rowspan="1" class="fontweight">地上</td>
+                <td colspan='1' rowspan="1" class="fontweight">地下</td>
+                <td colspan='1' rowspan="1" class="fontweight">数量</td>
+                <td colspan='1' rowspan="1" class="fontweight">最大面积（m<sup>2</sup>）</td>
+                <td colspan='1' rowspan="1" class="fontweight">数量</td>
+                <td colspan='1' rowspan="1" class="fontweight">最大面积（m<sup>2</sup>）</td>
+            </tr>
+            <tr>
+                <!-- 请输入单位建筑名称 -->
+                <td colspan="3"><input nz-input /></td>
+                <!-- 请输入结构类型 -->
+                <td><input nz-input /></td>
+                <!-- 请输入耐火等级 -->
+                <td><input nz-input /></td>
+                <!-- 层数 地上、地下 -->
+                <td><input nz-input /></td>
+                <td><input nz-input /></td>
+
+                <!-- 请输入建筑高度 -->
+                <td><input nz-input /></td>
+                <!-- 请输入建筑面积 -->
+                <td><input nz-input /></td>
+                <!-- 请输入占地面积 -->
+                <td><input nz-input /></td>
+                <!-- 请输入防火分区 数量、最大面积 -->
+                <td><input nz-input /></td>
+                <td><input nz-input /></td>
+                <!-- 防烟分区 数量、最大面积 -->
+                <td><input nz-input /></td>
+                <td><input nz-input /></td>
+
+                <!-- 请输入火灾危险性 -->
+                <td><input nz-input /></td>
+
+            </tr>
+            <tr>
+                <!-- 请输入单位建筑名称 -->
+                <td colspan="3"><input nz-input /></td>
+                <!-- 请输入结构类型 -->
+                <td><input nz-input /></td>
+                <!-- 请输入耐火等级 -->
+                <td><input nz-input /></td>
+                <!-- 层数 地上、地下 -->
+                <td><input nz-input /></td>
+                <td><input nz-input /></td>
+
+                <!-- 请输入建筑高度 -->
+                <td><input nz-input /></td>
+                <!-- 请输入建筑面积 -->
+                <td><input nz-input /></td>
+                <!-- 请输入占地面积 -->
+                <td><input nz-input /></td>
+                <!-- 请输入防火分区 数量、最大面积 -->
+                <td><input nz-input /></td>
+                <td><input nz-input /></td>
+                <!-- 防烟分区 数量、最大面积 -->
+                <td><input nz-input /></td>
+                <td><input nz-input /></td>
+
+                <!-- 请输入火灾危险性 -->
+                <td><input nz-input /></td>
+
+            </tr>
+            <tr>
+                    <!-- 请输入单位建筑名称 -->
+                    <td colspan="3"><input nz-input /></td>
+                    <!-- 请输入结构类型 -->
+                    <td><input nz-input /></td>
+                    <!-- 请输入耐火等级 -->
+                    <td><input nz-input /></td>
+                    <!-- 层数 地上、地下 -->
+                    <td><input nz-input /></td>
+                    <td><input nz-input /></td>
+    
+                    <!-- 请输入建筑高度 -->
+                    <td><input nz-input /></td>
+                    <!-- 请输入建筑面积 -->
+                    <td><input nz-input /></td>
+                    <!-- 请输入占地面积 -->
+                    <td><input nz-input /></td>
+                    <!-- 请输入防火分区 数量、最大面积 -->
+                    <td><input nz-input /></td>
+                    <td><input nz-input /></td>
+                    <!-- 防烟分区 数量、最大面积 -->
+                    <td><input nz-input /></td>
+                    <td><input nz-input /></td>
+    
+                    <!-- 请输入火灾危险性 -->
+                    <td><input nz-input /></td>
+    
+                </tr>
+                <tr>
+                        <!-- 请输入单位建筑名称 -->
+                        <td colspan="3"><input nz-input /></td>
+                        <!-- 请输入结构类型 -->
+                        <td><input nz-input /></td>
+                        <!-- 请输入耐火等级 -->
+                        <td><input nz-input /></td>
+                        <!-- 层数 地上、地下 -->
+                        <td><input nz-input /></td>
+                        <td><input nz-input /></td>
+        
+                        <!-- 请输入建筑高度 -->
+                        <td><input nz-input /></td>
+                        <!-- 请输入建筑面积 -->
+                        <td><input nz-input /></td>
+                        <!-- 请输入占地面积 -->
+                        <td><input nz-input /></td>
+                        <!-- 请输入防火分区 数量、最大面积 -->
+                        <td><input nz-input /></td>
+                        <td><input nz-input /></td>
+                        <!-- 防烟分区 数量、最大面积 -->
+                        <td><input nz-input /></td>
+                        <td><input nz-input /></td>
+        
+                        <!-- 请输入火灾危险性 -->
+                        <td><input nz-input /></td>
+        
+                    </tr>
+
+            <div style="height: 6px;"></div>
+            <!-- 附件上传 -->
+            <tr>
+                <td style="width: 37px;background-color: #ffedcc;color: #ff9c35;font-weight: 600;border-right: 0"
+                    rowspan='5'>附件上传
+                </td>
+            </tr>
+            <tr style="text-align: left;border-top: 1px solid #e2e2e2;">
+                <td colspan="20">
+                    <div>
+                        <span class="fontweight">1、建设工程消防设计审核申报</span>
+                        <button class="btn downLoad" nz-button>下载</button>
+                        <button (click)="checkAll('checkOptionsOne')" class="btn checkAll" nz-button>全选</button>
+
+                    </div>
+                    <div class="blockCheck">
+                        <nz-checkbox-group [(ngModel)]="checkOptionsOne.data"></nz-checkbox-group>
+                    </div>
+                </td>
+            </tr>
+            <tr style="text-align: left;">
+                <td colspan="20">
+                    <div>
+                        <span class="fontweight">2、建设单位的工商营业执照等合法身份证明文件</span> <button class="btn downLoad"
+                            nz-button>下载</button>
+                        <button (click)="checkAll('checkOptionsTwo')" class="btn checkAll" nz-button>全选</button></div>
+                    <div class="blockCheck">
+                        <nz-checkbox-group [(ngModel)]="checkOptionsTwo.data"></nz-checkbox-group>
+                    </div>
+                </td>
+            </tr>
+            <tr style="text-align: left;">
+                <td colspan="20">
+                    <div>
+                        <span class="fontweight">3、设计单位资质证明文件</span> <button class="btn downLoad" nz-button>下载</button>
+                        <button (click)="checkAll('checkOptionsThree')" class="btn checkAll" nz-button>全选</button>
+                    </div>
+                    <div class="blockCheck">
+                        <nz-checkbox-group [(ngModel)]="checkOptionsThree.data"></nz-checkbox-group>
+                    </div>
+                </td>
+            </tr>
+            <tr style="text-align: left;">
+                <td colspan="20">
+                    <div><span class="fontweight">4、消防设计文件</span> <button class="btn downLoad" nz-button>下载</button>
+                        <button (click)="checkAll('checkOptionsFour')" class="btn checkAll" nz-button>全选</button></div>
+                    <div class="blockCheck">
+                        <nz-checkbox-group [(ngModel)]="checkOptionsFour.data"></nz-checkbox-group>
+                    </div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+
+</div>
