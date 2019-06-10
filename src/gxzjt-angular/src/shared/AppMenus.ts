@@ -27,6 +27,16 @@ export class AppMenus {
             children: [
                 {
                     text: "",
+                    i18n: "待办",
+                    link: "/app/work-matters/agencyDoneComponent",
+                },
+                {
+                    text: "",
+                    i18n: "已办",
+                    link: "/app/work-matters/alreadyDoneComponent",
+                },
+                {
+                    text: "",
                     i18n: "流程",
                     link: "/app/work-matters/flowModuleComponent",
                 },

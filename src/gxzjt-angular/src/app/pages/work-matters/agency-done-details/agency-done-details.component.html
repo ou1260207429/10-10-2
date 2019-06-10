@@ -1,0 +1,15 @@
+<nz-spin [nzSpinning]="type">
+  <nz-tabset [(nzSelectedIndex)]="selectedIndex" [nzType]="'card'">
+    <div *ngFor="let tab of tabs">
+      <nz-tab [nzTitle]="tab.name">
+      </nz-tab>
+    </div>
+  </nz-tabset>
+
+  <div [ngClass]="{hide: selectedIndex != 0}">
+    11111
+  </div>
+  <div [ngClass]="{hide: selectedIndex != 1}">
+    <app-flow-route *ngIf="data" [data]="data"></app-flow-route>
+  </div>
+</nz-spin>
