@@ -11,7 +11,10 @@ export class HomeIndexComponent implements OnInit {
 
   constructor(public http: _HttpClient) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+
+    
+  }
 
   close() {
 
