@@ -1,0 +1,391 @@
+<form nz-form #f="ngForm" se-container size="compact" gutter="24">
+  <div nz-row>
+    <table class="tables" style="box-sizing: border-box;">
+      <thead>
+        <tr>
+          <td colspan='20' rowspan='1'>建设工程消防设计审查申报表 </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>建设单位:</td>
+          <td rowspan='1' colspan='3'>
+            <input nz-input placeholder="请输入工程名称" [(ngModel)]="data.test" name="test" required />
+          </td>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>法定代表人/主要负责人:</td>
+          <td rowspan='1' colspan='3'>
+            <input nz-input placeholder="请输入工程名称" [(ngModel)]="data.test" name="test" required />
+          </td>
+          <td rowspan='1' colspan='2' class="fontweight fontLeft" required=true>联系电话:</td>
+          <td rowspan='1' colspan='3'>
+            <nz-date-picker name="t2"></nz-date-picker>
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程名称:</td>
+          <td rowspan='1' colspan='3'>
+            <input nz-input placeholder="请输入工程名称" [(ngModel)]="data.test" name="test" required />
+          </td>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>联系人:</td>
+          <td rowspan='1' colspan='3'>
+            <input nz-input placeholder="请输入工程名称" [(ngModel)]="data.test" name="test" required />
+          </td>
+          <td rowspan='1' colspan='2' class="fontweight fontLeft" required=true>联系电话:</td>
+          <td rowspan='1' colspan='3'>
+            <nz-date-picker name="t2"></nz-date-picker>
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程地址:</td>
+          <td rowspan='1' colspan='3'>
+            <input nz-input placeholder="请输入工程名称" [(ngModel)]="data.test" name="test" required />
+          </td>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">计划开工日期:</td>
+          <td rowspan='1' colspan='3'>
+            <nz-date-picker name="t2"></nz-date-picker>
+          </td>
+          <td rowspan='1' colspan='2' class="fontweight fontLeft">计划竣工日期:</td>
+          <td rowspan='1' colspan='3'>
+            <nz-date-picker name="t2"></nz-date-picker>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan='3' class="fontweight fontLeft leftTitle" required=true>类别： </td>
+          <td colspan="15" style="text-align: left;">
+            <nz-radio-group [(ngModel)]="radiotype" (ngModelChange)="getClass()">
+              <label style="padding-right: 20px;" nz-radio nzValue="A">新建</label>
+              <label style="padding-right: 20px;" nz-radio nzValue="C">扩建</label>
+              <label nz-radio nzValue="B">改建</label>
+            </nz-radio-group>
+            ( &nbsp; &nbsp; <nz-radio-group [(ngModel)]="radiotypeA" [nzDisabled]="radiotype!='B'">
+              <label nz-radio nzValue="1">装修</label>
+              <label nz-radio nzValue="2">建筑保温</label>
+              <label nz-radio nzValue="3">改变用途</label>
+            </nz-radio-group>)
+        </tr>
+        <tr class="title">
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">单位类别</td>
+          <td rowspan='1' colspan='5' class="fontweight fontLeft">单位名称</td>
+          <td rowspan='1' colspan='4' class="fontweight fontLeft">资质等级</td>
+          <td rowspan='1' colspan='2' class="fontweight fontLeft">法定代表人/主要负责人</td>
+          <td rowspan='1' class="fontweight fontLeft">联系人</td>
+          <td rowspan='1'>联系电话</td>
+          <td rowspan='1'>操作</td>
+        </tr>
+        <tr>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>设计单位:</td>
+          <td rowspan='1' colspan='5'><input nz-input placeholder="请输入设计单位" name="sjsjdw" required /></td>
+          <td rowspan='1' colspan='4'><input nz-input placeholder="请输入资质等级" name="sjzzdj" required /></td>
+          <td rowspan='1' colspan='2'><input nz-input placeholder="请输入法定代表人" name="sjfddbr" required /></td>
+          <td rowspan='1'><input nz-input placeholder="请输入联系人" name="sjlrx" required /></td>
+          <td rowspan='1'><input nz-input placeholder="请输入联系电话" name="sjdw" required /></td>
+          <td rowspan='1'>无</td>
+        </tr>
+        <tr>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">施工单位:</td>
+          <td rowspan='1' colspan='5'><input nz-input placeholder="请输入设计单位" /></td>
+          <td rowspan='1' colspan='4'><input nz-input placeholder="请输入资质等级" /></td>
+          <td rowspan='1' colspan='2'><input nz-input placeholder="请输入法定代表人" /></td>
+          <td rowspan='1'><input nz-input placeholder="请输入联系人" /></td>
+          <td rowspan='1'><input nz-input placeholder="请输入联系电话" /></td>
+          <td rowspan='1'>
+            <a>新增</a>
+            <a>删除</a>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">监理单位:</td>
+          <td rowspan='1' colspan='5'><input nz-input placeholder="请输入监理单位" /></td>
+          <td rowspan='1' colspan='4'><input nz-input placeholder="请输入资质等级" /></td>
+          <td rowspan='1' colspan='2'><input nz-input placeholder="请输入法定代表人" /></td>
+          <td rowspan='1'><input nz-input placeholder="请输入联系人" /></td>
+          <td rowspan='1'><input nz-input placeholder="请输入联系电话" /></td>
+          <td rowspan='1'>无</td>
+        </tr>
+        <tr>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>审图单位:</td>
+          <td rowspan='1' colspan='5'><input nz-input placeholder="请输入审图单位" name="ststdw" /></td>
+          <td rowspan='1' colspan='4'><input nz-input placeholder="请输入资质等级" name="stzzdj" /></td>
+          <td rowspan='1' colspan='2'><input nz-input placeholder="请输入法定代表人" name="stfddbr" /></td>
+          <td rowspan='1'><input nz-input placeholder="请输入联系人" name="stlxt" /></td>
+          <td rowspan='1'><input nz-input placeholder="请输入联系电话" name="stlxdh" /></td>
+          <td rowspan='1'>无</td>
+        </tr>
+        <tr>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>
+            审图编号
+          </td>
+          <td rowspan='1' colspan='1'>
+            <input nz-input placeholder="请输入审图编号" name="ststbh" />
+          </td>
+          <td rowspan='1'>无</td>
+        </tr>
+
+        <!-- 使用性质 -->
+        <tr>
+          <td colspan='1' class="fontweight fontLeft leftTitle"
+            style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true> 使用性质 </td>
+          <td colspan='2' class="fontweight fontLeft leftTitle" style="width: 110px;">特殊建设工程:</td>
+          <td colspan="15" style="text-align: left;">
+            <div *ngFor="let item of listArr let index=index" style="width: 100%;overflow: hidden;margin-bottom: 10px">
+              <p class="fontweight fontLeft" style="text-align: left;">{{index+1}}、{{item.title}}</p>
+              <nz-radio-group [(ngModel)]="item.value">
+                <label nz-radio [nzValue]="o.value" *ngFor="let o of item.arr">{{ o.name }}</label>
+              </nz-radio-group>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 37px;background-color: #d0e8fe;color: #5a95e9;font-weight: 600;border-right: 0;"
+            rowspan='4'>工程基本情况
+          </td>
+        </tr>
+        <tr style="border-top: 1px solid #e2e2e2;">
+          <td colspan='3' rowspan="2" class="fontweight">单位建筑名称</td>
+          <td colspan='1' rowspan="2" class="fontweight">结构类型</td>
+          <td colspan='1' rowspan="2" class="fontweight">耐火等级</td>
+          <td colspan='2' rowspan="1" class="fontweight">层数</td>
+          <td colspan='1' rowspan="2" class="fontweight">建筑高度（m）</td>
+          <td colspan='1' rowspan="2" class="fontweight">建筑面积（m<sup>2</sup>）</td>
+          <td colspan='1' rowspan="2" class="fontweight">占地面积（m<sup>2</sup>）</td>
+          <td colspan='2' rowspan="1" class="fontweight">防火分区</td>
+          <td colspan='2' rowspan="1" class="fontweight">防烟分区</td>
+          <td colspan='1' rowspan="2" class="fontweight">火灾危险性</td>
+          <td colspan='1' rowspan="2" class="fontweight">操作</td>
+        </tr>
+        <tr>
+          <td colspan='1' rowspan="1" class="fontweight">地上</td>
+          <td colspan='1' rowspan="1" class="fontweight">地下</td>
+          <td colspan='1' rowspan="1" class="fontweight">数量</td>
+          <td colspan='1' rowspan="1" class="fontweight">最大面积（m<sup>2</sup>）</td>
+          <td colspan='1' rowspan="1" class="fontweight">数量</td>
+          <td colspan='1' rowspan="1" class="fontweight">最大面积（m<sup>2</sup>）</td>
+        </tr>
+        <tr>
+          <!-- 请输入单位建筑名称 -->
+          <td colspan="3"><input nz-input /></td>
+          <!-- 请输入结构类型 -->
+          <td><input nz-input /></td>
+          <!-- 请输入耐火等级 -->
+          <td><input nz-input /></td>
+          <!-- 层数 地上、地下 -->
+          <td><input nz-input /></td>
+          <td><input nz-input /></td>
+
+          <!-- 请输入建筑高度 -->
+          <td><input nz-input /></td>
+          <!-- 请输入建筑面积 -->
+          <td><input nz-input /></td>
+          <!-- 请输入占地面积 -->
+          <td><input nz-input /></td>
+          <!-- 请输入防火分区 数量、最大面积 -->
+          <td><input nz-input /></td>
+          <td><input nz-input /></td>
+          <!-- 防烟分区 数量、最大面积 -->
+          <td><input nz-input /></td>
+          <td><input nz-input /></td>
+
+          <!-- 请输入火灾危险性 -->
+          <td><input nz-input /></td>
+
+          <td><a>新增</a>
+            <a>删除</a> </td>
+        </tr>
+
+        <tr>
+          <td colspan='1' rowspan="3" class="fontweight fontLeft leftTitle"
+            style="width: 36px;background-color: #f8f8f8;text-align: center;">储 罐</td>
+          <td colspan='4' class="fontweight fontLeft leftTitle">设置位置</td>
+          <td rowspan='1' colspan='4'>
+            <input nz-input placeholder="请输入设置位置" [(ngModel)]="data.test" name="test" required />
+          </td>
+          <td colspan='3' class="fontweight fontLeft leftTitle">总容量（m3）</td>
+          <td rowspan='1' colspan='4'>
+            <input nz-input placeholder="请输入总容量（m3）" [(ngModel)]="data.test" name="test" required />
+          </td>
+          <td rowspan="1" colspan='1'>操作</td>
+        </tr>
+
+
+        <tr>
+          <td colspan='2' class="fontweight fontLeft leftTitle">设置型式</td>
+          <td colspan="13" style="text-align: left;">
+            浮顶罐(<nz-radio-group [(ngModel)]="radiotype">
+              <label style="padding-right: 20px;" nz-radio nzValue="外">外</label>
+              <label style="padding-right: 20px;" nz-radio nzValue="内">内</label>
+            </nz-radio-group>)
+            <nz-radio-group [(ngModel)]="radiotype">
+              <label style="padding-right: 20px;" nz-radio nzValue="固定顶罐">固定顶罐 </label>
+              <label style="padding-right: 20px;" nz-radio nzValue="卧式罐">卧式罐</label>
+            </nz-radio-group>
+            <br />
+            球形罐(<nz-radio-group [(ngModel)]="radiotype">
+              <label style="padding-right: 20px;" nz-radio nzValue="液体">液体</label>
+              <label style="padding-right: 20px;" nz-radio nzValue="气体">气体</label>
+            </nz-radio-group>)
+            可燃气体储罐(<nz-radio-group [(ngModel)]="radiotype">
+              <label style="padding-right: 20px;" nz-radio nzValue="干式">干式</label>
+              <label style="padding-right: 20px;" nz-radio nzValue="湿式">湿式</label>
+            </nz-radio-group>)
+            <nz-radio-group [(ngModel)]="radiotype">
+              <label style="padding-right: 20px;" nz-radio nzValue="其他">其他 </label>
+            </nz-radio-group>
+          </td>
+          <td rowspan="2" colspan='1'><a>新增</a>
+            <a>删除</a></td>
+        </tr>
+
+        <tr>
+          <td colspan='4' class="fontweight fontLeft leftTitle">储存形式</td>
+          <td rowspan='1' colspan='4'>
+            <nz-radio-group [(ngModel)]="radiotype">
+              <label style="padding-right: 20px;" nz-radio nzValue="地上">地上</label>
+              <label style="padding-right: 20px;" nz-radio nzValue="半地下">半地下</label>
+              <label style="padding-right: 20px;" nz-radio nzValue="地下">地下</label>
+            </nz-radio-group>
+          </td>
+          <td colspan='3' class="fontweight fontLeft leftTitle">储存物质名称</td>
+          <td rowspan='1' colspan='4'>
+            <input nz-input placeholder="请输入储存物质名称" [(ngModel)]="data.test" name="test" required />
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan='1' rowspan="1" class="fontweight fontLeft leftTitle"
+            style="width: 36px;background-color: #f8f8f8;text-align: center;">堆 场</td>
+          <td colspan='4' class="fontweight fontLeft leftTitle">储 量</td>
+          <td rowspan='1' colspan='4'>
+            <input nz-input placeholder="请输入储  量" [(ngModel)]="data.test" name="test" required />
+          </td>
+          <td colspan='3' class="fontweight fontLeft leftTitle">储存物质名称）</td>
+          <td rowspan='1' colspan='4'>
+            <input nz-input placeholder="请输入储存物质名称" [(ngModel)]="data.test" name="test" required />
+          </td>
+          <td rowspan="1" colspan='1'><a>新增</a>
+            <a>删除</a></td>
+        </tr>
+
+        <tr>
+          <td colspan='3' rowspan="2" class="fontweight fontLeft leftTitle"
+            style="width: 36px;background-color: #f8f8f8;text-align: center;">建筑保温</td>
+          <td colspan='3' class="fontweight fontLeft leftTitle">材料类别</td>
+          <td rowspan='1' colspan='4'>
+            <nz-radio-group [(ngModel)]="radiotype">
+              <label style="padding-right: 20px;" nz-radio nzValue="A">A</label>
+              <label style="padding-right: 20px;" nz-radio nzValue="B1">B1</label>
+              <label style="padding-right: 20px;" nz-radio nzValue="B2">B2</label>
+            </nz-radio-group>
+          </td>
+          <td colspan='3' class="fontweight fontLeft leftTitle">保温层数</td>
+          <td rowspan='1' colspan='4'>
+            <input nz-input placeholder="请输入保温层数" [(ngModel)]="data.test" name="test" required />
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan='3' class="fontweight fontLeft leftTitle">使用性质</td>
+          <td rowspan='1' colspan='4'>
+            <input nz-input placeholder="请输入使用性质" [(ngModel)]="data.test" name="test" required />
+          </td>
+          <td colspan='3' class="fontweight fontLeft leftTitle">原有用途</td>
+          <td rowspan='1' colspan='4'>
+            <input nz-input placeholder="请输入原有用途" [(ngModel)]="data.test" name="test" required />
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan='3' rowspan="3" class="fontweight fontLeft leftTitle"
+            style="width: 36px;background-color: #f8f8f8;text-align: center;">装修工程</td>
+          <td colspan='3' class="fontweight fontLeft leftTitle">装修部位</td>
+          <td rowspan='1' colspan='11'>
+            <label nz-checkbox name="checkbox{{i}}" *ngFor="let box of checkList;let i = index"
+              [(ngModel)]="box.value">{{box.label}}</label>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan='3' class="fontweight fontLeft leftTitle">装修面积（m2）</td>
+          <td rowspan='1' colspan='4'>
+            <input nz-input placeholder="请输入装修面积（m2）" [(ngModel)]="data.test" name="test" required />
+          </td>
+          <td colspan='3' class="fontweight fontLeft leftTitle">装修层数</td>
+          <td rowspan='1' colspan='4'>
+            <input nz-input placeholder="请输入装修层数" [(ngModel)]="data.test" name="test" required />
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan='3' class="fontweight fontLeft leftTitle">使用性质</td>
+          <td rowspan='1' colspan='4'>
+            <input nz-input placeholder="请输入使用性质" [(ngModel)]="data.test" name="test" required />
+          </td>
+          <td colspan='3' class="fontweight fontLeft leftTitle">原有用途</td>
+          <td rowspan='1' colspan='4'>
+            <input nz-input placeholder="请输入原有用途" [(ngModel)]="data.test" name="test" required />
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
+            style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>消防设施</td>
+          <td rowspan='1' colspan='14'>
+            <label nz-checkbox name="checkbox{{i}}" *ngFor="let box of checkNewList;let i = index"
+              [(ngModel)]="box.value">{{box.label}}</label>
+          </td>
+        </tr>
+
+
+        <tr>
+          <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
+            style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>同时提交的材料</td>
+          <td rowspan='1' colspan='14' class="textLeft">
+            <div>
+              <label nz-checkbox name="xfcs" [(ngModel)]="data.test"></label>
+              1. 消防设计文件，数量： <input style="width: 80px" nz-input placeholder="请输入使用性质" [(ngModel)]="data.test"
+                name="test" required /> 份（大写）；
+            </div>
+
+            <div>
+              <label nz-checkbox name="xfcs" [(ngModel)]="data.test"></label>
+              2. 专家评审申报材料（特殊消防设计文件，或者设计采用的国际标准、境外消防技术标准的中文文本，其他有关消防设计的应用实例、产品说明等技术资料），数量：<input style="width: 80px"
+                nz-input placeholder="请输入使用性质" [(ngModel)]="data.test" name="test" required />份（大写）；
+            </div>
+
+            <div>
+              <label nz-checkbox name="xfcs" [(ngModel)]="data.test"></label>
+              3. 建设工程规划许可证明文件；
+            </div>
+
+            <div>
+              <label nz-checkbox name="xfcs" [(ngModel)]="data.test"></label>
+              4. 城乡规划主管部门批准的临时性建筑证明文件
+            </div>
+
+            <div>
+              <label nz-checkbox name="xfcs" [(ngModel)]="data.test"></label>
+              5. 生产工艺和物品有特殊灭火要求的消防设计说明材料。
+            </div>
+
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
+            style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>审图公司意见</td>
+          <td rowspan='1' colspan='14' class="textLeft">
+            <p>该项目消防设计文件的编制符合消防设计文件申请要求；建筑的总平面布局和平面布置、耐火等级、建筑构造、安全疏散、消防给水、消防电源及配电、消防设施等的消防设计符合国家工程工程建设消防技术标准。</p>
+            <div>审图单位<input style="width: 80px" nz-input placeholder="请输入使用性质" [(ngModel)]="data.test" name="test"
+                required />（盖章）</div>
+            <div class="textRight">审图单位项目负责人签名<input style="width: 80px" nz-input placeholder="请输入使用性质"
+                [(ngModel)]="data.test" name="test" required /></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</form>
+<button nz-button nzType="primary" [disabled]="f.invalid">保存</button>
