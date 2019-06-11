@@ -39,7 +39,7 @@
 
 
         <!-- 验证码 -->
-        <nz-form-item>
+        <nz-form-item [formGroup]="form">
           <nz-form-control>
             <nz-input-group>
 
@@ -82,7 +82,7 @@
 
         </nz-form-item>
 
-        <!-- 登陆按钮 -->
+
 
         <button nz-button [nzLoading]="submitting" class="yoyo__block login_but"
           [disabled]="!loginForm.form.valid||submitting">
@@ -93,7 +93,7 @@
 
       <div class="other">
 
-        <a class="register" routerLink="/passport/register">前往注册</a>
+        <a class="register" routerLink="/account/register">前往注册</a>
       </div>
 
     </nz-card>

@@ -42,10 +42,10 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
   ngOnInit(): void {
     this.titleSrvice.setTitle(this.l('CreateAnAccount'));
 
-    if (!this.appSession.tenant) {
-      this.back();
-      return;
-    }
+    // if (!this.appSession.tenant) {
+    //   this.back();
+    //   return;
+    // }
     this.model = new RegisterInput();
   }
 
