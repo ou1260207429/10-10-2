@@ -1,21 +1,21 @@
+import { HomeRoutingModule } from './home-routing.module';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
-import { TestRoutingModule } from './home-routing.module';
-import { TestComponent } from './test.component';
+import { SystemHomeComponent } from './system-home/system-home.component'; 
 
 const COMPONENTS = [];
 const COMPONENTS_NOROUNT = [
-  TestComponent];
+  SystemHomeComponent];
 
 @NgModule({
   imports: [
     SharedModule,
-    TestRoutingModule
+    HomeRoutingModule
   ],
   declarations: [
     ...COMPONENTS,
-    ...COMPONENTS_NOROUNT
+    ...COMPONENTS_NOROUNT, 
   ],
   entryComponents: COMPONENTS_NOROUNT
 })
-export class TestModule { }
+export class HomeModule { }

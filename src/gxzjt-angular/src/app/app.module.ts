@@ -4,7 +4,10 @@ import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from '@app/app-routing.module';
 import { LayoutModule } from '@layout/layout.module';
 import { SharedModule } from '@shared/shared.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FlowServices } from 'services/flow.services';
+import { EventEmiter } from 'infrastructure/eventEmiter';
+import { AuthInterceptor } from 'infrastructure/http-interceptor';
 
 @NgModule({
   imports: [
@@ -18,6 +21,17 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   declarations: [],
   entryComponents: [
+  ],
+  providers: [
+    FlowServices,
+    EventEmiter,
+    [
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptor,
+        multi: true
+      }
+    ],
   ],
   // providers: [LocalizationService, MenuService],
 })

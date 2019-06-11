@@ -4,29 +4,46 @@ import { Menu } from '@delon/theme';
 export class AppMenus {
     static Menus: Menu[] = [
         {
-            text: "",// 无本地化显示字符
-            i18n: "首页",// 本地化主键(ABP本地化)
-            acl: "",// 权限
-            icon: { type: "icon", value: "home" },// 图标
-            link: "/app/home", // url 地址
-            // hide: true,  // 强制隐藏
-            // ...还有更多选项，请查看 Menu成员
-        },
-
-        {
             text: "",
-            i18n: "工作事项",
-            icon: { type: "class", value: "iconfont  icon8636f874" },
+            i18n: "首页",
+            icon: { type: "icon", value: "home" },// 图标
             children: [
                 {
                     text: "",
-                    i18n: "测试",
-                    link: "/app/test",
+                    i18n: "系统首页",
+                    link: "/app/home/systemHomeComponent",
+                },
+                {
+                    text: "",
+                    i18n: "监控大屏",
+                    link: "/app/home/systemHomeComponent",
+                },
+            ]
+        },
+        {
+            text: "",
+            i18n: "工作事项",
+            icon: { type: "icon", value: "home" },// 图标
+            children: [
+                {
+                    text: "",
+                    i18n: "待办",
+                    link: "/app/work-matters/agencyDoneComponent",
+                },
+                {
+                    text: "",
+                    i18n: "已办",
+                    link: "/app/work-matters/alreadyDoneComponent",
+                },
+                {
+                    text: "",
+                    i18n: "流程",
+                    link: "/app/work-matters/flowModuleComponent",
                 },
                 {
                     text: "",
                     i18n: "表单",
-                    link: "/app/formModuleComponent",
+                    link: "/app/work-matters/formModuleComponent",
                 },
             ]
         },

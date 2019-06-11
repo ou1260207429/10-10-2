@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FormModuleComponent } from './form-module.component';
+import { IndexComponent } from './index/index.component'
+
 
 const routes: Routes = [
   {
     path: '',
-    component: FormModuleComponent
+    component: IndexComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'index',
+    component: IndexComponent,
   },
 ];
 
@@ -13,4 +19,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class FormModuleRoutingModule { }
+export class IndexRoutingModule { }

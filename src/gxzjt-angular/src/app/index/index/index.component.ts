@@ -6,11 +6,11 @@ import { _HttpClient } from '@delon/theme';
   styleUrls: ['./index.component.less'],
   templateUrl: './index.component.html',
 })
-export class HomeIndexComponent implements OnInit {
+export class IndexComponent implements OnInit {
   record: any = {};
   i: any;
 
-  constructor(public http: _HttpClient) {}
+  constructor(public http: _HttpClient) { }
   currentIndex = 0;
   navList = [
     {
@@ -90,7 +90,7 @@ export class HomeIndexComponent implements OnInit {
     },
   ];
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  close() {}
+  close() { }
 }
