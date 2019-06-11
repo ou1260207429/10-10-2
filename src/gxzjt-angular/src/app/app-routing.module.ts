@@ -20,7 +20,7 @@ const routes: Routes = [
     children: [
       { path: 'home', loadChildren: './pages/home/home.module#HomeModule' },
       { path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule' },
-      { path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule' },
+      { path: 'engineering-management', loadChildren: './pages/engineering-management/engineering-management.module#EngineeringManagementModule' },
     ],
   },
 ];

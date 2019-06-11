@@ -34,7 +34,7 @@ export class IndexComponent implements OnInit {
       name: '法律法规',
     },
     {
-      path: '/login',
+      path: '/account/login',
       name: '登录',
     },
   ];
@@ -93,4 +93,12 @@ export class IndexComponent implements OnInit {
   ngOnInit(): void { }
 
   close() { }
+
+
+  /**
+   * 跳转进表单列表页
+   */
+  goFromList() {
+
+  }
 }

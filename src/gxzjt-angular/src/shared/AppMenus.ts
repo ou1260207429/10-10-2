@@ -47,5 +47,32 @@ export class AppMenus {
                 },
             ]
         },
+        {
+            text: "",
+            i18n: "工程管理",
+            icon: { type: "icon", value: "home" },// 图标
+            children: [
+                {
+                    text: "",
+                    i18n: "工程列表",
+                    link: "/app/engineering-management/engineeringListComponent",
+                },
+                {
+                    text: "",
+                    i18n: "消防设计审查",
+                    link: "/app/engineering-management/fireDesignComponent",
+                },
+                {
+                    text: "",
+                    i18n: "消防验收管理",
+                    link: "/app/engineering-management/fireAcceptanceComponent",
+                },
+                {
+                    text: "",
+                    i18n: "竣工验收备案",
+                    link: "/app/engineering-management/completedAcceptanceComponent",
+                },
+            ]
+        },
     ];
 }
