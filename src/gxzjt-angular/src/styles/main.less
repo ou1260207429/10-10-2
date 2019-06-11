@@ -1,102 +1,422 @@
-.flexCloumn{display: flex;flex-direction: column;height: 100%;overflow: hidden;}
-.flexCloumnAbsolute:extend(.flexCloumn){position: absolute;top: 0;left: 0;width: 100%;}
-.flexCloumn120:extend(.flexCloumn){height: calc(100vh - 120px);}
-.flexMain{-webkit-box-flex:1;height: 100%;overflow-y: auto;overflow-x: hidden}
-.flexBox{display: -webkit-box;}   
-.flex1{-webkit-box-flex: 1;display: block;width: 100%}  
-.flexContent{-webkit-box-pack: center;-webkit-box-align: center;display: -webkit-box;}
-.flexLeftContent{-webkit-box-pack: initial;-webkit-box-align: center;display: -webkit-box;}
-.flexRightContent{-webkit-box-pack: end;-webkit-box-align: center;display: -webkit-box;}
-.textCenter{text-align: center};
-.textLeft{text-align: left}
-.textRight{text-align: right};
-.relative{position: relative;}
+.flexCloumn {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.flexCloumnAbsolute:extend(.flexCloumn) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.flexCloumn120:extend(.flexCloumn) {
+  height: calc(100vh - 120px);
+}
+
+.flexMain {
+  -webkit-box-flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden
+}
+
+.flexBox {
+  display: -webkit-box;
+}
+
+.flex1 {
+  -webkit-box-flex: 1;
+  display: block;
+  width: 100%
+}
+
+.flexContent {
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  display: -webkit-box;
+}
+
+.flexLeftContent {
+  -webkit-box-pack: initial;
+  -webkit-box-align: center;
+  display: -webkit-box;
+}
+
+.flexRightContent {
+  -webkit-box-pack: end;
+  -webkit-box-align: center;
+  display: -webkit-box;
+}
+
+.textCenter {
+  text-align: center
+}
+
+;
+
+.textLeft {
+  text-align: left
+}
+
+.textRight {
+  text-align: right
+}
+
+;
+
+.relative {
+  position: relative;
+}
 
 //  不允许点击
-.pointer{pointer-events:none;}
-.pointerf5f5f5{pointer-events:none;background: #f5f5f5}
-.pointerf5f5f5>div.ant-select-selection,.pointerf5f5f5 span.ant-calendar-picker,.pointerf5f5f5 span.ant-calendar-picker input.ant-calendar-picker-input{background: #f5f5f5}
-.disabledInput.ant-input-disabled{background: white;border:1px solid #d9d9d9;color: #333;cursor: pointer;}
-.disabledInput.ant-input-disabled:hover{border:1px solid #d9d9d9;cursor: pointer;}
+.pointer {
+  pointer-events: none;
+}
+
+.pointerf5f5f5 {
+  pointer-events: none;
+  background: #f5f5f5
+}
+
+.pointerf5f5f5>div.ant-select-selection,
+.pointerf5f5f5 span.ant-calendar-picker,
+.pointerf5f5f5 span.ant-calendar-picker input.ant-calendar-picker-input {
+  background: #f5f5f5
+}
+
+.disabledInput.ant-input-disabled {
+  background: white;
+  border: 1px solid #d9d9d9;
+  color: #333;
+  cursor: pointer;
+}
+
+.disabledInput.ant-input-disabled:hover {
+  border: 1px solid #d9d9d9;
+  cursor: pointer;
+}
 
 
-.hide{display: none}
-.noLabel .se__label,.afterNone:after{display: none}
-.label5em .se__label{width: calc(150px - 5em) !important}
-.entry.bpmn-icon-screw-wrench,.entry.bpmn-icon-text-annotation{display: none!important}
-.w100{width: 100%!important}
-.noSpan .ant-input-group-addon{padding: 0;border:0;border-radius: 0;}
-.noSpan .ant-input-group-addon button{    border-top-left-radius: 0;border-bottom-left-radius: 0; }
+.hide {
+  display: none
+}
 
-.more{padding: 24px;background: white}
-.borderTopLeftRhith0{ border-top: 0;border-left: 0;border-right: 0;}
-.stBody{background: white;border: 1px solid #F4F4F4;margin-top: 24px;padding-bottom: 24px}
-.noBorder{border: 0;}
+.noLabel .se__label,
+.afterNone:after {
+  display: none
+}
+
+.label5em .se__label {
+  width: calc(150px - 5em) !important
+}
+
+.entry.bpmn-icon-screw-wrench,
+.entry.bpmn-icon-text-annotation {
+  display: none !important
+}
+
+.w100 {
+  width: 100% !important
+}
+
+.noSpan .ant-input-group-addon {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.noSpan .ant-input-group-addon button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.more {
+  padding: 24px;
+  background: white
+}
+
+.borderTopLeftRhith0 {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+
+.stBody {
+  background: white;
+  border: 1px solid #F4F4F4;
+  margin-top: 24px;
+  padding-bottom: 24px
+}
+
+.noBorder {
+  border: 0;
+}
+
 //隐藏流程的
-#js-canvas .bpmn-icon-gateway-none,.properties-panel-parent div.bpp-textfield[data-entry='id'],#js-canvas .bpmn-icon-intermediate-event-none,#js-properties-panel .bpp-properties-entry.bpp-checkbox,#js-properties-panel .bpp-properties-group[data-group='documentation'],#js-properties-panel .bpp-properties-tab-bar,#js-properties-panel .group-label,#js-properties-panel .bpp-properties-header{display: none!important}
-#js-drop-zone .bpp-properties-entry>label[for='camunda-name']{display: none}
-#js-drop-zone .bpp-properties-entry.bpp-textbox:before{content: '节点名称';font-weight: bolder;display: inline-block;vertical-align: middle;color: #666;margin-bottom: 3px}
+#js-canvas .bpmn-icon-gateway-none,
+.properties-panel-parent div.bpp-textfield[data-entry='id'],
+#js-canvas .bpmn-icon-intermediate-event-none,
+#js-properties-panel .bpp-properties-entry.bpp-checkbox,
+#js-properties-panel .bpp-properties-group[data-group='documentation'],
+#js-properties-panel .bpp-properties-tab-bar,
+#js-properties-panel .group-label,
+#js-properties-panel .bpp-properties-header {
+  display: none !important
+}
+
+#js-drop-zone .bpp-properties-entry>label[for='camunda-name'] {
+  display: none
+}
+
+#js-drop-zone .bpp-properties-entry.bpp-textbox:before {
+  content: '节点名称';
+  font-weight: bolder;
+  display: inline-block;
+  vertical-align: middle;
+  color: #666;
+  margin-bottom: 3px
+}
 
 
-.colorRed{color: red}
-.color52c41a{color: #52c41a}
+.colorRed {
+  color: red
+}
 
-.bgFFF{background: white}
-.myBox{min-height: 600px;display: -webkit-box;margin-top: 24px;}
-.myBox .boxLeft{width: 200px;margin-right: 20px;}
-.myBox .boxRight{-webkit-box-flex: 1;display: block;width: 100%;}
-.myBox .boxLeft,.myBox .boxRight{border:1px solid #F4F4F4;background: white;border-radius: 5px;overflow: hidden;}
-.myBox .boxLeft .ant-input-affix-wrapper .ant-input{border: 0;border-radius: 0;border-bottom: 1px solid #FAFAFA;}
-.myBox .boxLeft .ant-input-group input{border-color: #FAFAFA}
-.myBoxTitle{height: 32px;line-height: 32px;padding: 0 24px;border-bottom: 1px solid #FAFAFA}
-.myBoxTitle .typeName{color: #52A3FF}
-.customForm nz-date-picker,.customForm nz-date-picker .ant-calendar-picker,.customForm nz-input-number{width: 100%;}
+.color52c41a {
+  color: #52c41a
+}
+
+.bgFFF {
+  background: white
+}
+
+.myBox {
+  min-height: 600px;
+  display: -webkit-box;
+  margin-top: 24px;
+}
+
+.myBox .boxLeft {
+  width: 200px;
+  margin-right: 20px;
+}
+
+.myBox .boxRight {
+  -webkit-box-flex: 1;
+  display: block;
+  width: 100%;
+}
+
+.myBox .boxLeft,
+.myBox .boxRight {
+  border: 1px solid #F4F4F4;
+  background: white;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.myBox .boxLeft .ant-input-affix-wrapper .ant-input {
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid #FAFAFA;
+}
+
+.myBox .boxLeft .ant-input-group input {
+  border-color: #FAFAFA
+}
+
+.myBoxTitle {
+  height: 32px;
+  line-height: 32px;
+  padding: 0 24px;
+  border-bottom: 1px solid #FAFAFA
+}
+
+.myBoxTitle .typeName {
+  color: #52A3FF
+}
+
+.customForm nz-date-picker,
+.customForm nz-date-picker .ant-calendar-picker,
+.customForm nz-input-number {
+  width: 100%;
+}
 
 //自定义表单左侧的样式
-#left .boxButton{padding: 0}
-#left .boxButton>span{display: -webkit-box}
-#left .boxButton>span .iconfont{padding: 0 10px 0 8px}
+#left .boxButton {
+  padding: 0
+}
+
+#left .boxButton>span {
+  display: -webkit-box
+}
+
+#left .boxButton>span .iconfont {
+  padding: 0 10px 0 8px
+}
 
 
 //自定义表单中间的样式
-.zdyForm se .se__control{width: 100%;overflow: auto}
-.customForm se .se__control .edui-editor,.customForm se .se__control .edui-editor .edui-editor-iframeholder,.zdyForm se .se__control .edui-editor,.zdyForm se .se__control .edui-editor .edui-editor-iframeholder{width: 100%!important;overflow: auto}
+.zdyForm se .se__control {
+  width: 100%;
+  overflow: auto
+}
 
-.choiceSelect.ant-select-disabled .ant-select-selection{background: white;cursor: pointer;} 
+.customForm se .se__control .edui-editor,
+.customForm se .se__control .edui-editor .edui-editor-iframeholder,
+.zdyForm se .se__control .edui-editor,
+.zdyForm se .se__control .edui-editor .edui-editor-iframeholder {
+  width: 100% !important;
+  overflow: auto
+}
+
+.choiceSelect.ant-select-disabled .ant-select-selection {
+  background: white;
+  cursor: pointer;
+}
 
 
 /* 隐藏我发起的流程和已办流程->查看路径 流程的 */
-#js-newCanvas{position: relative;}
-#js-newCanvas .bjs-container{position: absolute!important;top: 0;left: 0;}
-#js-newCanvas .djs-palette.two-column.open,#js-newCanvas .bjs-powered-by,#js-newCanvas .open{display: none}
-.examineDiv{background: rgb(198, 237, 254);padding: 10px;border-radius: 10px;margin-bottom: 8px;}
+#js-newCanvas {
+  position: relative;
+}
+
+#js-newCanvas .bjs-container {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+}
+
+#js-newCanvas .djs-palette.two-column.open,
+#js-newCanvas .bjs-powered-by,
+#js-newCanvas .open {
+  display: none
+}
+
+.examineDiv {
+  background: rgb(198, 237, 254);
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
 
 
 
 //全局页面的样式
-.ant-layout.ant-pro-content{background: #F4F9FF;}
-.ant-table-thead > tr > th{background: #F1F1F1;}
-.reuse-tab .ant-tabs-nav .ant-tabs-tab .name{background: #F4F4F4;border-radius: 5px;color: #AAAAAA}
-.ant-tabs-nav .ant-tabs-tab-active,.reuse-tab .ant-tabs-nav .ant-tabs-tab.ant-tabs-tab-active .name{color: white;background: #1890FF;border-radius: 5px}
-nz-tabset .ant-tabs-ink-bar{display: none!important}
-nz-tabset .ant-tabs-nav-container,nz-tabset .ant-tabs-nav-wrap{margin-bottom:0} 
-.reuse-tab .ant-tabs-nav .ant-tabs-tab.ant-tabs-tab-active .reuse-tab__op{color: white;}
-.stButton{padding: 6px 9px;color: #fff;background-color: #1890ff;border-color: #1890ff;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);box-shadow: 0 2px 0 rgba(0, 0, 0, 0.035);border-radius: 4px;}
-.ant-table-tbody > tr > td .ant-divider, .ant-divider-vertical{width: 0}
-.addPersonContent.myBox{min-height: 690px;margin-top: 0;}
-.addPersonContent.myBox .boxRight{margin-right: 20px;}
-.addPersonContent.myBox .boxLeft{margin-right:0}
+.ant-layout.ant-pro-content {
+  background: #F4F9FF;
+}
+
+.ant-table-thead>tr>th {
+  background: #F1F1F1;
+}
+
+.reuse-tab .ant-tabs-nav .ant-tabs-tab .name {
+  background: #F4F4F4;
+  border-radius: 5px;
+  color: #AAAAAA
+}
+
+.ant-tabs-nav .ant-tabs-tab-active,
+.reuse-tab .ant-tabs-nav .ant-tabs-tab.ant-tabs-tab-active .name {
+  color: white;
+  background: #1890FF;
+  border-radius: 5px
+}
+
+nz-tabset .ant-tabs-ink-bar {
+  display: none !important
+}
+
+nz-tabset .ant-tabs-nav-container,
+nz-tabset .ant-tabs-nav-wrap {
+  margin-bottom: 0
+}
+
+.reuse-tab .ant-tabs-nav .ant-tabs-tab.ant-tabs-tab-active .reuse-tab__op {
+  color: white;
+}
+
+.stButton {
+  padding: 6px 9px;
+  color: #fff;
+  background-color: #1890ff;
+  border-color: #1890ff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.035);
+  border-radius: 4px;
+}
+
+.ant-table-tbody>tr>td .ant-divider,
+.ant-divider-vertical {
+  width: 0
+}
+
+.addPersonContent.myBox {
+  min-height: 690px;
+  margin-top: 0;
+}
+
+.addPersonContent.myBox .boxRight {
+  margin-right: 20px;
+}
+
+.addPersonContent.myBox .boxLeft {
+  margin-right: 0
+}
+
 //全局左侧导航的列表 
-yoyo-sidebar-nav .sidebar-nav>li.ant-menu-submenu-selected .ant-menu-submenu-title .iconfont{color: #1890FF} 
-.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected a{color: #1890FF}
-.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{background: none;}
-.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected:after{height: 1.5em;top: 50%;margin-top: -.75em;}
- 
-.fixedTable table{table-layout: fixed}
-.customForm se.ant-form-item{margin-bottom: 0}
-.limit1 {overflow: hidden;text-overflow: ellipsis;display: block;-webkit-line-clamp: 1;-webkit-box-orient: vertical;white-space: nowrap;}
-.minQuadrilateral{width: 30px;height: 30px;background-color: #C6EDFE;border:2px solid #000;border-radius: 6px}
-.minNoQuadrilateral:extend(.minQuadrilateral){background: #FF85FF}
+yoyo-sidebar-nav .sidebar-nav>li.ant-menu-submenu-selected .ant-menu-submenu-title .iconfont {
+  color: #1890FF
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected a {
+  color: #1890FF
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background: none;
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected:after {
+  height: 1.5em;
+  top: 50%;
+  margin-top: -.75em;
+}
+
+.fixedTable table {
+  table-layout: fixed
+}
+
+.customForm se.ant-form-item {
+  margin-bottom: 0
+}
+
+.limit1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  white-space: nowrap;
+}
+
+.minQuadrilateral {
+  width: 30px;
+  height: 30px;
+  background-color: #C6EDFE;
+  border: 2px solid #000;
+  border-radius: 6px
+}
+
+.minNoQuadrilateral:extend(.minQuadrilateral) {
+  background: #FF85FF
+}
 
 //去除引用UEdito的本地保存成功的提示
-.edui-default .edui-editor-messageholder{display:none!important}
+.edui-default .edui-editor-messageholder {
+  display: none !important
+}

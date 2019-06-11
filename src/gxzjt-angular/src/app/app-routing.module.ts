@@ -3,20 +3,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { LayoutDefaultComponent } from '../layout/default/layout-default.component';
 import { LayoutFullScreenComponent } from '@layout/fullscreen/fullscreen.component';
-// passport pages
-import { UserLoginComponent } from './passport/login/login.component';
-import { UserRegisterComponent } from './passport/register/register.component';
-import { UserRegisterResultComponent } from './passport/register-result/register-result.component';
+
 
 const routes: Routes = [
-  {
-    path: '',
-    component: LayoutFullScreenComponent,
-    data: { title: '首页' },
-    children: [
-      { path: '', loadChildren: './home/home.module#HomeModule' }
-    ],
-  },
+  // {
+  //   path: '',
+  //   component: LayoutFullScreenComponent,
+  //   data: { title: '首页' },
+  //   children: [
+  //     { path: '', loadChildren: './home/home.module#HomeModule' }
+  //   ],
+  // },
   {
     path: '',
     component: LayoutDefaultComponent,
@@ -27,14 +24,14 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'statistics',
+    path: '',
     component: LayoutDefaultComponent,
-    canActivate: [AppRouteGuard],
+    data: { title: '统计', preload: true },
+    // canActivate: [AppRouteGuard],
     children: [
-      { path: '', loadChildren: './routes/statistics/statistics.module#StatisticsModule', canActivate: [AppRouteGuard], },
+      { path: 'statistics', loadChildren: './routes/statistics/statistics.module#StatisticsModule', },
     ],
 
-    data: { preload: true },
   }
 ];
 

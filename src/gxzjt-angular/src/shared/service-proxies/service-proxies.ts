@@ -17,6 +17,70 @@ import * as moment from 'moment';
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 @Injectable()
+export class AcceptServiceServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param acceptApplyFormDto (optional) 
+     * @return Success
+     */
+    acceptApply(acceptApplyFormDto: AcceptApplyFormDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/AcceptService/AcceptApply";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(acceptApplyFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAcceptApply(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAcceptApply(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAcceptApply(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
 export class AccountServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -141,6 +205,183 @@ export class AccountServiceProxy {
 }
 
 @Injectable()
+export class ApplyServiceServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param flowType (optional) 
+     * @param projectId (optional) 
+     * @return Success
+     */
+    getFlowFormData(flowType: number | null | undefined, projectId: number | null | undefined): Observable<FlowFormDto> {
+        let url_ = this.baseUrl + "/api/services/app/ApplyService/GetFlowFormData?";
+        if (flowType !== undefined)
+            url_ += "FlowType=" + encodeURIComponent("" + flowType) + "&"; 
+        if (projectId !== undefined)
+            url_ += "ProjectId=" + encodeURIComponent("" + projectId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetFlowFormData(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetFlowFormData(<any>response_);
+                } catch (e) {
+                    return <Observable<FlowFormDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FlowFormDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetFlowFormData(response: HttpResponseBase): Observable<FlowFormDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? FlowFormDto.fromJS(resultData200) : new FlowFormDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FlowFormDto>(<any>null);
+    }
+
+    /**
+     * @param flowFormDto (optional) 
+     * @return Success
+     */
+    temporarySava(flowFormDto: FlowFormDto | null | undefined): Observable<number> {
+        let url_ = this.baseUrl + "/api/services/app/ApplyService/TemporarySava";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(flowFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processTemporarySava(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processTemporarySava(<any>response_);
+                } catch (e) {
+                    return <Observable<number>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<number>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processTemporarySava(response: HttpResponseBase): Observable<number> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<number>(<any>null);
+    }
+
+    /**
+     * @param flowDataDto (optional) 
+     * @return Success
+     */
+    applyFlow(flowDataDto: FlowDataDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ApplyService/ApplyFlow";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(flowDataDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApplyFlow(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApplyFlow(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApplyFlow(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
 export class ConfigurationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -185,6 +426,70 @@ export class ConfigurationServiceProxy {
     }
 
     protected processChangeUiTheme(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
+export class ExamineServiceServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param examineFormDto (optional) 
+     * @return Success
+     */
+    examine(examineFormDto: ExamineFormDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ExamineService/Examine";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(examineFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processExamine(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processExamine(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processExamine(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -2728,6 +3033,291 @@ export class UserServiceProxy {
     }
 }
 
+export class AcceptApplyFormDto implements IAcceptApplyFormDto {
+    acceptOrderInfo: AcceptOrder | undefined;
+    attachements: ProjectAttachment[] | undefined;
+    isAccept: boolean | undefined;
+
+    constructor(data?: IAcceptApplyFormDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.acceptOrderInfo = data["acceptOrderInfo"] ? AcceptOrder.fromJS(data["acceptOrderInfo"]) : <any>undefined;
+            if (data["attachements"] && data["attachements"].constructor === Array) {
+                this.attachements = [];
+                for (let item of data["attachements"])
+                    this.attachements.push(ProjectAttachment.fromJS(item));
+            }
+            this.isAccept = data["isAccept"];
+        }
+    }
+
+    static fromJS(data: any): AcceptApplyFormDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AcceptApplyFormDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["acceptOrderInfo"] = this.acceptOrderInfo ? this.acceptOrderInfo.toJSON() : <any>undefined;
+        if (this.attachements && this.attachements.constructor === Array) {
+            data["attachements"] = [];
+            for (let item of this.attachements)
+                data["attachements"].push(item.toJSON());
+        }
+        data["isAccept"] = this.isAccept;
+        return data; 
+    }
+
+    clone(): AcceptApplyFormDto {
+        const json = this.toJSON();
+        let result = new AcceptApplyFormDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAcceptApplyFormDto {
+    acceptOrderInfo: AcceptOrder | undefined;
+    attachements: ProjectAttachment[] | undefined;
+    isAccept: boolean | undefined;
+}
+
+export class AcceptOrder implements IAcceptOrder {
+    acceptVoucher: string | undefined;
+    flowId: number | undefined;
+    acceptUserCode: string | undefined;
+    acceptName: string | undefined;
+    acceptTime: moment.Moment | undefined;
+    timeout: number | undefined;
+    state: number | undefined;
+    acceptOrgName: string | undefined;
+    acceptOrgCode: string | undefined;
+    acceptAttachmentId: number | undefined;
+    opinionAttachmentId: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IAcceptOrder) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.acceptVoucher = data["acceptVoucher"];
+            this.flowId = data["flowId"];
+            this.acceptUserCode = data["acceptUserCode"];
+            this.acceptName = data["acceptName"];
+            this.acceptTime = data["acceptTime"] ? moment(data["acceptTime"].toString()) : <any>undefined;
+            this.timeout = data["timeout"];
+            this.state = data["state"];
+            this.acceptOrgName = data["acceptOrgName"];
+            this.acceptOrgCode = data["acceptOrgCode"];
+            this.acceptAttachmentId = data["acceptAttachmentId"];
+            this.opinionAttachmentId = data["opinionAttachmentId"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): AcceptOrder {
+        data = typeof data === 'object' ? data : {};
+        let result = new AcceptOrder();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["acceptVoucher"] = this.acceptVoucher;
+        data["flowId"] = this.flowId;
+        data["acceptUserCode"] = this.acceptUserCode;
+        data["acceptName"] = this.acceptName;
+        data["acceptTime"] = this.acceptTime ? this.acceptTime.toISOString() : <any>undefined;
+        data["timeout"] = this.timeout;
+        data["state"] = this.state;
+        data["acceptOrgName"] = this.acceptOrgName;
+        data["acceptOrgCode"] = this.acceptOrgCode;
+        data["acceptAttachmentId"] = this.acceptAttachmentId;
+        data["opinionAttachmentId"] = this.opinionAttachmentId;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): AcceptOrder {
+        const json = this.toJSON();
+        let result = new AcceptOrder();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAcceptOrder {
+    acceptVoucher: string | undefined;
+    flowId: number | undefined;
+    acceptUserCode: string | undefined;
+    acceptName: string | undefined;
+    acceptTime: moment.Moment | undefined;
+    timeout: number | undefined;
+    state: number | undefined;
+    acceptOrgName: string | undefined;
+    acceptOrgCode: string | undefined;
+    acceptAttachmentId: number | undefined;
+    opinionAttachmentId: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class ProjectAttachment implements IProjectAttachment {
+    projectId: number | undefined;
+    attachmentName: string | undefined;
+    attachmentType: string | undefined;
+    fileUrl: string | undefined;
+    note: string | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+    fileCount: number | undefined;
+    isPass: boolean | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IProjectAttachment) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.projectId = data["projectId"];
+            this.attachmentName = data["attachmentName"];
+            this.attachmentType = data["attachmentType"];
+            this.fileUrl = data["fileUrl"];
+            this.note = data["note"];
+            this.lastUpdateTime = data["lastUpdateTime"] ? moment(data["lastUpdateTime"].toString()) : <any>undefined;
+            this.lastUpdateUserCode = data["lastUpdateUserCode"];
+            this.lastUpdateUserName = data["lastUpdateUserName"];
+            this.fileCount = data["fileCount"];
+            this.isPass = data["isPass"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): ProjectAttachment {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectAttachment();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["projectId"] = this.projectId;
+        data["attachmentName"] = this.attachmentName;
+        data["attachmentType"] = this.attachmentType;
+        data["fileUrl"] = this.fileUrl;
+        data["note"] = this.note;
+        data["lastUpdateTime"] = this.lastUpdateTime ? this.lastUpdateTime.toISOString() : <any>undefined;
+        data["lastUpdateUserCode"] = this.lastUpdateUserCode;
+        data["lastUpdateUserName"] = this.lastUpdateUserName;
+        data["fileCount"] = this.fileCount;
+        data["isPass"] = this.isPass;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): ProjectAttachment {
+        const json = this.toJSON();
+        let result = new ProjectAttachment();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectAttachment {
+    projectId: number | undefined;
+    attachmentName: string | undefined;
+    attachmentType: string | undefined;
+    fileUrl: string | undefined;
+    note: string | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+    fileCount: number | undefined;
+    isPass: boolean | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
 export class IsTenantAvailableInput implements IIsTenantAvailableInput {
     tenancyName: string;
 
@@ -2924,6 +3514,560 @@ export interface IRegisterOutput {
     canLogin: boolean | undefined;
 }
 
+export class FlowFormDto implements IFlowFormDto {
+    projectInfo: ArchitectureProject | undefined;
+    projectExpandInfo: ProjectExpand | undefined;
+
+    constructor(data?: IFlowFormDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.projectInfo = data["projectInfo"] ? ArchitectureProject.fromJS(data["projectInfo"]) : <any>undefined;
+            this.projectExpandInfo = data["projectExpandInfo"] ? ProjectExpand.fromJS(data["projectExpandInfo"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): FlowFormDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new FlowFormDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["projectInfo"] = this.projectInfo ? this.projectInfo.toJSON() : <any>undefined;
+        data["projectExpandInfo"] = this.projectExpandInfo ? this.projectExpandInfo.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): FlowFormDto {
+        const json = this.toJSON();
+        let result = new FlowFormDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFlowFormDto {
+    projectInfo: ArchitectureProject | undefined;
+    projectExpandInfo: ProjectExpand | undefined;
+}
+
+export class ArchitectureProject implements IArchitectureProject {
+    projectCode: string | undefined;
+    projectName: string | undefined;
+    planStartTime: moment.Moment | undefined;
+    planEndTime: moment.Moment | undefined;
+    projectCategoryId: number | undefined;
+    area: string | undefined;
+    address: string | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+    investigateStatus: number | undefined;
+    acceptanceStatus: number | undefined;
+    putOnRecordStatus: number | undefined;
+    status: number | undefined;
+    relevanceProjectId: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IArchitectureProject) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.projectCode = data["projectCode"];
+            this.projectName = data["projectName"];
+            this.planStartTime = data["planStartTime"] ? moment(data["planStartTime"].toString()) : <any>undefined;
+            this.planEndTime = data["planEndTime"] ? moment(data["planEndTime"].toString()) : <any>undefined;
+            this.projectCategoryId = data["projectCategoryId"];
+            this.area = data["area"];
+            this.address = data["address"];
+            this.lastUpdateTime = data["lastUpdateTime"] ? moment(data["lastUpdateTime"].toString()) : <any>undefined;
+            this.lastUpdateUserCode = data["lastUpdateUserCode"];
+            this.lastUpdateUserName = data["lastUpdateUserName"];
+            this.investigateStatus = data["investigateStatus"];
+            this.acceptanceStatus = data["acceptanceStatus"];
+            this.putOnRecordStatus = data["putOnRecordStatus"];
+            this.status = data["status"];
+            this.relevanceProjectId = data["relevanceProjectId"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): ArchitectureProject {
+        data = typeof data === 'object' ? data : {};
+        let result = new ArchitectureProject();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["projectCode"] = this.projectCode;
+        data["projectName"] = this.projectName;
+        data["planStartTime"] = this.planStartTime ? this.planStartTime.toISOString() : <any>undefined;
+        data["planEndTime"] = this.planEndTime ? this.planEndTime.toISOString() : <any>undefined;
+        data["projectCategoryId"] = this.projectCategoryId;
+        data["area"] = this.area;
+        data["address"] = this.address;
+        data["lastUpdateTime"] = this.lastUpdateTime ? this.lastUpdateTime.toISOString() : <any>undefined;
+        data["lastUpdateUserCode"] = this.lastUpdateUserCode;
+        data["lastUpdateUserName"] = this.lastUpdateUserName;
+        data["investigateStatus"] = this.investigateStatus;
+        data["acceptanceStatus"] = this.acceptanceStatus;
+        data["putOnRecordStatus"] = this.putOnRecordStatus;
+        data["status"] = this.status;
+        data["relevanceProjectId"] = this.relevanceProjectId;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): ArchitectureProject {
+        const json = this.toJSON();
+        let result = new ArchitectureProject();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IArchitectureProject {
+    projectCode: string | undefined;
+    projectName: string | undefined;
+    planStartTime: moment.Moment | undefined;
+    planEndTime: moment.Moment | undefined;
+    projectCategoryId: number | undefined;
+    area: string | undefined;
+    address: string | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+    investigateStatus: number | undefined;
+    acceptanceStatus: number | undefined;
+    putOnRecordStatus: number | undefined;
+    status: number | undefined;
+    relevanceProjectId: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class ProjectExpand implements IProjectExpand {
+    applyingForms: string | undefined;
+    drawingNumber: string | undefined;
+    buildingPermit: string | undefined;
+    constructionPermit: string | undefined;
+    specialNatureType: number | undefined;
+    nature: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IProjectExpand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.applyingForms = data["applyingForms"];
+            this.drawingNumber = data["drawingNumber"];
+            this.buildingPermit = data["buildingPermit"];
+            this.constructionPermit = data["constructionPermit"];
+            this.specialNatureType = data["specialNatureType"];
+            this.nature = data["nature"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): ProjectExpand {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectExpand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["applyingForms"] = this.applyingForms;
+        data["drawingNumber"] = this.drawingNumber;
+        data["buildingPermit"] = this.buildingPermit;
+        data["constructionPermit"] = this.constructionPermit;
+        data["specialNatureType"] = this.specialNatureType;
+        data["nature"] = this.nature;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): ProjectExpand {
+        const json = this.toJSON();
+        let result = new ProjectExpand();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectExpand {
+    applyingForms: string | undefined;
+    drawingNumber: string | undefined;
+    buildingPermit: string | undefined;
+    constructionPermit: string | undefined;
+    specialNatureType: number | undefined;
+    nature: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class FlowDataDto implements IFlowDataDto {
+    flowType: number | undefined;
+    projectCompanys: ProjectCompany[] | undefined;
+    projectInfo: ArchitectureProject | undefined;
+    projectExpandInfo: ProjectExpand | undefined;
+    flowData: ProjectFlow | undefined;
+    fireFacilities: number[] | undefined;
+
+    constructor(data?: IFlowDataDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.flowType = data["flowType"];
+            if (data["projectCompanys"] && data["projectCompanys"].constructor === Array) {
+                this.projectCompanys = [];
+                for (let item of data["projectCompanys"])
+                    this.projectCompanys.push(ProjectCompany.fromJS(item));
+            }
+            this.projectInfo = data["projectInfo"] ? ArchitectureProject.fromJS(data["projectInfo"]) : <any>undefined;
+            this.projectExpandInfo = data["projectExpandInfo"] ? ProjectExpand.fromJS(data["projectExpandInfo"]) : <any>undefined;
+            this.flowData = data["flowData"] ? ProjectFlow.fromJS(data["flowData"]) : <any>undefined;
+            if (data["fireFacilities"] && data["fireFacilities"].constructor === Array) {
+                this.fireFacilities = [];
+                for (let item of data["fireFacilities"])
+                    this.fireFacilities.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): FlowDataDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new FlowDataDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["flowType"] = this.flowType;
+        if (this.projectCompanys && this.projectCompanys.constructor === Array) {
+            data["projectCompanys"] = [];
+            for (let item of this.projectCompanys)
+                data["projectCompanys"].push(item.toJSON());
+        }
+        data["projectInfo"] = this.projectInfo ? this.projectInfo.toJSON() : <any>undefined;
+        data["projectExpandInfo"] = this.projectExpandInfo ? this.projectExpandInfo.toJSON() : <any>undefined;
+        data["flowData"] = this.flowData ? this.flowData.toJSON() : <any>undefined;
+        if (this.fireFacilities && this.fireFacilities.constructor === Array) {
+            data["fireFacilities"] = [];
+            for (let item of this.fireFacilities)
+                data["fireFacilities"].push(item);
+        }
+        return data; 
+    }
+
+    clone(): FlowDataDto {
+        const json = this.toJSON();
+        let result = new FlowDataDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFlowDataDto {
+    flowType: number | undefined;
+    projectCompanys: ProjectCompany[] | undefined;
+    projectInfo: ArchitectureProject | undefined;
+    projectExpandInfo: ProjectExpand | undefined;
+    flowData: ProjectFlow | undefined;
+    fireFacilities: number[] | undefined;
+}
+
+export class ProjectCompany implements IProjectCompany {
+    projectId: number | undefined;
+    orgType: number | undefined;
+    companyName: string | undefined;
+    qualifications: string | undefined;
+    legalRepresentative: string | undefined;
+    legalRepresentativeNo: string | undefined;
+    contactPerson: string | undefined;
+    contactNumber: string | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IProjectCompany) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.projectId = data["projectId"];
+            this.orgType = data["orgType"];
+            this.companyName = data["companyName"];
+            this.qualifications = data["qualifications"];
+            this.legalRepresentative = data["legalRepresentative"];
+            this.legalRepresentativeNo = data["legalRepresentativeNo"];
+            this.contactPerson = data["contactPerson"];
+            this.contactNumber = data["contactNumber"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): ProjectCompany {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectCompany();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["projectId"] = this.projectId;
+        data["orgType"] = this.orgType;
+        data["companyName"] = this.companyName;
+        data["qualifications"] = this.qualifications;
+        data["legalRepresentative"] = this.legalRepresentative;
+        data["legalRepresentativeNo"] = this.legalRepresentativeNo;
+        data["contactPerson"] = this.contactPerson;
+        data["contactNumber"] = this.contactNumber;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): ProjectCompany {
+        const json = this.toJSON();
+        let result = new ProjectCompany();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectCompany {
+    projectId: number | undefined;
+    orgType: number | undefined;
+    companyName: string | undefined;
+    qualifications: string | undefined;
+    legalRepresentative: string | undefined;
+    legalRepresentativeNo: string | undefined;
+    contactPerson: string | undefined;
+    contactNumber: string | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class ProjectFlow implements IProjectFlow {
+    projectId: number | undefined;
+    flowPathType: number | undefined;
+    flowNo: string | undefined;
+    applyTime: moment.Moment | undefined;
+    applyUserCode: string | undefined;
+    applyName: string | undefined;
+    status: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IProjectFlow) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.projectId = data["projectId"];
+            this.flowPathType = data["flowPathType"];
+            this.flowNo = data["flowNo"];
+            this.applyTime = data["applyTime"] ? moment(data["applyTime"].toString()) : <any>undefined;
+            this.applyUserCode = data["applyUserCode"];
+            this.applyName = data["applyName"];
+            this.status = data["status"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): ProjectFlow {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectFlow();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["projectId"] = this.projectId;
+        data["flowPathType"] = this.flowPathType;
+        data["flowNo"] = this.flowNo;
+        data["applyTime"] = this.applyTime ? this.applyTime.toISOString() : <any>undefined;
+        data["applyUserCode"] = this.applyUserCode;
+        data["applyName"] = this.applyName;
+        data["status"] = this.status;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): ProjectFlow {
+        const json = this.toJSON();
+        let result = new ProjectFlow();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectFlow {
+    projectId: number | undefined;
+    flowPathType: number | undefined;
+    flowNo: string | undefined;
+    applyTime: moment.Moment | undefined;
+    applyUserCode: string | undefined;
+    applyName: string | undefined;
+    status: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
 export class ChangeUiThemeInput implements IChangeUiThemeInput {
     theme: string;
 
@@ -2965,6 +4109,164 @@ export class ChangeUiThemeInput implements IChangeUiThemeInput {
 
 export interface IChangeUiThemeInput {
     theme: string;
+}
+
+export class ExamineFormDto implements IExamineFormDto {
+    acceptRecordInfo: AcceptRecord | undefined;
+    attachment: ProjectAttachment[] | undefined;
+    isFinalFlow: boolean | undefined;
+
+    constructor(data?: IExamineFormDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.acceptRecordInfo = data["acceptRecordInfo"] ? AcceptRecord.fromJS(data["acceptRecordInfo"]) : <any>undefined;
+            if (data["attachment"] && data["attachment"].constructor === Array) {
+                this.attachment = [];
+                for (let item of data["attachment"])
+                    this.attachment.push(ProjectAttachment.fromJS(item));
+            }
+            this.isFinalFlow = data["isFinalFlow"];
+        }
+    }
+
+    static fromJS(data: any): ExamineFormDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExamineFormDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["acceptRecordInfo"] = this.acceptRecordInfo ? this.acceptRecordInfo.toJSON() : <any>undefined;
+        if (this.attachment && this.attachment.constructor === Array) {
+            data["attachment"] = [];
+            for (let item of this.attachment)
+                data["attachment"].push(item.toJSON());
+        }
+        data["isFinalFlow"] = this.isFinalFlow;
+        return data; 
+    }
+
+    clone(): ExamineFormDto {
+        const json = this.toJSON();
+        let result = new ExamineFormDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IExamineFormDto {
+    acceptRecordInfo: AcceptRecord | undefined;
+    attachment: ProjectAttachment[] | undefined;
+    isFinalFlow: boolean | undefined;
+}
+
+export class AcceptRecord implements IAcceptRecord {
+    acceptOrderId: number | undefined;
+    opinion: string | undefined;
+    isPass: boolean | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+    isDisplay: boolean | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IAcceptRecord) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.acceptOrderId = data["acceptOrderId"];
+            this.opinion = data["opinion"];
+            this.isPass = data["isPass"];
+            this.lastUpdateTime = data["lastUpdateTime"] ? moment(data["lastUpdateTime"].toString()) : <any>undefined;
+            this.lastUpdateUserCode = data["lastUpdateUserCode"];
+            this.lastUpdateUserName = data["lastUpdateUserName"];
+            this.isDisplay = data["isDisplay"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): AcceptRecord {
+        data = typeof data === 'object' ? data : {};
+        let result = new AcceptRecord();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["acceptOrderId"] = this.acceptOrderId;
+        data["opinion"] = this.opinion;
+        data["isPass"] = this.isPass;
+        data["lastUpdateTime"] = this.lastUpdateTime ? this.lastUpdateTime.toISOString() : <any>undefined;
+        data["lastUpdateUserCode"] = this.lastUpdateUserCode;
+        data["lastUpdateUserName"] = this.lastUpdateUserName;
+        data["isDisplay"] = this.isDisplay;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): AcceptRecord {
+        const json = this.toJSON();
+        let result = new AcceptRecord();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAcceptRecord {
+    acceptOrderId: number | undefined;
+    opinion: string | undefined;
+    isPass: boolean | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+    isDisplay: boolean | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
 }
 
 export class DataSourceRequest implements IDataSourceRequest {

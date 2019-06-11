@@ -46,6 +46,7 @@ export class AccountComponent extends AppComponentBase {
   }
 
   showTenantChange(): boolean {
-    return abp.multiTenancy.isEnabled;
+    // return abp.multiTenancy.isEnabled;
+    return false;
   }
 }
