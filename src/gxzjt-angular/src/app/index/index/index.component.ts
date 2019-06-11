@@ -93,4 +93,12 @@ export class IndexComponent implements OnInit {
   ngOnInit(): void { }
 
   close() { }
+
+
+  /**
+   * 跳转进表单列表页
+   */
+  goFromList() {
+
+  }
 }

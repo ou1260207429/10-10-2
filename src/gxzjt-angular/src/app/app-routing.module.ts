@@ -32,7 +32,7 @@ const routes: Routes = [
       { path: 'statistics', loadChildren: './routes/statistics/statistics.module#StatisticsModule', },
       { path: 'home', loadChildren: './pages/home/home.module#HomeModule' },
       { path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule' },
-      { path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule' },
+      { path: 'engineering-management', loadChildren: './pages/engineering-management/engineering-management.module#EngineeringManagementModule' },
       { path: 'content-manage', loadChildren: './pages/content-manage/content-manage.module#ContentManageModule' },
 
     ],
