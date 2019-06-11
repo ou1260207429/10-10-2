@@ -3,16 +3,13 @@
     <div nz-row class="more">
         <div class="mb-md">
 
-            <form nz-form #f="ngForm" se-container nzLayout="inline">
-                <se label="标题名称">
-                  <input type="text"  nz-input [(ngModel)]="params.search" name="search">
+            <form nz-form #f="ngForm" se-container="1" [nzLayout]="'inline'">
+                <se label="标题名称" required>
+                  <input style="width: 50%;" type="text"  nz-input[(ngModel)]="params.search" name="search" required>
                 </se>
-                <se label="发布时间">
-                    <input type="text"  nz-input [(ngModel)]="params.search" name="search">
-                  </se>
 
 
-<!-- 
+
 
               
                 <nz-form-item>
@@ -25,9 +22,7 @@
                       <nz-form-control [nzSpan]="8" [nzOffset]="4">
                         <button nz-button nzType="primary" (click)="init()">查询</button>
                       </nz-form-control>
-                    </nz-form-item> -->
-                    <button nz-button nzType="primary" (click)="init()">查询</button>
-
+                    </nz-form-item>
               </form>
            
               

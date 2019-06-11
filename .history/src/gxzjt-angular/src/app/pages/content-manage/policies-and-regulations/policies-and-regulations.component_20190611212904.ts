@@ -83,13 +83,15 @@ export class PoliciesAndRegulationsComponent implements OnInit {
 
 
   pageConfig: STPage = publicPageConfig;
-  validateForm: any;
-  constructor(private _regulationServiceProxy: RegulationServiceProxy, private router: Router, private _policiesAndRegulationsServices: PoliciesAndRegulationsServices, private eventEmiter: EventEmiter) {
+  constructor(private _regulationServiceProxy: RegulationServiceProxy, private fb: FormBuilder, private router: Router, private _policiesAndRegulationsServices: PoliciesAndRegulationsServices, private eventEmiter: EventEmiter) {
   }
 
   ngOnInit() {
     let _self = this;
-
+    this.validateForm = this.fb.group({
+      title: [null],
+      allDate: [[]]
+    });
     this.init();
 
     // this.eventEmiter.on('init', () => {

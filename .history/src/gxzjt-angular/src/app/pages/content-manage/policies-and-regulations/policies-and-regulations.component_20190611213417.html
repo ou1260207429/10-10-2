@@ -3,13 +3,10 @@
     <div nz-row class="more">
         <div class="mb-md">
 
-            <form nz-form #f="ngForm" se-container nzLayout="inline">
+            <form nz-form #f="ngForm" se-container="1" [nzLayout]="'inline'">
                 <se label="标题名称">
-                  <input type="text"  nz-input [(ngModel)]="params.search" name="search">
+                  <input style="width: 50%;" type="text"  nz-input [(ngModel)]="params.search" name="search">
                 </se>
-                <se label="发布时间">
-                    <input type="text"  nz-input [(ngModel)]="params.search" name="search">
-                  </se>
 
 
 <!-- 

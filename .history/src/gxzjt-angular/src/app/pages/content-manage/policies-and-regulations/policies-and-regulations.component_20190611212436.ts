@@ -3,6 +3,7 @@ import { STColumn, STPage, STComponent } from '@delon/abc';
 import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 import { Router } from '@angular/router';
 import { EventEmiter } from 'infrastructure/eventEmiter';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { PoliciesAndRegulationsServices } from './../../../../services/policies-and-regulations.services';
 import { RegulationServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -12,6 +13,7 @@ import { RegulationServiceProxy } from '@shared/service-proxies/service-proxies'
   styles: []
 })
 export class PoliciesAndRegulationsComponent implements OnInit {
+  validateForm: FormGroup;
   @ViewChild('treeCom') treeCom;
   @ViewChild('st') st: STComponent;
   flowAddType: any = {
@@ -32,9 +34,9 @@ export class PoliciesAndRegulationsComponent implements OnInit {
     isAsc: false,
     orderby: "",
     totalCount: 20,
-    search: 11,
-    startTime: null,
-    endTime: null,
+    search: null,
+   startTime: null,
+   endTime: null,
   };
   data
   columns: STColumn[] = [
@@ -83,13 +85,15 @@ export class PoliciesAndRegulationsComponent implements OnInit {
 
 
   pageConfig: STPage = publicPageConfig;
-  validateForm: any;
-  constructor(private _regulationServiceProxy: RegulationServiceProxy, private router: Router, private _policiesAndRegulationsServices: PoliciesAndRegulationsServices, private eventEmiter: EventEmiter) {
+  constructor(private _regulationServiceProxy: RegulationServiceProxy, private fb: FormBuilder, private router: Router, private _policiesAndRegulationsServices: PoliciesAndRegulationsServices, private eventEmiter: EventEmiter) {
   }
 
   ngOnInit() {
     let _self = this;
-
+    this.validateForm = this.fb.group({
+      title: [null],
+      allDate: [[]]
+    });
     this.init();
 
     // this.eventEmiter.on('init', () => {
@@ -105,9 +109,9 @@ export class PoliciesAndRegulationsComponent implements OnInit {
    * 初始化
    */
   init() {
-
+   
     // let params = this.validateForm.value
-    this.workFlow_NodeAuditorRecords(this.params);
+    this.workFlow_NodeAuditorRecords( this.params);
 
   }
 
@@ -132,8 +136,8 @@ export class PoliciesAndRegulationsComponent implements OnInit {
     // const page = {
     //   pageSize:
     // }
-    this._regulationServiceProxy.regulationListAsync(params).subscribe(data => {
-      this.data = data;
+    this._regulationServiceProxy.regulationListAsync(params).subscribe(data=>{
+      this.data = data.result;
       console.log(data)
     })
     // this._regulationService.getRegulationListAsync()

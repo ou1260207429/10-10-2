@@ -33,8 +33,8 @@ export class PoliciesAndRegulationsComponent implements OnInit {
     orderby: "",
     totalCount: 20,
     search: 11,
-    startTime: null,
-    endTime: null,
+   startTime: null,
+   endTime: null,
   };
   data
   columns: STColumn[] = [
@@ -84,12 +84,12 @@ export class PoliciesAndRegulationsComponent implements OnInit {
 
   pageConfig: STPage = publicPageConfig;
   validateForm: any;
-  constructor(private _regulationServiceProxy: RegulationServiceProxy, private router: Router, private _policiesAndRegulationsServices: PoliciesAndRegulationsServices, private eventEmiter: EventEmiter) {
+  constructor(private _regulationServiceProxy: RegulationServiceProxy, private fb: FormBuilder, private router: Router, private _policiesAndRegulationsServices: PoliciesAndRegulationsServices, private eventEmiter: EventEmiter) {
   }
 
   ngOnInit() {
     let _self = this;
-
+   
     this.init();
 
     // this.eventEmiter.on('init', () => {
@@ -105,9 +105,9 @@ export class PoliciesAndRegulationsComponent implements OnInit {
    * 初始化
    */
   init() {
-
+   
     // let params = this.validateForm.value
-    this.workFlow_NodeAuditorRecords(this.params);
+    this.workFlow_NodeAuditorRecords( this.params);
 
   }
 
@@ -132,7 +132,7 @@ export class PoliciesAndRegulationsComponent implements OnInit {
     // const page = {
     //   pageSize:
     // }
-    this._regulationServiceProxy.regulationListAsync(params).subscribe(data => {
+    this._regulationServiceProxy.regulationListAsync(params).subscribe(data=>{
       this.data = data;
       console.log(data)
     })
