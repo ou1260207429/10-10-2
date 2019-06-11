@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import * as BpmnModeler from "bpmn-js/dist/bpmn-modeler.production.min.js";
+//import * as BpmnModeler from "bpmn-js/dist/bpmn-modeler.production.min.js";
 import { _HttpClient } from '@delon/theme';
 import { FlowServices } from 'services/flow.services';
 

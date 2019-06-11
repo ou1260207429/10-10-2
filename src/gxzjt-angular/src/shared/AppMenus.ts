@@ -49,6 +49,28 @@ export class AppMenus {
         },
         {
             text: "",
+            i18n: "内容管理",
+            icon: { type: "icon", value: "home" },// 图标
+            children: [
+                {
+                    text: "",
+                    i18n: "政策法规",
+                    link: "/app/content-manage/policiesAndRegulationsComponent",
+                },
+                {
+                    text: "",
+                    i18n: "办事指南",
+                    link: "/app/content-manage/handlingGuideComponent",
+                },
+                {
+                    text: "",
+                    i18n: "表格下载",
+                    link: "/app/content-manage/formDownloadComponent",
+                },
+            ]
+        },
+        {
+            text: "",
             i18n: "工程管理",
             icon: { type: "icon", value: "home" },// 图标
             children: [

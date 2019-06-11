@@ -1,27 +1,124 @@
-.flexCloumn{display: flex;flex-direction: column;height: 100%;overflow: hidden;}
-.flexCloumnAbsolute:extend(.flexCloumn){position: absolute;top: 0;left: 0;width: 100%;}
-.flexCloumn120:extend(.flexCloumn){height: calc(100vh - 120px);}
-.flexMain{-webkit-box-flex:1;height: 100%;overflow-y: auto;overflow-x: hidden}
-.flexBox{display: -webkit-box;}   
-.flex1{-webkit-box-flex: 1;display: block;width: 100%}  
-.flexContent{-webkit-box-pack: center;-webkit-box-align: center;display: -webkit-box;}
-.flexLeftContent{-webkit-box-pack: initial;-webkit-box-align: center;display: -webkit-box;}
-.flexRightContent{-webkit-box-pack: end;-webkit-box-align: center;display: -webkit-box;}
-.textCenter{text-align: center};
-.textLeft{text-align: left}
-.textRight{text-align: right};
-.relative{position: relative;}
-.limit1 {overflow: hidden;text-overflow: ellipsis;display: block;-webkit-line-clamp: 1;-webkit-box-orient: vertical;white-space: nowrap;}
+.flexCloumn {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.flexCloumnAbsolute:extend(.flexCloumn) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.flexCloumn120:extend(.flexCloumn) {
+  height: calc(100vh - 120px);
+}
+
+.flexMain {
+  -webkit-box-flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden
+}
+
+.flexBox {
+  display: -webkit-box;
+}
+
+.flex1 {
+  -webkit-box-flex: 1;
+  display: block;
+  width: 100%
+}
+
+.flexContent {
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  display: -webkit-box;
+}
+
+.flexLeftContent {
+  -webkit-box-pack: initial;
+  -webkit-box-align: center;
+  display: -webkit-box;
+}
+
+.flexRightContent {
+  -webkit-box-pack: end;
+  -webkit-box-align: center;
+  display: -webkit-box;
+}
+
+.textCenter {
+  text-align: center
+}
+
+;
+
+.textLeft {
+  text-align: left
+}
+
+.textRight {
+  text-align: right
+}
+
+;
+
+.relative {
+  position: relative;
+}
+
+.limit1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  white-space: nowrap;
+}
 
 //  不允许点击
-.pointer{pointer-events:none;}
-.pointerf5f5f5{pointer-events:none;background: #f5f5f5}
-.pointerf5f5f5>div.ant-select-selection,.pointerf5f5f5 span.ant-calendar-picker,.pointerf5f5f5 span.ant-calendar-picker input.ant-calendar-picker-input{background: #f5f5f5}
-.disabledInput.ant-input-disabled{background: white;border:1px solid #d9d9d9;color: #333;cursor: pointer;}
-.disabledInput.ant-input-disabled:hover{border:1px solid #d9d9d9;cursor: pointer;}
-.hide{display: none} 
-.w100{width: 100%!important}
-.bgFFF{background: white}
+.pointer {
+  pointer-events: none;
+}
+
+.pointerf5f5f5 {
+  pointer-events: none;
+  background: #f5f5f5
+}
+
+.pointerf5f5f5>div.ant-select-selection,
+.pointerf5f5f5 span.ant-calendar-picker,
+.pointerf5f5f5 span.ant-calendar-picker input.ant-calendar-picker-input {
+  background: #f5f5f5
+}
+
+.disabledInput.ant-input-disabled {
+  background: white;
+  border: 1px solid #d9d9d9;
+  color: #333;
+  cursor: pointer;
+}
+
+.disabledInput.ant-input-disabled:hover {
+  border: 1px solid #d9d9d9;
+  cursor: pointer;
+}
+
+.hide {
+  display: none
+}
+
+.w100 {
+  width: 100% !important
+}
+
+.bgFFF {
+  background: white
+}
 
 
 
@@ -37,18 +134,80 @@ nz-tabset .ant-tabs-nav-container,nz-tabset .ant-tabs-nav-wrap{margin-bottom:0}
 .noSpan .ant-input-group-addon{padding: 0;border:0;border-radius: 0;}
 .noSpan .ant-input-group-addon button{    border-top-left-radius: 0;border-bottom-left-radius: 0; }
 .noLabel .se__label,.afterNone:after{display: none}
+.ant-layout.ant-pro-content {
+  background: #F4F9FF;
+}
+
+.ant-table-thead>tr>th {
+  background: #F1F1F1;
+}
+
+.reuse-tab .ant-tabs-nav .ant-tabs-tab .name {
+  background: #F4F4F4;
+  border-radius: 5px;
+  color: #AAAAAA
+}
+
+.ant-tabs-nav .ant-tabs-tab-active,
+.reuse-tab .ant-tabs-nav .ant-tabs-tab.ant-tabs-tab-active .name {
+  color: white;
+  background: #f5222d;
+  border-radius: 5px
+}
+
+nz-tabset .ant-tabs-ink-bar {
+  display: none !important
+}
+
+nz-tabset .ant-tabs-nav-container,
+nz-tabset .ant-tabs-nav-wrap {
+  margin-bottom: 0
+}
+
+.reuse-tab .ant-tabs-nav .ant-tabs-tab.ant-tabs-tab-active .reuse-tab__op {
+  color: white;
+}
+
+.reuse-tab {
+  margin-bottom: 10px
+}
+
+.noSpan .ant-input-group-addon {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.noSpan .ant-input-group-addon button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
 
 //全局左侧导航的列表 
-yoyo-sidebar-nav .sidebar-nav>li{position: relative}
-yoyo-sidebar-nav .sidebar-nav>li.ant-menu-submenu-selected,yoyo-sidebar-nav .sidebar-nav>li.ant-menu-submenu-selected> .ant-menu{background: #f8f8f8}
-yoyo-sidebar-nav .sidebar-nav>li.ant-menu-submenu-selected::after {content:'';clear: both;background: #f5222d;position: absolute;top: 0;left: 0;width: 2px;height: 100%;}
-yoyo-sidebar-nav .sidebar-nav>li.ant-menu-submenu-selected .ant-menu-submenu-title .iconfont{color: #f5222d} 
-.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected a{color: #f5222d}
-.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{background: none;}  
-.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected:after{display:none!important}
+yoyo-sidebar-nav .sidebar-nav>li {
+  position: relative
+}
 
-//去除引用UEdito的本地保存成功的提示
-.edui-default .edui-editor-messageholder{display:none!important}
+yoyo-sidebar-nav .sidebar-nav>li.ant-menu-submenu-selected,
+yoyo-sidebar-nav .sidebar-nav>li.ant-menu-submenu-selected>.ant-menu {
+  background: #f8f8f8
+}
+
+yoyo-sidebar-nav .sidebar-nav>li.ant-menu-submenu-selected::after {
+  content: '';
+  clear: both;
+  background: #f5222d;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+}
+
+yoyo-sidebar-nav .sidebar-nav>li.ant-menu-submenu-selected .ant-menu-submenu-title .iconfont {
+  color: #f5222d
+}
 
 .tables {nz-date-picker, nz-date-picker .ant-calendar-picker{width: 100%;}}
 
@@ -119,3 +278,19 @@ yoyo-sidebar-nav .sidebar-nav>li.ant-menu-submenu-selected .ant-menu-submenu-tit
    }
   }
 
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected a {
+  color: #f5222d
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background: none;
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected:after {
+  display: none !important
+}
+
+//去除引用UEdito的本地保存成功的提示
+.edui-default .edui-editor-messageholder {
+  display: none !important
+}
