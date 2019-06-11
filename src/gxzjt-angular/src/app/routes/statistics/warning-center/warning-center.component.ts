@@ -13,7 +13,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 export class StatisticsWarningCenterComponent implements OnInit {
   url = `/user`;
   searchKey = '';
-  selectedValuePro = [];
+  selectedValuePro = "";
   fliterForm: FormGroup;
   hiddenFliter = false;
 

@@ -1,14 +1,11 @@
 <page-header [action]="phActionTpl">
   <ng-template #phActionTpl>
 
-
     <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
         type="{{ hiddenFliter?'down':'up'}}"></i>{{ hiddenFliter?'展开条件':'收起条件'}}</button>
     <button (click)="refresh()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
     <button (click)="exportXlsx()" nz-button nzType="primary"><i nz-icon type="export"></i>导出</button>
-
   </ng-template>
-
 </page-header>
 <nz-card>
 
@@ -31,4 +28,6 @@
     <button nz-button (click)="search()" nzType="primary">搜索</button>
   </form>
   <st #st [data]="url" [columns]="columns"></st>
+  <br>
+  <nz-pagination [nzPageIndex]="2" [nzTotal]="500" nzShowQuickJumper></nz-pagination>
 </nz-card>
