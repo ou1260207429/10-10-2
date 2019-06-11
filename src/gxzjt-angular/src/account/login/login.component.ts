@@ -31,7 +31,10 @@ export class LoginComponent extends AppComponentBase implements OnInit {
   submitting = false;
   form: FormGroup;
   count = 0;
-
+  usePsw = true;
+  switchUswPsw() {
+    this.usePsw = !this.usePsw;
+  }
   get userName() {
     return this.form.controls.userName;
   }
