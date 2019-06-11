@@ -1,44 +1,79 @@
-﻿@import '../../../node_modules/@delon/theme//styles/default';
+﻿// @import '../../../node_modules/@delon/theme//styles/default';
+@import '../../styles/index.less';
+
 :host {
-    display: block;
-    width: 368px;
-    margin: 0 auto;
-    ::ng-deep {
-        .ant-tabs .ant-tabs-bar {
-            border-bottom: 0;
-            margin-bottom: 24px;
-            text-align: center;
-        }
-        .ant-tabs-tab {
-            font-size: 16px;
-            line-height: 24px;
-        }
-        .ant-input-affix-wrapper .ant-input:not(:first-child) {
-            padding-left: 34px;
-        }
-        .icon {
-            font-size: 24px;
-            color: rgba(0, 0, 0, 0.2);
-            margin-left: 16px;
-            vertical-align: middle;
-            cursor: pointer;
-            transition: color 0.3s;
-            &:hover {
-                color: @primary-color;
-            }
-        }
-        .other {
-            text-align: left;
-            margin-top: 24px;
-            line-height: 22px;
-            nz-tooltip {
-                vertical-align: middle;
-            }
-            .register {
-                float: right;
-            }
-        }
+  display: block;
+  width: 368px;
+  margin: 0 auto;
+
+
+  ::ng-deep {
+    .ant-tabs .ant-tabs-bar {
+      border-bottom: 0;
+      margin-bottom: 24px;
+      text-align: center;
     }
+
+    .ant-tabs-tab {
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    .ant-input-affix-wrapper .ant-input:not(:first-child) {
+      padding-left: 34px;
+    }
+
+    .icon {
+      font-size: 24px;
+      color: rgba(0, 0, 0, 0.2);
+      margin-left: 16px;
+      vertical-align: middle;
+      cursor: pointer;
+      transition: color 0.3s;
+
+      &:hover {
+        color: @primary-color;
+      }
+    }
+
+    .other {
+      text-align: left;
+      margin-top: 24px;
+      line-height: 22px;
+
+      nz-tooltip {
+        vertical-align: middle;
+      }
+
+      .register {
+        float: right;
+      }
+    }
+  }
 }
-.title{font-weight: 700;font-style: normal;font-size: 24px;color: #1ABC9C;line-height: 28px;}
-.login_but{background-color: rgba(26, 188, 156, 1);font-size: 18px;border-color:rgba(26, 188, 156, 1) ;color: white;height: 40px;line-height: 40px;}
+
+.title {
+  font-weight: 700;
+  font-style: normal;
+  font-size: 24px;
+  color: @primary-color;
+
+
+}
+
+.title span {
+  width: 100% !important;
+  float: left !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: normal !important;
+}
+
+.login_but {
+  background-color: @primary-color;
+  font-size: 18px;
+  border-color: @primary-color ;
+  color: white;
+  height: 40px;
+  line-height: 40px;
+}

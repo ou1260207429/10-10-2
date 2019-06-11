@@ -29,4 +29,4 @@ import { AccountComponent } from './account.component';
   ],
   exports: [RouterModule],
 })
-export class AccountRoutingModule {}
+export class AccountRoutingModule { }

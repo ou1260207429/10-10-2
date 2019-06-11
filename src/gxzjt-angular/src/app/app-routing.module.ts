@@ -4,11 +4,20 @@ import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { LayoutDefaultComponent } from '../layout/default/layout-default.component';
 import { LayoutFullScreenComponent } from '@layout/fullscreen/fullscreen.component';
 
+
 const routes: Routes = [
+  // {
+  //   path: '',
+  //   component: LayoutFullScreenComponent,
+  //   data: { title: '首页' },
+  //   children: [
+  //     { path: '', loadChildren: './home/home.module#HomeModule' }
+  //   ],
+  // },
   {
     path: '',
-    component: LayoutFullScreenComponent,
-    data: { title: '首页' },
+    component: LayoutDefaultComponent,
+    canActivate: [AppRouteGuard],
     children: [
       { path: '', loadChildren: './index/index.module#IndexModule' },
 
@@ -17,15 +26,18 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutDefaultComponent,
-    canActivate: [AppRouteGuard],
+    data: { title: '统计', preload: true },
+    // canActivate: [AppRouteGuard],
     children: [
+      { path: 'statistics', loadChildren: './routes/statistics/statistics.module#StatisticsModule', },
       { path: 'home', loadChildren: './pages/home/home.module#HomeModule' },
       { path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule' },
       { path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule' },
       { path: 'content-manage', loadChildren: './pages/content-manage/content-manage.module#ContentManageModule' },
 
     ],
-  },
+
+  }
 ];
 
 @NgModule({
