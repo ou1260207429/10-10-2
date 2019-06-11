@@ -34,7 +34,7 @@ export class IndexComponent implements OnInit {
       name: '法律法规',
     },
     {
-      path: '/login',
+      path: '/account/login',
       name: '登录',
     },
   ];

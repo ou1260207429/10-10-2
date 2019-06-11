@@ -10,7 +10,8 @@ const routes: Routes = [
     component: LayoutFullScreenComponent,
     data: { title: '首页' },
     children: [
-      { path: '', loadChildren: './index/index.module#IndexModule' }
+      { path: '', loadChildren: './index/index.module#IndexModule' },
+
     ],
   },
   {
@@ -21,6 +22,8 @@ const routes: Routes = [
       { path: 'home', loadChildren: './pages/home/home.module#HomeModule' },
       { path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule' },
       { path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule' },
+      { path: 'content-manage', loadChildren: './pages/content-manage/content-manage.module#ContentManageModule' },
+
     ],
   },
 ];

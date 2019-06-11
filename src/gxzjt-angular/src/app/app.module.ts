@@ -8,6 +8,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlowServices } from 'services/flow.services';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { AuthInterceptor } from 'infrastructure/http-interceptor';
+import { ContentManageModule } from './pages/content-manage/content-manage.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { AuthInterceptor } from 'infrastructure/http-interceptor';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ContentManageModule,
     AppRoutingModule,
     LayoutModule,
     SharedModule,

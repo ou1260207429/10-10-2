@@ -1,0 +1,46 @@
+<div nz-row>
+    <div nz-col nzSpan="3" style="padding-top: 40px;">
+    
+    <div style="background-color: #9ea7b4;color: #fff;padding: 20px 20%;">基本信息</div>
+    
+    
+    </div>
+  <div nz-col nzSpan="12" style="padding-top: 40px;border-left: 1px solid #d9d9d9;height: 100%;">
+      <form nz-form #f="ngForm" se-container="1">
+          <se label="标题名称" required>
+            <input style="width: 50%;" type="text" nz-input [(ngModel)]="modaleForm.number" name="number" required>
+          </se>
+          <se label="颁布机关" required>
+            <input style="width: 50%;" type="text" nz-input [(ngModel)]="modaleForm.curNodeName" name="curNodeName" required>
+          </se>
+          <se label="类型" required>
+            <nz-select style="width: 175px;" [(ngModel)]="modaleForm.name" name="name" nzAllowClear nzPlaceHolder="Choose">
+              <nz-option [nzValue]="1" nzLabel="1"></nz-option>
+              <nz-option [nzValue]="2" nzLabel="2"></nz-option>
+              <nz-option [nzValue]="3" nzLabel="3"></nz-option>
+              <nz-option [nzValue]="4" nzLabel="4"></nz-option>
+              <nz-option [nzValue]="5" nzLabel="5"></nz-option>
+            </nz-select>
+          </se>
+          <se label="生效日期" required>
+            <nz-date-picker [(ngModel)]="modaleForm.startDate" name="startDate"></nz-date-picker>
+          </se>
+          <se label="附件上传" required>
+            <div style="height:120px;padding:5px 10px;border:1px solid #d9d9d9;">
+              <nz-upload style="float: left;margin:0 10px;" nzAction="https://jsonplaceholder.typicode.com/posts/">
+                <button nz-button style="background-color: #3498db;color: #fff;height: 30px;width: 90px;border: 1px solid #3498db;"><i nz-icon
+                    nzType="upload"></i><span>上传</span></button>
+              </nz-upload>
+              <button nz-button style="background-color: #f04844;color: #fff;height: 30px;width: 90px;border: 1px solid #f04844;"><i nz-icon></i><span>删除</span></button>
+      
+            </div>
+      
+      
+          </se>
+          <se>
+            <button nz-button nzType="primary" [disabled]="f.invalid">Save</button>
+          </se>
+        </form>
+  </div>
+</div>
+
