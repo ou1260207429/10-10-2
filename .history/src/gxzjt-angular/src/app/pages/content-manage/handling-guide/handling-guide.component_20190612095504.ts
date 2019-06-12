@@ -3,7 +3,6 @@ import { STColumn, STPage, STComponent } from '@delon/abc';
 import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 import { Router } from '@angular/router';
 import { EventEmiter } from 'infrastructure/eventEmiter';
-import { RegulationServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'app-handling-guide',

@@ -4,13 +4,13 @@ import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 import { Router } from '@angular/router';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 
-import { PoliciesAndRegulationsServices } from './../../../../services/policies-and-regulations.services';
 import { RegulationServiceProxy } from '@shared/service-proxies/service-proxies';
 @Component({
   selector: 'app-policies-and-regulations',
   templateUrl: './policies-and-regulations.component.html',
   styles: []
 })
+
 export class PoliciesAndRegulationsComponent implements OnInit {
   @ViewChild('treeCom') treeCom;
   @ViewChild('st') st: STComponent;
@@ -24,17 +24,18 @@ export class PoliciesAndRegulationsComponent implements OnInit {
     icon: 'folder-open',
     isLeaf: true
   }];
-
+deleteId:any
   chooseAuditors;
-  allDate = []
   params: any = {
+    page:1,
+    size:10,
     sort: "",
     isAsc: false,
     orderby: "",
     totalCount: 20,
-    search: 11,
-    startTime: null,
-    endTime: null,
+    //search: 11,
+    //startTime: null,
+    //endTime: null,
   };
   data
   columns: STColumn[] = [
@@ -69,36 +70,35 @@ export class PoliciesAndRegulationsComponent implements OnInit {
       title: '操作', className: 'text-center', buttons: [
         {
           text: '<font class="stButton">详情</font>', click: (record: any) => {
-            this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/${record.id}`, { operate: "detail" }]);
+            this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/${record.id}`, { operate: 1 }]);
           }
         },
         {
           text: '<font class="stButton">编辑</font>', click: (record: any) => {
-            this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/${record.id}/2`, { operate: "edit" }]);
+            this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/${record.id}`, { operate: 2 }]);
           }
+        },
+        {
+          text: '<font class="stButton">删除</font>', click: (record: any) => {
+            this.deleteVisible=true;
+            this.isOkLoading=false;
+            this.deleteId = record.id;
         },
       ]
     }
   ];
 
-
+  deleteVisible:false
+  isOkLoading:false
   pageConfig: STPage = publicPageConfig;
   validateForm: any;
-  constructor(private _regulationServiceProxy: RegulationServiceProxy, private router: Router, private _policiesAndRegulationsServices: PoliciesAndRegulationsServices, private eventEmiter: EventEmiter) {
+  constructor(private _regulationServiceProxy: RegulationServiceProxy, private router: Router, private eventEmiter: EventEmiter) {
   }
 
   ngOnInit() {
     let _self = this;
-
     this.init();
-
-    // this.eventEmiter.on('init', () => {
-    //   _self.init();
-    // });
-
-    // this.eventEmiter.on('flowadd', () => {
-    //   _self.init();
-    // });
+  
   }
 
   /**
@@ -125,20 +125,23 @@ export class PoliciesAndRegulationsComponent implements OnInit {
    */
   workFlow_NodeAuditorRecords(params?: any) {
     this.data = "";
-    // this._policiesAndRegulationsServices.get_PoliciesAndRegulations(params).subscribe(data => {
-    //   this.data = data.result;
-    // })
-
-    // const page = {
-    //   pageSize:
-    // }
     this._regulationServiceProxy.regulationListAsync(params).subscribe(data => {
       this.data = data;
-      console.log(data)
     })
-    // this._regulationService.getRegulationListAsync()
   }
+  /**
+   * 删除数据
+   */
 
+
+   deleteList(){
+this.isOkLoading=true;
+    this._regulationServiceProxy.deleteRegulationByIdAsync(this.deleteId).subscribe(data => {
+this.isOkLoading=false;
+      this.deleteVisible=false;
+      this.init();
+    })
+   }
   /**
    * 点击查询
    */
@@ -152,9 +155,16 @@ export class PoliciesAndRegulationsComponent implements OnInit {
       this.workFlow_NodeAuditorRecords(this.params);
     })
   }
+  handleCancel(): void{
+    this.deleteVisible=false
+  }
+  handleOk(): void{
+    this.deleteList()
+  }
+
 
   add() {
     this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/1`, { operate: 0 }]);
   }
-
+ 
 }

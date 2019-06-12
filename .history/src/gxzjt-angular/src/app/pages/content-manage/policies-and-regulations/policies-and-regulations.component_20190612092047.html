@@ -14,15 +14,6 @@
       <div>
         <button nz-button nzType="primary" (click)="add()">新增</button>
       </div>
-      <st #st loading="!data" [data]="data.data" [req]="{params: params}" [columns]="columns" [pi]="params.page" [ps]="params.size" [page]="pageConfig" [total]="data.totalCount" (change)="change($event)"></st>
+      <st #st loading='!data' *ngIf="data" [data]="data.data" [req]="{params: params}" [columns]="columns" [pi]="params.page" [ps]="params.size"></st>
     </div>
-    <nz-modal
-    [(nzVisible)]="deleteVisible"
-    (nzOnCancel)="handleCancel()"
-    (nzOnOk)="handleOk()"
-    [nzOkLoading]="isOkLoading"
-  >
-    <h3>是否删除该条信息?</h3>
-  </nz-modal>
   </div>
- 

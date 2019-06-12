@@ -37,12 +37,11 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
 
   //表单对象
   data: RegulationDto;
-  RegulationType: any
   constructor(private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute, private _policiesAndRegulationsServices: PoliciesAndRegulationsServices) {
     this.regulationId = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
     this.operate = parseInt(this._activatedRoute.snapshot.paramMap.get('operate'));
     console.log(this.operate);
-    this.initType()
+
   }
   ngOnInit() {
     this.init()
@@ -73,13 +72,13 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   /**
    * 获取类型
    */
-  initType() {
+  initType(){
     let params = {
       regulationId: this.regulationId
     }
-    this._regulationServiceProxy.getDropdownTypeByEnumType("RegulationType").subscribe((data: any) => {
-      this.RegulationType = data
-      console.log(data);
+    this._regulationServiceProxy.getDropdownTypeByEnumType(this.regulationId).subscribe((data: any) => {
+      this.data = data;
+      console.log(this.data);
     })
   }
 
@@ -91,17 +90,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
       regulationId: this.regulationId
     }
     this._regulationServiceProxy.getRegulationDetailsByIdAsync(this.regulationId).subscribe((data: any) => {
-      this.data = {
-        "regulationId": data.id,
-        "regulationCode": data.regulationCode,
-        "title": data.title,
-        "issueOrg": data.issueOrg,
-        "regulationType": data.regulationType,
-        "issueDate": data.issueDate,
-        "content": data.content,
-        "guid": data.guid
-      };
-
+      this.data = data;
       console.log(this.data);
     })
   }
@@ -110,13 +99,12 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
    * 提交
    */
   save() {
-    if (this.operate == 0) {
+  
+    const src = this.operate == 0 ? this._regulationServiceProxy.addRegulationAsync(this.data) : this._regulationServiceProxy.editRegulationAsync(this.data)
+    if(this.operate == 0 ){
       this.data.guid = this.createguid();
     }
-    const src = this.operate == 0 ? this._regulationServiceProxy.addRegulationAsync(this.data) : this._regulationServiceProxy.editRegulationAsync(this.data)
-
     src.subscribe(data => {
-      console.log(this.data)
       this.goBack()
     })
   }
