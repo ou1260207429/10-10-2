@@ -91,7 +91,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
       regulationId: this.regulationId
     }
     this._regulationServiceProxy.getRegulationDetailsByIdAsync(this.regulationId).subscribe((data: any) => {
-      this.data = {
+      var res = {
         "regulationId": data.id,
         "regulationCode": data.regulationCode,
         "title": data.title,
@@ -101,9 +101,9 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
         "content": data.content,
         "guid": data.guid
       };
-
+      this.data.init(res);
       console.log(this.data);
-    })
+    });
   }
 
   /**

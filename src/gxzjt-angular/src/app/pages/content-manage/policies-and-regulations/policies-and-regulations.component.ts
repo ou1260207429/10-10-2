@@ -84,6 +84,7 @@ export class PoliciesAndRegulationsComponent implements OnInit {
             this.isOkLoading = false;
             this.deleteId = record.id;
           },
+        }
       ]
     }
   ];
