@@ -14,7 +14,7 @@ export class AuthInterceptor {
     let headers;
     console.log(this._tokenService.getToken());
     // if (this._tokenService.getToken()) {
-      headers = req.headers.set('Authorization', 'Bearer ' +  this._tokenService.getToken())
+    headers = req.headers.set('Authorization', 'Bearer ' + this._tokenService.getToken())
     // }
     //在请求头加Authorization 不做任何处理
     const authReq = req.clone({

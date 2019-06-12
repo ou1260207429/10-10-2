@@ -17,7 +17,7 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutDefaultComponent,
-    canActivate: [AppRouteGuard],
+    // canActivate: [AppRouteGuard],
     children: [
       { path: '', loadChildren: './index/index.module#IndexModule' },
 
