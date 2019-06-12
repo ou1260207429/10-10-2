@@ -28,7 +28,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'addFireDesignDeclareComponent',
+    path: 'addFireDesignDeclareComponent/:type',
     data: { title: '新增申报' },
     component: AddFireDesignDeclareComponent
   },

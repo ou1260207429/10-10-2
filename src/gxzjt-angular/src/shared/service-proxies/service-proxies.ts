@@ -216,32 +216,31 @@ export class ApplyServiceServiceProxy {
     }
 
     /**
-     * @param flowType (optional) 
-     * @param projectId (optional) 
+     * @param flowFormQueryDto (optional) 
      * @return Success
      */
-    getFlowFormData(flowType: number | null | undefined, projectId: number | null | undefined): Observable<FlowFormDto> {
-        let url_ = this.baseUrl + "/api/services/app/ApplyService/GetFlowFormData?";
-        if (flowType !== undefined)
-            url_ += "FlowType=" + encodeURIComponent("" + flowType) + "&"; 
-        if (projectId !== undefined)
-            url_ += "ProjectId=" + encodeURIComponent("" + projectId) + "&"; 
+    post_GetFlowFormData(flowFormQueryDto: FlowFormQueryDto | null | undefined): Observable<FlowFormDto> {
+        let url_ = this.baseUrl + "/api/services/app/ApplyService/Post_GetFlowFormData";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(flowFormQueryDto);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json", 
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetFlowFormData(response_);
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetFlowFormData(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetFlowFormData(<any>response_);
+                    return this.processPost_GetFlowFormData(<any>response_);
                 } catch (e) {
                     return <Observable<FlowFormDto>><any>_observableThrow(e);
                 }
@@ -250,7 +249,7 @@ export class ApplyServiceServiceProxy {
         }));
     }
 
-    protected processGetFlowFormData(response: HttpResponseBase): Observable<FlowFormDto> {
+    protected processPost_GetFlowFormData(response: HttpResponseBase): Observable<FlowFormDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -362,6 +361,68 @@ export class ApplyServiceServiceProxy {
     }
 
     protected processApplyFlow(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
+export class AttachmentServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    deleteAttachmentById(id: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Attachment/DeleteAttachmentById?";
+        if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteAttachmentById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteAttachmentById(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteAttachmentById(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -995,6 +1056,74 @@ export class ProjectCompanyServiceProxy {
 }
 
 @Injectable()
+export class ProjectFlowServcieServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param projectFlowItemQueryDto (optional) 
+     * @return Success
+     */
+    post_GetProjects(projectFlowItemQueryDto: ProjectFlowItemQueryDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/ProjectFlowServcie/Post_GetProjects";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(projectFlowItemQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetProjects(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetProjects(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetProjects(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
+}
+
+@Injectable()
 export class RegulationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -1476,6 +1605,350 @@ export class RegulationServiceProxy {
             }));
         }
         return _observableOf<RegulationListDto>(<any>null);
+    }
+
+    /**
+     * @param regulationDto (optional) 
+     * @return Success
+     */
+    addRegulationAsync(regulationDto: RegulationDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Regulation/AddRegulationAsync";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(regulationDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddRegulationAsync(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddRegulationAsync(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAddRegulationAsync(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param size (optional) 
+     * @param page (optional) 
+     * @param sort (optional) 
+     * @param isAsc (optional) 
+     * @param orderby (optional) 
+     * @param totalCount (optional) 
+     * @param title (optional) 
+     * @param startTime (optional) 
+     * @param endTime (optional) 
+     * @return Success
+     */
+    getRegulationListAsync(size: number | null | undefined, page: number | null | undefined, sort: string | null | undefined, isAsc: boolean | null | undefined, orderby: string | null | undefined, totalCount: number | null | undefined, title: string | null | undefined, startTime: moment.Moment | null | undefined, endTime: moment.Moment | null | undefined): Observable<PageModel> {
+        let url_ = this.baseUrl + "/api/services/app/Regulation/GetRegulationListAsync?";
+        if (size !== undefined)
+            url_ += "size=" + encodeURIComponent("" + size) + "&"; 
+        if (page !== undefined)
+            url_ += "page=" + encodeURIComponent("" + page) + "&"; 
+        if (sort !== undefined)
+            url_ += "sort=" + encodeURIComponent("" + sort) + "&"; 
+        if (isAsc !== undefined)
+            url_ += "isAsc=" + encodeURIComponent("" + isAsc) + "&"; 
+        if (orderby !== undefined)
+            url_ += "orderby=" + encodeURIComponent("" + orderby) + "&"; 
+        if (totalCount !== undefined)
+            url_ += "totalCount=" + encodeURIComponent("" + totalCount) + "&"; 
+        if (title !== undefined)
+            url_ += "title=" + encodeURIComponent("" + title) + "&"; 
+        if (startTime !== undefined)
+            url_ += "startTime=" + encodeURIComponent(startTime ? "" + startTime.toJSON() : "") + "&"; 
+        if (endTime !== undefined)
+            url_ += "endTime=" + encodeURIComponent(endTime ? "" + endTime.toJSON() : "") + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetRegulationListAsync(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetRegulationListAsync(<any>response_);
+                } catch (e) {
+                    return <Observable<PageModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PageModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetRegulationListAsync(response: HttpResponseBase): Observable<PageModel> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PageModel.fromJS(resultData200) : new PageModel();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PageModel>(<any>null);
+    }
+
+    /**
+     * @param regulationId (optional) 
+     * @return Success
+     */
+    getRegulationDetailsByIdAsync(regulationId: number | null | undefined): Observable<RegulationDetailsViewModel> {
+        let url_ = this.baseUrl + "/api/services/app/Regulation/GetRegulationDetailsByIdAsync?";
+        if (regulationId !== undefined)
+            url_ += "regulationId=" + encodeURIComponent("" + regulationId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetRegulationDetailsByIdAsync(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetRegulationDetailsByIdAsync(<any>response_);
+                } catch (e) {
+                    return <Observable<RegulationDetailsViewModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<RegulationDetailsViewModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetRegulationDetailsByIdAsync(response: HttpResponseBase): Observable<RegulationDetailsViewModel> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? RegulationDetailsViewModel.fromJS(resultData200) : new RegulationDetailsViewModel();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<RegulationDetailsViewModel>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    deleteRegulationByIdAsync(id: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Regulation/DeleteRegulationByIdAsync?";
+        if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteRegulationByIdAsync(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteRegulationByIdAsync(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteRegulationByIdAsync(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param regulationDto (optional) 
+     * @return Success
+     */
+    editRegulationAsync(regulationDto: RegulationDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Regulation/EditRegulationAsync";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(regulationDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processEditRegulationAsync(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processEditRegulationAsync(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processEditRegulationAsync(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param enumType (optional) 
+     * @return Success
+     */
+    getDropdownTypeByEnumType(enumType: string | null | undefined): Observable<KeyValueDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Regulation/GetDropdownTypeByEnumType?";
+        if (enumType !== undefined)
+            url_ += "enumType=" + encodeURIComponent("" + enumType) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDropdownTypeByEnumType(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDropdownTypeByEnumType(<any>response_);
+                } catch (e) {
+                    return <Observable<KeyValueDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<KeyValueDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetDropdownTypeByEnumType(response: HttpResponseBase): Observable<KeyValueDto[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(KeyValueDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<KeyValueDto[]>(<any>null);
     }
 }
 
@@ -3514,7 +3987,55 @@ export interface IRegisterOutput {
     canLogin: boolean | undefined;
 }
 
+export class FlowFormQueryDto implements IFlowFormQueryDto {
+    flowType: number | undefined;
+    projectId: number | undefined;
+
+    constructor(data?: IFlowFormQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.flowType = data["flowType"];
+            this.projectId = data["projectId"];
+        }
+    }
+
+    static fromJS(data: any): FlowFormQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new FlowFormQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["flowType"] = this.flowType;
+        data["projectId"] = this.projectId;
+        return data; 
+    }
+
+    clone(): FlowFormQueryDto {
+        const json = this.toJSON();
+        let result = new FlowFormQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFlowFormQueryDto {
+    flowType: number | undefined;
+    projectId: number | undefined;
+}
+
 export class FlowFormDto implements IFlowFormDto {
+    natures: ArchitecturalInNature[] | undefined;
     projectInfo: ArchitectureProject | undefined;
     projectExpandInfo: ProjectExpand | undefined;
 
@@ -3529,6 +4050,11 @@ export class FlowFormDto implements IFlowFormDto {
 
     init(data?: any) {
         if (data) {
+            if (data["natures"] && data["natures"].constructor === Array) {
+                this.natures = [];
+                for (let item of data["natures"])
+                    this.natures.push(ArchitecturalInNature.fromJS(item));
+            }
             this.projectInfo = data["projectInfo"] ? ArchitectureProject.fromJS(data["projectInfo"]) : <any>undefined;
             this.projectExpandInfo = data["projectExpandInfo"] ? ProjectExpand.fromJS(data["projectExpandInfo"]) : <any>undefined;
         }
@@ -3543,6 +4069,11 @@ export class FlowFormDto implements IFlowFormDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        if (this.natures && this.natures.constructor === Array) {
+            data["natures"] = [];
+            for (let item of this.natures)
+                data["natures"].push(item.toJSON());
+        }
         data["projectInfo"] = this.projectInfo ? this.projectInfo.toJSON() : <any>undefined;
         data["projectExpandInfo"] = this.projectExpandInfo ? this.projectExpandInfo.toJSON() : <any>undefined;
         return data; 
@@ -3557,8 +4088,92 @@ export class FlowFormDto implements IFlowFormDto {
 }
 
 export interface IFlowFormDto {
+    natures: ArchitecturalInNature[] | undefined;
     projectInfo: ArchitectureProject | undefined;
     projectExpandInfo: ProjectExpand | undefined;
+}
+
+export class ArchitecturalInNature implements IArchitecturalInNature {
+    natureCode: string | undefined;
+    natureName: string | undefined;
+    displayOrder: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IArchitecturalInNature) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.natureCode = data["natureCode"];
+            this.natureName = data["natureName"];
+            this.displayOrder = data["displayOrder"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): ArchitecturalInNature {
+        data = typeof data === 'object' ? data : {};
+        let result = new ArchitecturalInNature();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["natureCode"] = this.natureCode;
+        data["natureName"] = this.natureName;
+        data["displayOrder"] = this.displayOrder;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): ArchitecturalInNature {
+        const json = this.toJSON();
+        let result = new ArchitecturalInNature();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IArchitecturalInNature {
+    natureCode: string | undefined;
+    natureName: string | undefined;
+    displayOrder: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
 }
 
 export class ArchitectureProject implements IArchitectureProject {
@@ -4945,6 +5560,77 @@ export interface IProjectCompanyEditDto {
     contactNumber: string | undefined;
 }
 
+export class ProjectFlowItemQueryDto implements IProjectFlowItemQueryDto {
+    projectCode: string | undefined;
+    projectName: string | undefined;
+    constructOrgName: string | undefined;
+    status: number | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+
+    constructor(data?: IProjectFlowItemQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.projectCode = data["projectCode"];
+            this.projectName = data["projectName"];
+            this.constructOrgName = data["constructOrgName"];
+            this.status = data["status"];
+            this.page = data["page"];
+            this.sorting = data["sorting"];
+            this.skipCount = data["skipCount"];
+            this.maxResultCount = data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): ProjectFlowItemQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectFlowItemQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["projectCode"] = this.projectCode;
+        data["projectName"] = this.projectName;
+        data["constructOrgName"] = this.constructOrgName;
+        data["status"] = this.status;
+        data["page"] = this.page;
+        data["sorting"] = this.sorting;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+
+    clone(): ProjectFlowItemQueryDto {
+        const json = this.toJSON();
+        let result = new ProjectFlowItemQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectFlowItemQueryDto {
+    projectCode: string | undefined;
+    projectName: string | undefined;
+    constructOrgName: string | undefined;
+    status: number | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+}
+
 export class ListResultDtoOfRegulationListDto implements IListResultDtoOfRegulationListDto {
     items: RegulationListDto[] | undefined;
 
@@ -5198,6 +5884,349 @@ export interface IRegulationEditDto {
     lastUpdateTime: moment.Moment | undefined;
     lastUpdateUserCode: string | undefined;
     lastUpdateUserName: string | undefined;
+}
+
+export class RegulationDto implements IRegulationDto {
+    regulationId: number | undefined;
+    regulationCode: string | undefined;
+    title: string;
+    issueOrg: string;
+    regulationType: string;
+    issueDate: moment.Moment | undefined;
+    content: string;
+    attachmentList: AttachmentDto[] | undefined;
+
+    constructor(data?: IRegulationDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.regulationId = data["regulationId"];
+            this.regulationCode = data["regulationCode"];
+            this.title = data["title"];
+            this.issueOrg = data["issueOrg"];
+            this.regulationType = data["regulationType"];
+            this.issueDate = data["issueDate"] ? moment(data["issueDate"].toString()) : <any>undefined;
+            this.content = data["content"];
+            if (data["attachmentList"] && data["attachmentList"].constructor === Array) {
+                this.attachmentList = [];
+                for (let item of data["attachmentList"])
+                    this.attachmentList.push(AttachmentDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): RegulationDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RegulationDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["regulationId"] = this.regulationId;
+        data["regulationCode"] = this.regulationCode;
+        data["title"] = this.title;
+        data["issueOrg"] = this.issueOrg;
+        data["regulationType"] = this.regulationType;
+        data["issueDate"] = this.issueDate ? this.issueDate.toISOString() : <any>undefined;
+        data["content"] = this.content;
+        if (this.attachmentList && this.attachmentList.constructor === Array) {
+            data["attachmentList"] = [];
+            for (let item of this.attachmentList)
+                data["attachmentList"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): RegulationDto {
+        const json = this.toJSON();
+        let result = new RegulationDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IRegulationDto {
+    regulationId: number | undefined;
+    regulationCode: string | undefined;
+    title: string;
+    issueOrg: string;
+    regulationType: string;
+    issueDate: moment.Moment | undefined;
+    content: string;
+    attachmentList: AttachmentDto[] | undefined;
+}
+
+export class AttachmentDto implements IAttachmentDto {
+    attachmentId: number;
+    relationID: number;
+    attachmentName: string;
+    category: number;
+    fileUrl: string | undefined;
+
+    constructor(data?: IAttachmentDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.attachmentId = data["attachmentId"];
+            this.relationID = data["relationID"];
+            this.attachmentName = data["attachmentName"];
+            this.category = data["category"];
+            this.fileUrl = data["fileUrl"];
+        }
+    }
+
+    static fromJS(data: any): AttachmentDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AttachmentDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["attachmentId"] = this.attachmentId;
+        data["relationID"] = this.relationID;
+        data["attachmentName"] = this.attachmentName;
+        data["category"] = this.category;
+        data["fileUrl"] = this.fileUrl;
+        return data; 
+    }
+
+    clone(): AttachmentDto {
+        const json = this.toJSON();
+        let result = new AttachmentDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAttachmentDto {
+    attachmentId: number;
+    relationID: number;
+    attachmentName: string;
+    category: number;
+    fileUrl: string | undefined;
+}
+
+export class PageModel implements IPageModel {
+    totalCount: number | undefined;
+    page: number | undefined;
+    size: number | undefined;
+    data: any | undefined;
+
+    constructor(data?: IPageModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.totalCount = data["totalCount"];
+            this.page = data["page"];
+            this.size = data["size"];
+            this.data = data["data"];
+        }
+    }
+
+    static fromJS(data: any): PageModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new PageModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        data["page"] = this.page;
+        data["size"] = this.size;
+        data["data"] = this.data;
+        return data; 
+    }
+
+    clone(): PageModel {
+        const json = this.toJSON();
+        let result = new PageModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPageModel {
+    totalCount: number | undefined;
+    page: number | undefined;
+    size: number | undefined;
+    data: any | undefined;
+}
+
+export class RegulationDetailsViewModel implements IRegulationDetailsViewModel {
+    content: string | undefined;
+    attachmentList: AttachmentDto[] | undefined;
+    id: number | undefined;
+    regulationCode: string | undefined;
+    title: string | undefined;
+    issueOrg: string | undefined;
+    regulationType: string | undefined;
+    issueDate: moment.Moment | undefined;
+    contentUrl: string | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+    visitCount: number | undefined;
+    creationTime: moment.Moment | undefined;
+
+    constructor(data?: IRegulationDetailsViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.content = data["content"];
+            if (data["attachmentList"] && data["attachmentList"].constructor === Array) {
+                this.attachmentList = [];
+                for (let item of data["attachmentList"])
+                    this.attachmentList.push(AttachmentDto.fromJS(item));
+            }
+            this.id = data["id"];
+            this.regulationCode = data["regulationCode"];
+            this.title = data["title"];
+            this.issueOrg = data["issueOrg"];
+            this.regulationType = data["regulationType"];
+            this.issueDate = data["issueDate"] ? moment(data["issueDate"].toString()) : <any>undefined;
+            this.contentUrl = data["contentUrl"];
+            this.lastUpdateTime = data["lastUpdateTime"] ? moment(data["lastUpdateTime"].toString()) : <any>undefined;
+            this.lastUpdateUserCode = data["lastUpdateUserCode"];
+            this.lastUpdateUserName = data["lastUpdateUserName"];
+            this.visitCount = data["visitCount"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): RegulationDetailsViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new RegulationDetailsViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["content"] = this.content;
+        if (this.attachmentList && this.attachmentList.constructor === Array) {
+            data["attachmentList"] = [];
+            for (let item of this.attachmentList)
+                data["attachmentList"].push(item.toJSON());
+        }
+        data["id"] = this.id;
+        data["regulationCode"] = this.regulationCode;
+        data["title"] = this.title;
+        data["issueOrg"] = this.issueOrg;
+        data["regulationType"] = this.regulationType;
+        data["issueDate"] = this.issueDate ? this.issueDate.toISOString() : <any>undefined;
+        data["contentUrl"] = this.contentUrl;
+        data["lastUpdateTime"] = this.lastUpdateTime ? this.lastUpdateTime.toISOString() : <any>undefined;
+        data["lastUpdateUserCode"] = this.lastUpdateUserCode;
+        data["lastUpdateUserName"] = this.lastUpdateUserName;
+        data["visitCount"] = this.visitCount;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): RegulationDetailsViewModel {
+        const json = this.toJSON();
+        let result = new RegulationDetailsViewModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IRegulationDetailsViewModel {
+    content: string | undefined;
+    attachmentList: AttachmentDto[] | undefined;
+    id: number | undefined;
+    regulationCode: string | undefined;
+    title: string | undefined;
+    issueOrg: string | undefined;
+    regulationType: string | undefined;
+    issueDate: moment.Moment | undefined;
+    contentUrl: string | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+    visitCount: number | undefined;
+    creationTime: moment.Moment | undefined;
+}
+
+export class KeyValueDto implements IKeyValueDto {
+    key: string | undefined;
+    value: string | undefined;
+
+    constructor(data?: IKeyValueDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.key = data["key"];
+            this.value = data["value"];
+        }
+    }
+
+    static fromJS(data: any): KeyValueDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new KeyValueDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["key"] = this.key;
+        data["value"] = this.value;
+        return data; 
+    }
+
+    clone(): KeyValueDto {
+        const json = this.toJSON();
+        let result = new KeyValueDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IKeyValueDto {
+    key: string | undefined;
+    value: string | undefined;
 }
 
 export class CreateRoleDto implements ICreateRoleDto {
