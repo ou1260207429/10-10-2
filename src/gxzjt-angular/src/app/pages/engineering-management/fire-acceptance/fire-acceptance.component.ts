@@ -131,7 +131,7 @@ export class FireAcceptanceComponent implements OnInit {
    * 新增申报
    */
   addDeclare() {
-
+    this.router.navigate([`/app/engineering-management/addFireAcceptanceComponent/0`]);
   }
 
   change(v) {

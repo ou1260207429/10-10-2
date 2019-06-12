@@ -5,6 +5,8 @@ import { CompletedAcceptanceComponent } from './completed-acceptance/completed-a
 import { EngineeringListComponent } from './engineering-list/engineering-list.component';
 import { FireAcceptanceComponent } from './fire-acceptance/fire-acceptance.component';
 import { AddFireDesignDeclareComponent } from './add-fire-design-declare/add-fire-design-declare.component';
+import { AddFireAcceptanceComponent } from './add-fire-acceptance/add-fire-acceptance.component';
+import { AddCompletedAcceptanceComponent } from './add-completed-acceptance/add-completed-acceptance.component';
 
 const routes: Routes = [
   {
@@ -31,6 +33,18 @@ const routes: Routes = [
     path: 'addFireDesignDeclareComponent/:type',
     data: { title: '新增申报' },
     component: AddFireDesignDeclareComponent
+  },
+
+  {
+    path: 'addCompletedAcceptanceComponent/:type',
+    data: { title: '新增申报' },
+    component: AddCompletedAcceptanceComponent
+  },
+
+  {
+    path: 'addFireAcceptanceComponent/:type',
+    data: { title: '新增申报' },
+    component: AddFireAcceptanceComponent
   },
 
 

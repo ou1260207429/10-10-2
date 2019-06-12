@@ -1,8 +1,9 @@
-import { ApplyServiceServiceProxy, FlowFormQueryDto } from './../../../../shared/service-proxies/service-proxies';
+import { ApplyServiceServiceProxy, FlowFormQueryDto, FlowFormDto } from './../../../../shared/service-proxies/service-proxies';
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ActivatedRoute } from '@angular/router';
 import { timeTrans } from 'infrastructure/regular-expression';
+import { OptionsEnum, ArchitectureTypeEnum } from 'infrastructure/expression';
 
 /**
  * 工程管理->消防设计审查管理->新增申报
@@ -18,18 +19,21 @@ export class AddFireDesignDeclareComponent implements OnInit {
 
   flowFormQueryDto = new FlowFormQueryDto();
 
+  flowFormDto = new FlowFormDto();
+
   //0是新增  1是查看  2是修改
   type
 
-  typeSelect = [
-    { label: '混凝土结构。包括素混凝土结构、钢筋混凝土结构和预应力混凝土结构', value: '混凝土结构。包括素混凝土结构、钢筋混凝土结构和预应力混凝土结构' },
-    { label: '砌体结构', value: '砌体结构' },
-    { label: '钢结构', value: '钢结构' },
-    { label: '木结构', value: '木结构' }
-  ]
+  //市县区
+  position = OptionsEnum
+
+  //结构类型
+  typeSelect = ArchitectureTypeEnum
   constructor(private _applyService: ApplyServiceServiceProxy, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     this.flowFormQueryDto.flowType = 1;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
+
+    console.log(this.position);
   }
 
   //特殊建设工程列表
@@ -411,6 +415,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
     projectName: '',
     contacts: '',
     contactsNumber: '',
+    engineeringCitycountyAndDistrict: '',
     engineeringAddress: '',
     planStartTime: '',
     planEndTime: '',
@@ -571,7 +576,12 @@ export class AddFireDesignDeclareComponent implements OnInit {
   depositDraft() {
     this.data.planStartTime = this.data.planStartTime == '' ? '' : timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy-MM-dd', '-')
     this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd', '-')
-
+    this.flowFormDto.formJson = JSON.stringify(this.data);
+    console.log(this.data)
+    return false
+    this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
+      this.message.success('保存成功')
+    })
   }
 
   /**
@@ -617,6 +627,14 @@ export class AddFireDesignDeclareComponent implements OnInit {
 
   addYardArray(arr) {
     arr.push({ Reserves: '', name: '' })
+  }
+
+  /**
+   * 选择市县区
+   * @param v 
+   */
+  changeCitycountyAndDistrict(v) {
+    this.data.engineeringCitycountyAndDistrict = v;
   }
 
   /**

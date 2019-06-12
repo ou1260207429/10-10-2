@@ -55,8 +55,13 @@
         <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程地址:</td>
           <td rowspan='1' colspan='3'>
+            <nz-cascader formControlName="position" [nzPlaceHolder]="'请设置位置'" [nzSize]="'large'"
+              [nzChangeOnSelect]="true" [nzShowSearch]="true" [nzOptions]="position"
+              (nzChange)="changeCitycountyAndDistrict($event)" [(ngModel)]="data.engineeringCitycountyAndDistrict"
+              name="engineeringCitycountyAndDistrict" required>
+            </nz-cascader>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入工程名称" [(ngModel)]="data.engineeringAddress" name="engineeringAddress"
+              <input nz-input placeholder="请输入详细地址" [(ngModel)]="data.engineeringAddress" name="engineeringAddress"
                 required />
             </se>
           </td>
@@ -207,7 +212,7 @@
           <td colspan="15" style="text-align: left;">
             <div *ngFor="let item of listArr let index=index" style="width: 100%;overflow: hidden;margin-bottom: 10px">
               <p class="fontweight fontLeft" style="text-align: left;">{{index+1}}、{{item.title}}</p>
-              <nz-radio-group [(ngModel)]="item.value">
+              <nz-radio-group [(ngModel)]="item.value" name="syxzRadio">
                 <label nz-radio [nzValue]="o.value" *ngFor="let o of item.arr">{{ o.name }}</label>
               </nz-radio-group>
             </div>
@@ -294,8 +299,6 @@
           <td rowspan="1" colspan='1'>操作</td>
         </tr>
 
-
-
         <tr>
           <td colspan='2' class="fontweight fontLeft leftTitle">设置型式</td>
           <td colspan="13" style="text-align: left;">
@@ -303,7 +306,7 @@
               <label style="padding-right: 20px;" nz-radio nzValue="外">外</label>
               <label style="padding-right: 20px;" nz-radio nzValue="内">内</label>
             </nz-radio-group>)
-            <nz-radio-group [(ngModel)]="radiotype">
+            <nz-radio-group [(ngModel)]="radiotype" name="storagesetupType55">
               <label style="padding-right: 20px;" nz-radio nzValue="固定顶罐">固定顶罐 </label>
               <label style="padding-right: 20px;" nz-radio nzValue="卧式罐">卧式罐</label>
             </nz-radio-group>
@@ -361,7 +364,7 @@
           style="width: 36px;background-color: #f8f8f8;text-align: center;">建筑保温</td>
         <td colspan='3' class="fontweight fontLeft leftTitle">材料类别</td>
         <td rowspan='1' colspan='4'>
-          <nz-radio-group [(ngModel)]="data.buildingThermalInsulation.type" namd="buildingThermalInsulationtype">
+          <nz-radio-group [(ngModel)]="data.buildingThermalInsulation.type" name="buildingThermalInsulationtype">
             <label style="padding-right: 20px;" nz-radio nzValue="A">A</label>
             <label style="padding-right: 20px;" nz-radio nzValue="B1">B1</label>
             <label style="padding-right: 20px;" nz-radio nzValue="B2">B2</label>
