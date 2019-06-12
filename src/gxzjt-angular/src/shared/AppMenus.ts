@@ -114,5 +114,18 @@ export class AppMenus {
                 },
             ]
         },
+        {
+            text: "系统管理",
+
+            icon: { type: "icon", value: "account-book" },// 图标
+            children: [
+                {
+                    text: "抽查比例中心",
+
+                    link: "/app/sys-setting/spot-check-proportion",
+                }
+
+            ]
+        },
     ];
 }

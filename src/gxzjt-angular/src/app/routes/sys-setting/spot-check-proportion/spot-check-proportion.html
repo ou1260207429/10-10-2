@@ -1,0 +1,19 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+
+
+    <button (click)="refresh()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
+
+  </ng-template>
+</page-header>
+
+<nz-card>
+
+
+  <st #st [data]="formResultData" [columns]="columns" [loading]="isSearchForm"></st>
+  <br>
+  <nz-modal [(nzVisible)]="isVisibleModal" nzTitle="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+    [nzOkLoading]="isOkLoading">
+    <input type="text" nz-input [ngModel]="modifyProportion" />
+  </nz-modal>
+</nz-card>
