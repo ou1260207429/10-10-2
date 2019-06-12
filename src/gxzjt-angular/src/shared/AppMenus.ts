@@ -49,6 +49,19 @@ export class AppMenus {
         },
         {
             text: "",
+            i18n: "统计分析",
+            icon: { type: "icon", value: "account-book" },// 图标
+            children: [
+                {
+                    text: "预警中心",
+
+                    link: "/app/statistics",
+                }
+
+            ]
+        },
+        {
+            text: "",
             i18n: "内容管理",
             icon: { type: "icon", value: "home" },// 图标
             children: [

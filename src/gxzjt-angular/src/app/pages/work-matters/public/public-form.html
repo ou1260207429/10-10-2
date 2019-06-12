@@ -11,19 +11,45 @@
 
   <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
 
-    <input nz-input [(ngModel)]="searchKey" formControlName="proNo" placeholder="工程流水号" class="search_menu_input">
+    <input nz-input [(ngModel)]="searchKey" formControlName="proNo" placeholder="流程流水号"
+      style="margin-right: 10px;width: 200px;">
 
-    <!-- <nz-select class="search_menu_input" nzShowSearch nzAllowClear nzPlaceHolder="工程名称" [(ngModel)]="selectedValuePro">     </nz-select>-->
-    <input nz-input [(ngModel)]="searchKey" formControlName="proName" placeholder="工程名称" class="search_menu_input">
 
-    <nz-select class="search_menu_input" formControlName="proType" nzShowSearch nzAllowClear nzPlaceHolder="流程类型"
-      [(ngModel)]="selectedValuePro">
+    <input [hidden]="useSelect" nz-input [(ngModel)]="proName" formControlName="proName" placeholder="工程名称"
+      style="margin-right: 10px;width: 200px;">
 
+    <input [hidden]="useSelect" nz-input [(ngModel)]="orgName" formControlName="orgName" placeholder="建设单位"
+      style="margin-right: 10px;width: 200px;">
+
+    <nz-select [hidden]="!useSelect" style="margin-right: 10px;width: 200px;" nzMode="multiple"
+      [(ngModel)]="selectedPro" nzPlaceHolder="工程名称" nzAllowClear nzShowSearch [nzServerSearch]="true"
+      (nzOnSearch)="onSearchPro($event)" formControlName="proName">
+      <ng-container *ngFor="let item of proList">
+        <nz-option *ngIf="!isProSearchLoading" [nzValue]="item.value" [nzLabel]="item.text"></nz-option>
+      </ng-container>
+      <nz-option *ngIf="isProSearchLoading" nzDisabled nzCustomContent>
+        <i nz-icon type="loading" class="loading-icon"></i> 加载中...
+      </nz-option>
     </nz-select>
 
-    <nz-range-picker nzFormat="yyyy/MM/dd" formControlName="dateRange" class="search_menu"></nz-range-picker>
+    <nz-select [hidden]="!useSelect" style="margin-right: 10px;width: 200px;" nzMode="multiple"
+      [(ngModel)]="selectedOrg" nzPlaceHolder="请选择建设单位" nzAllowClear nzShowSearch [nzServerSearch]="true"
+      (nzOnSearch)="onSearchOrg($event)" formControlName="orgName">
+      <ng-container *ngFor="let item of orgList">
+        <nz-option *ngIf="!isOrgSearchLoading" [nzValue]="item.value" [nzLabel]="item.text"></nz-option>
+      </ng-container>
+      <nz-option *ngIf="isOrgSearchLoading" nzDisabled nzCustomContent>
+        <i nz-icon type="loading" class="loading-icon"></i> 加载中...
+      </nz-option>
+    </nz-select>
 
-    <button nz-button (click)="resetForm()" class="search_menu">重置</button>
+
+
+
+    <nz-range-picker [(ngModel)]="rangeTime" nzFormat="yyyy/MM/dd" formControlName="dateRange"
+      style="margin-right: 10px;"></nz-range-picker>
+
+    <button nz-button (click)="resetSearchFliterForm()" style="margin-right: 10px;">重置</button>
 
     <button nz-button (click)="search()" nzType="primary">搜索</button>
   </form>

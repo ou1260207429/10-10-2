@@ -1,10 +1,15 @@
 import { FlowServices } from './../../../../services/flow.services';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { STColumn, STPage, STComponent } from '@delon/abc';
-import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
-import { Router } from '@angular/router';
-import { EventEmiter } from 'infrastructure/eventEmiter';
-import { AppConsts } from '@shared/AppConsts';
+import { STColumn, STComponent, XlsxService } from '@delon/abc';
+
+
+import { _HttpClient, ModalHelper } from '@delon/theme';
+
+
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { stringify } from '@angular/compiler/src/util';
+
+import { PublicFormComponent } from '../public/public-form.component'
 
 /**
  * 待办流程
@@ -12,117 +17,95 @@ import { AppConsts } from '@shared/AppConsts';
 @Component({
   selector: 'app-agency-done',
   templateUrl: '../public/public-form.html',
-  styles: []
+  styles: [],
 })
-export class AgencyDoneComponent implements OnInit {
+export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
-  @ViewChild('treeCom') treeCom;
+  url = `/user`;
+  searchKey = '';
+
+
+
+
+  formData = {};
+
+
+
   @ViewChild('st') st: STComponent;
-  flowAddType: any = {
-    type: '',
-    name: ''
-  };
-  nodes = [{
-    title: '全部',
-    key: '',
-    icon: 'folder-open',
-    isLeaf: true
-  }];
-
-  chooseAuditors;
-
-  params: any = {};
-  data;
   columns: STColumn[] = [
-    { title: '流水号', index: 'number' },
-    { title: '流程名称', index: 'name' },
-    { title: '发起人', index: 'createEName' },
-    { title: '当前节点', index: 'curNodeName' },
-    { title: '当前审核人', index: 'applyEName' },
+
+    { title: '部门', index: 'pro_type' },
+    { title: '流程流水号', index: 'pro_no' },
+
+    { title: '工程名称', index: 'pro_name' },
+
+    { title: '建设单位', index: 'org' },
     {
-      title: '创建时间', index: 'creationTime', type: 'date'
+      title: '工程类型', index: 'node',
+      sort: {
+        compare: (a, b) => a.node > b.node ? 1 : 0,
+      },
+      filter: {
+        menus: [
+          { text: '初审', value: 0 },
+          { text: '复审', value: 1 },
+          { text: '审核完毕', value: 2 },
+        ],
+        fn: (filter: any, record: any) =>
+          record.node >= filter.value[0] && record.node <= filter.value[1],
+        multiple: false,
+      }
     },
+    { title: '当前处理人', index: 'person' },
+
+    { title: '申报时间', type: 'date', index: 'repo_time' },
+    { title: '流程超时', index: 'timeout' },
     {
-      title: '操作', className: 'text-center', buttons: [
-        {
-          text: '<font class="stButton">办理</font>', iif: (record) => this.isSen(record.isCustom), click: (record: any) => {
-            this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${record.workFlow_Instance_Id}`]);
-          }
-        },
+      title: '操作',
+      buttons: [
+        { text: '查看', click: (item: any) => `/form/${item.id}` },
+        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
     }
   ];
 
-
-  pageConfig: STPage = publicPageConfig;
-  constructor(private router: Router, private _flowServices: FlowServices, private eventEmiter: EventEmiter, ) {
-    this.init();
-  }
-
-  /**
-   * 判断发起流程
-   * @param key 
-   * @param index 
-   */
-  isSen(key) {
-    return key
+  constructor(private http: _HttpClient,
+    private modal: ModalHelper,
+    private xlsx: XlsxService) {
+    super();
   }
 
   ngOnInit() {
-    let _self = this;
 
-    this.eventEmiter.on('init', () => {
-      _self.init();
+  }
+
+
+
+  refresh() {
+    // this.modal
+    //   .createStatic(FormEditComponent, { i: { id: 0 } })
+    //   .subscribe(() => this.st.reload());
+  }
+  search() {
+
+  }
+
+
+  exportXlsx() {
+    const expData = [this.columns.map(i => i.title)];
+
+    expData.push(['1', '1', '1', '1',]);
+
+    this.xlsx.export({
+      sheets: [
+        {
+          data: expData,
+          name: 'sheet name',
+        },
+      ],
     });
-
-    this.eventEmiter.on('flowadd', () => {
-      _self.init();
-    });
   }
 
-  /**
-   * 初始化
-   */
-  init() {
-    this.params.page = 1;
-    this.params.maxResultCount = AppConsts.grid.defaultPageSize;
-    this.params.filterText = '';
-    this.params.result = 4;
-    this.workFlow_NodeAuditorRecords(this.params);
-  }
 
-  /**
-   * 回车
-   */
-  onEnter(v) {
-    if (v.which === 13) {
-      this.query();
-    }
-  }
-
-  /**
-   * 获取列表 
-   */
-  workFlow_NodeAuditorRecords(params?: any) {
-    this.data = '';
-    this._flowServices.tenant_PendingWorkFlow_NodeAuditorRecord(params).subscribe(data => {
-      this.data = data.result;
-    })
-  }
-
-  /**
-   * 点击查询
-   */
-  query() {
-    this.params.page = 1;
-    this.params.maxResultCount = AppConsts.grid.defaultPageSize;
-    this.workFlow_NodeAuditorRecords(this.params);
-  }
-
-  change(v) {
-    pageOnChange(v, this.params, () => {
-      this.workFlow_NodeAuditorRecords(this.params);
-    })
-  }
 
 }
