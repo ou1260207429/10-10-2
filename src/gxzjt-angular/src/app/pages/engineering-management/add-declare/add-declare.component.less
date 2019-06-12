@@ -1,70 +1,79 @@
+.tables {
+  width: 100%;
+  border: 1px solid #e2e2e2;
+  text-align: center;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 40px;
 
-  .tables {
-    width: 100%;
-    border: 1px solid #e2e2e2;
-    text-align: center;
-    border-collapse: collapse;
-    border-spacing: 0;
-    margin-bottom: 40px;
-    td{
-      word-break: break-all;
-      word-wrap: break-word;
-      border-right: 1px solid #e2e2e2;
-      border-bottom: 1px solid #e2e2e2;
-      font: 500 14px Arial;
-      padding: 10px 5px;
-      -min-width: 80px;
+  td {
+    word-break: break-all;
+    word-wrap: break-word;
+    border-right: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
+    font: 500 14px Arial;
+    padding: 10px 5px;
+    -min-width: 80px;
+  }
+
+  td[required="true"]::before {
+    display: inline-block;
+    margin-right: 4px;
+    color: @primary-color;
+    font-size: 14px;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
+    content: '*';
+  }
+
+  thead td {
+    font-size: 17px;
+    font-weight: 900;
+  }
+
+  .fontweight {
+    font-weight: 600;
+  }
+
+  .fontLeft {
+    text-align: right;
+  }
+
+  .leftTitle {
+    max-width: 150px;
+  }
+
+  .title {
+    td {
+      text-align: center;
+      background-color: #e0e0e075;
     }
-    td[required="true"]::before {
-        display: inline-block;
-        margin-right: 4px;
-        color: #f5222d;
-        font-size: 14px;
-        font-family: SimSun,sans-serif;
-        line-height: 1;
-        content: '*';
- }
-    thead td{
-      font-size: 17px;
-      font-weight: 900;
-    }
-    .fontweight{
-      font-weight: 600;
-    }
-    .fontLeft{
-      text-align: right;
-    }
-    .leftTitle{
-      max-width: 150px;
-    }
-    .title{
-      td{
-        text-align: center;
-        background-color: #e0e0e075;
-      }
-      
-    }
-    .checkList{
-      float: left;
-      padding-right: 20px;
-    }
-    .btn{
-      float: right;
-      height: 25px;
-      font-size: 10px;
-      padding: 0 20px;
-    }
-   .checkAll{
+
+  }
+
+  .checkList {
+    float: left;
+    padding-right: 20px;
+  }
+
+  .btn {
+    float: right;
+    height: 25px;
+    font-size: 10px;
+    padding: 0 20px;
+  }
+
+  .checkAll {
     border: 1px solid #cacaca;
     color: #979797;
     margin-right: 10px;
-   }
-   .downLoad{
-     border: 1px solid red;
-     color: red;
-   }
-
-   
-  
   }
 
+  .downLoad {
+    border: 1px solid red;
+    color: red;
+  }
+
+
+
+}

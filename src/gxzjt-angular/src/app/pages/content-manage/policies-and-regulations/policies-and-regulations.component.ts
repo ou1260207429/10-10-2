@@ -24,11 +24,11 @@ export class PoliciesAndRegulationsComponent implements OnInit {
     icon: 'folder-open',
     isLeaf: true
   }];
-deleteId:any
+  deleteId: any
   chooseAuditors;
   params: any = {
-    page:1,
-    size:10,
+    page: 1,
+    size: 10,
     sort: "",
     isAsc: false,
     orderby: "",
@@ -80,16 +80,16 @@ deleteId:any
         },
         {
           text: '<font class="stButton">删除</font>', click: (record: any) => {
-            this.deleteVisible=true;
-            this.isOkLoading=false;
+            this.deleteVisible = true;
+            this.isOkLoading = false;
             this.deleteId = record.id;
-        },
+          },
       ]
     }
   ];
 
-  deleteVisible:false
-  isOkLoading:false
+  deleteVisible = false;
+  isOkLoading = false;
   pageConfig: STPage = publicPageConfig;
   validateForm: any;
   constructor(private _regulationServiceProxy: RegulationServiceProxy, private router: Router, private eventEmiter: EventEmiter) {
@@ -98,7 +98,7 @@ deleteId:any
   ngOnInit() {
     let _self = this;
     this.init();
-  
+
   }
 
   /**
@@ -134,14 +134,14 @@ deleteId:any
    */
 
 
-   deleteList(){
-this.isOkLoading=true;
+  deleteList() {
+    this.isOkLoading = true;
     this._regulationServiceProxy.deleteRegulationByIdAsync(this.deleteId).subscribe(data => {
-this.isOkLoading=false;
-      this.deleteVisible=false;
+      this.isOkLoading = false;
+      this.deleteVisible = false;
       this.init();
     })
-   }
+  }
   /**
    * 点击查询
    */
@@ -155,10 +155,10 @@ this.isOkLoading=false;
       this.workFlow_NodeAuditorRecords(this.params);
     })
   }
-  handleCancel(): void{
-    this.deleteVisible=false
+  handleCancel(): void {
+    this.deleteVisible = false
   }
-  handleOk(): void{
+  handleOk(): void {
     this.deleteList()
   }
 
@@ -166,5 +166,5 @@ this.isOkLoading=false;
   add() {
     this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/1`, { operate: 0 }]);
   }
- 
+
 }
