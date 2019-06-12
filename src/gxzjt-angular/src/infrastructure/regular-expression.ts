@@ -1,6 +1,6 @@
 import { ValidatorFn, AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { STComponent } from '@delon/abc';
-
+import lodash from 'lodash'
 
 // 常用正则表达式
 
@@ -273,9 +273,16 @@ export function deleteArray(array: any, checkAttribute: string, ) {
   } else {
     throw new Error('传入的类型错误');
   }
-
 }
 
+export function objDeleteType(box) {
+  const obj = lodash.cloneDeep(box);
+  Object.keys(obj).forEach(function (key) {
+    obj[key] = '';
+  });
+  console.log(obj);
+  return obj;
+}
 /**
  * 数组中单独判断
  * @param array 数组
