@@ -37,6 +37,11 @@ export class AppMenus {
                 },
                 {
                     text: "",
+                    i18n: "草稿",
+                    link: "/app/work-matters/draf",
+                },
+                {
+                    text: "",
                     i18n: "流程",
                     link: "/app/work-matters/flowModuleComponent",
                 },
@@ -53,8 +58,8 @@ export class AppMenus {
             ]
         },
         {
-            text: "",
-            i18n: "统计分析",
+            text: "统计分析",
+
             icon: { type: "icon", value: "account-book" },// 图标
             children: [
                 {
@@ -112,6 +117,19 @@ export class AppMenus {
                     i18n: "竣工验收备案",
                     link: "/app/engineering-management/completedAcceptanceComponent",
                 },
+            ]
+        },
+        {
+            text: "系统管理",
+
+            icon: { type: "icon", value: "account-book" },// 图标
+            children: [
+                {
+                    text: "抽查比例中心",
+
+                    link: "/app/sys-setting/spot-check-proportion",
+                }
+
             ]
         },
     ];

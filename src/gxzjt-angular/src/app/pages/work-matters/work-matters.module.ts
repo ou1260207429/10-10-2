@@ -9,6 +9,7 @@ import { PipesModule } from 'pipes/pipes.module';
 import { AlreadyDoneDetailsComponent } from './already-done-details/already-done-details.component';
 import { ComponentsModule } from '@app/components/components.module';
 import { DraftsComponent } from './drafts/drafts.component';
+import { WorkFlowedServiceProxy } from '../../../shared/service-proxies/service-proxies'
 
 const COMPONENTS = [];
 const COMPONENTS_NOROUNT = [
@@ -32,7 +33,7 @@ const COMPONENTS_NOROUNT = [
     ...COMPONENTS_NOROUNT,
 
   ],
-
+  providers: [WorkFlowedServiceProxy],
   entryComponents: COMPONENTS_NOROUNT
 })
 export class WorkMattersModule { }

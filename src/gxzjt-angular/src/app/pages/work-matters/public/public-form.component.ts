@@ -1,13 +1,19 @@
 
 import { FormBuilder, FormGroup } from '@angular/forms';
-
+import { _HttpClient } from '@delon/theme';
 export class PublicFormComponent {
 
 
     proName = "";
     orgName = "";
-
     rangeTime: any;
+
+    formResultData: any;
+
+
+
+
+    isSearchForm = false;
 
     useSelect = false;
     //选择单位
