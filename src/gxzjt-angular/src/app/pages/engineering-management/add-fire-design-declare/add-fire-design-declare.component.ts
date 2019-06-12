@@ -1,4 +1,9 @@
+import { ApplyServiceServiceProxy, FlowFormQueryDto, FlowFormDto } from './../../../../shared/service-proxies/service-proxies';
 import { Component, OnInit } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd';
+import { ActivatedRoute } from '@angular/router';
+import { timeTrans } from 'infrastructure/regular-expression';
+import { OptionsEnum, ArchitectureTypeEnum } from 'infrastructure/expression';
 
 /**
  * 工程管理->消防设计审查管理->新增申报
@@ -11,7 +16,25 @@ import { Component, OnInit } from '@angular/core';
 export class AddFireDesignDeclareComponent implements OnInit {
 
   checked = false;
-  constructor() { }
+
+  flowFormQueryDto = new FlowFormQueryDto();
+
+  flowFormDto = new FlowFormDto();
+
+  //0是新增  1是查看  2是修改
+  type
+
+  //市县区
+  position = OptionsEnum
+
+  //结构类型
+  typeSelect = ArchitectureTypeEnum
+  constructor(private _applyService: ApplyServiceServiceProxy, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
+    this.flowFormQueryDto.flowType = 1;
+    this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
+
+    console.log(this.position);
+  }
 
   //特殊建设工程列表
   listArr = [
@@ -360,7 +383,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
   };
 
   checkList = [
-    { label: '顶棚', value: false, checked: false },
+    { label: '顶棚', value: true, checked: true },
     { label: '墙面', value: false, checked: false },
     { label: '地面', value: false, checked: false },
     { label: '隔断', value: false, checked: false },
@@ -385,31 +408,244 @@ export class AddFireDesignDeclareComponent implements OnInit {
     { label: '其他', value: false, checked: false },
   ]
 
-  data = {
-    test: ''
-  }
-  ngOnInit() {
-  }
-  //附件上传全选
-  checkAll(name) {
-    let objList = this[name];
-    objList.isAllChecked = !objList.isAllChecked;
-    objList.data.map(item => {
-      if (objList.isAllChecked) {
-        item.checked = true;
-      } else {
-        item.checked = false;
-
+  data: any = {
+    jsconstructionUnit: '',
+    legalRepresentative: '',
+    legalRepresentativeNo: '',
+    projectName: '',
+    contacts: '',
+    contactsNumber: '',
+    engineeringCitycountyAndDistrict: '',
+    engineeringAddress: '',
+    planStartTime: '',
+    planEndTime: '',
+    projectCategoryId: '',
+    design: {
+      designUnit: '',
+      qualificationLevel: '',
+      legalRepresentative: '',
+      contacts: '',
+      contactsNumber: ''
+    },
+    constructionUnit: [
+      {
+        designUnit: '',
+        qualificationLevel: '',
+        legalRepresentative: '',
+        contacts: '',
+        contactsNumber: ''
       }
+    ],
+    constructionControlUnit: {
+      designUnit: '',
+      qualificationLevel: '',
+      legalRepresentative: '',
+      contacts: '',
+      contactsNumber: ''
+    },
+    mappingUnit: {
+      designUnit: '',
+      qualificationLevel: '',
+      legalRepresentative: '',
+      contacts: '',
+      contactsNumber: '',
+      no: ''
+    },
+    basicInformation: [
+      {
+        name: '',
+        type: '',
+        grade: '',
+        aboveGround: '',
+        underground: '',
+        height: '',
+        builtUpArea: '',
+        areaCovered: '',
+        firePreventionSum: '',
+        firePreventionMaximumArea: '',
+        smokeControlSum: '',
+        smokeControlMaximumArea: '',
+        fireHazard: '',
+      }
+    ],
+    storageTank: [
+      {
+        position: '',
+        totalCapacity: '',
+        setupType: '',
+        storageForm: '',
+        name: '',
+      }
+    ],
+    yard: [
+      { reserves: '', name: '' }
+    ],
+    buildingThermalInsulation: {
+      type: '',
+      layerNumber: '',
+      useNature: '',
+      originallyUsed: '',
+    },
+    decorationProject: {
+      decorationSite: [
+        { label: '顶棚', value: false, checked: true },
+        { label: '墙面', value: false, checked: false },
+        { label: '地面', value: false, checked: false },
+        { label: '隔断', value: false, checked: false },
+        { label: '固定家具', value: false, checked: false },
+        { label: '装饰织物', value: false, checked: false },
+        { label: '其他', value: false, checked: false },
+      ],
+      decorationArea: '',
+      decorationFloorNumber: '',
+      useNature: '',
+      originallyUsed: '',
+    },
+    fireFightingFacilities: [
+      { label: '室内消火栓系统', value: false, checked: false },
+      { label: '室外消火栓系统', value: false, checked: false },
+      { label: '火灾自动报警系统', value: false, checked: false },
+      { label: '自动喷水灭火系统', value: false, checked: false },
+      { label: '气体灭火系统', value: false, checked: false },
+      { label: '泡沫灭火系统', value: false, checked: false },
+      { label: '其他灭火系统', value: false, checked: false },
+      { label: '疏散指示标志', value: false, checked: false },
+      { label: '消防应急照明', value: false, checked: false },
+      { label: '防烟排烟系统', value: false, checked: false },
+      { label: '消防电梯', value: false, checked: false },
+      { label: '灭火器', value: false, checked: false },
+      { label: '其他', value: false, checked: false },
+    ],
 
-    })
-
-  }
-  //类别单选框
-  getClass() {
-    if (this.radiotype != 'B') {
-      this.radiotypeA = "";
+    //同时提供的材料
+    simultaneousMaterials: {
+      a1Checkbox: '',
+      a1Input: '',
+      a2Checkbox: '',
+      a2Input: '',
+      a3Checkbox: '',
+      a4Checkbox: '',
+      a5Checkbox: '',
+    },
+    corporateOpinion: {
+      seal: '',
+      name: '',
     }
+  }
+
+
+
+  ngOnInit() {
+    this.init();
+  }
+
+  /**
+   * 初始化数据
+   */
+  init() {
+    // this.post_GetFlowFormData();
+  }
+
+  /**
+   * 获取特殊工程列表
+   */
+  post_GetFlowFormData() {
+    this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
+      console.log(data)
+    })
+  }
+
+  /**
+   * 申请提交
+   */
+  save() {
+    this.data.planStartTime = timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy-MM-dd', '-')
+    this.data.planEndTime = timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd', '-')
+    console.log(this.data)
+    // const src = this.type == 0 ? this._applyService.applyFlow : this._applyService.applyFlow;
+    // src().subscribe(data => { 
+
+    // })
+    console.log(JSON.stringify(this.data))
+  }
+
+
+  /**
+   * 存草稿
+   */
+  depositDraft() {
+    this.data.planStartTime = this.data.planStartTime == '' ? '' : timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy-MM-dd', '-')
+    this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd', '-')
+    this.flowFormDto.formJson = JSON.stringify(this.data);
+    console.log(this.data)
+    return false
+    this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
+      this.message.success('保存成功')
+    })
+  }
+
+  /**
+   * 添加数组
+   */
+  addArray(arr) {
+    arr.push({
+      designUnit: '',
+      qualificationLevel: '',
+      legalRepresentative: '',
+      contacts: '',
+      contactsNumber: ''
+    })
+  }
+
+  addJArray(arr) {
+    arr.push({
+      name: '',
+      type: '',
+      grade: '',
+      aboveGround: '',
+      underground: '',
+      height: '',
+      builtUpArea: '',
+      areaCovered: '',
+      firePreventionSum: '',
+      firePreventionMaximumArea: '',
+      smokeControlSum: '',
+      smokeControlMaximumArea: '',
+      fireHazard: '',
+    })
+  }
+
+  addStorageArray(arr) {
+    arr.push({
+      position: '',
+      totalCapacity: '',
+      setupType: '',
+      storageForm: '',
+      name: '',
+    })
+  }
+
+  addYardArray(arr) {
+    arr.push({ Reserves: '', name: '' })
+  }
+
+  /**
+   * 选择市县区
+   * @param v 
+   */
+  changeCitycountyAndDistrict(v) {
+    this.data.engineeringCitycountyAndDistrict = v;
+  }
+
+  /**
+   * 删除数组
+   */
+  deleteArray(arr, index) {
+    if (index == 0) {
+      this.message.error('不允许删除完，必须保留一个')
+      return false
+    }
+    arr.splice(index, 1)
   }
 
 }

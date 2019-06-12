@@ -1,12 +1,11 @@
 {
   "/app1": {
-    "target": "http://192.168.10.151:8087",
+    "target": "http://localhost:21021",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,
     "pathRewrite": {
       "^/app1": ""
     }
-
   }
 }
