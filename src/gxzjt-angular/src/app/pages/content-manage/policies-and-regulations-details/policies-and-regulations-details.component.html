@@ -17,16 +17,13 @@
       </se> 
       <se label="类型" required>
         <nz-select [disabled]="operate=='detail'" style="width: 175px;" [(ngModel)]="data.regulationType"
-          name="regulationTypeId" nzAllowClear nzPlaceHolder="Choose" required>
-          <nz-option [nzValue]="1" nzLabel="1"></nz-option>
-          <nz-option [nzValue]="2" nzLabel="2"></nz-option>
-          <nz-option [nzValue]="3" nzLabel="3"></nz-option>
-          <nz-option [nzValue]="4" nzLabel="4"></nz-option>
-          <nz-option [nzValue]="5" nzLabel="5"></nz-option>
+          name="regulationTypeId" nzAllowClear  required>
+          <nz-option *ngFor="let item of RegulationType" [nzValue]="item.value" [nzLabel]="item.value"></nz-option>
+         
         </nz-select>
       </se>
       <se label="生效日期" required>
-        <nz-date-picker [(ngModel)]="data.issueDate" [disabled]="operate=='detail'" name="creationTime" required>
+        <nz-date-picker [nzDateRender]="YYYY-MM-DD" [(ngModel)]="data.issueDate" [disabled]="operate=='detail'" name="creationTime" required>
         </nz-date-picker>
       </se>
       <se label="附件上传" required>

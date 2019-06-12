@@ -3,14 +3,16 @@ import { STColumn, STPage, STComponent } from '@delon/abc';
 import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 import { Router } from '@angular/router';
 import { EventEmiter } from 'infrastructure/eventEmiter';
-import { RegulationServiceProxy } from '@shared/service-proxies/service-proxies';
 
+import { PoliciesAndRegulationsServices } from './../../../../services/policies-and-regulations.services';
+import { RegulationServiceProxy } from '@shared/service-proxies/service-proxies';
 @Component({
-  selector: 'app-handling-guide',
-  templateUrl: './handling-guide.component.html',
+  selector: 'app-policies-and-regulations',
+  templateUrl: './policies-and-regulations.component.html',
   styles: []
 })
-export class HandlingGuideComponent implements OnInit {
+
+export class PoliciesAndRegulationsComponent implements OnInit {
   @ViewChild('treeCom') treeCom;
   @ViewChild('st') st: STComponent;
   flowAddType: any = {
@@ -25,6 +27,7 @@ export class HandlingGuideComponent implements OnInit {
   }];
 
   chooseAuditors;
+  allDate = []
   params: any = {
     page:1,
     size:10,

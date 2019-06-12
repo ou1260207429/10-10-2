@@ -3,14 +3,15 @@ import { STColumn, STPage, STComponent } from '@delon/abc';
 import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 import { Router } from '@angular/router';
 import { EventEmiter } from 'infrastructure/eventEmiter';
-import { RegulationServiceProxy } from '@shared/service-proxies/service-proxies';
 
+import { PoliciesAndRegulationsServices } from './../../../../services/policies-and-regulations.services';
+import { RegulationServiceProxy } from '@shared/service-proxies/service-proxies';
 @Component({
-  selector: 'app-handling-guide',
-  templateUrl: './handling-guide.component.html',
+  selector: 'app-policies-and-regulations',
+  templateUrl: './policies-and-regulations.component.html',
   styles: []
 })
-export class HandlingGuideComponent implements OnInit {
+export class PoliciesAndRegulationsComponent implements OnInit {
   @ViewChild('treeCom') treeCom;
   @ViewChild('st') st: STComponent;
   flowAddType: any = {
@@ -25,6 +26,7 @@ export class HandlingGuideComponent implements OnInit {
   }];
 
   chooseAuditors;
+  allDate = []
   params: any = {
     page:1,
     size:10,
@@ -69,12 +71,12 @@ export class HandlingGuideComponent implements OnInit {
       title: '操作', className: 'text-center', buttons: [
         {
           text: '<font class="stButton">详情</font>', click: (record: any) => {
-            this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/${record.id}`, { operate: 1 }]);
+            this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/${record.regulationTypeId}`, { operate: 1 }]);
           }
         },
         {
           text: '<font class="stButton">编辑</font>', click: (record: any) => {
-            this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/${record.id}`, { operate: 2 }]);
+            this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/${record.regulationTypeId}`, { operate: 2 }]);
           }
         },
       ]
@@ -84,7 +86,7 @@ export class HandlingGuideComponent implements OnInit {
 
   pageConfig: STPage = publicPageConfig;
   validateForm: any;
-  constructor(private _regulationServiceProxy: RegulationServiceProxy, private router: Router, private eventEmiter: EventEmiter) {
+  constructor(private _regulationServiceProxy: RegulationServiceProxy, private router: Router, private _policiesAndRegulationsServices: PoliciesAndRegulationsServices, private eventEmiter: EventEmiter) {
   }
 
   ngOnInit() {
