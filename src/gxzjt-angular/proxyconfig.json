@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "/app": {
+=======
+  "/app1": {
+>>>>>>> 4c524d1e428a4b52540a02e7bd95869b055d3209
     "target": "http://localhost:21021",
     "secure": false,
     "logLevel": "debug",
@@ -7,6 +11,5 @@
     "pathRewrite": {
       "^/app1": ""
     }
-
   }
 }

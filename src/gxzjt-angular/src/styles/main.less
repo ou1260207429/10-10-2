@@ -123,17 +123,6 @@
 
 
 //全局页面的样式
-.ant-layout.ant-pro-content{background: #F4F9FF;}
-.ant-table-thead > tr > th{background: #F1F1F1;}
-.reuse-tab .ant-tabs-nav .ant-tabs-tab .name{background: #F4F4F4;border-radius: 5px;color: #AAAAAA}
-.ant-tabs-nav .ant-tabs-tab-active,.reuse-tab .ant-tabs-nav .ant-tabs-tab.ant-tabs-tab-active .name{color: white;background: #f5222d;border-radius: 5px}
-nz-tabset .ant-tabs-ink-bar{display: none!important}
-nz-tabset .ant-tabs-nav-container,nz-tabset .ant-tabs-nav-wrap{margin-bottom:0} 
-.reuse-tab .ant-tabs-nav .ant-tabs-tab.ant-tabs-tab-active .reuse-tab__op{color: white;}
-.reuse-tab{margin-bottom: 10px}
-.noSpan .ant-input-group-addon{padding: 0;border:0;border-radius: 0;}
-.noSpan .ant-input-group-addon button{    border-top-left-radius: 0;border-bottom-left-radius: 0; }
-.noLabel .se__label,.afterNone:after{display: none}
 .ant-layout.ant-pro-content {
   background: #F4F9FF;
 }
@@ -151,7 +140,61 @@ nz-tabset .ant-tabs-nav-container,nz-tabset .ant-tabs-nav-wrap{margin-bottom:0}
 .ant-tabs-nav .ant-tabs-tab-active,
 .reuse-tab .ant-tabs-nav .ant-tabs-tab.ant-tabs-tab-active .name {
   color: white;
-  background: #f5222d;
+  background: @primary-color;
+  border-radius: 5px
+}
+
+nz-tabset .ant-tabs-ink-bar {
+  display: none !important
+}
+
+nz-tabset .ant-tabs-nav-container,
+nz-tabset .ant-tabs-nav-wrap {
+  margin-bottom: 0
+}
+
+.reuse-tab .ant-tabs-nav .ant-tabs-tab.ant-tabs-tab-active .reuse-tab__op {
+  color: white;
+}
+
+.reuse-tab {
+  margin-bottom: 10px
+}
+
+.noSpan .ant-input-group-addon {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.noSpan .ant-input-group-addon button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.noLabel .se__label,
+.afterNone:after {
+  display: none
+}
+
+.ant-layout.ant-pro-content {
+  background: #F4F9FF;
+}
+
+.ant-table-thead>tr>th {
+  background: #F1F1F1;
+}
+
+.reuse-tab .ant-tabs-nav .ant-tabs-tab .name {
+  background: #F4F4F4;
+  border-radius: 5px;
+  color: #AAAAAA
+}
+
+.ant-tabs-nav .ant-tabs-tab-active,
+.reuse-tab .ant-tabs-nav .ant-tabs-tab.ant-tabs-tab-active .name {
+  color: white;
+  background: @primary-color;
   border-radius: 5px
 }
 
@@ -226,7 +269,7 @@ yoyo-sidebar-nav .sidebar-nav>li.ant-menu-submenu-selected>.ant-menu {
 yoyo-sidebar-nav .sidebar-nav>li.ant-menu-submenu-selected::after {
   content: '';
   clear: both;
-  background: #f5222d;
+  background: @primary-color;
   position: absolute;
   top: 0;
   left: 0;
@@ -235,80 +278,99 @@ yoyo-sidebar-nav .sidebar-nav>li.ant-menu-submenu-selected::after {
 }
 
 yoyo-sidebar-nav .sidebar-nav>li.ant-menu-submenu-selected .ant-menu-submenu-title .iconfont {
-  color: #f5222d
+  color: @primary-color
 }
 
+.formTables .tables se{padding-left: 0 !important;padding-right: 0 !important}
 .tables {nz-date-picker, nz-date-picker .ant-calendar-picker{width: 100%;}}
+.tables {
+
+  nz-date-picker,
+  nz-date-picker .ant-calendar-picker {
+    width: 100%;
+  }
+}
 
 
 .tables {
-    width: 100%;
-    border: 1px solid #e2e2e2;
-    text-align: center;
-    border-collapse: collapse;
-    border-spacing: 0;
-    margin-bottom: 40px;
-    td{
-      word-break: break-all;
-      word-wrap: break-word;
-      border-right: 1px solid #e2e2e2;
-      border-bottom: 1px solid #e2e2e2;
-      font: 500 14px Arial;
-      padding: 10px 5px;
-      -min-width: 80px;
+  width: 100%;
+  border: 1px solid #e2e2e2;
+  text-align: center;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 40px;
+
+  td {
+    word-break: break-all;
+    word-wrap: break-word;
+    border-right: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
+    font: 500 14px Arial;
+    padding: 10px 5px;
+    min-width: 80px;
+  }
+
+  td[required="true"]::before {
+    display: inline-block;
+    margin-right: 4px;
+    color: @primary-color;
+    font-size: 14px;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
+    content: '*';
+  }
+
+  thead td {
+    font-size: 17px;
+    font-weight: 900;
+  }
+
+  .fontweight {
+    font-weight: 600;
+  }
+
+  .fontLeft {
+    text-align: right;
+  }
+
+  .leftTitle {
+    max-width: 150px;
+  }
+
+  .title {
+    td {
+      text-align: center;
+      background-color: #e0e0e075;
     }
-    td[required="true"]::before {
-        display: inline-block;
-        margin-right: 4px;
-        color: #f5222d;
-        font-size: 14px;
-        font-family: SimSun,sans-serif;
-        line-height: 1;
-        content: '*';
- }
-    thead td{
-      font-size: 17px;
-      font-weight: 900;
-    }
-    .fontweight{
-      font-weight: 600;
-    }
-    .fontLeft{
-      text-align: right;
-    }
-    .leftTitle{
-      max-width: 150px;
-    }
-    .title{
-      td{
-        text-align: center;
-        background-color: #e0e0e075;
-      }
-      
-    }
-    .checkList{
-      float: left;
-      padding-right: 20px;
-    }
-    .btn{
-      float: right;
-      height: 25px;
-      font-size: 10px;
-      padding: 0 20px;
-    }
-   .checkAll{
+
+  }
+
+  .checkList {
+    float: left;
+    padding-right: 20px;
+  }
+
+  .btn {
+    float: right;
+    height: 25px;
+    font-size: 10px;
+    padding: 0 20px;
+  }
+
+  .checkAll {
     border: 1px solid #cacaca;
     color: #979797;
     margin-right: 10px;
-   }
-   .downLoad{
-     border: 1px solid red;
-     color: red;
-   }
   }
 
+  .downLoad {
+    border: 1px solid red;
+    color: red;
+  }
+}
+
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected a {
-  color: #f5222d
+  color: @primary-color
 }
 
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
@@ -323,6 +385,7 @@ yoyo-sidebar-nav .sidebar-nav>li.ant-menu-submenu-selected .ant-menu-submenu-tit
 .edui-default .edui-editor-messageholder {
   display: none !important
 }
-.se__inline .se__label{
+
+.se__inline .se__label {
   text-align: right;
 }

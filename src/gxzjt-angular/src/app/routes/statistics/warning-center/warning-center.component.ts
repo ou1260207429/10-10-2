@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent, XlsxService } from '@delon/abc';
-import { SFSchema } from '@delon/form';
+
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 

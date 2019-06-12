@@ -6,16 +6,15 @@ import { Router } from '@angular/router';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { AppConsts } from '@shared/AppConsts';
 
-
 /**
- * 消防验收
+ *  草稿箱
  */
 @Component({
-  selector: 'app-fire-acceptance',
-  templateUrl: './fire-acceptance.component.html',
+  selector: 'app-drafts',
+  templateUrl: './drafts.component.html',
   styles: []
 })
-export class FireAcceptanceComponent implements OnInit {
+export class DraftsComponent implements OnInit {
 
   @ViewChild('treeCom') treeCom;
   @ViewChild('st') st: STComponent;
@@ -46,8 +45,8 @@ export class FireAcceptanceComponent implements OnInit {
     {
       title: '操作', className: 'text-center', buttons: [
         {
-          text: '<font class="stButton">办理</font>', iif: (record) => this.isSen(record.isCustom), click: (record: any) => {
-            this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${record.workFlow_Instance_Id}`]);
+          text: '<font class="stButton">查看详情</font>', click: (record: any) => {
+            this.router.navigate([`/app/work-matters/alreadyDoneDetailsComponent/${record.workFlow_Instance_Id}`]);
           }
         },
       ]
@@ -58,15 +57,6 @@ export class FireAcceptanceComponent implements OnInit {
   pageConfig: STPage = publicPageConfig;
   constructor(private router: Router, private _flowServices: FlowServices, private eventEmiter: EventEmiter, ) {
     this.init();
-  }
-
-  /**
-   * 判断发起流程
-   * @param key 
-   * @param index 
-   */
-  isSen(key) {
-    return key
   }
 
   ngOnInit() {
@@ -106,7 +96,7 @@ export class FireAcceptanceComponent implements OnInit {
    */
   workFlow_NodeAuditorRecords(params?: any) {
     this.data = '';
-    this._flowServices.tenant_PendingWorkFlow_NodeAuditorRecord(params).subscribe(data => {
+    this._flowServices.tenant_ProcessedWorkFlow_NodeAuditorRecord(params).subscribe(data => {
       this.data = data.result;
     })
   }
@@ -118,20 +108,6 @@ export class FireAcceptanceComponent implements OnInit {
     this.params.page = 1;
     this.params.maxResultCount = AppConsts.grid.defaultPageSize;
     this.workFlow_NodeAuditorRecords(this.params);
-  }
-
-  /**
-   * 导出
-   */
-  export() {
-
-  }
-
-  /**
-   * 新增申报
-   */
-  addDeclare() {
-    this.router.navigate([`/app/engineering-management/addFireAcceptanceComponent/0`]);
   }
 
   change(v) {

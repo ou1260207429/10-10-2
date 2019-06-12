@@ -39,9 +39,15 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   // ]
 
   //表单对象
+<<<<<<< HEAD
   data: any;
   RegulationType: any
   constructor(private _eventEmiter: EventEmiter, private message: NzMessageService, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute) {
+=======
+  data: RegulationDto;
+  RegulationType: any
+  constructor(private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute, private _policiesAndRegulationsServices: PoliciesAndRegulationsServices) {
+>>>>>>> 4c524d1e428a4b52540a02e7bd95869b055d3209
     this.regulationId = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
     this.operate = parseInt(this._activatedRoute.snapshot.paramMap.get('operate'));
     this.initType();
@@ -71,6 +77,10 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     }
     this._regulationServiceProxy.getDropdownTypeByEnumType("RegulationType").subscribe((data: any) => {
       this.RegulationType = data
+<<<<<<< HEAD
+=======
+      console.log(data);
+>>>>>>> 4c524d1e428a4b52540a02e7bd95869b055d3209
     })
   }
 
@@ -79,6 +89,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
    */
   getRegulationDetailsByIdAsync() {
     this._regulationServiceProxy.getRegulationDetailsByIdAsync(this.regulationId).subscribe((data: any) => {
+<<<<<<< HEAD
       this.data = data
       this.data.regulationId = this.regulationId;
      // this.data.issueDate = timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-');
@@ -111,6 +122,21 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     arr.forEach(item => {
       delete data[item]
     })
+=======
+      var res = {
+        "regulationId": data.id,
+        "regulationCode": data.regulationCode,
+        "title": data.title,
+        "issueOrg": data.issueOrg,
+        "regulationType": data.regulationType,
+        "issueDate": data.issueDate,
+        "content": data.content,
+        "guid": data.guid
+      };
+      this.data.init(res);
+      console.log(this.data);
+    });
+>>>>>>> 4c524d1e428a4b52540a02e7bd95869b055d3209
   }
 
   /**
@@ -126,10 +152,16 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     console.log(this.data)
 
     const src = this.operate == 0 ? this._regulationServiceProxy.addRegulationAsync(this.data) : this._regulationServiceProxy.editRegulationAsync(this.data)
+<<<<<<< HEAD
     src.subscribe(data => {
       const name = this.operate == 0 ? '新增成功' : '修改成功';
       this.message.success(name);
       this._eventEmiter.emit('init', []);
+=======
+
+    src.subscribe(data => {
+      console.log(this.data)
+>>>>>>> 4c524d1e428a4b52540a02e7bd95869b055d3209
       this.goBack()
     })
   }

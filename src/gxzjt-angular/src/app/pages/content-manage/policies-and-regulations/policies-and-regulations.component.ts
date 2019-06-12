@@ -15,9 +15,24 @@ import { PublicModel } from 'infrastructure/public-model';
 export class PoliciesAndRegulationsComponent implements OnInit {
   @ViewChild('treeCom') treeCom;
   @ViewChild('st') st: STComponent;
+<<<<<<< HEAD
+=======
+  flowAddType: any = {
+    type: '',
+    name: ''
+  };
+  nodes = [{
+    title: '全部',
+    key: '',
+    icon: 'folder-open',
+    isLeaf: true
+  }];
+  deleteId: any
+  chooseAuditors;
+>>>>>>> 4c524d1e428a4b52540a02e7bd95869b055d3209
   params: any = {
-    page:1,
-    size:10,
+    page: 1,
+    size: 10,
     sort: "",
     isAsc: false,
     orderby: "",
@@ -69,6 +84,7 @@ export class PoliciesAndRegulationsComponent implements OnInit {
         },
         {
           text: '<font class="stButton">删除</font>', click: (record: any) => {
+<<<<<<< HEAD
             this._publicModel.isDeleteModal(()=>{
               this._regulationServiceProxy.deleteRegulationByIdAsync(record.id).subscribe(data => {
                 this.init();
@@ -76,10 +92,22 @@ export class PoliciesAndRegulationsComponent implements OnInit {
             });
           }
         },
+=======
+            this.deleteVisible = true;
+            this.isOkLoading = false;
+            this.deleteId = record.id;
+          },
+        }
+>>>>>>> 4c524d1e428a4b52540a02e7bd95869b055d3209
       ]
     }
   ];
 
+<<<<<<< HEAD
+=======
+  deleteVisible = false;
+  isOkLoading = false;
+>>>>>>> 4c524d1e428a4b52540a02e7bd95869b055d3209
   pageConfig: STPage = publicPageConfig;
   constructor(private _eventEmiter:EventEmiter,private _publicModel:PublicModel,private _regulationServiceProxy: RegulationServiceProxy, private router: Router) {
   }
@@ -87,9 +115,13 @@ export class PoliciesAndRegulationsComponent implements OnInit {
   ngOnInit() {
     let _self = this;
     this.init();
+<<<<<<< HEAD
     this._eventEmiter.on('init',()=>{
       _self.init();
     });
+=======
+
+>>>>>>> 4c524d1e428a4b52540a02e7bd95869b055d3209
   }
 
   /**
@@ -118,7 +150,24 @@ export class PoliciesAndRegulationsComponent implements OnInit {
     this._regulationServiceProxy.regulationListAsync(params).subscribe(data => {
       this.data = data;
     })
+<<<<<<< HEAD
   } 
+=======
+  }
+  /**
+   * 删除数据
+   */
+
+
+  deleteList() {
+    this.isOkLoading = true;
+    this._regulationServiceProxy.deleteRegulationByIdAsync(this.deleteId).subscribe(data => {
+      this.isOkLoading = false;
+      this.deleteVisible = false;
+      this.init();
+    })
+  }
+>>>>>>> 4c524d1e428a4b52540a02e7bd95869b055d3209
   /**
    * 点击查询
    */
@@ -132,10 +181,19 @@ export class PoliciesAndRegulationsComponent implements OnInit {
       this.workFlow_NodeAuditorRecords(this.params);
     })
   }
+<<<<<<< HEAD
+=======
+  handleCancel(): void {
+    this.deleteVisible = false
+  }
+  handleOk(): void {
+    this.deleteList()
+  }
+>>>>>>> 4c524d1e428a4b52540a02e7bd95869b055d3209
 
 
   add() {
     this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/1`, { operate: 0 }]);
   }
- 
+
 }
