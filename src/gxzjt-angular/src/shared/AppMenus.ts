@@ -37,6 +37,11 @@ export class AppMenus {
                 },
                 {
                     text: "",
+                    i18n: "草稿",
+                    link: "/app/work-matters/draf",
+                },
+                {
+                    text: "",
                     i18n: "流程",
                     link: "/app/work-matters/flowModuleComponent",
                 },
@@ -48,8 +53,8 @@ export class AppMenus {
             ]
         },
         {
-            text: "",
-            i18n: "统计分析",
+            text: "统计分析",
+
             icon: { type: "icon", value: "account-book" },// 图标
             children: [
                 {

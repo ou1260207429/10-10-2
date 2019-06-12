@@ -1,15 +1,16 @@
-import { FlowServices } from './../../../../services/flow.services';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { STColumn, STComponent, XlsxService } from '@delon/abc';
 
 
-import { _HttpClient, ModalHelper } from '@delon/theme';
+import { _HttpClient } from '@delon/theme';
 
 
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { stringify } from '@angular/compiler/src/util';
+import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, PagedAndFilteredInputDto } from '../../../../shared/service-proxies/service-proxies'
 
-import { PublicFormComponent } from '../public/public-form.component'
+import { PublicFormComponent } from '../public/public-form.component';
+
+import { Router } from '@angular/router';
+
 
 /**
  * 待办流程
@@ -21,19 +22,25 @@ import { PublicFormComponent } from '../public/public-form.component'
 })
 export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
-  url = `/user`;
+
   searchKey = '';
 
 
-
-
-  formData = {};
-
+  page = 1;
 
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
-
+    {
+      title: '操作',
+      buttons: [
+        {
+          text: '查看', click: (item: any) => {
+            this.watchItem(item);
+          }
+        },
+      ]
+    },
     { title: '部门', index: 'pro_type' },
     { title: '流程流水号', index: 'pro_no' },
 
@@ -59,37 +66,61 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     { title: '当前处理人', index: 'person' },
 
     { title: '申报时间', type: 'date', index: 'repo_time' },
-    { title: '流程超时', index: 'timeout' },
-    {
-      title: '操作',
-      buttons: [
-        { text: '查看', click: (item: any) => `/form/${item.id}` },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
-      ]
-    }
+    { title: '流程超时', index: 'timeout' }
+
   ];
 
-  constructor(private http: _HttpClient,
-    private modal: ModalHelper,
+  constructor(private workFlowedServiceProxy: WorkFlowedServiceProxy,
+    private router: Router,
+
     private xlsx: XlsxService) {
     super();
   }
 
   ngOnInit() {
-
+    this.search();
   }
 
 
 
   refresh() {
-    // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+    this.resetSearchFliterForm();
+    this.search();
   }
   search() {
 
+    var searchParam = new PendingWorkFlow_NodeAuditorRecordDto();
+
+    var jsonData = {
+      "applyTimeStart": this.rangeTime[0],
+      "applyTimeEnd": this.rangeTime[1],
+      "companyName": this.orgName,
+      "projectName": this.proName,
+      "pagedAndFilteredInputDto": {
+        "filterText": "",
+        "page": this.page,
+        "sorting": "",
+        "skipCount": 0,
+        "maxResultCount": 50
+      },
+    };
+
+    searchParam.init(jsonData);
+
+    this.isSearchForm = true;
+    this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(searchParam).pipe().subscribe(res => {
+      console.log(res);
+      this.isSearchForm = false;
+    }, err => {
+      console.log(err);
+      this.isSearchForm = false;
+    });
   }
 
+
+  watchItem(item) {
+    this.router.navigate([`/app/work-matters/alreadyDoneDetailsComponent/${item.workFlow_Instance_Id}`]);
+  }
 
   exportXlsx() {
     const expData = [this.columns.map(i => i.title)];

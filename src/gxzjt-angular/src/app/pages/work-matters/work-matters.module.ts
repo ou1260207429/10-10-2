@@ -8,6 +8,7 @@ import { WorkMattersRoutingModule } from './work-matters-routing.module';
 import { PipesModule } from 'pipes/pipes.module';
 import { AlreadyDoneDetailsComponent } from './already-done-details/already-done-details.component';
 import { ComponentsModule } from '@app/components/components.module';
+import { WorkFlowedServiceProxy } from '../../../shared/service-proxies/service-proxies'
 
 const COMPONENTS = [];
 const COMPONENTS_NOROUNT = [FormModuleComponent, AgencyDoneComponent, AgencyDoneDetailsComponent, AlreadyDoneComponent, AlreadyDoneDetailsComponent];
@@ -23,7 +24,7 @@ const COMPONENTS_NOROUNT = [FormModuleComponent, AgencyDoneComponent, AgencyDone
     ...COMPONENTS,
     ...COMPONENTS_NOROUNT,
   ],
-
+  providers: [WorkFlowedServiceProxy],
   entryComponents: COMPONENTS_NOROUNT
 })
 export class WorkMattersModule { }

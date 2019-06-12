@@ -615,6 +615,255 @@ export class ConfigurationServiceProxy {
 }
 
 @Injectable()
+export class EnumConfigServiceServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param enumId (optional) 
+     * @param enumType (optional) 
+     * @param parentTypeId (optional) 
+     * @return Success
+     */
+    getEnumConfigs(enumId: number | null | undefined, enumType: string | null | undefined, parentTypeId: number | null | undefined): Observable<EnumConfig[]> {
+        let url_ = this.baseUrl + "/api/services/app/EnumConfigService/GetEnumConfigs?";
+        if (enumId !== undefined)
+            url_ += "EnumId=" + encodeURIComponent("" + enumId) + "&"; 
+        if (enumType !== undefined)
+            url_ += "EnumType=" + encodeURIComponent("" + enumType) + "&"; 
+        if (parentTypeId !== undefined)
+            url_ += "ParentTypeId=" + encodeURIComponent("" + parentTypeId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEnumConfigs(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEnumConfigs(<any>response_);
+                } catch (e) {
+                    return <Observable<EnumConfig[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<EnumConfig[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetEnumConfigs(response: HttpResponseBase): Observable<EnumConfig[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(EnumConfig.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<EnumConfig[]>(<any>null);
+    }
+
+    /**
+     * @param parentTypeId (optional) 
+     * @return Success
+     */
+    getEnumConfigsByParent(parentTypeId: number | null | undefined): Observable<EnumConfig[]> {
+        let url_ = this.baseUrl + "/api/services/app/EnumConfigService/GetEnumConfigsByParent?";
+        if (parentTypeId !== undefined)
+            url_ += "parentTypeId=" + encodeURIComponent("" + parentTypeId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEnumConfigsByParent(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEnumConfigsByParent(<any>response_);
+                } catch (e) {
+                    return <Observable<EnumConfig[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<EnumConfig[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetEnumConfigsByParent(response: HttpResponseBase): Observable<EnumConfig[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(EnumConfig.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<EnumConfig[]>(<any>null);
+    }
+
+    /**
+     * @param enumType (optional) 
+     * @return Success
+     */
+    getEnumConfigsByType(enumType: string | null | undefined): Observable<EnumConfig[]> {
+        let url_ = this.baseUrl + "/api/services/app/EnumConfigService/GetEnumConfigsByType?";
+        if (enumType !== undefined)
+            url_ += "enumType=" + encodeURIComponent("" + enumType) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEnumConfigsByType(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEnumConfigsByType(<any>response_);
+                } catch (e) {
+                    return <Observable<EnumConfig[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<EnumConfig[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetEnumConfigsByType(response: HttpResponseBase): Observable<EnumConfig[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(EnumConfig.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<EnumConfig[]>(<any>null);
+    }
+
+    /**
+     * @param enumType (optional) 
+     * @param value (optional) 
+     * @return Success
+     */
+    getEnumConfig(enumType: string | null | undefined, value: string | null | undefined): Observable<EnumConfig> {
+        let url_ = this.baseUrl + "/api/services/app/EnumConfigService/GetEnumConfig?";
+        if (enumType !== undefined)
+            url_ += "enumType=" + encodeURIComponent("" + enumType) + "&"; 
+        if (value !== undefined)
+            url_ += "value=" + encodeURIComponent("" + value) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEnumConfig(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEnumConfig(<any>response_);
+                } catch (e) {
+                    return <Observable<EnumConfig>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<EnumConfig>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetEnumConfig(response: HttpResponseBase): Observable<EnumConfig> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? EnumConfig.fromJS(resultData200) : new EnumConfig();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<EnumConfig>(<any>null);
+    }
+}
+
+@Injectable()
 export class ExamineServiceServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -2312,6 +2561,116 @@ export class RegulationServiceProxy {
         }
         return _observableOf<KeyValueDto[]>(<any>null);
     }
+
+    /**
+     * @param pageSize (optional) 
+     * @return Success
+     */
+    homeRegulationList(pageSize: PageSize | null | undefined): Observable<PageModel> {
+        let url_ = this.baseUrl + "/api/services/app/Regulation/HomeRegulationList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(pageSize);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHomeRegulationList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHomeRegulationList(<any>response_);
+                } catch (e) {
+                    return <Observable<PageModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PageModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processHomeRegulationList(response: HttpResponseBase): Observable<PageModel> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PageModel.fromJS(resultData200) : new PageModel();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PageModel>(<any>null);
+    }
+
+    /**
+     * @param regulationId (optional) 
+     * @return Success
+     */
+    homeRegulationDetailsById(regulationId: number | null | undefined): Observable<RegulationDetailsViewModel> {
+        let url_ = this.baseUrl + "/api/services/app/Regulation/HomeRegulationDetailsById?";
+        if (regulationId !== undefined)
+            url_ += "regulationId=" + encodeURIComponent("" + regulationId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHomeRegulationDetailsById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHomeRegulationDetailsById(<any>response_);
+                } catch (e) {
+                    return <Observable<RegulationDetailsViewModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<RegulationDetailsViewModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processHomeRegulationDetailsById(response: HttpResponseBase): Observable<RegulationDetailsViewModel> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? RegulationDetailsViewModel.fromJS(resultData200) : new RegulationDetailsViewModel();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<RegulationDetailsViewModel>(<any>null);
+    }
 }
 
 @Injectable()
@@ -3868,6 +4227,130 @@ export class UserServiceProxy {
     }
 }
 
+@Injectable()
+export class WorkFlowedServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    pendingWorkFlow_NodeAuditorRecord(input: PendingWorkFlow_NodeAuditorRecordDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/WorkFlowed/PendingWorkFlow_NodeAuditorRecord";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPendingWorkFlow_NodeAuditorRecord(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPendingWorkFlow_NodeAuditorRecord(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPendingWorkFlow_NodeAuditorRecord(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    processedWorkFlow_NodeAuditorRecord(input: PendingWorkFlow_NodeAuditorRecordDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/WorkFlowed/ProcessedWorkFlow_NodeAuditorRecord";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processProcessedWorkFlow_NodeAuditorRecord(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processProcessedWorkFlow_NodeAuditorRecord(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processProcessedWorkFlow_NodeAuditorRecord(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
+}
+
 export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     acceptOrderInfo: AcceptOrder | undefined;
     attachements: ProjectAttachment[] | undefined;
@@ -5002,6 +5485,105 @@ export interface IChangeUiThemeInput {
     theme: string;
 }
 
+export class EnumConfig implements IEnumConfig {
+    enumName: string | undefined;
+    enumType: string | undefined;
+    parentTypeId: number | undefined;
+    displayOrder: number | undefined;
+    isNote: boolean | undefined;
+    isDisable: boolean | undefined;
+    value: string | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IEnumConfig) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.enumName = data["enumName"];
+            this.enumType = data["enumType"];
+            this.parentTypeId = data["parentTypeId"];
+            this.displayOrder = data["displayOrder"];
+            this.isNote = data["isNote"];
+            this.isDisable = data["isDisable"];
+            this.value = data["value"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): EnumConfig {
+        data = typeof data === 'object' ? data : {};
+        let result = new EnumConfig();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["enumName"] = this.enumName;
+        data["enumType"] = this.enumType;
+        data["parentTypeId"] = this.parentTypeId;
+        data["displayOrder"] = this.displayOrder;
+        data["isNote"] = this.isNote;
+        data["isDisable"] = this.isDisable;
+        data["value"] = this.value;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): EnumConfig {
+        const json = this.toJSON();
+        let result = new EnumConfig();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IEnumConfig {
+    enumName: string | undefined;
+    enumType: string | undefined;
+    parentTypeId: number | undefined;
+    displayOrder: number | undefined;
+    isNote: boolean | undefined;
+    isDisable: boolean | undefined;
+    value: string | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
 export class ExamineFormDto implements IExamineFormDto {
     acceptRecordInfo: AcceptRecord | undefined;
     attachment: ProjectAttachment[] | undefined;
@@ -5165,7 +5747,7 @@ export class NoticeDto implements INoticeDto {
     title: string;
     content: string;
     noticeType: string;
-    guid: string | undefined;
+    guid: string;
 
     constructor(data?: INoticeDto) {
         if (data) {
@@ -5216,7 +5798,7 @@ export interface INoticeDto {
     title: string;
     content: string;
     noticeType: string;
-    guid: string | undefined;
+    guid: string;
 }
 
 export class NoticeViewModel implements INoticeViewModel {
@@ -6336,7 +6918,7 @@ export class RegulationDto implements IRegulationDto {
     regulationType: string;
     issueDate: moment.Moment | undefined;
     content: string;
-    guid: string | undefined;
+    guid: string;
 
     constructor(data?: IRegulationDto) {
         if (data) {
@@ -6396,7 +6978,7 @@ export interface IRegulationDto {
     regulationType: string;
     issueDate: moment.Moment | undefined;
     content: string;
-    guid: string | undefined;
+    guid: string;
 }
 
 export class RegulationDetailsViewModel implements IRegulationDetailsViewModel {
@@ -8198,6 +8780,69 @@ export class PagedResultDtoOfUserDto implements IPagedResultDtoOfUserDto {
 export interface IPagedResultDtoOfUserDto {
     totalCount: number | undefined;
     items: UserDto[] | undefined;
+}
+
+export class PendingWorkFlow_NodeAuditorRecordDto implements IPendingWorkFlow_NodeAuditorRecordDto {
+    pagedAndFilteredInputDto: PagedAndFilteredInputDto | undefined;
+    number: string | undefined;
+    projectName: string | undefined;
+    companyName: string | undefined;
+    applyTimeStart: moment.Moment | undefined;
+    applyTimeEnd: moment.Moment | undefined;
+
+    constructor(data?: IPendingWorkFlow_NodeAuditorRecordDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.pagedAndFilteredInputDto = data["pagedAndFilteredInputDto"] ? PagedAndFilteredInputDto.fromJS(data["pagedAndFilteredInputDto"]) : <any>undefined;
+            this.number = data["number"];
+            this.projectName = data["projectName"];
+            this.companyName = data["companyName"];
+            this.applyTimeStart = data["applyTimeStart"] ? moment(data["applyTimeStart"].toString()) : <any>undefined;
+            this.applyTimeEnd = data["applyTimeEnd"] ? moment(data["applyTimeEnd"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): PendingWorkFlow_NodeAuditorRecordDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PendingWorkFlow_NodeAuditorRecordDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["pagedAndFilteredInputDto"] = this.pagedAndFilteredInputDto ? this.pagedAndFilteredInputDto.toJSON() : <any>undefined;
+        data["number"] = this.number;
+        data["projectName"] = this.projectName;
+        data["companyName"] = this.companyName;
+        data["applyTimeStart"] = this.applyTimeStart ? this.applyTimeStart.toISOString() : <any>undefined;
+        data["applyTimeEnd"] = this.applyTimeEnd ? this.applyTimeEnd.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): PendingWorkFlow_NodeAuditorRecordDto {
+        const json = this.toJSON();
+        let result = new PendingWorkFlow_NodeAuditorRecordDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPendingWorkFlow_NodeAuditorRecordDto {
+    pagedAndFilteredInputDto: PagedAndFilteredInputDto | undefined;
+    number: string | undefined;
+    projectName: string | undefined;
+    companyName: string | undefined;
+    applyTimeStart: moment.Moment | undefined;
+    applyTimeEnd: moment.Moment | undefined;
 }
 
 export enum IsTenantAvailableOutputState {

@@ -5,7 +5,7 @@ import { AgencyDoneComponent } from './agency-done/agency-done.component';
 import { AlreadyDoneComponent } from './already-done/already-done.component';
 import { AlreadyDoneDetailsComponent } from './already-done-details/already-done-details.component';
 import { AgencyDoneDetailsComponent } from './agency-done-details/agency-done-details.component';
-
+import { DrafComponent } from './draf/draf.component';
 const routes: Routes = [
   {
     path: 'formModuleComponent',
@@ -30,6 +30,11 @@ const routes: Routes = [
     path: 'agencyDoneDetailsComponent/:workFlow_Instance_Id',
     component: AgencyDoneDetailsComponent,
     data: { title: '待办流程详情' },
+  },
+  {
+    path: 'draf',
+    component: DrafComponent,
+    data: { title: '草稿箱' },
   },
 ];
 

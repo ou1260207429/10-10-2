@@ -53,7 +53,7 @@
 
     <button nz-button (click)="search()" nzType="primary">搜索</button>
   </form>
-  <st #st [data]="url" [columns]="columns"></st>
+  <st #st [data]="formResultData" [columns]="columns" [loading]="isSearchForm"></st>
   <br>
-  <nz-pagination [nzPageIndex]="2" [nzTotal]="500" nzShowQuickJumper></nz-pagination>
+  <nz-pagination [nzPageIndex]="page" [nzTotal]="500" nzShowQuickJumper (nzPageIndexChange)="search()"></nz-pagination>
 </nz-card>
