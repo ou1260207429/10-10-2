@@ -11,7 +11,7 @@ import { AppConsts } from '@shared/AppConsts';
  */
 @Component({
   selector: 'app-agency-done',
-  templateUrl: './agency-done.component.html',
+  templateUrl: '../public/public-form.html',
   styles: []
 })
 export class AgencyDoneComponent implements OnInit {

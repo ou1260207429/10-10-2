@@ -1,11 +1,6 @@
 {
-<<<<<<< HEAD
   "/app1": {
-    "target": "http://192.168.10.179:8589",
-=======
-  "/app": {
     "target": "http://localhost:21021",
->>>>>>> d11149c007cbd9435f374add1742e5848d427a3a
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,

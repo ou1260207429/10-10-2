@@ -36,20 +36,20 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   // ]
 
   //表单对象
-  data:RegulationDto;
-  constructor(private _regulationServiceProxy:RegulationServiceProxy,private _activatedRoute: ActivatedRoute, private _policiesAndRegulationsServices: PoliciesAndRegulationsServices) {
+  data: RegulationDto;
+  constructor(private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute, private _policiesAndRegulationsServices: PoliciesAndRegulationsServices) {
     this.regulationId = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
-    this.operate = parseInt(this._activatedRoute.snapshot.paramMap.get('operate')); 
+    this.operate = parseInt(this._activatedRoute.snapshot.paramMap.get('operate'));
     console.log(this.operate);
-    
+
   }
   ngOnInit() {
     this.init()
   }
   init() {
-    if(this.operate == 0){
+    if (this.operate == 0) {
       this.data = new RegulationDto();
-    }else{
+    } else {
       this.getRegulationDetailsByIdAsync()
     }
 
@@ -65,15 +65,15 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     //   this.creationTime = data.result.data[0].creationTime;
     // })
   }
-  goBack(){
+  goBack() {
     history.go(-1);
   }
 
   /**
    * 获取详情
    */
-  getRegulationDetailsByIdAsync(){
-    this._regulationServiceProxy.getRegulationDetailsByIdAsync(this.regulationId).subscribe((data:any)=>{
+  getRegulationDetailsByIdAsync() {
+    this._regulationServiceProxy.getRegulationDetailsByIdAsync(this.regulationId).subscribe((data: any) => {
       this.data = data;
       console.log(this.data);
     })
@@ -82,37 +82,37 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   /**
    * 提交
    */
-  save(){
-    const src = this.operate == 0?this._regulationServiceProxy.addRegulationAsync(this.data):this._regulationServiceProxy.editRegulationAsync(this.data)
+  save() {
+    const src = this.operate == 0 ? this._regulationServiceProxy.addRegulationAsync(this.data) : this._regulationServiceProxy.editRegulationAsync(this.data)
     this.data.guid = this.createguid();
     console.log(this.data);
     console.log(this.operate);
-    
-    
-    src.subscribe(data=>{
+
+
+    src.subscribe(data => {
       console.log(data)
     })
   }
 
-   createguid (){
+  createguid() {
     var CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('')
     var chars = CHARS,
-        uuid = [],
-        i
+      uuid = [],
+      i
     // rfc4122, version 4 form
     var r
     // rfc4122 requires these characters
     uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-'
     uuid[14] = '4'
     for (i = 0; i < 36; i++) {
-        if (!uuid[i]) {
-            r = 0 | (Math.random() * 16)
-            uuid[i] = chars[i == 19 ? (r & 0x3) | 0x8 : r]
-        }
+      if (!uuid[i]) {
+        r = 0 | (Math.random() * 16)
+        uuid[i] = chars[i == 19 ? (r & 0x3) | 0x8 : r]
+      }
     }
 
     var ret = uuid.join('')
     console.log(ret);
     return ret
-}
+  }
 }
