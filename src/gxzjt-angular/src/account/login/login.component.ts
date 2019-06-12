@@ -31,7 +31,10 @@ export class LoginComponent extends AppComponentBase implements OnInit {
   submitting = false;
   form: FormGroup;
   count = 0;
-
+  usePsw = true;
+  switchUswPsw() {
+    this.usePsw = !this.usePsw;
+  }
   get userName() {
     return this.form.controls.userName;
   }
@@ -85,8 +88,21 @@ export class LoginComponent extends AppComponentBase implements OnInit {
       this.submitting = false;
     });
   }
-  getCaptcha() {
 
+  interval$: any;
+  getCaptcha() {
+    if (this.mobile.invalid) {
+      this.mobile.markAsDirty({ onlySelf: true });
+      this.mobile.updateValueAndValidity({ onlySelf: true });
+      return;
+    }
+    this.count = 59;
+    this.interval$ = setInterval(() => {
+      this.count -= 1;
+      if (this.count <= 0) {
+        clearInterval(this.interval$);
+      }
+    }, 1000);
   }
 
 }

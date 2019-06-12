@@ -42,6 +42,8 @@ export class LoginService {
   }
 
   authenticate(finallyCallback?: () => void): void {
+
+
     finallyCallback = finallyCallback || (() => { });
 
     this._tokenAuthService
@@ -50,6 +52,9 @@ export class LoginService {
       .subscribe((result: AuthenticateResultModel) => {
         this.processAuthenticateResult(result);
       });
+
+
+
   }
 
   private processAuthenticateResult(

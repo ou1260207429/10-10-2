@@ -20,6 +20,7 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { LoginService } from '../login/login.service';
 import { AppComponentBase } from '@shared/component-base/app-component-base';
 
+import { _HttpClient } from '@delon/theme';
 @Component({
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.less'],
@@ -29,12 +30,15 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
 
 
   model: RegisterInput;
+  captcha: {};
+  count = 0;
 
   constructor(
     injector: Injector,
     private _accountService: AccountServiceProxy,
     private _router: Router,
     private readonly _loginService: LoginService,
+    public http: _HttpClient,
   ) {
     super(injector);
   }
@@ -42,10 +46,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
   ngOnInit(): void {
     this.titleSrvice.setTitle(this.l('CreateAnAccount'));
 
-    if (!this.appSession.tenant) {
-      this.back();
-      return;
-    }
+
     this.model = new RegisterInput();
   }
 
@@ -76,6 +77,23 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
           this.saving = false;
         });
       });
+  }
+
+
+  interval$: any;
+  getCaptcha() {
+    // if (this.mobile.invalid) {
+    //   this.mobile.markAsDirty({ onlySelf: true });
+    //   this.mobile.updateValueAndValidity({ onlySelf: true });
+    //   return;
+    // }
+    this.count = 59;
+    this.interval$ = setInterval(() => {
+      this.count -= 1;
+      if (this.count <= 0) {
+        clearInterval(this.interval$);
+      }
+    }, 1000);
   }
 
 }

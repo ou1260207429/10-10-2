@@ -3,14 +3,15 @@ import { STColumn, STPage, STComponent } from '@delon/abc';
 import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 import { Router } from '@angular/router';
 import { EventEmiter } from 'infrastructure/eventEmiter';
-import { AppConsts } from '@shared/AppConsts';
+
+import { RegulationServiceProxy } from '@shared/service-proxies/service-proxies';
 @Component({
   selector: 'app-policies-and-regulations',
   templateUrl: './policies-and-regulations.component.html',
   styles: []
 })
-export class PoliciesAndRegulationsComponent implements OnInit {
 
+export class PoliciesAndRegulationsComponent implements OnInit {
   @ViewChild('treeCom') treeCom;
   @ViewChild('st') st: STComponent;
   flowAddType: any = {
@@ -23,77 +24,92 @@ export class PoliciesAndRegulationsComponent implements OnInit {
     icon: 'folder-open',
     isLeaf: true
   }];
-
+  deleteId: any
   chooseAuditors;
-
-  params: any = {};
-  data=[
-    {
-      id:1,
-      number:999,
-      name:"xxx",
-      titleName:"标题名称",
-      curNodeName:"222",
-      startDate:"2019-07-03",
-      operator:"操作人",
-      creationTime:"2019-082-21"
-    }
-  ];
+  params: any = {
+    page: 1,
+    size: 10,
+    sort: "",
+    isAsc: false,
+    orderby: "",
+    totalCount: 20,
+    //search: 11,
+    //startTime: null,
+    //endTime: null,
+  };
+  data
   columns: STColumn[] = [
-    { title: '内部编号', index: 'number' },
-    { title: '类型', index: 'name' },
-    { title: '标题名称', index: 'titleName' },
-    { title: '颁布机关', index: 'curNodeName' },
-    { title: '生效日期', index: 'startDate' },
-    {
-      title: '操作人', index: 'creationTime', type: 'date'
-    },
+    { title: '法规编号', index: 'regulationCode' },
+    { title: '法规类型', index: 'regulationTypeId' },
+    { title: '标题名称', index: 'title' },
+    { title: '颁布机关', index: 'issueOrg' },
     {
       title: '发布时间', index: 'creationTime', type: 'date'
     },
+    { title: '生效日期', index: 'issueDate', type: 'date' },
+    {
+      title: '内容存放路径', index: 'contentUrl'
+    },
+    {
+      title: '最近修改时间', index: 'lastUpdateTime', type: 'date'
+    },
+    {
+      title: '最近操作人账号', index: 'lastUpdateUserCode'
+    },
+    {
+      title: '最近操作人名字', index: 'lastUpdateUserName'
+    },
+    {
+      title: '浏览量', index: 'visitCount'
+    },
+    {
+      title: '删除人id', index: '删除人id'
+    },
+
     {
       title: '操作', className: 'text-center', buttons: [
         {
           text: '<font class="stButton">详情</font>', click: (record: any) => {
-            this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/${record.id}`]);
+            this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/${record.id}`, { operate: 1 }]);
           }
         },
         {
           text: '<font class="stButton">编辑</font>', click: (record: any) => {
-            this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/${record.id}`]);
+            this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/${record.id}`, { operate: 2 }]);
           }
         },
+        {
+          text: '<font class="stButton">删除</font>', click: (record: any) => {
+            this.deleteVisible = true;
+            this.isOkLoading = false;
+            this.deleteId = record.id;
+          },
+        }
       ]
     }
   ];
 
-
+  deleteVisible = false;
+  isOkLoading = false;
   pageConfig: STPage = publicPageConfig;
-  constructor(private router: Router, private eventEmiter: EventEmiter, ) {
-    this.init();
+  validateForm: any;
+  constructor(private _regulationServiceProxy: RegulationServiceProxy, private router: Router, private eventEmiter: EventEmiter) {
   }
 
   ngOnInit() {
     let _self = this;
+    this.init();
 
-    this.eventEmiter.on('init', () => {
-      _self.init();
-    });
-
-    this.eventEmiter.on('flowadd', () => {
-      _self.init();
-    });
   }
 
   /**
    * 初始化
    */
   init() {
-    this.params.page = 1;
-    this.params.maxResultCount = AppConsts.grid.defaultPageSize;
-    this.params.filterText = '';
-    this.params.result = 4;
+
+    // let params = this.validateForm.value
     this.workFlow_NodeAuditorRecords(this.params);
+
   }
 
   /**
@@ -109,18 +125,29 @@ export class PoliciesAndRegulationsComponent implements OnInit {
    * 获取列表 
    */
   workFlow_NodeAuditorRecords(params?: any) {
-   // this.data = '';
-    // this._flowServices.tenant_ProcessedWorkFlow_NodeAuditorRecord(params).subscribe(data => {
-    //   this.data = data.result;
-    // })
+    this.data = "";
+    this._regulationServiceProxy.regulationListAsync(params).subscribe(data => {
+      this.data = data;
+    })
   }
+  /**
+   * 删除数据
+   */
 
+
+  deleteList() {
+    this.isOkLoading = true;
+    this._regulationServiceProxy.deleteRegulationByIdAsync(this.deleteId).subscribe(data => {
+      this.isOkLoading = false;
+      this.deleteVisible = false;
+      this.init();
+    })
+  }
   /**
    * 点击查询
    */
   query() {
     this.params.page = 1;
-    this.params.maxResultCount = AppConsts.grid.defaultPageSize;
     this.workFlow_NodeAuditorRecords(this.params);
   }
 
@@ -128,6 +155,17 @@ export class PoliciesAndRegulationsComponent implements OnInit {
     pageOnChange(v, this.params, () => {
       this.workFlow_NodeAuditorRecords(this.params);
     })
+  }
+  handleCancel(): void {
+    this.deleteVisible = false
+  }
+  handleOk(): void {
+    this.deleteList()
+  }
+
+
+  add() {
+    this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/1`, { operate: 0 }]);
   }
 
 }
