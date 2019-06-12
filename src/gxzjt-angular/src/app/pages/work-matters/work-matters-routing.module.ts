@@ -6,8 +6,6 @@ import { AlreadyDoneComponent } from './already-done/already-done.component';
 import { AlreadyDoneDetailsComponent } from './already-done-details/already-done-details.component';
 import { AgencyDoneDetailsComponent } from './agency-done-details/agency-done-details.component';
 import { DraftsComponent } from './drafts/drafts.component';
-
-import { DrafComponent } from './draf/draf.component';
 const routes: Routes = [
   {
     path: 'formModuleComponent',
@@ -37,13 +35,6 @@ const routes: Routes = [
   {
     path: 'draftsComponent',
     component: DraftsComponent,
-    data: { title: '草稿箱' },
-  },
-
-
-  {
-    path: 'draf',
-    component: DrafComponent,
     data: { title: '草稿箱' },
   },
 ];
