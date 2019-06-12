@@ -94,15 +94,13 @@ export class PoliciesAndRegulationsComponent implements OnInit {
   deleteVisible:false 
   pageConfig: STPage = publicPageConfig;
   validateForm: any;
-  constructor(private _eventEmiter:EventEmiter,private _publicModel:PublicModel,private _regulationServiceProxy: RegulationServiceProxy, private router: Router, private eventEmiter: EventEmiter) {
+  constructor(private _publicModel:PublicModel,private _regulationServiceProxy: RegulationServiceProxy, private router: Router, private eventEmiter: EventEmiter) {
   }
 
   ngOnInit() {
     let _self = this;
     this.init();
-    this._eventEmiter.on('init',()=>{
-      _self.init();
-    });
+  
   }
 
   /**

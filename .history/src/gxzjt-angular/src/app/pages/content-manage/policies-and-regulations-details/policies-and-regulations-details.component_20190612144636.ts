@@ -78,22 +78,16 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
    * 获取详情
    */
   getRegulationDetailsByIdAsync() {
+    let params = {
+      regulationId: this.regulationId
+    }
     this._regulationServiceProxy.getRegulationDetailsByIdAsync(this.regulationId).subscribe((data: any) => {
       this.data = data
-      this.data.regulationId = this.regulationId;
-     // this.data.issueDate = timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-');
-      this.data = {
-        regulationId:data.id,
-        content: data.content,
-        guid: data.guid,
-        issueDate: timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'),
-        issueOrg: data.issueOrg,
-        regulationCode: data.regulationCode,
-        regulationType: data.regulationType,
-        title: data.title,
-      }
-      // this.deleteSum(this.data, ['contentUrl', 'creationTime', 'id', 'lastUpdateUserName', 'visitCount','lastUpdateTime','lastUpdateUserCode']);
-      console.log(this.data)
+      this.data.regulationId = data.id;
+      this.data.issueDate = timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
+    // this.deleteSum(this.data, ['contentUrl', 'creationTime', 'id', 'lastUpdateUserName', 'visitCount','lastUpdateTime','lastUpdateUserCode']);
+     console.log(this.data.issueDate)
+     console.log(timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'))
     })
   }
 
@@ -114,11 +108,9 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   save() {
     if (this.operate == 0) {
       this.data.guid = this.createguid();
-    } else {
-      this.data.regulationId = this.regulationId;
     }
-    this.data.issueDate = new Date(timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'))
     console.log(this.data)
+    // this.data.issueDate = timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd', '-')
 
     const src = this.operate == 0 ? this._regulationServiceProxy.addRegulationAsync(this.data) : this._regulationServiceProxy.editRegulationAsync(this.data)
     src.subscribe(data => {

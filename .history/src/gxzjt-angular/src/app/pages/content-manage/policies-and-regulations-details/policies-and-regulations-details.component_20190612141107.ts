@@ -42,7 +42,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   //表单对象
   data: any;
   RegulationType: any
-  constructor(private _eventEmiter: EventEmiter, private message: NzMessageService, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute, private _policiesAndRegulationsServices: PoliciesAndRegulationsServices) {
+  constructor(private _eventEmiter:EventEmiter,private message: NzMessageService, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute, private _policiesAndRegulationsServices: PoliciesAndRegulationsServices) {
     this.regulationId = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
     this.operate = parseInt(this._activatedRoute.snapshot.paramMap.get('operate'));
     this.initType()
@@ -78,22 +78,15 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
    * 获取详情
    */
   getRegulationDetailsByIdAsync() {
+    let params = {
+      regulationId: this.regulationId
+    }
     this._regulationServiceProxy.getRegulationDetailsByIdAsync(this.regulationId).subscribe((data: any) => {
-      this.data = data
-      this.data.regulationId = this.regulationId;
-     // this.data.issueDate = timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-');
-      this.data = {
-        regulationId:data.id,
-        content: data.content,
-        guid: data.guid,
-        issueDate: timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'),
-        issueOrg: data.issueOrg,
-        regulationCode: data.regulationCode,
-        regulationType: data.regulationType,
-        title: data.title,
-      }
-      // this.deleteSum(this.data, ['contentUrl', 'creationTime', 'id', 'lastUpdateUserName', 'visitCount','lastUpdateTime','lastUpdateUserCode']);
-      console.log(this.data)
+      this.data = data 
+      console.log
+      this.deleteSum(this.data,['contentUrl','creationTime','regulationCode','id','lastUpdateUserName','visitCount']);
+      this.data.regulationId = data.this.data.regulationId
+      console.log(this.data.regulationId)
     })
   }
 
@@ -102,8 +95,8 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
    * @param data 对象
    * @param arr 删除的属性数组
    */
-  deleteSum(data: any, arr: Array<any>) {
-    arr.forEach(item => {
+  deleteSum(data:any,arr:Array<any>){
+    arr.forEach(item=>{
       delete data[item]
     })
   }
@@ -114,17 +107,13 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   save() {
     if (this.operate == 0) {
       this.data.guid = this.createguid();
-    } else {
-      this.data.regulationId = this.regulationId;
-    }
-    this.data.issueDate = new Date(timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'))
-    console.log(this.data)
-
+    }   
+     
     const src = this.operate == 0 ? this._regulationServiceProxy.addRegulationAsync(this.data) : this._regulationServiceProxy.editRegulationAsync(this.data)
     src.subscribe(data => {
       const name = this.operate == 0 ? '新增成功' : '修改成功';
       this.message.success(name);
-      this._eventEmiter.emit('init', []);
+      this._eventEmiter.emit('init',[]);
       this.goBack()
     })
   }

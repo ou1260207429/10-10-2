@@ -6,8 +6,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { RegulationServiceProxy, RegulationDto } from '@shared/service-proxies/service-proxies';
 import { PublicModel } from 'infrastructure/public-model';
 import { timeTrans } from 'infrastructure/regular-expression';
-import { NzMessageService } from 'ng-zorro-antd';
-import { EventEmiter } from 'infrastructure/eventEmiter';
 @Component({
   selector: 'app-policies-and-regulations-details',
   templateUrl: './policies-and-regulations-details.component.html',
@@ -41,10 +39,11 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
 
   //表单对象
   data: any;
-  RegulationType: any
-  constructor(private _eventEmiter: EventEmiter, private message: NzMessageService, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute, private _policiesAndRegulationsServices: PoliciesAndRegulationsServices) {
+  RegulationType:any
+  constructor(private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute, private _policiesAndRegulationsServices: PoliciesAndRegulationsServices) {
     this.regulationId = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
     this.operate = parseInt(this._activatedRoute.snapshot.paramMap.get('operate'));
+    console.log(this.operate);
     this.initType()
   }
   ngOnInit() {
@@ -58,6 +57,17 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
       this.getRegulationDetailsByIdAsync()
     }
 
+    // this.modaleForm = null;
+    // this._policiesAndRegulationsServices.get_PoliciesAndRegulations({ regulationId: this.regulationId }).subscribe(data => {
+    //   this.title = data.result.data[0].title;
+    //   this.issueOrg = data.result.data[0].issueOrg;
+
+    //   this.regulationTypeId = data.result.data[0].regulationTypeId;
+
+    //   this.curNodeName = data.result.data[0].curNodeName;
+
+    //   this.creationTime = data.result.data[0].creationTime;
+    // })
   }
   goBack() {
     history.go(-1);
@@ -65,12 +75,13 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   /**
    * 获取类型
    */
-  initType() {
+  initType(){
     let params = {
       regulationId: this.regulationId
     }
     this._regulationServiceProxy.getDropdownTypeByEnumType("RegulationType").subscribe((data: any) => {
-      this.RegulationType = data
+this.RegulationType = data
+      console.log(data);
     })
   }
 
@@ -78,33 +89,22 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
    * 获取详情
    */
   getRegulationDetailsByIdAsync() {
+    let params = {
+      regulationId: this.regulationId
+    }
     this._regulationServiceProxy.getRegulationDetailsByIdAsync(this.regulationId).subscribe((data: any) => {
-      this.data = data
-      this.data.regulationId = this.regulationId;
-     // this.data.issueDate = timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-');
-      this.data = {
-        regulationId:data.id,
-        content: data.content,
-        guid: data.guid,
-        issueDate: timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'),
-        issueOrg: data.issueOrg,
-        regulationCode: data.regulationCode,
-        regulationType: data.regulationType,
-        title: data.title,
-      }
-      // this.deleteSum(this.data, ['contentUrl', 'creationTime', 'id', 'lastUpdateUserName', 'visitCount','lastUpdateTime','lastUpdateUserCode']);
-      console.log(this.data)
-    })
-  }
-
-  /**
-   * 删除对象多余的属性
-   * @param data 对象
-   * @param arr 删除的属性数组
-   */
-  deleteSum(data: any, arr: Array<any>) {
-    arr.forEach(item => {
-      delete data[item]
+      // this.data = {
+      //   "regulationId": data.id,
+      //   "regulationCode": data.regulationCode,
+      //   "title":data.title,
+      //   "issueOrg": data.issueOrg,
+      //   "regulationType": data.regulationType,
+      //   "issueDate":data.issueDate,
+      //   "content": data.content,
+      //   "guid": data.guid
+      //  };
+      
+      console.log(this.data);
     })
   }
 
@@ -112,19 +112,13 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
    * 提交
    */
   save() {
-    if (this.operate == 0) {
+    if(this.operate == 0 ){
       this.data.guid = this.createguid();
-    } else {
-      this.data.regulationId = this.regulationId;
     }
-    this.data.issueDate = new Date(timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'))
-    console.log(this.data)
-
     const src = this.operate == 0 ? this._regulationServiceProxy.addRegulationAsync(this.data) : this._regulationServiceProxy.editRegulationAsync(this.data)
+    this.data.issueDate = timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd', '-') 
     src.subscribe(data => {
-      const name = this.operate == 0 ? '新增成功' : '修改成功';
-      this.message.success(name);
-      this._eventEmiter.emit('init', []);
+      console.log( this.data)
       this.goBack()
     })
   }

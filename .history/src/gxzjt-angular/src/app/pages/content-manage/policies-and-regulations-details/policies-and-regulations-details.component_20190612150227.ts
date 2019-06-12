@@ -82,16 +82,16 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
       this.data = data
       this.data.regulationId = this.regulationId;
      // this.data.issueDate = timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-');
-      this.data = {
-        regulationId:data.id,
-        content: data.content,
-        guid: data.guid,
-        issueDate: timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'),
-        issueOrg: data.issueOrg,
-        regulationCode: data.regulationCode,
-        regulationType: data.regulationType,
-        title: data.title,
-      }
+      // this.data = {
+      //   regulationId:data.id,
+      //   content: data.content,
+      //   guid: data.guid,
+      //   issueDate: timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'),
+      //   issueOrg: data.issueOrg,
+      //   regulationCode: data.regulationCode,
+      //   regulationType: data.regulationType,
+      //   title: data.title,
+      // }
       // this.deleteSum(this.data, ['contentUrl', 'creationTime', 'id', 'lastUpdateUserName', 'visitCount','lastUpdateTime','lastUpdateUserCode']);
       console.log(this.data)
     })

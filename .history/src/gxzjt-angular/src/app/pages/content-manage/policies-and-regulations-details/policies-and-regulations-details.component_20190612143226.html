@@ -23,8 +23,7 @@
         </nz-select>
       </se>
       <se label="生效日期" required>
-        <nz-date-picker nzShowTime
-        [nzFormat]="'yyyy-MM-dd HH:mm:ss'" [(ngModel)]="data.issueDate" [disabled]="operate=='1'" name="creationTime" required>
+        <nz-date-picker [nzFormat]="dateFormat" [(ngModel)]="data.issueDate" [disabled]="operate=='1'" name="creationTime" required>
         </nz-date-picker>
       </se>
       <se label="附件上传" required>

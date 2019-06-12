@@ -25,6 +25,7 @@ export class PoliciesAndRegulationsComponent implements OnInit {
     icon: 'folder-open',
     isLeaf: true
   }];
+deleteId:any
   chooseAuditors;
   params: any = {
     page:1,
@@ -81,9 +82,7 @@ export class PoliciesAndRegulationsComponent implements OnInit {
         {
           text: '<font class="stButton">删除</font>', click: (record: any) => {
             this._publicModel.isDeleteModal(()=>{
-              this._regulationServiceProxy.deleteRegulationByIdAsync(record.id).subscribe(data => {
-                this.init();
-              })
+              this.deleteList();
             });
           }
         },
@@ -94,15 +93,13 @@ export class PoliciesAndRegulationsComponent implements OnInit {
   deleteVisible:false 
   pageConfig: STPage = publicPageConfig;
   validateForm: any;
-  constructor(private _eventEmiter:EventEmiter,private _publicModel:PublicModel,private _regulationServiceProxy: RegulationServiceProxy, private router: Router, private eventEmiter: EventEmiter) {
+  constructor(private _publicModel:PublicModel,private _regulationServiceProxy: RegulationServiceProxy, private router: Router, private eventEmiter: EventEmiter) {
   }
 
   ngOnInit() {
     let _self = this;
     this.init();
-    this._eventEmiter.on('init',()=>{
-      _self.init();
-    });
+  
   }
 
   /**
@@ -131,7 +128,17 @@ export class PoliciesAndRegulationsComponent implements OnInit {
     this._regulationServiceProxy.regulationListAsync(params).subscribe(data => {
       this.data = data;
     })
-  } 
+  }
+  /**
+   * 删除数据
+   */
+
+
+   deleteList(){
+    this._regulationServiceProxy.deleteRegulationByIdAsync(this.deleteId).subscribe(data => {
+      this.init();
+    })
+   }
   /**
    * 点击查询
    */
@@ -147,7 +154,10 @@ export class PoliciesAndRegulationsComponent implements OnInit {
   }
   handleCancel(): void{
     this.deleteVisible=false
-  } 
+  }
+  handleOk(): void{
+    this.deleteList()
+  }
 
 
   add() {

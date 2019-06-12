@@ -21,10 +21,11 @@ import { PublicModel } from 'infrastructure/public-model';
     ReactiveFormsModule,
     HttpClientModule,
     ContentManageModule,
+    PublicModel,
     AppRoutingModule,
     LayoutModule,
     SharedModule,
-    
+   
     UEditorModule.forRoot({
       js: [
         `/assets/js/ueditor.config.js`,
@@ -41,7 +42,6 @@ import { PublicModel } from 'infrastructure/public-model';
   providers: [
     FlowServices,
     PoliciesAndRegulationsServices,
-    PublicModel,
     EventEmiter,
     [
       {

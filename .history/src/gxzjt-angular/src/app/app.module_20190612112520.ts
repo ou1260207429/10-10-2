@@ -12,7 +12,6 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 import { AuthInterceptor } from 'infrastructure/http-interceptor';
 import { ContentManageModule } from './pages/content-manage/content-manage.module';
 import { UEditorModule } from 'ngx-ueditor';
-import { PublicModel } from 'infrastructure/public-model';
 
 @NgModule({
   imports: [
@@ -41,7 +40,6 @@ import { PublicModel } from 'infrastructure/public-model';
   providers: [
     FlowServices,
     PoliciesAndRegulationsServices,
-    PublicModel,
     EventEmiter,
     [
       {
