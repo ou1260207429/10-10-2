@@ -279,7 +279,7 @@
           <!-- 请输入火灾危险性 -->
           <td><input nz-input [(ngModel)]="item.fireHazard" name="jbfireHazard" /></td>
 
-          <td><a (click)="addJArray(data.basicInformation)">新增</a>
+          <td><a (click)="addArray(data.basicInformation)">新增</a>
             <a (click)="deleteArray(data.basicInformation,index)">删除</a> </td>
         </tr>
 
@@ -323,7 +323,7 @@
                 nz-radio nzValue="其他">其他 </label>
             </nz-radio-group>
           </td>
-          <td rowspan="2" colspan='1'><a (click)="addStorageArray(data.storageTank)">新增</a>
+          <td rowspan="2" colspan='1'><a (click)="addArray(data.storageTank)">新增</a>
             <a (click)="deleteArray(data.storageTank,index)">删除</a></td>
         </tr>
 
@@ -354,7 +354,7 @@
         <td rowspan='1' colspan='4'>
           <input nz-input placeholder="请输入储存物质名称" [(ngModel)]="item.name" name="yardname" />
         </td>
-        <td rowspan="1" colspan='1'><a (click)="addYardArray(data.yard)">新增</a>
+        <td rowspan="1" colspan='1'><a (click)="addArray(data.yard)">新增</a>
           <a (click)="deleteArray(data.yard,index)">删除</a></td>
       </tr>
 

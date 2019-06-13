@@ -2,7 +2,7 @@ import { ApplyServiceServiceProxy, FlowFormQueryDto, FlowFormDto } from './../..
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ActivatedRoute } from '@angular/router';
-import { timeTrans } from 'infrastructure/regular-expression';
+import { timeTrans, objDeleteType } from 'infrastructure/regular-expression';
 import { OptionsEnum, ArchitectureTypeEnum } from 'infrastructure/expression';
 
 /**
@@ -577,56 +577,9 @@ export class AddFireDesignDeclareComponent implements OnInit {
     this.data.planStartTime = this.data.planStartTime == '' ? '' : timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy-MM-dd', '-')
     this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd', '-')
     this.flowFormDto.formJson = JSON.stringify(this.data);
-    console.log(this.data)
-    return false
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.message.success('保存成功')
     })
-  }
-
-  /**
-   * 添加数组
-   */
-  addArray(arr) {
-    arr.push({
-      designUnit: '',
-      qualificationLevel: '',
-      legalRepresentative: '',
-      contacts: '',
-      contactsNumber: ''
-    })
-  }
-
-  addJArray(arr) {
-    arr.push({
-      name: '',
-      type: '',
-      grade: '',
-      aboveGround: '',
-      underground: '',
-      height: '',
-      builtUpArea: '',
-      areaCovered: '',
-      firePreventionSum: '',
-      firePreventionMaximumArea: '',
-      smokeControlSum: '',
-      smokeControlMaximumArea: '',
-      fireHazard: '',
-    })
-  }
-
-  addStorageArray(arr) {
-    arr.push({
-      position: '',
-      totalCapacity: '',
-      setupType: '',
-      storageForm: '',
-      name: '',
-    })
-  }
-
-  addYardArray(arr) {
-    arr.push({ Reserves: '', name: '' })
   }
 
   /**
@@ -635,6 +588,14 @@ export class AddFireDesignDeclareComponent implements OnInit {
    */
   changeCitycountyAndDistrict(v) {
     this.data.engineeringCitycountyAndDistrict = v;
+  }
+
+  /**
+   * 添加数组
+   * @param arr 数组
+   */
+  addArray(arr) {
+    arr.push(objDeleteType(arr[0]))
   }
 
   /**

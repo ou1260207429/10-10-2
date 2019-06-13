@@ -8,12 +8,18 @@ import { WorkMattersRoutingModule } from './work-matters-routing.module';
 import { PipesModule } from 'pipes/pipes.module';
 import { AlreadyDoneDetailsComponent } from './already-done-details/already-done-details.component';
 import { ComponentsModule } from '@app/components/components.module';
+import { DraftsComponent } from './drafts/drafts.component';
 import { WorkFlowedServiceProxy } from '../../../shared/service-proxies/service-proxies'
-import { DrafComponent } from './draf/draf.component';
+
 const COMPONENTS = [];
-const COMPONENTS_NOROUNT = [FormModuleComponent, AgencyDoneComponent,
-  AgencyDoneDetailsComponent, AlreadyDoneComponent, AlreadyDoneDetailsComponent,
-  DrafComponent];
+const COMPONENTS_NOROUNT = [
+  FormModuleComponent,
+  AgencyDoneComponent,
+  AgencyDoneDetailsComponent,
+  AlreadyDoneComponent,
+  AlreadyDoneDetailsComponent,
+  DraftsComponent
+];
 
 @NgModule({
   imports: [
@@ -25,6 +31,7 @@ const COMPONENTS_NOROUNT = [FormModuleComponent, AgencyDoneComponent,
   declarations: [
     ...COMPONENTS,
     ...COMPONENTS_NOROUNT,
+
   ],
   providers: [WorkFlowedServiceProxy],
   entryComponents: COMPONENTS_NOROUNT
