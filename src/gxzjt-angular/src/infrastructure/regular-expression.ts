@@ -280,9 +280,9 @@ export function objDeleteType(box) {
   Object.keys(obj).forEach(function (key) {
     obj[key] = '';
   });
-  console.log(obj);
   return obj;
 }
+
 /**
  * 数组中单独判断
  * @param array 数组
