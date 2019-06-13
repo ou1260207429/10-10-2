@@ -5,7 +5,7 @@ import { STColumn, STComponent, XlsxService } from '@delon/abc';
 import { _HttpClient } from '@delon/theme';
 
 
-import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, PagedAndFilteredInputDto } from '../../../../shared/service-proxies/service-proxies'
+import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, DataSourceResult } from '@shared/service-proxies/service-proxies'
 
 import { PublicFormComponent } from '../public/public-form.component';
 
@@ -84,8 +84,6 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
 
   refresh() {
-    this.resetSearchFliterForm();
-    this.resetTime();
     this.search();
   }
 
@@ -93,30 +91,33 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
     var searchParam = new PendingWorkFlow_NodeAuditorRecordDto();
 
+
+
     var jsonData = {
-      "applyTimeStart": this.rangeTime[0],
-      "applyTimeEnd": this.rangeTime[1],
+      "applyTimeStart": this.rangeTime ? this.rangeTime[0] : null,
+      "applyTimeEnd": this.rangeTime ? this.rangeTime[1] : new Date(),
       "companyName": this.orgName,
       "projectName": this.proName,
       "pagedAndFilteredInputDto": {
         "filterText": "",
         "page": this.page,
         "sorting": "",
-        "skipCount": 0,
-        "maxResultCount": 50
+        "skipCount": this.page * this.pageSize,
+        "maxResultCount": this.pageSize
       },
     };
 
     searchParam.init(jsonData);
 
     this.isSearchForm = true;
-    // this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(searchParam).subscribe(data => {
-    //   console.log(JSON.stringify(data));
-    //   this.isSearchForm = false;
-    // }, err => {
-    //   console.log(err);
-    //   this.isSearchForm = false;
-    //   });
+    this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(searchParam).subscribe((res: DataSourceResult) => {
+      console.log(JSON.stringify(res));
+      this.formResultData = res.data;
+      this.isSearchForm = false;
+    }, err => {
+      console.log(err);
+      this.isSearchForm = false;
+    });
 
   }
 

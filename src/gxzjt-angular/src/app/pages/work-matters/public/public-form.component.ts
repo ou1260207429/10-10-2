@@ -12,7 +12,7 @@ export class PublicFormComponent {
 
     formResultData: any;
 
-
+    pageSize = 50;
 
 
     isSearchForm = false;

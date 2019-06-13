@@ -1,3 +1,4 @@
+import { BigScreenComponent } from './pages/big-screen/big/big-screen.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
@@ -37,7 +38,12 @@ const routes: Routes = [
 
     ],
 
-  }
+  },
+  {
+    path: 'big-screen/big',
+    component: BigScreenComponent
+
+  },
 ];
 
 @NgModule({

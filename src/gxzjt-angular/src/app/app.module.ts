@@ -1,3 +1,5 @@
+import { NgxEchartsModule } from 'ngx-echarts';
+import { BigScreenComponent } from './pages/big-screen/big/big-screen.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -24,7 +26,7 @@ import { PublicModel } from 'infrastructure/public-model';
     AppRoutingModule,
     LayoutModule,
     SharedModule,
-    
+    NgxEchartsModule,
     UEditorModule.forRoot({
       js: [
         `/assets/js/ueditor.config.js`,
@@ -34,9 +36,10 @@ import { PublicModel } from 'infrastructure/public-model';
         UEDITOR_HOME_URL: `//apps.bdimg.com/libs/ueditor/1.4.3.1/`,
       },
     }),
-    
   ],
-  declarations: [],
+  declarations: [
+    BigScreenComponent
+  ],
   entryComponents: [
   ],
   providers: [
