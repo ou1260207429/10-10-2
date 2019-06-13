@@ -984,6 +984,176 @@ export class ExamineServiceServiceProxy {
 }
 
 @Injectable()
+export class NatureServiceServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    post_GetSpotCheckSetupDto(): Observable<SpotCheckSetupDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/NatureService/Post_GetSpotCheckSetupDto";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetSpotCheckSetupDto(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetSpotCheckSetupDto(<any>response_);
+                } catch (e) {
+                    return <Observable<SpotCheckSetupDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<SpotCheckSetupDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetSpotCheckSetupDto(response: HttpResponseBase): Observable<SpotCheckSetupDto[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(SpotCheckSetupDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SpotCheckSetupDto[]>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    post_GetSpotCheckSetupList(): Observable<SpotChechSetupList> {
+        let url_ = this.baseUrl + "/api/services/app/NatureService/Post_GetSpotCheckSetupList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetSpotCheckSetupList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetSpotCheckSetupList(<any>response_);
+                } catch (e) {
+                    return <Observable<SpotChechSetupList>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<SpotChechSetupList>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetSpotCheckSetupList(response: HttpResponseBase): Observable<SpotChechSetupList> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? SpotChechSetupList.fromJS(resultData200) : new SpotChechSetupList();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SpotChechSetupList>(<any>null);
+    }
+
+    /**
+     * @param spotCheckSetup (optional) 
+     * @return Success
+     */
+    post_UpdateSpotCheckSetup(spotCheckSetup: SpotCheckSetup | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/NatureService/Post_UpdateSpotCheckSetup";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(spotCheckSetup);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_UpdateSpotCheckSetup(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_UpdateSpotCheckSetup(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_UpdateSpotCheckSetup(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
 export class NoticeServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -5495,6 +5665,7 @@ export class ProjectFlow implements IProjectFlow {
     applyUserCode: string | undefined;
     applyName: string | undefined;
     status: number | undefined;
+    expireTime: moment.Moment | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -5522,6 +5693,7 @@ export class ProjectFlow implements IProjectFlow {
             this.applyUserCode = data["applyUserCode"];
             this.applyName = data["applyName"];
             this.status = data["status"];
+            this.expireTime = data["expireTime"] ? moment(data["expireTime"].toString()) : <any>undefined;
             this.isDeleted = data["isDeleted"];
             this.deleterUserId = data["deleterUserId"];
             this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
@@ -5549,6 +5721,7 @@ export class ProjectFlow implements IProjectFlow {
         data["applyUserCode"] = this.applyUserCode;
         data["applyName"] = this.applyName;
         data["status"] = this.status;
+        data["expireTime"] = this.expireTime ? this.expireTime.toISOString() : <any>undefined;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -5576,6 +5749,7 @@ export interface IProjectFlow {
     applyUserCode: string | undefined;
     applyName: string | undefined;
     status: number | undefined;
+    expireTime: moment.Moment | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -6057,6 +6231,219 @@ export interface IAcceptRecord {
     lastUpdateUserCode: string | undefined;
     lastUpdateUserName: string | undefined;
     isDisplay: boolean | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class SpotCheckSetupDto implements ISpotCheckSetupDto {
+    natureId: number | undefined;
+    natureCode: string | undefined;
+    natureName: string | undefined;
+    displayOrder: number | undefined;
+    ratio: number | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+
+    constructor(data?: ISpotCheckSetupDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.natureId = data["natureId"];
+            this.natureCode = data["natureCode"];
+            this.natureName = data["natureName"];
+            this.displayOrder = data["displayOrder"];
+            this.ratio = data["ratio"];
+            this.lastUpdateTime = data["lastUpdateTime"] ? moment(data["lastUpdateTime"].toString()) : <any>undefined;
+            this.lastUpdateUserCode = data["lastUpdateUserCode"];
+            this.lastUpdateUserName = data["lastUpdateUserName"];
+        }
+    }
+
+    static fromJS(data: any): SpotCheckSetupDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SpotCheckSetupDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["natureId"] = this.natureId;
+        data["natureCode"] = this.natureCode;
+        data["natureName"] = this.natureName;
+        data["displayOrder"] = this.displayOrder;
+        data["ratio"] = this.ratio;
+        data["lastUpdateTime"] = this.lastUpdateTime ? this.lastUpdateTime.toISOString() : <any>undefined;
+        data["lastUpdateUserCode"] = this.lastUpdateUserCode;
+        data["lastUpdateUserName"] = this.lastUpdateUserName;
+        return data; 
+    }
+
+    clone(): SpotCheckSetupDto {
+        const json = this.toJSON();
+        let result = new SpotCheckSetupDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISpotCheckSetupDto {
+    natureId: number | undefined;
+    natureCode: string | undefined;
+    natureName: string | undefined;
+    displayOrder: number | undefined;
+    ratio: number | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+}
+
+export class SpotChechSetupList implements ISpotChechSetupList {
+    natureList: SpotCheckSetupDto[] | undefined;
+
+    constructor(data?: ISpotChechSetupList) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["natureList"] && data["natureList"].constructor === Array) {
+                this.natureList = [];
+                for (let item of data["natureList"])
+                    this.natureList.push(SpotCheckSetupDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): SpotChechSetupList {
+        data = typeof data === 'object' ? data : {};
+        let result = new SpotChechSetupList();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.natureList && this.natureList.constructor === Array) {
+            data["natureList"] = [];
+            for (let item of this.natureList)
+                data["natureList"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): SpotChechSetupList {
+        const json = this.toJSON();
+        let result = new SpotChechSetupList();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISpotChechSetupList {
+    natureList: SpotCheckSetupDto[] | undefined;
+}
+
+export class SpotCheckSetup implements ISpotCheckSetup {
+    natureId: number | undefined;
+    ratio: number | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: ISpotCheckSetup) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.natureId = data["natureId"];
+            this.ratio = data["ratio"];
+            this.lastUpdateTime = data["lastUpdateTime"] ? moment(data["lastUpdateTime"].toString()) : <any>undefined;
+            this.lastUpdateUserCode = data["lastUpdateUserCode"];
+            this.lastUpdateUserName = data["lastUpdateUserName"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): SpotCheckSetup {
+        data = typeof data === 'object' ? data : {};
+        let result = new SpotCheckSetup();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["natureId"] = this.natureId;
+        data["ratio"] = this.ratio;
+        data["lastUpdateTime"] = this.lastUpdateTime ? this.lastUpdateTime.toISOString() : <any>undefined;
+        data["lastUpdateUserCode"] = this.lastUpdateUserCode;
+        data["lastUpdateUserName"] = this.lastUpdateUserName;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): SpotCheckSetup {
+        const json = this.toJSON();
+        let result = new SpotCheckSetup();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISpotCheckSetup {
+    natureId: number | undefined;
+    ratio: number | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -8502,6 +8889,7 @@ export class AuthenticateModel implements IAuthenticateModel {
     userNameOrEmailAddress: string | undefined;
     password: string | undefined;
     clientId: string | undefined;
+    rememberClient: boolean | undefined;
 
     constructor(data?: IAuthenticateModel) {
         if (data) {
@@ -8517,6 +8905,7 @@ export class AuthenticateModel implements IAuthenticateModel {
             this.userNameOrEmailAddress = data["userNameOrEmailAddress"];
             this.password = data["password"];
             this.clientId = data["clientId"];
+            this.rememberClient = data["rememberClient"];
         }
     }
 
@@ -8532,6 +8921,7 @@ export class AuthenticateModel implements IAuthenticateModel {
         data["userNameOrEmailAddress"] = this.userNameOrEmailAddress;
         data["password"] = this.password;
         data["clientId"] = this.clientId;
+        data["rememberClient"] = this.rememberClient;
         return data; 
     }
 
@@ -8547,6 +8937,7 @@ export interface IAuthenticateModel {
     userNameOrEmailAddress: string | undefined;
     password: string | undefined;
     clientId: string | undefined;
+    rememberClient: boolean | undefined;
 }
 
 export class AuthenticateResultModel implements IAuthenticateResultModel {
