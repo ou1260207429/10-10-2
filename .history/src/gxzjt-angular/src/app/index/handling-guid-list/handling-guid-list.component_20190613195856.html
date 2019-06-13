@@ -15,9 +15,9 @@
           <ul style="margin-top: 10px;padding-left: 0">
             <li nz-row nzGutter="20" *ngFor="let item of xukeList">
               <div nz-col nzSpan="9">
-                <img style="width: 100%;" [src]="item.src" alt="">
+                <img style="width: 100%;height: 100px;" [src]="item.src" alt="">
               </div>
-              <div nz-col nzSpan="15" style="position: relative">
+              <div nz-col nzSpan="15">
                 <p class="title">{{item.name}}</p>
                 <p class="tip">{{item.tip}}</p>
                 <div class="bottomMore">
@@ -44,17 +44,15 @@
               <div nz-col nzSpan="9">
                 <img style="width: 100%;" [src]="item.src" alt="">
               </div>
-              <div nz-col nzSpan="15"  style="position: relative">
+              <div nz-col nzSpan="15">
                 <p class="title">{{item.name}}</p>
                 <p class="tip">{{item.tip}}</p>
                 <div class="bottomMore">
-                 <div>
-                    <p class="detail"><span>了解详情</span></p>
+                  <p class="detail"><span>了解详情</span></p>
                   <div class="right">
                     <p class="span"><span> > </span></p>
                     <p class="rightspan"><span> > </span></p>
                   </div>
-                 </div>
 
                 </div>
               </div>
