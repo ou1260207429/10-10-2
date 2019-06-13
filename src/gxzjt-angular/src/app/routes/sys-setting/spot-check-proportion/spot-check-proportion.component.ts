@@ -4,7 +4,7 @@ import { STColumn, STComponent } from '@delon/abc';
 
 import { _HttpClient } from '@delon/theme';
 
-import { NatureServiceServiceProxy, SpotChechSetupList } from '../../../../shared/service-proxies/service-proxies'
+// import { NatureServiceServiceProxy, SpotChechSetupList } from '../../../../shared/service-proxies/service-proxies'
 
 import { Router } from '@angular/router';
 
@@ -52,7 +52,7 @@ export class SpotCheckProportionComponent implements OnInit {
   isOkLoading = false;
   modalTitle = "";
 
-  constructor(private natureServiceServiceProxy: NatureServiceServiceProxy,
+  constructor(
     private router: Router
 
   ) {
@@ -87,14 +87,14 @@ export class SpotCheckProportionComponent implements OnInit {
 
     this.isSearchForm = true;
 
-    this.natureServiceServiceProxy.post_GetSpotCheckSetupList().subscribe((result: SpotChechSetupList) => {
-      console.log(result);
-      this.formResultData = result.natureList;
-      this.isSearchForm = false;
-    }, err => {
-      console.log(err);
-      this.isSearchForm = false;
-    });
+    // this.natureServiceServiceProxy.post_GetSpotCheckSetupList().subscribe((result: SpotChechSetupList) => {
+    //   console.log(result);
+    //   this.formResultData = result.natureList;
+    //   this.isSearchForm = false;
+    // }, err => {
+    //   console.log(err);
+    //   this.isSearchForm = false;
+    // });
   }
 
 

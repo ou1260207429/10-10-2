@@ -59,14 +59,14 @@ export class HandlingGuidDetailComponent implements OnInit {
           data.noticeType = element.key
         }
       });
-    //  / this.data = data;
-      this.data = {
-        noticeId: data.id,
-        content: data.content,
-        guid: data.guid,
-        noticeType: data.noticeType,
-        title: data.title,
-      }
+      this.data = data;
+      // this.data = {
+      //   noticeId: data.id,
+      //   content: data.content,
+      //   guid: data.guid,
+      //   noticeType: data.noticeType,
+      //   title: data.title,
+      // }
       console.log(this.data)
     })
   }
