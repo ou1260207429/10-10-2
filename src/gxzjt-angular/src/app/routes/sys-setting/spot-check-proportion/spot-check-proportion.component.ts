@@ -68,14 +68,9 @@ export class SpotCheckProportionComponent implements OnInit {
   formatterPercent = (value: number) => `${value} %`;
   parserPercent = (value: string) => value.replace(' %', '');
 
-<<<<<<< HEAD
   constructor(private natureServiceServiceProxy: NatureServiceServiceProxy,
     private router: Router,
     private modalService: NzModalService
-=======
-  constructor(
-    private router: Router
->>>>>>> 62dbdbfa36447535c5507bc153b0822699bf21b5
 
   ) {
 
