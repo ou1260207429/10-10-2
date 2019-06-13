@@ -1,3 +1,5 @@
+import { NgxEchartsModule } from 'ngx-echarts';
+import { BigScreenComponent } from './pages/big-screen/big/big-screen.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -23,6 +25,7 @@ import { UEditorModule } from 'ngx-ueditor';
     AppRoutingModule,
     LayoutModule,
     SharedModule,
+    NgxEchartsModule,
     UEditorModule.forRoot({
       js: [
         `/assets/js/ueditor.config.js`,
@@ -33,7 +36,9 @@ import { UEditorModule } from 'ngx-ueditor';
       },
     }),
   ],
-  declarations: [],
+  declarations: [
+    BigScreenComponent
+  ],
   entryComponents: [
   ],
   providers: [
