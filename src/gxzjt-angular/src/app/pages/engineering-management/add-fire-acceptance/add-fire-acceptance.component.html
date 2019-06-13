@@ -110,6 +110,15 @@
             </se>
           </td>
         </tr>
+        <tr>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>检测报告编号</td>
+          <td rowspan='1' colspan='17'>
+            <se error="这是必填项">
+              <input nz-input placeholder="请输入施工许可证编号" [(ngModel)]="data.testReportNumber" name="testReportNumber"
+                required />
+            </se>
+          </td>
+        </tr>
         <tr class="title">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">单位类别</td>
           <td rowspan='1' colspan='5' class="fontweight fontLeft" required=true>单位名称</td>

@@ -25,17 +25,13 @@ export class AddFireDesignDeclareComponent implements OnInit {
   //0是新增  1是查看  2是修改
   type
 
+
   //市县区
   position = OptionsEnum
 
   //结构类型
   typeSelect = ArchitectureTypeEnum
-  constructor(private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
-    this.flowFormQueryDto.flowType = 1;
-    this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
 
-    console.log(this.position);
-  }
 
   //类别
   radiotype = "A";
@@ -529,7 +525,12 @@ export class AddFireDesignDeclareComponent implements OnInit {
       }]
   }
 
-
+  constructor(private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
+    this.flowFormQueryDto.flowType = 1;
+    this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
+    console.log(parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId')));
+    this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
+  }
 
   ngOnInit() {
     this.init();
@@ -539,6 +540,9 @@ export class AddFireDesignDeclareComponent implements OnInit {
    * 初始化数据
    */
   init() {
+    if (this.type != 1) {
+      this.post_GetFlowFormData();
+    }
     // this.post_GetFlowFormData();
   }
 
@@ -574,7 +578,6 @@ export class AddFireDesignDeclareComponent implements OnInit {
     this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd', '-')
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto.flowPathType = 1;
-    console.log(this.flowFormDto);
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')

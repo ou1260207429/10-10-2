@@ -130,7 +130,7 @@ export class FireDesignComponent implements OnInit {
    * 新增申报
    */
   addDeclare() {
-    this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0`]);
+    this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/null`]);
   }
 
   change(v) {

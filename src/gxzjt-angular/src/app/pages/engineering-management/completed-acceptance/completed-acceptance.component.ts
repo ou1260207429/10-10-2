@@ -130,7 +130,7 @@ export class CompletedAcceptanceComponent implements OnInit {
    * 新增申报
    */
   addDeclare() {
-    this.router.navigate([`/app/engineering-management/addCompletedAcceptanceComponent/0`]);
+    this.router.navigate([`/app/engineering-management/addCompletedAcceptanceComponent/0/null`]);
   }
 
   change(v) {

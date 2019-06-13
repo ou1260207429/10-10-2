@@ -3,7 +3,8 @@ import { objDeleteType } from 'infrastructure/regular-expression';
 import { NzMessageService } from 'ng-zorro-antd';
 import { OptionsEnum, ArchitectureTypeEnum } from 'infrastructure/expression';
 import { PublicModel } from 'infrastructure/public-model';
-import { ApplyServiceServiceProxy, FlowFormDto } from '@shared/service-proxies/service-proxies';
+import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto } from '@shared/service-proxies/service-proxies';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * 工程管理->消防验收->新增申报
@@ -29,7 +30,7 @@ export class AddFireAcceptanceComponent implements OnInit {
     symbol: '',
     dateOfReview: '',
     constructionPermitNumber: '',
-
+    testReportNumber: '',
     design: {
       designUnit: '',
       qualificationLevel: '',
@@ -145,10 +146,30 @@ export class AddFireAcceptanceComponent implements OnInit {
   //结构类型
   typeSelect = ArchitectureTypeEnum
 
+  flowFormQueryDto = new FlowFormQueryDto();
   flowFormDto = new FlowFormDto();
-  constructor(private _applyService: ApplyServiceServiceProxy, private message: NzMessageService, public publicModel: PublicModel, ) { }
+  constructor(private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
+    this.flowFormQueryDto.flowType = 2;
+    this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
 
+    if (!this._ActivatedRoute.snapshot.paramMap.get('projectId')) {
+      // this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
+    }
+    console.log(this.flowFormDto)
+  }
   ngOnInit() {
+    if (this.type != 1) {
+      this.post_GetFlowFormData();
+    }
+  }
+
+  /**
+   * 获取特殊工程列表
+   */
+  post_GetFlowFormData() {
+    this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
+      console.log(data)
+    })
   }
 
   /**
