@@ -32,17 +32,16 @@ export class IndexHeaderComponent implements OnInit {
     {
       path: 'form-download',
       name: '表格下载',
-      activeName:"antiveform"
+      activeName:"antiveinform"
     },
     {
       path: 'laws-and-regulations',
       name: '法律法规',
-      activeName:"antivelaws"
+      activeName:"antiveinlaws"
     },
     {
       path: '/account/login',
       name: '登录',
-      activeName:"antivelogin"
     },
 
   ];

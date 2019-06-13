@@ -12,37 +12,30 @@ export class IndexHeaderComponent implements OnInit {
   i: any;
   constructor(private location: PlatformLocation, private router: Router) { }
   currentIndex = 0;
-  active
   navList = [
     {
       path: 'index',
       name: '首页',
-      activeName:"antiveIndex"
     },
     {
       path: 'handling-guid',
       name: '办事指南',
-      activeName:"antivehandling"
     },
     {
       path: 'announcement-information',
       name: '公告信息',
-      activeName:"antiveinformation"
     },
     {
       path: 'form-download',
       name: '表格下载',
-      activeName:"antiveform"
     },
     {
       path: 'laws-and-regulations',
       name: '法律法规',
-      activeName:"antivelaws"
     },
     {
       path: '/account/login',
       name: '登录',
-      activeName:"antivelogin"
     },
 
   ];

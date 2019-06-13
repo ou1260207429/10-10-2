@@ -23,7 +23,7 @@ export class AppMenus {
         {
             text: "",
             i18n: "工作事项",
-            icon: { type: "icon", value: "bars" },// 图标
+            icon: { type: "icon", value: "home" },// 图标
             children: [
                 {
                     text: "",
@@ -60,7 +60,7 @@ export class AppMenus {
         {
             text: "统计分析",
 
-            icon: { type: "icon", value: "area-chart" },// 图标
+            icon: { type: "icon", value: "account-book" },// 图标
             children: [
                 {
                     text: "预警中心",
@@ -73,7 +73,7 @@ export class AppMenus {
         {
             text: "",
             i18n: "内容管理",
-            icon: { type: "icon", value: "form" },// 图标
+            icon: { type: "icon", value: "home" },// 图标
             children: [
                 {
                     text: "",

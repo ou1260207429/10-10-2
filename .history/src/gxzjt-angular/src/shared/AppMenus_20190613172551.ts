@@ -60,7 +60,7 @@ export class AppMenus {
         {
             text: "统计分析",
 
-            icon: { type: "icon", value: "area-chart" },// 图标
+            icon: { type: "icon", value: "account-book" },// 图标
             children: [
                 {
                     text: "预警中心",
