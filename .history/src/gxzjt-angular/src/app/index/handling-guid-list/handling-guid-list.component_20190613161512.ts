@@ -10,7 +10,7 @@ export class HandlingGuidListComponent implements OnInit {
   i: any;
   router: any;
 
-  constructor() { }
+  constructor(private _home:Home) { }
   currentIndex = 0;
   xukeList = [
     {

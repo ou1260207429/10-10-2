@@ -95,7 +95,7 @@ export class AppMenus {
         {
             text: "",
             i18n: "工程管理",
-            icon: { type: "icon", value: "woman" },// 图标
+            icon: { type: "icon", value: "home" },// 图标
             children: [
                 {
                     text: "",
@@ -122,7 +122,7 @@ export class AppMenus {
         {
             text: "系统管理",
 
-            icon: { type: "icon", value: "account-book" },// 图标
+            icon: { type: "icon", value: "setting" },// 图标
             children: [
                 {
                     text: "抽查比例中心",

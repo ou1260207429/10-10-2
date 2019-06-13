@@ -35,4 +35,10 @@ export class HandlingGuidListComponent implements OnInit {
 
   ngOnInit(): void { }
 
+  /**
+   * 跳转进表单列表页
+   */
+  goFromList(item) {
+    this.router.navigate(item.path);
+  }
 }
