@@ -11,7 +11,7 @@ import { PublicFormComponent } from '../public/public-form.component';
 
 import { Router } from '@angular/router';
 
-
+import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 /**
  * 待办流程
  */
@@ -72,7 +72,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
   constructor(private workFlowedServiceProxy: WorkFlowedServiceProxy,
     private router: Router,
-
+    private http: _HttpClient,
     private xlsx: XlsxService) {
     super();
   }
@@ -85,8 +85,10 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
   refresh() {
     this.resetSearchFliterForm();
+    this.resetTime();
     this.search();
   }
+
   search() {
 
     var searchParam = new PendingWorkFlow_NodeAuditorRecordDto();
@@ -108,13 +110,14 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     searchParam.init(jsonData);
 
     this.isSearchForm = true;
-    this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(searchParam).pipe().subscribe(res => {
-      console.log(res);
-      this.isSearchForm = false;
-    }, err => {
-      console.log(err);
-      this.isSearchForm = false;
-    });
+    // this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(searchParam).subscribe(data => {
+    //   console.log(JSON.stringify(data));
+    //   this.isSearchForm = false;
+    // }, err => {
+    //   console.log(err);
+    //   this.isSearchForm = false;
+    //   });
+
   }
 
 

@@ -16,7 +16,7 @@ import { AppConsts } from '@shared/AppConsts';
   styles: []
 })
 export class DraftsComponent implements OnInit {
-
+  data: any;
   // @ViewChild('treeCom') treeCom;
   // @ViewChild('st') st: STComponent;
   // flowAddType: any = {
