@@ -376,7 +376,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   depositDraft() {
     this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd', '-')
     this.flowFormDto.formJson = JSON.stringify(this.data);
-    this.flowFormDto.flowPathType = 3;
+    this.flowFormDto['flowPathType'] = 3;
     if (!this.flowFormDto.projectId) delete this.flowFormDto.projectId
     console.log(this.flowFormDto)
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {

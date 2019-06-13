@@ -1,3 +1,4 @@
+import { BigScreenComponent } from './pages/big-screen/big/big-screen.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
@@ -36,8 +37,11 @@ const routes: Routes = [
       { path: 'content-manage', loadChildren: './pages/content-manage/content-manage.module#ContentManageModule' },
 
     ],
-
-  }
+  },
+  {
+    path: 'big-screen/big',
+    component: BigScreenComponent
+  },
 ];
 
 @NgModule({

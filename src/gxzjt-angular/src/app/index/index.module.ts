@@ -8,6 +8,7 @@ import { FormDownloadListComponent } from './form-download-list/form-download-li
 import { LawsAndRegulationsComponent } from './laws-and-regulations/laws-and-regulations.component';
 import { IndexHeaderComponent } from './index-header/index-header.component';
 import { HandlingGuidListDetailComponent } from './handling-guid-list-detail/handling-guid-list-detail.component';
+import { PipesModule } from 'pipes/pipes.module';
 
 const COMPONENTS = [];
 const COMPONENTS_NOROUNT = [
@@ -20,7 +21,8 @@ const COMPONENTS_NOROUNT = [
 @NgModule({
   imports: [
     SharedModule,
-    IndexRoutingModule
+    PipesModule,
+    IndexRoutingModule,
   ],
   declarations: [
     ...COMPONENTS,

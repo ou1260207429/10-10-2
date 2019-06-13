@@ -5516,6 +5516,10 @@ export class FlowFormAllDataDto implements IFlowFormAllDataDto {
     natures: ArchitecturalInNature[] | undefined;
     formJson: string | undefined;
     projectId: number | undefined;
+<<<<<<< HEAD
+=======
+    projectTypeStatu: number | undefined;
+>>>>>>> 9be1c8f9b8c8b355d54eb603d4d313a1e5025cba
 
     constructor(data?: IFlowFormAllDataDto) {
         if (data) {
@@ -5540,6 +5544,10 @@ export class FlowFormAllDataDto implements IFlowFormAllDataDto {
             }
             this.formJson = data["formJson"];
             this.projectId = data["projectId"];
+<<<<<<< HEAD
+=======
+            this.projectTypeStatu = data["projectTypeStatu"];
+>>>>>>> 9be1c8f9b8c8b355d54eb603d4d313a1e5025cba
         }
     }
 
@@ -5564,6 +5572,10 @@ export class FlowFormAllDataDto implements IFlowFormAllDataDto {
         }
         data["formJson"] = this.formJson;
         data["projectId"] = this.projectId;
+<<<<<<< HEAD
+=======
+        data["projectTypeStatu"] = this.projectTypeStatu;
+>>>>>>> 9be1c8f9b8c8b355d54eb603d4d313a1e5025cba
         return data; 
     }
 
@@ -5580,6 +5592,10 @@ export interface IFlowFormAllDataDto {
     natures: ArchitecturalInNature[] | undefined;
     formJson: string | undefined;
     projectId: number | undefined;
+<<<<<<< HEAD
+=======
+    projectTypeStatu: number | undefined;
+>>>>>>> 9be1c8f9b8c8b355d54eb603d4d313a1e5025cba
 }
 
 export class SpecialNatureItem implements ISpecialNatureItem {
@@ -5802,6 +5818,10 @@ export interface ISpecialNatureType {
 export class FlowFormDto implements IFlowFormDto {
     formJson: string | undefined;
     projectId: number | undefined;
+<<<<<<< HEAD
+=======
+    projectTypeStatu: number | undefined;
+>>>>>>> 9be1c8f9b8c8b355d54eb603d4d313a1e5025cba
 
     constructor(data?: IFlowFormDto) {
         if (data) {
@@ -5816,6 +5836,10 @@ export class FlowFormDto implements IFlowFormDto {
         if (data) {
             this.formJson = data["formJson"];
             this.projectId = data["projectId"];
+<<<<<<< HEAD
+=======
+            this.projectTypeStatu = data["projectTypeStatu"];
+>>>>>>> 9be1c8f9b8c8b355d54eb603d4d313a1e5025cba
         }
     }
 
@@ -5830,6 +5854,10 @@ export class FlowFormDto implements IFlowFormDto {
         data = typeof data === 'object' ? data : {};
         data["formJson"] = this.formJson;
         data["projectId"] = this.projectId;
+<<<<<<< HEAD
+=======
+        data["projectTypeStatu"] = this.projectTypeStatu;
+>>>>>>> 9be1c8f9b8c8b355d54eb603d4d313a1e5025cba
         return data; 
     }
 
@@ -5844,6 +5872,10 @@ export class FlowFormDto implements IFlowFormDto {
 export interface IFlowFormDto {
     formJson: string | undefined;
     projectId: number | undefined;
+<<<<<<< HEAD
+=======
+    projectTypeStatu: number | undefined;
+>>>>>>> 9be1c8f9b8c8b355d54eb603d4d313a1e5025cba
 }
 
 export class FlowDataDto implements IFlowDataDto {
@@ -7712,6 +7744,12 @@ export interface IProjectFlowItemQueryDto {
 }
 
 export class DraftQueryDto implements IDraftQueryDto {
+    number: string | undefined;
+    projectName: string | undefined;
+    companyName: string | undefined;
+    applyTimeStart: moment.Moment | undefined;
+    applyTimeEnd: moment.Moment | undefined;
+    filterText: string | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
@@ -7728,6 +7766,12 @@ export class DraftQueryDto implements IDraftQueryDto {
 
     init(data?: any) {
         if (data) {
+            this.number = data["number"];
+            this.projectName = data["projectName"];
+            this.companyName = data["companyName"];
+            this.applyTimeStart = data["applyTimeStart"] ? moment(data["applyTimeStart"].toString()) : <any>undefined;
+            this.applyTimeEnd = data["applyTimeEnd"] ? moment(data["applyTimeEnd"].toString()) : <any>undefined;
+            this.filterText = data["filterText"];
             this.page = data["page"];
             this.sorting = data["sorting"];
             this.skipCount = data["skipCount"];
@@ -7744,6 +7788,12 @@ export class DraftQueryDto implements IDraftQueryDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["number"] = this.number;
+        data["projectName"] = this.projectName;
+        data["companyName"] = this.companyName;
+        data["applyTimeStart"] = this.applyTimeStart ? this.applyTimeStart.toISOString() : <any>undefined;
+        data["applyTimeEnd"] = this.applyTimeEnd ? this.applyTimeEnd.toISOString() : <any>undefined;
+        data["filterText"] = this.filterText;
         data["page"] = this.page;
         data["sorting"] = this.sorting;
         data["skipCount"] = this.skipCount;
@@ -7760,6 +7810,12 @@ export class DraftQueryDto implements IDraftQueryDto {
 }
 
 export interface IDraftQueryDto {
+    number: string | undefined;
+    projectName: string | undefined;
+    companyName: string | undefined;
+    applyTimeStart: moment.Moment | undefined;
+    applyTimeEnd: moment.Moment | undefined;
+    filterText: string | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;

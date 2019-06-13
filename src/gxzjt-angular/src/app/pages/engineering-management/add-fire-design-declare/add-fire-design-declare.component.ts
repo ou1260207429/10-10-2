@@ -528,7 +528,6 @@ export class AddFireDesignDeclareComponent implements OnInit {
   constructor(private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     this.flowFormQueryDto.flowType = 1;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
-    console.log(parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId')));
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
   }
 
@@ -577,7 +576,8 @@ export class AddFireDesignDeclareComponent implements OnInit {
     this.data.planStartTime = this.data.planStartTime == '' ? '' : timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy-MM-dd', '-')
     this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd', '-')
     this.flowFormDto.formJson = JSON.stringify(this.data);
-    this.flowFormDto.flowPathType = 1;
+    this.flowFormDto['flowPathType'] = 1;
+    this.flowFormDto.projectTypeStatu = 0;
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')
