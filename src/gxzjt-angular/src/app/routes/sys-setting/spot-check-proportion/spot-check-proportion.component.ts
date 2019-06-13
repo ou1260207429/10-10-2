@@ -4,7 +4,7 @@ import { STColumn, STComponent } from '@delon/abc';
 
 import { _HttpClient } from '@delon/theme';
 
-import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto } from '../../../../shared/service-proxies/service-proxies'
+import { NatureServiceServiceProxy, SpotChechSetupList } from '../../../../shared/service-proxies/service-proxies'
 
 import { Router } from '@angular/router';
 
@@ -22,7 +22,7 @@ export class SpotCheckProportionComponent implements OnInit {
 
   page = 1;
   isSearchForm = false;
-
+  formResultData = [];
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     {
@@ -35,15 +35,15 @@ export class SpotCheckProportionComponent implements OnInit {
         },
       ]
     },
-    { title: '编号', index: 'no' },
-    { title: '使用性质名称', index: 'use_name' },
+    { title: '编号', index: 'natureCode' },
+    { title: '使用性质名称', index: 'natureName' },
 
-    { title: '抽查比例', index: 'proportion' },
+    { title: '抽查比例', index: 'ratio' },
 
-    { title: '操作人', index: 'controlor' },
+    { title: '操作人', index: 'lastUpdateUserName' },
 
 
-    { title: '操作时间', type: 'date', index: 'ctrl_time' },
+    { title: '操作时间', type: 'date', index: 'lastUpdateTime' },
 
 
   ];
@@ -52,7 +52,7 @@ export class SpotCheckProportionComponent implements OnInit {
   isOkLoading = false;
   modalTitle = "";
 
-  constructor(private workFlowedServiceProxy: WorkFlowedServiceProxy,
+  constructor(private natureServiceServiceProxy: NatureServiceServiceProxy,
     private router: Router
 
   ) {
@@ -83,22 +83,18 @@ export class SpotCheckProportionComponent implements OnInit {
   }
   getList() {
 
-    // var searchParam = new PendingWorkFlow_NodeAuditorRecordDto();
 
-    // var jsonData = {
 
-    // };
+    this.isSearchForm = true;
 
-    // searchParam.init(jsonData);
-
-    // this.isSearchForm = true;
-    // this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(searchParam).pipe().subscribe(res => {
-    //   console.log(res);
-    //   this.isSearchForm = false;
-    // }, err => {
-    //   console.log(err);
-    //   this.isSearchForm = false;
-    // });
+    this.natureServiceServiceProxy.post_GetSpotCheckSetupList().subscribe((result: SpotChechSetupList) => {
+      console.log(result);
+      this.formResultData = result.natureList;
+      this.isSearchForm = false;
+    }, err => {
+      console.log(err);
+      this.isSearchForm = false;
+    });
   }
 
 

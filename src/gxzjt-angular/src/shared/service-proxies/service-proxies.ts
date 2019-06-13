@@ -548,62 +548,6 @@ export class AttachmentServiceProxy {
         }
         return _observableOf<void>(<any>null);
     }
-
-    /**
-     * @param pageSize (optional) 
-     * @return Success
-     */
-    homeTableDownloadList(pageSize: PageSize | null | undefined): Observable<PageModel> {
-        let url_ = this.baseUrl + "/api/services/app/Attachment/HomeTableDownloadList";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(pageSize);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processHomeTableDownloadList(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processHomeTableDownloadList(<any>response_);
-                } catch (e) {
-                    return <Observable<PageModel>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PageModel>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processHomeTableDownloadList(response: HttpResponseBase): Observable<PageModel> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PageModel.fromJS(resultData200) : new PageModel();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PageModel>(<any>null);
-    }
 }
 
 @Injectable()
@@ -1281,6 +1225,7 @@ export class NatureServiceServiceProxy {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "";
     }
+<<<<<<< HEAD
 
     /**
      * @return Success
@@ -1386,6 +1331,19 @@ export class NatureServiceServiceProxy {
             }));
         }
         return _observableOf<SpotChechSetupList>(<any>null);
+=======
+}
+
+@Injectable()
+export class ProjectCompanyServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+>>>>>>> 2e0640c183dbb6fcb9093dade016544694ddae9a
     }
 
     /**
@@ -1893,6 +1851,7 @@ export class ProjectCompanyServiceProxy {
         }
         return _observableOf<DataSourceResult>(<any>null);
     }
+<<<<<<< HEAD
 
     /**
      * @param input (optional) 
@@ -1948,6 +1907,19 @@ export class ProjectCompanyServiceProxy {
             }));
         }
         return _observableOf<DataSourceResult>(<any>null);
+=======
+}
+
+@Injectable()
+export class RegulationServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+>>>>>>> 2e0640c183dbb6fcb9093dade016544694ddae9a
     }
 
     /**
@@ -5896,8 +5868,8 @@ export interface IFlowFormDto {
 
 export class FlowDataDto implements IFlowDataDto {
     projectId: number | undefined;
+    flowType: number | undefined;
     formJson: string | undefined;
-    projectFlowInfo: ProjectFlow | undefined;
 
     constructor(data?: IFlowDataDto) {
         if (data) {
@@ -5911,8 +5883,8 @@ export class FlowDataDto implements IFlowDataDto {
     init(data?: any) {
         if (data) {
             this.projectId = data["projectId"];
+            this.flowType = data["flowType"];
             this.formJson = data["formJson"];
-            this.projectFlowInfo = data["projectFlowInfo"] ? ProjectFlow.fromJS(data["projectFlowInfo"]) : <any>undefined;
         }
     }
 
@@ -5926,8 +5898,8 @@ export class FlowDataDto implements IFlowDataDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["projectId"] = this.projectId;
+        data["flowType"] = this.flowType;
         data["formJson"] = this.formJson;
-        data["projectFlowInfo"] = this.projectFlowInfo ? this.projectFlowInfo.toJSON() : <any>undefined;
         return data; 
     }
 
@@ -5941,7 +5913,9 @@ export class FlowDataDto implements IFlowDataDto {
 
 export interface IFlowDataDto {
     projectId: number | undefined;
+    flowType: number | undefined;
     formJson: string | undefined;
+<<<<<<< HEAD
     projectFlowInfo: ProjectFlow | undefined;
 }
 
@@ -6046,6 +6020,8 @@ export interface IProjectFlow {
     creationTime: moment.Moment | undefined;
     creatorUserId: number | undefined;
     id: number | undefined;
+=======
+>>>>>>> 2e0640c183dbb6fcb9093dade016544694ddae9a
 }
 
 export class AttachmentDto implements IAttachmentDto {
@@ -6160,7 +6136,6 @@ export class PageSize implements IPageSize {
     page: number | undefined;
     sort: string | undefined;
     isAsc: boolean | undefined;
-    group: string | undefined;
     orderby: string | undefined;
     search: string | undefined;
     startTime: moment.Moment | undefined;
@@ -6182,7 +6157,6 @@ export class PageSize implements IPageSize {
             this.page = data["page"];
             this.sort = data["sort"];
             this.isAsc = data["isAsc"];
-            this.group = data["group"];
             this.orderby = data["orderby"];
             this.search = data["search"];
             this.startTime = data["startTime"] ? moment(data["startTime"].toString()) : <any>undefined;
@@ -6204,7 +6178,6 @@ export class PageSize implements IPageSize {
         data["page"] = this.page;
         data["sort"] = this.sort;
         data["isAsc"] = this.isAsc;
-        data["group"] = this.group;
         data["orderby"] = this.orderby;
         data["search"] = this.search;
         data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
@@ -6226,7 +6199,6 @@ export interface IPageSize {
     page: number | undefined;
     sort: string | undefined;
     isAsc: boolean | undefined;
-    group: string | undefined;
     orderby: string | undefined;
     search: string | undefined;
     startTime: moment.Moment | undefined;
@@ -6917,9 +6889,18 @@ export interface ISpotChechSetupList {
     natureList: SpotCheckSetupDto[] | undefined;
 }
 
+<<<<<<< HEAD
 export class SpotCheckSetup implements ISpotCheckSetup {
     natureId: number | undefined;
     ratio: number | undefined;
+=======
+export class NoticeViewModel implements INoticeViewModel {
+    guid: string | undefined;
+    content: string | undefined;
+    title: string | undefined;
+    contentUrl: string | undefined;
+    noticeTypeId: string | undefined;
+>>>>>>> 2e0640c183dbb6fcb9093dade016544694ddae9a
     lastUpdateTime: moment.Moment | undefined;
     lastUpdateUserCode: string | undefined;
     lastUpdateUserName: string | undefined;
@@ -6943,8 +6924,16 @@ export class SpotCheckSetup implements ISpotCheckSetup {
 
     init(data?: any) {
         if (data) {
+<<<<<<< HEAD
             this.natureId = data["natureId"];
             this.ratio = data["ratio"];
+=======
+            this.guid = data["guid"];
+            this.content = data["content"];
+            this.title = data["title"];
+            this.contentUrl = data["contentUrl"];
+            this.noticeTypeId = data["noticeTypeId"];
+>>>>>>> 2e0640c183dbb6fcb9093dade016544694ddae9a
             this.lastUpdateTime = data["lastUpdateTime"] ? moment(data["lastUpdateTime"].toString()) : <any>undefined;
             this.lastUpdateUserCode = data["lastUpdateUserCode"];
             this.lastUpdateUserName = data["lastUpdateUserName"];
@@ -6968,8 +6957,16 @@ export class SpotCheckSetup implements ISpotCheckSetup {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+<<<<<<< HEAD
         data["natureId"] = this.natureId;
         data["ratio"] = this.ratio;
+=======
+        data["guid"] = this.guid;
+        data["content"] = this.content;
+        data["title"] = this.title;
+        data["contentUrl"] = this.contentUrl;
+        data["noticeTypeId"] = this.noticeTypeId;
+>>>>>>> 2e0640c183dbb6fcb9093dade016544694ddae9a
         data["lastUpdateTime"] = this.lastUpdateTime ? this.lastUpdateTime.toISOString() : <any>undefined;
         data["lastUpdateUserCode"] = this.lastUpdateUserCode;
         data["lastUpdateUserName"] = this.lastUpdateUserName;
@@ -6992,9 +6989,18 @@ export class SpotCheckSetup implements ISpotCheckSetup {
     }
 }
 
+<<<<<<< HEAD
 export interface ISpotCheckSetup {
     natureId: number | undefined;
     ratio: number | undefined;
+=======
+export interface INoticeViewModel {
+    guid: string | undefined;
+    content: string | undefined;
+    title: string | undefined;
+    contentUrl: string | undefined;
+    noticeTypeId: string | undefined;
+>>>>>>> 2e0640c183dbb6fcb9093dade016544694ddae9a
     lastUpdateTime: moment.Moment | undefined;
     lastUpdateUserCode: string | undefined;
     lastUpdateUserName: string | undefined;
@@ -7749,61 +7755,6 @@ export interface IProjectFlowItemQueryDto {
     projectName: string | undefined;
     constructOrgName: string | undefined;
     status: number | undefined;
-    page: number | undefined;
-    sorting: string | undefined;
-    skipCount: number | undefined;
-    maxResultCount: number | undefined;
-}
-
-export class DraftQueryDto implements IDraftQueryDto {
-    page: number | undefined;
-    sorting: string | undefined;
-    skipCount: number | undefined;
-    maxResultCount: number | undefined;
-
-    constructor(data?: IDraftQueryDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.page = data["page"];
-            this.sorting = data["sorting"];
-            this.skipCount = data["skipCount"];
-            this.maxResultCount = data["maxResultCount"];
-        }
-    }
-
-    static fromJS(data: any): DraftQueryDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new DraftQueryDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["page"] = this.page;
-        data["sorting"] = this.sorting;
-        data["skipCount"] = this.skipCount;
-        data["maxResultCount"] = this.maxResultCount;
-        return data; 
-    }
-
-    clone(): DraftQueryDto {
-        const json = this.toJSON();
-        let result = new DraftQueryDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IDraftQueryDto {
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;

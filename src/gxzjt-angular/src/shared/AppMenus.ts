@@ -48,7 +48,7 @@ export class AppMenus {
                 {
                     text: "",
                     i18n: "草稿箱",
-                    link: "/app/work-matters/flowModuleComponent",
+                    link: "/app/work-matters/draftsComponent",
                 },
                 {
                     text: "",

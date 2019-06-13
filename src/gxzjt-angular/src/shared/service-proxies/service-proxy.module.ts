@@ -14,14 +14,11 @@ import * as ApiServiceProxies from '@shared/service-proxies/service-proxies';
     ApiServiceProxies.AccountServiceProxy,
     ApiServiceProxies.ConfigurationServiceProxy,
     ApiServiceProxies.TenantRegistrationServiceProxy,
-<<<<<<< HEAD
     ApiServiceProxies.NoticeServiceProxy,
-=======
     ApiServiceProxies.ApplyServiceServiceProxy,
->>>>>>> 4c524d1e428a4b52540a02e7bd95869b055d3209
     ApiServiceProxies.RegulationServiceProxy,
     ApiServiceProxies.AttachmentServiceProxy,
-
+    ApiServiceProxies.ProjectFlowServcieServiceProxy,
     { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },
   ],
 })

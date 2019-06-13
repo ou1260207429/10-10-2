@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import lodash from 'lodash'
 import { objDeleteType } from 'infrastructure/regular-expression';
+import { ArchitectureTypeEnum, OptionsEnum } from 'infrastructure/expression';
 /**
  * 工程管理->竣工验收->新增申报
  */
@@ -306,6 +306,12 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     }
 
   }
+
+  //市县区
+  position = OptionsEnum
+
+  //结构类型
+  typeSelect = ArchitectureTypeEnum
 
   constructor(private message: NzMessageService, ) { }
 
