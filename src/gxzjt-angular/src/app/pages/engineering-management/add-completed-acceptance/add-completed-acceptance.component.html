@@ -476,3 +476,7 @@
     </table>
   </div>
 </form>
+<div class="textCenter">
+  <button nz-button nzType="primary" (click)="depositDraft()">保存草稿</button>
+  <button nz-button nzType="primary" [disabled]="f.invalid" (click)="save()">申请提交</button>
+</div>
