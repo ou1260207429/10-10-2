@@ -548,62 +548,6 @@ export class AttachmentServiceProxy {
         }
         return _observableOf<void>(<any>null);
     }
-
-    /**
-     * @param pageSize (optional) 
-     * @return Success
-     */
-    homeTableDownloadList(pageSize: PageSize | null | undefined): Observable<PageModel> {
-        let url_ = this.baseUrl + "/api/services/app/Attachment/HomeTableDownloadList";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(pageSize);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processHomeTableDownloadList(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processHomeTableDownloadList(<any>response_);
-                } catch (e) {
-                    return <Observable<PageModel>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PageModel>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processHomeTableDownloadList(response: HttpResponseBase): Observable<PageModel> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PageModel.fromJS(resultData200) : new PageModel();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PageModel>(<any>null);
-    }
 }
 
 @Injectable()
@@ -1257,116 +1201,6 @@ export class NoticeServiceProxy {
         }
         return _observableOf<void>(<any>null);
     }
-
-    /**
-     * @param pageSize (optional) 
-     * @return Success
-     */
-    homeNoticeList(pageSize: PageSize | null | undefined): Observable<PageModel> {
-        let url_ = this.baseUrl + "/api/services/app/Notice/HomeNoticeList";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(pageSize);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processHomeNoticeList(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processHomeNoticeList(<any>response_);
-                } catch (e) {
-                    return <Observable<PageModel>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PageModel>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processHomeNoticeList(response: HttpResponseBase): Observable<PageModel> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PageModel.fromJS(resultData200) : new PageModel();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PageModel>(<any>null);
-    }
-
-    /**
-     * @param noticeId (optional) 
-     * @return Success
-     */
-    homeNoticeDetailsById(noticeId: number | null | undefined): Observable<NoticeViewModel> {
-        let url_ = this.baseUrl + "/api/services/app/Notice/HomeNoticeDetailsById?";
-        if (noticeId !== undefined)
-            url_ += "noticeId=" + encodeURIComponent("" + noticeId) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processHomeNoticeDetailsById(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processHomeNoticeDetailsById(<any>response_);
-                } catch (e) {
-                    return <Observable<NoticeViewModel>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<NoticeViewModel>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processHomeNoticeDetailsById(response: HttpResponseBase): Observable<NoticeViewModel> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? NoticeViewModel.fromJS(resultData200) : new NoticeViewModel();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<NoticeViewModel>(<any>null);
-    }
 }
 
 @Injectable()
@@ -1900,62 +1734,6 @@ export class ProjectFlowServcieServiceProxy {
     }
 
     protected processPost_GetProjects(response: HttpResponseBase): Observable<DataSourceResult> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<DataSourceResult>(<any>null);
-    }
-
-    /**
-     * @param draftQueryDto (optional) 
-     * @return Success
-     */
-    post_GetDrafts(draftQueryDto: DraftQueryDto | null | undefined): Observable<DataSourceResult> {
-        let url_ = this.baseUrl + "/api/services/app/ProjectFlowServcie/Post_GetDrafts";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(draftQueryDto);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPost_GetDrafts(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processPost_GetDrafts(<any>response_);
-                } catch (e) {
-                    return <Observable<DataSourceResult>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<DataSourceResult>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processPost_GetDrafts(response: HttpResponseBase): Observable<DataSourceResult> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -5438,8 +5216,8 @@ export interface IFlowFormDto {
 
 export class FlowDataDto implements IFlowDataDto {
     projectId: number | undefined;
+    flowType: number | undefined;
     formJson: string | undefined;
-    projectFlowInfo: ProjectFlow | undefined;
 
     constructor(data?: IFlowDataDto) {
         if (data) {
@@ -5453,8 +5231,8 @@ export class FlowDataDto implements IFlowDataDto {
     init(data?: any) {
         if (data) {
             this.projectId = data["projectId"];
+            this.flowType = data["flowType"];
             this.formJson = data["formJson"];
-            this.projectFlowInfo = data["projectFlowInfo"] ? ProjectFlow.fromJS(data["projectFlowInfo"]) : <any>undefined;
         }
     }
 
@@ -5468,8 +5246,8 @@ export class FlowDataDto implements IFlowDataDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["projectId"] = this.projectId;
+        data["flowType"] = this.flowType;
         data["formJson"] = this.formJson;
-        data["projectFlowInfo"] = this.projectFlowInfo ? this.projectFlowInfo.toJSON() : <any>undefined;
         return data; 
     }
 
@@ -5483,107 +5261,8 @@ export class FlowDataDto implements IFlowDataDto {
 
 export interface IFlowDataDto {
     projectId: number | undefined;
+    flowType: number | undefined;
     formJson: string | undefined;
-    projectFlowInfo: ProjectFlow | undefined;
-}
-
-export class ProjectFlow implements IProjectFlow {
-    projectId: number | undefined;
-    flowPathType: number | undefined;
-    flowNo: string | undefined;
-    applyTime: moment.Moment | undefined;
-    applyUserCode: string | undefined;
-    applyName: string | undefined;
-    status: number | undefined;
-    isDeleted: boolean | undefined;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: IProjectFlow) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.projectId = data["projectId"];
-            this.flowPathType = data["flowPathType"];
-            this.flowNo = data["flowNo"];
-            this.applyTime = data["applyTime"] ? moment(data["applyTime"].toString()) : <any>undefined;
-            this.applyUserCode = data["applyUserCode"];
-            this.applyName = data["applyName"];
-            this.status = data["status"];
-            this.isDeleted = data["isDeleted"];
-            this.deleterUserId = data["deleterUserId"];
-            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
-            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = data["lastModifierUserId"];
-            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = data["creatorUserId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): ProjectFlow {
-        data = typeof data === 'object' ? data : {};
-        let result = new ProjectFlow();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["projectId"] = this.projectId;
-        data["flowPathType"] = this.flowPathType;
-        data["flowNo"] = this.flowNo;
-        data["applyTime"] = this.applyTime ? this.applyTime.toISOString() : <any>undefined;
-        data["applyUserCode"] = this.applyUserCode;
-        data["applyName"] = this.applyName;
-        data["status"] = this.status;
-        data["isDeleted"] = this.isDeleted;
-        data["deleterUserId"] = this.deleterUserId;
-        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): ProjectFlow {
-        const json = this.toJSON();
-        let result = new ProjectFlow();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IProjectFlow {
-    projectId: number | undefined;
-    flowPathType: number | undefined;
-    flowNo: string | undefined;
-    applyTime: moment.Moment | undefined;
-    applyUserCode: string | undefined;
-    applyName: string | undefined;
-    status: number | undefined;
-    isDeleted: boolean | undefined;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
 }
 
 export class AttachmentDto implements IAttachmentDto {
@@ -5638,7 +5317,6 @@ export class PageSize implements IPageSize {
     page: number | undefined;
     sort: string | undefined;
     isAsc: boolean | undefined;
-    group: string | undefined;
     orderby: string | undefined;
     search: string | undefined;
     startTime: moment.Moment | undefined;
@@ -5660,7 +5338,6 @@ export class PageSize implements IPageSize {
             this.page = data["page"];
             this.sort = data["sort"];
             this.isAsc = data["isAsc"];
-            this.group = data["group"];
             this.orderby = data["orderby"];
             this.search = data["search"];
             this.startTime = data["startTime"] ? moment(data["startTime"].toString()) : <any>undefined;
@@ -5682,7 +5359,6 @@ export class PageSize implements IPageSize {
         data["page"] = this.page;
         data["sort"] = this.sort;
         data["isAsc"] = this.isAsc;
-        data["group"] = this.group;
         data["orderby"] = this.orderby;
         data["search"] = this.search;
         data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
@@ -5704,7 +5380,6 @@ export interface IPageSize {
     page: number | undefined;
     sort: string | undefined;
     isAsc: boolean | undefined;
-    group: string | undefined;
     orderby: string | undefined;
     search: string | undefined;
     startTime: moment.Moment | undefined;
@@ -6129,7 +5804,6 @@ export interface INoticeDto {
 export class NoticeViewModel implements INoticeViewModel {
     guid: string | undefined;
     content: string | undefined;
-    noticeType: string | undefined;
     title: string | undefined;
     contentUrl: string | undefined;
     noticeTypeId: string | undefined;
@@ -6159,7 +5833,6 @@ export class NoticeViewModel implements INoticeViewModel {
         if (data) {
             this.guid = data["guid"];
             this.content = data["content"];
-            this.noticeType = data["noticeType"];
             this.title = data["title"];
             this.contentUrl = data["contentUrl"];
             this.noticeTypeId = data["noticeTypeId"];
@@ -6189,7 +5862,6 @@ export class NoticeViewModel implements INoticeViewModel {
         data = typeof data === 'object' ? data : {};
         data["guid"] = this.guid;
         data["content"] = this.content;
-        data["noticeType"] = this.noticeType;
         data["title"] = this.title;
         data["contentUrl"] = this.contentUrl;
         data["noticeTypeId"] = this.noticeTypeId;
@@ -6219,7 +5891,6 @@ export class NoticeViewModel implements INoticeViewModel {
 export interface INoticeViewModel {
     guid: string | undefined;
     content: string | undefined;
-    noticeType: string | undefined;
     title: string | undefined;
     contentUrl: string | undefined;
     noticeTypeId: string | undefined;
@@ -6978,61 +6649,6 @@ export interface IProjectFlowItemQueryDto {
     projectName: string | undefined;
     constructOrgName: string | undefined;
     status: number | undefined;
-    page: number | undefined;
-    sorting: string | undefined;
-    skipCount: number | undefined;
-    maxResultCount: number | undefined;
-}
-
-export class DraftQueryDto implements IDraftQueryDto {
-    page: number | undefined;
-    sorting: string | undefined;
-    skipCount: number | undefined;
-    maxResultCount: number | undefined;
-
-    constructor(data?: IDraftQueryDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.page = data["page"];
-            this.sorting = data["sorting"];
-            this.skipCount = data["skipCount"];
-            this.maxResultCount = data["maxResultCount"];
-        }
-    }
-
-    static fromJS(data: any): DraftQueryDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new DraftQueryDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["page"] = this.page;
-        data["sorting"] = this.sorting;
-        data["skipCount"] = this.skipCount;
-        data["maxResultCount"] = this.maxResultCount;
-        return data; 
-    }
-
-    clone(): DraftQueryDto {
-        const json = this.toJSON();
-        let result = new DraftQueryDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IDraftQueryDto {
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
@@ -8499,9 +8115,9 @@ export interface IPagedResultDtoOfTenantDto {
 }
 
 export class AuthenticateModel implements IAuthenticateModel {
-    userNameOrEmailAddress: string | undefined;
-    password: string | undefined;
-    clientId: string | undefined;
+    userNameOrEmailAddress: string;
+    password: string;
+    rememberClient: boolean | undefined;
 
     constructor(data?: IAuthenticateModel) {
         if (data) {
@@ -8516,7 +8132,7 @@ export class AuthenticateModel implements IAuthenticateModel {
         if (data) {
             this.userNameOrEmailAddress = data["userNameOrEmailAddress"];
             this.password = data["password"];
-            this.clientId = data["clientId"];
+            this.rememberClient = data["rememberClient"];
         }
     }
 
@@ -8531,7 +8147,7 @@ export class AuthenticateModel implements IAuthenticateModel {
         data = typeof data === 'object' ? data : {};
         data["userNameOrEmailAddress"] = this.userNameOrEmailAddress;
         data["password"] = this.password;
-        data["clientId"] = this.clientId;
+        data["rememberClient"] = this.rememberClient;
         return data; 
     }
 
@@ -8544,9 +8160,9 @@ export class AuthenticateModel implements IAuthenticateModel {
 }
 
 export interface IAuthenticateModel {
-    userNameOrEmailAddress: string | undefined;
-    password: string | undefined;
-    clientId: string | undefined;
+    userNameOrEmailAddress: string;
+    password: string;
+    rememberClient: boolean | undefined;
 }
 
 export class AuthenticateResultModel implements IAuthenticateResultModel {

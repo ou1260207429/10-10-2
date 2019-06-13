@@ -130,7 +130,7 @@
         </tr>
         <tr *ngFor="let item of data.constructionUnit;let a = index">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">施工单位:</td>
-          <td rowspan='1' colspan='5'><input nz-input placeholder="请输入设计单位" [(ngModel)]="item.designUnit"
+          <td rowspan='1' colspan='5'><input nz-input placeholder="请输入施工单位" [(ngModel)]="item.designUnit"
               name="constructionUnitDesignUnit{{a}}" /></td>
           <td rowspan='1' colspan='4'><input nz-input placeholder="请输入资质等级" [(ngModel)]="item.qualificationLevel"
               name="constructionQualificationLevel{{a}}" /></td>

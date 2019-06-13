@@ -1,16 +1,7 @@
 <div class="myBox">
   <div class="boxRight">
     <div nz-row class="more">
-      <div nz-col [nzSpan]="6" class="noSpan">
-        <nz-input-group nzSearch [nzAddOnAfter]="suffixButton">
-          <input type="text" (keyup)="onEnter($event)" nz-input placeholder="请输入流水号/流程名称"
-            [(ngModel)]="params.filterText">
-        </nz-input-group>
-        <ng-template #suffixButton>
-          <button nz-button nzType="primary" nzSearch (click)="query()">查询</button>
-        </ng-template>
-      </div>
-      <div nz-col [nzSpan]="18" class="textRight">
+      <div nz-col [nzSpan]="24" class="textRight">
         <button nz-button nzType="primary" (click)="init()">刷新</button>
       </div>
     </div>
