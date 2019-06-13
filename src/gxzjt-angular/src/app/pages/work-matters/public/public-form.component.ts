@@ -5,7 +5,9 @@ export class PublicFormComponent {
 
 
     proName = "";
+
     orgName = "";
+
     rangeTime: any;
 
     formResultData: any;
@@ -65,13 +67,15 @@ export class PublicFormComponent {
     constructor() {
         this.formBuilder = new FormBuilder();
         this.fliterForm = this.formBuilder.group({
-            proNo: [null],
-            proName: [null],
-            orgName: [null],
-            dateRange: [[]],
+            pro_no: [null],
+            pro_name: [null],
+            org_name: [null],
+            date_range: [[]],
 
         });
+        this.proName = "";
 
+        this.orgName = "";
         this.resetTime();
     }
 

@@ -42,38 +42,28 @@ export class IndexComponent implements OnInit {
     {
       path: '',
       name: '建设工程消防设计审查申请表',
-      time: '2019-06-03 12:12',
+      time: '2019-06-01  12:00',
     },
     {
       path: '',
       name: '建设工程消防设计审查申请表',
-      time: '2019-06-03 12:12',
+      time: '2019-05-28  10:00',
     },
     {
       path: '',
       name: '建设工程消防验收申请表',
-      time: '2019-06-03 12:12',
+      time: '2019-05-22  14:20',
     },
     {
       path: '',
-      name: '建设工程竣工验收消防设备案申请表',
-      time: '2019-06-03 12:12',
+      name: '建设工程竣工验收消防备案申请表',
+      time: '2019-05-19  16:32',
     },
     {
       path: '',
-      name: '建设工程竣工验收消防设备案申请表',
-      time: '2019-06-03 12:12',
-    },
-    {
-      path: '',
-      name: '建设工程竣工验收消防设备案申请表',
-      time: '2019-06-03 12:12',
-    },
-    {
-      path: '',
-      name: '建设工程竣工验收消防设备案申请表',
-      time: '2019-06-03 12:12',
-    },
+      name: '建设工程竣工验收消防备案申请表',
+      time: '2019-05-10  16:32',
+    }
   ];
   lawList = [
     {
@@ -98,7 +88,7 @@ export class IndexComponent implements OnInit {
   /**
    * 跳转进表单列表页
    */
-  goFromList(item) {
-    this.router.navigate(item.path);
+  goFromList() {
+    // this.router.navigate(item.path);
   }
 }

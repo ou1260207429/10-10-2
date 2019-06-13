@@ -108,16 +108,14 @@ export class AlreadyDoneComponent extends PublicFormComponent implements OnInit 
     searchParam.init(jsonData);
 
     this.isSearchForm = true;
-    // this.workFlowedServiceProxy.processedWorkFlow_NodeAuditorRecord(searchParam).subscribe((result: any) => {
-    //   console.log(result);
-    //   this.isSearchForm = false;
-    // }, err => {
-    //   console.log(err);
-    //   this.isSearchForm = false;
-    // });
-    this.workFlowedServiceProxy.processedWorkFlow_NodeAuditorRecord(searchParam).subscribe(data => {
-      console.log(data)
-    })
+    this.workFlowedServiceProxy.processedWorkFlow_NodeAuditorRecord(searchParam).subscribe((result: any) => {
+      console.log(result);
+      this.isSearchForm = false;
+    }, err => {
+      console.log(err);
+      this.isSearchForm = false;
+    });
+
   }
 
 

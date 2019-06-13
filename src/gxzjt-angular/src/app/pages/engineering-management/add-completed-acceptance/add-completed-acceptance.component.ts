@@ -384,5 +384,5 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       this.message.success('保存成功')
     })
   }
-
+  save() { }
 }
