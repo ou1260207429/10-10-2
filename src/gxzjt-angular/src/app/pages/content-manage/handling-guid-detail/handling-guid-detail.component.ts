@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { _HttpClient } from '@delon/theme';
-import { RegulationServiceProxy, NoticeServiceProxy, NoticeDto } from '@shared/service-proxies/service-proxies';
+import { RegulationServiceProxy, NoticeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { timeTrans } from 'infrastructure/regular-expression';
 import { NzMessageService } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
@@ -20,7 +20,7 @@ export class HandlingGuidDetailComponent implements OnInit {
   //表单对象
   data: any;
   RegulationType: any
-  constructor(private _eventEmiter: EventEmiter, private message: NzMessageService, private _noticeServiceProxy: NoticeServiceProxy,private _regulationServiceProxy:RegulationServiceProxy, private _activatedRoute: ActivatedRoute) {
+  constructor(private _eventEmiter: EventEmiter, private message: NzMessageService, private _noticeServiceProxy: NoticeServiceProxy, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute) {
     this.noticeId = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
     this.operate = parseInt(this._activatedRoute.snapshot.paramMap.get('operate'));
     this.initType()
@@ -29,7 +29,7 @@ export class HandlingGuidDetailComponent implements OnInit {
     this.init()
   }
   init() {
-    this.data = new NoticeDto();
+    // this.data = new NoticeDto();
 
     if (this.operate == 0) {
     } else {
@@ -55,12 +55,12 @@ export class HandlingGuidDetailComponent implements OnInit {
   getRegulationDetailsByIdAsync() {
     this._noticeServiceProxy.noticeDetailsByIdAsync(this.noticeId).subscribe((data: any) => {
       this.RegulationType.forEach(element => {
-        if(element.value==data.noticeType){
-          data.noticeType=element.key
+        if (element.value == data.noticeType) {
+          data.noticeType = element.key
         }
-       });
-       this.data = {
-        noticeId:data.id,
+      });
+      this.data = {
+        noticeId: data.id,
         content: data.content,
         guid: data.guid,
         noticeType: data.noticeType,
@@ -87,7 +87,7 @@ export class HandlingGuidDetailComponent implements OnInit {
   save() {
     if (this.operate == 0) {
       this.data.guid = this.createguid();
-      this.data.noticeId=0;
+      this.data.noticeId = 0;
     } else {
       this.data.noticeId = this.noticeId;
     }

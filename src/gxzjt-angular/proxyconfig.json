@@ -1,6 +1,6 @@
 {
   "/app1": {
-    "target": "http://192.168.10.179:8589",
+    "target": "http://192.168.30.100:7123",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,

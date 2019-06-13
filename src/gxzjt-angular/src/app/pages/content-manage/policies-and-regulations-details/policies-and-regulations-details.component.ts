@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { _HttpClient } from '@delon/theme';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { RegulationServiceProxy, RegulationDto } from '@shared/service-proxies/service-proxies';
+import { RegulationServiceProxy } from '@shared/service-proxies/service-proxies';
 import { PublicModel } from 'infrastructure/public-model';
 import { timeTrans } from 'infrastructure/regular-expression';
 import { NzMessageService } from 'ng-zorro-antd';
@@ -51,7 +51,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     this.init()
   }
   init() {
-    this.data = new RegulationDto();
+    // this.data = new RegulationDto();
 
     if (this.operate == 0) {
     } else {
@@ -81,14 +81,14 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     this._regulationServiceProxy.getRegulationDetailsByIdAsync(this.regulationId).subscribe((data: any) => {
       this.data = data
       this.data.regulationId = this.regulationId;
-     // this.data.issueDate = timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-');
-     this.RegulationType.forEach(element => {
-      if(element.value==data.regulationType){
-        data.regulationType=element.key
-      }
-     });
+      // this.data.issueDate = timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-');
+      this.RegulationType.forEach(element => {
+        if (element.value == data.regulationType) {
+          data.regulationType = element.key
+        }
+      });
       this.data = {
-        regulationId:data.id,
+        regulationId: data.id,
         content: data.content,
         guid: data.guid,
         issueDate: timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'),

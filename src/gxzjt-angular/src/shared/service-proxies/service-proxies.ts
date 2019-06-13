@@ -984,6 +984,294 @@ export class ExamineServiceServiceProxy {
 }
 
 @Injectable()
+export class HomeServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param regulationId (optional) 
+     * @return Success
+     */
+    homeRegulationDetailsById(regulationId: number | null | undefined): Observable<RegulationDetailsViewModel> {
+        let url_ = this.baseUrl + "/api/services/app/Home/HomeRegulationDetailsById?";
+        if (regulationId !== undefined)
+            url_ += "regulationId=" + encodeURIComponent("" + regulationId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHomeRegulationDetailsById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHomeRegulationDetailsById(<any>response_);
+                } catch (e) {
+                    return <Observable<RegulationDetailsViewModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<RegulationDetailsViewModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processHomeRegulationDetailsById(response: HttpResponseBase): Observable<RegulationDetailsViewModel> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? RegulationDetailsViewModel.fromJS(resultData200) : new RegulationDetailsViewModel();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<RegulationDetailsViewModel>(<any>null);
+    }
+
+    /**
+     * @param pageSize (optional) 
+     * @return Success
+     */
+    homeRegulationList(pageSize: PageSize | null | undefined): Observable<PageModel> {
+        let url_ = this.baseUrl + "/api/services/app/Home/HomeRegulationList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(pageSize);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHomeRegulationList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHomeRegulationList(<any>response_);
+                } catch (e) {
+                    return <Observable<PageModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PageModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processHomeRegulationList(response: HttpResponseBase): Observable<PageModel> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PageModel.fromJS(resultData200) : new PageModel();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PageModel>(<any>null);
+    }
+
+    /**
+     * @param pageSize (optional) 
+     * @return Success
+     */
+    homeNoticeList(pageSize: PageSize | null | undefined): Observable<PageModel> {
+        let url_ = this.baseUrl + "/api/services/app/Home/HomeNoticeList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(pageSize);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHomeNoticeList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHomeNoticeList(<any>response_);
+                } catch (e) {
+                    return <Observable<PageModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PageModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processHomeNoticeList(response: HttpResponseBase): Observable<PageModel> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PageModel.fromJS(resultData200) : new PageModel();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PageModel>(<any>null);
+    }
+
+    /**
+     * @param noticeId (optional) 
+     * @return Success
+     */
+    homeNoticeDetailsById(noticeId: number | null | undefined): Observable<NoticeViewModel> {
+        let url_ = this.baseUrl + "/api/services/app/Home/HomeNoticeDetailsById?";
+        if (noticeId !== undefined)
+            url_ += "noticeId=" + encodeURIComponent("" + noticeId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHomeNoticeDetailsById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHomeNoticeDetailsById(<any>response_);
+                } catch (e) {
+                    return <Observable<NoticeViewModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<NoticeViewModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processHomeNoticeDetailsById(response: HttpResponseBase): Observable<NoticeViewModel> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? NoticeViewModel.fromJS(resultData200) : new NoticeViewModel();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<NoticeViewModel>(<any>null);
+    }
+
+    /**
+     * @param pageSize (optional) 
+     * @return Success
+     */
+    homeTableDownloadList(pageSize: PageSize | null | undefined): Observable<PageModel> {
+        let url_ = this.baseUrl + "/api/services/app/Home/HomeTableDownloadList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(pageSize);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHomeTableDownloadList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHomeTableDownloadList(<any>response_);
+                } catch (e) {
+                    return <Observable<PageModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PageModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processHomeTableDownloadList(response: HttpResponseBase): Observable<PageModel> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PageModel.fromJS(resultData200) : new PageModel();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PageModel>(<any>null);
+    }
+}
+
+@Injectable()
 export class NatureServiceServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -6241,6 +6529,212 @@ export interface IAcceptRecord {
     id: number | undefined;
 }
 
+export class RegulationDetailsViewModel implements IRegulationDetailsViewModel {
+    content: string | undefined;
+    guid: string | undefined;
+    id: number | undefined;
+    regulationCode: string | undefined;
+    title: string | undefined;
+    issueOrg: string | undefined;
+    regulationType: string | undefined;
+    issueDate: moment.Moment | undefined;
+    contentUrl: string | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+    visitCount: number | undefined;
+    creationTime: moment.Moment | undefined;
+
+    constructor(data?: IRegulationDetailsViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.content = data["content"];
+            this.guid = data["guid"];
+            this.id = data["id"];
+            this.regulationCode = data["regulationCode"];
+            this.title = data["title"];
+            this.issueOrg = data["issueOrg"];
+            this.regulationType = data["regulationType"];
+            this.issueDate = data["issueDate"] ? moment(data["issueDate"].toString()) : <any>undefined;
+            this.contentUrl = data["contentUrl"];
+            this.lastUpdateTime = data["lastUpdateTime"] ? moment(data["lastUpdateTime"].toString()) : <any>undefined;
+            this.lastUpdateUserCode = data["lastUpdateUserCode"];
+            this.lastUpdateUserName = data["lastUpdateUserName"];
+            this.visitCount = data["visitCount"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): RegulationDetailsViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new RegulationDetailsViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["content"] = this.content;
+        data["guid"] = this.guid;
+        data["id"] = this.id;
+        data["regulationCode"] = this.regulationCode;
+        data["title"] = this.title;
+        data["issueOrg"] = this.issueOrg;
+        data["regulationType"] = this.regulationType;
+        data["issueDate"] = this.issueDate ? this.issueDate.toISOString() : <any>undefined;
+        data["contentUrl"] = this.contentUrl;
+        data["lastUpdateTime"] = this.lastUpdateTime ? this.lastUpdateTime.toISOString() : <any>undefined;
+        data["lastUpdateUserCode"] = this.lastUpdateUserCode;
+        data["lastUpdateUserName"] = this.lastUpdateUserName;
+        data["visitCount"] = this.visitCount;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): RegulationDetailsViewModel {
+        const json = this.toJSON();
+        let result = new RegulationDetailsViewModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IRegulationDetailsViewModel {
+    content: string | undefined;
+    guid: string | undefined;
+    id: number | undefined;
+    regulationCode: string | undefined;
+    title: string | undefined;
+    issueOrg: string | undefined;
+    regulationType: string | undefined;
+    issueDate: moment.Moment | undefined;
+    contentUrl: string | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+    visitCount: number | undefined;
+    creationTime: moment.Moment | undefined;
+}
+
+export class NoticeViewModel implements INoticeViewModel {
+    guid: string | undefined;
+    content: string | undefined;
+    noticeType: string | undefined;
+    title: string | undefined;
+    contentUrl: string | undefined;
+    noticeTypeId: string | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+    visitCount: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: INoticeViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.guid = data["guid"];
+            this.content = data["content"];
+            this.noticeType = data["noticeType"];
+            this.title = data["title"];
+            this.contentUrl = data["contentUrl"];
+            this.noticeTypeId = data["noticeTypeId"];
+            this.lastUpdateTime = data["lastUpdateTime"] ? moment(data["lastUpdateTime"].toString()) : <any>undefined;
+            this.lastUpdateUserCode = data["lastUpdateUserCode"];
+            this.lastUpdateUserName = data["lastUpdateUserName"];
+            this.visitCount = data["visitCount"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): NoticeViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new NoticeViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["guid"] = this.guid;
+        data["content"] = this.content;
+        data["noticeType"] = this.noticeType;
+        data["title"] = this.title;
+        data["contentUrl"] = this.contentUrl;
+        data["noticeTypeId"] = this.noticeTypeId;
+        data["lastUpdateTime"] = this.lastUpdateTime ? this.lastUpdateTime.toISOString() : <any>undefined;
+        data["lastUpdateUserCode"] = this.lastUpdateUserCode;
+        data["lastUpdateUserName"] = this.lastUpdateUserName;
+        data["visitCount"] = this.visitCount;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): NoticeViewModel {
+        const json = this.toJSON();
+        let result = new NoticeViewModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface INoticeViewModel {
+    guid: string | undefined;
+    content: string | undefined;
+    noticeType: string | undefined;
+    title: string | undefined;
+    contentUrl: string | undefined;
+    noticeTypeId: string | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+    visitCount: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
 export class SpotCheckSetupDto implements ISpotCheckSetupDto {
     natureId: number | undefined;
     natureCode: string | undefined;
@@ -6511,117 +7005,6 @@ export interface INoticeDto {
     content: string;
     noticeType: string;
     guid: string;
-}
-
-export class NoticeViewModel implements INoticeViewModel {
-    guid: string | undefined;
-    content: string | undefined;
-    noticeType: string | undefined;
-    title: string | undefined;
-    contentUrl: string | undefined;
-    noticeTypeId: string | undefined;
-    lastUpdateTime: moment.Moment | undefined;
-    lastUpdateUserCode: string | undefined;
-    lastUpdateUserName: string | undefined;
-    visitCount: number | undefined;
-    isDeleted: boolean | undefined;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: INoticeViewModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.guid = data["guid"];
-            this.content = data["content"];
-            this.noticeType = data["noticeType"];
-            this.title = data["title"];
-            this.contentUrl = data["contentUrl"];
-            this.noticeTypeId = data["noticeTypeId"];
-            this.lastUpdateTime = data["lastUpdateTime"] ? moment(data["lastUpdateTime"].toString()) : <any>undefined;
-            this.lastUpdateUserCode = data["lastUpdateUserCode"];
-            this.lastUpdateUserName = data["lastUpdateUserName"];
-            this.visitCount = data["visitCount"];
-            this.isDeleted = data["isDeleted"];
-            this.deleterUserId = data["deleterUserId"];
-            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
-            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = data["lastModifierUserId"];
-            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = data["creatorUserId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): NoticeViewModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new NoticeViewModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["guid"] = this.guid;
-        data["content"] = this.content;
-        data["noticeType"] = this.noticeType;
-        data["title"] = this.title;
-        data["contentUrl"] = this.contentUrl;
-        data["noticeTypeId"] = this.noticeTypeId;
-        data["lastUpdateTime"] = this.lastUpdateTime ? this.lastUpdateTime.toISOString() : <any>undefined;
-        data["lastUpdateUserCode"] = this.lastUpdateUserCode;
-        data["lastUpdateUserName"] = this.lastUpdateUserName;
-        data["visitCount"] = this.visitCount;
-        data["isDeleted"] = this.isDeleted;
-        data["deleterUserId"] = this.deleterUserId;
-        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): NoticeViewModel {
-        const json = this.toJSON();
-        let result = new NoticeViewModel();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface INoticeViewModel {
-    guid: string | undefined;
-    content: string | undefined;
-    noticeType: string | undefined;
-    title: string | undefined;
-    contentUrl: string | undefined;
-    noticeTypeId: string | undefined;
-    lastUpdateTime: moment.Moment | undefined;
-    lastUpdateUserCode: string | undefined;
-    lastUpdateUserName: string | undefined;
-    visitCount: number | undefined;
-    isDeleted: boolean | undefined;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
 }
 
 export class DataSourceRequest implements IDataSourceRequest {
@@ -7752,101 +8135,6 @@ export interface IRegulationDto {
     guid: string;
 }
 
-export class RegulationDetailsViewModel implements IRegulationDetailsViewModel {
-    content: string | undefined;
-    guid: string | undefined;
-    id: number | undefined;
-    regulationCode: string | undefined;
-    title: string | undefined;
-    issueOrg: string | undefined;
-    regulationType: string | undefined;
-    issueDate: moment.Moment | undefined;
-    contentUrl: string | undefined;
-    lastUpdateTime: moment.Moment | undefined;
-    lastUpdateUserCode: string | undefined;
-    lastUpdateUserName: string | undefined;
-    visitCount: number | undefined;
-    creationTime: moment.Moment | undefined;
-
-    constructor(data?: IRegulationDetailsViewModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.content = data["content"];
-            this.guid = data["guid"];
-            this.id = data["id"];
-            this.regulationCode = data["regulationCode"];
-            this.title = data["title"];
-            this.issueOrg = data["issueOrg"];
-            this.regulationType = data["regulationType"];
-            this.issueDate = data["issueDate"] ? moment(data["issueDate"].toString()) : <any>undefined;
-            this.contentUrl = data["contentUrl"];
-            this.lastUpdateTime = data["lastUpdateTime"] ? moment(data["lastUpdateTime"].toString()) : <any>undefined;
-            this.lastUpdateUserCode = data["lastUpdateUserCode"];
-            this.lastUpdateUserName = data["lastUpdateUserName"];
-            this.visitCount = data["visitCount"];
-            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): RegulationDetailsViewModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new RegulationDetailsViewModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["content"] = this.content;
-        data["guid"] = this.guid;
-        data["id"] = this.id;
-        data["regulationCode"] = this.regulationCode;
-        data["title"] = this.title;
-        data["issueOrg"] = this.issueOrg;
-        data["regulationType"] = this.regulationType;
-        data["issueDate"] = this.issueDate ? this.issueDate.toISOString() : <any>undefined;
-        data["contentUrl"] = this.contentUrl;
-        data["lastUpdateTime"] = this.lastUpdateTime ? this.lastUpdateTime.toISOString() : <any>undefined;
-        data["lastUpdateUserCode"] = this.lastUpdateUserCode;
-        data["lastUpdateUserName"] = this.lastUpdateUserName;
-        data["visitCount"] = this.visitCount;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        return data; 
-    }
-
-    clone(): RegulationDetailsViewModel {
-        const json = this.toJSON();
-        let result = new RegulationDetailsViewModel();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IRegulationDetailsViewModel {
-    content: string | undefined;
-    guid: string | undefined;
-    id: number | undefined;
-    regulationCode: string | undefined;
-    title: string | undefined;
-    issueOrg: string | undefined;
-    regulationType: string | undefined;
-    issueDate: moment.Moment | undefined;
-    contentUrl: string | undefined;
-    lastUpdateTime: moment.Moment | undefined;
-    lastUpdateUserCode: string | undefined;
-    lastUpdateUserName: string | undefined;
-    visitCount: number | undefined;
-    creationTime: moment.Moment | undefined;
-}
-
 export class KeyValueDto implements IKeyValueDto {
     key: string | undefined;
     value: string | undefined;
@@ -8886,9 +9174,8 @@ export interface IPagedResultDtoOfTenantDto {
 }
 
 export class AuthenticateModel implements IAuthenticateModel {
-    userNameOrEmailAddress: string | undefined;
-    password: string | undefined;
-    clientId: string | undefined;
+    userNameOrEmailAddress: string;
+    password: string;
     rememberClient: boolean | undefined;
 
     constructor(data?: IAuthenticateModel) {
@@ -8904,7 +9191,6 @@ export class AuthenticateModel implements IAuthenticateModel {
         if (data) {
             this.userNameOrEmailAddress = data["userNameOrEmailAddress"];
             this.password = data["password"];
-            this.clientId = data["clientId"];
             this.rememberClient = data["rememberClient"];
         }
     }
@@ -8920,7 +9206,6 @@ export class AuthenticateModel implements IAuthenticateModel {
         data = typeof data === 'object' ? data : {};
         data["userNameOrEmailAddress"] = this.userNameOrEmailAddress;
         data["password"] = this.password;
-        data["clientId"] = this.clientId;
         data["rememberClient"] = this.rememberClient;
         return data; 
     }
@@ -8934,9 +9219,8 @@ export class AuthenticateModel implements IAuthenticateModel {
 }
 
 export interface IAuthenticateModel {
-    userNameOrEmailAddress: string | undefined;
-    password: string | undefined;
-    clientId: string | undefined;
+    userNameOrEmailAddress: string;
+    password: string;
     rememberClient: boolean | undefined;
 }
 

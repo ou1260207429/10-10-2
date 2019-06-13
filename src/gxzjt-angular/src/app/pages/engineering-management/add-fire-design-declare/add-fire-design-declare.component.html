@@ -130,7 +130,7 @@
         </tr>
         <tr *ngFor="let item of data.constructionUnit;let a = index">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">施工单位:</td>
-          <td rowspan='1' colspan='5'><input nz-input placeholder="请输入设计单位" [(ngModel)]="item.designUnit"
+          <td rowspan='1' colspan='5'><input nz-input placeholder="请输入施工单位" [(ngModel)]="item.designUnit"
               name="constructionUnitDesignUnit{{a}}" /></td>
           <td rowspan='1' colspan='4'><input nz-input placeholder="请输入资质等级" [(ngModel)]="item.qualificationLevel"
               name="constructionQualificationLevel{{a}}" /></td>
@@ -210,7 +210,8 @@
             style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true> 使用性质 </td>
           <td colspan='2' class="fontweight fontLeft leftTitle" style="width: 110px;">特殊建设工程:</td>
           <td colspan="15" style="text-align: left;">
-            <div *ngFor="let item of listArr let index=index" style="width: 100%;overflow: hidden;margin-bottom: 10px">
+            <div *ngFor="let item of data.listArr let index=index"
+              style="width: 100%;overflow: hidden;margin-bottom: 10px">
               <p class="fontweight fontLeft" style="text-align: left;">{{index+1}}、{{item.title}}</p>
               <nz-radio-group [(ngModel)]="item.value" name="syxzRadio">
                 <label nz-radio [nzValue]="o.value" *ngFor="let o of item.arr">{{ o.name }}</label>
