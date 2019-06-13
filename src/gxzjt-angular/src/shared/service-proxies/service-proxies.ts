@@ -2280,17 +2280,17 @@ export class ProjectFlowServcieServiceProxy {
 
         const content_ = JSON.stringify(projectFlowIndexItemQueryDto);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_: any) => {
             return this.processPost_GetProjectFlowIndexTopCount(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
@@ -2306,21 +2306,21 @@ export class ProjectFlowServcieServiceProxy {
 
     protected processPost_GetProjectFlowIndexTopCount(response: HttpResponseBase): Observable<ProjectFlowIndexTopDto> {
         const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+                (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); } };
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? ProjectFlowIndexTopDto.fromJS(resultData200) : new ProjectFlowIndexTopDto();
-            return _observableOf(result200);
+                let result200: any = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 ? ProjectFlowIndexTopDto.fromJS(resultData200) : new ProjectFlowIndexTopDto();
+                return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
         return _observableOf<ProjectFlowIndexTopDto>(<any>null);
@@ -2336,17 +2336,17 @@ export class ProjectFlowServcieServiceProxy {
 
         const content_ = JSON.stringify(projectTimeoutQueryDto);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_: any) => {
             return this.processPost_GetProjectsTimeout(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
@@ -2362,21 +2362,21 @@ export class ProjectFlowServcieServiceProxy {
 
     protected processPost_GetProjectsTimeout(response: HttpResponseBase): Observable<DataSourceResult> {
         const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+                (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); } };
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
-            return _observableOf(result200);
+                let result200: any = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+                return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
         return _observableOf<DataSourceResult>(<any>null);
@@ -2392,17 +2392,17 @@ export class ProjectFlowServcieServiceProxy {
 
         const content_ = JSON.stringify(projectFlowStatisticsDto);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_: any) => {
             return this.processPost_GetProjectFlowDataStatistics(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
@@ -2418,21 +2418,21 @@ export class ProjectFlowServcieServiceProxy {
 
     protected processPost_GetProjectFlowDataStatistics(response: HttpResponseBase): Observable<ProjectFlowStatisticsDto> {
         const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+                (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); } };
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? ProjectFlowStatisticsDto.fromJS(resultData200) : new ProjectFlowStatisticsDto();
-            return _observableOf(result200);
+                let result200: any = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 ? ProjectFlowStatisticsDto.fromJS(resultData200) : new ProjectFlowStatisticsDto();
+                return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
         return _observableOf<ProjectFlowStatisticsDto>(<any>null);
@@ -2448,17 +2448,17 @@ export class ProjectFlowServcieServiceProxy {
 
         const content_ = JSON.stringify(sdeclareStatisticsQueryDto);
 
-        let options_ : any = {
+        let options_: any = {
             body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json", 
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_: any) => {
             return this.processPost_GetDeclareRate(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
@@ -2474,25 +2474,25 @@ export class ProjectFlowServcieServiceProxy {
 
     protected processPost_GetDeclareRate(response: HttpResponseBase): Observable<SdeclareStatisticsDto[]> {
         const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+                (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); } };
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (resultData200 && resultData200.constructor === Array) {
-                result200 = [];
-                for (let item of resultData200)
-                    result200.push(SdeclareStatisticsDto.fromJS(item));
-            }
-            return _observableOf(result200);
+                let result200: any = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                if (resultData200 && resultData200.constructor === Array) {
+                    result200 = [];
+                    for (let item of resultData200)
+                        result200.push(SdeclareStatisticsDto.fromJS(item));
+                }
+                return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
         return _observableOf<SdeclareStatisticsDto[]>(<any>null);
@@ -5567,13 +5567,8 @@ export class FlowFormAllDataDto implements IFlowFormAllDataDto {
         }
         data["formJson"] = this.formJson;
         data["projectId"] = this.projectId;
-<<<<<<< HEAD
         data["projectTypeStatu"] = this.projectTypeStatu;
-        return data; 
-=======
-        data["flowPathType"] = this.flowPathType;
         return data;
->>>>>>> 757a83455f2b940ce5548e8d8d810c3e3cf2a46e
     }
 
     clone(): FlowFormAllDataDto {
@@ -5908,13 +5903,8 @@ export class FlowFormDto implements IFlowFormDto {
         data = typeof data === 'object' ? data : {};
         data["formJson"] = this.formJson;
         data["projectId"] = this.projectId;
-<<<<<<< HEAD
         data["projectTypeStatu"] = this.projectTypeStatu;
-        return data; 
-=======
-        data["flowPathType"] = this.flowPathType;
         return data;
->>>>>>> 757a83455f2b940ce5548e8d8d810c3e3cf2a46e
     }
 
     clone(): RegisterInput {
@@ -7938,21 +7928,12 @@ export class ProjectFlowIndexTopQueryDto implements IProjectFlowIndexTopQueryDto
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-<<<<<<< HEAD
         data["processedStatus"] = this.processedStatus;
         data["fireAuditStatus"] = this.fireAuditStatus;
         data["fireCompleteStatus"] = this.fireCompleteStatus;
         data["completeStatus"] = this.completeStatus;
         data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
-        return data; 
-=======
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
         return data;
->>>>>>> 757a83455f2b940ce5548e8d8d810c3e3cf2a46e
     }
 
     clone(): ProjectFlowIndexTopQueryDto {
@@ -8011,7 +7992,7 @@ export class ProjectFlowIndexTopDto implements IProjectFlowIndexTopDto {
         data["fireAuditCount"] = this.fireAuditCount;
         data["fireCompleteCount"] = this.fireCompleteCount;
         data["completeCount"] = this.completeCount;
-        return data; 
+        return data;
     }
 
     clone(): ProjectFlowIndexTopDto {
@@ -8073,7 +8054,7 @@ export class ProjectTimeoutQueryDto implements IProjectTimeoutQueryDto {
         data["sorting"] = this.sorting;
         data["skipCount"] = this.skipCount;
         data["maxResultCount"] = this.maxResultCount;
-        return data; 
+        return data;
     }
 
     clone(): ProjectTimeoutQueryDto {
@@ -8124,7 +8105,7 @@ export class ProjectFlowDataStatisticsQueryDto implements IProjectFlowDataStatis
         data = typeof data === 'object' ? data : {};
         data["stateDate"] = this.stateDate ? this.stateDate.toISOString() : <any>undefined;
         data["statisticsType"] = this.statisticsType;
-        return data; 
+        return data;
     }
 
     clone(): ProjectFlowDataStatisticsQueryDto {
@@ -8188,7 +8169,7 @@ export class ProjectFlowStatisticsDto implements IProjectFlowStatisticsDto {
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone(): ProjectFlowStatisticsDto {
@@ -8238,7 +8219,7 @@ export class ProjectFlowStatisticsDayDto implements IProjectFlowStatisticsDayDto
         data = typeof data === 'object' ? data : {};
         data["dayCount"] = this.dayCount;
         data["dayTime"] = this.dayTime ? this.dayTime.toISOString() : <any>undefined;
-        return data; 
+        return data;
     }
 
     clone(): ProjectFlowStatisticsDayDto {
@@ -8288,7 +8269,7 @@ export class SdeclareStatisticsQueryDto implements ISdeclareStatisticsQueryDto {
         data["fireAuditStatus"] = this.fireAuditStatus;
         data["fireCompleteStatus"] = this.fireCompleteStatus;
         data["completeStatus"] = this.completeStatus;
-        return data; 
+        return data;
     }
 
     clone(): SdeclareStatisticsQueryDto {
@@ -8342,7 +8323,7 @@ export class SdeclareStatisticsDto implements ISdeclareStatisticsDto {
         data["fireAuditNumber"] = this.fireAuditNumber;
         data["fireCompleteNumber"] = this.fireCompleteNumber;
         data["completeNumber"] = this.completeNumber;
-        return data; 
+        return data;
     }
 
     clone(): SdeclareStatisticsDto {
@@ -8396,7 +8377,7 @@ export class ListResultDtoOfRegulationListDto implements IListResultDtoOfRegulat
             for (let item of this.items)
                 data["items"].push(item.toJSON());
         }
-        return data; 
+        return data;
     }
 
     clone(): ListResultDtoOfRegulationListDto {
@@ -9688,13 +9669,9 @@ export class AuthenticateModel implements IAuthenticateModel {
         data = typeof data === 'object' ? data : {};
         data["userNameOrEmailAddress"] = this.userNameOrEmailAddress;
         data["rememberClient"] = this.rememberClient;
-<<<<<<< HEAD
         data["clientId"] = this.clientId;
         data["password"] = this.password;
-        return data; 
-=======
         return data;
->>>>>>> 757a83455f2b940ce5548e8d8d810c3e3cf2a46e
     }
 
     clone(): AuthenticateModel {
