@@ -7,6 +7,7 @@ import { AnnouncementInformationComponent } from './announcement-information/ann
 import { FormDownloadListComponent } from './form-download-list/form-download-list.component';
 import { LawsAndRegulationsComponent } from './laws-and-regulations/laws-and-regulations.component';
 import { IndexHeaderComponent } from './index-header/index-header.component';
+import { HandlingGuidListDetailComponent } from './handling-guid-list-detail/handling-guid-list-detail.component';
 
 const COMPONENTS = [];
 const COMPONENTS_NOROUNT = [
@@ -24,6 +25,7 @@ const COMPONENTS_NOROUNT = [
   declarations: [
     ...COMPONENTS,
     ...COMPONENTS_NOROUNT,
+    HandlingGuidListDetailComponent,
 
   ],
   entryComponents: COMPONENTS_NOROUNT
