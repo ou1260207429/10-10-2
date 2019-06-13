@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { objDeleteType, timeTrans } from 'infrastructure/regular-expression';
 import { ArchitectureTypeEnum, OptionsEnum } from 'infrastructure/expression';
-import { ApplyServiceServiceProxy, FlowFormDto } from '@shared/service-proxies/service-proxies';
+import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto } from '@shared/service-proxies/service-proxies';
+import { ActivatedRoute } from '@angular/router';
 /**
  * 工程管理->竣工验收->新增申报
  */
@@ -21,6 +22,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     engineeringAddress: '',
     useNature: '',
     constructionPermitNumber: '',
+    testReportNumber: '',
     planEndTime: '',
     constructionUnit: {
       name: '',
@@ -316,9 +318,23 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   typeSelect = ArchitectureTypeEnum
 
   flowFormDto = new FlowFormDto()
-  constructor(private _applyService: ApplyServiceServiceProxy, private message: NzMessageService, public publicModel: PublicModel, ) { }
+
+  //0是新增  1是查看  2是修改
+  type
+
+  flowFormQueryDto = new FlowFormQueryDto();
+
+  constructor(private _ActivatedRoute: ActivatedRoute, private _applyService: ApplyServiceServiceProxy, private message: NzMessageService, public publicModel: PublicModel, ) {
+    this.flowFormQueryDto.flowType = 3;
+    this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
+    console.log(parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId')));
+    this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
+  }
 
   ngOnInit() {
+    if (this.type != 1) {
+      this.post_GetFlowFormData();
+    }
   }
 
   /**
@@ -346,12 +362,23 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   }
 
   /**
+   * 获取详情
+   */
+  post_GetFlowFormData() {
+    this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
+      this.data = data;
+    })
+  }
+
+  /**
   * 存草稿
   */
   depositDraft() {
     this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd', '-')
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto.flowPathType = 3;
+    if (!this.flowFormDto.projectId) delete this.flowFormDto.projectId
+    console.log(this.flowFormDto)
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')

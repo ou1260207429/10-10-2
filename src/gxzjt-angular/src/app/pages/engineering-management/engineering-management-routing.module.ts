@@ -30,19 +30,19 @@ const routes: Routes = [
   },
 
   {
-    path: 'addFireDesignDeclareComponent/:type',
+    path: 'addFireDesignDeclareComponent/:type/:projectId',
     data: { title: '新增申报' },
     component: AddFireDesignDeclareComponent
   },
 
   {
-    path: 'addCompletedAcceptanceComponent/:type',
+    path: 'addCompletedAcceptanceComponent/:type/:projectId',
     data: { title: '新增申报' },
     component: AddCompletedAcceptanceComponent
   },
 
   {
-    path: 'addFireAcceptanceComponent/:type',
+    path: 'addFireAcceptanceComponent/:type/:projectId',
     data: { title: '新增申报' },
     component: AddFireAcceptanceComponent
   },
