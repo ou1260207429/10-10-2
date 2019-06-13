@@ -3,7 +3,7 @@
 import { STPage, STComponent } from "@delon/abc";
 
 
-export const FLOW_SERVICES_URL = 'http://192.168.30.100:7123'
+export const FLOW_SERVICES_URL = 'http://222.84.250.158:8111'
 
 ///通用变量
 export let publicPageConfig: STPage = {
