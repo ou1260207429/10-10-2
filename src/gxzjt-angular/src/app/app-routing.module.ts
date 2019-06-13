@@ -37,12 +37,10 @@ const routes: Routes = [
       { path: 'content-manage', loadChildren: './pages/content-manage/content-manage.module#ContentManageModule' },
 
     ],
-
   },
   {
     path: 'big-screen/big',
     component: BigScreenComponent
-
   },
 ];
 
