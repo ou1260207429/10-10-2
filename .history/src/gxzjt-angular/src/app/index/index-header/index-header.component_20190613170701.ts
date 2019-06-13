@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { _HttpClient } from '@delon/theme';
 import { Router } from '@angular/router';
-import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-index-header',
@@ -10,41 +10,34 @@ import { PlatformLocation } from '@angular/common';
 export class IndexHeaderComponent implements OnInit {
   record: any = {};
   i: any;
-  constructor(private location: PlatformLocation, private router: Router) { }
+  constructor(private location: PlatformLocation, private router: Router, ) { }
   currentIndex = 0;
-  active
   navList = [
     {
       path: 'index',
       name: '首页',
-      activeName:"antiveIndex"
     },
     {
       path: 'handling-guid',
       name: '办事指南',
-      activeName:"antivehandling"
     },
     {
       path: 'announcement-information',
       name: '公告信息',
-      activeName:"antiveinformation"
     },
     {
       path: 'form-download',
       name: '表格下载',
-      activeName:"antiveform"
     },
     {
       path: 'laws-and-regulations',
       name: '法律法规',
-      activeName:"antivelaws"
     },
     {
       path: '/account/login',
       name: '登录',
-      activeName:"antivelogin"
     },
-
+    
   ];
   downLoadList = [
     {
@@ -98,10 +91,9 @@ export class IndexHeaderComponent implements OnInit {
     },
   ];
 
-  ngOnInit(): void {
-    var pathArr = this.location.pathname.split('/');
-    console.log(pathArr)
-   }
+  ngOnInit(): void { }
+
+  close() { }
 
 
   /**
