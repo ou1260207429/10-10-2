@@ -16,7 +16,6 @@ import { ProjectFlowServcieServiceProxy, DraftQueryDto } from '@shared/service-p
   styles: []
 })
 export class DraftsComponent implements OnInit {
-<<<<<<< HEAD
 
   @ViewChild('treeCom') treeCom;
   @ViewChild('st') st: STComponent;
@@ -30,21 +29,6 @@ export class DraftsComponent implements OnInit {
     icon: 'folder-open',
     isLeaf: true
   }];
-=======
-  data: any;
-  // @ViewChild('treeCom') treeCom;
-  // @ViewChild('st') st: STComponent;
-  // flowAddType: any = {
-  //   type: '',
-  //   name: ''
-  // };
-  // nodes = [{
-  //   title: '全部',
-  //   key: '',
-  //   icon: 'folder-open',
-  //   isLeaf: true
-  // }];
->>>>>>> c3018090dca72821eceabc3e2783c4c900438779
 
   chooseAuditors;
 
