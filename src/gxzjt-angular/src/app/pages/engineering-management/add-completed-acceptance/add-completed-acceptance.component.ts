@@ -1,7 +1,9 @@
+import { PublicModel } from './../../../../infrastructure/public-model';
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { objDeleteType } from 'infrastructure/regular-expression';
+import { objDeleteType, timeTrans } from 'infrastructure/regular-expression';
 import { ArchitectureTypeEnum, OptionsEnum } from 'infrastructure/expression';
+import { ApplyServiceServiceProxy, FlowFormDto } from '@shared/service-proxies/service-proxies';
 /**
  * 工程管理->竣工验收->新增申报
  */
@@ -313,9 +315,18 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   //结构类型
   typeSelect = ArchitectureTypeEnum
 
-  constructor(private message: NzMessageService, ) { }
+  flowFormDto = new FlowFormDto()
+  constructor(private _applyService: ApplyServiceServiceProxy, private message: NzMessageService, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
+  }
+
+  /**
+   * 选择市县区
+   * @param v 
+   */
+  changeCitycountyAndDistrict(v) {
+    this.data.engineeringCitycountyAndDistrict = v;
   }
 
   /**
@@ -331,11 +342,20 @@ export class AddCompletedAcceptanceComponent implements OnInit {
    * 删除数组
    */
   deleteArray(arr, index) {
-    if (arr.length == 1) {
-      this.message.error('不允许删除完，必须保留一个')
-      return false
-    }
-    arr.splice(index, 1)
+    this.publicModel.engineeringDeleteArray(arr, index)
+  }
+
+  /**
+  * 存草稿
+  */
+  depositDraft() {
+    this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd', '-')
+    this.flowFormDto.formJson = JSON.stringify(this.data);
+    this.flowFormDto.flowPathType = 3;
+    this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
+      this.flowFormDto.projectId = data;
+      this.message.success('保存成功')
+    })
   }
 
 }

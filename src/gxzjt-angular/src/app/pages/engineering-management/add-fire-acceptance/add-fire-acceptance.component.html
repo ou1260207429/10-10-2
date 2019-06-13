@@ -143,14 +143,16 @@
           <td rowspan='1'>
             <se error="这是必填项"><input nz-input placeholder="请输入联系人" [(ngModel)]="data.design.contacts"
                 name="designContacts" required />
+            </se>
           </td>
           <td rowspan='1'>
             <se error="这是必填项"><input nz-input placeholder="请输入联系电话" [(ngModel)]="data.design.contactsNumber"
                 name="designContactsNumber" required />
+            </se>
           </td>
           <td rowspan='1'>无</td>
         </tr>
-        <tr>
+        <tr *ngFor="let item of data.constructionUnit;let a = index">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>施工单位:</td>
           <td rowspan='1' colspan='5'>
             <se error="这是必填项">

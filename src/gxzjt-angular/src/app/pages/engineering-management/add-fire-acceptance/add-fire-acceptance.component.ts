@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { objDeleteType } from 'infrastructure/regular-expression';
 import { NzMessageService } from 'ng-zorro-antd';
+import { OptionsEnum, ArchitectureTypeEnum } from 'infrastructure/expression';
+import { PublicModel } from 'infrastructure/public-model';
+import { ApplyServiceServiceProxy, FlowFormDto } from '@shared/service-proxies/service-proxies';
 
 /**
  * 工程管理->消防验收->新增申报
@@ -133,7 +136,17 @@ export class AddFireAcceptanceComponent implements OnInit {
 
   }
 
-  constructor(private message: NzMessageService, ) { }
+  //0是新增  1是查看  2是修改
+  type
+
+  //市县区
+  position = OptionsEnum
+
+  //结构类型
+  typeSelect = ArchitectureTypeEnum
+
+  flowFormDto = new FlowFormDto();
+  constructor(private _applyService: ApplyServiceServiceProxy, private message: NzMessageService, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
   }
@@ -158,11 +171,19 @@ export class AddFireAcceptanceComponent implements OnInit {
    * 删除数组
    */
   deleteArray(arr, index) {
-    if (index == 0) {
-      this.message.error('不允许删除完，必须保留一个')
-      return false
-    }
-    arr.splice(index, 1)
+    this.publicModel.engineeringDeleteArray(arr, index)
+  }
+
+  /**
+   * 存草稿
+   */
+  depositDraft() {
+    this.flowFormDto.formJson = JSON.stringify(this.data);
+    this.flowFormDto.flowPathType = 2;
+    this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
+      this.flowFormDto.projectId = data;
+      this.message.success('保存成功')
+    })
   }
 
 }
