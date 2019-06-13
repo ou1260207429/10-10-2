@@ -36,7 +36,6 @@ import { PublicModel } from 'infrastructure/public-model';
         UEDITOR_HOME_URL: `//apps.bdimg.com/libs/ueditor/1.4.3.1/`,
       },
     }),
-
   ],
   declarations: [
     BigScreenComponent
