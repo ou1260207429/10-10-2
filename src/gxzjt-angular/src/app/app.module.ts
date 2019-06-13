@@ -14,6 +14,7 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 import { AuthInterceptor } from 'infrastructure/http-interceptor';
 import { ContentManageModule } from './pages/content-manage/content-manage.module';
 import { UEditorModule } from 'ngx-ueditor';
+import { PublicModel } from 'infrastructure/public-model';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { UEditorModule } from 'ngx-ueditor';
         UEDITOR_HOME_URL: `//apps.bdimg.com/libs/ueditor/1.4.3.1/`,
       },
     }),
+
   ],
   declarations: [
     BigScreenComponent
@@ -44,6 +46,7 @@ import { UEditorModule } from 'ngx-ueditor';
   providers: [
     FlowServices,
     PoliciesAndRegulationsServices,
+    PublicModel,
     EventEmiter,
     [
       {

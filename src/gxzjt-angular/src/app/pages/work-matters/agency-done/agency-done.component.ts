@@ -1,128 +1,146 @@
-import { FlowServices } from './../../../../services/flow.services';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { STColumn, STPage, STComponent } from '@delon/abc';
-import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
-import { Router } from '@angular/router';
-import { EventEmiter } from 'infrastructure/eventEmiter';
-import { AppConsts } from '@shared/AppConsts';
+import { STColumn, STComponent, XlsxService } from '@delon/abc';
 
+
+import { _HttpClient } from '@delon/theme';
+
+
+import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, DataSourceResult } from '@shared/service-proxies/service-proxies'
+
+import { PublicFormComponent } from '../public/public-form.component';
+
+import { Router } from '@angular/router';
+
+import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 /**
  * 待办流程
  */
 @Component({
   selector: 'app-agency-done',
-  templateUrl: './agency-done.component.html',
-  styles: []
+  templateUrl: '../public/public-form.html',
+  styles: [],
 })
-export class AgencyDoneComponent implements OnInit {
+export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
-  @ViewChild('treeCom') treeCom;
+
+  searchKey = '';
+
+
+  page = 1;
+
+
   @ViewChild('st') st: STComponent;
-  flowAddType: any = {
-    type: '',
-    name: ''
-  };
-  nodes = [{
-    title: '全部',
-    key: '',
-    icon: 'folder-open',
-    isLeaf: true
-  }];
-
-  chooseAuditors;
-
-  params: any = {};
-  data;
   columns: STColumn[] = [
-    { title: '流水号', index: 'number' },
-    { title: '流程名称', index: 'name' },
-    { title: '发起人', index: 'createEName' },
-    { title: '当前节点', index: 'curNodeName' },
-    { title: '当前审核人', index: 'applyEName' },
     {
-      title: '创建时间', index: 'creationTime', type: 'date'
-    },
-    {
-      title: '操作', className: 'text-center', buttons: [
+      title: '操作',
+      buttons: [
         {
-          text: '<font class="stButton">办理</font>', iif: (record) => this.isSen(record.isCustom), click: (record: any) => {
-            this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${record.workFlow_Instance_Id}`]);
+          text: '查看', click: (item: any) => {
+            this.watchItem(item);
           }
         },
       ]
-    }
+    },
+    { title: '部门', index: 'pro_type' },
+    { title: '流程流水号', index: 'pro_no' },
+
+    { title: '工程名称', index: 'pro_name' },
+
+    { title: '建设单位', index: 'org' },
+    {
+      title: '工程类型', index: 'node',
+      sort: {
+        compare: (a, b) => a.node > b.node ? 1 : 0,
+      },
+      filter: {
+        menus: [
+          { text: '初审', value: 0 },
+          { text: '复审', value: 1 },
+          { text: '审核完毕', value: 2 },
+        ],
+        fn: (filter: any, record: any) =>
+          record.node >= filter.value[0] && record.node <= filter.value[1],
+        multiple: false,
+      }
+    },
+    { title: '当前处理人', index: 'person' },
+
+    { title: '申报时间', type: 'date', index: 'repo_time' },
+    { title: '流程超时', index: 'timeout' }
+
   ];
 
-
-  pageConfig: STPage = publicPageConfig;
-  constructor(private router: Router, private _flowServices: FlowServices, private eventEmiter: EventEmiter, ) {
-    this.init();
-  }
-
-  /**
-   * 判断发起流程
-   * @param key 
-   * @param index 
-   */
-  isSen(key) {
-    return key
+  constructor(private workFlowedServiceProxy: WorkFlowedServiceProxy,
+    private router: Router,
+    private http: _HttpClient,
+    private xlsx: XlsxService) {
+    super();
   }
 
   ngOnInit() {
-    let _self = this;
+    this.search();
+  }
 
-    this.eventEmiter.on('init', () => {
-      _self.init();
+
+
+  refresh() {
+    this.search();
+  }
+
+  search() {
+
+    var searchParam = new PendingWorkFlow_NodeAuditorRecordDto();
+
+
+
+    var jsonData = {
+      "applyTimeStart": this.rangeTime ? this.rangeTime[0] : null,
+      "applyTimeEnd": this.rangeTime ? this.rangeTime[1] : new Date(),
+      "companyName": this.orgName,
+      "projectName": this.proName,
+      "pagedAndFilteredInputDto": {
+        "filterText": "",
+        "page": this.page,
+        "sorting": "",
+        "skipCount": this.page * this.pageSize,
+        "maxResultCount": this.pageSize
+      },
+    };
+
+    searchParam.init(jsonData);
+
+    this.isSearchForm = true;
+    this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(searchParam).subscribe((res: DataSourceResult) => {
+      console.log(JSON.stringify(res));
+      this.formResultData = res.data;
+      this.isSearchForm = false;
+    }, err => {
+      console.log(err);
+      this.isSearchForm = false;
     });
 
-    this.eventEmiter.on('flowadd', () => {
-      _self.init();
+  }
+
+
+  watchItem(item) {
+    this.router.navigate([`/app/work-matters/alreadyDoneDetailsComponent/${item.workFlow_Instance_Id}`]);
+  }
+
+  exportXlsx() {
+    const expData = [this.columns.map(i => i.title)];
+
+    expData.push(['1', '1', '1', '1',]);
+
+    this.xlsx.export({
+      sheets: [
+        {
+          data: expData,
+          name: 'sheet name',
+        },
+      ],
     });
   }
 
-  /**
-   * 初始化
-   */
-  init() {
-    this.params.page = 1;
-    this.params.maxResultCount = AppConsts.grid.defaultPageSize;
-    this.params.filterText = '';
-    this.params.result = 4;
-    this.workFlow_NodeAuditorRecords(this.params);
-  }
 
-  /**
-   * 回车
-   */
-  onEnter(v) {
-    if (v.which === 13) {
-      this.query();
-    }
-  }
-
-  /**
-   * 获取列表 
-   */
-  workFlow_NodeAuditorRecords(params?: any) {
-    this.data = '';
-    this._flowServices.tenant_PendingWorkFlow_NodeAuditorRecord(params).subscribe(data => {
-      this.data = data.result;
-    })
-  }
-
-  /**
-   * 点击查询
-   */
-  query() {
-    this.params.page = 1;
-    this.params.maxResultCount = AppConsts.grid.defaultPageSize;
-    this.workFlow_NodeAuditorRecords(this.params);
-  }
-
-  change(v) {
-    pageOnChange(v, this.params, () => {
-      this.workFlow_NodeAuditorRecords(this.params);
-    })
-  }
 
 }

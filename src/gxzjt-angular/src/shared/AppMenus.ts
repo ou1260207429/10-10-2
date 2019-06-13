@@ -35,7 +35,7 @@ export class AppMenus {
         {
             text: "",
             i18n: "工作事项",
-            icon: { type: "icon", value: "home" },// 图标
+            icon: { type: "icon", value: "bars" },// 图标
             children: [
                 {
                     text: "",
@@ -49,8 +49,18 @@ export class AppMenus {
                 },
                 {
                     text: "",
+                    i18n: "草稿",
+                    link: "/app/work-matters/draf",
+                },
+                {
+                    text: "",
                     i18n: "流程",
                     link: "/app/work-matters/flowModuleComponent",
+                },
+                {
+                    text: "",
+                    i18n: "草稿箱",
+                    link: "/app/work-matters/draftsComponent",
                 },
                 {
                     text: "",
@@ -60,9 +70,22 @@ export class AppMenus {
             ]
         },
         {
+            text: "统计分析",
+
+            icon: { type: "icon", value: "area-chart" },// 图标
+            children: [
+                {
+                    text: "预警中心",
+
+                    link: "/app/statistics",
+                }
+
+            ]
+        },
+        {
             text: "",
             i18n: "内容管理",
-            icon: { type: "icon", value: "home" },// 图标
+            icon: { type: "icon", value: "form" },// 图标
             children: [
                 {
                     text: "",
@@ -84,7 +107,7 @@ export class AppMenus {
         {
             text: "",
             i18n: "工程管理",
-            icon: { type: "icon", value: "home" },// 图标
+            icon: { type: "icon", value: "project" },// 图标
             children: [
                 {
                     text: "",
@@ -106,6 +129,19 @@ export class AppMenus {
                     i18n: "竣工验收备案",
                     link: "/app/engineering-management/completedAcceptanceComponent",
                 },
+            ]
+        },
+        {
+            text: "系统管理",
+
+            icon: { type: "icon", value: "account-book" },// 图标
+            children: [
+                {
+                    text: "抽查比例中心",
+
+                    link: "/app/sys-setting/spot-check-proportion",
+                }
+
             ]
         },
     ];

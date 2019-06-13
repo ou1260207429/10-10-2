@@ -17,11 +17,10 @@ const routes: Routes = [
   // },
   {
     path: '',
-    component: LayoutDefaultComponent,
+    component: LayoutFullScreenComponent,
     // canActivate: [AppRouteGuard],
     children: [
       { path: '', loadChildren: './index/index.module#IndexModule' },
-
     ],
   },
   {
@@ -31,6 +30,7 @@ const routes: Routes = [
     // canActivate: [AppRouteGuard],
     children: [
       { path: 'statistics', loadChildren: './routes/statistics/statistics.module#StatisticsModule', },
+      { path: 'sys-setting', loadChildren: './routes/sys-setting/sys-setting.module#SysSettingModule', },
       { path: 'home', loadChildren: './pages/home/home.module#HomeModule' },
       { path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule' },
       { path: 'engineering-management', loadChildren: './pages/engineering-management/engineering-management.module#EngineeringManagementModule' },

@@ -1,0 +1,21 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+
+
+    <button (click)="refresh()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
+
+  </ng-template>
+</page-header>
+
+<nz-card>
+
+
+  <st #st [data]="formResultData" [columns]="columns" [loading]="isSearchForm"></st>
+  <br>
+  <nz-modal [(nzVisible)]="isVisibleModal" nzTitle="{{needModifyItem.natureName+'比例修改'}}" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleOk()" [nzOkLoading]="isOkLoading">
+    <!-- <input type="text" nz-input [ngModel]="needModifyItem.ratio" /> -->
+    <nz-input-number [(ngModel)]="needModifyItem.ratio" [nzMin]="0" [nzMax]="100" [nzStep]="1"
+      [nzFormatter]="formatterPercent" [nzParser]="parserPercent"></nz-input-number>
+  </nz-modal>
+</nz-card>

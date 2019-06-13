@@ -15,7 +15,7 @@ import { AppConsts } from '@shared/AppConsts';
   styles: []
 })
 export class FireDesignComponent implements OnInit {
-
+  noResult: any;
   @ViewChild('treeCom') treeCom;
   @ViewChild('st') st: STComponent;
   flowAddType: any = {
@@ -130,7 +130,7 @@ export class FireDesignComponent implements OnInit {
    * 新增申报
    */
   addDeclare() {
-    this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent`]);
+    this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/null`]);
   }
 
   change(v) {

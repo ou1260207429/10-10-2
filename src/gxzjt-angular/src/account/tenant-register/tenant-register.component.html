@@ -43,8 +43,8 @@
         <nz-form-item>
           <nz-form-control nzHasFeedback>
             <nz-input-group nzPrefixIcon="anticon anticon-mail">
-              <input nz-input type="email" name="adminEmailAddress" #adminEmailAddress="ngModel" [(ngModel)]="model.adminEmailAddress"
-                [placeholder]="l('AdminEmailAddress')" required email>
+              <input nz-input type="email" name="adminEmailAddress" #adminEmailAddress="ngModel"
+                [(ngModel)]="model.adminEmailAddress" [placeholder]="l('AdminEmailAddress')" required email>
             </nz-input-group>
             <nz-form-explain *ngIf="adminEmailAddress.control.dirty&&adminEmailAddress.control.errors">
               <ng-container *ngIf="adminEmailAddress.control.hasError('email')">{{l('NotEmail')}}</ng-container>
@@ -57,8 +57,8 @@
         <nz-form-item>
           <nz-form-control nzHasFeedback>
             <nz-input-group nzPrefixIcon="anticon anticon-lock">
-              <input nz-input type="password" name="tenantAdminPassword" #tenantAdminPassword="ngModel" [(ngModel)]="model.tenantAdminPassword"
-                [placeholder]="l('Password')" required maxlength="32" minlength="6">
+              <input nz-input type="password" name="tenantAdminPassword" #tenantAdminPassword="ngModel"
+                [(ngModel)]="model.adminPassword" [placeholder]="l('Password')" required maxlength="32" minlength="6">
             </nz-input-group>
             <nz-form-explain *ngIf="tenantAdminPassword.control.dirty&&tenantAdminPassword.control.errors">
               <ng-container *ngIf="tenantAdminPassword.control.hasError('required')">{{l('CanNotNull')}}</ng-container>
@@ -68,7 +68,8 @@
         </nz-form-item>
 
         <!-- 功能按钮 -->
-        <button nz-button [nzType]="'primary'" [nzLoading]="saving" class="yoyo__block" type="submit" [disabled]="!validateForm.valid||saving">
+        <button nz-button [nzType]="'primary'" [nzLoading]="saving" class="yoyo__block" type="submit"
+          [disabled]="!validateForm.valid||saving">
           <i class="anticon anticon-login"></i>
           <span>{{l("Register")}}</span>
         </button>
