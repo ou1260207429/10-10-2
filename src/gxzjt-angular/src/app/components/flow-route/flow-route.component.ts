@@ -16,5 +16,5 @@ export class FlowRouteComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  extraTemplate = "";
 }

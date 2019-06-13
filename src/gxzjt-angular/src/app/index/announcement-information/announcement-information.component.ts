@@ -98,8 +98,8 @@ export class AnnouncementInformationComponent implements OnInit {
   /**
    * 跳转进表单列表页
    */
-  goFromList(item) {
-    this.router.navigate(item.path);
+  goFromList() {
+    // this.router.navigate(item.path);
   }
 
 }

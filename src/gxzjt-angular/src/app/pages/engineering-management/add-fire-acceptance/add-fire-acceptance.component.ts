@@ -14,7 +14,7 @@ import { ApplyServiceServiceProxy, FlowFormDto } from '@shared/service-proxies/s
   styles: []
 })
 export class AddFireAcceptanceComponent implements OnInit {
-
+  dateOfReview: any;
   data: any = {
     jsconstructionUnit: '',
     legalRepresentative: '',
@@ -185,5 +185,5 @@ export class AddFireAcceptanceComponent implements OnInit {
       this.message.success('保存成功')
     })
   }
-
+  save() { }
 }
