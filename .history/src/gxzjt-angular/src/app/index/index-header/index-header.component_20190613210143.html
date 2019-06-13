@@ -16,7 +16,7 @@
     <div nz-row class="nav content">
       <ul>
         <li *ngFor="let item of navList; let index = index">
-          <a [routerLink]="item.path" [routerLinkActive]="[item.activeName,'active',item.acitve]">
+          <a [routerLink]="item.path" [routerLinkActive]="[item.activeName,'active',item.active]">
             {{ item.name }}</a>
         </li>
       </ul>

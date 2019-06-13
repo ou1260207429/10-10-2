@@ -8,44 +8,40 @@ import { PlatformLocation } from '@angular/common';
   styleUrls: ['./index-header.less']
 })
 export class IndexHeaderComponent implements OnInit {
+  record: any = {};
+  i: any;
   constructor(private location: PlatformLocation, private router: Router) { }
   active
   navList = [
     {
       path: 'index',
       name: '首页',
-      activeName: "antiveIndex",
-      acitve:"nowIndex"
+      activeName: "antiveIndex"
     },
     {
       path: 'handling-guid',
       name: '办事指南',
-      activeName: "antivehandling",
-      acitve:"nowhandling"
+      activeName: "antivehandling"
     },
     {
       path: 'announcement-information',
       name: '公告信息',
-      activeName: "antiveinformation",
-      acitve:"nowinformation"
+      activeName: "antiveinformation"
     },
     {
       path: 'form-download',
       name: '表格下载',
-      activeName: "antiveform",
-      acitve:"nowform"
+      activeName: "antiveform"
     },
     {
       path: 'laws-and-regulations',
       name: '法律法规',
-      activeName: "antivelaws",
-      acitve:"nowlaws"
+      activeName: "antivelaws"
     },
     {
       path: '/account/login',
       name: '登录',
-      activeName: "antivelogin",
-      acitve:"nowlogin"
+      activeName: "antivelogin"
     },
 
   ];

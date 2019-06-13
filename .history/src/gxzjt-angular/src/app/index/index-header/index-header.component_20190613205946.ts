@@ -21,31 +21,31 @@ export class IndexHeaderComponent implements OnInit {
       path: 'handling-guid',
       name: '办事指南',
       activeName: "antivehandling",
-      acitve:"nowhandling"
+      acitve:"nowIndex"
     },
     {
       path: 'announcement-information',
       name: '公告信息',
       activeName: "antiveinformation",
-      acitve:"nowinformation"
+      acitve:"nowIndex"
     },
     {
       path: 'form-download',
       name: '表格下载',
       activeName: "antiveform",
-      acitve:"nowform"
+      acitve:"nowIndex"
     },
     {
       path: 'laws-and-regulations',
       name: '法律法规',
       activeName: "antivelaws",
-      acitve:"nowlaws"
+      acitve:"nowIndex"
     },
     {
       path: '/account/login',
       name: '登录',
       activeName: "antivelogin",
-      acitve:"nowlogin"
+      acitve:"nowIndex"
     },
 
   ];

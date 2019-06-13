@@ -80,9 +80,7 @@ export class IndexComponent implements OnInit {
       name: '《消防监督检查规定》',
     },
   ];
-  handleList=[
 
-  ]
   ngOnInit(): void { }
 
   /**

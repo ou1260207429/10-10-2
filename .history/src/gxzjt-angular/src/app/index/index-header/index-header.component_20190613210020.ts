@@ -21,7 +21,7 @@ export class IndexHeaderComponent implements OnInit {
       path: 'handling-guid',
       name: '办事指南',
       activeName: "antivehandling",
-      acitve:"nowhandling"
+      acitve:"nowIndex"
     },
     {
       path: 'announcement-information',

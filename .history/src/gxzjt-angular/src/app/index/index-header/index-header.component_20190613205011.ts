@@ -1,70 +1,88 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { PlatformLocation } from '@angular/common';
 import { HomeServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
-  selector: 'app-home-index',
-  styleUrls: ['./index.component.less'],
-  templateUrl: './index.component.html',
+  selector: 'app-index-header',
+  templateUrl: './index-header.component.html',
+  styleUrls: ['./index-header.less']
 })
-export class IndexComponent implements OnInit {
+export class IndexHeaderComponent implements OnInit {
   record: any = {};
   i: any;
-  router: any;
-
-  constructor(private _homeServiceProxy: HomeServiceProxy) { }
+  constructor(private _homeServiceProxy: HomeServiceProxy, private location: PlatformLocation, private router: Router) { }
   currentIndex = 0;
+  active
   navList = [
     {
-      path: 'app',
+      path: 'index',
       name: '首页',
+      activeName: "antiveIndex"
     },
     {
       path: 'handling-guid',
       name: '办事指南',
+      activeName: "antivehandling"
     },
     {
       path: 'announcement-information',
       name: '公告信息',
+      activeName: "antiveinformation"
     },
     {
       path: 'form-download',
       name: '表格下载',
+      activeName: "antiveform"
     },
     {
       path: 'laws-and-regulations',
       name: '法律法规',
+      activeName: "antivelaws"
     },
     {
       path: '/account/login',
       name: '登录',
+      activeName: "antivelogin"
     },
+
   ];
   downLoadList = [
     {
       path: '',
       name: '建设工程消防设计审查申请表',
-      time: '2019-06-01  12:00',
+      time: '2019-06-03 12:12',
     },
     {
       path: '',
       name: '建设工程消防设计审查申请表',
-      time: '2019-05-28  10:00',
+      time: '2019-06-03 12:12',
     },
     {
       path: '',
       name: '建设工程消防验收申请表',
-      time: '2019-05-22  14:20',
+      time: '2019-06-03 12:12',
     },
     {
       path: '',
-      name: '建设工程竣工验收消防备案申请表',
-      time: '2019-05-19  16:32',
+      name: '建设工程竣工验收消防设备案申请表',
+      time: '2019-06-03 12:12',
     },
     {
       path: '',
-      name: '建设工程竣工验收消防备案申请表',
-      time: '2019-05-10  16:32',
-    }
+      name: '建设工程竣工验收消防设备案申请表',
+      time: '2019-06-03 12:12',
+    },
+    {
+      path: '',
+      name: '建设工程竣工验收消防设备案申请表',
+      time: '2019-06-03 12:12',
+    },
+    {
+      path: '',
+      name: '建设工程竣工验收消防设备案申请表',
+      time: '2019-06-03 12:12',
+    },
   ];
   lawList = [
     {
@@ -80,11 +98,6 @@ export class IndexComponent implements OnInit {
       name: '《消防监督检查规定》',
     },
   ];
-  handleList=[
-
-  ]
-  ngOnInit(): void { }
-
   /**
    * 获取表格列表
    */
@@ -111,11 +124,21 @@ export class IndexComponent implements OnInit {
 
     })
   }
+  ngOnInit(): void {
+    var pathArr = this.location.pathname.split('/');
+    console.log(pathArr)
+  }
+
 
   /**
    * 跳转进表单列表页
    */
   goFromList() {
-    // this.router.navigate(item.path);
+
   }
+  gotoMenu(item) {
+    console.log(item)
+    this.router.navigate(item.path);
+  }
+
 }
