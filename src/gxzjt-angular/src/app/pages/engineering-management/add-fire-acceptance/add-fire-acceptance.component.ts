@@ -151,14 +151,10 @@ export class AddFireAcceptanceComponent implements OnInit {
   constructor(private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     this.flowFormQueryDto.flowType = 2;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
-
-    if (!this._ActivatedRoute.snapshot.paramMap.get('projectId')) {
-      // this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
-    }
-    console.log(this.flowFormDto)
+    this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
   }
   ngOnInit() {
-    if (this.type != 1) {
+    if (this.type != 0) {
       this.post_GetFlowFormData();
     }
   }
@@ -167,7 +163,9 @@ export class AddFireAcceptanceComponent implements OnInit {
    * 获取特殊工程列表
    */
   post_GetFlowFormData() {
+    this.data = '';
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
+      this.data = JSON.parse(data.formJson);
       console.log(data)
     })
   }
@@ -201,6 +199,7 @@ export class AddFireAcceptanceComponent implements OnInit {
   depositDraft() {
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 2;
+    this.flowFormDto.projectTypeStatu = 1;
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')

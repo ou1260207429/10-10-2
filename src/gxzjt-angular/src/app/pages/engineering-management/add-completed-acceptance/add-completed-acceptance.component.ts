@@ -332,7 +332,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.type != 1) {
+    if (this.type != 0) {
       this.post_GetFlowFormData();
     }
   }
@@ -365,8 +365,10 @@ export class AddCompletedAcceptanceComponent implements OnInit {
    * 获取详情
    */
   post_GetFlowFormData() {
+    this.data = '';
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
-      this.data = data;
+      this.data = JSON.parse(data.formJson);
+      console.log(data)
     })
   }
 
@@ -377,7 +379,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd', '-')
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 3;
-    if (!this.flowFormDto.projectId) delete this.flowFormDto.projectId
+    this.flowFormDto.projectTypeStatu = 2;
     console.log(this.flowFormDto)
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
