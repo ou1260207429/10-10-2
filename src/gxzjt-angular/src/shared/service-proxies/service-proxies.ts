@@ -2268,6 +2268,234 @@ export class ProjectFlowServcieServiceProxy {
         }
         return _observableOf<DataSourceResult>(<any>null);
     }
+
+    /**
+     * @param projectFlowIndexItemQueryDto (optional) 
+     * @return Success
+     */
+    post_GetProjectFlowIndexTopCount(projectFlowIndexItemQueryDto: ProjectFlowIndexTopQueryDto | null | undefined): Observable<ProjectFlowIndexTopDto> {
+        let url_ = this.baseUrl + "/api/services/app/ProjectFlowServcie/Post_GetProjectFlowIndexTopCount";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(projectFlowIndexItemQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetProjectFlowIndexTopCount(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetProjectFlowIndexTopCount(<any>response_);
+                } catch (e) {
+                    return <Observable<ProjectFlowIndexTopDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProjectFlowIndexTopDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetProjectFlowIndexTopCount(response: HttpResponseBase): Observable<ProjectFlowIndexTopDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ProjectFlowIndexTopDto.fromJS(resultData200) : new ProjectFlowIndexTopDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProjectFlowIndexTopDto>(<any>null);
+    }
+
+    /**
+     * @param projectTimeoutQueryDto (optional) 
+     * @return Success
+     */
+    post_GetProjectsTimeout(projectTimeoutQueryDto: ProjectTimeoutQueryDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/ProjectFlowServcie/Post_GetProjectsTimeout";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(projectTimeoutQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetProjectsTimeout(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetProjectsTimeout(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetProjectsTimeout(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
+
+    /**
+     * @param projectFlowStatisticsDto (optional) 
+     * @return Success
+     */
+    post_GetProjectFlowDataStatistics(projectFlowStatisticsDto: ProjectFlowDataStatisticsQueryDto | null | undefined): Observable<ProjectFlowStatisticsDto> {
+        let url_ = this.baseUrl + "/api/services/app/ProjectFlowServcie/Post_GetProjectFlowDataStatistics";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(projectFlowStatisticsDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetProjectFlowDataStatistics(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetProjectFlowDataStatistics(<any>response_);
+                } catch (e) {
+                    return <Observable<ProjectFlowStatisticsDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProjectFlowStatisticsDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetProjectFlowDataStatistics(response: HttpResponseBase): Observable<ProjectFlowStatisticsDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ProjectFlowStatisticsDto.fromJS(resultData200) : new ProjectFlowStatisticsDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProjectFlowStatisticsDto>(<any>null);
+    }
+
+    /**
+     * @param sdeclareStatisticsQueryDto (optional) 
+     * @return Success
+     */
+    post_GetDeclareRate(sdeclareStatisticsQueryDto: SdeclareStatisticsQueryDto | null | undefined): Observable<SdeclareStatisticsDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ProjectFlowServcie/Post_GetDeclareRate";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(sdeclareStatisticsQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetDeclareRate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetDeclareRate(<any>response_);
+                } catch (e) {
+                    return <Observable<SdeclareStatisticsDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<SdeclareStatisticsDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetDeclareRate(response: HttpResponseBase): Observable<SdeclareStatisticsDto[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(SdeclareStatisticsDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SdeclareStatisticsDto[]>(<any>null);
+    }
 }
 
 @Injectable()
@@ -5288,7 +5516,7 @@ export class FlowFormAllDataDto implements IFlowFormAllDataDto {
     natures: ArchitecturalInNature[] | undefined;
     formJson: string | undefined;
     projectId: number | undefined;
-    flowPathType: number | undefined;
+    projectTypeStatu: number | undefined;
 
     constructor(data?: IFlowFormAllDataDto) {
         if (data) {
@@ -5313,7 +5541,7 @@ export class FlowFormAllDataDto implements IFlowFormAllDataDto {
             }
             this.formJson = data["formJson"];
             this.projectId = data["projectId"];
-            this.flowPathType = data["flowPathType"];
+            this.projectTypeStatu = data["projectTypeStatu"];
         }
     }
 
@@ -5338,7 +5566,7 @@ export class FlowFormAllDataDto implements IFlowFormAllDataDto {
         }
         data["formJson"] = this.formJson;
         data["projectId"] = this.projectId;
-        data["flowPathType"] = this.flowPathType;
+        data["projectTypeStatu"] = this.projectTypeStatu;
         return data; 
     }
 
@@ -5355,7 +5583,7 @@ export interface IFlowFormAllDataDto {
     natures: ArchitecturalInNature[] | undefined;
     formJson: string | undefined;
     projectId: number | undefined;
-    flowPathType: number | undefined;
+    projectTypeStatu: number | undefined;
 }
 
 export class SpecialNatureItem implements ISpecialNatureItem {
@@ -5578,7 +5806,7 @@ export interface ISpecialNatureType {
 export class FlowFormDto implements IFlowFormDto {
     formJson: string | undefined;
     projectId: number | undefined;
-    flowPathType: number | undefined;
+    projectTypeStatu: number | undefined;
 
     constructor(data?: IFlowFormDto) {
         if (data) {
@@ -5593,7 +5821,7 @@ export class FlowFormDto implements IFlowFormDto {
         if (data) {
             this.formJson = data["formJson"];
             this.projectId = data["projectId"];
-            this.flowPathType = data["flowPathType"];
+            this.projectTypeStatu = data["projectTypeStatu"];
         }
     }
 
@@ -5608,7 +5836,7 @@ export class FlowFormDto implements IFlowFormDto {
         data = typeof data === 'object' ? data : {};
         data["formJson"] = this.formJson;
         data["projectId"] = this.projectId;
-        data["flowPathType"] = this.flowPathType;
+        data["projectTypeStatu"] = this.projectTypeStatu;
         return data; 
     }
 
@@ -5623,7 +5851,7 @@ export class FlowFormDto implements IFlowFormDto {
 export interface IFlowFormDto {
     formJson: string | undefined;
     projectId: number | undefined;
-    flowPathType: number | undefined;
+    projectTypeStatu: number | undefined;
 }
 
 export class FlowDataDto implements IFlowDataDto {
@@ -6324,6 +6552,7 @@ export interface IAcceptRecord {
 export class RegulationDetailsViewModel implements IRegulationDetailsViewModel {
     content: string | undefined;
     guid: string | undefined;
+    regulationTypeId: string | undefined;
     id: number | undefined;
     regulationCode: string | undefined;
     title: string | undefined;
@@ -6350,6 +6579,7 @@ export class RegulationDetailsViewModel implements IRegulationDetailsViewModel {
         if (data) {
             this.content = data["content"];
             this.guid = data["guid"];
+            this.regulationTypeId = data["regulationTypeId"];
             this.id = data["id"];
             this.regulationCode = data["regulationCode"];
             this.title = data["title"];
@@ -6376,6 +6606,7 @@ export class RegulationDetailsViewModel implements IRegulationDetailsViewModel {
         data = typeof data === 'object' ? data : {};
         data["content"] = this.content;
         data["guid"] = this.guid;
+        data["regulationTypeId"] = this.regulationTypeId;
         data["id"] = this.id;
         data["regulationCode"] = this.regulationCode;
         data["title"] = this.title;
@@ -6402,6 +6633,7 @@ export class RegulationDetailsViewModel implements IRegulationDetailsViewModel {
 export interface IRegulationDetailsViewModel {
     content: string | undefined;
     guid: string | undefined;
+    regulationTypeId: string | undefined;
     id: number | undefined;
     regulationCode: string | undefined;
     title: string | undefined;
@@ -7488,6 +7720,12 @@ export interface IProjectFlowItemQueryDto {
 }
 
 export class DraftQueryDto implements IDraftQueryDto {
+    number: string | undefined;
+    projectName: string | undefined;
+    companyName: string | undefined;
+    applyTimeStart: moment.Moment | undefined;
+    applyTimeEnd: moment.Moment | undefined;
+    filterText: string | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
@@ -7504,6 +7742,12 @@ export class DraftQueryDto implements IDraftQueryDto {
 
     init(data?: any) {
         if (data) {
+            this.number = data["number"];
+            this.projectName = data["projectName"];
+            this.companyName = data["companyName"];
+            this.applyTimeStart = data["applyTimeStart"] ? moment(data["applyTimeStart"].toString()) : <any>undefined;
+            this.applyTimeEnd = data["applyTimeEnd"] ? moment(data["applyTimeEnd"].toString()) : <any>undefined;
+            this.filterText = data["filterText"];
             this.page = data["page"];
             this.sorting = data["sorting"];
             this.skipCount = data["skipCount"];
@@ -7520,6 +7764,12 @@ export class DraftQueryDto implements IDraftQueryDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["number"] = this.number;
+        data["projectName"] = this.projectName;
+        data["companyName"] = this.companyName;
+        data["applyTimeStart"] = this.applyTimeStart ? this.applyTimeStart.toISOString() : <any>undefined;
+        data["applyTimeEnd"] = this.applyTimeEnd ? this.applyTimeEnd.toISOString() : <any>undefined;
+        data["filterText"] = this.filterText;
         data["page"] = this.page;
         data["sorting"] = this.sorting;
         data["skipCount"] = this.skipCount;
@@ -7536,10 +7786,464 @@ export class DraftQueryDto implements IDraftQueryDto {
 }
 
 export interface IDraftQueryDto {
+    number: string | undefined;
+    projectName: string | undefined;
+    companyName: string | undefined;
+    applyTimeStart: moment.Moment | undefined;
+    applyTimeEnd: moment.Moment | undefined;
+    filterText: string | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
     maxResultCount: number | undefined;
+}
+
+export class ProjectFlowIndexTopQueryDto implements IProjectFlowIndexTopQueryDto {
+    processedStatus: number | undefined;
+    fireAuditStatus: number | undefined;
+    fireCompleteStatus: number | undefined;
+    completeStatus: number | undefined;
+    dateTimeNow: moment.Moment | undefined;
+
+    constructor(data?: IProjectFlowIndexTopQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.processedStatus = data["processedStatus"];
+            this.fireAuditStatus = data["fireAuditStatus"];
+            this.fireCompleteStatus = data["fireCompleteStatus"];
+            this.completeStatus = data["completeStatus"];
+            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): ProjectFlowIndexTopQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectFlowIndexTopQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["processedStatus"] = this.processedStatus;
+        data["fireAuditStatus"] = this.fireAuditStatus;
+        data["fireCompleteStatus"] = this.fireCompleteStatus;
+        data["completeStatus"] = this.completeStatus;
+        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): ProjectFlowIndexTopQueryDto {
+        const json = this.toJSON();
+        let result = new ProjectFlowIndexTopQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectFlowIndexTopQueryDto {
+    processedStatus: number | undefined;
+    fireAuditStatus: number | undefined;
+    fireCompleteStatus: number | undefined;
+    completeStatus: number | undefined;
+    dateTimeNow: moment.Moment | undefined;
+}
+
+export class ProjectFlowIndexTopDto implements IProjectFlowIndexTopDto {
+    processedCount: number | undefined;
+    timeoutCount: number | undefined;
+    fireAuditCount: number | undefined;
+    fireCompleteCount: number | undefined;
+    completeCount: number | undefined;
+
+    constructor(data?: IProjectFlowIndexTopDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.processedCount = data["processedCount"];
+            this.timeoutCount = data["timeoutCount"];
+            this.fireAuditCount = data["fireAuditCount"];
+            this.fireCompleteCount = data["fireCompleteCount"];
+            this.completeCount = data["completeCount"];
+        }
+    }
+
+    static fromJS(data: any): ProjectFlowIndexTopDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectFlowIndexTopDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["processedCount"] = this.processedCount;
+        data["timeoutCount"] = this.timeoutCount;
+        data["fireAuditCount"] = this.fireAuditCount;
+        data["fireCompleteCount"] = this.fireCompleteCount;
+        data["completeCount"] = this.completeCount;
+        return data; 
+    }
+
+    clone(): ProjectFlowIndexTopDto {
+        const json = this.toJSON();
+        let result = new ProjectFlowIndexTopDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectFlowIndexTopDto {
+    processedCount: number | undefined;
+    timeoutCount: number | undefined;
+    fireAuditCount: number | undefined;
+    fireCompleteCount: number | undefined;
+    completeCount: number | undefined;
+}
+
+export class ProjectTimeoutQueryDto implements IProjectTimeoutQueryDto {
+    processedStatus: number | undefined;
+    dateTimeNow: moment.Moment | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+
+    constructor(data?: IProjectTimeoutQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.processedStatus = data["processedStatus"];
+            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
+            this.page = data["page"];
+            this.sorting = data["sorting"];
+            this.skipCount = data["skipCount"];
+            this.maxResultCount = data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): ProjectTimeoutQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectTimeoutQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["processedStatus"] = this.processedStatus;
+        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
+        data["page"] = this.page;
+        data["sorting"] = this.sorting;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+
+    clone(): ProjectTimeoutQueryDto {
+        const json = this.toJSON();
+        let result = new ProjectTimeoutQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectTimeoutQueryDto {
+    processedStatus: number | undefined;
+    dateTimeNow: moment.Moment | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+}
+
+export class ProjectFlowDataStatisticsQueryDto implements IProjectFlowDataStatisticsQueryDto {
+    stateDate: moment.Moment | undefined;
+    statisticsType: number | undefined;
+
+    constructor(data?: IProjectFlowDataStatisticsQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.stateDate = data["stateDate"] ? moment(data["stateDate"].toString()) : <any>undefined;
+            this.statisticsType = data["statisticsType"];
+        }
+    }
+
+    static fromJS(data: any): ProjectFlowDataStatisticsQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectFlowDataStatisticsQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["stateDate"] = this.stateDate ? this.stateDate.toISOString() : <any>undefined;
+        data["statisticsType"] = this.statisticsType;
+        return data; 
+    }
+
+    clone(): ProjectFlowDataStatisticsQueryDto {
+        const json = this.toJSON();
+        let result = new ProjectFlowDataStatisticsQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectFlowDataStatisticsQueryDto {
+    stateDate: moment.Moment | undefined;
+    statisticsType: number | undefined;
+}
+
+export class ProjectFlowStatisticsDto implements IProjectFlowStatisticsDto {
+    currentMonthCount: number | undefined;
+    currentWeekCount: number | undefined;
+    comparedMonthRate: number | undefined;
+    comparedWeekRate: number | undefined;
+    items: ProjectFlowStatisticsDayDto[] | undefined;
+
+    constructor(data?: IProjectFlowStatisticsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.currentMonthCount = data["currentMonthCount"];
+            this.currentWeekCount = data["currentWeekCount"];
+            this.comparedMonthRate = data["comparedMonthRate"];
+            this.comparedWeekRate = data["comparedWeekRate"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(ProjectFlowStatisticsDayDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ProjectFlowStatisticsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectFlowStatisticsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["currentMonthCount"] = this.currentMonthCount;
+        data["currentWeekCount"] = this.currentWeekCount;
+        data["comparedMonthRate"] = this.comparedMonthRate;
+        data["comparedWeekRate"] = this.comparedWeekRate;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ProjectFlowStatisticsDto {
+        const json = this.toJSON();
+        let result = new ProjectFlowStatisticsDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectFlowStatisticsDto {
+    currentMonthCount: number | undefined;
+    currentWeekCount: number | undefined;
+    comparedMonthRate: number | undefined;
+    comparedWeekRate: number | undefined;
+    items: ProjectFlowStatisticsDayDto[] | undefined;
+}
+
+export class ProjectFlowStatisticsDayDto implements IProjectFlowStatisticsDayDto {
+    dayCount: number | undefined;
+    dayTime: moment.Moment | undefined;
+
+    constructor(data?: IProjectFlowStatisticsDayDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.dayCount = data["dayCount"];
+            this.dayTime = data["dayTime"] ? moment(data["dayTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): ProjectFlowStatisticsDayDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectFlowStatisticsDayDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dayCount"] = this.dayCount;
+        data["dayTime"] = this.dayTime ? this.dayTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): ProjectFlowStatisticsDayDto {
+        const json = this.toJSON();
+        let result = new ProjectFlowStatisticsDayDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectFlowStatisticsDayDto {
+    dayCount: number | undefined;
+    dayTime: moment.Moment | undefined;
+}
+
+export class SdeclareStatisticsQueryDto implements ISdeclareStatisticsQueryDto {
+    fireAuditStatus: number | undefined;
+    fireCompleteStatus: number | undefined;
+    completeStatus: number | undefined;
+
+    constructor(data?: ISdeclareStatisticsQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.fireAuditStatus = data["fireAuditStatus"];
+            this.fireCompleteStatus = data["fireCompleteStatus"];
+            this.completeStatus = data["completeStatus"];
+        }
+    }
+
+    static fromJS(data: any): SdeclareStatisticsQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SdeclareStatisticsQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["fireAuditStatus"] = this.fireAuditStatus;
+        data["fireCompleteStatus"] = this.fireCompleteStatus;
+        data["completeStatus"] = this.completeStatus;
+        return data; 
+    }
+
+    clone(): SdeclareStatisticsQueryDto {
+        const json = this.toJSON();
+        let result = new SdeclareStatisticsQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISdeclareStatisticsQueryDto {
+    fireAuditStatus: number | undefined;
+    fireCompleteStatus: number | undefined;
+    completeStatus: number | undefined;
+}
+
+export class SdeclareStatisticsDto implements ISdeclareStatisticsDto {
+    cityName: string | undefined;
+    fireAuditNumber: number | undefined;
+    fireCompleteNumber: number | undefined;
+    completeNumber: number | undefined;
+
+    constructor(data?: ISdeclareStatisticsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.cityName = data["cityName"];
+            this.fireAuditNumber = data["fireAuditNumber"];
+            this.fireCompleteNumber = data["fireCompleteNumber"];
+            this.completeNumber = data["completeNumber"];
+        }
+    }
+
+    static fromJS(data: any): SdeclareStatisticsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SdeclareStatisticsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["cityName"] = this.cityName;
+        data["fireAuditNumber"] = this.fireAuditNumber;
+        data["fireCompleteNumber"] = this.fireCompleteNumber;
+        data["completeNumber"] = this.completeNumber;
+        return data; 
+    }
+
+    clone(): SdeclareStatisticsDto {
+        const json = this.toJSON();
+        let result = new SdeclareStatisticsDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISdeclareStatisticsDto {
+    cityName: string | undefined;
+    fireAuditNumber: number | undefined;
+    fireCompleteNumber: number | undefined;
+    completeNumber: number | undefined;
 }
 
 export class ListResultDtoOfRegulationListDto implements IListResultDtoOfRegulationListDto {
@@ -8836,9 +9540,10 @@ export interface IPagedResultDtoOfTenantDto {
 }
 
 export class AuthenticateModel implements IAuthenticateModel {
-    userNameOrEmailAddress: string;
-    password: string;
+    userNameOrEmailAddress: string | undefined;
     rememberClient: boolean | undefined;
+    clientId: string | undefined;
+    password: string | undefined;
 
     constructor(data?: IAuthenticateModel) {
         if (data) {
@@ -8852,8 +9557,9 @@ export class AuthenticateModel implements IAuthenticateModel {
     init(data?: any) {
         if (data) {
             this.userNameOrEmailAddress = data["userNameOrEmailAddress"];
-            this.password = data["password"];
             this.rememberClient = data["rememberClient"];
+            this.clientId = data["clientId"];
+            this.password = data["password"];
         }
     }
 
@@ -8867,8 +9573,9 @@ export class AuthenticateModel implements IAuthenticateModel {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["userNameOrEmailAddress"] = this.userNameOrEmailAddress;
-        data["password"] = this.password;
         data["rememberClient"] = this.rememberClient;
+        data["clientId"] = this.clientId;
+        data["password"] = this.password;
         return data; 
     }
 
@@ -8881,9 +9588,10 @@ export class AuthenticateModel implements IAuthenticateModel {
 }
 
 export interface IAuthenticateModel {
-    userNameOrEmailAddress: string;
-    password: string;
+    userNameOrEmailAddress: string | undefined;
     rememberClient: boolean | undefined;
+    clientId: string | undefined;
+    password: string | undefined;
 }
 
 export class AuthenticateResultModel implements IAuthenticateResultModel {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HomeServiceProxy, PageSize } from '@shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'app-laws-and-regulations',
@@ -10,69 +11,23 @@ export class LawsAndRegulationsComponent implements OnInit {
   i: any;
   router: any;
 
-  constructor() { }
+  constructor(private _homeService: HomeServiceProxy) { }
   currentIndex = 0;
 
-  downLoadList = [
-    {
-      path: '',
-      name: '建设工程消防设计审查申请表',
-      time: '2019-06-03 12:12',
-      forms:"——全国人民代表大会常务委员会"
-    },
-    {
-      path: '',
-      name: '建设工程消防设计审查申请表',
-      time: '2019-06-03 12:12',
-      forms:"——全国人民代表大会常务委员会"
-    },
-    {
-      path: '',
-      name: '建设工程消防验收申请表',
-      time: '2019-06-03 12:12',
-      forms:"——全国人民代表大会常务委员会"
-    },
-    {
-      path: '',
-      name: '建设工程竣工验收消防设备案申请表',
-      time: '2019-06-03 12:12',
-      forms:"——全国人民代表大会常务委员会"
-    },
-    {
-      path: '',
-      name: '建设工程竣工验收消防设备案申请表',
-      time: '2019-06-03 12:12',
-      forms:"——全国人民代表大会常务委员会"
-    },
-    {
-      path: '',
-      name: '建设工程竣工验收消防设备案申请表',
-      time: '2019-06-03 12:12',
-      forms:"——全国人民代表大会常务委员会"
-    },
-    {
-      path: '',
-      name: '建设工程竣工验收消防设备案申请表',
-      time: '2019-06-03 12:12',
-      forms:"——全国人民代表大会常务委员会"
-    },
-  ];
-  lawList = [
-    {
-      path: '',
-      name: '中华人民共和国消防法',
-    },
-    {
-      path: '',
-      name: '《建设工程消防监督管理规定》',
-    },
-    {
-      path: '',
-      name: '《消防监督检查规定》',
-    },
-  ];
+  downLoadList;
 
-  ngOnInit(): void { }
+  pageSize: PageSize = new PageSize();
+  ngOnInit(): void {
+    this.init()
+  }
+  init() {
+    this.pageSize.page = 1;
+    this.pageSize.size = 10;
+    this._homeService.homeRegulationList(this.pageSize).subscribe(data => {
+      this.downLoadList = data.data;
+      console.log(this.downLoadList);
+    })
+  }
 
   close() { }
 

@@ -1,3 +1,4 @@
+import { HomeServiceProxy, PageSize } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -10,46 +11,13 @@ export class FormDownloadListComponent implements OnInit {
   i: any;
   router: any;
 
-  constructor() { }
+  constructor(private _homeService: HomeServiceProxy) { }
   currentIndex = 0;
 
-  downLoadList = [
-    {
-      path: '',
-      name: '建设工程消防设计审查申请表',
-      time: '2019-06-03 12:12',
-    },
-    {
-      path: '',
-      name: '建设工程消防设计审查申请表',
-      time: '2019-06-03 12:12',
-    },
-    {
-      path: '',
-      name: '建设工程消防验收申请表',
-      time: '2019-06-03 12:12',
-    },
-    {
-      path: '',
-      name: '建设工程竣工验收消防设备案申请表',
-      time: '2019-06-03 12:12',
-    },
-    {
-      path: '',
-      name: '建设工程竣工验收消防设备案申请表',
-      time: '2019-06-03 12:12',
-    },
-    {
-      path: '',
-      name: '建设工程竣工验收消防设备案申请表',
-      time: '2019-06-03 12:12',
-    },
-    {
-      path: '',
-      name: '建设工程竣工验收消防设备案申请表',
-      time: '2019-06-03 12:12',
-    },
-  ];
+  //列表
+  downLoadList: any
+
+  pageSize: PageSize = new PageSize();
   lawList = [
     {
       path: '',
@@ -65,10 +33,19 @@ export class FormDownloadListComponent implements OnInit {
     },
   ];
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.init();
+  }
 
   close() { }
 
+  init() {
+    this.pageSize.page = 1;
+    this.pageSize.size = 10;
+    this._homeService.homeTableDownloadList(this.pageSize).subscribe(data => {
+      this.downLoadList = data.data;
+    })
+  }
 
   /**
    * 跳转进表单列表页

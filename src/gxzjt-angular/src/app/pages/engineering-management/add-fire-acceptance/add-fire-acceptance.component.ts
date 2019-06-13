@@ -200,7 +200,7 @@ export class AddFireAcceptanceComponent implements OnInit {
    */
   depositDraft() {
     this.flowFormDto.formJson = JSON.stringify(this.data);
-    this.flowFormDto.flowPathType = 2;
+    this.flowFormDto['flowPathType'] = 2;
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')
