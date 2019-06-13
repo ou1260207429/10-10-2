@@ -15,6 +15,21 @@ import { PublicModel } from 'infrastructure/public-model';
 export class PoliciesAndRegulationsComponent implements OnInit {
   @ViewChild('treeCom') treeCom;
   @ViewChild('st') st: STComponent;
+<<<<<<< HEAD
+=======
+  flowAddType: any = {
+    type: '',
+    name: ''
+  };
+  nodes = [{
+    title: '全部',
+    key: '',
+    icon: 'folder-open',
+    isLeaf: true
+  }];
+  deleteId: any
+  chooseAuditors;
+>>>>>>> 4c524d1e428a4b52540a02e7bd95869b055d3209
   params: any = {
     page: 1,
     size: 10,
