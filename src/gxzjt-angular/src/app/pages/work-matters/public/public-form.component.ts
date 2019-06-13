@@ -72,6 +72,10 @@ export class PublicFormComponent {
 
         });
 
+        this.resetTime();
+    }
+
+    resetTime() {
         var startTime = new Date();
         startTime.setDate(startTime.getDate() - 1)
         this.rangeTime = [startTime, new Date()];

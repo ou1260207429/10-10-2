@@ -84,6 +84,7 @@ export class AlreadyDoneComponent extends PublicFormComponent implements OnInit 
 
   refresh() {
     this.resetSearchFliterForm();
+    this.resetTime();
     this.search();
   }
   search() {
@@ -107,13 +108,16 @@ export class AlreadyDoneComponent extends PublicFormComponent implements OnInit 
     searchParam.init(jsonData);
 
     this.isSearchForm = true;
-    this.workFlowedServiceProxy.processedWorkFlow_NodeAuditorRecord(searchParam).pipe().subscribe(res => {
-      console.log(res);
-      this.isSearchForm = false;
-    }, err => {
-      console.log(err);
-      this.isSearchForm = false;
-    });
+    // this.workFlowedServiceProxy.processedWorkFlow_NodeAuditorRecord(searchParam).subscribe((result: any) => {
+    //   console.log(result);
+    //   this.isSearchForm = false;
+    // }, err => {
+    //   console.log(err);
+    //   this.isSearchForm = false;
+    // });
+    this.workFlowedServiceProxy.processedWorkFlow_NodeAuditorRecord(searchParam).subscribe(data => {
+      console.log(data)
+    })
   }
 
 
