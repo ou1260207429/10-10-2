@@ -13,7 +13,7 @@ export class IndexHeaderComponent implements OnInit {
   active
   navList = [
     {
-      path: 'index',
+      path: 'app',
       name: '首页',
       activeName: "antiveIndex",
       acitve:"nowIndex"

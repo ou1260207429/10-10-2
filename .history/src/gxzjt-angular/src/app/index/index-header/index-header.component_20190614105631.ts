@@ -9,6 +9,7 @@ import { PlatformLocation } from '@angular/common';
 })
 export class IndexHeaderComponent implements OnInit {
   constructor(private location: PlatformLocation, private router: Router) {
+    this.router.navigate('app/index/indexComponent');
    }
   active
   navList = [
@@ -53,6 +54,7 @@ export class IndexHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     var pathArr = this.location.pathname.split('/');
+    
     console.log(pathArr)
   }
 

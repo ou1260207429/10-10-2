@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: '',
     component: IndexHeaderComponent,
-    //  redirectTo: 'app/index',
+     redirectTo: 'app/index',
     //  pathMatch: 'full',
     children: [
       {

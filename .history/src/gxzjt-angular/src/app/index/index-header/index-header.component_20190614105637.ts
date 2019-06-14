@@ -53,6 +53,8 @@ export class IndexHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     var pathArr = this.location.pathname.split('/');
+    this.router.navigate('app/index/indexComponent');
+    
     console.log(pathArr)
   }
 

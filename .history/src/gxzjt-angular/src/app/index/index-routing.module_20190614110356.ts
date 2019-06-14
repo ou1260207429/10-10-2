@@ -12,15 +12,15 @@ const routes: Routes = [
   {
     path: '',
     component: IndexHeaderComponent,
-    //  redirectTo: 'app/index',
-    //  pathMatch: 'full',
-    children: [
+//  redirectTo: 'app/index',
+  //  pathMatch: 'full',
+    children:[
       {
         path: '',
         component: IndexComponent,
       },
       {
-        path: 'index',
+        path: 'app',
         component: IndexComponent,
       },
       {
@@ -39,7 +39,7 @@ const routes: Routes = [
       }
     ]
   },
-
+ 
 ];
 
 @NgModule({
