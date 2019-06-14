@@ -8,8 +8,8 @@ import { HomeServiceProxy, PageSize } from '@shared/service-proxies/service-prox
 })
 export class LawsAndRegulationsComponent implements OnInit {
   constructor(private _homeService: HomeServiceProxy) { }
-  lawsList:any;
-  lawsFiles:any;
+  lawsList;
+  lawsFiles;
   pageSize: PageSize = new PageSize();
   ngOnInit(): void {
     this.init()
@@ -24,11 +24,13 @@ export class LawsAndRegulationsComponent implements OnInit {
 
     this._homeService.homeRegulationList(params1).subscribe(data => {
       this.lawsList = data.data;
+      console.log(this.lawsList);
     })
     params2.group ="Normative";
 
     this._homeService.homeRegulationList(params2).subscribe(data => {
       this.lawsFiles = data.data;
+      console.log(this.lawsFiles);
     })
   }
 }

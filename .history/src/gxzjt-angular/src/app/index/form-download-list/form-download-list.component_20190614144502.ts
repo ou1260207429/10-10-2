@@ -1,5 +1,5 @@
+import { HomeServiceProxy, PageSize } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit } from '@angular/core';
-import { PageSize, HomeServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'app-form-download-list',
@@ -13,10 +13,26 @@ export class FormDownloadListComponent implements OnInit {
   downLoadList: any
 
   pageSize: PageSize = new PageSize();
+  lawList = [
+    {
+      path: '',
+      name: '中华人民共和国消防法',
+    },
+    {
+      path: '',
+      name: '《建设工程消防监督管理规定》',
+    },
+    {
+      path: '',
+      name: '《消防监督检查规定》',
+    },
+  ];
 
   ngOnInit(): void {
     this.init();
   }
+
+  close() { }
 
   init() {
     this.pageSize.page = 1;
@@ -25,4 +41,12 @@ export class FormDownloadListComponent implements OnInit {
       this.downLoadList = data.data;
     })
   }
+
+  /**
+   * 跳转进表单列表页
+   */
+  goFromList(item) {
+    this.router.navigate(item.path);
+  }
+
 }

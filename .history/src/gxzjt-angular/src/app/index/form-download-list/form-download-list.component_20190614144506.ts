@@ -1,5 +1,5 @@
+import { HomeServiceProxy, PageSize } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit } from '@angular/core';
-import { PageSize, HomeServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'app-form-download-list',
@@ -18,6 +18,8 @@ export class FormDownloadListComponent implements OnInit {
     this.init();
   }
 
+  close() { }
+
   init() {
     this.pageSize.page = 1;
     this.pageSize.size = 10;
@@ -25,4 +27,12 @@ export class FormDownloadListComponent implements OnInit {
       this.downLoadList = data.data;
     })
   }
+
+  /**
+   * 跳转进表单列表页
+   */
+  goFromList(item) {
+    this.router.navigate(item.path);
+  }
+
 }

@@ -10,8 +10,8 @@ export class IndexComponent implements OnInit {
   pageSize: PageSize = new PageSize();
   constructor(private _homeServiceProxy: HomeServiceProxy) { }
   currentIndex = 0;
-  downLoadList: any
-  lawsList: any
+  downLoadList
+  lawsList
   
   ngOnInit(): void {
     this.pageSize.page = 1;

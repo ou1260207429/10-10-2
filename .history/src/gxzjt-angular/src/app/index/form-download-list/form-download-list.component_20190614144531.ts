@@ -1,5 +1,5 @@
+import { HomeServiceProxy, PageSize } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit } from '@angular/core';
-import { PageSize, HomeServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'app-form-download-list',
@@ -25,4 +25,5 @@ export class FormDownloadListComponent implements OnInit {
       this.downLoadList = data.data;
     })
   }
+
 }

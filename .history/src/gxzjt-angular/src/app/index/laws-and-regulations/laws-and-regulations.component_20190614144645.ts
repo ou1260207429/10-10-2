@@ -24,11 +24,13 @@ export class LawsAndRegulationsComponent implements OnInit {
 
     this._homeService.homeRegulationList(params1).subscribe(data => {
       this.lawsList = data.data;
+      console.log(this.lawsList);
     })
     params2.group ="Normative";
 
     this._homeService.homeRegulationList(params2).subscribe(data => {
       this.lawsFiles = data.data;
+      console.log(this.lawsFiles);
     })
   }
 }
