@@ -21,6 +21,25 @@ export class FireAcceptanceComponent implements OnInit {
   params: PendingWorkFlow_NodeAuditorRecordDto
   data;
   columns: STColumn[] = [
+    {
+      title: '操作', className: 'text-center', buttons: [
+        {
+          text: '<font class="stButton">详情</font>', click: (record: any) => {
+            this.router.navigate([`/app/engineering-management/addFireAcceptanceComponent/2/${record.projectId}`]);
+          }
+        },
+        {
+          text: '<font class="stButton">受理凭证</font>', click: (record: any) => {
+
+          }
+        },
+        {
+          text: '<font class="stButton">意见书</font>', click: (record: any) => {
+
+          }
+        },
+      ]
+    },
     { title: '工程编号', index: 'projectCode' },
     { title: '工程名称', index: 'projectName' },
     { title: '表单名称', index: 'name' },
@@ -29,15 +48,7 @@ export class FireAcceptanceComponent implements OnInit {
     {
       title: '申请时间', index: 'applyTime', type: 'date'
     },
-    {
-      title: '操作', className: 'text-center', buttons: [
-        {
-          text: '<font class="stButton">详情</font>', click: (record: any) => {
-            this.router.navigate([`/app/engineering-management/addFireAcceptanceComponent/2/${record.projectId}`]);
-          }
-        },
-      ]
-    }
+
   ];
   pageConfig: STPage = publicPageConfig;
   constructor(private _workFlowedService: WorkFlowedServiceProxy, private router: Router, private _flowServices: FlowServices, private eventEmiter: EventEmiter, ) {
@@ -93,7 +104,6 @@ export class FireAcceptanceComponent implements OnInit {
     this.data = '';
     this._workFlowedService.queryWorkFlow_InstanceList(this.params).subscribe(data => {
       this.data = data;
-      console.log(this.data);
     })
   }
 

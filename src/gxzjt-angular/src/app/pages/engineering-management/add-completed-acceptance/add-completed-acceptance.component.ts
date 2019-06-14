@@ -1,10 +1,11 @@
 import { PublicModel } from './../../../../infrastructure/public-model';
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { objDeleteType, timeTrans } from 'infrastructure/regular-expression';
-import { ArchitectureTypeEnum, OptionsEnum } from 'infrastructure/expression';
+import { timeTrans } from 'infrastructure/regular-expression';
 import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute } from '@angular/router';
+import { FlowServices, GXZJT_From } from 'services/flow.services';
+import { FormGroup } from '@angular/forms';
 /**
  * 工程管理->竣工验收->新增申报
  */
@@ -19,6 +20,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     recordNo: '',
     projectName: '',
     projectNumber: '',
+    engineeringCitycountyAndDistrict: '',
     engineeringAddress: '',
     useNature: '',
     constructionPermitNumber: '',
@@ -74,6 +76,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       {
         position: '',
         settingForm: '',
+        name: '',
         type: '',
         materialQuality: '',
         pressure: '',
@@ -311,11 +314,6 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
   }
 
-  //市县区
-  position = OptionsEnum
-
-  //结构类型
-  typeSelect = ArchitectureTypeEnum
 
   flowFormDto = new FlowFormDto()
 
@@ -323,11 +321,11 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   type
 
   flowFormQueryDto = new FlowFormQueryDto();
-
-  constructor(private _ActivatedRoute: ActivatedRoute, private _applyService: ApplyServiceServiceProxy, private message: NzMessageService, public publicModel: PublicModel, ) {
+  //子组件的表单对象
+  form: FormGroup
+  constructor(private _flowServices: FlowServices, private _ActivatedRoute: ActivatedRoute, private _applyService: ApplyServiceServiceProxy, private message: NzMessageService, public publicModel: PublicModel, ) {
     this.flowFormQueryDto.flowType = 3;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
-    console.log(parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId')));
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
   }
 
@@ -337,29 +335,6 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     }
   }
 
-  /**
-   * 选择市县区
-   * @param v 
-   */
-  changeCitycountyAndDistrict(v) {
-    this.data.engineeringCitycountyAndDistrict = v;
-  }
-
-  /**
-   * 添加数组
-   * @param arr 数组
-   */
-  addArray(arr) {
-    arr.push(objDeleteType(arr[0]))
-  }
-
-
-  /**
-   * 删除数组
-   */
-  deleteArray(arr, index) {
-    this.publicModel.engineeringDeleteArray(arr, index)
-  }
 
   /**
    * 获取详情
@@ -368,7 +343,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this.data = '';
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
       this.data = JSON.parse(data.formJson);
-      console.log(data)
+      console.log(this.data)
     })
   }
 
@@ -380,11 +355,35 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 3;
     this.flowFormDto.projectTypeStatu = 2;
-    console.log(this.flowFormDto)
+
+    console.log(this.data);
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')
+      history.go(-1)
     })
   }
-  save() { }
+  save() {
+    const from: GXZJT_From = {
+      frow_TemplateInfo_Data: this.data,
+      identify: 'jgys',
+      editWorkFlow_NodeAuditorRecordDto: {
+        applyEID: '10001',
+        applyEName: '测试人员',
+        deptId: 1,
+        deptFullPath: '测试部门',
+      }
+    };
+    this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe(data => {
+      this.message.success('提交成功')
+      history.go(-1)
+    })
+  }
+
+  /**
+     * 获取子组件发送的数据
+     */
+  outer(e) {
+    this.form = e;
+  }
 }
