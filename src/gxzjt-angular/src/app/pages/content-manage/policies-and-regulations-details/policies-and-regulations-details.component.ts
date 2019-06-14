@@ -39,7 +39,13 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   // ]
 
   //表单对象
-  data: any;
+  data: any = {
+    title: '',
+    issueOrg: '',
+    regulationTypeId: '',
+    issueDate: '',
+    content: '',
+  };
   RegulationType: any
   constructor(private _eventEmiter: EventEmiter, private message: NzMessageService, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute) {
     this.id = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
@@ -76,7 +82,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
    */
   getRegulationDetailsByIdAsync() {
     this._regulationServiceProxy.getRegulationDetailsByIdAsync(this.id).subscribe((data: any) => {
-     
+
       // this.data.issueDate = timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-');
       // this.RegulationType.forEach(element => {
       //   if (element.value == data.regulationType) {

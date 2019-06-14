@@ -18,7 +18,9 @@ export class HandlingGuidDetailComponent implements OnInit {
   id
 
   //表单对象
-  data: any;
+  data: any = {
+
+  };
   RegulationType: any
   constructor(private _eventEmiter: EventEmiter, private message: NzMessageService, private _noticeServiceProxy: NoticeServiceProxy, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute) {
     this.id = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
@@ -59,7 +61,7 @@ export class HandlingGuidDetailComponent implements OnInit {
       //     data.noticeType = element.key
       //   }
       // });
-    //  / this.data = data;
+      //  / this.data = data;
       this.data = {
         id: data.id,
         content: data.content,
