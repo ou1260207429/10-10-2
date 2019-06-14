@@ -55,10 +55,9 @@
         <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程地址:</td>
           <td rowspan='1' colspan='3'>
-            <nz-cascader formControlName="position" [nzPlaceHolder]="'请设置位置'" [nzSize]="'large'"
-              [nzChangeOnSelect]="true" [nzShowSearch]="true" [nzOptions]="position"
-              (nzChange)="changeCitycountyAndDistrict($event)" [(ngModel)]="data.engineeringCitycountyAndDistrict"
-              name="engineeringCitycountyAndDistrict" required>
+            <nz-cascader [nzPlaceHolder]="'请设置工程地址'" [nzSize]="'large'" [nzChangeOnSelect]="true" [nzShowSearch]="true"
+              [nzOptions]="position" (nzChange)="changeCitycountyAndDistrict($event)"
+              [(ngModel)]="data.engineeringCitycountyAndDistrict" name="engineeringCitycountyAndDistrict" required>
             </nz-cascader>
             <se error="这是必填项">
               <input nz-input placeholder="请输入详细地址" [(ngModel)]="data.engineeringAddress" name="engineeringAddress"

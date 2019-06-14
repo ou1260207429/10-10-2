@@ -25,7 +25,8 @@
       </se>
     </form>
     <st loading="!data" #st [data]="data.data" [columns]="columns" [page]="pageConfig" [total]="data.total"
-      [pi]="params.page" [ps]="params.maxResultCount" (change)="change($event)"></st>
+      [pi]="params.pagedAndFilteredInputDto.page" [ps]="params.pagedAndFilteredInputDto.maxResultCount"
+      (change)="change($event)"></st>
 
   </div>
 </div>
