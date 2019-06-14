@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Rx';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FLOW_SERVICES_URL, XIEFENG_SERVICES_URL } from 'infrastructure/expression';
+import { FLOW_SERVICES_URL } from 'infrastructure/expression';
 
 /**
  * 对接谢峰的表单接口和流程接口   
@@ -35,7 +35,7 @@ export class FlowServices {
     }
 
     GXZJT_StartWorkFlowInstanceAsync(data: GXZJT_From) {
-        return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/GXZJT_StartWorkFlowInstanceAsync', data);
+        return this.http.post(FLOW_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/GXZJT_StartWorkFlowInstanceAsync', data);
     }
 }
 

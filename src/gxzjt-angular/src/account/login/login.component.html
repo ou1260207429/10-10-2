@@ -88,7 +88,7 @@
 
           <!-- 记住我 -->
 
-          <nz-form-item>
+          <!-- <nz-form-item>
             <nz-col [nzSpan]="12">
 
               <label nz-checkbox [(ngModel)]="loginService.rememberMe" name="rememberMe" id="rememberme">
@@ -96,12 +96,12 @@
               </label>
             </nz-col>
 
-            <!-- //todo:忘记密码 等待有缘人帮我们完善吧-
+            //todo:忘记密码 等待有缘人帮我们完善吧-
            <nz-col [nzSpan]="12" class="text-right">
             <a routerLink="/account/forgot-password" class="forgot forget-password">{{l("ForgotPassword")}}</a>
-          </nz-col>  -->
+          </nz-col> 
 
-          </nz-form-item>
+          </nz-form-item> -->
 
 
 
@@ -120,6 +120,7 @@
         <div class="register_menu">
 
           <a class="item" (click)="switchUswPsw()">{{usePsw?'验证码登录':'密码登录'}}</a>
+          <a class="item" routerLink="/account/forgot-psw" style="margin-right: 20px;">忘记密码</a>
           <a class="item" routerLink="/account/register" style="margin-right: 20px;">前往注册</a>
 
         </div>
