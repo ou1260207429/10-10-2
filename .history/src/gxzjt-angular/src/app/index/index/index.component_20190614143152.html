@@ -46,7 +46,7 @@
         </nz-card>
         <nz-card nz-card style="font-size:8px;height: 219px;">
           <p class="titleLeft"><span>法律法规</span></p>
-          <div *ngIf="!lawsList" style="text-align: center;line-height: 30px;font-size: 30px">
+          <div *ngIf="!lawsList" style="text-align: center;line-height: 30px;">
             暂无数据
           </div>
           <div *ngIf="lawsList">
@@ -99,24 +99,18 @@
         </nz-card>
         <nz-card nz-card style="font-size:8px;height: 332px;">
           <p class="titleRight" style="float: right;"><span>表格下载</span></p>
-          <div *ngIf="!downLoadList" style="text-align: center;line-height: 50px;font-size: 25px;margin-top: 80px;">
-              暂无数据
+          <div nz-row style="padding:25px;margin-top: 40px;">
+            <div *ngFor="let item of downLoadList"
+              style="background-color:#f7f7f7;padding:5px 30px;margin-bottom: 10px;cursor: pointer;">
+              {{ item.attachmentName }}
+              <span style="float: right">{{ item.creationTime }}</span>
             </div>
-            <div *ngIf="downLoadList" >
-                <div nz-row style="padding:25px;margin-top: 40px;">
-                    <div *ngFor="let item of downLoadList"
-                      style="background-color:#f7f7f7;padding:5px 30px;margin-bottom: 10px;cursor: pointer;">
-                      {{ item.attachmentName }}
-                      <span style="float: right">{{ item.creationTime }}</span>
-                    </div>
-                  </div>
-                  <div style="position: absolute;bottom: 0;left: 0;">
-                    <p class="more">
-                      <span> 更多 ></span>
-                    </p>
-                  </div>
-            </div>
-         
+          </div>
+          <div style="position: absolute;bottom: 0;left: 0;">
+            <p class="more">
+              <span> 更多 ></span>
+            </p>
+          </div>
         </nz-card>
       </div>
     </div>
