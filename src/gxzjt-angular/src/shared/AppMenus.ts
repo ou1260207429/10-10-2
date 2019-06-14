@@ -16,8 +16,20 @@ export class AppMenus {
                 {
                     text: "",
                     i18n: "监控大屏",
-                    link: "/app/home/systemHomeComponent",
+                    link: "/app/big-screen/big",
+                    // externalLink: "/app/big-screen/big",
+                    target: "_blank",
+                    hideInBreadcrumb: true,
+                    "reuse": false
                 },
+                // {
+                //     "text": "主屏",
+                //     "icon": "anticon anticon-bars",
+                //     "link": "/gd-monitor-big-screen/gd-main-screen",
+                //     // "externalLink": "/#/gd-monitor-big-screen/gd-main-screen", // 本地调试
+                //     "externalLink": "/dist/index.html#/gd-monitor-big-screen/gd-main-screen", // 发布
+                //     "target": "_blank"
+                //   },
             ]
         },
         {

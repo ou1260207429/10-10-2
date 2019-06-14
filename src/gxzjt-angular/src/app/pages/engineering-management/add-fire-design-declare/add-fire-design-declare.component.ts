@@ -528,7 +528,6 @@ export class AddFireDesignDeclareComponent implements OnInit {
   constructor(private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     this.flowFormQueryDto.flowType = 1;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
-    console.log(parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId')));
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
   }
 
@@ -540,7 +539,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
    * 初始化数据
    */
   init() {
-    if (this.type != 1) {
+    if (this.type != 0) {
       this.post_GetFlowFormData();
     }
     // this.post_GetFlowFormData();
@@ -550,7 +549,9 @@ export class AddFireDesignDeclareComponent implements OnInit {
    * 获取特殊工程列表
    */
   post_GetFlowFormData() {
+    this.data = '';
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
+      this.data = JSON.parse(data.formJson);
       console.log(data)
     })
   }
@@ -577,7 +578,8 @@ export class AddFireDesignDeclareComponent implements OnInit {
     this.data.planStartTime = this.data.planStartTime == '' ? '' : timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy-MM-dd', '-')
     this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd', '-')
     this.flowFormDto.formJson = JSON.stringify(this.data);
-    this.flowFormDto.flowPathType = 1;
+    this.flowFormDto['flowPathType'] = 1;
+    this.flowFormDto.projectTypeStatu = 0;
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')
