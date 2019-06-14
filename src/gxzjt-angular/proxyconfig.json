@@ -1,10 +1,6 @@
 {
   "/app1": {
-<<<<<<< HEAD
     "target": "http://222.84.250.158:8111",
-=======
-    "target": "http://localhost:21021",
->>>>>>> 9be1c8f9b8c8b355d54eb603d4d313a1e5025cba
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,

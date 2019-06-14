@@ -2,11 +2,7 @@
   "runtime": "Default",
   "swaggerGenerator": {
     "fromSwagger": {
-<<<<<<< HEAD
       "url": "http://222.84.250.158:8111/swagger/v1/swagger.json",
-=======
-      "url": "http://localhost:21021/swagger/v1/swagger.json",
->>>>>>> 9be1c8f9b8c8b355d54eb603d4d313a1e5025cba
       "output": null
     }
   },
