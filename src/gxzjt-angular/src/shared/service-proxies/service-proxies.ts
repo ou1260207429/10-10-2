@@ -4981,62 +4981,6 @@ export class WorkFlowedServiceProxy {
         }
         return _observableOf<DataSourceResult>(<any>null);
     }
-
-    /**
-     * @param input (optional) 
-     * @return Success
-     */
-    queryWorkFlow_InstanceList(input: PendingWorkFlow_NodeAuditorRecordDto | null | undefined): Observable<DataSourceResult> {
-        let url_ = this.baseUrl + "/api/services/app/WorkFlowed/QueryWorkFlow_InstanceList";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(input);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processQueryWorkFlow_InstanceList(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processQueryWorkFlow_InstanceList(<any>response_);
-                } catch (e) {
-                    return <Observable<DataSourceResult>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<DataSourceResult>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processQueryWorkFlow_InstanceList(response: HttpResponseBase): Observable<DataSourceResult> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<DataSourceResult>(<any>null);
-    }
 }
 
 export class AcceptApplyFormDto implements IAcceptApplyFormDto {
@@ -10242,7 +10186,6 @@ export class PendingWorkFlow_NodeAuditorRecordDto implements IPendingWorkFlow_No
     companyName: string | undefined;
     applyTimeStart: moment.Moment | undefined;
     applyTimeEnd: moment.Moment | undefined;
-    projectTypeStatu: number | undefined;
 
     constructor(data?: IPendingWorkFlow_NodeAuditorRecordDto) {
         if (data) {
@@ -10261,7 +10204,6 @@ export class PendingWorkFlow_NodeAuditorRecordDto implements IPendingWorkFlow_No
             this.companyName = data["companyName"];
             this.applyTimeStart = data["applyTimeStart"] ? moment(data["applyTimeStart"].toString()) : <any>undefined;
             this.applyTimeEnd = data["applyTimeEnd"] ? moment(data["applyTimeEnd"].toString()) : <any>undefined;
-            this.projectTypeStatu = data["projectTypeStatu"];
         }
     }
 
@@ -10280,7 +10222,6 @@ export class PendingWorkFlow_NodeAuditorRecordDto implements IPendingWorkFlow_No
         data["companyName"] = this.companyName;
         data["applyTimeStart"] = this.applyTimeStart ? this.applyTimeStart.toISOString() : <any>undefined;
         data["applyTimeEnd"] = this.applyTimeEnd ? this.applyTimeEnd.toISOString() : <any>undefined;
-        data["projectTypeStatu"] = this.projectTypeStatu;
         return data; 
     }
 
@@ -10299,7 +10240,6 @@ export interface IPendingWorkFlow_NodeAuditorRecordDto {
     companyName: string | undefined;
     applyTimeStart: moment.Moment | undefined;
     applyTimeEnd: moment.Moment | undefined;
-    projectTypeStatu: number | undefined;
 }
 
 export enum IsTenantAvailableOutputState {

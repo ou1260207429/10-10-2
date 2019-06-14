@@ -1,4 +1,4 @@
-<div nz-row id="wrap">
+<div nz-row>
   <div nz-col nzSpan="2" style="letter-spacing: 2px;font-size: 15px;border-right: 1px solid #d9d9d9;">
     <button (click)="goBack()" nz-button style="margin-bottom: 40px;" nzType="default">返回</button>
     <div class="leftTitle">基本信息</div>
@@ -8,22 +8,22 @@
   <div nz-col nzSpan="12" style="padding-top: 40px;height: 100%;">
     <form nz-form #f="ngForm" se-container="1">
       <se label="标题名称" required>
-        <input style="width: 250px;" type="text" [disabled]="operate=='1'" nz-input [(ngModel)]="data.title"
+        <input style="width: 195px;" type="text" [disabled]="operate=='1'" nz-input [(ngModel)]="data.title"
           name="title" required>
       </se>
       <se label="颁布机关" required>
-        <input style="width: 250px;" type="text" [disabled]="operate=='1'" nz-input [(ngModel)]="data.issueOrg"
+        <input style="width: 195px;" type="text" [disabled]="operate=='1'" nz-input [(ngModel)]="data.issueOrg"
           name="curNodeName" required>
       </se>
       <se label="类型" required>
-        <nz-select [disabled]="operate=='1'" style="width: 250px;" [(ngModel)]="data.regulationTypeId"
+        <nz-select [disabled]="operate=='1'" style="width: 195px;" [(ngModel)]="data.regulationTypeId"
           name="regulationTypeId" nzAllowClear required>
           <nz-option *ngFor="let item of RegulationType" [nzValue]="item.key" [nzLabel]="item.value"></nz-option>
 
         </nz-select>
       </se>
       <se label="生效日期" required>
-        <nz-date-picker style="width: 250px;" nzShowTime [nzFormat]="'yyyy-MM-dd HH:mm:ss'" [(ngModel)]="data.issueDate"
+        <nz-date-picker style="width: 195px;" nzShowTime [nzFormat]="'yyyy-MM-dd HH:mm:ss'" [(ngModel)]="data.issueDate"
           [disabled]="operate=='1'" name="creationTime" required>
         </nz-date-picker>
       </se>
