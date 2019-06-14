@@ -27,10 +27,6 @@ export class LawsAndRegulationsComponent implements OnInit {
       this.lawsList = data.data;
       console.log(this.lawsList);
     })
-    // this._homeService.homeRegulationList(this.pageSize).subscribe(data => {
-    //   this.lawsList = data.data;
-    //   console.log(this.lawsList);
-    // })
   }
 
   close() { }

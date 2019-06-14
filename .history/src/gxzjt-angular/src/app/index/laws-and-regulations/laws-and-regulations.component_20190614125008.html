@@ -14,11 +14,11 @@
           </div>
         </nz-card>
       </div>
-      <div nz-col nzSpan="24">
+      <div nz-col nzSpan="12">
         <nz-spin [nzSpinning]="!lawsList">
           <nz-card nz-card style="font-size:8px;">
             <p class="titleLeft"><span>法律法规</span></p>
-            <div nz-row nzGutter="50" style="padding:10px 40px 40px 0px;box-sizing: border-box;" *ngIf="lawsList">
+            <div nz-row nzGutter="50" style="padding:10px 40px 40px 0px;box-sizing: border-box;" *ngIf="downLoadList">
               <ul>
                 <li *ngFor="let item of lawsList">
                   <div style="overflow: hidden"> <span class="title">{{item.title}}</span>

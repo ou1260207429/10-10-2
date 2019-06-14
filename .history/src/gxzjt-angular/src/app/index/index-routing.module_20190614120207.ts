@@ -16,13 +16,13 @@ const routes: Routes = [
     //  pathMatch: 'full',
     children: [
       {
-        path: '',
+        path: 'index',
         component: IndexComponent,
-      }, 
+      },
       {
         path: 'index',
         component: IndexComponent,
-      }, 
+      },
       {
         path: 'laws-and-regulations',
         component: LawsAndRegulationsComponent,

@@ -16,10 +16,6 @@ const routes: Routes = [
     //  pathMatch: 'full',
     children: [
       {
-        path: '',
-        component: IndexComponent,
-      }, 
-      {
         path: 'index',
         component: IndexComponent,
       }, 

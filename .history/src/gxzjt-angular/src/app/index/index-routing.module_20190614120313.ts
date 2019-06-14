@@ -11,14 +11,10 @@ import { AnnouncementInformationComponent } from './announcement-information/ann
 const routes: Routes = [
   {
     path: '',
-    component: IndexHeaderComponent,
+    component: IndexComponent,
     //  redirectTo: 'app/index',
     //  pathMatch: 'full',
     children: [
-      {
-        path: '',
-        component: IndexComponent,
-      }, 
       {
         path: 'index',
         component: IndexComponent,
