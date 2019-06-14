@@ -69,21 +69,19 @@ export class IndexComponent implements OnInit {
   //   }
   // ];
   // lawsList = [
-  //   {
-  //     path: '',
-  //     title: '中华人民共和国消防法',
-  //   },
-  //   {
-  //     path: '',
-  //     title: '《建设工程消防监督管理规定》',
-  //   },
-  //   {
-  //     path: '',
-  //     title: '《消防监督检查规定》',
-  //   },
-  // ];
-  
-  
+    {
+      path: '',
+      title: '中华人民共和国消防法',
+    },
+    {
+      path: '',
+      title: '《建设工程消防监督管理规定》',
+    },
+    {
+      path: '',
+      title: '《消防监督检查规定》',
+    },
+  ];
   handleList = [
 
   ]
@@ -96,6 +94,7 @@ export class IndexComponent implements OnInit {
      *  */
     this._homeServiceProxy.homeTableDownloadList(this.pageSize).subscribe(data => {
       this.downLoadList = data.data;
+      console.log(data)
     })
     /**
      * 查询法律法规
@@ -103,9 +102,10 @@ export class IndexComponent implements OnInit {
     let params = this.pageSize
     params.group = "Regulation";
 
-    this._homeServiceProxy.homeRegulationList(params).subscribe(data => {
-      this.lawsList = data.data;
-    })
+    // this._homeServiceProxy.homeRegulationList(params).subscribe(data => {
+    //   this.lawsList = data.data;
+    //   console.log(this.lawsList);
+    // })
 
 
   }

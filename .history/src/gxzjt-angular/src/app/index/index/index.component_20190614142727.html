@@ -19,24 +19,21 @@
           <p class="titleLeft"><span>办事指南</span></p>
           <div nz-row nzGutter="50" style="padding:2px 40px;">
             <div nz-col nzSpan="8">
-              <div class="cardList"><img style="height: 120px;" src="../../../assets/images/index/首页02_21.jpg" alt="">
-              </div>
+              <div class="cardList"><img style="height: 120px;" src="../../../assets/images/index/首页02_21.jpg" alt=""></div>
               <div>
                 建设工程消防设计
                 审查办事指南
               </div>
             </div>
             <div nz-col nzSpan="8">
-              <div class="cardList"><img style="height: 120px;" src="../../../assets/images/index/首页02_23.jpg" alt="">
-              </div>
+              <div class="cardList"><img style="height: 120px;" src="../../../assets/images/index/首页02_23.jpg" alt=""></div>
               <div>
                 建设工程消防验收
                 办事指南
               </div>
             </div>
             <div nz-col nzSpan="8">
-              <div class="cardList"><img style="height: 120px;" src="../../../assets/images/index/首页02_25.jpg" alt="">
-              </div>
+              <div class="cardList"><img style="height: 120px;" src="../../../assets/images/index/首页02_25.jpg" alt=""></div>
               <div>
                 建设工程竣工验收
                 消防备案指南
@@ -46,23 +43,17 @@
         </nz-card>
         <nz-card nz-card style="font-size:8px;height: 219px;">
           <p class="titleLeft"><span>法律法规</span></p>
-          <div *ngIf="!lawsList" style="text-align: center;line-height: 30px;font-size: 30px">
-            暂无数据
+          <div nz-row style="padding:20px">
+            <div *ngFor="let item of lawList"
+              style="background-color:#f7f7f7;padding:5px 30px;margin-bottom: 10px;cursor: pointer;">
+              {{ item.title }}
+            </div>
           </div>
-          <div *ngIf="lawsList">
-              <div nz-row style="padding:20px">
-                  <div *ngFor="let item of lawsList"
-                    style="background-color:#f7f7f7;padding:5px 30px;margin-bottom: 10px;cursor: pointer;">
-                    {{ item.title }}
-                  </div>
-                </div>
-                <div style="position: absolute;bottom: 0;left: 0;">
-                  <p class="more">
-                    <span> 更多 ></span>
-                  </p>
-                </div>
-          </div>
-          
+         <div style="position: absolute;bottom: 0;left: 0;">
+            <p class="more">
+                <span> 更多 ></span>
+              </p>
+         </div>
         </nz-card>
       </div>
       <div nz-col nzSpan="12">
@@ -92,31 +83,25 @@
             </div>
           </div>
           <div style="position: absolute;bottom: 0;left: 0;">
-            <p class="more">
-              <span> 更多 ></span>
-            </p>
-          </div>
+              <p class="more">
+                  <span> 更多 ></span>
+                </p>
+           </div>
         </nz-card>
         <nz-card nz-card style="font-size:8px;height: 332px;">
           <p class="titleRight" style="float: right;"><span>表格下载</span></p>
-          <div *ngIf="!downLoadList" style="text-align: center;line-height: 50px;font-size: 25px;margin-top: 80px;">
-              暂无数据
+          <div nz-row style="padding:25px;margin-top: 40px;">
+            <div *ngFor="let item of downLoadList"
+              style="background-color:#f7f7f7;padding:5px 30px;margin-bottom: 10px;cursor: pointer;">
+              {{ item.attachmentName }}
+              <span style="float: right">{{ item.creationTime }}</span>
             </div>
-            <div *ngIf="downLoadList" >
-                <div nz-row style="padding:25px;margin-top: 40px;">
-                    <div *ngFor="let item of downLoadList"
-                      style="background-color:#f7f7f7;padding:5px 30px;margin-bottom: 10px;cursor: pointer;">
-                      {{ item.attachmentName }}
-                      <span style="float: right">{{ item.creationTime }}</span>
-                    </div>
-                  </div>
-                  <div style="position: absolute;bottom: 0;left: 0;">
-                    <p class="more">
-                      <span> 更多 ></span>
-                    </p>
-                  </div>
-            </div>
-         
+          </div>
+          <div style="position: absolute;bottom: 0;left: 0;">
+              <p class="more">
+                  <span> 更多 ></span>
+                </p>
+           </div>
         </nz-card>
       </div>
     </div>
