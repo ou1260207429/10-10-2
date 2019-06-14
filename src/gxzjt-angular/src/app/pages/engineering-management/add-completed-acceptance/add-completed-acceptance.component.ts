@@ -327,7 +327,6 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   constructor(private _ActivatedRoute: ActivatedRoute, private _applyService: ApplyServiceServiceProxy, private message: NzMessageService, public publicModel: PublicModel, ) {
     this.flowFormQueryDto.flowType = 3;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
-    console.log(parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId')));
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
   }
 

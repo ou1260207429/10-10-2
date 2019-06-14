@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-system-home',
   templateUrl: './system-home.component.html',
-  styles: []
+  styleUrls: ['./system-home.component.less']
 })
 export class SystemHomeComponent implements OnInit {
 

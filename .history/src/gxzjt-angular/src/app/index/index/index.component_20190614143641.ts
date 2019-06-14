@@ -96,6 +96,7 @@ export class IndexComponent implements OnInit {
      *  */
     this._homeServiceProxy.homeTableDownloadList(this.pageSize).subscribe(data => {
       this.downLoadList = data.data;
+      console.log(data)
     })
     /**
      * 查询法律法规
@@ -105,6 +106,7 @@ export class IndexComponent implements OnInit {
 
     this._homeServiceProxy.homeRegulationList(params).subscribe(data => {
       this.lawsList = data.data;
+      console.log(this.lawsList);
     })
 
 
