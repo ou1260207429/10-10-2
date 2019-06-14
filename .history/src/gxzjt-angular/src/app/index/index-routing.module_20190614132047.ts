@@ -10,29 +10,35 @@ import { AnnouncementInformationComponent } from './announcement-information/ann
 
 const routes: Routes = [
   {
-    path: '',
-    component: IndexComponent,
-     redirectTo: 'index',
-    //  pathMatch: 'full',
-  },
-  {
     path: 'index',
     component: IndexComponent,
-  }, 
-  {
-    path: 'laws-and-regulations',
-    component: LawsAndRegulationsComponent,
+    //  redirectTo: 'app/index',
+    //  pathMatch: 'full',
+    children: [
+      {
+        path: 'index',
+        component: IndexComponent,
+      }, 
+      {
+        path: 'index',
+        component: IndexComponent,
+      }, 
+      {
+        path: 'laws-and-regulations',
+        component: LawsAndRegulationsComponent,
+      },
+      {
+        path: 'form-download',
+        component: FormDownloadListComponent,
+      }, {
+        path: 'handling-guid',
+        component: HandlingGuidListComponent,
+      }, {
+        path: 'announcement-information',
+        component: AnnouncementInformationComponent,
+      }
+    ]
   },
-  {
-    path: 'form-download',
-    component: FormDownloadListComponent,
-  }, {
-    path: 'handling-guid',
-    component: HandlingGuidListComponent,
-  }, {
-    path: 'announcement-information',
-    component: AnnouncementInformationComponent,
-  }
 
 ];
 

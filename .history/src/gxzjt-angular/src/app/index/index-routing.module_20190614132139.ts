@@ -12,8 +12,15 @@ const routes: Routes = [
   {
     path: '',
     component: IndexComponent,
-     redirectTo: 'index',
+     redirectTo: 'app/index',
     //  pathMatch: 'full',
+    children: [
+      {
+        path: 'index',
+        component: IndexComponent,
+      }, 
+     
+    ]
   },
   {
     path: 'index',
