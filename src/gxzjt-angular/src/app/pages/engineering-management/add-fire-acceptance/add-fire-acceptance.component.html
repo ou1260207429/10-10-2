@@ -230,8 +230,8 @@
           <td rowspan='1'>无</td>
         </tr>
         <tr>
-          <td style="width: 37px;background-color: #d0e8fe;color: #5a95e9;font-weight: 600;border-right: 0;" rowspan='4'
-            colspan='1'>
+          <td style="width: 37px;background-color: #d0e8fe;color: #5a95e9;font-weight: 600;border-right: 0;"
+            [attr.rowspan]="data.basicInformation.length+3" colspan='1'>
             工程基本情况
           </td>
         </tr>
@@ -251,29 +251,6 @@
           <td colspan='1' rowspan="1" class="fontweight">地下</td>
           <td colspan='1' rowspan="1" class="fontweight">地上</td>
           <td colspan='1' rowspan="1" class="fontweight">地下</td>
-        </tr>
-        <tr>
-          <!-- 请输入单位建筑名称 -->
-          <td colspan="5"><input nz-input /></td>
-          <!-- 请输入结构类型 -->
-          <td colspan="2"><input nz-input /></td>
-          <!-- 请输入耐火等级 -->
-          <td><input nz-input /></td>
-          <!-- 层数 地上、地下 -->
-          <td><input nz-input /></td>
-          <td><input nz-input /></td>
-
-          <!-- 请输入建筑高度 -->
-          <td><input nz-input /></td>
-          <!-- 请输入建筑面积 -->
-          <td><input nz-input /></td>
-          <!-- 请输入占地面积 -->
-          <td><input nz-input /></td>
-          <!-- 建筑面积（m2） -->
-          <td><input nz-input /></td>
-          <td><input nz-input /></td>
-          <td><a>新增</a>
-            <a>删除</a> </td>
         </tr>
 
         <tr *ngFor="let item of data.basicInformation;let index = index">

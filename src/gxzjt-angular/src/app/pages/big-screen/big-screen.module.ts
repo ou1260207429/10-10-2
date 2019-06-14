@@ -1,23 +1,25 @@
-import { NgModule } from '@angular/core';
-import { SharedModule } from '@shared/shared.module';
 import { BigScreenRouting } from './big-screen-routing.module';
-import { BigScreenComponent } from './big/big-screen.component';
-
-const COMPONENTS = [];
-const COMPONENTS_NOROUNT = [
-    BigScreenComponent];
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { SharedModule } from "@shared/shared.module";
+import { NgxEchartsModule } from "ngx-echarts";
 
 @NgModule({
     imports: [
+        CommonModule,
         SharedModule,
+        NgxEchartsModule,
         BigScreenRouting
     ],
-    declarations: [
-        ...COMPONENTS,
-        ...COMPONENTS_NOROUNT,
+    exports: [
+
     ],
-    entryComponents: COMPONENTS_NOROUNT
+    declarations: [
+    ],
+    entryComponents: [
+    ]
 })
+
 export class BigScreenModule {
 
 }
