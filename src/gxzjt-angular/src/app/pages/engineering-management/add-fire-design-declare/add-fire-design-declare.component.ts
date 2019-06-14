@@ -2,9 +2,10 @@ import { ApplyServiceServiceProxy, FlowFormQueryDto, FlowFormDto } from './../..
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ActivatedRoute } from '@angular/router';
-import { timeTrans, objDeleteType } from 'infrastructure/regular-expression';
-import { OptionsEnum, ArchitectureTypeEnum } from 'infrastructure/expression';
+import { timeTrans } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
+import { GXZJT_From, FlowServices } from 'services/flow.services';
+import { FormGroup } from '@angular/forms';
 
 /**
  * 工程管理->消防设计审查管理->新增申报
@@ -16,7 +17,6 @@ import { PublicModel } from 'infrastructure/public-model';
 })
 export class AddFireDesignDeclareComponent implements OnInit {
 
-  checked = false;
 
   flowFormQueryDto = new FlowFormQueryDto();
 
@@ -26,70 +26,6 @@ export class AddFireDesignDeclareComponent implements OnInit {
   type
 
 
-  //市县区
-  position = OptionsEnum
-
-  //结构类型
-  typeSelect = ArchitectureTypeEnum
-
-
-  //类别
-  radiotype = "A";
-  radiotypeA = "";
-  checkOptionsOne = {
-    isAllChecked: false,
-    data: [
-      { label: '润健股份有限公司——润健创研院大楼', value: 'Apple', checked: false },
-      { label: '润健股份有限公司——润健创研院大楼', value: 'Pear', checked: false },
-    ]
-  }
-  checkOptionsTwo = {
-    isAllChecked: false,
-    data: [
-      { label: '润健股份有限公司——润健创研院大楼', value: 'Apple', checked: false },
-      { label: '润健股份有限公司——润健创研院大楼', value: 'Pear', checked: false },
-    ]
-  };
-  checkOptionsThree = {
-    isAllChecked: false,
-    data: [
-      { label: '润健股份有限公司——润健创研院大楼', value: 'Apple', checked: false },
-      { label: '润健股份有限公司——润健创研院大楼', value: 'Pear', checked: false },
-    ]
-  };
-  checkOptionsFour = {
-    isAllChecked: false,
-    data: [
-      { label: '润健股份有限公司——润健创研院大楼', value: 'Apple', checked: false },
-      { label: '润健股份有限公司——润健创研院大楼', value: 'Pear', checked: false },
-    ]
-  };
-
-  checkList = [
-    { label: '顶棚', value: true, checked: true },
-    { label: '墙面', value: false, checked: false },
-    { label: '地面', value: false, checked: false },
-    { label: '隔断', value: false, checked: false },
-    { label: '固定家具', value: false, checked: false },
-    { label: '装饰织物', value: false, checked: false },
-    { label: '其他', value: false, checked: false },
-  ]
-
-  checkNewList = [
-    { label: '室内消火栓系统', value: false, checked: false },
-    { label: '室外消火栓系统', value: false, checked: false },
-    { label: '火灾自动报警系统', value: false, checked: false },
-    { label: '自动喷水灭火系统', value: false, checked: false },
-    { label: '气体灭火系统', value: false, checked: false },
-    { label: '泡沫灭火系统', value: false, checked: false },
-    { label: '其他灭火系统', value: false, checked: false },
-    { label: '疏散指示标志', value: false, checked: false },
-    { label: '消防应急照明', value: false, checked: false },
-    { label: '防烟排烟系统', value: false, checked: false },
-    { label: '消防电梯', value: false, checked: false },
-    { label: '灭火器', value: false, checked: false },
-    { label: '其他', value: false, checked: false },
-  ]
 
   data: any = {
     jsconstructionUnit: '',
@@ -525,7 +461,9 @@ export class AddFireDesignDeclareComponent implements OnInit {
       }]
   }
 
-  constructor(private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
+  //子组件的表单对象
+  form: FormGroup
+  constructor(private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     this.flowFormQueryDto.flowType = 1;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
@@ -552,7 +490,6 @@ export class AddFireDesignDeclareComponent implements OnInit {
     this.data = '';
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
       this.data = JSON.parse(data.formJson);
-      console.log(this.data)
     })
   }
 
@@ -560,14 +497,20 @@ export class AddFireDesignDeclareComponent implements OnInit {
    * 申请提交
    */
   save() {
-    this.data.planStartTime = timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy-MM-dd', '-')
-    this.data.planEndTime = timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd', '-')
-    console.log(this.data)
-    // const src = this.type == 0 ? this._applyService.applyFlow : this._applyService.applyFlow;
-    // src().subscribe(data => { 
-
-    // })
-    console.log(JSON.stringify(this.data))
+    const from: GXZJT_From = {
+      frow_TemplateInfo_Data: this.data,
+      identify: 'xfsj',
+      editWorkFlow_NodeAuditorRecordDto: {
+        applyEID: '10001',
+        applyEName: '测试人员',
+        deptId: 1,
+        deptFullPath: '测试部门',
+      }
+    };
+    this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe(data => {
+      this.message.success('提交成功')
+      history.go(-1)
+    })
   }
 
 
@@ -580,34 +523,18 @@ export class AddFireDesignDeclareComponent implements OnInit {
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 1;
     this.flowFormDto.projectTypeStatu = 0;
-    console.log(this.data);
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')
+      history.go(-1)
     })
   }
 
   /**
-   * 选择市县区
-   * @param v 
-   */
-  changeCitycountyAndDistrict(v) {
-    this.data.engineeringCitycountyAndDistrict = v;
-  }
-
-  /**
-   * 添加数组
-   * @param arr 数组
-   */
-  addArray(arr) {
-    arr.push(objDeleteType(arr[0]))
-  }
-
-  /**
-   * 删除数组
-   */
-  deleteArray(arr, index) {
-    this.publicModel.engineeringDeleteArray(arr, index)
+     * 获取子组件发送的数据
+     */
+  outer(e) {
+    this.form = e;
   }
 
 }
