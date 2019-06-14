@@ -27,16 +27,15 @@ export class LawsAndRegulationsComponent implements OnInit {
     let params2 = this.pageSize;
 
     params1.group ="Regulation";
+    params2.group ="Normative";
 
     this._homeService.homeRegulationList(params1).subscribe(data => {
       this.lawsList = data.data;
       console.log(this.lawsList);
     })
-    params2.group ="Normative";
-
     this._homeService.homeRegulationList(params2).subscribe(data => {
       this.lawsFiles = data.data;
-      console.log(this.lawsFiles);
+      console.log(this.lawsList);
     })
   }
 
