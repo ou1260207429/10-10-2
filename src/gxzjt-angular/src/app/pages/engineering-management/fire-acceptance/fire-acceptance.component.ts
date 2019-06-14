@@ -5,6 +5,7 @@ import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 import { Router } from '@angular/router';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { AppConsts } from '@shared/AppConsts';
+import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, PagedAndFilteredInputDto } from '@shared/service-proxies/service-proxies';
 
 
 /**
@@ -16,47 +17,30 @@ import { AppConsts } from '@shared/AppConsts';
   styles: []
 })
 export class FireAcceptanceComponent implements OnInit {
-  noResult: any;
-  @ViewChild('treeCom') treeCom;
   @ViewChild('st') st: STComponent;
-  flowAddType: any = {
-    type: '',
-    name: ''
-  };
-  nodes = [{
-    title: '全部',
-    key: '',
-    icon: 'folder-open',
-    isLeaf: true
-  }];
-
-  chooseAuditors;
-
-  params: any = {};
+  params: PendingWorkFlow_NodeAuditorRecordDto
   data;
   columns: STColumn[] = [
-    { title: '流水号', index: 'number' },
-    { title: '流程名称', index: 'name' },
-    { title: '发起人', index: 'createEName' },
-    { title: '当前节点', index: 'curNodeName' },
-    { title: '当前审核人', index: 'applyEName' },
+    { title: '工程编号', index: 'projectCode' },
+    { title: '工程名称', index: 'projectName' },
+    { title: '表单名称', index: 'name' },
+    { title: '创建人单位', index: 'companyName' },
+    { title: '创建人名', index: 'createEName' },
     {
-      title: '创建时间', index: 'creationTime', type: 'date'
+      title: '申请时间', index: 'applyTime', type: 'date'
     },
     {
       title: '操作', className: 'text-center', buttons: [
         {
-          text: '<font class="stButton">办理</font>', iif: (record) => this.isSen(record.isCustom), click: (record: any) => {
-            this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${record.workFlow_Instance_Id}`]);
+          text: '<font class="stButton">详情</font>', click: (record: any) => {
+            this.router.navigate([`/app/engineering-management/addFireAcceptanceComponent/2/${record.projectId}`]);
           }
         },
       ]
     }
   ];
-
-
   pageConfig: STPage = publicPageConfig;
-  constructor(private router: Router, private _flowServices: FlowServices, private eventEmiter: EventEmiter, ) {
+  constructor(private _workFlowedService: WorkFlowedServiceProxy, private router: Router, private _flowServices: FlowServices, private eventEmiter: EventEmiter, ) {
     this.init();
   }
 
@@ -85,10 +69,11 @@ export class FireAcceptanceComponent implements OnInit {
    * 初始化
    */
   init() {
-    this.params.page = 1;
-    this.params.maxResultCount = AppConsts.grid.defaultPageSize;
-    this.params.filterText = '';
-    this.params.result = 4;
+    this.params = new PendingWorkFlow_NodeAuditorRecordDto();
+    this.params.pagedAndFilteredInputDto = new PagedAndFilteredInputDto()
+    this.params.pagedAndFilteredInputDto.page = 1;
+    this.params.pagedAndFilteredInputDto.maxResultCount = AppConsts.grid.defaultPageSize;
+    this.params.projectTypeStatu = 0;
     this.workFlow_NodeAuditorRecords(this.params);
   }
 
@@ -106,8 +91,9 @@ export class FireAcceptanceComponent implements OnInit {
    */
   workFlow_NodeAuditorRecords(params?: any) {
     this.data = '';
-    this._flowServices.tenant_PendingWorkFlow_NodeAuditorRecord(params).subscribe(data => {
-      this.data = data.result;
+    this._workFlowedService.queryWorkFlow_InstanceList(this.params).subscribe(data => {
+      this.data = data;
+      console.log(this.data);
     })
   }
 
@@ -115,8 +101,8 @@ export class FireAcceptanceComponent implements OnInit {
    * 点击查询
    */
   query() {
-    this.params.page = 1;
-    this.params.maxResultCount = AppConsts.grid.defaultPageSize;
+    this.params.pagedAndFilteredInputDto.page = 1;
+    this.params.pagedAndFilteredInputDto.maxResultCount = AppConsts.grid.defaultPageSize;
     this.workFlow_NodeAuditorRecords(this.params);
   }
 
@@ -135,7 +121,7 @@ export class FireAcceptanceComponent implements OnInit {
   }
 
   change(v) {
-    pageOnChange(v, this.params, () => {
+    pageOnChange(v, this.params.pagedAndFilteredInputDto, () => {
       this.workFlow_NodeAuditorRecords(this.params);
     })
   }

@@ -539,7 +539,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
    * 初始化数据
    */
   init() {
-    if (this.type != 1) {
+    if (this.type != 0) {
       this.post_GetFlowFormData();
     }
     // this.post_GetFlowFormData();
@@ -549,7 +549,9 @@ export class AddFireDesignDeclareComponent implements OnInit {
    * 获取特殊工程列表
    */
   post_GetFlowFormData() {
+    this.data = '';
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
+      this.data = JSON.parse(data.formJson);
       console.log(data)
     })
   }

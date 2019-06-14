@@ -42,11 +42,10 @@ export class DraftsComponent implements OnInit {
         {
           text: '<font class="stButton">查看详情</font>', click: (record: any) => {
             let url = `addFireDesignDeclareComponent`;
-            if (record.flowPathType != 1) {
-              url = record.flowPathType == 2 ? `addFireAcceptanceComponent` : `addFireDesignDeclareComponent`
+            if (record.projectTypeStatu != 0) {
+              url = record.projectTypeStatu == 1 ? `addFireAcceptanceComponent` : `addCompletedAcceptanceComponent`
             }
             const headerUrl = `/app/engineering-management/`
-            console.log()
             this.router.navigate([headerUrl + url + `/2/${record.projectId}`]);
           }
         },
