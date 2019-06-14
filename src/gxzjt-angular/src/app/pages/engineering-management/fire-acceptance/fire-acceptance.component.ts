@@ -93,7 +93,6 @@ export class FireAcceptanceComponent implements OnInit {
     this.data = '';
     this._workFlowedService.queryWorkFlow_InstanceList(this.params).subscribe(data => {
       this.data = data;
-      console.log(this.data);
     })
   }
 
