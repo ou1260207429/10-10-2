@@ -24,8 +24,8 @@
         <button nz-button nzType="primary" (click)="init()">刷新</button>
       </se>
     </form>
-    <st loading="!data" #st [data]="data.data" [columns]="columns" [page]="pageConfig" [total]="data.total"
-      [pi]="params.page" [ps]="params.maxResultCount" (change)="change($event)"></st>
-
+    <!-- <st loading="!data" #st [data]="data.data" [columns]="columns" [page]="pageConfig" [total]="data.total"
+      [pi]="params.page" [ps]="params.maxResultCount" (change)="change($event)"></st> -->
+    <st loading="!data" #st [data]="data.data" [columns]="columns" [page]="pageConfig" [total]="data.total"></st>
   </div>
 </div>
