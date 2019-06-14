@@ -552,7 +552,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
     this.data = '';
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
       this.data = JSON.parse(data.formJson);
-      console.log(data)
+      console.log(this.data)
     })
   }
 
@@ -580,6 +580,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 1;
     this.flowFormDto.projectTypeStatu = 0;
+    console.log(this.data);
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')
