@@ -21,14 +21,6 @@ export class FireDesignComponent implements OnInit {
   params: PendingWorkFlow_NodeAuditorRecordDto
   data;
   columns: STColumn[] = [
-    { title: '工程编号', index: 'projectCode' },
-    { title: '工程名称', index: 'projectName' },
-    { title: '表单名称', index: 'name' },
-    { title: '创建人单位', index: 'companyName' },
-    { title: '创建人名', index: 'createEName' },
-    {
-      title: '申请时间', index: 'applyTime', type: 'date'
-    },
     {
       title: '操作', className: 'text-center', buttons: [
         {
@@ -36,7 +28,25 @@ export class FireDesignComponent implements OnInit {
             this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/2/${record.projectId}`]);
           }
         },
+        {
+          text: '<font class="stButton">受理凭证</font>', click: (record: any) => {
+
+          }
+        },
+        {
+          text: '<font class="stButton">意见书</font>', click: (record: any) => {
+
+          }
+        },
       ]
+    },
+    { title: '工程编号', index: 'projectCode' },
+    { title: '工程名称', index: 'projectName' },
+    { title: '表单名称', index: 'name' },
+    { title: '创建人单位', index: 'companyName' },
+    { title: '创建人名', index: 'createEName' },
+    {
+      title: '申请时间', index: 'applyTime', type: 'date'
     }
   ];
   pageConfig: STPage = publicPageConfig;
