@@ -35,12 +35,12 @@ export class HandlingGuidListComponent implements OnInit {
     // }
   ];
   rightList = [
-    // {
-    //   path: '',
-    //   name: '建设工程消防设计备案指南',
-    //   src:"../../../assets/images/index/办事指南详情_16.jpg",
-    //   tip: " 备案依据：《中华人民共和国消防法》；《建设工程消防监督管理规定》； "
-    // },
+    {
+      path: '',
+      name: '建设工程消防设计备案指南',
+      src:"../../../assets/images/index/办事指南详情_16.jpg",
+      tip: " 备案依据：《中华人民共和国消防法》；《建设工程消防监督管理规定》； "
+    },
     {
       path: '',
       name: '建设工程竣工验收消防备案指南',
