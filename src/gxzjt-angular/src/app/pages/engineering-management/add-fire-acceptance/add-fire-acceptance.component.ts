@@ -5,6 +5,8 @@ import { OptionsEnum, ArchitectureTypeEnum } from 'infrastructure/expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute } from '@angular/router';
+import { GXZJT_From, FlowServices } from 'services/flow.services';
+import { FormGroup } from '@angular/forms';
 
 /**
  * 工程管理->消防验收->新增申报
@@ -15,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
   styles: []
 })
 export class AddFireAcceptanceComponent implements OnInit {
-  dateOfReview: any;
+
   data: any = {
     jsconstructionUnit: '',
     legalRepresentative: '',
@@ -140,15 +142,14 @@ export class AddFireAcceptanceComponent implements OnInit {
   //0是新增  1是查看  2是修改
   type
 
-  //市县区
-  position = OptionsEnum
 
-  //结构类型
-  typeSelect = ArchitectureTypeEnum
 
   flowFormQueryDto = new FlowFormQueryDto();
   flowFormDto = new FlowFormDto();
-  constructor(private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
+
+  //子组件的表单对象
+  form: FormGroup
+  constructor(private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     this.flowFormQueryDto.flowType = 2;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
@@ -171,29 +172,6 @@ export class AddFireAcceptanceComponent implements OnInit {
   }
 
   /**
-   * 选择市县区
-   * @param v 
-   */
-  changeCitycountyAndDistrict(v) {
-    this.data.engineeringCitycountyAndDistrict = v;
-  }
-
-  /**
-   * 添加数组
-   * @param arr 数组
-   */
-  addArray(arr) {
-    arr.push(objDeleteType(arr[0]))
-  }
-
-  /**
-   * 删除数组
-   */
-  deleteArray(arr, index) {
-    this.publicModel.engineeringDeleteArray(arr, index)
-  }
-
-  /**
    * 存草稿
    */
   depositDraft() {
@@ -203,7 +181,30 @@ export class AddFireAcceptanceComponent implements OnInit {
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')
+      history.go(-1)
     })
   }
-  save() { }
+  save() {
+    const from: GXZJT_From = {
+      frow_TemplateInfo_Data: this.data,
+      identify: 'xfys',
+      editWorkFlow_NodeAuditorRecordDto: {
+        applyEID: '10001',
+        applyEName: '测试人员',
+        deptId: 1,
+        deptFullPath: '测试部门',
+      }
+    };
+    this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe(data => {
+      this.message.success('提交成功')
+      history.go(-1)
+    })
+  }
+
+  /**
+     * 获取子组件发送的数据
+     */
+  outer(e) {
+    this.form = e;
+  }
 }
