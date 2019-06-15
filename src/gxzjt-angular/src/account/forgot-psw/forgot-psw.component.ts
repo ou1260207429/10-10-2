@@ -17,7 +17,6 @@ import {
 
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 
-import { LoginService } from '../login/login.service';
 import { AppComponentBase } from '@shared/component-base/app-component-base';
 
 import { _HttpClient } from '@delon/theme';
@@ -29,7 +28,7 @@ import { _HttpClient } from '@delon/theme';
 export class ForgotPswComponent extends AppComponentBase implements OnInit {
 
 
-  model: RegisterInput;
+  model: any;
   captcha: {};
   count = 0;
 
@@ -37,7 +36,6 @@ export class ForgotPswComponent extends AppComponentBase implements OnInit {
     injector: Injector,
     private _accountService: AccountServiceProxy,
     private _router: Router,
-    private readonly _loginService: LoginService,
     public http: _HttpClient,
   ) {
     super(injector);
@@ -47,7 +45,21 @@ export class ForgotPswComponent extends AppComponentBase implements OnInit {
     this.titleSrvice.setTitle(this.l('CreateAnAccount'));
 
 
-    this.model = new RegisterInput();
+    this.model = {
+      MerchantId: "C8793952-540E-414C-98FF-9C65D61",
+      EId: "",//登录手机号
+      EName: "",
+      Password: "",
+      ConfirmPassword: "",
+      EnterpriseCode: "",
+      EnterpriseName: "",
+      Leader: "",
+      LeaderPhone: "",
+      Contact: "",
+      ContactPhone: "",
+      VerificationCode: "",
+
+    };
   }
 
   back(): void {
@@ -71,11 +83,11 @@ export class ForgotPswComponent extends AppComponentBase implements OnInit {
         this.saving = true;
 
         // Autheticate
-        this._loginService.authenticateModel.userNameOrEmailAddress = this.model.userName;
-        this._loginService.authenticateModel.password = this.model.password;
-        this._loginService.authenticate(() => {
-          this.saving = false;
-        });
+        // this._loginService.authenticateModel.userNameOrEmailAddress = this.model.userName;
+        // this._loginService.authenticateModel.password = this.model.password;
+        // this._loginService.authenticate(() => {
+        //   this.saving = false;
+        // });
       });
   }
 
