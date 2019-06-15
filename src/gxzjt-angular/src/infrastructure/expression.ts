@@ -156,6 +156,13 @@ export let WorkFlowedStateEnum = {
   5: { color: '', text: '已驳回' },
 }
 
+export let RefractoryEnum = [
+  { label: '一级', value: '一级' },
+  { label: '二级', value: '二级' },
+  { label: '三级', value: '三级' },
+  { label: '四级', value: '四级' },
+]
+
 export const ArchitectureTypeEnum = [
   { label: '混凝土结构。包括素混凝土结构、钢筋混凝土结构和预应力混凝土结构', value: '混凝土结构。包括素混凝土结构、钢筋混凝土结构和预应力混凝土结构' },
   { label: '砌体结构', value: '砌体结构' },
