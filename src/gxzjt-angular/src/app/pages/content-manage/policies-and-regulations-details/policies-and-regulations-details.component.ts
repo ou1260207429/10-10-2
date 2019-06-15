@@ -17,7 +17,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   operate
   //0是新增  1是查看 2是编辑
   type
-  regulationId
+  id
   // title: null
   // issueOrg: ""
   // regulationTypeId: ""
@@ -39,10 +39,16 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   // ]
 
   //表单对象
-  data: any;
+  data: any = {
+    title: '',
+    issueOrg: '',
+    regulationTypeId: '',
+    issueDate: '',
+    content: '',
+  };
   RegulationType: any
   constructor(private _eventEmiter: EventEmiter, private message: NzMessageService, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute) {
-    this.regulationId = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
+    this.id = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
     this.operate = parseInt(this._activatedRoute.snapshot.paramMap.get('operate'));
     this.initType();
 
@@ -66,9 +72,6 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
    * 获取类型
    */
   initType() {
-    let params = {
-      regulationId: this.regulationId
-    }
     this._regulationServiceProxy.getDropdownTypeByEnumType("RegulationType").subscribe((data: any) => {
       this.RegulationType = data
     })
@@ -78,23 +81,24 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
    * 获取详情
    */
   getRegulationDetailsByIdAsync() {
-    this._regulationServiceProxy.getRegulationDetailsByIdAsync(this.regulationId).subscribe((data: any) => {
-      this.data = data
-      this.data.regulationId = this.regulationId;
+    this._regulationServiceProxy.getRegulationDetailsByIdAsync(this.id).subscribe((data: any) => {
+
       // this.data.issueDate = timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-');
-      this.RegulationType.forEach(element => {
-        if (element.value == data.regulationType) {
-          data.regulationType = element.key
-        }
-      });
+      // this.RegulationType.forEach(element => {
+      //   if (element.value == data.regulationType) {
+      //     data.regulationType = element.key
+      //   }
+      // });
+      this.data = data
+      this.data.regulationId = this.id;
       this.data = {
-        regulationId: data.id,
+        id: data.id,
         content: data.content,
         guid: data.guid,
         issueDate: timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'),
         issueOrg: data.issueOrg,
         regulationCode: data.regulationCode,
-        regulationType: data.regulationType,
+        regulationTypeId: data.regulationTypeId,
         title: data.title,
       }
       // this.deleteSum(this.data, ['contentUrl', 'creationTime', 'id', 'lastUpdateUserName', 'visitCount','lastUpdateTime','lastUpdateUserCode']);
@@ -120,7 +124,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     if (this.operate == 0) {
       this.data.guid = this.createguid();
     } else {
-      this.data.regulationId = this.regulationId;
+      this.data.regulationId = this.id;
     }
     this.data.issueDate = new Date(timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'))
     console.log(this.data)

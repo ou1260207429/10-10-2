@@ -35,23 +35,23 @@ export class DraftsComponent implements OnInit {
   params: DraftQueryDto = new DraftQueryDto();
   data;
   columns: STColumn[] = [
-    { title: '表单ID', index: 'projectId' },
-    { title: '表单名称', index: 'projectName' },
     {
       title: '操作', className: 'text-center', buttons: [
         {
-          text: '<font class="stButton">查看详情</font>', click: (record: any) => {
+          text: '<font class="stButton">编辑</font>', click: (record: any) => {
             let url = `addFireDesignDeclareComponent`;
-            if (record.flowPathType != 1) {
-              url = record.flowPathType == 2 ? `addFireAcceptanceComponent` : `addFireDesignDeclareComponent`
+            if (record.projectTypeStatu != 0) {
+              url = record.projectTypeStatu == 1 ? `addFireAcceptanceComponent` : `addCompletedAcceptanceComponent`
             }
             const headerUrl = `/app/engineering-management/`
-            console.log()
             this.router.navigate([headerUrl + url + `/2/${record.projectId}`]);
           }
         },
       ]
-    }
+    },
+    { title: '表单ID', index: 'projectId' },
+    { title: '表单名称', index: 'projectName' },
+
   ];
 
 

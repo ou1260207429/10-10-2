@@ -10,6 +10,7 @@ import { HeaderUserComponent } from './default/header/components/user.component'
 import { YoYoSidebarNavComponent } from './default/sidebar/components/yoyo-sidebar-nav.component';
 import { LayoutDefaultComponent } from './default/layout-default.component';
 import { LayoutFullScreenComponent } from './fullscreen/fullscreen.component';
+import { IndexDefaultComponent } from './index-default/index-default.component';
 
 const COMPONENTS = [
   HeaderComponent,
@@ -40,6 +41,7 @@ const SIDEBARCOMPONENTS = [
     ...COMPONENTS,
     ...HEADERCOMPONENTS,
     ...SIDEBARCOMPONENTS,
+    IndexDefaultComponent,
   ],
   exports: [
     ...COMPONENTS

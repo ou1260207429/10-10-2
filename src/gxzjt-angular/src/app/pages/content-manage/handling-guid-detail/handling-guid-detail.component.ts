@@ -15,13 +15,15 @@ export class HandlingGuidDetailComponent implements OnInit {
   operate
   //0是新增  1是查看 2是编辑
   type
-  noticeId
+  id
 
   //表单对象
-  data: any;
+  data: any = {
+
+  };
   RegulationType: any
   constructor(private _eventEmiter: EventEmiter, private message: NzMessageService, private _noticeServiceProxy: NoticeServiceProxy, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute) {
-    this.noticeId = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
+    this.id = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
     this.operate = parseInt(this._activatedRoute.snapshot.paramMap.get('operate'));
     this.initType()
   }
@@ -53,18 +55,18 @@ export class HandlingGuidDetailComponent implements OnInit {
    * 获取详情
    */
   getRegulationDetailsByIdAsync() {
-    this._noticeServiceProxy.noticeDetailsByIdAsync(this.noticeId).subscribe((data: any) => {
-      this.RegulationType.forEach(element => {
-        if (element.value == data.noticeType) {
-          data.noticeType = element.key
-        }
-      });
-    //  / this.data = data;
+    this._noticeServiceProxy.noticeDetailsByIdAsync(this.id).subscribe((data: any) => {
+      // this.RegulationType.forEach(element => {
+      //   if (element.value == data.noticeType) {
+      //     data.noticeType = element.key
+      //   }
+      // });
+      //  / this.data = data;
       this.data = {
-        noticeId: data.id,
+        id: data.id,
         content: data.content,
         guid: data.guid,
-        noticeType: data.noticeType,
+        noticeTypeId: data.noticeTypeId,
         title: data.title,
       }
       console.log(this.data)
@@ -90,7 +92,7 @@ export class HandlingGuidDetailComponent implements OnInit {
       this.data.guid = this.createguid();
       this.data.noticeId = 0;
     } else {
-      this.data.noticeId = this.noticeId;
+      this.data.noticeId = this.id;
     }
     console.log(this.data)
 

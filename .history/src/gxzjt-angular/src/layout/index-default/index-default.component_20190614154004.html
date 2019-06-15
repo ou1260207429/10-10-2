@@ -1,0 +1,28 @@
+<div id="wrap">
+    <div nz-row class="top">
+        <div nz-row class="content" style="padding: 0 9px;">
+          <div nz-col nzSpan="19" style="font-size: 28px; padding: 12px 0">
+            <span style="margin-right: 10px;"><img style="width: 45px;" src="../../../assets/images/index/logo-index.png" alt=""></span>广西建设工程消防设计审查与验收管理平台
+          </div>
+          <div nz-col nzSpan="5" class="tip">
+            <span>公正</span>
+            <span>严格</span>
+            <span>文明</span>
+            <span>高效</span>
+          </div>
+        </div>
+      </div>
+      <div nz-row style="padding: 0 40px;background-color: #fff;margin-bottom: 5px;">
+        <div nz-row class="nav content" style="padding: 0 9px;"> 
+          <ul>
+            <li *ngFor="let item of navList; let index = index">
+              <a [routerLink]="item.path" [class]="item.activeName" [routerLinkActive]="['active',item.acitve]" [routerLinkActiveOptions]="{exact: true}">
+                {{ item.name }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <router-outlet></router-outlet>
+      </div>
+</div>

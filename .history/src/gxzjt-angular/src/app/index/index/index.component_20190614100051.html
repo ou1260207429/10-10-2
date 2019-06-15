@@ -1,0 +1,103 @@
+<div id="wrap">
+  <div nz-row style="padding: 10px 40px">
+    <div class="content" style="font-size: 8px;;padding: 0 9px;">
+      <span>建设大厅</span> >
+      <span style="color: red">首页</span>
+    </div>
+  </div>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+  <div nz-row nzGutter="16" style="padding: 0px 40px">
+    <div class="content">
+      <div nz-col nzSpan="12">
+        <nz-card (click)="goFromList()" nz-card
+          style="color:#fff;height: 130px;text-align: center;line-height: 130px;font-size: 28px;cursor: pointer;background: url(../../../assets/images/index/首页02_03.jpg) no-repeat center">
+          消防设计审查和验收办事入口
+        </nz-card>
+        <nz-card nz-card style="font-size:8px;">
+          <p class="titleLeft"><span>办事指南</span></p>
+          <div nz-row nzGutter="50" style="padding: 40px;">
+            <div nz-col nzSpan="8">
+              <div class="cardList" style="height: 100px"><img src="../../../assets/images/index/首页02_21.jpg" alt=""></div>
+              <div>
+                建设工程消防设计
+                审查办事指南
+              </div>
+            </div>
+            <div nz-col nzSpan="8">
+              <div class="cardList"><img src="../../../assets/images/index/首页02_23.jpg" alt=""></div>
+              <div>
+                建设工程消防验收
+                办事指南
+              </div>
+            </div>
+            <div nz-col nzSpan="8">
+              <div class="cardList"><img src="../../../assets/images/index/首页02_25.jpg" alt=""></div>
+              <div>
+                建设工程竣工验收
+                消防备案指南
+              </div>
+            </div>
+          </div>
+        </nz-card>
+        <nz-card nz-card style="font-size:8px;">
+          <p class="titleLeft"><span>法律法规</span></p>
+          <div nz-row style="padding:20px">
+            <div *ngFor="let item of lawList"
+              style="background-color:#f7f7f7;padding:5px 30px;margin-bottom: 10px;cursor: pointer;">
+              {{ item.name }}
+            </div>
+          </div>
+          <p class="more">
+            <span> 更多 ></span>
+          </p>
+        </nz-card>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-card nz-card style="font-size:8px;">
+          <p class="titleRight" style="float: right"><span>公告消息</span></p>
+          <div nz-row nzGutter="50" style="padding: 40px;">
+            <div nz-col nzSpan="8">
+              <div class="cardList"><img src="../../../assets/images/index/首页02_10.jpg" alt=""></div>
+              <div>
+                建设工程消防设计
+                审查公告
+              </div>
+            </div>
+            <div nz-col nzSpan="8">
+              <div class="cardList"><img src="../../../assets/images/index/首页02_12.jpg" alt=""></div>
+              <div>
+                建设工程消防验收
+                公告
+              </div>
+            </div>
+            <div nz-col nzSpan="8">
+              <div class="cardList"><img src="../../../assets/images/index/首页02_14.jpg" alt=""></div>
+              <div>
+                建设工程竣工验收
+                消防备案公告
+              </div>
+            </div>
+          </div>
+          <p class="more">
+            <span> 更多 ></span>
+          </p>
+        </nz-card>
+        <nz-card nz-card style="font-size:8px;">
+          <p class="titleRight" style="float: right;"><span>表格下载</span></p>
+          <div nz-row style="padding:25px;margin-top: 40px;">
+            <div *ngFor="let item of downLoadList"
+              style="background-color:#f7f7f7;padding:5px 30px;margin-bottom: 10px;cursor: pointer;">
+              {{ item.name }}
+              <span style="float: right">{{ item.time }}</span>
+            </div>
+          </div>
+          <p class="more">
+            <span> 更多 ></span>
+          </p>
+        </nz-card>
+      </div>
+    </div>
+  </div>
+</div>

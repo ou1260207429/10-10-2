@@ -97,7 +97,7 @@
           <nz-form-item>
             <nz-form-control nzHasFeedback>
               <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-barcode">
-                <input nz-input name="surname" #surname="ngModel" [(ngModel)]="model.surname" placeholder="组织机构代码"
+                <input nz-input name="surname" #surname="ngModel" [(ngModel)]="model.surname" placeholder="统一社会信用代码"
                   required>
               </nz-input-group>
               <nz-form-explain *ngIf="surname.control.dirty&&surname.control.errors">
@@ -111,7 +111,7 @@
           <nz-form-item>
             <nz-form-control nzHasFeedback>
               <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-user">
-                <input nz-input name="name" #emailAddress="ngModel" [(ngModel)]="model.name" placeholder="企业法人/负责人"
+                <input nz-input name="name" #emailAddress="ngModel" [(ngModel)]="model.name" placeholder="法定代表人/负责人"
                   required>
               </nz-input-group>
               <nz-form-explain *ngIf="name.control.dirty&&name.control.errors">
