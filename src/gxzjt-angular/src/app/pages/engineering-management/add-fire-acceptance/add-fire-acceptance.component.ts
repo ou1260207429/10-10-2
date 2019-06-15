@@ -115,25 +115,30 @@ export class AddFireAcceptanceComponent implements OnInit {
     implementation: {
       designUnit: '',
       personInChargeName: '',
+      opinion: '本工程能按照经审查合格的消防设计文件施工，施工质量满足消防设计和国家工程建设消防技术标准要求 。'
     },
     constructionSituation: {
       contractingUnit: '',
       projectManagerName: '',
       subcontractors: '',
       personInChargeName: '',
+      opinion: '按照经审查合格的消防设计文件实施，符合国家工程建设消防技术标准。'
     },
     supervision: {
       constructionControlUnit: '',
       signatureOfChiefEngineer: '',
+      opinion: '该工程安装使用的消防产品和有防火性能要求的建筑构件、建筑材料、消防施工安装、隐蔽工程均按照经审查合格的消防设计文件的要求进行施工 。 '
     },
     detection: {
       detectionUnit: '',
       personInChargeName: '',
+      opinion: '经对建筑类别、总平面布局和平面布置，防火防烟分隔，安全疏散，消防水源，水灭火系统，火灾自动报警系统，防烟排烟系统，建筑灭火器（防爆设施）等单项进行外观质量检查、现场测量核查、消防设施功能测试和消防产品现场判定，我单位认为该工程基本符合国家有关消防技术标准的要求'
     },
     acceptance: {
       completionTime: '',
       constructionUnit: '',
       personInChargeName: '',
+      opinion: '竣工验收情况我单位于XXXX年XX月XX日组织设计、施工、监理、检测等单位有关工程技术人员对该工程进行消防验收，对建筑消防设施功能进行检测，综合评定消防验收合格 。'
     },
     remarks: ''
 

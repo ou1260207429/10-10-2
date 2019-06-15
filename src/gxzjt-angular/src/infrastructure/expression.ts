@@ -5,6 +5,9 @@ import { STPage, STComponent } from "@delon/abc";
 
 export const FLOW_SERVICES_URL = 'http://222.84.250.158:8111'
 
+//谢峰的服务地址
+export const XIEFENG_SERVICES_URL = 'http://192.168.10.151:8085';
+
 ///通用变量
 export let publicPageConfig: STPage = {
   front: false,
@@ -152,6 +155,13 @@ export let WorkFlowedStateEnum = {
   4: { color: '', text: '缺少审批人' },
   5: { color: '', text: '已驳回' },
 }
+
+export let RefractoryEnum = [
+  { label: '一级', value: '一级' },
+  { label: '二级', value: '二级' },
+  { label: '三级', value: '三级' },
+  { label: '四级', value: '四级' },
+]
 
 export const ArchitectureTypeEnum = [
   { label: '混凝土结构。包括素混凝土结构、钢筋混凝土结构和预应力混凝土结构', value: '混凝土结构。包括素混凝土结构、钢筋混凝土结构和预应力混凝土结构' },
