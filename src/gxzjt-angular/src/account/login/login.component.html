@@ -45,6 +45,7 @@
 
 
 
+
           <!-- 验证码 -->
           <nz-form-item [formGroup]="form" *ngIf="!usePsw">
             <nz-form-control>
@@ -73,6 +74,17 @@
             </nz-form-control>
           </nz-form-item>
 
+          <!-- 滑块 -->
+          <div class="slider_content" id="slider_content">
+            <div class="outer">
+              <div class="filter-box"></div>
+              <span>
+                请拖动滑块至最右边
+              </span>
+              <div class="inner">&gt;&gt;</div>
+            </div>
+
+          </div>
 
           <!-- 记住我 -->
 
@@ -99,6 +111,11 @@
             <span>{{l("LogIn")}}</span>
           </button>
         </form>
+
+
+
+
+
 
         <div class="register_menu">
 
