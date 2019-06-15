@@ -6,13 +6,13 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, ValidationErrors } from '@angular/forms';
 
-import {
-  AccountServiceProxy,
-  RegisterInput,
-  RegisterOutput,
-} from '@shared/service-proxies/service-proxies';
+// import {
+//   AccountServiceProxy,
+//   RegisterInput,
+//   RegisterOutput,
+// } from '@shared/service-proxies/service-proxies';
 
 
 import { appModuleAnimation } from '@shared/animations/routerTransition';
@@ -20,7 +20,10 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { LoginService } from '../login/login.service';
 import { AppComponentBase } from '@shared/component-base/app-component-base';
 
-import { _HttpClient } from '@delon/theme';
+import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
+
+import { environment } from 'environments/environment'
+
 @Component({
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.less'],
@@ -29,16 +32,17 @@ import { _HttpClient } from '@delon/theme';
 export class RegisterComponent extends AppComponentBase implements OnInit {
 
 
-  model: RegisterInput;
+  model: any;
   captcha: {};
   count = 0;
 
   constructor(
     injector: Injector,
-    private _accountService: AccountServiceProxy,
+    // private _accountService: AccountServiceProxy,
     private _router: Router,
     private readonly _loginService: LoginService,
-    public http: _HttpClient,
+    public http: HttpClient,
+    private fb: FormBuilder,
   ) {
     super(injector);
   }
@@ -47,38 +51,79 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
     this.titleSrvice.setTitle(this.l('CreateAnAccount'));
 
 
-    this.model = new RegisterInput();
+    // this.model = {new RegisterInput()};
+
+    this.model = {
+      MerchantId: "C8793952-540E-414C-98FF-9C65D61",
+      EId: "",//登录手机号
+      EName: "",
+      Password: "",
+      ConfirmPassword: "",
+      EnterpriseCode: "",
+      EnterpriseName: "",
+      Leader: "",
+      LeaderPhone: "",
+      Contact: "",
+      ContactPhone: "",
+      VerificationCode: "",
+
+    };
+
+
   }
 
   back(): void {
     this._router.navigate(['/account/login']);
   }
+  isSetCaptcha = false;
 
   save(): void {
-    this.saving = true;
-    this._accountService
-      .register(this.model)
-      .pipe(finalize(() => {
-        this.saving = false;
-      }))
-      .subscribe((result: RegisterOutput) => {
-        if (!result.canLogin) {
-          this.notify.success(this.l('SuccessfullyRegistered'));
-          this._router.navigate(['/login']);
-          return;
-        }
+    // this.saving = true;
+    // this._accountService
+    //   .register(this.model)
+    //   .pipe(finalize(() => {
+    //     this.saving = false;
+    //   }))
+    //   .subscribe((result: RegisterOutput) => {
+    //     if (!result.canLogin) {
+    //       this.notify.success(this.l('SuccessfullyRegistered'));
+    //       this._router.navigate(['/login']);
+    //       return;
+    //     }
 
-        this.saving = true;
+    //     this.saving = true;
 
-        // Autheticate
-        this._loginService.authenticateModel.userNameOrEmailAddress = this.model.userName;
-        this._loginService.authenticateModel.password = this.model.password;
-        this._loginService.authenticate(() => {
-          this.saving = false;
-        });
-      });
+    //     // Autheticate
+    //     this._loginService.authenticateModel.userNameOrEmailAddress = this.model.userName;
+    //     this._loginService.authenticateModel.password = this.model.password;
+    //     this._loginService.authenticate(() => {
+    //       this.saving = false;
+    //     });
+    //   });
+
+
   }
 
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+  register() {
+    this.saving = true;
+    let url = environment.REGISTER_URL + "/api/User/Register";
+
+
+    this.http.post(url, this.model, this.httpOptions).subscribe(res => {
+
+      console.log(res);
+      this.saving = false;
+    }, err => {
+      console.log(err);
+      this.saving = false;
+    });
+  }
 
   interval$: any;
   getCaptcha() {
@@ -95,5 +140,8 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
       }
     }, 1000);
   }
+
+
+
 
 }
