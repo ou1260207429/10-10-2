@@ -7,6 +7,7 @@ export const environment = {
   production: false,
   useHash: true,
   hmr: true,
+  REGISTER_URL: "http://demo.rjtx.net:5001",
 };
 
 /*

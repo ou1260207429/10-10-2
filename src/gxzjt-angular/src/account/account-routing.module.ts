@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AccountComponent } from './account.component';
+import { ForgotPswComponent } from './forgot-psw/forgot-psw.component';
+
 
 @NgModule({
   imports: [
@@ -15,6 +17,7 @@ import { AccountComponent } from './account.component';
         children: [
           { path: 'login', component: LoginComponent },
           { path: 'register', component: RegisterComponent },
+          { path: 'forgot-psw', component: ForgotPswComponent },
           {
             path: 'tenant-register',
             component: TenantRegisterComponent,
