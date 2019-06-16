@@ -105,8 +105,8 @@ export class LoginService {
 
     /** 强制刷新导航栏url 跳转到首页 */
     location.href = location.href.replace('#/account/login', '/#/app/home/systemHomeComponent');
-    // location.href = location.href.replace('#/account/login', 'http://222.84.250.158:8111');
-    // location.href = 'http://222.84.250.158:8111'
+    // location.href = location.href.replace('#/account/login', 'http://localhost:21021');
+    // location.href = 'http://localhost:21021'
   }
 
   private clear(): void {

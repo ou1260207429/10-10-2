@@ -377,6 +377,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     })
   }
   save() {
+    debugger
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: this.data,
       identify: 'jgys',
@@ -387,6 +388,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         deptFullPath: '测试部门',
       }
     };
+
+
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe(data => {
       this.message.success('提交成功')
       history.go(-1)

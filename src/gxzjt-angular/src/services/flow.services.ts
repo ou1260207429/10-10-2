@@ -13,21 +13,21 @@ export class FlowServices {
      * 查询已办流程
      */
     tenant_ProcessedWorkFlow_NodeAuditorRecord(page?: any): Observable<any> {
-        return this.http.post(FLOW_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/ProcessedWorkFlow_NodeAuditorRecord', page);
+        return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/ProcessedWorkFlow_NodeAuditorRecord', page);
     }
 
     /**
      * 查询待办流程
      */
     tenant_PendingWorkFlow_NodeAuditorRecord(page?: any): Observable<any> {
-        return this.http.post(FLOW_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/PendingWorkFlow_NodeAuditorRecord', page);
+        return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/PendingWorkFlow_NodeAuditorRecord', page);
     }
 
     /**
      * 获取已办流程的详情的路径
      */
     getWorkFlow_NodeRecordAndAuditorRecords(Id: string): Observable<any> {
-        return this.http.get(FLOW_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/getWorkFlow_NodeRecordAndAuditorRecords', {
+        return this.http.get(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/getWorkFlow_NodeRecordAndAuditorRecords', {
             params: {
                 Id: Id
             }
