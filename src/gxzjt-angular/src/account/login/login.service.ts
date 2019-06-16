@@ -28,7 +28,7 @@ export class LoginService {
   authenticateModel: AuthenticateModel;
   authenticateResult: AuthenticateResultModel;
 
-  rememberMe: boolean;
+  // rememberMe: boolean;
 
   constructor(
     private _tokenAuthService: TokenAuthServiceProxy,
@@ -69,7 +69,7 @@ export class LoginService {
         authenticateResult.accessToken,
         authenticateResult.encryptedAccessToken,
         authenticateResult.expireInSeconds,
-        this.rememberMe,
+        false,
       );
     } else {
       // Unexpected result!
@@ -105,14 +105,12 @@ export class LoginService {
 
     /** 强制刷新导航栏url 跳转到首页 */
     location.href = location.href.replace('#/account/login', '/#/app/home/systemHomeComponent');
-    // location.href = location.href.replace('#/account/login', 'http://222.84.250.158:8111');
-    // location.href = 'http://222.84.250.158:8111'
   }
 
   private clear(): void {
     this.authenticateModel = new AuthenticateModel();
     this.authenticateModel.rememberClient = false;
     this.authenticateResult = null;
-    this.rememberMe = false;
+    // this.rememberMe = false;
   }
 }

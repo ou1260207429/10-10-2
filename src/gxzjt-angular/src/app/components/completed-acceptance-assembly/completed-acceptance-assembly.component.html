@@ -7,6 +7,7 @@
         </tr>
       </thead>
       <tbody>
+        <!--  由后台生成的接口。展示在提交流程页面-->
         <tr>
           <td colspan='20' rowspan='1' style="text-align: right">备案号:<input nz-input style="width: 150px"
               placeholder="请输入备案号" [(ngModel)]="data.recordNo" name="recordNo" /></td>
@@ -15,13 +16,13 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程名称:</td>
           <td rowspan='1' colspan='7'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入单位名称" [(ngModel)]="data.projectName" name="projectName" required />
+              <input nz-input placeholder="请输入工程名称" [(ngModel)]="data.projectName" name="projectName" required />
             </se>
           </td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>联系电话:</td>
           <td rowspan='1' colspan='7'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入单位名称" [(ngModel)]="data.projectNumber" name="projectNumber" required />
+              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.projectNumber" name="projectNumber" required />
             </se>
           </td>
         </tr>
@@ -33,14 +34,14 @@
               [(ngModel)]="data.engineeringCitycountyAndDistrict" name="engineeringCitycountyAndDistrict" required>
             </nz-cascader>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入单位名称" [(ngModel)]="data.engineeringAddress" name="engineeringAddress"
+              <input nz-input placeholder="请输入工程地址" [(ngModel)]="data.engineeringAddress" name="engineeringAddress"
                 required />
             </se>
           </td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>使用性质:</td>
           <td rowspan='1' colspan='7'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入单位名称" [(ngModel)]="data.useNature" name="useNature" required />
+              <input nz-input placeholder="请输入使用性质" [(ngModel)]="data.useNature" name="useNature" required />
             </se>
           </td>
         </tr>
@@ -48,11 +49,11 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>施工许可证号:</td>
           <td rowspan='1' colspan='7'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入单位名称" [(ngModel)]="data.constructionPermitNumber"
+              <input nz-input placeholder="请输入施工许可证号" [(ngModel)]="data.constructionPermitNumber"
                 name="constructionPermitNumber" required />
             </se>
           </td>
-          <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>竣工验收合格日期:</td>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>验收合格日期:</td>
           <td rowspan='1' colspan='7'>
             <nz-date-picker name="t2" [(ngModel)]="data.planEndTime" name="planEndTime"></nz-date-picker>
           </td>
@@ -61,7 +62,7 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>检测报告编号</td>
           <td rowspan='1' colspan='17'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入施工许可证编号" [(ngModel)]="data.testReportNumber" name="testReportNumber"
+              <input nz-input placeholder="请输入检测报告编号" [(ngModel)]="data.testReportNumber" name="testReportNumber"
                 required />
             </se>
           </td>
@@ -223,12 +224,12 @@
         <tr *ngFor="let item of data.basicInformation;let index = index">
           <td rowspan='1' colspan='5' class="fontweight fontLeft leftTitle">
             <se error="这是必填项">
-              <input nz-input placeholder="请输入建筑物名称" [(ngModel)]="item.name" name="jbname{{index}}" />
+              <input nz-input placeholder="请输入建筑物名称" [(ngModel)]="item.name" name="jbname{{index}}" required />
             </se>
           </td>
           <td rowspan='1' colspan='2' class="fontweight fontLeft">
-            <se error="这是必填项">
-              <nz-select [(ngModel)]="item.type" name="jbtype{{index}}">
+            <se error="这是必填项" style="width: 130px;max-width: 130px;">
+              <nz-select [(ngModel)]="item.type" name="jbtype{{index}}" required>
                 <nz-option *ngFor="let option of typeSelect" [nzLabel]="option.label" [nzValue]="option.value">
                 </nz-option>
               </nz-select>
@@ -236,22 +237,27 @@
           </td>
           <td rowspan='1' colspan='2' class="fontweight fontLeft">
             <se error="这是必填项">
-              <input nz-input placeholder="请输入耐火等级" [(ngModel)]="item.grade" name="jbgrade{{index}}" />
+              <nz-select [(ngModel)]="item.grade" name="jbgrade{{index}}" required>
+                <nz-option *ngFor="let option of refractoryEnum" [nzLabel]="option.label" [nzValue]="option.value">
+                </nz-option>
+              </nz-select>
+              <!-- <input nz-input placeholder="请输入耐火等级" [(ngModel)]="item.grade" name="jbgrade{{index}}" required /> -->
             </se>
           </td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft">
             <se error="这是必填项">
-              <input nz-input placeholder="请输入高度" [(ngModel)]="item.height" name="jbheight{{index}}" />
+              <input nz-input placeholder="请输入高度" [(ngModel)]="item.height" name="jbheight{{index}}" required />
             </se>
           </td>
           <td rowspan='1' colspan='3'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入建筑面积" [(ngModel)]="item.builtUpArea" name="jbbuiltUpArea{{index}}" />
+              <input nz-input placeholder="请输入建筑面积" [(ngModel)]="item.builtUpArea" name="jbbuiltUpArea{{index}}"
+                required />
             </se>
           </td>
           <td rowspan='1' colspan='2'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入危险性类别" [(ngModel)]="item.fireHazard" name="jbfireHazard" />
+              <input nz-input placeholder="请输入危险性类别" [(ngModel)]="item.fireHazard" name="jbfireHazard" required />
             </se>
           </td>
           <td rowspan='1' colspan='2'><a (click)="addArray(data.basicInformation)">新增</a>
@@ -404,7 +410,13 @@
           建设单位
         </td>
         <td colspan='14' style="text-align: left">
-          <p>本工程所提交的材料真实、准确、齐全，基本按照消防设计文件实施，符合国家工程建设消防技术标准，本工程消防验收合格。</p>
+
+          <se error="这是必填项">
+            <textarea nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.constructionUnit.opinion"
+              name="constructionUnitopinion" required>
+                  </textarea>
+          </se>
+
           <div class="textRight">
             <se error="这是必填项">（建设单位公章）<input style="width: 160px;margin-right: 20px" nz-input placeholder="建设单位"
                 [(ngModel)]="data.acceptanceOpinions.constructionUnit.officialSeal" name="constructionUnitofficialSeal"
@@ -420,7 +432,11 @@
           设计单位
         </td>
         <td colspan='14' style="text-align: left">
-          <p>本工程消防设计符合国家工程建设消防技术标准，基本按照消防设计文件施工，本工程消防验收合格。</p>
+          <se error="这是必填项">
+            <textarea nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.designUnit.opinion"
+              name="designUnitopinion" required>
+                  </textarea>
+          </se>
           <div class="textRight">
             <se error="这是必填项">（设计单位公章）<input style="width: 160px;margin-right: 20px" nz-input placeholder="设计单位"
                 [(ngModel)]="data.acceptanceOpinions.designUnit.officialSeal" name="designUnitofficialSeal" required />
@@ -436,7 +452,12 @@
           施工总承包单位
         </td>
         <td colspan='14' style="text-align: left">
-          <p>严格按国家法律、法规、国家工程建设消防标准和施工图设计文件进行施工，本工程消防验收合格。</p>
+          <se error="这是必填项">
+            <textarea nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.contractingUnit.opinion"
+              name="contractingUnitopinion" required>
+                </textarea>
+          </se>
+
           <div class="textRight">
             <se error="这是必填项">
               （施工总承包单位）<input style="width: 160px;margin-right: 20px" nz-input placeholder="施工总承包单位"
@@ -455,7 +476,12 @@
           专业承包单位（如有）
         </td>
         <td colspan='14' style="text-align: left">
-          <p>严格按国家法律、法规、国家工程建设消防标准和施工图设计文件进行施工，本工程消防验收合格。</p>
+          <se error="这是必填项">
+            <textarea nz-input placeholder="请输入具体情况"
+              [(ngModel)]="data.acceptanceOpinions.professionalContractors.opinion"
+              name="professionalContractorsopinion" required>
+                  </textarea>
+          </se>
           <div class="textRight">（
             <se>
               专业承包单位公章）<input style="width: 160px;margin-right: 20" nz-input placeholder="专业承包单位公章"
@@ -475,7 +501,12 @@
           工程监理单位
         </td>
         <td colspan='14' style="text-align: left">
-          <p>本工程安装使用的消防产品和有防火性能要求的建筑构件、建筑材料、消防施工安装等均按照消防设计文件的要求进行施工。</p>
+          <se error="这是必填项">
+            <textarea nz-input placeholder="请输入具体情况"
+              [(ngModel)]="data.acceptanceOpinions.engineeringSupervisionUnit.opinion"
+              name="engineeringSupervisionUnitopinion" required>
+                  </textarea>
+          </se>
           <div class="textRight">
             <se>
               （监理单位公章）<input style="width: 160px;margin-right: 20px" nz-input placeholder="监理单位公章"
@@ -495,12 +526,14 @@
           消防设施检测单位
         </td>
         <td colspan='14' style="text-align: left">
-          <p>
-            经对建筑类别、总平面布局和平面布置，防火防烟分隔，安全疏散，消防水源，水灭火系统，火灾自动报警系统，防烟排烟系统，建筑灭火器（防爆设施）等单项进行外观质量检查、现场测量核查、消防设施功能测试和消防产品现场判定，我单位认为该工程基本符合国家有关消防技术标准的要求。
-          </p>
+          <se error="这是必填项">
+            <textarea nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.fireInspectionUnit.opinion"
+              name="fireInspectionUnitopinion" required>
+                    </textarea>
+          </se>
           <div class="textRight">
             <se error="这是必填项">
-              检测单位（盖章）<input style="width: 160px;margin-right: 20px" nz-input placeholder="检测单位"
+              检测单位<input style="width: 160px;margin-right: 20px" nz-input placeholder="检测单位"
                 [(ngModel)]="data.acceptanceOpinions.fireInspectionUnit.officialSeal"
                 name="fireInspectionUnitofficialSeal" required />
             </se>
@@ -517,10 +550,13 @@
           验收备案资料目录
         </td>
         <td colspan='14' style="text-align: left">
-          <p>1、消防产品质量合格证明文件；</p>
+          <!-- <p>1、消防产品质量合格证明文件；</p>
           <p>2、有防火性能要求的建筑构件、建筑材料、室内装修装饰材料符合国家标准或者行业标准的证明文件、出厂合格证；</p>
           <p>3、消防设施、电气防火技术检测合格证明文件；</p>
-          <p>4、施工、工程监理、检测单位的合法身份证明和资质等级证明文件。</p>
+          <p>4、施工、工程监理、检测单位的合法身份证明和资质等级证明文件。</p> -->
+          <!-- <textarea wrap="physical" nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.catalog.opinion"
+            name="catalogopinion" required>
+                    </textarea> -->
         </td>
       </tr>
       <tr>

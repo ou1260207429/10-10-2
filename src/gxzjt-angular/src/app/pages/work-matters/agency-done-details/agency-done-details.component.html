@@ -8,8 +8,92 @@
 
   <div [ngClass]="{hide: selectedIndex != 0}">
     11111
+    <form nz-form #f="ngForm" se-container="1">
+      <table class="tables" style="box-sizing: border-box;">
+        <tr>
+          <td style="width: 37px;background-color: #ffedcc;color: #ff9c35;font-weight: 600;border-right: 0" rowspan='5'>
+            附件上传
+          </td>
+        </tr>
+        <tr style="text-align: left;border-top: 1px solid #e2e2e2;">
+          <td colspan="20">
+            <div>
+              <span class="fontweight">1、建设工程消防设计审核申报</span>
+              <button class="btn downLoad" nz-button>下载</button>
+              <button (click)="checkAll('checkOptionsOne')" class="btn checkAll" nz-button>全选</button>
+
+            </div>
+            <div class="blockCheck">
+              <nz-checkbox-group [(ngModel)]="test.data" name="test11"></nz-checkbox-group>
+            </div>
+          </td>
+        </tr>
+        <tr style="text-align: left;">
+          <td colspan="20">
+            <div>
+              <span class="fontweight">2、建设单位的工商营业执照等合法身份证明文件</span> <button class="btn downLoad" nz-button>下载</button>
+              <button (click)="checkAll('checkOptionsTwo')" class="btn checkAll" nz-button>全选</button></div>
+            <div class="blockCheck">
+              <nz-checkbox-group [(ngModel)]="test.data" name="test22"></nz-checkbox-group>
+            </div>
+          </td>
+        </tr>
+        <tr style="text-align: left;">
+          <td colspan="20">
+            <div>
+              <span class="fontweight">3、设计单位资质证明文件</span> <button class="btn downLoad" nz-button>下载</button>
+              <button (click)="checkAll('checkOptionsThree')" class="btn checkAll" nz-button>全选</button>
+            </div>
+            <div class="blockCheck">
+              <nz-checkbox-group [(ngModel)]="test.data" name="test33"></nz-checkbox-group>
+            </div>
+          </td>
+        </tr>
+        <tr style="text-align: left;">
+          <td colspan="20">
+            <div><span class="fontweight">4、消防设计文件</span> <button class="btn downLoad" nz-button>下载</button>
+              <button (click)="checkAll('checkOptionsFour')" class="btn checkAll" nz-button>全选</button></div>
+            <div class="blockCheck">
+              <nz-checkbox-group [(ngModel)]="test.data" name="test44"></nz-checkbox-group>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 37px;background-color: #ffedcc;color: #ff9c35;font-weight: 600;border-right: 0" rowspan='4'>
+            流程审批
+          </td>
+        </tr>
+        <tr style="text-align: left;border-top: 1px solid #e2e2e2;">
+          <td colspan="20">
+            <se error="这是必填项" label="是否通过" required>
+              <nz-select [(ngModel)]="test.type" name="jbtype{{index}}" required>
+                <nz-option *ngFor="let option of adoptEnum" [nzLabel]="option.label" [nzValue]="option.value">
+                </nz-option>
+              </nz-select>
+            </se>
+          </td>
+        </tr>
+        <tr style="text-align: left;">
+          <td colspan="20">
+            <se error="这是必填项" label="审批意见" required>
+              <textarea nz-input placeholder="请输入审批意见" [(ngModel)]="test.opinion" name="constructionUnitopinion"
+                required>
+                </textarea>
+            </se>
+          </td>
+        </tr>
+        <tr style="text-align: left;">
+          <td colspan="20">
+            <se label="附件上传">
+
+            </se>
+          </td>
+        </tr>
+      </table>
+    </form>
   </div>
   <div [ngClass]="{hide: selectedIndex != 1}">
-    <app-flow-route *ngIf="data" [data]="data"></app-flow-route>
+    <!-- <app-flow-route *ngIf="data" [data]="data"></app-flow-route> -->
   </div>
 </nz-spin>

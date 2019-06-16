@@ -12,6 +12,7 @@ import { PublicFormComponent } from '../public/public-form.component';
 import { Router } from '@angular/router';
 
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
+import { FlowServices } from 'services/flow.services';
 /**
  * 待办流程
  */
@@ -35,42 +36,19 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
       title: '操作',
       buttons: [
         {
-          text: '查看', click: (item: any) => {
+          text: '执行', click: (item: any) => {
             this.watchItem(item);
           }
         },
       ]
     },
-    { title: '部门', index: 'pro_type' },
-    { title: '流程流水号', index: 'pro_no' },
-
-    { title: '工程名称', index: 'pro_name' },
-
-    { title: '建设单位', index: 'org' },
-    {
-      title: '工程类型', index: 'node',
-      sort: {
-        compare: (a, b) => a.node > b.node ? 1 : 0,
-      },
-      filter: {
-        menus: [
-          { text: '初审', value: 0 },
-          { text: '复审', value: 1 },
-          { text: '审核完毕', value: 2 },
-        ],
-        fn: (filter: any, record: any) =>
-          record.node >= filter.value[0] && record.node <= filter.value[1],
-        multiple: false,
-      }
-    },
-    { title: '当前处理人', index: 'person' },
-
-    { title: '申报时间', type: 'date', index: 'repo_time' },
-    { title: '流程超时', index: 'timeout' }
-
+    { title: '表单', index: 'fromName' },
+    { title: '创建人员', index: 'createEName' },
+    { title: '申报时间', index: 'completionTime' },
   ];
 
   constructor(private workFlowedServiceProxy: WorkFlowedServiceProxy,
+    private _flowServices: FlowServices,
     private router: Router,
     private http: _HttpClient,
     private xlsx: XlsxService) {
@@ -110,20 +88,16 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     searchParam.init(jsonData);
 
     this.isSearchForm = true;
-    this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(searchParam).subscribe((res: DataSourceResult) => {
-      console.log(JSON.stringify(res));
-      this.formResultData = res.data;
+    this._flowServices.tenant_PendingWorkFlow_NodeAuditorRecord(searchParam).subscribe(data => {
+      this.formResultData = data.result.data;
       this.isSearchForm = false;
-    }, err => {
-      console.log(err);
-      this.isSearchForm = false;
-    });
+    })
 
   }
 
 
   watchItem(item) {
-    this.router.navigate([`/app/work-matters/alreadyDoneDetailsComponent/${item.workFlow_Instance_Id}`]);
+    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.workFlow_TemplateInfo_Id}/${item.workFlow_Instance_Id}/${item.workFlow_NodeRecord_Id}`]);
   }
 
   exportXlsx() {

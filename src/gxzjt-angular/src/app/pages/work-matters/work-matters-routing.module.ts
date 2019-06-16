@@ -27,7 +27,7 @@ const routes: Routes = [
     data: { title: '待办流程' },
   },
   {
-    path: 'agencyDoneDetailsComponent/:workFlow_Instance_Id',
+    path: 'agencyDoneDetailsComponent/:workFlow_TemplateInfoId/:workFlow_InstanceId/:workFlow_NodeAuditorRecordId',
     component: AgencyDoneDetailsComponent,
     data: { title: '待办流程详情' },
   },

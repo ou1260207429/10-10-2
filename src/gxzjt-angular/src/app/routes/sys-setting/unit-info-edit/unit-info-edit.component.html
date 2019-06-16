@@ -1,0 +1,10 @@
+<page-header>
+  <ng-template #action>
+    <button (click)="add()" nz-button nzType="primary">新建</button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <st #st [data]="url" [columns]="columns"></st>
+</nz-card>
+
+<!-- 单位信息编辑 -->

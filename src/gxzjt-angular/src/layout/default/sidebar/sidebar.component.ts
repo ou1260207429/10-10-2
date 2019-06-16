@@ -29,4 +29,8 @@ export class SidebarComponent extends AppComponentBase implements OnInit {
   logout() {
     this.authService.logout();
   }
+  toggleCollapsedSidebar() {
+    this.settings.setLayout('collapsed', !this.settings.layout.collapsed);
+  }
+
 }
