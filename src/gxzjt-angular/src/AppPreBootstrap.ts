@@ -88,7 +88,7 @@ export class AppPreBootstrap {
 
 
             // 注册语言,NG-Zorro的DataPicker要使用
-            registerLocaleData('CNY');
+            registerLocaleData(zh);
 
 
             // 权限
