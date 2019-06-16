@@ -14,11 +14,11 @@ import { Router } from '@angular/router';
  * 权限管理
  */
 @Component({
-  selector: 'org-manager',
+  selector: 'role-manager',
   templateUrl: '../public/public-form.html',
   styles: [],
 })
-export class OrgManagerComponent extends PublicFormComponent implements OnInit {
+export class RoleManagerComponent extends PublicFormComponent implements OnInit {
 
 
 
@@ -36,10 +36,21 @@ export class OrgManagerComponent extends PublicFormComponent implements OnInit {
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     {
+      title: '',
+      index: 'id',
+      type: 'checkbox',
+
+    },
+    {
       title: '操作',
       buttons: [
         {
           text: '编辑', click: (item: any) => {
+            this.watchItem(item);
+          }
+        },
+        {
+          text: '删除', click: (item: any) => {
             this.watchItem(item);
           }
         },
@@ -62,8 +73,8 @@ export class OrgManagerComponent extends PublicFormComponent implements OnInit {
     private xlsx: XlsxService) {
     super();
     this.needAdd = true;
-    this.needSingleForm = false;
-    this.needTreeForm = true;
+    this.needSingleForm = true;
+    this.needTreeForm = false;
   }
 
   ngOnInit() {

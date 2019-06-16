@@ -27,8 +27,8 @@
   <div *ngIf="needTreeForm" nz-row nzGutter="12" style="width: 100%">
 
     <nz-col nzSpan="6">
-      <nz-card nzTitle="Card title">
-        <nz-tree [nzData]="nodes" nzShowLine> </nz-tree>
+      <nz-card [nzTitle]="treeCardTitle">
+        <nz-tree [nzData]="treeData" nzShowLine> </nz-tree>
       </nz-card>
     </nz-col>
     <nz-col nzSpan="18">

@@ -19,7 +19,7 @@ export class AppPreBootstrap {
     static run(injector: Injector, callback: () => void): void {
         let httpClient = injector.get(HttpClient);
 
-        console.log("由52ABP模板构建,详情请访问 https://www.52abp.com");
+        // console.log("由52ABP模板构建,详情请访问 https://www.52abp.com");
 
         AppPreBootstrap.getApplicationConfig(httpClient, () => {
             AppPreBootstrap.getUserConfiguration(injector, httpClient, callback);
@@ -68,7 +68,7 @@ export class AppPreBootstrap {
 
     private static getUserConfiguration(injector: Injector, httpClient: HttpClient, callback: () => void) {
 
-        let url = AppConsts.remoteServiceBaseUrl + '/AbpUserConfiguration/GetAll';
+        let url = '/assets/serverconfig.json';
         httpClient.get(url).subscribe((response: any) => {
             let result = response.result;
 
@@ -104,5 +104,42 @@ export class AppPreBootstrap {
 
             callback();
         });
+
+        // let url = AppConsts.remoteServiceBaseUrl + '/AbpUserConfiguration/GetAll';
+        // httpClient.get(url).subscribe((response: any) => {
+        //     let result = response.result;
+
+        //     // 填充数据
+        //     _.merge(abp, result);
+
+
+        //     // 时区
+        //     abp.clock.provider = this.getCurrentClockProvider(result.clock.provider);
+        //     moment.locale(abp.localization.currentLanguage.name);
+
+        //     (window as any).moment.locale(abp.localization.currentLanguage.name);
+        //     if (abp.clock.provider.supportsMultipleTimezone) {
+        //         moment.tz.setDefault(abp.timing.timeZoneInfo.iana.timeZoneId);
+        //         (window as any).moment.tz.setDefault(abp.timing.timeZoneInfo.iana.timeZoneId);
+        //     }
+
+
+        //     // 注册语言,NG-Zorro的DataPicker要使用
+        //     registerLocaleData(zh);
+
+
+        //     // 权限
+        //     const permissionService = injector.get(PermissionService);
+        //     permissionService.extend(abp.auth);
+        //     // 本地化
+        //     const localization = injector.get<LocalizationService>(ALAIN_I18N_TOKEN);
+        //     localization.extend(abp.localization);
+        //     // 写入菜单
+        //     const menuService = injector.get(MenuService);
+        //     menuService.add(AppMenus.Menus);
+
+
+        //     callback();
+        // });
     }
 }

@@ -14,11 +14,11 @@ import { Router } from '@angular/router';
  * 权限管理
  */
 @Component({
-  selector: 'org-manager',
+  selector: 'user-manager',
   templateUrl: '../public/public-form.html',
   styles: [],
 })
-export class OrgManagerComponent extends PublicFormComponent implements OnInit {
+export class UserManagerComponent extends PublicFormComponent implements OnInit {
 
 
 
