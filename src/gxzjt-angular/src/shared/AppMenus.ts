@@ -143,17 +143,10 @@ export class AppMenus {
         },
         {
           text: "单位信息管理",
-          icon: { type: "icon", value: "account-book" },// 图标
-          children: [
-            {
-              text: "抽查比例中心",
-              link: "/app/sys-setting/spot-check-proportion",
-            }
-          ]
+          link: "/app/sys-setting/unit-info-manage",
         },
         {
           text: "日志管理",
-
           link: "/app/sys-setting/log-manage",
         },
 
