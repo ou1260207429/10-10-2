@@ -138,10 +138,19 @@ export class AppMenus {
             children: [
                 {
                     text: "抽查比例中心",
-
                     link: "/app/sys-setting/spot-check-proportion",
                 }
 
+            ]
+        },
+        {
+            text: "权限管理",
+            icon: { type: "icon", value: "team" },// 图标
+            children: [
+                {
+                    text: "组织架构管理",
+                    link: "/app/permission/org-manager",
+                }
             ]
         },
     ];
