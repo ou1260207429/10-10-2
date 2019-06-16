@@ -22,7 +22,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AbpModule } from '@abp/abp.module';
 import { TenantRegisterComponent } from './tenant-register/tenant-register.component';
-
+import { ForgotPswComponent } from './forgot-psw/forgot-psw.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -35,6 +35,7 @@ import { TenantRegisterComponent } from './tenant-register/tenant-register.compo
     SharedModule,
     ServiceProxyModule,
     AccountRoutingModule,
+
   ],
   declarations: [
     AccountComponent,
@@ -43,7 +44,7 @@ import { TenantRegisterComponent } from './tenant-register/tenant-register.compo
     LoginComponent,
     RegisterComponent,
     AccountLanguagesComponent,
-
+    ForgotPswComponent,
     TenantRegisterComponent,
   ],
   entryComponents: [TenantChangeModalComponent],

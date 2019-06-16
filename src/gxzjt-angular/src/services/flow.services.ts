@@ -34,9 +34,22 @@ export class FlowServices {
         });
     }
 
-    GXZJT_StartWorkFlowInstanceAsync(data: GXZJT_From) {
-        return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/GXZJT_StartWorkFlowInstanceAsync', data);
+    /**
+     * 获取待办的详情
+     */
+    tenant_GetWorkFlowInstanceFrowTemplateInfoById(data: WorkFlow) {
+        return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/Tenant_GetWorkFlowInstanceFrowTemplateInfoById', data);
     }
+
+    GXZJT_StartWorkFlowInstanceAsync(data: GXZJT_From) {
+        return this.http.post(FLOW_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/GXZJT_StartWorkFlowInstanceAsync', data);
+    }
+}
+
+export interface WorkFlow {
+    workFlow_TemplateInfoId: string,
+    workFlow_InstanceId: string,
+    workFlow_NodeAuditorRecordId: string,
 }
 
 

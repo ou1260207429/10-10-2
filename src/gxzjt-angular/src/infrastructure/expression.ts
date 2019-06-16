@@ -170,6 +170,11 @@ export const ArchitectureTypeEnum = [
   { label: '木结构', value: '木结构' }
 ]
 
+export const AdoptEnum = [
+  { label: '通过', value: '通过' },
+  { label: '不通过', value: '不通过' }
+]
+
 /**
  * 市县区的json 
  */

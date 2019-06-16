@@ -21,6 +21,7 @@ import { NzModalService } from 'ng-zorro-antd';
 import * as $ from 'jquery';
 
 
+import { isPhone } from '@shared/utils/regex';
 
 import {
   SessionServiceProxy
@@ -34,7 +35,7 @@ import { UrlHelper } from '@shared/helpers/UrlHelper';
 })
 export class LoginComponent extends AppComponentBase implements OnInit {
   submitting = false;
-  form: FormGroup;
+  // validateForm: FormGroup;
   count = 0;
   usePsw = true;
 
@@ -50,18 +51,18 @@ export class LoginComponent extends AppComponentBase implements OnInit {
   switchUswPsw() {
     this.usePsw = !this.usePsw;
   }
-  get userName() {
-    return this.form.controls.userName;
-  }
-  get password() {
-    return this.form.controls.password;
-  }
-  get mobile() {
-    return this.form.controls.mobile;
-  }
-  get captcha() {
-    return this.form.controls.captcha;
-  }
+  // get userName() {
+  //   return this.form.controls.userName;
+  // }
+  // get password() {
+  //   return this.form.controls.password;
+  // }
+  // get mobile() {
+  //   return this.form.controls.mobile;
+  // }
+  // get captcha() {
+  //   return this.form.controls.captcha;
+  // }
   constructor(
     injector: Injector,
     private fb: FormBuilder,
@@ -74,14 +75,14 @@ export class LoginComponent extends AppComponentBase implements OnInit {
   ) {
     super(injector);
 
-    this.form = fb.group({
-      userName: [null, [Validators.required, Validators.minLength(4)]],
-      password: [null, Validators.required],
-      mobile: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
-      captcha: [null, [Validators.required]],
-      remember: [true],
+    // this.validateForm = fb.group({
 
-    });
+    //   password: [null, Validators.required, Validators.maxLength(32), Validators.minLength(6)],
+    //   mobile: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
+    //   captcha: [null, [Validators.required]],
+
+    // });
+
   }
 
 
@@ -195,11 +196,11 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
   interval$: any;
   getCaptcha() {
-    if (this.mobile.invalid) {
-      this.mobile.markAsDirty({ onlySelf: true });
-      this.mobile.updateValueAndValidity({ onlySelf: true });
-      return;
-    }
+    // if (this.mobile.invalid) {
+    //   this.mobile.markAsDirty({ onlySelf: true });
+    //   this.mobile.updateValueAndValidity({ onlySelf: true });
+    //   return;
+    // }
     this.count = 59;
     this.interval$ = setInterval(() => {
       this.count -= 1;
@@ -209,5 +210,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     }, 1000);
   }
 
-
+  checkPhone() {
+    return isPhone(this.loginService.authenticateModel.userNameOrEmailAddress);
+  }
 }

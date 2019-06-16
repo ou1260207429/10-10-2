@@ -1,3 +1,7 @@
 {
+<<<<<<< HEAD
   "remoteServiceBaseUrl": "http://localhost:21021"
+=======
+  "remoteServiceBaseUrl": "http://222.84.250.158:8111"
+>>>>>>> 2c9a6964844c3031fa73c4f9e29e7ddd495df4a5
 }

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 //import * as BpmnModeler from "bpmn-js/dist/bpmn-modeler.production.min.js";
 import { _HttpClient } from '@delon/theme';
-import { FlowServices } from 'services/flow.services';
+import { FlowServices, WorkFlow } from 'services/flow.services';
+import { AdoptEnum } from 'infrastructure/expression';
 
 /**
  * 待办详情->办理页面
@@ -16,7 +17,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   tabs = [
     {
-      name: '自定义表单卡',
+      name: '表单卡',
     },
     {
       name: '查看路径',
@@ -30,9 +31,58 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   workFlow_Instance_Id
 
+  workFlow: WorkFlow = {
+    workFlow_TemplateInfoId: '',
+    workFlow_InstanceId: '',
+    workFlow_NodeAuditorRecordId: '',
+  }
+
   type: boolean = true;
+
+  //通过和不通过
+  adoptEnum = AdoptEnum
+
+  test = {
+
+  }
+
+  //测试
+  checkOptionsOne = {
+    isAllChecked: false,
+    data: [
+      { label: '润健股份有限公司——润健创研院大楼', value: 'Apple', checked: false },
+      { label: '润健股份有限公司——润健创研院大楼', value: 'Pear', checked: false },
+    ]
+  }
+  checkOptionsTwo = {
+    isAllChecked: false,
+    data: [
+      { label: '润健股份有限公司——润健创研院大楼', value: 'Apple', checked: false },
+      { label: '润健股份有限公司——润健创研院大楼', value: 'Pear', checked: false },
+    ]
+  };
+  checkOptionsThree = {
+    isAllChecked: false,
+    data: [
+      { label: '润健股份有限公司——润健创研院大楼', value: 'Apple', checked: false },
+      { label: '润健股份有限公司——润健创研院大楼', value: 'Pear', checked: false },
+    ]
+  };
+  checkOptionsFour = {
+    isAllChecked: false,
+    data: [
+      { label: '润健股份有限公司——润健创研院大楼', value: 'Apple', checked: false },
+      { label: '润健股份有限公司——润健创研院大楼', value: 'Pear', checked: false },
+    ]
+  };
+
   constructor(private _flowServices: FlowServices, private _activatedRoute: ActivatedRoute, private _ActivatedRoute: ActivatedRoute, ) {
-    this.workFlow_Instance_Id = parseInt(this._activatedRoute.snapshot.paramMap.get('workFlow_Instance_Id'));
+    // console.log(this._activatedRoute.snapshot.paramMap.get('workFlow_TemplateInfoId'))
+    // console.log(this._activatedRoute.snapshot.paramMap.get('workFlow_InstanceId'))
+    // console.log(this._activatedRoute.snapshot.paramMap.get('workFlow_NodeAuditorRecordId'))
+    this.workFlow.workFlow_TemplateInfoId = this._activatedRoute.snapshot.paramMap.get('workFlow_TemplateInfoId')
+    this.workFlow.workFlow_InstanceId = this._activatedRoute.snapshot.paramMap.get('workFlow_InstanceId')
+    this.workFlow.workFlow_NodeAuditorRecordId = this._activatedRoute.snapshot.paramMap.get('workFlow_NodeAuditorRecordId')
   }
 
   ngOnInit() {
@@ -40,17 +90,27 @@ export class AgencyDoneDetailsComponent implements OnInit {
   }
 
   init() {
-    Promise.all([this.getWorkFlow_NodeRecordAndAuditorRecords()]).then((data: any) => {
+    Promise.all([this.gXZJT_StartWorkFlowInstanceAsync()]).then((data: any) => {
       this.data = data[0].result
       this.type = false
     })
+
+    this.type = false
   }
 
   /**
    * 获取路径
    */
-  getWorkFlow_NodeRecordAndAuditorRecords() {
-    return this._flowServices.getWorkFlow_NodeRecordAndAuditorRecords(this.workFlow_Instance_Id).toPromise()
+  // getWorkFlow_NodeRecordAndAuditorRecords() {
+  //   return this._flowServices.getWorkFlow_NodeRecordAndAuditorRecords(this.workFlow_Instance_Id).toPromise()
+  // }
+
+  /**
+   * 获取详情
+   */
+
+  gXZJT_StartWorkFlowInstanceAsync() {
+    return this._flowServices.tenant_GetWorkFlowInstanceFrowTemplateInfoById(this.workFlow).toPromise()
   }
 
 }
