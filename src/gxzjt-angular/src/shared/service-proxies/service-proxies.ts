@@ -1213,6 +1213,235 @@ export class HomeServiceProxy {
         }
         return _observableOf<PageModel>(<any>null);
     }
+
+    /**
+     * @param condition (optional) 
+     * @return Success
+     */
+    loadFireFightingInfoByCondition(condition: Condition | null | undefined): Observable<PageModel> {
+        let url_ = this.baseUrl + "/api/services/app/Home/LoadFireFightingInfoByCondition";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(condition);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processLoadFireFightingInfoByCondition(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processLoadFireFightingInfoByCondition(<any>response_);
+                } catch (e) {
+                    return <Observable<PageModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PageModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processLoadFireFightingInfoByCondition(response: HttpResponseBase): Observable<PageModel> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PageModel.fromJS(resultData200) : new PageModel();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PageModel>(<any>null);
+    }
+}
+
+@Injectable()
+export class LoginServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param model (optional) 
+     * @return Success
+     */
+    authenticate(model: AuthenticateModel | null | undefined): Observable<AuthenticateResultModel> {
+        let url_ = this.baseUrl + "/api/services/app/Login/Authenticate";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(model);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAuthenticate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAuthenticate(<any>response_);
+                } catch (e) {
+                    return <Observable<AuthenticateResultModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AuthenticateResultModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAuthenticate(response: HttpResponseBase): Observable<AuthenticateResultModel> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? AuthenticateResultModel.fromJS(resultData200) : new AuthenticateResultModel();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AuthenticateResultModel>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getCurrentLoginUserInfoByUserId(): Observable<UserCacheDto> {
+        let url_ = this.baseUrl + "/api/services/app/Login/GetCurrentLoginUserInfoByUserId";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCurrentLoginUserInfoByUserId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCurrentLoginUserInfoByUserId(<any>response_);
+                } catch (e) {
+                    return <Observable<UserCacheDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UserCacheDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetCurrentLoginUserInfoByUserId(response: HttpResponseBase): Observable<UserCacheDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? UserCacheDto.fromJS(resultData200) : new UserCacheDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<UserCacheDto>(<any>null);
+    }
+
+    /**
+     * @param userId (optional) 
+     * @return Success
+     */
+    getLoginUserInfoByUserId(userId: string | null | undefined): Observable<UserCacheDto> {
+        let url_ = this.baseUrl + "/api/services/app/Login/GetLoginUserInfoByUserId?";
+        if (userId !== undefined)
+            url_ += "userId=" + encodeURIComponent("" + userId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetLoginUserInfoByUserId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetLoginUserInfoByUserId(<any>response_);
+                } catch (e) {
+                    return <Observable<UserCacheDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UserCacheDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetLoginUserInfoByUserId(response: HttpResponseBase): Observable<UserCacheDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? UserCacheDto.fromJS(resultData200) : new UserCacheDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<UserCacheDto>(<any>null);
+    }
 }
 
 @Injectable()
@@ -4426,62 +4655,6 @@ export class TokenAuthServiceProxy {
     }
 
     /**
-     * @param model (optional) 
-     * @return Success
-     */
-    authenticate(model: AuthenticateModel | null | undefined): Observable<AuthenticateResultModel> {
-        let url_ = this.baseUrl + "/api/TokenAuth/Authenticate";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(model);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processAuthenticate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processAuthenticate(<any>response_);
-                } catch (e) {
-                    return <Observable<AuthenticateResultModel>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<AuthenticateResultModel>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processAuthenticate(response: HttpResponseBase): Observable<AuthenticateResultModel> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? AuthenticateResultModel.fromJS(resultData200) : new AuthenticateResultModel();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<AuthenticateResultModel>(<any>null);
-    }
-
-    /**
      * @return Success
      */
     getExternalAuthenticationProviders(): Observable<ExternalLoginProviderInfoModel[]> {
@@ -6309,6 +6482,8 @@ export class PageModel implements IPageModel {
     page: number | undefined;
     size: number | undefined;
     data: any | undefined;
+    msg: string | undefined;
+    isTrue: boolean | undefined;
 
     constructor(data?: IPageModel) {
         if (data) {
@@ -6325,6 +6500,8 @@ export class PageModel implements IPageModel {
             this.page = data["page"];
             this.size = data["size"];
             this.data = data["data"];
+            this.msg = data["msg"];
+            this.isTrue = data["isTrue"];
         }
     }
 
@@ -6341,6 +6518,8 @@ export class PageModel implements IPageModel {
         data["page"] = this.page;
         data["size"] = this.size;
         data["data"] = this.data;
+        data["msg"] = this.msg;
+        data["isTrue"] = this.isTrue;
         return data; 
     }
 
@@ -6357,6 +6536,8 @@ export interface IPageModel {
     page: number | undefined;
     size: number | undefined;
     data: any | undefined;
+    msg: string | undefined;
+    isTrue: boolean | undefined;
 }
 
 export class ChangeUiThemeInput implements IChangeUiThemeInput {
@@ -6899,6 +7080,342 @@ export interface INoticeViewModel {
     creationTime: moment.Moment | undefined;
     creatorUserId: number | undefined;
     id: number | undefined;
+}
+
+export class Condition implements ICondition {
+    flowType: number | undefined;
+    cityId: number | undefined;
+    cityName: string | undefined;
+    startTime: moment.Moment | undefined;
+    endTime: moment.Moment | undefined;
+    size: number | undefined;
+    page: number | undefined;
+    isAsc: boolean | undefined;
+
+    constructor(data?: ICondition) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.flowType = data["flowType"];
+            this.cityId = data["cityId"];
+            this.cityName = data["cityName"];
+            this.startTime = data["startTime"] ? moment(data["startTime"].toString()) : <any>undefined;
+            this.endTime = data["endTime"] ? moment(data["endTime"].toString()) : <any>undefined;
+            this.size = data["size"];
+            this.page = data["page"];
+            this.isAsc = data["isAsc"];
+        }
+    }
+
+    static fromJS(data: any): Condition {
+        data = typeof data === 'object' ? data : {};
+        let result = new Condition();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["flowType"] = this.flowType;
+        data["cityId"] = this.cityId;
+        data["cityName"] = this.cityName;
+        data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
+        data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
+        data["size"] = this.size;
+        data["page"] = this.page;
+        data["isAsc"] = this.isAsc;
+        return data; 
+    }
+
+    clone(): Condition {
+        const json = this.toJSON();
+        let result = new Condition();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICondition {
+    flowType: number | undefined;
+    cityId: number | undefined;
+    cityName: string | undefined;
+    startTime: moment.Moment | undefined;
+    endTime: moment.Moment | undefined;
+    size: number | undefined;
+    page: number | undefined;
+    isAsc: boolean | undefined;
+}
+
+export class AuthenticateModel implements IAuthenticateModel {
+    userNameOrEmailAddress: string | undefined;
+    password: string | undefined;
+    clientId: string | undefined;
+
+    constructor(data?: IAuthenticateModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.userNameOrEmailAddress = data["userNameOrEmailAddress"];
+            this.password = data["password"];
+            this.clientId = data["clientId"];
+        }
+    }
+
+    static fromJS(data: any): AuthenticateModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new AuthenticateModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userNameOrEmailAddress"] = this.userNameOrEmailAddress;
+        data["password"] = this.password;
+        data["clientId"] = this.clientId;
+        return data; 
+    }
+
+    clone(): AuthenticateModel {
+        const json = this.toJSON();
+        let result = new AuthenticateModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAuthenticateModel {
+    userNameOrEmailAddress: string | undefined;
+    password: string | undefined;
+    clientId: string | undefined;
+}
+
+export class AuthenticateResultModel implements IAuthenticateResultModel {
+    accessToken: string | undefined;
+    encryptedAccessToken: string | undefined;
+    expireInSeconds: number | undefined;
+    userId: string | undefined;
+
+    constructor(data?: IAuthenticateResultModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.accessToken = data["accessToken"];
+            this.encryptedAccessToken = data["encryptedAccessToken"];
+            this.expireInSeconds = data["expireInSeconds"];
+            this.userId = data["userId"];
+        }
+    }
+
+    static fromJS(data: any): AuthenticateResultModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new AuthenticateResultModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["accessToken"] = this.accessToken;
+        data["encryptedAccessToken"] = this.encryptedAccessToken;
+        data["expireInSeconds"] = this.expireInSeconds;
+        data["userId"] = this.userId;
+        return data; 
+    }
+
+    clone(): AuthenticateResultModel {
+        const json = this.toJSON();
+        let result = new AuthenticateResultModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAuthenticateResultModel {
+    accessToken: string | undefined;
+    encryptedAccessToken: string | undefined;
+    expireInSeconds: number | undefined;
+    userId: string | undefined;
+}
+
+export class UserCacheDto implements IUserCacheDto {
+    merchantId: string | undefined;
+    merchantName: string | undefined;
+    id: string | undefined;
+    head: string | undefined;
+    eid: string | undefined;
+    eName: string | undefined;
+    mobile: string | undefined;
+    organizationsId: string | undefined;
+    organizationsName: string | undefined;
+    sex: UserCacheDtoSex | undefined;
+    roleId: string | undefined;
+    roleName: string | undefined;
+    isLocked: boolean | undefined;
+    lockBeginTime: moment.Moment | undefined;
+    lockEndTime: moment.Moment | undefined;
+    registerTime: moment.Moment | undefined;
+    currentLoginIp: string | undefined;
+    currentLoginTime: moment.Moment | undefined;
+    lastLoginIp: string | undefined;
+    lastLoginTime: moment.Moment | undefined;
+    visibilityOrganizationsIds: string[] | undefined;
+    positionIds: string[] | undefined;
+    creatorId: string | undefined;
+    creationTime: moment.Moment | undefined;
+    lastModifierId: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
+
+    constructor(data?: IUserCacheDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.merchantId = data["merchantId"];
+            this.merchantName = data["merchantName"];
+            this.id = data["id"];
+            this.head = data["head"];
+            this.eid = data["eid"];
+            this.eName = data["eName"];
+            this.mobile = data["mobile"];
+            this.organizationsId = data["organizationsId"];
+            this.organizationsName = data["organizationsName"];
+            this.sex = data["sex"];
+            this.roleId = data["roleId"];
+            this.roleName = data["roleName"];
+            this.isLocked = data["isLocked"];
+            this.lockBeginTime = data["lockBeginTime"] ? moment(data["lockBeginTime"].toString()) : <any>undefined;
+            this.lockEndTime = data["lockEndTime"] ? moment(data["lockEndTime"].toString()) : <any>undefined;
+            this.registerTime = data["registerTime"] ? moment(data["registerTime"].toString()) : <any>undefined;
+            this.currentLoginIp = data["currentLoginIp"];
+            this.currentLoginTime = data["currentLoginTime"] ? moment(data["currentLoginTime"].toString()) : <any>undefined;
+            this.lastLoginIp = data["lastLoginIp"];
+            this.lastLoginTime = data["lastLoginTime"] ? moment(data["lastLoginTime"].toString()) : <any>undefined;
+            if (data["visibilityOrganizationsIds"] && data["visibilityOrganizationsIds"].constructor === Array) {
+                this.visibilityOrganizationsIds = [];
+                for (let item of data["visibilityOrganizationsIds"])
+                    this.visibilityOrganizationsIds.push(item);
+            }
+            if (data["positionIds"] && data["positionIds"].constructor === Array) {
+                this.positionIds = [];
+                for (let item of data["positionIds"])
+                    this.positionIds.push(item);
+            }
+            this.creatorId = data["creatorId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.lastModifierId = data["lastModifierId"];
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): UserCacheDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserCacheDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["merchantId"] = this.merchantId;
+        data["merchantName"] = this.merchantName;
+        data["id"] = this.id;
+        data["head"] = this.head;
+        data["eid"] = this.eid;
+        data["eName"] = this.eName;
+        data["mobile"] = this.mobile;
+        data["organizationsId"] = this.organizationsId;
+        data["organizationsName"] = this.organizationsName;
+        data["sex"] = this.sex;
+        data["roleId"] = this.roleId;
+        data["roleName"] = this.roleName;
+        data["isLocked"] = this.isLocked;
+        data["lockBeginTime"] = this.lockBeginTime ? this.lockBeginTime.toISOString() : <any>undefined;
+        data["lockEndTime"] = this.lockEndTime ? this.lockEndTime.toISOString() : <any>undefined;
+        data["registerTime"] = this.registerTime ? this.registerTime.toISOString() : <any>undefined;
+        data["currentLoginIp"] = this.currentLoginIp;
+        data["currentLoginTime"] = this.currentLoginTime ? this.currentLoginTime.toISOString() : <any>undefined;
+        data["lastLoginIp"] = this.lastLoginIp;
+        data["lastLoginTime"] = this.lastLoginTime ? this.lastLoginTime.toISOString() : <any>undefined;
+        if (this.visibilityOrganizationsIds && this.visibilityOrganizationsIds.constructor === Array) {
+            data["visibilityOrganizationsIds"] = [];
+            for (let item of this.visibilityOrganizationsIds)
+                data["visibilityOrganizationsIds"].push(item);
+        }
+        if (this.positionIds && this.positionIds.constructor === Array) {
+            data["positionIds"] = [];
+            for (let item of this.positionIds)
+                data["positionIds"].push(item);
+        }
+        data["creatorId"] = this.creatorId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["lastModifierId"] = this.lastModifierId;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): UserCacheDto {
+        const json = this.toJSON();
+        let result = new UserCacheDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserCacheDto {
+    merchantId: string | undefined;
+    merchantName: string | undefined;
+    id: string | undefined;
+    head: string | undefined;
+    eid: string | undefined;
+    eName: string | undefined;
+    mobile: string | undefined;
+    organizationsId: string | undefined;
+    organizationsName: string | undefined;
+    sex: UserCacheDtoSex | undefined;
+    roleId: string | undefined;
+    roleName: string | undefined;
+    isLocked: boolean | undefined;
+    lockBeginTime: moment.Moment | undefined;
+    lockEndTime: moment.Moment | undefined;
+    registerTime: moment.Moment | undefined;
+    currentLoginIp: string | undefined;
+    currentLoginTime: moment.Moment | undefined;
+    lastLoginIp: string | undefined;
+    lastLoginTime: moment.Moment | undefined;
+    visibilityOrganizationsIds: string[] | undefined;
+    positionIds: string[] | undefined;
+    creatorId: string | undefined;
+    creationTime: moment.Moment | undefined;
+    lastModifierId: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
 }
 
 export class SpotCheckSetupDto implements ISpotCheckSetupDto {
@@ -10094,116 +10611,6 @@ export interface IPagedResultDtoOfTenantDto {
     items: TenantDto[] | undefined;
 }
 
-export class AuthenticateModel implements IAuthenticateModel {
-    userNameOrEmailAddress: string | undefined;
-    rememberClient: boolean | undefined;
-    clientId: string | undefined;
-    password: string | undefined;
-
-    constructor(data?: IAuthenticateModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.userNameOrEmailAddress = data["userNameOrEmailAddress"];
-            this.rememberClient = data["rememberClient"];
-            this.clientId = data["clientId"];
-            this.password = data["password"];
-        }
-    }
-
-    static fromJS(data: any): AuthenticateModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new AuthenticateModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["userNameOrEmailAddress"] = this.userNameOrEmailAddress;
-        data["rememberClient"] = this.rememberClient;
-        data["clientId"] = this.clientId;
-        data["password"] = this.password;
-        return data; 
-    }
-
-    clone(): AuthenticateModel {
-        const json = this.toJSON();
-        let result = new AuthenticateModel();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IAuthenticateModel {
-    userNameOrEmailAddress: string | undefined;
-    rememberClient: boolean | undefined;
-    clientId: string | undefined;
-    password: string | undefined;
-}
-
-export class AuthenticateResultModel implements IAuthenticateResultModel {
-    accessToken: string | undefined;
-    encryptedAccessToken: string | undefined;
-    expireInSeconds: number | undefined;
-    userId: number | undefined;
-
-    constructor(data?: IAuthenticateResultModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.accessToken = data["accessToken"];
-            this.encryptedAccessToken = data["encryptedAccessToken"];
-            this.expireInSeconds = data["expireInSeconds"];
-            this.userId = data["userId"];
-        }
-    }
-
-    static fromJS(data: any): AuthenticateResultModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new AuthenticateResultModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["accessToken"] = this.accessToken;
-        data["encryptedAccessToken"] = this.encryptedAccessToken;
-        data["expireInSeconds"] = this.expireInSeconds;
-        data["userId"] = this.userId;
-        return data; 
-    }
-
-    clone(): AuthenticateResultModel {
-        const json = this.toJSON();
-        let result = new AuthenticateResultModel();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IAuthenticateResultModel {
-    accessToken: string | undefined;
-    encryptedAccessToken: string | undefined;
-    expireInSeconds: number | undefined;
-    userId: number | undefined;
-}
-
 export class ExternalLoginProviderInfoModel implements IExternalLoginProviderInfoModel {
     name: string | undefined;
     clientId: string | undefined;
@@ -10837,6 +11244,11 @@ export enum IsTenantAvailableOutputState {
     _1 = 1, 
     _2 = 2, 
     _3 = 3, 
+}
+
+export enum UserCacheDtoSex {
+    _0 = 0, 
+    _1 = 1, 
 }
 
 export class SwaggerException extends Error {

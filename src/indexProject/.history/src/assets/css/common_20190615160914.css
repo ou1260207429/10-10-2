@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+.content {
+  width: 70%;
+  min-width: 1200px;
+  margin: 0 auto;
+}
+
+.active {
+  border-bottom: 2px solid #bd1127ff;
+}
+.el-breadcrumb{
+  font-size: 12px;
+}
+.el-card__body{
+  padding: 0
+}
