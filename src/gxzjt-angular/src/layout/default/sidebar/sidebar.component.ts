@@ -23,7 +23,7 @@ export class SidebarComponent extends AppComponentBase implements OnInit {
 
   ngOnInit() {
     this.shownLoginName = this.appSession.getShownLoginName();
-    this.emailAddress = this.appSession.user.emailAddress;
+    this.emailAddress = this.appSession.user.eid;
   }
 
   logout() {

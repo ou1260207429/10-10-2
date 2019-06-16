@@ -1,6 +1,6 @@
 <div class="login_content">
   <div [@routerTransition]>
-    <nz-spin [nzTip]="l('LogIningWithThreeDot')" [nzSpinning]="submitting">
+    <nz-spin nzTip="正在登录..." [nzSpinning]="submitting">
       <nz-card [nzTitle]="nzTitle" nzHoverable='true' style="width: 400px">
         <ng-template #nzTitle>
           <div class="text-center yoyo__block title">
@@ -36,8 +36,8 @@
             <nz-form-control>
               <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-lock" nzHasFeedback>
                 <input nz-input name="password" #password="ngModel"
-                  [(ngModel)]="loginService.authenticateModel.password" [placeholder]="l('Password')" type="password"
-                  required maxlength="32" minlength="6">
+                  [(ngModel)]="loginService.authenticateModel.password" placeholder="请输入密码" type="password" required
+                  maxlength="32" minlength="6">
               </nz-input-group>
               <nz-form-explain *ngIf="password.control.dirty&&password.control.errors">
 
@@ -114,7 +114,7 @@
           <button nz-button [nzLoading]="submitting" class="yoyo__block login_but"
             [disabled]="!loginForm.form.valid||submitting">
             <!-- <i class="anticon anticon-login"></i> -->
-            <span>{{l("LogIn")}}</span>
+            <span>登录</span>
           </button>
         </form>
 

@@ -54,7 +54,7 @@
             <nz-form-control nzHasFeedback>
               <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-lock">
                 <input nz-input type="password" name="password" #password="ngModel" [(ngModel)]="model.Password"
-                  type="password" [placeholder]="l('Password')" required maxlength="32" minlength="6">
+                  type="password" placeholder="请输入6-32位密码" required maxlength="32" minlength="6">
               </nz-input-group>
               <nz-form-explain *ngIf="password.control.dirty&&password.control.errors">
                 <ng-container *ngIf="password.control.hasError('required')">不能为空！</ng-container>
@@ -169,11 +169,10 @@
           <!-- 功能按钮 -->
           <nz-form-item>
             <nz-col [nzSpan]="12">
-              <button (click)="back()" type="button" nz-button [disabled]="saving">{{l("Back")}}</button>
+              <button (click)="back()" type="button" nz-button [disabled]="saving">返回</button>
             </nz-col>
             <nz-col [nzSpan]="12" class="text-right">
-              <button nz-button nzType="primary" type="submit"
-                [disabled]="!validateForm.valid||saving">{{l("Submit")}}</button>
+              <button nz-button nzType="primary" type="submit" [disabled]="!validateForm.valid||saving">提交</button>
             </nz-col>
           </nz-form-item>
 

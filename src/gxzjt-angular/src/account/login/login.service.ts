@@ -13,6 +13,7 @@ import {
 import { UrlHelper } from '@shared/helpers/UrlHelper';
 import { AppConsts } from '@shared/AppConsts';
 
+
 import * as _ from 'lodash';
 import { MessageService } from '@abp/message/message.service';
 import { LogService } from '@abp/log/log.service';
@@ -98,6 +99,7 @@ export class LoginService {
       tokenExpireDate,
       abp.appPath,
     );
+
 
     let initialUrl = UrlHelper.initialUrl;
     if (initialUrl.indexOf('/login') > 0) {

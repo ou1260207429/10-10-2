@@ -39,10 +39,8 @@ export class AccountComponent extends AppComponentBase {
     super(injector);
     this.currentYear = new Date().getFullYear();
     this.versionText =
-      this.appSession.application.version +
-      ' [' +
-      this.appSession.application.releaseDate.format('YYYYDDMM') +
-      ']';
+
+      '1.0.0 [2019.7.1]';
   }
 
   showTenantChange(): boolean {
