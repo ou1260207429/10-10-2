@@ -147,6 +147,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     });
   }
   resetSliter() {
+    checkCode = "" + Math.ceil(Math.random() * 10000);
     var el = $(".inner");
     el.css("left", 0);
     el.html('&gt;&gt;');
@@ -177,8 +178,6 @@ export class LoginComponent extends AppComponentBase implements OnInit {
   login(): void {
     var str = $("#slider_content").attr("value");
     if (str === checkCode) {
-
-
 
       this.submitting = true;
       this.loginService.authenticate(() => {
