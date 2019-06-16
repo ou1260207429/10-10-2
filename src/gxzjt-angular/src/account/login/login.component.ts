@@ -18,7 +18,7 @@ import { _HttpClient } from '@delon/theme';
 
 import { NzModalService } from 'ng-zorro-antd';
 
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
 
 
 import { isPhone } from '@shared/utils/regex';
@@ -97,64 +97,64 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
   initSliter() {
 
-    $(".inner").mousedown(function (e) {
-      console.log(e)
-      var el = $(".inner");
+    // $(".inner").mousedown(function (e) {
+    //   console.log(e)
+    //   var el = $(".inner");
 
-      var os = el.offset();
-      var dx;
-      var span = $(".outer>span");
-      var filter = $(".filter-box");
-      $("#slider_content").attr("value", "no");
+    //   var os = el.offset();
+    //   var dx;
+    //   var span = $(".outer>span");
+    //   var filter = $(".filter-box");
+    //   $("#slider_content").attr("value", "no");
 
-      var _differ = $(".outer").width() - el.width();
-      $(document).mousemove(function (e) {
-        dx = e.pageX - os.left;
-        if (dx < 0) {
-          dx = 0;
-        } else if (dx > _differ) {
-          dx = _differ;
-        }
-        filter.css('width', dx);
-        el.css("left", dx);
-      });
-      $(document).mouseup(function (e) {
-        $(document).off('mousemove');
-        $(document).off('mouseup');
-        dx = e.pageX - os.left;
-        if (dx < _differ) {
-          dx = 0;
-          span.html("请拖动滑块至最右边");
-        } else if (dx >= _differ) {
-          dx = _differ;
-          $(".outer").addClass("act");
-          span.html("验证通过！");
-          el.html('&radic;');
-
-
-          $("#slider_content").attr("value", "ok");
-          // $(this).trigger('change');
+    //   var _differ = $(".outer").width() - el.width();
+    //   $(document).mousemove(function (e) {
+    //     dx = e.pageX - os.left;
+    //     if (dx < 0) {
+    //       dx = 0;
+    //     } else if (dx > _differ) {
+    //       dx = _differ;
+    //     }
+    //     filter.css('width', dx);
+    //     el.css("left", dx);
+    //   });
+    //   $(document).mouseup(function (e) {
+    //     $(document).off('mousemove');
+    //     $(document).off('mouseup');
+    //     dx = e.pageX - os.left;
+    //     if (dx < _differ) {
+    //       dx = 0;
+    //       span.html("请拖动滑块至最右边");
+    //     } else if (dx >= _differ) {
+    //       dx = _differ;
+    //       $(".outer").addClass("act");
+    //       span.html("验证通过！");
+    //       el.html('&radic;');
 
 
-        }
-        filter.css('width', dx);
-        el.css("left", dx);
+    //       $("#slider_content").attr("value", "ok");
+    //       // $(this).trigger('change');
 
-      })
-    });
+
+    //     }
+    //     filter.css('width', dx);
+    //     el.css("left", dx);
+
+    //   })
+    // });
   }
   resetSliter() {
-    var el = $(".inner");
-    el.css("left", 0);
-    el.html('&gt;&gt;');
+    // var el = $(".inner");
+    // el.css("left", 0);
+    // el.html('&gt;&gt;');
 
-    $(".outer").removeClass("act");
+    // $(".outer").removeClass("act");
 
 
-    var span = $(".outer>span");
-    span.html("请拖动滑块至最右边");
-    var filter = $(".filter-box");
-    filter.css('width', 0);
+    // var span = $(".outer>span");
+    // span.html("请拖动滑块至最右边");
+    // var filter = $(".filter-box");
+    // filter.css('width', 0);
   }
 
   ngAfterViewInit() {
@@ -172,22 +172,22 @@ export class LoginComponent extends AppComponentBase implements OnInit {
   }
 
   login(): void {
-    var str = $("#slider_content").attr("value");
-    if (str === "ok") {
+    // var str = $("#slider_content").attr("value");
+    // if (str === "ok") {
 
 
 
-      this.submitting = true;
-      this.loginService.authenticate(() => {
-        this.submitting = false;
-        this.resetSliter();
-      });
-    } else {
-      this.modalService.warning({
-        nzTitle: '提示',
-        nzContent: '请完成拖动验证！'
-      });
-    }
+    //   this.submitting = true;
+    //   this.loginService.authenticate(() => {
+    //     this.submitting = false;
+    //     this.resetSliter();
+    //   });
+    // } else {
+    //   this.modalService.warning({
+    //     nzTitle: '提示',
+    //     nzContent: '请完成拖动验证！'
+    //   });
+    // }
 
 
 
