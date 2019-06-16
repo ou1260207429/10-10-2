@@ -400,7 +400,7 @@
       </tr>
 
       <tr>
-        <td style="width: 37px;background-color: #d0e8fe;color: #5a95e9;font-weight: 600;border-right: 0;" rowspan='24'
+        <td style="width: 37px;background-color: #d0e8fe;color: #5a95e9;font-weight: 600;border-right: 0;" rowspan='8'
           colspan='1'>
           竣工验收意见
         </td>
@@ -522,7 +522,7 @@
         </td>
       </tr>
       <tr>
-        <td colspan='6' class="fontweight fontLeft leftTitle" required=true>
+        <td colspan='1' class="fontweight fontLeft leftTitle" required=true>
           消防设施检测单位
         </td>
         <td colspan='14' style="text-align: left">
@@ -545,25 +545,52 @@
           </div>
         </td>
       </tr>
-      <tr>
+      <!-- <tr>
         <td colspan='6' class="fontweight fontLeft leftTitle">
           验收备案资料目录
         </td>
         <td colspan='14' style="text-align: left">
-          <!-- <p>1、消防产品质量合格证明文件；</p>
+          <p>1、消防产品质量合格证明文件；</p>
           <p>2、有防火性能要求的建筑构件、建筑材料、室内装修装饰材料符合国家标准或者行业标准的证明文件、出厂合格证；</p>
           <p>3、消防设施、电气防火技术检测合格证明文件；</p>
           <p>4、施工、工程监理、检测单位的合法身份证明和资质等级证明文件。</p> -->
-          <!-- <textarea wrap="physical" nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.catalog.opinion"
+      <!-- <textarea wrap="physical" nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.catalog.opinion"
             name="catalogopinion" required>
-                    </textarea> -->
+                    </textarea>
         </td>
-      </tr>
+      </tr> -->
       <tr>
         <td colspan='15' rowspan='1' style="text-align: right">备案时间:
         </td>
         <td colspan='5' rowspan='1' style="text-align: right">
           <nz-date-picker name="t2" [(ngModel)]="data.acceptanceOpinions.filingTime" name="filingTime"></nz-date-picker>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan='1' rowspan="1" class="fontweight fontLeft leftTitle"
+          style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>上传附件</td>
+        <td rowspan='1' colspan='20' class="textLeft">
+          <div>
+            1、建设工程消防验收申报表（纸质申报表的图片）
+            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange()">
+              <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
+            </nz-upload>
+          </div>
+
+          <div>
+            2、与消防验收有关的竣工图纸及隐蔽工程记录
+            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange()">
+              <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
+            </nz-upload>
+          </div>
+
+          <div>
+            3、符合要求的检测机构出具出具的消防设施及系统检测合格证明文件
+            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange()">
+              <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
+            </nz-upload>
+          </div>
         </td>
       </tr>
       </tbody>

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { _HttpClient } from '@delon/theme';
 import { FlowServices, WorkFlow } from 'services/flow.services';
 import { AdoptEnum } from 'infrastructure/expression';
+import { UploadFile } from 'ng-zorro-antd';
 
 /**
  * 待办详情->办理页面
@@ -76,6 +77,23 @@ export class AgencyDoneDetailsComponent implements OnInit {
     ]
   };
 
+  //同时提供的材料
+  simultaneousMaterials = {
+    a1Checkbox: false,
+    a2Input: '',
+    a2Checkbox: false,
+    a5Input: '',
+    a3Checkbox: false,
+    a4Checkbox: false,
+    a5Checkbox: false,
+    complete: '',
+    notGrant: '',
+  }
+
+  uploading = false;
+  fileList: UploadFile[] = [];
+
+  textData = {}
   constructor(private _flowServices: FlowServices, private _activatedRoute: ActivatedRoute, private _ActivatedRoute: ActivatedRoute, ) {
     // console.log(this._activatedRoute.snapshot.paramMap.get('workFlow_TemplateInfoId'))
     // console.log(this._activatedRoute.snapshot.paramMap.get('workFlow_InstanceId'))
@@ -86,7 +104,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.init()
+    this.type = false
+    // this.init()
   }
 
   init() {
@@ -95,7 +114,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       this.type = false
     })
 
-    this.type = false
+
   }
 
   /**
@@ -112,5 +131,13 @@ export class AgencyDoneDetailsComponent implements OnInit {
   gXZJT_StartWorkFlowInstanceAsync() {
     return this._flowServices.tenant_GetWorkFlowInstanceFrowTemplateInfoById(this.workFlow).toPromise()
   }
+
+  /**
+   * 上传文件之前的钩子
+   */
+  beforeUpload = (file: UploadFile): boolean => {
+    this.fileList = this.fileList.concat(file);
+    return false;
+  };
 
 }

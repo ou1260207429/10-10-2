@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum } from 'infrastructure/expression';
 import { objDeleteType } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
+import { UploadFile } from 'ng-zorro-antd';
 
 /**
  * 消防设计的表单模块
@@ -60,6 +61,20 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
    */
   deleteArray(arr, index) {
     this.publicModel.engineeringDeleteArray(arr, index)
+  }
+
+  fileList: UploadFile[] = [];
+  /**
+   * 上传文件之前的钩子
+   */
+  beforeUpload = (file: UploadFile): boolean => {
+    console.log('11')
+    // this.fileList = this.fileList.concat(file);
+    return false;
+  };
+
+  handleChange(box, index) {
+    console.log('00')
   }
 
 }
