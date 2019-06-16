@@ -3753,6 +3753,246 @@ export class RoleServiceProxy {
 }
 
 @Injectable()
+export class ScreenServiceServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param screenTimeoutStatisticsQueryDto (optional) 
+     * @return Success
+     */
+    psot_GetScreenTimeoutStatistics(screenTimeoutStatisticsQueryDto: ScreenTimeoutStatisticsQueryDto | null | undefined): Observable<TimeoutStatisticsDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ScreenService/Psot_GetScreenTimeoutStatistics";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(screenTimeoutStatisticsQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPsot_GetScreenTimeoutStatistics(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPsot_GetScreenTimeoutStatistics(<any>response_);
+                } catch (e) {
+                    return <Observable<TimeoutStatisticsDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TimeoutStatisticsDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPsot_GetScreenTimeoutStatistics(response: HttpResponseBase): Observable<TimeoutStatisticsDto[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(TimeoutStatisticsDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TimeoutStatisticsDto[]>(<any>null);
+    }
+
+    /**
+     * @param yearApplyNumberQueryDto (optional) 
+     * @return Success
+     */
+    psot_GetScreenYearApplyNumber(yearApplyNumberQueryDto: YearApplyNumberQueryDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/ScreenService/Psot_GetScreenYearApplyNumber";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(yearApplyNumberQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPsot_GetScreenYearApplyNumber(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPsot_GetScreenYearApplyNumber(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPsot_GetScreenYearApplyNumber(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
+
+    /**
+     * @param screenTimeoutListQueryDto (optional) 
+     * @return Success
+     */
+    post_GetScreenTimeoutList(screenTimeoutListQueryDto: ScreenTimeoutListQueryDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetScreenTimeoutList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(screenTimeoutListQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetScreenTimeoutList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetScreenTimeoutList(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetScreenTimeoutList(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
+
+    /**
+     * @param fireDataListQueryDto (optional) 
+     * @return Success
+     */
+    post_GetFireDataList(fireDataListQueryDto: FireDataListQueryDto | null | undefined): Observable<FireDataListDto> {
+        let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetFireDataList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(fireDataListQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetFireDataList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetFireDataList(<any>response_);
+                } catch (e) {
+                    return <Observable<FireDataListDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FireDataListDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetFireDataList(response: HttpResponseBase): Observable<FireDataListDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? FireDataListDto.fromJS(resultData200) : new FireDataListDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FireDataListDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class SessionServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -5040,9 +5280,18 @@ export class WorkFlowedServiceProxy {
 }
 
 export class AcceptApplyFormDto implements IAcceptApplyFormDto {
-    acceptOrderInfo: AcceptOrder | undefined;
-    attachements: ProjectAttachment[] | undefined;
     isAccept: boolean | undefined;
+    expireTime: moment.Moment | undefined;
+    expireType: number | undefined;
+    flowId: number | undefined;
+    acceptUserCode: string | undefined;
+    acceptName: string | undefined;
+    acceptOrgName: string | undefined;
+    acceptOrgCode: string | undefined;
+    isDisplay: boolean | undefined;
+    opinion: string | undefined;
+    correctionOrAddItem: string | undefined;
+    refuseItems: number[] | undefined;
 
     constructor(data?: IAcceptApplyFormDto) {
         if (data) {
@@ -5055,13 +5304,22 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
 
     init(data?: any) {
         if (data) {
-            this.acceptOrderInfo = data["acceptOrderInfo"] ? AcceptOrder.fromJS(data["acceptOrderInfo"]) : <any>undefined;
-            if (data["attachements"] && data["attachements"].constructor === Array) {
-                this.attachements = [];
-                for (let item of data["attachements"])
-                    this.attachements.push(ProjectAttachment.fromJS(item));
-            }
             this.isAccept = data["isAccept"];
+            this.expireTime = data["expireTime"] ? moment(data["expireTime"].toString()) : <any>undefined;
+            this.expireType = data["expireType"];
+            this.flowId = data["flowId"];
+            this.acceptUserCode = data["acceptUserCode"];
+            this.acceptName = data["acceptName"];
+            this.acceptOrgName = data["acceptOrgName"];
+            this.acceptOrgCode = data["acceptOrgCode"];
+            this.isDisplay = data["isDisplay"];
+            this.opinion = data["opinion"];
+            this.correctionOrAddItem = data["correctionOrAddItem"];
+            if (data["refuseItems"] && data["refuseItems"].constructor === Array) {
+                this.refuseItems = [];
+                for (let item of data["refuseItems"])
+                    this.refuseItems.push(item);
+            }
         }
     }
 
@@ -5074,13 +5332,22 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["acceptOrderInfo"] = this.acceptOrderInfo ? this.acceptOrderInfo.toJSON() : <any>undefined;
-        if (this.attachements && this.attachements.constructor === Array) {
-            data["attachements"] = [];
-            for (let item of this.attachements)
-                data["attachements"].push(item.toJSON());
-        }
         data["isAccept"] = this.isAccept;
+        data["expireTime"] = this.expireTime ? this.expireTime.toISOString() : <any>undefined;
+        data["expireType"] = this.expireType;
+        data["flowId"] = this.flowId;
+        data["acceptUserCode"] = this.acceptUserCode;
+        data["acceptName"] = this.acceptName;
+        data["acceptOrgName"] = this.acceptOrgName;
+        data["acceptOrgCode"] = this.acceptOrgCode;
+        data["isDisplay"] = this.isDisplay;
+        data["opinion"] = this.opinion;
+        data["correctionOrAddItem"] = this.correctionOrAddItem;
+        if (this.refuseItems && this.refuseItems.constructor === Array) {
+            data["refuseItems"] = [];
+            for (let item of this.refuseItems)
+                data["refuseItems"].push(item);
+        }
         return data; 
     }
 
@@ -5093,235 +5360,18 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
 }
 
 export interface IAcceptApplyFormDto {
-    acceptOrderInfo: AcceptOrder | undefined;
-    attachements: ProjectAttachment[] | undefined;
     isAccept: boolean | undefined;
-}
-
-export class AcceptOrder implements IAcceptOrder {
-    acceptVoucher: string | undefined;
+    expireTime: moment.Moment | undefined;
+    expireType: number | undefined;
     flowId: number | undefined;
     acceptUserCode: string | undefined;
     acceptName: string | undefined;
-    acceptTime: moment.Moment | undefined;
-    timeout: number | undefined;
-    state: number | undefined;
     acceptOrgName: string | undefined;
     acceptOrgCode: string | undefined;
-    acceptAttachmentId: number | undefined;
-    opinionAttachmentId: number | undefined;
-    isDeleted: boolean | undefined;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: IAcceptOrder) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.acceptVoucher = data["acceptVoucher"];
-            this.flowId = data["flowId"];
-            this.acceptUserCode = data["acceptUserCode"];
-            this.acceptName = data["acceptName"];
-            this.acceptTime = data["acceptTime"] ? moment(data["acceptTime"].toString()) : <any>undefined;
-            this.timeout = data["timeout"];
-            this.state = data["state"];
-            this.acceptOrgName = data["acceptOrgName"];
-            this.acceptOrgCode = data["acceptOrgCode"];
-            this.acceptAttachmentId = data["acceptAttachmentId"];
-            this.opinionAttachmentId = data["opinionAttachmentId"];
-            this.isDeleted = data["isDeleted"];
-            this.deleterUserId = data["deleterUserId"];
-            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
-            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = data["lastModifierUserId"];
-            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = data["creatorUserId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): AcceptOrder {
-        data = typeof data === 'object' ? data : {};
-        let result = new AcceptOrder();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["acceptVoucher"] = this.acceptVoucher;
-        data["flowId"] = this.flowId;
-        data["acceptUserCode"] = this.acceptUserCode;
-        data["acceptName"] = this.acceptName;
-        data["acceptTime"] = this.acceptTime ? this.acceptTime.toISOString() : <any>undefined;
-        data["timeout"] = this.timeout;
-        data["state"] = this.state;
-        data["acceptOrgName"] = this.acceptOrgName;
-        data["acceptOrgCode"] = this.acceptOrgCode;
-        data["acceptAttachmentId"] = this.acceptAttachmentId;
-        data["opinionAttachmentId"] = this.opinionAttachmentId;
-        data["isDeleted"] = this.isDeleted;
-        data["deleterUserId"] = this.deleterUserId;
-        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): AcceptOrder {
-        const json = this.toJSON();
-        let result = new AcceptOrder();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IAcceptOrder {
-    acceptVoucher: string | undefined;
-    flowId: number | undefined;
-    acceptUserCode: string | undefined;
-    acceptName: string | undefined;
-    acceptTime: moment.Moment | undefined;
-    timeout: number | undefined;
-    state: number | undefined;
-    acceptOrgName: string | undefined;
-    acceptOrgCode: string | undefined;
-    acceptAttachmentId: number | undefined;
-    opinionAttachmentId: number | undefined;
-    isDeleted: boolean | undefined;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-}
-
-export class ProjectAttachment implements IProjectAttachment {
-    projectId: number | undefined;
-    attachmentName: string | undefined;
-    attachmentType: string | undefined;
-    fileUrl: string | undefined;
-    note: string | undefined;
-    lastUpdateTime: moment.Moment | undefined;
-    lastUpdateUserCode: string | undefined;
-    lastUpdateUserName: string | undefined;
-    fileCount: number | undefined;
-    isPass: boolean | undefined;
-    isDeleted: boolean | undefined;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: IProjectAttachment) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.projectId = data["projectId"];
-            this.attachmentName = data["attachmentName"];
-            this.attachmentType = data["attachmentType"];
-            this.fileUrl = data["fileUrl"];
-            this.note = data["note"];
-            this.lastUpdateTime = data["lastUpdateTime"] ? moment(data["lastUpdateTime"].toString()) : <any>undefined;
-            this.lastUpdateUserCode = data["lastUpdateUserCode"];
-            this.lastUpdateUserName = data["lastUpdateUserName"];
-            this.fileCount = data["fileCount"];
-            this.isPass = data["isPass"];
-            this.isDeleted = data["isDeleted"];
-            this.deleterUserId = data["deleterUserId"];
-            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
-            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = data["lastModifierUserId"];
-            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = data["creatorUserId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): ProjectAttachment {
-        data = typeof data === 'object' ? data : {};
-        let result = new ProjectAttachment();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["projectId"] = this.projectId;
-        data["attachmentName"] = this.attachmentName;
-        data["attachmentType"] = this.attachmentType;
-        data["fileUrl"] = this.fileUrl;
-        data["note"] = this.note;
-        data["lastUpdateTime"] = this.lastUpdateTime ? this.lastUpdateTime.toISOString() : <any>undefined;
-        data["lastUpdateUserCode"] = this.lastUpdateUserCode;
-        data["lastUpdateUserName"] = this.lastUpdateUserName;
-        data["fileCount"] = this.fileCount;
-        data["isPass"] = this.isPass;
-        data["isDeleted"] = this.isDeleted;
-        data["deleterUserId"] = this.deleterUserId;
-        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): ProjectAttachment {
-        const json = this.toJSON();
-        let result = new ProjectAttachment();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IProjectAttachment {
-    projectId: number | undefined;
-    attachmentName: string | undefined;
-    attachmentType: string | undefined;
-    fileUrl: string | undefined;
-    note: string | undefined;
-    lastUpdateTime: moment.Moment | undefined;
-    lastUpdateUserCode: string | undefined;
-    lastUpdateUserName: string | undefined;
-    fileCount: number | undefined;
-    isPass: boolean | undefined;
-    isDeleted: boolean | undefined;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
+    isDisplay: boolean | undefined;
+    opinion: string | undefined;
+    correctionOrAddItem: string | undefined;
+    refuseItems: number[] | undefined;
 }
 
 export class IsTenantAvailableInput implements IIsTenantAvailableInput {
@@ -5969,6 +6019,7 @@ export class ProjectFlow implements IProjectFlow {
     applyUserCode: string | undefined;
     applyName: string | undefined;
     status: number | undefined;
+    endTime: moment.Moment | undefined;
     expireTime: moment.Moment | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
@@ -5997,6 +6048,7 @@ export class ProjectFlow implements IProjectFlow {
             this.applyUserCode = data["applyUserCode"];
             this.applyName = data["applyName"];
             this.status = data["status"];
+            this.endTime = data["endTime"] ? moment(data["endTime"].toString()) : <any>undefined;
             this.expireTime = data["expireTime"] ? moment(data["expireTime"].toString()) : <any>undefined;
             this.isDeleted = data["isDeleted"];
             this.deleterUserId = data["deleterUserId"];
@@ -6025,6 +6077,7 @@ export class ProjectFlow implements IProjectFlow {
         data["applyUserCode"] = this.applyUserCode;
         data["applyName"] = this.applyName;
         data["status"] = this.status;
+        data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
         data["expireTime"] = this.expireTime ? this.expireTime.toISOString() : <any>undefined;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
@@ -6053,6 +6106,7 @@ export interface IProjectFlow {
     applyUserCode: string | undefined;
     applyName: string | undefined;
     status: number | undefined;
+    endTime: moment.Moment | undefined;
     expireTime: moment.Moment | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
@@ -6448,9 +6502,14 @@ export interface IEnumConfig {
 }
 
 export class ExamineFormDto implements IExamineFormDto {
-    acceptRecordInfo: AcceptRecord | undefined;
     attachment: ProjectAttachment[] | undefined;
     isFinalFlow: boolean | undefined;
+    isPass: boolean | undefined;
+    expireTime: moment.Moment | undefined;
+    expireType: number | undefined;
+    flowId: number | undefined;
+    isDisplay: boolean | undefined;
+    opinion: string | undefined;
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -6463,13 +6522,18 @@ export class ExamineFormDto implements IExamineFormDto {
 
     init(data?: any) {
         if (data) {
-            this.acceptRecordInfo = data["acceptRecordInfo"] ? AcceptRecord.fromJS(data["acceptRecordInfo"]) : <any>undefined;
             if (data["attachment"] && data["attachment"].constructor === Array) {
                 this.attachment = [];
                 for (let item of data["attachment"])
                     this.attachment.push(ProjectAttachment.fromJS(item));
             }
             this.isFinalFlow = data["isFinalFlow"];
+            this.isPass = data["isPass"];
+            this.expireTime = data["expireTime"] ? moment(data["expireTime"].toString()) : <any>undefined;
+            this.expireType = data["expireType"];
+            this.flowId = data["flowId"];
+            this.isDisplay = data["isDisplay"];
+            this.opinion = data["opinion"];
         }
     }
 
@@ -6482,13 +6546,18 @@ export class ExamineFormDto implements IExamineFormDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["acceptRecordInfo"] = this.acceptRecordInfo ? this.acceptRecordInfo.toJSON() : <any>undefined;
         if (this.attachment && this.attachment.constructor === Array) {
             data["attachment"] = [];
             for (let item of this.attachment)
                 data["attachment"].push(item.toJSON());
         }
         data["isFinalFlow"] = this.isFinalFlow;
+        data["isPass"] = this.isPass;
+        data["expireTime"] = this.expireTime ? this.expireTime.toISOString() : <any>undefined;
+        data["expireType"] = this.expireType;
+        data["flowId"] = this.flowId;
+        data["isDisplay"] = this.isDisplay;
+        data["opinion"] = this.opinion;
         return data; 
     }
 
@@ -6501,19 +6570,27 @@ export class ExamineFormDto implements IExamineFormDto {
 }
 
 export interface IExamineFormDto {
-    acceptRecordInfo: AcceptRecord | undefined;
     attachment: ProjectAttachment[] | undefined;
     isFinalFlow: boolean | undefined;
+    isPass: boolean | undefined;
+    expireTime: moment.Moment | undefined;
+    expireType: number | undefined;
+    flowId: number | undefined;
+    isDisplay: boolean | undefined;
+    opinion: string | undefined;
 }
 
-export class AcceptRecord implements IAcceptRecord {
-    acceptOrderId: number | undefined;
-    opinion: string | undefined;
-    isPass: boolean | undefined;
+export class ProjectAttachment implements IProjectAttachment {
+    projectId: number | undefined;
+    attachmentName: string | undefined;
+    attachmentType: string | undefined;
+    fileUrl: string | undefined;
+    note: string | undefined;
     lastUpdateTime: moment.Moment | undefined;
     lastUpdateUserCode: string | undefined;
     lastUpdateUserName: string | undefined;
-    isDisplay: boolean | undefined;
+    fileCount: number | undefined;
+    isPass: boolean | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -6523,7 +6600,7 @@ export class AcceptRecord implements IAcceptRecord {
     creatorUserId: number | undefined;
     id: number | undefined;
 
-    constructor(data?: IAcceptRecord) {
+    constructor(data?: IProjectAttachment) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -6534,13 +6611,16 @@ export class AcceptRecord implements IAcceptRecord {
 
     init(data?: any) {
         if (data) {
-            this.acceptOrderId = data["acceptOrderId"];
-            this.opinion = data["opinion"];
-            this.isPass = data["isPass"];
+            this.projectId = data["projectId"];
+            this.attachmentName = data["attachmentName"];
+            this.attachmentType = data["attachmentType"];
+            this.fileUrl = data["fileUrl"];
+            this.note = data["note"];
             this.lastUpdateTime = data["lastUpdateTime"] ? moment(data["lastUpdateTime"].toString()) : <any>undefined;
             this.lastUpdateUserCode = data["lastUpdateUserCode"];
             this.lastUpdateUserName = data["lastUpdateUserName"];
-            this.isDisplay = data["isDisplay"];
+            this.fileCount = data["fileCount"];
+            this.isPass = data["isPass"];
             this.isDeleted = data["isDeleted"];
             this.deleterUserId = data["deleterUserId"];
             this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
@@ -6552,22 +6632,25 @@ export class AcceptRecord implements IAcceptRecord {
         }
     }
 
-    static fromJS(data: any): AcceptRecord {
+    static fromJS(data: any): ProjectAttachment {
         data = typeof data === 'object' ? data : {};
-        let result = new AcceptRecord();
+        let result = new ProjectAttachment();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["acceptOrderId"] = this.acceptOrderId;
-        data["opinion"] = this.opinion;
-        data["isPass"] = this.isPass;
+        data["projectId"] = this.projectId;
+        data["attachmentName"] = this.attachmentName;
+        data["attachmentType"] = this.attachmentType;
+        data["fileUrl"] = this.fileUrl;
+        data["note"] = this.note;
         data["lastUpdateTime"] = this.lastUpdateTime ? this.lastUpdateTime.toISOString() : <any>undefined;
         data["lastUpdateUserCode"] = this.lastUpdateUserCode;
         data["lastUpdateUserName"] = this.lastUpdateUserName;
-        data["isDisplay"] = this.isDisplay;
+        data["fileCount"] = this.fileCount;
+        data["isPass"] = this.isPass;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -6579,22 +6662,25 @@ export class AcceptRecord implements IAcceptRecord {
         return data; 
     }
 
-    clone(): AcceptRecord {
+    clone(): ProjectAttachment {
         const json = this.toJSON();
-        let result = new AcceptRecord();
+        let result = new ProjectAttachment();
         result.init(json);
         return result;
     }
 }
 
-export interface IAcceptRecord {
-    acceptOrderId: number | undefined;
-    opinion: string | undefined;
-    isPass: boolean | undefined;
+export interface IProjectAttachment {
+    projectId: number | undefined;
+    attachmentName: string | undefined;
+    attachmentType: string | undefined;
+    fileUrl: string | undefined;
+    note: string | undefined;
     lastUpdateTime: moment.Moment | undefined;
     lastUpdateUserCode: string | undefined;
     lastUpdateUserName: string | undefined;
-    isDisplay: boolean | undefined;
+    fileCount: number | undefined;
+    isPass: boolean | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -9196,6 +9282,419 @@ export class PagedResultDtoOfRoleDto implements IPagedResultDtoOfRoleDto {
 export interface IPagedResultDtoOfRoleDto {
     totalCount: number | undefined;
     items: RoleDto[] | undefined;
+}
+
+export class ScreenTimeoutStatisticsQueryDto implements IScreenTimeoutStatisticsQueryDto {
+    processedStatus: number | undefined;
+    dateTimeNow: moment.Moment | undefined;
+
+    constructor(data?: IScreenTimeoutStatisticsQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.processedStatus = data["processedStatus"];
+            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): ScreenTimeoutStatisticsQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ScreenTimeoutStatisticsQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["processedStatus"] = this.processedStatus;
+        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): ScreenTimeoutStatisticsQueryDto {
+        const json = this.toJSON();
+        let result = new ScreenTimeoutStatisticsQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IScreenTimeoutStatisticsQueryDto {
+    processedStatus: number | undefined;
+    dateTimeNow: moment.Moment | undefined;
+}
+
+export class TimeoutStatisticsDto implements ITimeoutStatisticsDto {
+    cityName: string | undefined;
+    fireAuditNumber: number | undefined;
+    fireCompleteNumber: number | undefined;
+    completeNumber: number | undefined;
+
+    constructor(data?: ITimeoutStatisticsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.cityName = data["cityName"];
+            this.fireAuditNumber = data["fireAuditNumber"];
+            this.fireCompleteNumber = data["fireCompleteNumber"];
+            this.completeNumber = data["completeNumber"];
+        }
+    }
+
+    static fromJS(data: any): TimeoutStatisticsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TimeoutStatisticsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["cityName"] = this.cityName;
+        data["fireAuditNumber"] = this.fireAuditNumber;
+        data["fireCompleteNumber"] = this.fireCompleteNumber;
+        data["completeNumber"] = this.completeNumber;
+        return data; 
+    }
+
+    clone(): TimeoutStatisticsDto {
+        const json = this.toJSON();
+        let result = new TimeoutStatisticsDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITimeoutStatisticsDto {
+    cityName: string | undefined;
+    fireAuditNumber: number | undefined;
+    fireCompleteNumber: number | undefined;
+    completeNumber: number | undefined;
+}
+
+export class YearApplyNumberQueryDto implements IYearApplyNumberQueryDto {
+    dateTimeNow: moment.Moment | undefined;
+    startDateTime: moment.Moment | undefined;
+    endDateTime: moment.Moment | undefined;
+    completeStatus: number | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+
+    constructor(data?: IYearApplyNumberQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
+            this.startDateTime = data["startDateTime"] ? moment(data["startDateTime"].toString()) : <any>undefined;
+            this.endDateTime = data["endDateTime"] ? moment(data["endDateTime"].toString()) : <any>undefined;
+            this.completeStatus = data["completeStatus"];
+            this.page = data["page"];
+            this.sorting = data["sorting"];
+            this.skipCount = data["skipCount"];
+            this.maxResultCount = data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): YearApplyNumberQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new YearApplyNumberQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
+        data["startDateTime"] = this.startDateTime ? this.startDateTime.toISOString() : <any>undefined;
+        data["endDateTime"] = this.endDateTime ? this.endDateTime.toISOString() : <any>undefined;
+        data["completeStatus"] = this.completeStatus;
+        data["page"] = this.page;
+        data["sorting"] = this.sorting;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+
+    clone(): YearApplyNumberQueryDto {
+        const json = this.toJSON();
+        let result = new YearApplyNumberQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IYearApplyNumberQueryDto {
+    dateTimeNow: moment.Moment | undefined;
+    startDateTime: moment.Moment | undefined;
+    endDateTime: moment.Moment | undefined;
+    completeStatus: number | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+}
+
+export class ScreenTimeoutListQueryDto implements IScreenTimeoutListQueryDto {
+    dateTimeNow: moment.Moment | undefined;
+    processedStatus: number | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+
+    constructor(data?: IScreenTimeoutListQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
+            this.processedStatus = data["processedStatus"];
+            this.page = data["page"];
+            this.sorting = data["sorting"];
+            this.skipCount = data["skipCount"];
+            this.maxResultCount = data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): ScreenTimeoutListQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ScreenTimeoutListQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
+        data["processedStatus"] = this.processedStatus;
+        data["page"] = this.page;
+        data["sorting"] = this.sorting;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+
+    clone(): ScreenTimeoutListQueryDto {
+        const json = this.toJSON();
+        let result = new ScreenTimeoutListQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IScreenTimeoutListQueryDto {
+    dateTimeNow: moment.Moment | undefined;
+    processedStatus: number | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+}
+
+export class FireDataListQueryDto implements IFireDataListQueryDto {
+    statisticsType: number | undefined;
+    dateTimeNow: moment.Moment | undefined;
+    processedStatus: number | undefined;
+
+    constructor(data?: IFireDataListQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.statisticsType = data["statisticsType"];
+            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
+            this.processedStatus = data["processedStatus"];
+        }
+    }
+
+    static fromJS(data: any): FireDataListQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new FireDataListQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["statisticsType"] = this.statisticsType;
+        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
+        data["processedStatus"] = this.processedStatus;
+        return data; 
+    }
+
+    clone(): FireDataListQueryDto {
+        const json = this.toJSON();
+        let result = new FireDataListQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFireDataListQueryDto {
+    statisticsType: number | undefined;
+    dateTimeNow: moment.Moment | undefined;
+    processedStatus: number | undefined;
+}
+
+export class FireDataListDto implements IFireDataListDto {
+    completeCountNumber: number | undefined;
+    timeoutCountNumber: number | undefined;
+    aTimeByCountNumber: number | undefined;
+    avgCompleteTimeCountNumber: number | undefined;
+    items: CityFireDataList[] | undefined;
+
+    constructor(data?: IFireDataListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.completeCountNumber = data["completeCountNumber"];
+            this.timeoutCountNumber = data["timeoutCountNumber"];
+            this.aTimeByCountNumber = data["aTimeByCountNumber"];
+            this.avgCompleteTimeCountNumber = data["avgCompleteTimeCountNumber"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(CityFireDataList.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): FireDataListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new FireDataListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["completeCountNumber"] = this.completeCountNumber;
+        data["timeoutCountNumber"] = this.timeoutCountNumber;
+        data["aTimeByCountNumber"] = this.aTimeByCountNumber;
+        data["avgCompleteTimeCountNumber"] = this.avgCompleteTimeCountNumber;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): FireDataListDto {
+        const json = this.toJSON();
+        let result = new FireDataListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFireDataListDto {
+    completeCountNumber: number | undefined;
+    timeoutCountNumber: number | undefined;
+    aTimeByCountNumber: number | undefined;
+    avgCompleteTimeCountNumber: number | undefined;
+    items: CityFireDataList[] | undefined;
+}
+
+export class CityFireDataList implements ICityFireDataList {
+    cityName: string | undefined;
+    completeCountNumber: number | undefined;
+    timeoutCountNumber: number | undefined;
+    aTimeByCountNumber: number | undefined;
+    avgCompleteTimeCountNumber: number | undefined;
+
+    constructor(data?: ICityFireDataList) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.cityName = data["cityName"];
+            this.completeCountNumber = data["completeCountNumber"];
+            this.timeoutCountNumber = data["timeoutCountNumber"];
+            this.aTimeByCountNumber = data["aTimeByCountNumber"];
+            this.avgCompleteTimeCountNumber = data["avgCompleteTimeCountNumber"];
+        }
+    }
+
+    static fromJS(data: any): CityFireDataList {
+        data = typeof data === 'object' ? data : {};
+        let result = new CityFireDataList();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["cityName"] = this.cityName;
+        data["completeCountNumber"] = this.completeCountNumber;
+        data["timeoutCountNumber"] = this.timeoutCountNumber;
+        data["aTimeByCountNumber"] = this.aTimeByCountNumber;
+        data["avgCompleteTimeCountNumber"] = this.avgCompleteTimeCountNumber;
+        return data; 
+    }
+
+    clone(): CityFireDataList {
+        const json = this.toJSON();
+        let result = new CityFireDataList();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICityFireDataList {
+    cityName: string | undefined;
+    completeCountNumber: number | undefined;
+    timeoutCountNumber: number | undefined;
+    aTimeByCountNumber: number | undefined;
+    avgCompleteTimeCountNumber: number | undefined;
 }
 
 export class GetCurrentLoginInformationsOutput implements IGetCurrentLoginInformationsOutput {

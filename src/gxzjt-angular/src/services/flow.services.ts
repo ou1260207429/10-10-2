@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Rx';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FLOW_SERVICES_URL } from 'infrastructure/expression';
+import { FLOW_SERVICES_URL, XIEFENG_SERVICES_URL } from 'infrastructure/expression';
 
 /**
  * 对接谢峰的表单接口和流程接口   
@@ -13,30 +13,43 @@ export class FlowServices {
      * 查询已办流程
      */
     tenant_ProcessedWorkFlow_NodeAuditorRecord(page?: any): Observable<any> {
-        return this.http.post(FLOW_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/ProcessedWorkFlow_NodeAuditorRecord', page);
+        return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/ProcessedWorkFlow_NodeAuditorRecord', page);
     }
 
     /**
      * 查询待办流程
      */
     tenant_PendingWorkFlow_NodeAuditorRecord(page?: any): Observable<any> {
-        return this.http.post(FLOW_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/PendingWorkFlow_NodeAuditorRecord', page);
+        return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/PendingWorkFlow_NodeAuditorRecord', page);
     }
 
     /**
      * 获取已办流程的详情的路径
      */
     getWorkFlow_NodeRecordAndAuditorRecords(Id: string): Observable<any> {
-        return this.http.get(FLOW_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/getWorkFlow_NodeRecordAndAuditorRecords', {
+        return this.http.get(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/getWorkFlow_NodeRecordAndAuditorRecords', {
             params: {
                 Id: Id
             }
         });
     }
 
+    /**
+     * 获取待办的详情
+     */
+    tenant_GetWorkFlowInstanceFrowTemplateInfoById(data: WorkFlow) {
+        return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/Tenant_GetWorkFlowInstanceFrowTemplateInfoById', data);
+    }
+
     GXZJT_StartWorkFlowInstanceAsync(data: GXZJT_From) {
         return this.http.post(FLOW_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/GXZJT_StartWorkFlowInstanceAsync', data);
     }
+}
+
+export interface WorkFlow {
+    workFlow_TemplateInfoId: string,
+    workFlow_InstanceId: string,
+    workFlow_NodeAuditorRecordId: string,
 }
 
 
