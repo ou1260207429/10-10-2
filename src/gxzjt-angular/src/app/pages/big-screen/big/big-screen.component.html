@@ -1,5 +1,5 @@
-
-<div id="big" style="background-image:url('./assets/images/big/img_bg.png');width:100%;height:100%;background-size: 100% 100%;">
+<div id="big"
+    style="background-image:url('./assets/images/big/img_bg.png');width:100%;height:100%;background-size: 100% 100%;">
     <div id='stars'></div>
     <div id='stars2'></div>
     <div id='stars3'></div>
@@ -67,103 +67,116 @@
             </div>
         </div>
         <div style='height:40%;width:100%'>
-            <div style='width:50%;height:100%;float:left;background-image:url("./assets/images/big/img_excel_bg.png");background-size: 100% 100%;    padding-left: 3%;
-                padding-right: 3%;'>
-                <span style="    font-size: 20px;
+            <div style='width:50%;height:100%;float:left;background-image:url("./assets/images/big/img_excel_bg.png");background-size: 100% 100%;padding-left: 1%;
+            padding-right: 1%;'>
+                <span style="font-size: 20px;
                 color: #13F5FF;
                 font-weight: 400;
                 position: relative;
-                left: 12%;
+                left: 15%;
                 display: block;
                 margin-top: -1%;">
                     累计办理情况（年度）
                 </span>
-                <nz-table class='FireTable' [nzData]="data" nzIsPagination='true' [(nzPageSize)]='pagesize'
-                    [(nzPageIndex)]='pageindex' nzShowPagination='false'>
-                    <thead nz-thead>
-                        <tr>
-                            <th nz-th>
-                                <span>序号</span>
-                            </th>
-                            <th nz-th>
-                                <span>工程名称</span>
-                            </th>
-                            <th nz-th>
-                                <span>申报单位</span>
-                            </th>
-                            <th nz-th>
-                                <span>联系人</span>
-                            </th>
-                            <th nz-th>
-                                <span>审批时间</span>
-                            </th>
-                            <th nz-th>
-                                <span>审批结果</span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody nz-tbody>
-                        <tr nz-tbody-tr *ngFor='let data of data;let i = index;'>
-                            <td nz-td>{{i+1}}</td>
-                            <td nz-td>{{data.name}}</td>
-                            <td nz-td>{{data.unit}}</td>
-                            <td nz-td>{{data.people}}</td>
-                            <td nz-td>{{data.time}}</td>
-                            <td nz-td *ngIf='data.state == "合格"' style='color:#2EDB63'>{{data.state}}</td>
-                            <td nz-td *ngIf='data.state == "不合格"' style='color:red'>{{data.state}}</td>
-                        </tr>
-                    </tbody>
-                </nz-table>
+                <div style='width:100%;height:93%;padding-top:7%'>
+                    <nz-table class='FireTable' nzSize="small" nzBordered='false' [nzData]="data" nzIsPagination='true'
+                        [(nzPageSize)]='pagesize' [(nzPageIndex)]='pageindex' nzShowPagination='false'>
+                        <thead nz-thead>
+                            <tr>
+                                <th nz-th>
+                                    <span>序号</span>
+                                </th>
+                                <th nz-th>
+                                    <span>工程名称</span>
+                                </th>
+                                <th nz-th>
+                                    <span>申报单位</span>
+                                </th>
+                                <th nz-th>
+                                    <span>联系人</span>
+                                </th>
+                                <th nz-th>
+                                    <span>审批时间</span>
+                                </th>
+                                <th nz-th>
+                                    <span>审批结果</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody nz-tbody>
+                            <tr nz-tbody-tr *ngFor='let data of data;let i = index;'>
+                                <td nz-td>{{i+1}}</td>
+                                <td nz-td>{{data.name}}</td>
+                                <td nz-td>{{data.unit}}</td>
+                                <td nz-td>{{data.people}}</td>
+                                <td nz-td>{{data.time}}</td>
+                                <td nz-td *ngIf='data.state == "合格"' style='color:#2EDB63'>{{data.state}}</td>
+                                <td nz-td *ngIf='data.state == "不合格"' style='color:red'>{{data.state}}</td>
+                            </tr>
+                        </tbody>
+                    </nz-table>
+                </div>
+
             </div>
-            <div style='width:50%;height:100%;float:left;background-image:url("./assets/images/big/img_excel_bg.png");background-size: 100% 100%;    padding-left: 3%;
-                padding-right: 3%;'>
-                <span style="    font-size: 20px;
+            <div style='width:50%;height:100%;float:left;background-image:url("./assets/images/big/img_excel_bg.png");background-size: 100% 100%;padding-left: 1%;
+            padding-right: 1%;'>
+                <span style="font-size: 20px;
                 color: #13F5FF;
                 font-weight: 400;
                 position: relative;
-                left: 12%;
+                left: 15%;
                 display: block;
                 margin-top: -1%;">
                     超时办理列表
                 </span>
-                <nz-table class='FireTable' [nzData]="data" nzIsPagination='true' [(nzPageSize)]='pagesize'
-                    [(nzPageIndex)]='pageindex' nzShowPagination='false'>
-                    <thead nz-thead>
-                        <tr>
-                            <th nz-th>
-                                <span>工程名称</span>
-                            </th>
-                            <th nz-th>
-                                <span>申报单位</span>
-                            </th>
-                            <th nz-th>
-                                <span>联系人</span>
-                            </th>
-                            <th nz-th>
-                                <span>审批时间</span>
-                            </th>
-                            <th nz-th>
-                                <span>审批结果</span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody nz-tbody>
-                        <tr nz-tbody-tr>
-                            <td nz-td>市政建设工程一</td>
-                            <td nz-td>部门一</td>
-                            <td nz-td>张三</td>
-                            <td nz-td>2019-06-01</td>
-                            <td nz-td>合格</td>
-                        </tr>
-                    </tbody>
-                </nz-table>
+                <div style='width:100%;height:93%;padding-top:7%'>
+                    <!-- <nz-table class='FireTable' nzSize="small" [nzData]="data" nzIsPagination='true' [nzPageSize]='8'
+                        [(nzPageIndex)]='pageindex' nzShowPagination='false'> -->
+                    <nz-table class='FireTable' #basicTable nzSize="small" [nzData]="data" nzShowPagination='false'
+                        [(nzPageSize)]="pagesize" [nzFrontPagination]='false' [(nzPageIndex)]="pageindex"
+                        (nzPageIndexChange)="PageChange($event)">
+                        <thead nz-thead>
+                            <tr>
+                                <th nz-th>
+                                    <span>序号</span>
+                                </th>
+                                <th nz-th>
+                                    <span>工程名称</span>
+                                </th>
+                                <th nz-th>
+                                    <span>申报单位</span>
+                                </th>
+                                <th nz-th>
+                                    <span>联系人</span>
+                                </th>
+                                <th nz-th>
+                                    <span>审批时间</span>
+                                </th>
+                                <th nz-th>
+                                    <span>审批结果</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody nz-tbody>
+                            <tr nz-tbody-tr *ngFor='let data of data;let i = index;'>
+                                <td nz-td>{{(i+1)+(pageindex - 1 )*pagesize}}</td>
+                                <td nz-td>{{data.name}}</td>
+                                <td nz-td>{{data.unit}}</td>
+                                <td nz-td>{{data.people}}</td>
+                                <td nz-td>{{data.time}}</td>
+                                <td nz-td *ngIf='data.state == "合格"' style='color:#2EDB63'>{{data.state}}</td>
+                                <td nz-td *ngIf='data.state == "不合格"' style='color:red'>{{data.state}}</td>
+                            </tr>
+                        </tbody>
+                    </nz-table>
+                </div>
             </div>
         </div>
     </div>
     <div style="position: relative; height: 88.2%;float: left;margin-left: 2%;width: 383.04px;margin-top: 2%;"
         [style.width]='RightWidth'>
-        <span style='color:#00EDF8;font-size:20px'>累计登陆人数</span>
-        <div style='width:100%;height: 8%;margin-top: 25%;'>
+        <span style='color:#00EDF8;font-size:20px'>累计登录人数</span>
+        <div style='width:100%;height: 8%;'>
             <div class='NumBerTop' style='background-image:url("./assets/images/big/img_shape_bg.png");'>
                 <span>6</span>
             </div>
@@ -187,7 +200,7 @@
             </div>
 
         </div>
-        <div style='width:100%;height:78%;margin-top: 10%;'>
+        <div style='width:100%;height:86%;margin-top: 10%;'>
             <div class='NumBer'
                 style='background-image:url("./assets/images/big/img_number_bg.png");background-size: 100% 100%;padding-left: 3%;padding-right: 3%;'>
                 <span class="NumBerTitle">消防设计审核</span>

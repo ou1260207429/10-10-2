@@ -10,7 +10,7 @@ import { SysSettingUnitInfoEditComponent } from './unit-info-edit/unit-info-edit
 
 const COMPONENTS = [
   SpotCheckProportionComponent
-,
+  ,
   SysSettingUnitInfoManageComponent,
   SysSettingLogManageComponent,
   SysSettingLogEditComponent,

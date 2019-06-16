@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { STColumn, STComponent, XlsxService } from '@delon/abc';
 
-
 import { _HttpClient } from '@delon/theme';
-
 
 import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, DataSourceResult } from '@shared/service-proxies/service-proxies'
 
@@ -11,24 +9,29 @@ import { PublicFormComponent } from '../public/public-form.component';
 
 import { Router } from '@angular/router';
 
-import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
-import { FlowServices } from 'services/flow.services';
+
 /**
- * 待办流程
+ * 权限管理
  */
 @Component({
-  selector: 'app-agency-done',
+  selector: 'org-manager',
   templateUrl: '../public/public-form.html',
   styles: [],
 })
-export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
+export class OrgManagerComponent extends PublicFormComponent implements OnInit {
 
 
-  searchKey = '';
 
 
   page = 1;
 
+  searchInputs = [
+    {
+      searchKey: "",
+      formControlName: "search",
+      placeholder: "组织名称"
+    }
+  ];
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
@@ -36,23 +39,49 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
       title: '操作',
       buttons: [
         {
-          text: '执行', click: (item: any) => {
+          text: '编辑', click: (item: any) => {
             this.watchItem(item);
           }
         },
       ]
     },
-    { title: '表单', index: 'fromName' },
-    { title: '创建人员', index: 'createEName' },
-    { title: '申报时间', index: 'completionTime' },
+    { title: '部门', index: 'pro_type' },
+    { title: '流程流水号', index: 'pro_no' },
+
+    { title: '工程名称', index: 'pro_name' },
+
+    { title: '建设单位', index: 'org' },
+    {
+      title: '工程类型', index: 'node',
+      sort: {
+        compare: (a, b) => a.node > b.node ? 1 : 0,
+      },
+      filter: {
+        menus: [
+          { text: '初审', value: 0 },
+          { text: '复审', value: 1 },
+          { text: '审核完毕', value: 2 },
+        ],
+        fn: (filter: any, record: any) =>
+          record.node >= filter.value[0] && record.node <= filter.value[1],
+        multiple: false,
+      }
+    },
+    { title: '当前处理人', index: 'person' },
+
+    { title: '申报时间', type: 'date', index: 'repo_time' },
+    { title: '流程超时', index: 'timeout' }
+
   ];
 
   constructor(private workFlowedServiceProxy: WorkFlowedServiceProxy,
-    private _flowServices: FlowServices,
     private router: Router,
     private http: _HttpClient,
     private xlsx: XlsxService) {
     super();
+    this.needAdd = true;
+    this.needSingleForm = false;
+    this.needTreeForm = true;
   }
 
   ngOnInit() {
@@ -66,16 +95,8 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   }
 
   search() {
-
     var searchParam = new PendingWorkFlow_NodeAuditorRecordDto();
-
-
-
     var jsonData = {
-      "applyTimeStart": this.rangeTime ? this.rangeTime[0] : null,
-      "applyTimeEnd": this.rangeTime ? this.rangeTime[1] : new Date(),
-      "companyName": this.orgName,
-      "projectName": this.proName,
       "pagedAndFilteredInputDto": {
         "filterText": "",
         "page": this.page,
@@ -88,17 +109,23 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     searchParam.init(jsonData);
 
     this.isSearchForm = true;
-    this._flowServices.tenant_PendingWorkFlow_NodeAuditorRecord(searchParam).subscribe(data => {
-      this.formResultData = data.result.data;
+    this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(searchParam).subscribe((res: DataSourceResult) => {
+      console.log(JSON.stringify(res));
+      this.formResultData = res.data;
       this.isSearchForm = false;
-    })
+    }, err => {
+      console.log(err);
+      this.isSearchForm = false;
+    });
 
   }
+
 
 
   watchItem(item) {
-    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.workFlow_TemplateInfo_Id}/${item.workFlow_Instance_Id}/${item.workFlow_NodeRecord_Id}`]);
+
   }
+
 
   exportXlsx() {
     const expData = [this.columns.map(i => i.title)];

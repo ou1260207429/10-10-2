@@ -1,3 +1,4 @@
+import { ProjectFlowServcieServiceProxy, SdeclareStatisticsQueryDto } from './../../../../shared/service-proxies/service-proxies';
 import { OnInit, Component } from "@angular/core";
 import { _HttpClient } from "@delon/theme";
 
@@ -18,7 +19,7 @@ export class BigScreenComponent implements OnInit {
     RightWidth = '';
     constructor(
         private http: _HttpClient,
-        // private es: NgxEchartsService
+        private service: ProjectFlowServcieServiceProxy
     ) {
         let currComponent = this;
         if (document.body.scrollHeight === window.screen.height && document.body.scrollWidth === window.screen.width) {
@@ -56,14 +57,13 @@ export class BigScreenComponent implements OnInit {
     pagesize = 7;
     pageindex = 1;
     ngOnInit() {
-
-        this.Line();
-        this.OverTimeBar1();
-        this.OverTimeBar2();
-        this.OverTimeBar3();
-        this.Bar2();
-        this.Bar3();
-        this.Bar4();
+        // this.Line();
+        // this.OverTimeBar1();
+        // this.OverTimeBar2();
+        // this.OverTimeBar3();
+        // this.Bar2();
+        // this.Bar3();
+        // this.Bar4();
         this.Pie1();
         this.Pie2();
         this.Pie3();
@@ -101,10 +101,70 @@ export class BigScreenComponent implements OnInit {
                     break;
             }
         }, 3000);
+        this.Post_GetDeclareRate();
+        this.DisposableGetDeclareRate();
+        this.GetScreenTimeoutStatistics();
+    }
+    model = new SdeclareStatisticsQueryDto();
+    //申报统计
+    Post_GetDeclareRate() {
+        this.model.fireAuditStatus = 2;
+        this.model.fireCompleteStatus = 2;
+        this.model.completeStatus = 3;
+        const CityList = [];
+        const completeList = [];
+        const fireAudit = [];
+        const fireComplete = [];
+        this.service.post_GetDeclareRate(this.model).subscribe((res) => {
+            res.forEach(e => {
+                CityList.push(e.cityName);
+                completeList.push(e.completeNumber);
+                fireAudit.push(e.fireAuditNumber);
+                fireComplete.push(e.fireCompleteNumber);
+            });
+            this.OverTimeBar1(CityList, completeList);
+            this.OverTimeBar2(CityList, fireAudit);
+            this.OverTimeBar3(CityList, fireComplete);
+        });
+    }
+    // 一次性通过率
+    DisposableGetDeclareRate() {
+        this.model.fireAuditStatus = -1;
+        this.model.fireCompleteStatus = -1;
+        this.model.completeStatus = -1;
+        const CityList = [];
+        const completeList = [];
+        const fireAuditList = [];
+        const fireCompleteList = [];
+        this.service.post_GetDeclareRate(this.model).subscribe((res) => {
+            res.forEach(e => {
+                CityList.push(e.cityName);
+                completeList.push(e.completeNumber);
+                fireAuditList.push(e.fireAuditNumber);
+                fireCompleteList.push(e.fireCompleteNumber);
+            });
+            this.Line(CityList, completeList, fireAuditList, fireCompleteList);
+            // this.Bar3(CityList, fireAudit);
+            // this.Bar4(CityList, fireComplete);
+        });
+    }
+    // 超时统计
+    GetScreenTimeoutStatistics() {
+        let model = {
+            dateTimeNow: new Date()
+        }
+        // this.http.post('/api/services/app/ScreenService/Psot_GetScreenTimeoutStatistics', model).subscribe((res) => {
+        //     console.log(res);
+
+        // })
+    }
+    // 累计办理情况
+    GetScreenYearApplyNumber() {
+
     }
     GetData() {
         this.data = [];
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 7; i++) {
             if (i % 2 === 0) {
                 this.data.push({
                     name: '市政建设工程一',
@@ -124,14 +184,36 @@ export class BigScreenComponent implements OnInit {
             }
 
         }
+        // 计算有多少页
+        this.changeNum = Math.floor(this.tatol / 7);
+        if (this.tatol % 7 !== 0) {
+            this.changeNum = this.changeNum + 1;
+        }
+    }
+    changeNum = 0;
+    tatol = 100;
+    PageChange() {
+
     }
     option: any;
-    Line() {
+    Line(city, completeList, fireAuditList, fireCompleteList) {
         this.option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {             //  坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'         //  默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+                data: city,//['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
                 axisLabel: {
                     textStyle: {
                         color: '#fff'
@@ -150,6 +232,7 @@ export class BigScreenComponent implements OnInit {
                         color: '#fff'
                     },
                 },
+                max: 'dataMax',
                 splitLine: {
                     show: false
                 },
@@ -157,20 +240,50 @@ export class BigScreenComponent implements OnInit {
                     alignWithLabel: true
                 },
             },
-            series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320, 820, 932, 901, 934, 1290, 1330],
-                type: 'line',
-                areaStyle: {
-                    color: '#201756',
+            legend: {
+                x: 'center',
+                data: ['消防设计审查,消防验收,竣工验收备案'],
+                padding: [20, 0, 0, 0],
+                textStyle: {
+                    color: '#fff'
                 },
-                itemStyle: {
-                    color: '#9013fe',
-                }
-            }]
+            },
+            series: [
+                {
+                    data: completeList,//[820, 932, 901, 934, 1290, 1330, 1320, 820, 932, 901, 934, 1290, 1330],
+                    type: 'line',
+                    areaStyle: {
+                        color: '#201756',
+                    },
+                    itemStyle: {
+                        color: '#9013fe',
+                    }
+                },
+                {
+                    data: fireAuditList,//[820, 932, 901, 934, 1290, 1330, 1320, 820, 932, 901, 934, 1290, 1330],
+                    type: 'line',
+                    areaStyle: {
+                        color: '#201756',
+                    },
+                    itemStyle: {
+                        color: 'red',
+                    }
+                },
+                {
+                    data: fireCompleteList,// [820, 932, 901, 934, 1290, 1330, 1320, 820, 932, 901, 934, 1290, 1330],
+                    type: 'line',
+                    areaStyle: {
+                        color: '#201756',
+                    },
+                    itemStyle: {
+                        color: '#008000',
+                    }
+                },
+            ]
         };
     }
     OverTimebar1: any;
-    OverTimeBar1() {
+    OverTimeBar1(city, data) {
         this.OverTimebar1 = {
             legend: {
                 x: 'center',
@@ -195,7 +308,7 @@ export class BigScreenComponent implements OnInit {
             xAxis: [
                 {
                     type: 'category',
-                    data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+                    data: city,//['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
                     axisLabel: {
                         textStyle: {
                             color: '#fff'
@@ -228,7 +341,7 @@ export class BigScreenComponent implements OnInit {
                 {
                     name: '消防设计审查',
                     type: 'bar',
-                    data: [5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
+                    data: data, //[5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
                     barWidth: 20, // 柱形宽度
                     itemStyle: {
                         normal: {
@@ -261,7 +374,7 @@ export class BigScreenComponent implements OnInit {
         };
     }
     OverTimebar2: any;
-    OverTimeBar2() {
+    OverTimeBar2(city, data) {
         this.OverTimebar2 = {
             legend: {
                 x: 'center',
@@ -286,7 +399,7 @@ export class BigScreenComponent implements OnInit {
             xAxis: [
                 {
                     type: 'category',
-                    data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+                    data: city,//['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
                     axisLabel: {
                         textStyle: {
                             color: '#fff'
@@ -319,7 +432,7 @@ export class BigScreenComponent implements OnInit {
                 {
                     name: '消防验收',
                     type: 'bar',
-                    data: [5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
+                    data: data,//[5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
                     barWidth: 20, // 柱形宽度
                     itemStyle: {
                         normal: {
@@ -352,7 +465,7 @@ export class BigScreenComponent implements OnInit {
         };
     }
     OverTimebar3: any;
-    OverTimeBar3() {
+    OverTimeBar3(city, data) {
         this.OverTimebar3 = {
             legend: {
                 x: 'center',
@@ -377,7 +490,7 @@ export class BigScreenComponent implements OnInit {
             xAxis: [
                 {
                     type: 'category',
-                    data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+                    data: city,//['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
                     axisLabel: {
                         textStyle: {
                             color: '#fff'
@@ -410,7 +523,7 @@ export class BigScreenComponent implements OnInit {
                 {
                     name: '竣工验收备案',
                     type: 'bar',
-                    data: [5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
+                    data: data,//[5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
                     barWidth: 20, // 柱形宽度
                     itemStyle: {
                         normal: {
@@ -443,7 +556,7 @@ export class BigScreenComponent implements OnInit {
         };
     }
     bar2: any;
-    Bar2() {
+    Bar2(city, data) {
         this.bar2 = {
             tooltip: {
                 trigger: 'axis',
@@ -534,7 +647,7 @@ export class BigScreenComponent implements OnInit {
         };
     }
     bar3: any;
-    Bar3() {
+    Bar3(city, data) {
         this.bar3 = {
             tooltip: {
                 trigger: 'axis',
@@ -626,7 +739,7 @@ export class BigScreenComponent implements OnInit {
         };
     }
     bar4: any;
-    Bar4() {
+    Bar4(city, data) {
         this.bar4 = {
             tooltip: {
                 trigger: 'axis',

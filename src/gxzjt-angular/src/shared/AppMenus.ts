@@ -143,16 +143,33 @@ export class AppMenus {
         },
         {
           text: "单位信息管理",
-
-          link: "/app/sys-setting/unit-info-manage",
+          icon: { type: "icon", value: "account-book" },// 图标
+          children: [
+            {
+              text: "抽查比例中心",
+              link: "/app/sys-setting/spot-check-proportion",
+            }
+          ]
         },
         {
           text: "日志管理",
 
           link: "/app/sys-setting/log-manage",
-        }
+        },
 
       ]
     },
+    {
+      text: "权限管理",
+      icon: { type: "icon", value: "team" },// 图标
+      children: [
+        {
+          text: "组织架构管理",
+          link: "/app/permission/org-manager",
+        }
+      ]
+    },
+
   ];
 }
+

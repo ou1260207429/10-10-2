@@ -1,0 +1,45 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+
+    <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
+        type="{{ hiddenFliter?'down':'up'}}"></i>{{ hiddenFliter?'展开条件':'收起条件'}}</button>
+    <button (click)="refresh()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
+    <button *ngIf="needAdd" (click)="add()" nz-button nzType="primary"><i nz-icon type="add"></i>添加</button>
+    <button *ngIf="needInport" (click)="inportXlsx()" nz-button nzType="primary"><i nz-icon
+        type="inport"></i>导入</button>
+    <button *ngIf="needRxport" (click)="exportXlsx()" nz-button nzType="primary"><i nz-icon
+        type="export"></i>导出</button>
+  </ng-template>
+</page-header>
+<nz-card>
+
+  <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
+
+    <input *ngFor="let item of searchInputs" nz-input [(ngModel)]="item.searchKey"
+      [formControlName]="item.formControlName" [placeholder]="item.placeholder"
+      style="margin-right: 10px;margin-top: 10px;width: 200px;">
+
+    <button nz-button (click)="resetSearchFliterForm()" style="margin-right: 10px;margin-top: 10px;">重置</button>
+
+    <button nz-button (click)="search()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>
+  </form>
+
+  <div *ngIf="needTreeForm" nz-row nzGutter="12" style="width: 100%">
+
+    <nz-col nzSpan="6">
+      <nz-card nzTitle="Card title">
+        <nz-tree [nzData]="nodes" nzShowLine> </nz-tree>
+      </nz-card>
+    </nz-col>
+    <nz-col nzSpan="18">
+      <st #st [data]="formResultData" [columns]="columns" [loading]="isSearchForm"></st>
+    </nz-col>
+  </div>
+
+  <st *ngIf="needSingleForm" #st [data]="formResultData" [columns]="columns" [loading]="isSearchForm"></st>
+
+
+  <br>
+  <nz-pagination [(nzPageIndex)]="page" [nzTotal]="500" nzShowQuickJumper (nzPageIndexChange)="search()"
+    [nzPageSize]="pageSize"></nz-pagination>
+</nz-card>

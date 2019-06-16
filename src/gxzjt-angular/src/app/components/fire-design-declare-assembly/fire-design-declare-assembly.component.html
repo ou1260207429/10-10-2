@@ -195,7 +195,7 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>
             审图编号
           </td>
-          <td rowspan='1' colspan='1'>
+          <td rowspan='1' colspan='13'>
             <se error="这是必填项">
               <input nz-input placeholder="请输入审图编号" name="ststbh" [(ngModel)]="data.mappingUnit.no" required />
             </se>
@@ -209,10 +209,10 @@
             style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true> 使用性质 </td>
           <td colspan='2' class="fontweight fontLeft leftTitle" style="width: 110px;">特殊建设工程:</td>
           <td colspan="15" style="text-align: left;">
-            <div *ngFor="let item of data.listArr let index=index"
+            <div *ngFor="let item of data.specialEngineering.listArr let index=index"
               style="width: 100%;overflow: hidden;margin-bottom: 10px">
               <p class="fontweight fontLeft" style="text-align: left;">{{index+1}}、{{item.title}}</p>
-              <nz-radio-group [(ngModel)]="item.value" name="syxzRadio{{index}}">
+              <nz-radio-group [(ngModel)]="data.specialEngineering.value" name="syxzRadio{{index}}">
                 <label nz-radio [nzValue]="o.value" *ngFor="let o of item.arr">{{ o.name }}</label>
               </nz-radio-group>
             </div>
@@ -221,7 +221,7 @@
 
         <tr>
           <td style="width: 37px;background-color: #d0e8fe;color: #5a95e9;font-weight: 600;border-right: 0;"
-            [attr.rowspan]="data.basicInformation.length+3">工程基本情况
+            [attr.rowspan]="data.basicInformation.length+3" required=true>工程基本情况
           </td>
         </tr>
         <tr style="border-top: 1px solid #e2e2e2;">
@@ -247,37 +247,76 @@
         </tr>
         <tr *ngFor="let item of data.basicInformation;let index = index">
           <!-- 请输入单位建筑名称 -->
-          <td colspan="3"><input nz-input [(ngModel)]="item.name" name="jbname{{index}}" /></td>
+          <td colspan="3">
+            <se error="这是必填项">
+              <input nz-input [(ngModel)]="item.name" name="jbname{{index}}" required />
+            </se>
+          </td>
           <!-- 请输入结构类型 -->
           <td style="width: 130px;max-width: 130px;">
-            <nz-select [(ngModel)]="item.type" name="jbtype{{index}}">
-              <nz-option *ngFor="let option of typeSelect" [nzLabel]="option.label" [nzValue]="option.value">
-              </nz-option>
-            </nz-select>
+            <se error="这是必填项">
+              <nz-select [(ngModel)]="item.type" name="jbtype{{index}}" required>
+                <nz-option *ngFor="let option of typeSelect" [nzLabel]="option.label" [nzValue]="option.value">
+                </nz-option>
+              </nz-select>
+            </se>
           </td>
           <!-- 请输入耐火等级 -->
-          <td><input nz-input [(ngModel)]="item.grade" name="jbgrade{{index}}" /></td>
+          <td>
+            <se error="这是必填项">
+              <nz-select [(ngModel)]="item.grade" name="jbgrade{{index}}" required>
+                <nz-option *ngFor="let option of refractoryEnum" [nzLabel]="option.label" [nzValue]="option.value">
+                </nz-option>
+              </nz-select>
+            </se>
+          </td>
           <!-- 层数 地上、地下 -->
-          <td><input nz-input [(ngModel)]="item.aboveGround" name="jbaboveGround{{index}}" /></td>
-          <td><input nz-input [(ngModel)]="item.underground" name="jbunderground{{index}}" /></td>
+          <td>
+            <se error="这是必填项"><input nz-input [(ngModel)]="item.aboveGround" name="jbaboveGround{{index}}" required />
+            </se>
+          </td>
+          <td>
+            <se error="这是必填项"><input nz-input [(ngModel)]="item.underground" name="jbunderground{{index}}" required />
+            </se>
+          </td>
 
           <!-- 请输入建筑高度 -->
-          <td><input nz-input [(ngModel)]="item.height" name="jbheight{{index}}" /></td>
+          <td>
+            <se error="这是必填项"><input nz-input [(ngModel)]="item.height" name="jbheight{{index}}" required /></se>
+          </td>
           <!-- 请输入建筑面积 -->
-          <td><input nz-input [(ngModel)]="item.builtUpArea" name="jbbuiltUpArea{{index}}" /></td>
+          <td>
+            <se error="这是必填项"><input nz-input [(ngModel)]="item.builtUpArea" name="jbbuiltUpArea{{index}}" required />
+            </se>
+          </td>
           <!-- 请输入占地面积 -->
-          <td><input nz-input [(ngModel)]="item.areaCovered" name="jbareaCovered{{index}}" /></td>
+          <td>
+            <se error="这是必填项"><input nz-input [(ngModel)]="item.areaCovered" name="jbareaCovered{{index}}" required />
+            </se>
+          </td>
           <!-- 请输入防火分区 数量、最大面积 -->
-          <td><input nz-input [(ngModel)]="item.firePreventionSum" name="jbfirePreventionSum{{index}}" /></td>
-          <td><input nz-input [(ngModel)]="item.firePreventionMaximumArea"
-              name="jbfirePreventionMaximumArea{{index}}" /></td>
+          <td>
+            <se error="这是必填项"><input nz-input [(ngModel)]="item.firePreventionSum" name="jbfirePreventionSum{{index}}"
+                required /></se>
+          </td>
+          <td>
+            <se error="这是必填项"><input nz-input [(ngModel)]="item.firePreventionMaximumArea"
+                name="jbfirePreventionMaximumArea{{index}}" required /></se>
+          </td>
           <!-- 防烟分区 数量、最大面积 -->
-          <td><input nz-input [(ngModel)]="item.smokeControlSum" name="jbsmokeControlSum{{index}}" /></td>
-          <td><input nz-input [(ngModel)]="item.smokeControlMaximumArea" name="jbsmokeControlMaximumArea{{index}}" />
+          <td>
+            <se error="这是必填项"><input nz-input [(ngModel)]="item.smokeControlSum" name="jbsmokeControlSum{{index}}"
+                required /></se>
+          </td>
+          <td>
+            <se error="这是必填项"><input nz-input [(ngModel)]="item.smokeControlMaximumArea"
+                name="jbsmokeControlMaximumArea{{index}}" required /></se>
           </td>
 
           <!-- 请输入火灾危险性 -->
-          <td><input nz-input [(ngModel)]="item.fireHazard" name="jbfireHazard" /></td>
+          <td>
+            <se error="这是必填项"><input nz-input [(ngModel)]="item.fireHazard" name="jbfireHazard" required /></se>
+          </td>
 
           <td><a (click)="addArray(data.basicInformation)">新增</a>
             <a (click)="deleteArray(data.basicInformation,index)">删除</a> </td>
@@ -483,9 +522,14 @@
         <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
           style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>审图公司意见</td>
         <td rowspan='1' colspan='14' class="textLeft">
-          <p>该项目消防设计文件的编制符合消防设计文件申请要求；建筑的总平面布局和平面布置、耐火等级、建筑构造、安全疏散、消防给水、消防电源及配电、消防设施等的消防设计符合国家工程工程建设消防技术标准。</p>
-          <div>审图单位 <se error="这是必填项"><input style="width: 80px" nz-input placeholder="请输入使用性质"
-                [(ngModel)]="data.corporateOpinion.seal" name="data.corporateOpinionseal" required /></se>（盖章）</div>
+          <se error="这是必填项">
+            <textarea nz-input placeholder="请输入审图公司意见" [(ngModel)]="data.corporateOpinion.opinion"
+              name="corporateOpinionopinion" required>
+            </textarea>
+          </se>
+          <div class="textRight">审图单位 <se error="这是必填项"><input style="width: 80px" nz-input placeholder="请输入使用性质"
+                [(ngModel)]="data.corporateOpinion.seal" name="data.corporateOpinionseal" required /></se>
+          </div>
           <div class="textRight">审图单位项目负责人签名 <se error="这是必填项"><input style="width: 80px" nz-input placeholder="请输入使用性质"
                 [(ngModel)]="data.corporateOpinion.name" name="data.corporateOpinionname" required /></se>
           </div>
