@@ -19,13 +19,9 @@
             <nz-form-control>
               <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-user" nzHasFeedback>
                 <input nz-input name="userName" #userName="ngModel" type="text"
-<<<<<<< HEAD
-                  [(ngModel)]="loginService.authenticateModel.userNameOrEmailAddress" placeholder="请输入电话号码" required>
-=======
                   [(ngModel)]="loginService.authenticateModel.userNameOrEmailAddress" placeholder="请输入电话号码" required
                   maxlength="11">
                 <!-- pattern="^1\d{10}$" -->
->>>>>>> 777bb0c8342a9a20345d181f6e0821cbff6874ea
               </nz-input-group>
               <nz-form-explain *ngIf="userName.control.dirty&&userName.control.errors">
                 <ng-container>

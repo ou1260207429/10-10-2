@@ -8,44 +8,6 @@ import { FLOW_SERVICES_URL, XIEFENG_SERVICES_URL } from 'infrastructure/expressi
  */
 @Injectable()
 export class FlowServices {
-<<<<<<< HEAD
-    constructor(public http: HttpClient) { }
-    /**
-     * 查询已办流程
-     */
-    tenant_ProcessedWorkFlow_NodeAuditorRecord(page?: any): Observable<any> {
-        return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/ProcessedWorkFlow_NodeAuditorRecord', page);
-    }
-
-    /**
-     * 查询待办流程
-     */
-    tenant_PendingWorkFlow_NodeAuditorRecord(page?: any): Observable<any> {
-        return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/PendingWorkFlow_NodeAuditorRecord', page);
-    }
-
-    /**
-     * 获取已办流程的详情的路径
-     */
-    getWorkFlow_NodeRecordAndAuditorRecords(Id: string): Observable<any> {
-        return this.http.get(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/getWorkFlow_NodeRecordAndAuditorRecords', {
-            params: {
-                Id: Id
-            }
-        });
-    }
-
-    /**
-     * 获取待办的详情
-     */
-    tenant_GetWorkFlowInstanceFrowTemplateInfoById(data: WorkFlow) {
-        return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/Tenant_GetWorkFlowInstanceFrowTemplateInfoById', data);
-    }
-
-    GXZJT_StartWorkFlowInstanceAsync(data: GXZJT_From) {
-        return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/GXZJT_StartWorkFlowInstanceAsync', data);
-    }
-=======
   constructor(public http: HttpClient) { }
   /**
    * 查询已办流程
@@ -80,9 +42,8 @@ export class FlowServices {
   }
 
   GXZJT_StartWorkFlowInstanceAsync(data: GXZJT_From) {
-    return this.http.post(FLOW_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/GXZJT_StartWorkFlowInstanceAsync', data);
+    return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/GXZJT_StartWorkFlowInstanceAsync', data);
   }
->>>>>>> 777bb0c8342a9a20345d181f6e0821cbff6874ea
 }
 
 export interface WorkFlow {
