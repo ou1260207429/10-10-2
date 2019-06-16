@@ -3753,6 +3753,78 @@ export class RoleServiceProxy {
 }
 
 @Injectable()
+export class ScreenServiceServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param screenTimeoutStatisticsQueryDto (optional) 
+     * @return Success
+     */
+    psot_GetScreenTimeoutStatistics(screenTimeoutStatisticsQueryDto: ScreenTimeoutStatisticsQueryDto | null | undefined): Observable<TimeoutStatisticsDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ScreenService/Psot_GetScreenTimeoutStatistics";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(screenTimeoutStatisticsQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPsot_GetScreenTimeoutStatistics(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPsot_GetScreenTimeoutStatistics(<any>response_);
+                } catch (e) {
+                    return <Observable<TimeoutStatisticsDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TimeoutStatisticsDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPsot_GetScreenTimeoutStatistics(response: HttpResponseBase): Observable<TimeoutStatisticsDto[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(TimeoutStatisticsDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TimeoutStatisticsDto[]>(<any>null);
+    }
+}
+
+@Injectable()
 export class SessionServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -9196,6 +9268,104 @@ export class PagedResultDtoOfRoleDto implements IPagedResultDtoOfRoleDto {
 export interface IPagedResultDtoOfRoleDto {
     totalCount: number | undefined;
     items: RoleDto[] | undefined;
+}
+
+export class ScreenTimeoutStatisticsQueryDto implements IScreenTimeoutStatisticsQueryDto {
+    dateTimeNow: moment.Moment | undefined;
+
+    constructor(data?: IScreenTimeoutStatisticsQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): ScreenTimeoutStatisticsQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ScreenTimeoutStatisticsQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): ScreenTimeoutStatisticsQueryDto {
+        const json = this.toJSON();
+        let result = new ScreenTimeoutStatisticsQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IScreenTimeoutStatisticsQueryDto {
+    dateTimeNow: moment.Moment | undefined;
+}
+
+export class TimeoutStatisticsDto implements ITimeoutStatisticsDto {
+    cityName: string | undefined;
+    fireAuditNumber: number | undefined;
+    fireCompleteNumber: number | undefined;
+    completeNumber: number | undefined;
+
+    constructor(data?: ITimeoutStatisticsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.cityName = data["cityName"];
+            this.fireAuditNumber = data["fireAuditNumber"];
+            this.fireCompleteNumber = data["fireCompleteNumber"];
+            this.completeNumber = data["completeNumber"];
+        }
+    }
+
+    static fromJS(data: any): TimeoutStatisticsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TimeoutStatisticsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["cityName"] = this.cityName;
+        data["fireAuditNumber"] = this.fireAuditNumber;
+        data["fireCompleteNumber"] = this.fireCompleteNumber;
+        data["completeNumber"] = this.completeNumber;
+        return data; 
+    }
+
+    clone(): TimeoutStatisticsDto {
+        const json = this.toJSON();
+        let result = new TimeoutStatisticsDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITimeoutStatisticsDto {
+    cityName: string | undefined;
+    fireAuditNumber: number | undefined;
+    fireCompleteNumber: number | undefined;
+    completeNumber: number | undefined;
 }
 
 export class GetCurrentLoginInformationsOutput implements IGetCurrentLoginInformationsOutput {

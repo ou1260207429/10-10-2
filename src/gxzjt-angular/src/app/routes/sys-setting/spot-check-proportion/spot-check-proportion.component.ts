@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 
 
 /**
- * 待办流程
+ * 抽查比例
  */
 @Component({
   selector: 'spot-check-proportion',
@@ -121,9 +121,10 @@ export class SpotCheckProportionComponent implements OnInit {
 
     this.isSearchForm = true;
 
-    this.natureServiceServiceProxy.post_GetSpotCheckSetupList().subscribe((result: SpotChechSetupList) => {
+    this.natureServiceServiceProxy.post_GetSpotCheckSetupList().subscribe((result: any) => {
 
       this.formResultData = result.natureList;
+
       this.isSearchForm = false;
     }, err => {
       console.log(err);
