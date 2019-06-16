@@ -19,8 +19,7 @@
             <nz-form-control>
               <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-user" nzHasFeedback>
                 <input nz-input name="userName" #userName="ngModel" type="text"
-                  [(ngModel)]="loginService.authenticateModel.userNameOrEmailAddress" placeholder="请输入电话号码" required
-                  maxlength="11" pattern="^1\d{10}$">
+                  [(ngModel)]="loginService.authenticateModel.userNameOrEmailAddress" placeholder="请输入电话号码" required>
               </nz-input-group>
               <nz-form-explain *ngIf="userName.control.dirty&&userName.control.errors">
                 <ng-container>

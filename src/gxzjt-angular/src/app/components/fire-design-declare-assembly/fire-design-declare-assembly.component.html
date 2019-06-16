@@ -221,40 +221,38 @@
 
         <tr>
           <td style="width: 37px;background-color: #d0e8fe;color: #5a95e9;font-weight: 600;border-right: 0;"
-            [attr.rowspan]="data.basicInformation.length+3" required=true>工程基本情况
+            [attr.rowspan]="data.basicInformation.length+3" colspan='1' required=true>
+            工程基本情况
           </td>
         </tr>
         <tr style="border-top: 1px solid #e2e2e2;">
-          <td colspan='3' rowspan="2" class="fontweight">单位建筑名称</td>
-          <td colspan='1' rowspan="2" class="fontweight">结构类型</td>
+          <td colspan='5' rowspan="2" class="fontweight">单位建筑名称</td>
+          <td colspan='2' rowspan="2" class="fontweight">结构类型</td>
           <td colspan='1' rowspan="2" class="fontweight">耐火等级</td>
           <td colspan='2' rowspan="1" class="fontweight">层数</td>
           <td colspan='1' rowspan="2" class="fontweight">建筑高度（m）</td>
-          <td colspan='1' rowspan="2" class="fontweight">建筑面积（m<sup>2</sup>）</td>
-          <td colspan='1' rowspan="2" class="fontweight">占地面积（m<sup>2</sup>）</td>
-          <td colspan='2' rowspan="1" class="fontweight">防火分区</td>
-          <td colspan='2' rowspan="1" class="fontweight">防烟分区</td>
-          <td colspan='1' rowspan="2" class="fontweight">火灾危险性</td>
+          <td colspan='1' rowspan="2" class="fontweight">建筑面积<br />（m<sup>2</sup>）</td>
+          <td colspan='1' rowspan="2" class="fontweight">占地面积<br />（m<sup>2</sup>）</td>
+          <td colspan='2' rowspan="1" class="fontweight">建筑面积<br />（m<sup>2</sup>）</td>
           <td colspan='1' rowspan="2" class="fontweight">操作</td>
         </tr>
         <tr>
           <td colspan='1' rowspan="1" class="fontweight">地上</td>
           <td colspan='1' rowspan="1" class="fontweight">地下</td>
-          <td colspan='1' rowspan="1" class="fontweight">数量</td>
-          <td colspan='1' rowspan="1" class="fontweight">最大面积（m<sup>2</sup>）</td>
-          <td colspan='1' rowspan="1" class="fontweight">数量</td>
-          <td colspan='1' rowspan="1" class="fontweight">最大面积（m<sup>2</sup>）</td>
+          <td colspan='1' rowspan="1" class="fontweight">地上</td>
+          <td colspan='1' rowspan="1" class="fontweight">地下</td>
         </tr>
+
         <tr *ngFor="let item of data.basicInformation;let index = index">
           <!-- 请输入单位建筑名称 -->
-          <td colspan="3">
+          <td colspan="5">
             <se error="这是必填项">
               <input nz-input [(ngModel)]="item.name" name="jbname{{index}}" required />
             </se>
           </td>
           <!-- 请输入结构类型 -->
-          <td style="width: 130px;max-width: 130px;">
-            <se error="这是必填项">
+          <td colspan="2">
+            <se error="这是必填项" style="width: 130px;max-width: 130px;">
               <nz-select [(ngModel)]="item.type" name="jbtype{{index}}" required>
                 <nz-option *ngFor="let option of typeSelect" [nzLabel]="option.label" [nzValue]="option.value">
                 </nz-option>
@@ -272,7 +270,8 @@
           </td>
           <!-- 层数 地上、地下 -->
           <td>
-            <se error="这是必填项"><input nz-input [(ngModel)]="item.aboveGround" name="jbaboveGround{{index}}" required />
+            <se error="这是必填项">
+              <input nz-input [(ngModel)]="item.aboveGround" name="jbaboveGround{{index}}" required />
             </se>
           </td>
           <td>
@@ -294,29 +293,17 @@
             <se error="这是必填项"><input nz-input [(ngModel)]="item.areaCovered" name="jbareaCovered{{index}}" required />
             </se>
           </td>
-          <!-- 请输入防火分区 数量、最大面积 -->
+
+          <!-- 建筑面积 地上、地下 -->
           <td>
-            <se error="这是必填项"><input nz-input [(ngModel)]="item.firePreventionSum" name="jbfirePreventionSum{{index}}"
+            <se error="这是必填项"><input nz-input [(ngModel)]="item.jzmjaboveGround" name="jzmjjbaboveGround{{index}}"
                 required /></se>
           </td>
           <td>
-            <se error="这是必填项"><input nz-input [(ngModel)]="item.firePreventionMaximumArea"
-                name="jbfirePreventionMaximumArea{{index}}" required /></se>
-          </td>
-          <!-- 防烟分区 数量、最大面积 -->
-          <td>
-            <se error="这是必填项"><input nz-input [(ngModel)]="item.smokeControlSum" name="jbsmokeControlSum{{index}}"
+            <se error="这是必填项"><input nz-input [(ngModel)]="item.jzmjunderground" name="jzmjjbunderground{{index}}"
                 required /></se>
-          </td>
-          <td>
-            <se error="这是必填项"><input nz-input [(ngModel)]="item.smokeControlMaximumArea"
-                name="jbsmokeControlMaximumArea{{index}}" required /></se>
           </td>
 
-          <!-- 请输入火灾危险性 -->
-          <td>
-            <se error="这是必填项"><input nz-input [(ngModel)]="item.fireHazard" name="jbfireHazard" required /></se>
-          </td>
 
           <td><a (click)="addArray(data.basicInformation)">新增</a>
             <a (click)="deleteArray(data.basicInformation,index)">删除</a> </td>
@@ -477,7 +464,7 @@
       </tr>
 
 
-      <tr>
+      <!-- <tr>
         <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
           style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>同时提交的材料</td>
         <td rowspan='1' colspan='14' class="textLeft">
@@ -516,6 +503,59 @@
           </div>
 
         </td>
+      </tr> -->
+
+
+
+
+      <tr>
+        <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
+          style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>同时提交的材料</td>
+        <td rowspan='1' colspan='14' class="textLeft">
+          <div>
+            1、建设工程消防设计审查申报表（纸质申报表的图片）
+            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange()">
+              <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
+            </nz-upload>
+          </div>
+
+          <div>
+            2、消防设计文件
+            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange()">
+              <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
+            </nz-upload>
+          </div>
+
+          <div>
+            3、专家评审申报材料
+            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange()">
+              <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
+            </nz-upload>
+          </div>
+
+          <div>
+            4、建设工程规划许可证明文件
+            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange()">
+              <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
+            </nz-upload>
+          </div>
+
+          <div>
+            5、城乡规划主管部门批准的临时性建筑证明文件
+            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange()">
+              <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
+            </nz-upload>
+          </div>
+
+          <div>
+            6、生产工艺和物品有特殊灭火要求的消防设计说明材料
+            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange()">
+              <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
+            </nz-upload>
+          </div>
+
+
+        </td>
       </tr>
 
       <tr>
@@ -525,7 +565,7 @@
           <se error="这是必填项">
             <textarea nz-input placeholder="请输入审图公司意见" [(ngModel)]="data.corporateOpinion.opinion"
               name="corporateOpinionopinion" required>
-            </textarea>
+              </textarea>
           </se>
           <div class="textRight">审图单位 <se error="这是必填项"><input style="width: 80px" nz-input placeholder="请输入使用性质"
                 [(ngModel)]="data.corporateOpinion.seal" name="data.corporateOpinionseal" required /></se>
