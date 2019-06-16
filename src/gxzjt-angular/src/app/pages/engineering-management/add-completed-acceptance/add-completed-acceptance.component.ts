@@ -144,13 +144,13 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         checked: false,
         arr: [
           {
-            label: '', value: '', checked: false, type: 'radio', list: [
-              { label: '干式', value: '干式', checked: false },
-              { label: '湿式', value: '湿式', checked: false },
-              { label: '预作用', value: '预作用', checked: false },
-              { label: '雨淋', value: '雨淋', checked: false },
-              { label: '水幕', value: '水幕', checked: false },
-              { label: '水雾', value: '水雾', checked: false },
+            label: '', value: '', checked: false, type: 'check', list: [
+              { label: '干式', value: false, checked: false },
+              { label: '湿式', value: false, checked: false },
+              { label: '预作用', value: false, checked: false },
+              { label: '雨淋', value: false, checked: false },
+              { label: '水幕', value: false, checked: false },
+              { label: '水雾', value: false, checked: false },
             ]
           },
         ]
@@ -163,10 +163,10 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         checked: false,
         arr: [
           {
-            label: '', value: '', checked: false, type: 'radio', list: [
-              { label: '区域报警', value: '区域报警', checked: false },
-              { label: '集中报警', value: '集中报警', checked: false },
-              { label: '控制中心报警', value: '控制中心报警', checked: false },
+            label: '', value: '', checked: false, type: 'check', list: [
+              { label: '区域报警', value: false, checked: false },
+              { label: '集中报警', value: false, checked: false },
+              { label: '控制中心报警', value: false, checked: false },
             ]
           },
         ]
@@ -179,17 +179,17 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         checked: false,
         arr: [
           {
-            label: '管    网', value: '', checked: false, type: 'radio', list: [
-              { label: '管网', value: '管网', checked: false },
-              { label: '无管网', value: '无管网', checked: false },
+            label: '管    网', value: '', checked: false, type: 'check', list: [
+              { label: '管网', value: false, checked: false },
+              { label: '无管网', value: false, checked: false },
             ]
           },
 
           {
-            label: '灭 火 剂', value: '', checked: false, type: 'radio', list: [
-              { label: '洁净气体', value: '洁净气体', checked: false },
-              { label: '哈龙', value: '哈龙', checked: false },
-              { label: '其他', value: '其他', checked: false },
+            label: '灭 火 剂', value: '', checked: false, type: 'check', list: [
+              { label: '洁净气体', value: false, checked: false },
+              { label: '哈龙', value: false, checked: false },
+              { label: '其他', value: false, checked: false },
             ]
           },
         ]
