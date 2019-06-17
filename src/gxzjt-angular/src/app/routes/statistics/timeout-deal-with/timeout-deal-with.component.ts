@@ -4,22 +4,22 @@ import { STColumn, STComponent, XlsxService } from '@delon/abc';
 
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
-
 @Component({
-  selector: 'app-statistics-warning-center',
-  templateUrl: './warning-center.component.html',
-  styleUrls: ['./warning-center.component.less'],
+  selector: 'app-statistics-timeout-deal-with',
+  templateUrl: './timeout-deal-with.component.html',
+  styleUrls: ['./timeout-deal-with.less'],
 })
-export class StatisticsWarningCenterComponent implements OnInit {
+export class StatisticsTimeoutDealWithComponent implements OnInit {
   url = [{
-    pro_type: '',
-    pro_name: '',
-    pro_no: '',
-    org: '',
-    node: '',
-    person: '',
-    repo_time: '',
-    at_time: '',
+    jgbh: '10000005',
+    gcname: '西南大厦超时',
+    jsdanw: '未来科技',
+    lxr: '王哈哈',
+    phone: '13333333',
+    lc: '否',
+    sh: '通过',
+    czr: '操作人A',
+    cztime: '2015-05-05'
 
   }];
   searchKey = '';
@@ -27,44 +27,35 @@ export class StatisticsWarningCenterComponent implements OnInit {
   fliterForm: FormGroup;
   hiddenFliter = false;
 
+  isAddProducttyepe5 = false;
+  submodel = {
+
+  };
+
   formData = {};
 
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
 
-
-    { title: '流程类型', index: 'pro_type' },
-    { title: '工程名称', index: 'pro_name' },
-    { title: '工程编号', index: 'pro_no' },
-    { title: '建设单位', index: 'org' },
-    {
-      title: '节点名称', index: 'node',
-      sort: {
-        compare: (a, b) => a.node > b.node ? 1 : 0,
-      },
-      filter: {
-        menus: [
-          { text: '初审', value: 0 },
-          { text: '复审', value: 1 },
-          { text: '审核完毕', value: 2 },
-        ],
-        fn: (filter: any, record: any) =>
-          record.node >= filter.value[0] && record.node <= filter.value[1],
-        multiple: false,
-      }
-    },
-    { title: '流程发起人', index: 'person' },
-
-    { title: '申报时间', type: 'date', index: 'repo_time' },
-    { title: '流程到达时间', type: 'date', index: 'at_time' },
     {
       title: '操作',
       buttons: [
-        { text: '查看', click: (item: any) => `/form/${item.id}` },
+        { text: '详情', click: (item: any) => `/form/${item.id}` },
+        { text: '受理凭证', click: (item: any) => `/form/${item.id}` },
+        { text: '意见书', click: (item: any) => `/form/${item.id}` },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
-    }
+    },
+    { title: '竣工验收申报编号', index: 'jgbh' },
+    { title: '工程名称', index: 'gcname' },
+    { title: '建设单位', index: 'jsdanw' },
+    { title: '联系人', index: 'lxr' },
+    { title: '联系电话', index: 'phone' },
+    { title: '流程是否超时', index: 'lc' },
+    { title: '审核结果', index: 'sh' },
+    { title: '操作人', index: 'czr' },
+    { title: '操作时间', index: 'cztime' },
   ];
 
   constructor(private http: _HttpClient,
@@ -114,5 +105,14 @@ export class StatisticsWarningCenterComponent implements OnInit {
         },
       ],
     });
+  }
+  handleCancel5(): void {
+    this.isAddProducttyepe5 = false;
+  }
+  subProducttype5(): void {
+    this.isAddProducttyepe5 = false;
+  }
+  addview() {
+    this.isAddProducttyepe5 = true;
   }
 }
