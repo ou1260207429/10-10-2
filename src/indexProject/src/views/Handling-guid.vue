@@ -6,29 +6,23 @@
         <el-col :span="12">
           <el-card style="min-height:640px;">
             <div>
-              <p id="tip" class="zhinan">
+              <p class="zhinan tip">
                 <span>行政许可</span>
               </p>
             </div>
             <ul style="margin-top: 30px;padding-left: 0">
               <li :key="index" v-for="(item,index) in allowList">
-                <el-row :gutter="16">
-                  <el-col :span="8">
-                    <img style="width: 100%;height:130px;display:block" :src="allowImg[index]" alt>
-                  </el-col>
-                  <el-col :span="16" style="position: relative;height:130px;">
-                    <router-link
-                      :to="{
+                <img style="float:left;margin-right:16px;" :src="allowImg[index]" alt>
+                <router-link
+                  :to="{
          path: '/handling-guid-list-detail/'+item.id, 
       
    }"
-                    >
-                      <p class="title">{{item.title}}</p>
-                      <p class="tip">{{item.Brief}}</p>
-                      <p class="detail">了解详情</p>
-                    </router-link>
-                  </el-col>
-                </el-row>
+                >
+                  <p class="title">{{item.title}}</p>
+                  <p class="tip">{{item.Brief}}</p>
+                  <p class="detail">了解详情</p>
+                </router-link>
               </li>
             </ul>
           </el-card>
@@ -36,29 +30,26 @@
         <el-col :span="12">
           <el-card style="min-height:640px;">
             <div style="overflow:hidden">
-              <p id="tip" class="info" style="float: right">
+              <p
+                class="info tip"
+                style="float: right;background-position: right; text-indent: 48%;"
+              >
                 <span>网上备案</span>
               </p>
             </div>
             <ul style="margin-top: 10px;padding-left: 0">
               <li :key="index" v-for="(item,index) in recordList">
-                <el-row :gutter="16">
-                  <el-col :span="9">
-                    <img style="width: 100%;height:130px;" :src="recordImg[index]" alt>
-                  </el-col>
-                  <el-col :span="15" style="position: relative;height:130px;">
-                    <router-link
-                      :to="{
+                <img style="float:left;margin-right:16px;" :src="recordImg[index]" alt>
+                <router-link
+                  :to="{
          path: '/handling-guid-list-detail/'+item.id, 
       
    }"
-                    >
-                      <p class="title">{{item.title}}</p>
-                      <p class="tip">{{item.Brief}}</p>
-                      <p class="detail">了解详情</p>
-                    </router-link>
-                  </el-col>
-                </el-row>
+                >
+                  <p class="title">{{item.title}}</p>
+                  <p class="tip">{{item.Brief}}</p>
+                  <p class="detail">了解详情</p>
+                </router-link>
               </li>
             </ul>
           </el-card>
@@ -77,10 +68,10 @@ export default {
       //许可图片
       allowImg: [
         require("../assets/images/办事指南_03.jpg"),
-        require("../assets/images/办事指南详情_10.jpg")
+        require("../assets/images/办事指南_14.jpg")
       ],
       //备案图片
-      recordImg: [require("../assets/images/办事指南详情_18.jpg")],
+      recordImg: [require("../assets/images/办事指南_09.jpg")],
       //行政许可列表
       allowList: [
         {
@@ -101,12 +92,17 @@ export default {
           Brief:
             " 备案依据：《中华人民共和国消防法》；《建设工程消防监督管理规定》；"
         }
-      ]
+      ],
+       tableHight:"450px",
+
     };
   },
- 
+
   mounted() {
+    this.tableHight = app.clentHeight();
     this.initList();
+    console.log(this.tableHight)
+
   },
 
   methods: {
@@ -131,6 +127,13 @@ export default {
 <style lang='less' scoped>
 li {
   margin-top: 30px;
+  overflow: hidden;
+  a {
+    display: block;
+    position: relative;
+    float: left;
+    height: 138px;
+  }
 }
 .title {
   font-size: 20px;
@@ -141,16 +144,24 @@ li {
   color: #c9c9c9;
   font-size: 15px;
 }
+.tip {
+  width: 32%;
+  padding: 10px 0;
+  text-indent: 20%;
+  background-repeat: no-repeat;
+  background-position: left;
+  font-size: 22px;
+  color: #fff;
+
+}
 .detail {
-  width: 100px;
-  height: 23px;
-  text-indent: 8px;
-  line-height: 23px;
+  width: 63%;
+  text-indent: 8%;
+  line-height: 25px;
   position: absolute;
   left: 10px;
   bottom: 0;
   background: url("/../../assets/images/办事指南_08.png") no-repeat;
-  background-size: 100px 23px;
   font-size: 8px !important;
   color: #fff;
 }

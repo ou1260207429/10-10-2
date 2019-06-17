@@ -40,6 +40,6 @@
 
 
   <br>
-  <nz-pagination [(nzPageIndex)]="page" [nzTotal]="500" nzShowQuickJumper (nzPageIndexChange)="search()"
-    [nzPageSize]="pageSize"></nz-pagination>
+  <nz-pagination *ngIf="needPagination" [(nzPageIndex)]="page" [nzTotal]="500" nzShowQuickJumper
+    (nzPageIndexChange)="search()" [nzPageSize]="pageSize"></nz-pagination>
 </nz-card>

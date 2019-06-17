@@ -34,7 +34,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
 
   isAddProducttyepe5 = false;
   submodel = {
-
+    Name: ""
   };
 
   formData = {};

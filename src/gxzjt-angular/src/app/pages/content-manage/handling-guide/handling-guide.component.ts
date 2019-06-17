@@ -5,29 +5,31 @@ import { Router } from '@angular/router';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { RegulationServiceProxy, NoticeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { PublicModel } from 'infrastructure/public-model';
+import { PublicFormComponent } from '../public/public-form.component';
 
 @Component({
   selector: 'app-handling-guide',
-  templateUrl: './handling-guide.component.html',
+  // templateUrl: './handling-guide.component.html',
+  templateUrl: '../public/public-form.html',
   styles: []
 })
-export class HandlingGuideComponent implements OnInit {
+export class HandlingGuideComponent extends PublicFormComponent implements OnInit {
   @ViewChild('treeCom') treeCom;
   @ViewChild('st') st: STComponent;
 
   params: any = {
     page: 1,
-    size: 10,
+    size: 200,
     sort: "",
     isAsc: false,
     orderby: "",
-    totalCount: 20,
-    group:"",
-    //search: 11,
-    //startTime: null,
-    //endTime: null,
+    totalCount: 200,
+    group: "",
+    search: "",
+    startTime: null,
+    endTime: null,
   };
-  data
+
 
 
   // Id = q.Id,
@@ -87,12 +89,11 @@ export class HandlingGuideComponent implements OnInit {
   pageConfig: STPage = publicPageConfig;
   validateForm: any;
   constructor(private _publicModel: PublicModel, private _noticeServiceProxy: NoticeServiceProxy, private _regulationServiceProxy: RegulationServiceProxy, private router: Router, private eventEmiter: EventEmiter) {
+    super();
   }
 
   ngOnInit() {
     let _self = this;
-    this.params.startTime = new Date(new Date(new Date().toLocaleDateString()).getTime());
-    this.params.endTime = new Date(new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1);
     this.init();
     this.eventEmiter.on('init', () => {
       _self.init();
@@ -104,6 +105,7 @@ export class HandlingGuideComponent implements OnInit {
    * 初始化
    */
   init() {
+
     this.query_noticeRecords(this.params);
 
   }
@@ -121,9 +123,14 @@ export class HandlingGuideComponent implements OnInit {
    * 获取列表 
    */
   query_noticeRecords(params?: any) {
-    this.data = "";
+    this.params.page = 1;
+    this.params.startTime = this.rangeTime[0];
+    this.params.endTime = this.rangeTime[1];
+    this.params.search = this.searchKey;
+    this.isSearchForm = true;
     this._noticeServiceProxy.noticeListAsync(params).subscribe(data => {
-      this.data = data;
+      this.isSearchForm = false;
+      this.formResultData = data.data;
     })
   }
 
@@ -142,7 +149,10 @@ export class HandlingGuideComponent implements OnInit {
   }
 
   add() {
-    this.router.navigate([`/app/content-manage/handlingGuidDetailComponent/1`,{ operate: 0 }]);
+    this.router.navigate([`/app/content-manage/handlingGuidDetailComponent/1`, { operate: 0 }]);
   }
 
+  refresh() {
+    this.query();
+  }
 }

@@ -30,8 +30,7 @@ export class StatisticsProAppStaticComponent implements OnInit {
   selectedValuePro = "";
   fliterForm: FormGroup;
   hiddenFliter = false;
-  formResultData = []
-
+  formResultData = [];
   isAddProducttyepe5 = false;
   submodel = {
     Name: '',
@@ -98,10 +97,13 @@ export class StatisticsProAppStaticComponent implements OnInit {
     private modal: ModalHelper,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
     private formBuilder: FormBuilder,
-    private xlsx: XlsxService) { }
+    private xlsx: XlsxService) {
+
+  }
 
   ngOnInit() {
-    this.resetTime()
+
+    this.resetTime();
     this.fliterForm = this.formBuilder.group({
       proNo: [null],
       proName: [null],

@@ -6,8 +6,9 @@
         <el-col :span="12">
           <div class="comeIn">消防设计审查和验收办事入口</div>
           <el-card style="min-height:270px;">
-            <div>
-              <p id="tip" class="zhinan">
+            <div style="overflow:hidden;">
+               <p class="tips" style="float: left">
+                <img src="../assets/images/img_bg_bszn.png" alt="">
                 <span>办事指南</span>
               </p>
             </div>
@@ -28,14 +29,15 @@
                   <div class="cardList">
                     <img :src="item.src" alt>
                   </div>
-                  <div>{{item.title}}</div>
                 </router-link>
+                <div>{{item.title}}</div>
               </el-col>
             </el-row>
           </el-card>
-          <el-card nz-card style="height: 219px;margin-top:8px; position: relative;">
-            <div>
-              <p id="tip" class="fagui">
+          <el-card nz-card style="margin-top:8px; position: relative;">
+            <div style="overflow:hidden;">
+              <p class="tips" style="float: left">
+                <img src="../assets/images/img_bg_flfg.png" alt="">
                 <span>法律法规</span>
               </p>
             </div>
@@ -47,7 +49,7 @@
                   <router-link :to="'/laws-and-regulations-detail/'+item.id">{{ item.title }}</router-link>
                 </div>
               </div>
-              <div style="position: absolute;bottom: 0;left: 0;">
+              <div style="position: absolute;bottom: 0;left: 0;width:100%;">
                 <p class="more">
                   <span>更多 ></span>
                 </p>
@@ -56,44 +58,46 @@
           </el-card>
         </el-col>
         <el-col :span="12">
-          <el-card style="height: 301px; position: relative;">
+          <el-card style="min-height: 301px; position: relative;">
             <div style="overflow:hidden">
-              <p id="tip" class="info" style="float: right">
-                <span>公告消息</span>
+              <p class="tips" style="float: right">
+                <img src="../assets/images/img_bg_ggxx.png" alt="">
+                <span>公告信息</span>
               </p>
             </div>
-            <el-row :gutter="50" style="padding:20px 40px;">
+            <el-row :gutter="50" style="padding:20px 40px;" class="listParent">
               <el-col class="item" :span="8" :key="index" v-for="(item,index) in infoList">
                 <router-link :to="'/announcement-information/'+item.type">
                   <div class="cardList">
-                    <img :src="item.src" alt>
+                    <img :src="infoImg[index]" alt>
                   </div>
-                  <div>{{item.name}}</div>
                 </router-link>
+                  <div>{{item.name}}</div>
               </el-col>
             </el-row>
-            <div style="position: absolute;bottom: 0;left: 0;">
+            <div style="position: absolute;bottom: 0;left: 0;width:100%;">
               <p class="more">
                 <span>更多 ></span>
               </p>
             </div>
           </el-card>
-          <el-card nz-card style="height: 347px;margin-top:8px; position: relative;">
+          <el-card nz-card style="margin-top:8px; position: relative;">
             <div style="overflow:hidden">
-              <p id="tip" class="tablein" style="float: right">
+              <p class="tips" style="float: right">
+                <img src="../assets/images/img_bgxz.png" alt="">
                 <span>表格下载</span>
               </p>
             </div>
             <div v-if="!lawsList" class="noData">暂无数据</div>
             <div v-if="lawsList">
-              <div nz-row style="padding:20px">
+              <div class="listParent" style="padding:20px">
                 <div :key="index" v-for="(item,index) in tableList" class="list">
                   {{ item.attachmentName }}
                   <span style="float: right">{{ item.creationTime }}</span>
                 </div>
               </div>
             </div>
-            <div style="position: absolute;bottom: 0;left: 0;">
+            <div style="position: absolute;bottom: 0;left: 0;width:100%;">
               <p class="more">
                 <span>更多 ></span>
               </p>
@@ -120,23 +124,24 @@ export default {
         require("../assets/images/img_zn_jgys.png")
       ],
       handleList: [
-        {
-          type: "Audit",
-          name: "建设工程消防设计审核指南",
-          src: require("../assets/images/img_zn_sjsc.png")
-        },
-        {
-          type: "Acceptance",
-          src: require("../assets/images/img_zn_xfys.png"),
+        // {
+        //   type: "Audit",
+        //   name: "建设工程消防设计审核指南",
+        //   src: require("../assets/images/img_zn_sjsc.png")
+        // },
+        // {
+        //   type: "Acceptance",
+        //   src: require("../assets/images/img_zn_xfys.png"),
 
-          name: "建设工程消防验收指南"
-        },
-        {
-          type: "Record",
-          name: "建设工程竣工验收消防备案指南",
-          src: require("../assets/images/img_zn_jgys.png")
-        }
+        //   name: "建设工程消防验收指南"
+        // },
+        // {
+        //   type: "Record",
+        //   name: "建设工程竣工验收消防备案指南",
+        //   src: require("../assets/images/img_zn_jgys.png")
+        // }
       ],
+      infoImg:[require("../assets/images/img_xx_sjsc.png"),require("../assets/images/img_xx_xfys.png"), require("../assets/images/img_xx_jgys.png")],
       infoList: [
         {
           type: "1",
@@ -204,16 +209,13 @@ export default {
             item.srcIndex = 2;
           }
         });
-        _this.handleList = app.sortByKey(req.result.data,'srcIndex');
-
-        console.log(req);
-
+        _this.handleList = app.sortByKey(req.result.data, "srcIndex");
         req.result.data.forEach(item => {
-          // if (item.noticeTypeId == 1) {
-          //   _this.allowList.push(item);
-          // } else if (item.noticeTypeId == 2) {
-          //   _this.recordList.push(item);
-          // }
+          if (item.noticeTypeId == 1) {
+            _this.allowList.push(item);
+          } else if (item.noticeTypeId == 2) {
+            _this.recordList.push(item);
+          }
         });
       });
     }
@@ -230,9 +232,7 @@ export default {
 .info {
   background-image: url("../assets/images/img_bg_ggxx.png");
 }
-.tablein {
-  background-image: url("../assets/images/img_bgxz.png");
-}
+
 .comeIn {
   width: 100%;
   height: 160px;
@@ -245,29 +245,11 @@ export default {
   background-size: 100%;
   cursor: pointer;
 }
-
-.cardList {
-  width: 150px;
-  height: 150px;
-  text-align: center;
-  line-height: 150px;
-  margin-bottom: 10px;
-  padding: 30px;
-  box-sizing: border-box;
-  cursor: pointer;
-  background-color: #f4f4f4;
-  position: relative;
-
-  img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-left: -35px;
-    margin-top: -35px;
-  }
+.listParent{
+ margin-bottom: 4%;
 }
 .more {
-  width: 90px;
+  width: 10%;
   text-align: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -276,5 +258,33 @@ export default {
   padding: 5px 0;
   font-size: 12px;
   background-image: url("../assets/images/img_bg_more.png");
+  cursor: pointer;
+}
+.item {
+  a {
+    width: 100%;
+    display: block;
+    padding-top: 100%;
+    height: 0; //避免被内容撑开多余的高度
+    position: relative;
+    .cardList {
+      width: 90%;
+      height: 90%;
+      text-align: center;
+      margin: 0 auto;
+      box-sizing: border-box;
+      cursor: pointer;
+      background-color: #f4f4f4;
+      position: absolute;
+      top: 0;
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -35px;
+        margin-top: -35px;
+      }
+    }
+  }
 }
 </style>

@@ -16,6 +16,7 @@ import { ContentManageModule } from './pages/content-manage/content-manage.modul
 import { UEditorModule } from 'ngx-ueditor';
 import { PublicModel } from 'infrastructure/public-model';
 import { PublicServices } from 'services/public.services';
+import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { PublicServices } from 'services/public.services';
     ReactiveFormsModule,
     HttpClientModule,
     ContentManageModule,
+    ServiceProxyModule,
     AppRoutingModule,
     LayoutModule,
     SharedModule,

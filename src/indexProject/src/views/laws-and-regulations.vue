@@ -2,14 +2,14 @@
 <template>
   <div style="width:100%;overflow:hidden;">
     <div class="content">
-      <el-row>
+      <el-row id="banner">
         <img style="width:100%;" src="../assets/images/法律法规_03.jpg" alt>
       </el-row>
       <el-row :gutter="16">
         <el-col :span="12">
-          <el-card style="height:450px;">
+          <el-card :style="{minHeight:tableHight}">
             <div>
-              <p id="tip" class="zhinan">
+              <p class="zhinan tip">
                 <span>法律法规</span>
               </p>
             </div>
@@ -30,9 +30,12 @@
           </el-card>
         </el-col>
         <el-col :span="12">
-          <el-card style="height:450px;">
+          <el-card :style="{minHeight:tableHight}">
             <div style="overflow:hidden">
-              <p id="tip" class="info" style="float: right">
+              <p
+                class="info tip"
+                style="float: right;background-position: right; text-indent: 48%;"
+              >
                 <span>规范性文件</span>
               </p>
             </div>
@@ -71,7 +74,8 @@ export default {
         //   issueOrg: "hahahah"
         // }
       ],
-      lawsFiles: []
+      lawsFiles: [],
+      tableHight: "450px"
     };
   },
 
@@ -82,7 +86,7 @@ export default {
   mounted() {
     let params1 = Object.assign({ group: "Regulation" }, app.pageSize);
     this.getlawsList(params1);
-
+    this.tableHight = app.clentHeight();
     let params2 = Object.assign({ group: "Normative" }, app.pageSize);
     this.getlawsList(params2);
   },
@@ -114,5 +118,14 @@ export default {
 }
 .time {
   float: right;
+}
+.tip {
+  width: 32%;
+  padding: 10px 0;
+  text-indent: 20%;
+  background-repeat: no-repeat;
+  background-position: left;
+  font-size: 22px;
+  color: #fff;
 }
 </style>
