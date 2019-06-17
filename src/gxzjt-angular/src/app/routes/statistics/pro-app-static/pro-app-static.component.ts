@@ -6,6 +6,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { StatisticsProAppStaticDetailComponent } from '../pro-app-static-detail/pro-app-static-detail.component';
 import { StatisticsAcceptCredentialsComponent } from '../accept-credentials/accept-credentials.component';
 import { StatisticsPositionPaperComponent } from '../position-paper/position-paper.component';
+import { StatisticalServiceServiceProxy, ProjectApplyQueryDto } from '@shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'app-statistics-pro-app-static',
@@ -29,11 +30,13 @@ export class StatisticsProAppStaticComponent implements OnInit {
   selectedValuePro = "";
   fliterForm: FormGroup;
   hiddenFliter = false;
+  formResultData = []
 
   isAddProducttyepe5 = false;
   submodel = {
-
+    Name: '',
   };
+  rangeTime = [];
 
   formData = {};
 
@@ -93,17 +96,20 @@ export class StatisticsProAppStaticComponent implements OnInit {
 
   constructor(private http: _HttpClient,
     private modal: ModalHelper,
+    private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
     private formBuilder: FormBuilder,
     private xlsx: XlsxService) { }
 
   ngOnInit() {
+    this.resetTime()
     this.fliterForm = this.formBuilder.group({
       proNo: [null],
       proName: [null],
       proType: [null],
-      dateRange: [[]],
+      dateRange: [[this.rangeTime]],
 
     });
+    this.getList();
   }
 
   switchFilter() {
@@ -125,20 +131,20 @@ export class StatisticsProAppStaticComponent implements OnInit {
 
 
 
-  exportXlsx() {
-    const expData = [this.columns.map(i => i.title)];
+  // exportXlsx() {
+  //   const expData = [this.columns.map(i => i.title)];
 
-    expData.push(['1', '1', '1', '1',]);
+  //   expData.push(['1', '1', '1', '1',]);
 
-    this.xlsx.export({
-      sheets: [
-        {
-          data: expData,
-          name: 'sheet name',
-        },
-      ],
-    });
-  }
+  //   this.xlsx.export({
+  //     sheets: [
+  //       {
+  //         data: expData,
+  //         name: 'sheet name',
+  //       },
+  //     ],
+  //   });
+  // }
   handleCancel5(): void {
     this.isAddProducttyepe5 = false;
   }
@@ -147,5 +153,34 @@ export class StatisticsProAppStaticComponent implements OnInit {
   }
   addview() {
     this.isAddProducttyepe5 = true;
+  }
+  getList() {
+
+    var param = new ProjectApplyQueryDto();
+    param.init(
+
+      {
+        "recordNumber": "",
+        "projectName": "",
+        "status": -1,
+        "startApplyTime": "2019-06-17T08:52:36.883Z",
+        "endApplyTime": "2019-06-17T08:52:36.883Z",
+        "page": 1,
+        "sorting": "",
+        "skipCount": 0,
+        "maxResultCount": 10
+      });
+
+    this.statisticalServiceServiceProxy.post_GetProjectApplyList(param).subscribe((result: any) => {
+      this.formResultData = result.data;
+    }, err => {
+      console.log(err);
+
+    });
+  }
+  resetTime() {
+    var startTime = new Date();
+    startTime.setDate(startTime.getDate() - 1)
+    this.rangeTime = [startTime, new Date()];
   }
 }

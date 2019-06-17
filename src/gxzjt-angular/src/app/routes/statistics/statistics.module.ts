@@ -7,7 +7,7 @@ import { ComponentsModule } from '@app/components/components.module';
 import { StatisticsProAppStaticComponent } from './pro-app-static/pro-app-static.component';
 import { StatisticsTimeoutDealWithComponent } from './timeout-deal-with/timeout-deal-with.component';
 import { StatisticsTimeLimtDealComponent } from './time-limt-deal/time-limt-deal.component';
-import { NatureServiceServiceProxy } from '@shared/service-proxies/service-proxies';
+// import { NatureServiceServiceProxy } from '@shared/service-proxies/service-proxies';
 import { StatisticsProAppStaticDetailComponent } from './pro-app-static-detail/pro-app-static-detail.component';
 import { StatisticsTimeLimtDealDetailComponent } from './time-limt-deal-detail/time-limt-deal-detail.component';
 import { StatisticsTimeoutDealDetailComponent } from './timeout-deal-detail/timeout-deal-detail.component';
@@ -38,7 +38,7 @@ const COMPONENTS_NOROUNT = [];
     ...COMPONENTS,
     ...COMPONENTS_NOROUNT
   ],
-  providers: [NatureServiceServiceProxy],
+  // providers: [NatureServiceServiceProxy],
   entryComponents: COMPONENTS_NOROUNT
 })
 export class StatisticsModule { }

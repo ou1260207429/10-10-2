@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent, XlsxService } from '@delon/abc';
-
+import { StatisticalServiceServiceProxy, HandleLimitQueryDto } from '@shared/service-proxies/service-proxies';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { StatisticsTimeLimtDealDetailComponent } from '../time-limt-deal-detail/time-limt-deal-detail.component';
 
@@ -30,6 +30,8 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
   fliterForm: FormGroup;
   hiddenFliter = false;
   formData = {};
+  formResultData = [];
+  rangeTime = [];
 
 
   @ViewChild('st') st: STComponent;
@@ -66,17 +68,20 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
 
   constructor(private http: _HttpClient,
     private modal: ModalHelper,
+    private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
     private formBuilder: FormBuilder,
     private xlsx: XlsxService) { }
 
   ngOnInit() {
+    this.resetTime();
     this.fliterForm = this.formBuilder.group({
       proNo: [null],
       proName: [null],
       proType: [null],
-      dateRange: [[]],
+      dateRange: [this.rangeTime],
 
     });
+    this.getList();
   }
 
   switchFilter() {
@@ -98,19 +103,48 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
 
 
 
-  exportXlsx() {
-    const expData = [this.columns.map(i => i.title)];
+  // exportXlsx() {
+  //   const expData = [this.columns.map(i => i.title)];
 
-    expData.push(['1', '1', '1', '1',]);
+  //   expData.push(['1', '1', '1', '1',]);
 
-    this.xlsx.export({
-      sheets: [
-        {
-          data: expData,
-          name: 'sheet name',
-        },
-      ],
+  //   this.xlsx.export({
+  //     sheets: [
+  //       {
+  //         data: expData,
+  //         name: 'sheet name',
+  //       },
+  //     ],
+  //   });
+  // }
+  getList() {
+
+    var param = new HandleLimitQueryDto();
+    param.init(
+
+      {
+        "cityName": "",
+        "area": "",
+        "flowPathType": -1,
+        "startApplyTime": "2019-02-17T08:54:38.985Z",
+        "endApplyTime": "2019-06-17T08:54:38.985Z",
+        "dateTimeNow": "2019-06-17T08:54:38.985Z",
+        "page": 1,
+        "sorting": "",
+        "skipCount": 0,
+        "maxResultCount": 10
+      });
+
+    this.statisticalServiceServiceProxy.post_GetHandleLimitList(param).subscribe((result: any) => {
+      this.formResultData = result.data;
+    }, err => {
+      console.log(err);
+
     });
   }
-
+  resetTime() {
+    var startTime = new Date();
+    startTime.setDate(startTime.getDate() - 1)
+    this.rangeTime = [startTime, new Date()];
+  }
 }
