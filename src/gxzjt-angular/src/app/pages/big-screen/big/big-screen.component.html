@@ -1,0 +1,356 @@
+<!-- <div id="big"
+    style="background-image:url('./assets/images/big2/img_bg.jpg');width:100%;height:100%;background-size: 100% 100%;">
+    <div id='stars'></div>
+    <div id='stars2'></div>
+    <div id='stars3'></div>
+    <div id='title'>
+    </div>
+
+    <div style='height:70px;'>
+        <span class="BigDate">
+            {{dateTime |date:'yyyy年MM月dd日 HH:mm:ss'}}
+        </span>
+        <span class='BigTitle'>广西建设工程消防设计审查与验收管理平台</span>
+    </div>
+    <div style="position: relative;height:65%;float: left;margin-top: -1%;width:80%">
+        <div style='float: left;width:30%;height:100%'>
+            <div
+                style='width:100%;height:45%;background-image:url("./assets/images/big2/img_bg_bjqk.png");background-size: 100% 100%;'>
+                <div style='width:100%;height:10%;margin-left: 15%;'>
+                    <div style='float: left;width:25%;height:100%;margin-top: 2%;text-align: center;'>
+                        <span style='color:#26BEFE;display: block;'>设计审查总数</span>
+                        <span style='color:#0EF9B3;font-size:18px;display: block;'>6014</span>
+                    </div>
+                    <div style='float: left;width:25%;height:100%;margin-top: 2%;text-align: center;'>
+                        <span style='color:#26BEFE;display: block;'>消防验收总数</span>
+                        <span style='color:#0EF9B3;font-size:18px;display: block;'>4000</span>
+                    </div>
+                    <div style='float: left;width:25%;height:100%;margin-top: 2%;text-align: center;'>
+                        <span style='color:#26BEFE;display: block;'>验收消防备案总数</span>
+                        <span style='color:#0EF9B3;font-size:18px;display: block;'>2014</span>
+                    </div>
+             
+            </div>
+            <div
+                style='width:100%;height:28%;background-image:url("./assets/images/big2/img_bg_sbtj.png");background-size: 100% 100%;'>
+                <div style="width:100%;height:90%;padding: 3%;" *ngIf='OverTimeTitle === "消防设计审查"'>
+                    <div echarts [options]="OverTimebar1" class="echartsStyle" style="height:100%">
+                    </div>
+                </div>
+                <div style="width:100%;height:90%;padding: 3%;" *ngIf='OverTimeTitle === "消防验收"'>
+                    <div echarts [options]="OverTimebar2" class="echartsStyle" style="height:100%">
+                    </div>
+                </div>
+                <div style="width:100%;height:90%;padding: 3%;" *ngIf='OverTimeTitle === "竣工验收备案"'>
+                    <div echarts [options]="OverTimebar3" class="echartsStyle" style="height:100%">
+                    </div>
+                </div>
+            </div>
+            <div
+                style='width:100%;height:28%;background-image:url("./assets/images/big2/img_bg_sbtj.png");background-size: 100% 100%;'>
+                <div style='width:100%;height:92%;padding: 4%;' *ngIf='BarTitle === "消防设计审查"'>
+                    <div echarts [options]="bar2" class="echartsStyle" style="height:100%">
+                    </div>
+                </div>
+                <div style='width:100%;height:92%;padding: 3%;' *ngIf='BarTitle === "消防验收"'>
+                    <div echarts [options]="bar3" class="echartsStyle" style="height:100%">
+                    </div>
+                </div>
+                <div style='width:100%;height:92%;padding: 3%;' *ngIf='BarTitle === "竣工验收备案"'>
+                    <div echarts [options]="bar4" class="echartsStyle" style="height:100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style='float: left;width:69%;height:100%'>
+            <div
+                style="float:left;width:100%;height: 100%;background-image:url('./assets/images/big2/img_bg_dt.png');background-size: 100% 100%;">
+                <div id="echarts" style="display: block; " style="height:100%;width:100%;margin-left: -15%;">
+                </div>
+            </div>
+            <div style='width: 20%;height: 50%;position: absolute; right: 2%;bottom: 0px;'>
+                <div
+                    style="width:100%;height:30%;margin-bottom:3%;background-image:url('./assets/images/big2/img_bg_sc.png');background-size: 100% 100%;text-align: center;">
+                    <div class='BigCensusDiv' style='color:#FFD001;'>
+                        <span class='BigNum'>12</span>
+                        <span class='BigTag'>办理数</span>
+                    </div>
+                    <div class='BigCensusDiv' style='color:#2EDB63;'>
+                        <span class='BigNum'>10</span>
+                        <span class='BigTag'>一次性通过数</span>
+                    </div>
+                    <div class='BigCensusDiv' style='color:#FF205F;'>
+                        <span class='BigNum'>2</span>
+                        <span class='BigTag'>超时数</span>
+                    </div>
+                    <div class='BigCensusDiv' style='color:#D3FF3A;'>
+                        <span class='BigNum'>20</span>
+                        <span class='BigTag'>平均办理时长</span>
+                    </div>
+                    <div style='height: 4px;
+                            background-color: #ffd001;
+                            width: 90%;
+                            position: relative;
+                            top: 70%;
+                            left: 5%;'></div>
+                    <span class='BigCensusTitle'>消防设计审查</span>
+                </div>
+                <div
+                    style="width:100%;height:30%;margin-bottom:3%;background-image:url('./assets/images/big2/img_bg_sc.png');background-size: 100% 100%;text-align: center;">
+                    <div class='BigCensusDiv' style='color:#FFD001;'>
+                        <span class='BigNum'>12</span>
+                        <span class='BigTag'>办理数</span>
+                    </div>
+                    <div class='BigCensusDiv' style='color:#2EDB63;'>
+                        <span class='BigNum'>10</span>
+                        <span class='BigTag'>一次性通过数</span>
+                    </div>
+                    <div class='BigCensusDiv' style='color:#FF205F;'>
+                        <span class='BigNum'>2</span>
+                        <span class='BigTag'>超时数</span>
+                    </div>
+                    <div class='BigCensusDiv' style='color:#D3FF3A;'>
+                        <span class='BigNum'>20</span>
+                        <span class='BigTag'>平均办理时长</span>
+                    </div>
+                    <div style='height: 4px;
+                                background-color: #ffd001;
+                                width: 90%;
+                                position: relative;
+                                top: 70%;
+                                left: 5%;'></div>
+                    <div class='BigCensusTitle'>消防验收</div>
+                </div>
+                <div
+                    style="width:100%;height:30%;background-image:url('./assets/images/big2/img_bg_sc.png');background-size: 100% 100%;text-align: center;">
+                    <div class='BigCensusDiv' style='color:#FFD001;'>
+                        <span class='BigNum'>12</span>
+                        <span class='BigTag'>办理数</span>
+                    </div>
+                    <div class='BigCensusDiv' style='color:#2EDB63;'>
+                        <span class='BigNum'>10</span>
+                        <span class='BigTag'>一次性通过数</span>
+                    </div>
+                    <div class='BigCensusDiv' style='color:#FF205F;'>
+                        <span class='BigNum'>2</span>
+                        <span class='BigTag'>超时数</span>
+                    </div>
+                    <div class='BigCensusDiv' style='color:#D3FF3A;'>
+                        <span class='BigNum'>20</span>
+                        <span class='BigTag'>平均办理时长</span>
+                    </div>
+                    <div style='height: 4px;
+                                    background-color: #ffd001;
+                                    width: 90%;
+                                    position: relative;
+                                    top: 70%;
+                                    left: 5%;'></div>
+                    <div class='BigCensusTitle'>消防验收备案</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="position: relative;height: 94%;float: left;margin-top: -1%;width: 20%;">
+        <div style='width:100%;height:20%'>
+            <div style='width:100%;height:50%'>
+                <div style='width:100%;height: 30%;'>
+                    <span style='color:#fff'>累计登录人数</span>
+                </div>
+                <div style='width:100%;height: 90%;'>
+                    <div class='NumBerDiv'
+                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'>
+                    </div>
+                    <div class='NumBerDiv'
+                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'>
+                    </div>
+                    <div class='NumBerDiv'
+                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'>
+                    </div>
+                    <div class='NumBerDiv'
+                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'>
+                    </div>
+                    <div class='NumBerDiv'
+                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'>
+                    </div>
+                    <div class='NumBerDiv'
+                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'>
+                    </div>
+                    <div class='NumBerDiv'
+                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'>
+                    </div>
+                    <div class='NumBerDiv'
+                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'>
+                    </div>
+                </div>
+
+            </div>
+            <div style='width:100%;height:50%'>
+                <div style='width:100%;height: 30%;'>
+                    <span style='color:#fff'>累计办结数量</span>
+                </div>
+                <div style='width:100%;height: 90%;'>
+                    <div class='NumBerDiv'
+                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'>
+                    </div>
+                    <div class='NumBerDiv'
+                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'>
+                    </div>
+                    <div class='NumBerDiv'
+                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'>
+                    </div>
+                    <div class='NumBerDiv'
+                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'>
+                    </div>
+                    <div class='NumBerDiv'
+                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'>
+                    </div>
+                    <div class='NumBerDiv'
+                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'>
+                    </div>
+                    <div class='NumBerDiv'
+                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'>
+                    </div>
+                    <div class='NumBerDiv'
+                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div
+            style='width:100%;height:20%;background-image:url("./assets/images/big2/img_bg_sbtj.png");background-size: 100% 100%;'>
+
+        </div>
+        <div
+            style='width:100%;height:20%;background-image:url("./assets/images/big2/img_bg_sbtj.png");background-size: 100% 100%;'>
+
+        </div>
+        <div
+            style='width:100%;height:40%;background-image:url("./assets/images/big2/img_bg_pm.png");background-size: 100% 100%;'>
+
+        </div>
+    </div>
+    <div style="position: relative;height: 28%;float: left;margin-top: -14.5%;width: 80%;">
+        <div
+            style='float: left;width:25%;height:100%;background-image:url("./assets/images/big2/img_bg_ycxtgl.png");background-size: 100% 100%;'>
+            <div echarts [options]="option" class="echartsStyle" style="height:100%;width:100%">
+            </div>
+        </div>
+        <div
+            style='float: left;width:25%;height:100%;background-image:url("./assets/images/big2/img_bg_yjlb.png");background-size: 100% 100%;padding:1.5%'>
+            <nz-table class='FireTable' nzSize="small" nzBordered='false' [nzData]="data" nzIsPagination='true'
+                [(nzPageSize)]='pagesize' [(nzPageIndex)]='pageindex' nzShowPagination='false'>
+                <thead nz-thead>
+                    <tr>
+                        <th nz-th>
+                            <span>序号</span>
+                        </th>
+                        <th nz-th>
+                            <span>工程名称</span>
+                        </th>
+                        <th nz-th>
+                            <span>申报单位</span>
+                        </th>
+                        <th nz-th>
+                            <span>联系人</span>
+                        </th>
+                        <th nz-th>
+                            <span>审批时间</span>
+                        </th>
+                        <th nz-th>
+                            <span>审批结果</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody nz-tbody>
+                    <tr nz-tbody-tr *ngFor='let data of data;let i = index;'>
+                        <td nz-td>{{i+1}}</td>
+                        <td nz-td>{{data.name}}</td>
+                        <td nz-td>{{data.unit}}</td>
+                        <td nz-td>{{data.people}}</td>
+                        <td nz-td>{{data.time}}</td>
+                        <td nz-td *ngIf='data.state == "合格"' style='color:#2EDB63'>{{data.state}}</td>
+                        <td nz-td *ngIf='data.state == "不合格"' style='color:red'>{{data.state}}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+        <div
+            style='float: left;width:25%;height:100%;background-image:url("./assets/images/big2/img_bg_yjlb.png");background-size: 100% 100%;padding:1.5%'>
+            <nz-table class='FireTable' nzSize="small" nzBordered='false' [nzData]="data" nzIsPagination='true'
+                [(nzPageSize)]='pagesize' [(nzPageIndex)]='pageindex' nzShowPagination='false'>
+                <thead nz-thead>
+                    <tr>
+                        <th nz-th>
+                            <span>序号</span>
+                        </th>
+                        <th nz-th>
+                            <span>工程名称</span>
+                        </th>
+                        <th nz-th>
+                            <span>申报单位</span>
+                        </th>
+                        <th nz-th>
+                            <span>联系人</span>
+                        </th>
+                        <th nz-th>
+                            <span>审批时间</span>
+                        </th>
+                        <th nz-th>
+                            <span>审批结果</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody nz-tbody>
+                    <tr nz-tbody-tr *ngFor='let data of data;let i = index;'>
+                        <td nz-td>{{i+1}}</td>
+                        <td nz-td>{{data.name}}</td>
+                        <td nz-td>{{data.unit}}</td>
+                        <td nz-td>{{data.people}}</td>
+                        <td nz-td>{{data.time}}</td>
+                        <td nz-td *ngIf='data.state == "合格"' style='color:#2EDB63'>{{data.state}}</td>
+                        <td nz-td *ngIf='data.state == "不合格"' style='color:red'>{{data.state}}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+        <div
+            style='float: left;width:25%;height:100%;background-image:url("./assets/images/big2/img_bg_yjlb.png");background-size: 100% 100%;padding:1.5%'>
+            <nz-table class='FireTable' nzSize="small" nzBordered='false' [nzData]="data" nzIsPagination='true'
+                [(nzPageSize)]='pagesize' [(nzPageIndex)]='pageindex' nzShowPagination='false'>
+                <thead nz-thead>
+                    <tr>
+                        <th nz-th>
+                            <span>序号</span>
+                        </th>
+                        <th nz-th>
+                            <span>工程名称</span>
+                        </th>
+                        <th nz-th>
+                            <span>申报单位</span>
+                        </th>
+                        <th nz-th>
+                            <span>联系人</span>
+                        </th>
+                        <th nz-th>
+                            <span>审批时间</span>
+                        </th>
+                        <th nz-th>
+                            <span>审批结果</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody nz-tbody>
+                    <tr nz-tbody-tr *ngFor='let data of data;let i = index;'>
+                        <td nz-td>{{i+1}}</td>
+                        <td nz-td>{{data.name}}</td>
+                        <td nz-td>{{data.unit}}</td>
+                        <td nz-td>{{data.people}}</td>
+                        <td nz-td>{{data.time}}</td>
+                        <td nz-td *ngIf='data.state == "合格"' style='color:#2EDB63'>{{data.state}}</td>
+                        <td nz-td *ngIf='data.state == "不合格"' style='color:red'>{{data.state}}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </div>
+</div> -->

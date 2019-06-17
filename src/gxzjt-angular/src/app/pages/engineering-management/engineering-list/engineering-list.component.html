@@ -1,0 +1,31 @@
+<div class="myBox">
+  <div class="boxRight">
+    <form nz-form #f="ngForm" se-container se-container="3">
+      <se label="工程编号">
+        <input type="text" nz-input placeholder="请输入工程编号" name="ak">
+      </se>
+      <se label="工程名称">
+        <input type="text" nz-input placeholder="请输入工程名称" name="sk">
+      </se>
+      <se label="建设单位">
+        <nz-select nzAllowClear nzPlaceHolder="Choose">
+          <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+          <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+        </nz-select>
+      </se>
+      <se label="状态">
+        <nz-select nzAllowClear nzPlaceHolder="Choose">
+          <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+          <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+        </nz-select>
+      </se>
+      <se class="noLabel">
+        <button nz-button nzType="primary" (click)="export()">导出</button>
+        <button nz-button nzType="primary" (click)="query()">搜索</button>
+      </se>
+    </form>
+    <st loading="!data" #st [data]="data.data" [columns]="columns" [page]="pageConfig" [total]="data.total"
+      [pi]="params.page" [ps]="params.maxResultCount" (change)="change($event)"></st>
+
+  </div>
+</div>

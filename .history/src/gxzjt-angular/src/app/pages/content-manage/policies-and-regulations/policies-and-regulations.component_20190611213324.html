@@ -1,0 +1,40 @@
+<div class="myBox">
+  <div class="boxRight">
+    <div nz-row class="more">
+        <div class="mb-md">
+
+            <form nz-form #f="ngForm" se-container="1" [nzLayout]="'inline'">
+                <se label="标题名称" required>
+                  <input style="width: 50%;" type="text"  nz-input[(ngModel)]="params.search" name="search" required>
+                </se>
+
+
+
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="7" [nzXs]="24">标题名称</nz-form-label>
+                  <nz-form-control [nzSm]="17" [nzXs]="24">
+                    <input nz-input [(ngModel)]="params.search" id="search" />
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSm]="7" [nzXs]="24">发布时间</nz-form-label>
+                    <nz-form-control [nzSm]="16" [nzXs]="24">
+                      <nz-range-picker [nzFormat]="'yyyy-MM-dd'"  [(ngModel)]="allDate"></nz-range-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                      <nz-form-control [nzSpan]="8" [nzOffset]="4">
+                        <button nz-button nzType="primary" (click)="init()">查询</button>
+                      </nz-form-control>
+                    </nz-form-item>
+              </form>
+           
+              
+          </div>
+          <div>
+              <button nz-button nzType="primary" (click)="add()">新增</button>
+          </div>
+          <st #st *ngIf="data" [data]="data.data" [req]="{params: params}" [columns]="columns"></st>
+  </div>
+</div>

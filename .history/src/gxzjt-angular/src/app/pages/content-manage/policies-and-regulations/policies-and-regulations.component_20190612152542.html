@@ -1,0 +1,48 @@
+<nz-spin [nzSpinning]="!data">
+  <div class="myBox">
+    <div class="boxRight">
+      <div nz-row class="more">
+        <form nz-form #f="ngForm" se-container nzLayout="inline">
+          <se label="标题名称">
+            <input type="text" nz-input [(ngModel)]="params.search" name="search">
+          </se>
+          <se label="发布时间">
+            <nz-date-picker [(ngModel)]="params.startTime" name="startTime"></nz-date-picker>~
+            <nz-date-picker [(ngModel)]="params.endTime" name="endTime"></nz-date-picker>
+          </se>
+          <button nz-button nzType="primary" (click)="init()">查询</button>
+        </form>
+        <div>
+          <button nz-button nzType="primary" (click)="add()">新增</button>
+        </div>
+        <st #st *ngIf="data" [data]="data.data" [req]="{params: params}" [columns]="columns" [pi]="params.page"
+          [ps]="params.size" [page]="pageConfig" [total]="data.totalCount" (change)="change($event)"></st>
+      </div>
+    </div>
+  </div>
+</nz-spin>
+<!-- columns: STColumn[] = [
+    { title: '内部编号', index: 'regulationCode' },
+    { title: '类型', index: 'regulationTypeId' },
+    { title: '标题名称', index: 'title' },
+    { title: '浏览量', index: 'issueOrg' },
+    { title: '操作人', index: 'issueDate', type: 'date' },
+    {
+      title: '发布时间', index: 'creationTime', type: 'date'
+    },
+
+    {
+      title: '操作', className: 'text-center', buttons: [
+        {
+          text: '<font class="stButton">详情</font>', click: (record: any) => {
+            this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/${record.id}`, { operate: 1 }]);
+          }
+        },
+        {
+          text: '<font class="stButton">编辑</font>', click: (record: any) => {
+            this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/${record.id}`, { operate: 2 }]);
+          }
+        },
+      ]
+    }
+  ]; -->
