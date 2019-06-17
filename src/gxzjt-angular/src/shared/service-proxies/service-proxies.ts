@@ -4258,7 +4258,7 @@ export class ScreenServiceServiceProxy {
      * @param declareRateQueryDto (optional) 
      * @return Success
      */
-    post_GetDeclareRate(declareRateQueryDto: DeclareRateQueryDto | null | undefined): Observable<TimeoutStatisticsDto[]> {
+    post_GetDeclareRate(declareRateQueryDto: DeclareRateQueryDto | null | undefined): Observable<ListResultDtoOfTimeoutStatisticsDto> {
         let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetDeclareRate";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -4281,14 +4281,14 @@ export class ScreenServiceServiceProxy {
                 try {
                     return this.processPost_GetDeclareRate(<any>response_);
                 } catch (e) {
-                    return <Observable<TimeoutStatisticsDto[]>><any>_observableThrow(e);
+                    return <Observable<ListResultDtoOfTimeoutStatisticsDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<TimeoutStatisticsDto[]>><any>_observableThrow(response_);
+                return <Observable<ListResultDtoOfTimeoutStatisticsDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPost_GetDeclareRate(response: HttpResponseBase): Observable<TimeoutStatisticsDto[]> {
+    protected processPost_GetDeclareRate(response: HttpResponseBase): Observable<ListResultDtoOfTimeoutStatisticsDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -4299,11 +4299,7 @@ export class ScreenServiceServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (resultData200 && resultData200.constructor === Array) {
-                result200 = [];
-                for (let item of resultData200)
-                    result200.push(TimeoutStatisticsDto.fromJS(item));
-            }
+            result200 = resultData200 ? ListResultDtoOfTimeoutStatisticsDto.fromJS(resultData200) : new ListResultDtoOfTimeoutStatisticsDto();
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -4311,14 +4307,14 @@ export class ScreenServiceServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<TimeoutStatisticsDto[]>(<any>null);
+        return _observableOf<ListResultDtoOfTimeoutStatisticsDto>(<any>null);
     }
 
     /**
      * @param screenTimeoutStatisticsQueryDto (optional) 
      * @return Success
      */
-    post_GetScreenCityTimeoutStatistics(screenTimeoutStatisticsQueryDto: ScreenTimeoutStatisticsQueryDto | null | undefined): Observable<TimeoutStatisticsDto[]> {
+    post_GetScreenCityTimeoutStatistics(screenTimeoutStatisticsQueryDto: ScreenTimeoutStatisticsQueryDto | null | undefined): Observable<ListResultDtoOfTimeoutStatisticsDto> {
         let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetScreenCityTimeoutStatistics";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -4341,14 +4337,14 @@ export class ScreenServiceServiceProxy {
                 try {
                     return this.processPost_GetScreenCityTimeoutStatistics(<any>response_);
                 } catch (e) {
-                    return <Observable<TimeoutStatisticsDto[]>><any>_observableThrow(e);
+                    return <Observable<ListResultDtoOfTimeoutStatisticsDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<TimeoutStatisticsDto[]>><any>_observableThrow(response_);
+                return <Observable<ListResultDtoOfTimeoutStatisticsDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPost_GetScreenCityTimeoutStatistics(response: HttpResponseBase): Observable<TimeoutStatisticsDto[]> {
+    protected processPost_GetScreenCityTimeoutStatistics(response: HttpResponseBase): Observable<ListResultDtoOfTimeoutStatisticsDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -4359,11 +4355,7 @@ export class ScreenServiceServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (resultData200 && resultData200.constructor === Array) {
-                result200 = [];
-                for (let item of resultData200)
-                    result200.push(TimeoutStatisticsDto.fromJS(item));
-            }
+            result200 = resultData200 ? ListResultDtoOfTimeoutStatisticsDto.fromJS(resultData200) : new ListResultDtoOfTimeoutStatisticsDto();
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -4371,13 +4363,13 @@ export class ScreenServiceServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<TimeoutStatisticsDto[]>(<any>null);
+        return _observableOf<ListResultDtoOfTimeoutStatisticsDto>(<any>null);
     }
 
     /**
      * @return Success
      */
-    post_GetATimeByStatistics(): Observable<ATimeByStatisticsDto[]> {
+    post_GetATimeByStatistics(): Observable<ListResultDtoOfATimeByStatisticsDto> {
         let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetATimeByStatistics";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -4396,14 +4388,14 @@ export class ScreenServiceServiceProxy {
                 try {
                     return this.processPost_GetATimeByStatistics(<any>response_);
                 } catch (e) {
-                    return <Observable<ATimeByStatisticsDto[]>><any>_observableThrow(e);
+                    return <Observable<ListResultDtoOfATimeByStatisticsDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ATimeByStatisticsDto[]>><any>_observableThrow(response_);
+                return <Observable<ListResultDtoOfATimeByStatisticsDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPost_GetATimeByStatistics(response: HttpResponseBase): Observable<ATimeByStatisticsDto[]> {
+    protected processPost_GetATimeByStatistics(response: HttpResponseBase): Observable<ListResultDtoOfATimeByStatisticsDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -4414,11 +4406,7 @@ export class ScreenServiceServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (resultData200 && resultData200.constructor === Array) {
-                result200 = [];
-                for (let item of resultData200)
-                    result200.push(ATimeByStatisticsDto.fromJS(item));
-            }
+            result200 = resultData200 ? ListResultDtoOfATimeByStatisticsDto.fromJS(resultData200) : new ListResultDtoOfATimeByStatisticsDto();
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -4426,7 +4414,7 @@ export class ScreenServiceServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ATimeByStatisticsDto[]>(<any>null);
+        return _observableOf<ListResultDtoOfATimeByStatisticsDto>(<any>null);
     }
 
     /**
@@ -4676,8 +4664,8 @@ export class StatisticalServiceServiceProxy {
      * @param warningCenterQueryDto (optional) 
      * @return Success
      */
-    psot_GetWarningCenterList(warningCenterQueryDto: WarningCenterQueryDto | null | undefined): Observable<DataSourceResult> {
-        let url_ = this.baseUrl + "/api/services/app/StatisticalService/Psot_GetWarningCenterList";
+    post_GetWarningCenterList(warningCenterQueryDto: WarningCenterQueryDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/StatisticalService/Post_GetWarningCenterList";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(warningCenterQueryDto);
@@ -4693,11 +4681,11 @@ export class StatisticalServiceServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPsot_GetWarningCenterList(response_);
+            return this.processPost_GetWarningCenterList(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPsot_GetWarningCenterList(<any>response_);
+                    return this.processPost_GetWarningCenterList(<any>response_);
                 } catch (e) {
                     return <Observable<DataSourceResult>><any>_observableThrow(e);
                 }
@@ -4706,7 +4694,7 @@ export class StatisticalServiceServiceProxy {
         }));
     }
 
-    protected processPsot_GetWarningCenterList(response: HttpResponseBase): Observable<DataSourceResult> {
+    protected processPost_GetWarningCenterList(response: HttpResponseBase): Observable<DataSourceResult> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -4763,6 +4751,118 @@ export class StatisticalServiceServiceProxy {
     }
 
     protected processPost_GetProjectApplyList(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
+
+    /**
+     * @param timeoutQuetyDto (optional) 
+     * @return Success
+     */
+    post_GetTimeoutList(timeoutQuetyDto: TimeoutQuetyDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/StatisticalService/Post_GetTimeoutList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(timeoutQuetyDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetTimeoutList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetTimeoutList(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetTimeoutList(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
+
+    /**
+     * @param handleLimitQueryDto (optional) 
+     * @return Success
+     */
+    post_GetHandleLimitList(handleLimitQueryDto: HandleLimitQueryDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/StatisticalService/Post_GetHandleLimitList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(handleLimitQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetHandleLimitList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetHandleLimitList(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetHandleLimitList(response: HttpResponseBase): Observable<DataSourceResult> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -5971,6 +6071,10 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     address: string | undefined;
     attachmentItems: AttachmentItem[] | undefined;
     timeLimit: number | undefined;
+    timeLimitOfDay: number | undefined;
+    projectId: number | undefined;
+    projectName: string | undefined;
+    completeContent: string | undefined;
 
     constructor(data?: IAcceptApplyFormDto) {
         if (data) {
@@ -6012,6 +6116,10 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
                     this.attachmentItems.push(AttachmentItem.fromJS(item));
             }
             this.timeLimit = data["timeLimit"];
+            this.timeLimitOfDay = data["timeLimitOfDay"];
+            this.projectId = data["projectId"];
+            this.projectName = data["projectName"];
+            this.completeContent = data["completeContent"];
         }
     }
 
@@ -6053,6 +6161,10 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
                 data["attachmentItems"].push(item.toJSON());
         }
         data["timeLimit"] = this.timeLimit;
+        data["timeLimitOfDay"] = this.timeLimitOfDay;
+        data["projectId"] = this.projectId;
+        data["projectName"] = this.projectName;
+        data["completeContent"] = this.completeContent;
         return data; 
     }
 
@@ -6082,6 +6194,10 @@ export interface IAcceptApplyFormDto {
     address: string | undefined;
     attachmentItems: AttachmentItem[] | undefined;
     timeLimit: number | undefined;
+    timeLimitOfDay: number | undefined;
+    projectId: number | undefined;
+    projectName: string | undefined;
+    completeContent: string | undefined;
 }
 
 export class UserBaseDto implements IUserBaseDto {
@@ -10686,6 +10802,57 @@ export interface IDeclareRateQueryDto {
     processedStatus: number | undefined;
 }
 
+export class ListResultDtoOfTimeoutStatisticsDto implements IListResultDtoOfTimeoutStatisticsDto {
+    items: TimeoutStatisticsDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfTimeoutStatisticsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(TimeoutStatisticsDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfTimeoutStatisticsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfTimeoutStatisticsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfTimeoutStatisticsDto {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfTimeoutStatisticsDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfTimeoutStatisticsDto {
+    items: TimeoutStatisticsDto[] | undefined;
+}
+
 export class TimeoutStatisticsDto implements ITimeoutStatisticsDto {
     cityName: string | undefined;
     flowPathType: number | undefined;
@@ -10786,6 +10953,57 @@ export class ScreenTimeoutStatisticsQueryDto implements IScreenTimeoutStatistics
 
 export interface IScreenTimeoutStatisticsQueryDto {
     dateTimeNow: moment.Moment | undefined;
+}
+
+export class ListResultDtoOfATimeByStatisticsDto implements IListResultDtoOfATimeByStatisticsDto {
+    items: ATimeByStatisticsDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfATimeByStatisticsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(ATimeByStatisticsDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfATimeByStatisticsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfATimeByStatisticsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfATimeByStatisticsDto {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfATimeByStatisticsDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfATimeByStatisticsDto {
+    items: ATimeByStatisticsDto[] | undefined;
 }
 
 export class ATimeByStatisticsDto implements IATimeByStatisticsDto {
@@ -11456,9 +11674,9 @@ export interface IWarningCenterQueryDto {
 export class ProjectApplyQueryDto implements IProjectApplyQueryDto {
     recordNumber: string | undefined;
     projectName: string | undefined;
+    status: number | undefined;
     startApplyTime: moment.Moment | undefined;
     endApplyTime: moment.Moment | undefined;
-    dateTimeNow: moment.Moment | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
@@ -11477,9 +11695,9 @@ export class ProjectApplyQueryDto implements IProjectApplyQueryDto {
         if (data) {
             this.recordNumber = data["recordNumber"];
             this.projectName = data["projectName"];
+            this.status = data["status"];
             this.startApplyTime = data["startApplyTime"] ? moment(data["startApplyTime"].toString()) : <any>undefined;
             this.endApplyTime = data["endApplyTime"] ? moment(data["endApplyTime"].toString()) : <any>undefined;
-            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
             this.page = data["page"];
             this.sorting = data["sorting"];
             this.skipCount = data["skipCount"];
@@ -11498,9 +11716,9 @@ export class ProjectApplyQueryDto implements IProjectApplyQueryDto {
         data = typeof data === 'object' ? data : {};
         data["recordNumber"] = this.recordNumber;
         data["projectName"] = this.projectName;
+        data["status"] = this.status;
         data["startApplyTime"] = this.startApplyTime ? this.startApplyTime.toISOString() : <any>undefined;
         data["endApplyTime"] = this.endApplyTime ? this.endApplyTime.toISOString() : <any>undefined;
-        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
         data["page"] = this.page;
         data["sorting"] = this.sorting;
         data["skipCount"] = this.skipCount;
@@ -11519,6 +11737,164 @@ export class ProjectApplyQueryDto implements IProjectApplyQueryDto {
 export interface IProjectApplyQueryDto {
     recordNumber: string | undefined;
     projectName: string | undefined;
+    status: number | undefined;
+    startApplyTime: moment.Moment | undefined;
+    endApplyTime: moment.Moment | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+}
+
+export class TimeoutQuetyDto implements ITimeoutQuetyDto {
+    recordNumber: string | undefined;
+    projectName: string | undefined;
+    status: number | undefined;
+    startApplyTime: moment.Moment | undefined;
+    endApplyTime: moment.Moment | undefined;
+    dateTimeNow: moment.Moment | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+
+    constructor(data?: ITimeoutQuetyDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.recordNumber = data["recordNumber"];
+            this.projectName = data["projectName"];
+            this.status = data["status"];
+            this.startApplyTime = data["startApplyTime"] ? moment(data["startApplyTime"].toString()) : <any>undefined;
+            this.endApplyTime = data["endApplyTime"] ? moment(data["endApplyTime"].toString()) : <any>undefined;
+            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
+            this.page = data["page"];
+            this.sorting = data["sorting"];
+            this.skipCount = data["skipCount"];
+            this.maxResultCount = data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): TimeoutQuetyDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TimeoutQuetyDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["recordNumber"] = this.recordNumber;
+        data["projectName"] = this.projectName;
+        data["status"] = this.status;
+        data["startApplyTime"] = this.startApplyTime ? this.startApplyTime.toISOString() : <any>undefined;
+        data["endApplyTime"] = this.endApplyTime ? this.endApplyTime.toISOString() : <any>undefined;
+        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
+        data["page"] = this.page;
+        data["sorting"] = this.sorting;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+
+    clone(): TimeoutQuetyDto {
+        const json = this.toJSON();
+        let result = new TimeoutQuetyDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITimeoutQuetyDto {
+    recordNumber: string | undefined;
+    projectName: string | undefined;
+    status: number | undefined;
+    startApplyTime: moment.Moment | undefined;
+    endApplyTime: moment.Moment | undefined;
+    dateTimeNow: moment.Moment | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+}
+
+export class HandleLimitQueryDto implements IHandleLimitQueryDto {
+    cityName: string | undefined;
+    area: string | undefined;
+    flowPathType: number | undefined;
+    startApplyTime: moment.Moment | undefined;
+    endApplyTime: moment.Moment | undefined;
+    dateTimeNow: moment.Moment | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+
+    constructor(data?: IHandleLimitQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.cityName = data["cityName"];
+            this.area = data["area"];
+            this.flowPathType = data["flowPathType"];
+            this.startApplyTime = data["startApplyTime"] ? moment(data["startApplyTime"].toString()) : <any>undefined;
+            this.endApplyTime = data["endApplyTime"] ? moment(data["endApplyTime"].toString()) : <any>undefined;
+            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
+            this.page = data["page"];
+            this.sorting = data["sorting"];
+            this.skipCount = data["skipCount"];
+            this.maxResultCount = data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): HandleLimitQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new HandleLimitQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["cityName"] = this.cityName;
+        data["area"] = this.area;
+        data["flowPathType"] = this.flowPathType;
+        data["startApplyTime"] = this.startApplyTime ? this.startApplyTime.toISOString() : <any>undefined;
+        data["endApplyTime"] = this.endApplyTime ? this.endApplyTime.toISOString() : <any>undefined;
+        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
+        data["page"] = this.page;
+        data["sorting"] = this.sorting;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+
+    clone(): HandleLimitQueryDto {
+        const json = this.toJSON();
+        let result = new HandleLimitQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IHandleLimitQueryDto {
+    cityName: string | undefined;
+    area: string | undefined;
+    flowPathType: number | undefined;
     startApplyTime: moment.Moment | undefined;
     endApplyTime: moment.Moment | undefined;
     dateTimeNow: moment.Moment | undefined;

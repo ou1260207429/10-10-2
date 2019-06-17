@@ -5,6 +5,7 @@ import { _HttpClient } from '@delon/theme';
 import { FlowServices, WorkFlow } from 'services/flow.services';
 import { AdoptEnum } from 'infrastructure/expression';
 import { UploadFile } from 'ng-zorro-antd';
+import { AcceptServiceServiceProxy, AcceptApplyFormDto, ApplyServiceServiceProxy, FlowFormQueryDto } from '@shared/service-proxies/service-proxies';
 
 /**
  * 待办详情->办理页面
@@ -29,14 +30,6 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   //路径的对象
   data
-
-  workFlow_Instance_Id
-
-  workFlow: WorkFlow = {
-    workFlow_TemplateInfoId: '',
-    workFlow_InstanceId: '',
-    workFlow_NodeAuditorRecordId: '',
-  }
 
   type: boolean = true;
 
@@ -77,41 +70,57 @@ export class AgencyDoneDetailsComponent implements OnInit {
     ]
   };
 
-  //同时提供的材料
-  simultaneousMaterials = {
-    a1Checkbox: false,
-    a2Input: '',
-    a2Checkbox: false,
-    a5Input: '',
-    a3Checkbox: false,
-    a4Checkbox: false,
-    a5Checkbox: false,
-    complete: '',
-    notGrant: '',
-  }
+
 
   uploading = false;
   fileList: UploadFile[] = [];
 
   textData = { projectNumber: "", opinion: "", projectName: "" }
-  constructor(private _flowServices: FlowServices, private _activatedRoute: ActivatedRoute, private _ActivatedRoute: ActivatedRoute, ) {
-    // console.log(this._activatedRoute.snapshot.paramMap.get('workFlow_TemplateInfoId'))
-    // console.log(this._activatedRoute.snapshot.paramMap.get('workFlow_InstanceId'))
-    // console.log(this._activatedRoute.snapshot.paramMap.get('workFlow_NodeAuditorRecordId'))
-    this.workFlow.workFlow_TemplateInfoId = this._activatedRoute.snapshot.paramMap.get('workFlow_TemplateInfoId')
-    this.workFlow.workFlow_InstanceId = this._activatedRoute.snapshot.paramMap.get('workFlow_InstanceId')
-    this.workFlow.workFlow_NodeAuditorRecordId = this._activatedRoute.snapshot.paramMap.get('workFlow_NodeAuditorRecordId')
+
+  //路径的ID 
+  flowNo
+
+  //判断类型 消防设计1   消防验收2   消防竣工3 
+  flowPathType
+
+  //获取表单详情的ID 
+  flowId
+
+
+  //提交表单的对象
+  formDto: AcceptApplyFormDto = new AcceptApplyFormDto();
+
+  //表单json对象
+  formJson
+
+  constructor(private _applyService: ApplyServiceServiceProxy, private _acceptServiceServiceProxy: AcceptServiceServiceProxy, private _flowServices: FlowServices, private _activatedRoute: ActivatedRoute, private _ActivatedRoute: ActivatedRoute, ) {
+    this.flowNo = this._activatedRoute.snapshot.paramMap.get('flowNo')
+    this.flowId = this._activatedRoute.snapshot.paramMap.get('flowId')
+    this.flowPathType = this._activatedRoute.snapshot.paramMap.get('flowPathType')
+    console.log(this.flowPathType);
+
   }
 
   ngOnInit() {
     this.type = false
-    // this.init()
+    this.init()
   }
 
   init() {
-    Promise.all([this.gXZJT_StartWorkFlowInstanceAsync()]).then((data: any) => {
+    Promise.all([this.getWorkFlow_NodeRecordAndAuditorRecords(), this.getAcceptApplyForm()]).then((data: any) => {
       this.data = data[0].result
-      this.type = false
+      this.formDto = data[1]
+      const flowFormQueryDto = new FlowFormQueryDto();
+      flowFormQueryDto.flowType = this.flowPathType
+      flowFormQueryDto.projectId = this.formDto.projectId;
+      flowFormQueryDto.flowId = this.flowId
+
+      //获取表单JSON数据
+      this._applyService.post_GetFlowFormData(flowFormQueryDto).subscribe(data => {
+        this.formJson = JSON.parse(data.formJson);
+        console.log(JSON.parse(data.formJson))
+        this.type = false
+      })
     })
 
 
@@ -120,17 +129,18 @@ export class AgencyDoneDetailsComponent implements OnInit {
   /**
    * 获取路径
    */
-  // getWorkFlow_NodeRecordAndAuditorRecords() {
-  //   return this._flowServices.getWorkFlow_NodeRecordAndAuditorRecords(this.workFlow_Instance_Id).toPromise()
-  // }
+  getWorkFlow_NodeRecordAndAuditorRecords() {
+    return this._flowServices.getWorkFlow_NodeRecordAndAuditorRecords(this.flowNo).toPromise()
+  }
 
   /**
-   * 获取详情
+   * 获取表单
    */
-
-  gXZJT_StartWorkFlowInstanceAsync() {
-    return this._flowServices.tenant_GetWorkFlowInstanceFrowTemplateInfoById(this.workFlow).toPromise()
+  getAcceptApplyForm() {
+    return this._acceptServiceServiceProxy.getAcceptApplyForm(this.flowId).toPromise()
   }
+
+
 
   /**
    * 上传文件之前的钩子
@@ -139,5 +149,19 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.fileList = this.fileList.concat(file);
     return false;
   };
-  save() { };
+
+  /**
+   * 点击提交
+   */
+  save() {
+
+
+    // this._flowServices.tenant_NodeToNextNodeByPass().subscribe(data => { 
+
+    // })
+    // this.formDto.flowId = this.flowId
+    // this._acceptServiceServiceProxy.acceptApply(this.formDto).subscribe(data => {
+
+    // })
+  };
 }

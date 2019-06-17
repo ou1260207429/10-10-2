@@ -19,8 +19,8 @@ export class FlowServices {
   /**
    * 查询待办流程
    */
-  tenant_PendingWorkFlow_NodeAuditorRecord(page?: any): Observable<any> {
-    return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/PendingWorkFlow_NodeAuditorRecord', page);
+  pendingWorkFlow_NodeAuditorRecord(page?: any): Observable<any> {
+    return this.http.post(FLOW_SERVICES_URL + '/api/services/app/WorkFlowed/PendingWorkFlow_NodeAuditorRecord', page);
   }
 
   /**
@@ -39,6 +39,13 @@ export class FlowServices {
    */
   tenant_GetWorkFlowInstanceFrowTemplateInfoById(data: WorkFlow) {
     return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/Tenant_GetWorkFlowInstanceFrowTemplateInfoById', data);
+  }
+
+  /**
+   * 通过操作
+   */
+  tenant_NodeToNextNodeByPass(data: any) {
+    return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/Tenant_NodeToNextNodeByPass', data);
   }
 
   GXZJT_StartWorkFlowInstanceAsync(data: GXZJT_From) {

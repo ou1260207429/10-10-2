@@ -6,6 +6,7 @@ import { timeTrans } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { GXZJT_From, FlowServices } from 'services/flow.services';
 import { FormGroup } from '@angular/forms';
+import { SSL_OP_ALL } from 'constants';
 
 /**
  * 工程管理->消防设计审查管理->新增申报
@@ -471,6 +472,18 @@ export class AddFireDesignDeclareComponent implements OnInit {
         }]
     },
 
+    uploadAttachments: [
+      // {
+      //   ty0e:1,
+      //   xfgcImg: [
+      //     { name: '360exe.exe', gid: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' },
+      //     { name: '360exe.exe', gid: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' },
+      //   ],
+      // },
+      ,
+
+    ]
+
   }
 
   //子组件的表单对象
@@ -543,13 +556,12 @@ export class AddFireDesignDeclareComponent implements OnInit {
       //待审人数组 等后台改模型
       // currentHandleUserCode: string | undefined; 
 
+      console.log(this.data);
+      console.log(flowDataDto);
       this._applyService.investigate(flowDataDto).subscribe(data => {
         this.message.success('提交成功')
         history.go(-1)
       })
-
-      //   this.message.success('提交成功')
-      //   history.go(-1)
     })
 
   }

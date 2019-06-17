@@ -552,6 +552,10 @@ export function removeComma(str: string): string {
   return str.replace(/,$/gi, "");
 }
 
+export function genID(length) {
+  return Number(Math.random().toString().substr(0, length) + Date.now()).toString(50);
+}
+
 /**
  * 单选框 
  * 根据对象删除子数组

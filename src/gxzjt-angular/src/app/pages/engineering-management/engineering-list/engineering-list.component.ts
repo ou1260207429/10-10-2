@@ -106,10 +106,10 @@ export class EngineeringListComponent implements OnInit {
    * 获取列表 
    */
   workFlow_NodeAuditorRecords(params?: any) {
-    this.data = '';
-    this._flowServices.tenant_PendingWorkFlow_NodeAuditorRecord(params).subscribe(data => {
-      this.data = data.result;
-    })
+    // this.data = '';
+    // this._flowServices.tenant_PendingWorkFlow_NodeAuditorRecord(params).subscribe(data => {
+    //   this.data = data.result;
+    // })
   }
 
   /**
