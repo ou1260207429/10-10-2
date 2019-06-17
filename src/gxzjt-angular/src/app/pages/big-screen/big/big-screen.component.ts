@@ -12,8 +12,8 @@ import { _HttpClient } from "@delon/theme";
 export class BigScreenComponent {
     echarts = require('echarts');
 
-    percent = 87;
-    color = '#2f9cff';
+    //     percent = 87;
+    //     color = '#2f9cff';
 
     clientHeight = 0; //  屏幕可视高度
     clientWidth = 0;
@@ -35,10 +35,10 @@ export class BigScreenComponent {
             this.clientWidth = document.body.clientWidth;
         }
 
-        //         this.FireHeight = this.clientHeight * 0.5 + 'px';
-        //         this.FireWidth = this.clientWidth * 0.32 + 'px';
-        //         this.MiddleWidth = this.clientWidth * 0.47 + 'px';
-        //         this.RightWidth = this.clientWidth * 0.18 + 'px';
+        this.FireHeight = this.clientHeight * 0.5 + 'px';
+        this.FireWidth = this.clientWidth * 0.32 + 'px';
+        this.MiddleWidth = this.clientWidth * 0.47 + 'px';
+        this.RightWidth = this.clientWidth * 0.18 + 'px';
 
         window.onresize = () => {
 
