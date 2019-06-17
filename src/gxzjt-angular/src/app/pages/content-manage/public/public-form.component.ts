@@ -41,7 +41,7 @@ export class PublicFormComponent {
             date_range: [[]],
 
         });
-
+        this.searchHolder = "标题名称";
         this.resetTime();
     }
 
@@ -50,4 +50,6 @@ export class PublicFormComponent {
         startTime.setDate(startTime.getDate() - 1)
         this.rangeTime = [startTime, new Date()];
     }
+
+
 }

@@ -90,7 +90,7 @@ export class PoliciesAndRegulationsComponent extends PublicFormComponent impleme
   pageConfig: STPage = publicPageConfig;
   constructor(private _eventEmiter: EventEmiter, private _publicModel: PublicModel, private _regulationServiceProxy: RegulationServiceProxy, private router: Router) {
     super();
-    this.searchHolder = "标题名称";
+
   }
 
   ngOnInit() {

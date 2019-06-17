@@ -12,7 +12,8 @@
   <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
 
 
-    <button nz-button (click)="add()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">增加</button>
+    <button nz-button (click)="add()" nzType="primary" style="margin-right: 10px;margin-top: 10px;"><i nz-icon
+        type="plus"></i>增加</button>
 
     <input nz-input [(ngModel)]="searchKey" formControlName="pro_no" [placeholder]="searchHolder"
       style="margin-right: 10px;margin-top: 10px;width: 200px;">
