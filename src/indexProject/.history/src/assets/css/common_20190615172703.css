@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+.content {
+  width: 70%;
+  min-width: 1200px;
+  margin: 0 auto;
+}
+
+.active {
+  border-bottom: 2px solid #bd1127ff;
+}
+.item{
+  cursor: pointer;
+}
+#tip{
+  width: 150px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+  background-image: url('../../assets/images/img_bg_bszn.png');
+}

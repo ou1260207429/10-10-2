@@ -1,0 +1,25 @@
+<nz-spin [nzSpinning]="!data">
+  <div class="myBox">
+    <div class="boxRight">
+      <div nz-row class="more">
+        <form nz-form #f="ngForm" se-container se-container se-container="3">
+          <se label="标题名称">
+            <input type="text" nz-input [(ngModel)]="params.search" name="search">
+          </se>
+          <se label="发布时间">
+            <nz-date-picker  nzShowTime [nzFormat]="'yyyy-MM-dd HH:mm:ss'" [(ngModel)]="params.startTime" name="startTime"></nz-date-picker>~
+            <nz-date-picker  nzShowTime [nzFormat]="'yyyy-MM-dd HH:mm:ss'" [(ngModel)]="params.endTime" name="endTime"></nz-date-picker>
+          </se>
+          <se>
+              <button nz-button nzType="primary" (click)="init()">查询</button>
+          </se>
+        </form>
+        <div style="margin-bottom: 5px">
+          <button nz-button nzType="primary" (click)="add()">新增</button>
+        </div>
+        <st #st *ngIf="data" [data]="data.data" [req]="{params: params}" [columns]="columns" [pi]="params.page"
+          [ps]="params.size" [page]="pageConfig" [total]="data.totalCount" (change)="change($event)"></st>
+      </div>
+    </div>
+  </div>
+</nz-spin>

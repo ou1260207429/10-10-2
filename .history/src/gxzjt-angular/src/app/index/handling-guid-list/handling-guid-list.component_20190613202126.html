@@ -1,0 +1,53 @@
+<div id="content">
+  <div nz-row style="padding: 10px 40px">
+    <div class="content" style="font-size: 8px">
+      <span>建设大厅</span> >
+      <span style="color: red">办事指南</span>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div class="content">
+      <div nz-col nzSpan="12">
+        <nz-card nz-card style="font-size:8px;min-height:500px;">
+          <div style="overflow: hidden">
+            <p class="titleLeft"><span>行政许可</span></p>
+          </div>
+          <ul style="margin-top: 10px;padding-left: 0">
+            <li nz-row nzGutter="20" *ngFor="let item of xukeList">
+              <div nz-col nzSpan="9">
+                <img style="width: 100%;" [src]="item.src" alt="">
+              </div>
+              <div nz-col nzSpan="15" style="position: relative;height: 108px;">
+                <p class="title">{{item.name}}</p>
+                <p class="tip">{{item.tip}}</p>
+                <p class="detail">了解详情</p>
+              </div>
+
+            </li>
+          </ul>
+
+        </nz-card>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-card nz-card style="font-size:8px;min-height:500px;">
+          <div style="overflow: hidden">
+            <p class="titleRight" style="float: right"><span>网上备案</span></p>
+          </div>
+          <ul style="margin-top: 10px;padding-left: 0">
+            <li nz-row nzGutter="20" *ngFor="let item of rightList">
+              <div nz-col nzSpan="9">
+                <img style="width: 100%;" [src]="item.src" alt="">
+              </div>
+              <div nz-col nzSpan="15" style="position: relative;height: 108px;"">
+                <p class="title">{{item.name}}</p>
+                <p class="tip">{{item.tip}}</p>
+                <p class="detail"><span>了解详情</span></p>
+                </div>
+
+            </li>
+          </ul>
+        </nz-card>
+      </div>
+    </div>
+  </div>
+</div>
