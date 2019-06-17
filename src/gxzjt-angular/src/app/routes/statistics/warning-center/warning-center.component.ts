@@ -4,6 +4,7 @@ import { STColumn, STComponent, XlsxService } from '@delon/abc';
 
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { StatisticsWarningCenterDetailComponent } from '../warning-center-detail/warning-center-detail.component';
+import { StatisticalServiceServiceProxy, WarningCenterQueryDto } from '@shared/service-proxies/service-proxies';
 
 
 @Component({
@@ -23,12 +24,19 @@ export class StatisticsWarningCenterComponent implements OnInit {
     at_time: '8',
 
   }];
+  param = new WarningCenterQueryDto();
   searchKey = '';
   selectedValuePro = "";
   fliterForm: FormGroup;
   hiddenFliter = false;
+  formResultData = [];
+  rangeTime = [];
 
   formData = {};
+  // i = {
+  //   start: '2019-02-17T08:51:45.854Z',
+  //   end: '2019-06-17T08:51:45.854Z',
+  // };
 
 
   @ViewChild('st') st: STComponent;
@@ -80,17 +88,20 @@ export class StatisticsWarningCenterComponent implements OnInit {
 
   constructor(private http: _HttpClient,
     private modal: ModalHelper,
+    private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
     private formBuilder: FormBuilder,
     private xlsx: XlsxService) { }
 
   ngOnInit() {
+    this.resetTime();
     this.fliterForm = this.formBuilder.group({
       proNo: [null],
       proName: [null],
       proType: [null],
-      dateRange: [[]],
+      dateRange: [[this.rangeTime]],
 
     });
+    this.getList();
   }
 
   switchFilter() {
@@ -103,11 +114,27 @@ export class StatisticsWarningCenterComponent implements OnInit {
     //   .subscribe(() => this.st.reload());
   }
   search() {
+    console.log(this.rangeTime)
+    this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+    this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
+    this.statisticalServiceServiceProxy.post_GetWarningCenterList(this.param).subscribe((result: any) => {
+      this.formResultData = result.data;
+    }, err => {
+      console.log(err);
+
+    });
 
   }
 
   resetForm(): void {
-    this.fliterForm.reset();
+    this.fliterForm = this.formBuilder.group({
+      proNo: [null],
+      proName: [null],
+      proType: [null],
+      dateRange: [[this.rangeTime]],
+
+    });
+    // this.fliterForm.reset();
   }
 
 
@@ -125,5 +152,35 @@ export class StatisticsWarningCenterComponent implements OnInit {
         },
       ],
     });
+  }
+  getList() {
+    this.param.init(
+      {
+        "flowNo": "",
+        "projectName": "",
+        "flowPathType": -1,
+        "startApplyTime": "2019-02-17T08:51:45.854Z",
+        "endApplyTime": "2019-06-17T08:51:45.854Z",
+        "dateTimeNow": "2019-06-17T08:51:45.854Z",
+        "page": 1,
+        "sorting": "",
+        "skipCount": 0,
+        "maxResultCount": 10
+      });
+
+    this.statisticalServiceServiceProxy.post_GetWarningCenterList(this.param).subscribe((result: any) => {
+      this.formResultData = result.data;
+    }, err => {
+      console.log(err);
+
+    });
+  }
+  // get dateRange() {
+  //   return this.fliterForm.controls.dateRange;
+  // }
+  resetTime() {
+    var startTime = new Date();
+    startTime.setDate(startTime.getDate() - 1)
+    this.rangeTime = [startTime, new Date()];
   }
 }
