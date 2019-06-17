@@ -71,14 +71,25 @@ export class AppMenus {
     },
     {
       text: "统计分析",
-
       icon: { type: "icon", value: "area-chart" },// 图标
       children: [
         {
           text: "预警中心",
 
-          link: "/app/statistics",
-        }
+          link: "/app/statistics/warning-center",
+        },
+        {
+          text: "项目申报情况统计",
+          link: "/app/statistics/pro-app-static",
+        },
+        {
+          text: "超时办理情况分析",
+          link: "/app/statistics/timeout-deal-with",
+        },
+        {
+          text: "办理时限统计",
+          link: "/app/statistics/time-limt-deal",
+        },
 
       ]
     },
@@ -141,27 +152,35 @@ export class AppMenus {
 
           link: "/app/sys-setting/spot-check-proportion",
         },
-        {
-          text: "单位信息管理",
-          link: "/app/sys-setting/unit-info-manage",
-        },
-        {
-          text: "日志管理",
-          link: "/app/sys-setting/log-manage",
-        },
+        // {
+        //   text: "单位信息管理",
+        //   link: "/app/sys-setting/unit-info-manage",
+        // },
+        // {
+        //   text: "日志管理",
+        //   link: "/app/sys-setting/log-manage",
+        // },
 
       ]
     },
-    {
-      text: "权限管理",
-      icon: { type: "icon", value: "team" },// 图标
-      children: [
-        {
-          text: "组织架构管理",
-          link: "/app/permission/org-manager",
-        }
-      ]
-    },
+    // {
+    //   text: "权限管理",
+    //   icon: { type: "icon", value: "team" },// 图标
+    //   children: [
+    //     {
+    //       text: "组织架构管理",
+    //       link: "/app/permission/org-manager",
+    //     },
+    //     {
+    //       text: "用户管理",
+    //       link: "/app/permission/user-manager",
+    //     },
+    //     {
+    //       text: "角色管理",
+    //       link: "/app/permission/role-manager",
+    //     },
+    //   ]
+    // },
 
   ];
 }

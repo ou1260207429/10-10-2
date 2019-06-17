@@ -3,32 +3,34 @@ import { STColumn, STPage, STComponent } from '@delon/abc';
 import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 import { Router } from '@angular/router';
 import { EventEmiter } from 'infrastructure/eventEmiter';
-import {AttachmentServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AttachmentServiceProxy } from '@shared/service-proxies/service-proxies';
 import { PublicModel } from 'infrastructure/public-model';
+import { PublicFormComponent } from '../public/public-form.component';
 
 @Component({
   selector: 'app-form-download',
-  templateUrl: './form-download.component.html',
+  // templateUrl: './form-download.component.html',
+  templateUrl: '../public/public-form.html',
   styles: []
 })
-export class FormDownloadComponent implements OnInit {
+export class FormDownloadComponent extends PublicFormComponent implements OnInit {
   @ViewChild('treeCom') treeCom;
   @ViewChild('st') st: STComponent;
 
   params: any = {
     page: 1,
-    size: 10,
+    size: 200,
     sort: "",
     isAsc: false,
     orderby: "",
-    totalCount: 20,
-    group:''
-    //search: 11,
-    //startTime: null,
-    //endTime: null,
+    totalCount: 200,
+    group: "",
+    search: "",
+    startTime: null,
+    endTime: null,
   };
-  data
-  
+
+
   columns: STColumn[] = [
     { title: '表名', index: 'attachmentName' },
     { title: '创建时间', index: 'creationTime', type: 'date' },
@@ -43,7 +45,7 @@ export class FormDownloadComponent implements OnInit {
       title: '操作', className: 'text-center', buttons: [
         {
           text: '<font class="stButton">删除</font>', click: (record: any) => {
-            this._publicModel.isDeleteModal(()=>{
+            this._publicModel.isDeleteModal(() => {
               this._attachmentServiceProxy.deleteAttachmentById(record.id).subscribe(data => {
                 this.init();
               })
@@ -57,6 +59,8 @@ export class FormDownloadComponent implements OnInit {
 
   pageConfig: STPage = publicPageConfig;
   constructor(private _publicModel: PublicModel, private _attachmentServiceProxy: AttachmentServiceProxy, private router: Router, private _eventEmiter: EventEmiter) {
+    super();
+    this.searchHolder = "表格名称";
   }
 
   ngOnInit() {
@@ -92,9 +96,15 @@ export class FormDownloadComponent implements OnInit {
    * 获取列表 
    */
   workFlow_NodeAuditorRecords(params?: any) {
-    this.data = "";
+
+    this.params.page = 1;
+    this.params.startTime = this.rangeTime[0];
+    this.params.endTime = this.rangeTime[1];
+    this.params.search = this.searchKey;
+    this.isSearchForm = true;
     this._attachmentServiceProxy.attachmentListAsync(params).subscribe(data => {
-      this.data = data;
+      this.isSearchForm = false;
+      this.formResultData = data.data;
     })
   }
 
@@ -116,4 +126,7 @@ export class FormDownloadComponent implements OnInit {
     this.router.navigate([`/app/content-manage/formDownloadDetailComponent`]);
   }
 
+  refresh() {
+    this.query();
+  }
 }

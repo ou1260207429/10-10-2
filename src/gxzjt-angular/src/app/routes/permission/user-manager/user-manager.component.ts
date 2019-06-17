@@ -29,8 +29,13 @@ export class UserManagerComponent extends PublicFormComponent implements OnInit 
     {
       searchKey: "",
       formControlName: "search",
-      placeholder: "组织名称"
-    }
+      placeholder: "部门名称"
+    },
+    {
+      searchKey: "",
+      formControlName: "search",
+      placeholder: "用户名称"
+    },
   ];
 
   @ViewChild('st') st: STComponent;
@@ -62,8 +67,8 @@ export class UserManagerComponent extends PublicFormComponent implements OnInit 
     private xlsx: XlsxService) {
     super();
     this.needAdd = true;
-    this.needSingleForm = false;
-    this.needTreeForm = true;
+    this.needSingleForm = true;
+    this.needTreeForm = false;
   }
 
   ngOnInit() {

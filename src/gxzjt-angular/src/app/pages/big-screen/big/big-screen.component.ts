@@ -9,7 +9,7 @@ import { _HttpClient } from "@delon/theme";
     providers: [ScreenServiceServiceProxy]
 })
 
-export class BigScreenComponent implements OnInit {
+export class BigScreenComponent {
     echarts = require('echarts');
 
     percent = 87;
@@ -35,10 +35,10 @@ export class BigScreenComponent implements OnInit {
             this.clientWidth = document.body.clientWidth;
         }
 
-        this.FireHeight = this.clientHeight * 0.5 + 'px';
-        this.FireWidth = this.clientWidth * 0.32 + 'px';
-        this.MiddleWidth = this.clientWidth * 0.47 + 'px';
-        this.RightWidth = this.clientWidth * 0.18 + 'px';
+        //         this.FireHeight = this.clientHeight * 0.5 + 'px';
+        //         this.FireWidth = this.clientWidth * 0.32 + 'px';
+        //         this.MiddleWidth = this.clientWidth * 0.47 + 'px';
+        //         this.RightWidth = this.clientWidth * 0.18 + 'px';
 
         window.onresize = () => {
 
@@ -240,16 +240,16 @@ export class BigScreenComponent implements OnInit {
                 });
             }
 
+            //         }
+            //         // 计算有多少页
+            //         this.changeNum = Math.floor(this.tatol / 7);
+            //         if (this.tatol % 7 !== 0) {
+            //             this.changeNum = this.changeNum + 1;
+            //         }
         }
-        // 计算有多少页
-        this.changeNum = Math.floor(this.tatol / 7);
-        if (this.tatol % 7 !== 0) {
-            this.changeNum = this.changeNum + 1;
-        }
-    }
-    changeNum = 0;
-    tatol = 100;
-    PageChange() {
+        //     changeNum = 0;
+        //     tatol = 100;
+        //     PageChange() {
 
     }
     option: any;
@@ -378,20 +378,20 @@ export class BigScreenComponent implements OnInit {
                     },
                 },
 
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    axisLabel: {
-                        textStyle: {
-                            color: '#fff'
-                        },
-                    },
-                    splitLine: {
-                        show: false
-                    },
-                    max: 'dataMax',
-                }
+                //             ],
+                //             yAxis: [
+                //                 {
+                //                     type: 'value',
+                //                     axisLabel: {
+                //                         textStyle: {
+                //                             color: '#fff'
+                //                         },
+                //                     },
+                //                     splitLine: {
+                //                         show: false
+                //                     },
+                //                     max: 'dataMax',
+                //                 }
 
             ],
             series: [
@@ -469,20 +469,20 @@ export class BigScreenComponent implements OnInit {
                     },
                 },
 
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    axisLabel: {
-                        textStyle: {
-                            color: '#fff'
-                        },
-                    },
-                    splitLine: {
-                        show: false
-                    },
-                    max: 'dataMax',
-                }
+                //             ],
+                //             yAxis: [
+                //                 {
+                //                     type: 'value',
+                //                     axisLabel: {
+                //                         textStyle: {
+                //                             color: '#fff'
+                //                         },
+                //                     },
+                //                     splitLine: {
+                //                         show: false
+                //                     },
+                //                     max: 'dataMax',
+                //                 }
 
             ],
             series: [
@@ -560,20 +560,20 @@ export class BigScreenComponent implements OnInit {
                     },
                 },
 
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    axisLabel: {
-                        textStyle: {
-                            color: '#fff'
-                        },
-                    },
-                    splitLine: {
-                        show: false
-                    },
-                    max: 'dataMax',
-                }
+                //             ],
+                //             yAxis: [
+                //                 {
+                //                     type: 'value',
+                //                     axisLabel: {
+                //                         textStyle: {
+                //                             color: '#fff'
+                //                         },
+                //                     },
+                //                     splitLine: {
+                //                         show: false
+                //                     },
+                //                     max: 'dataMax',
+                //                 }
 
             ],
             series: [
@@ -651,20 +651,20 @@ export class BigScreenComponent implements OnInit {
                     },
                 },
 
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    axisLabel: {
-                        textStyle: {
-                            color: '#fff'
-                        },
-                    },
-                    splitLine: {
-                        show: false
-                    },
-                    max: 'dataMax',
-                }
+                //             ],
+                //             yAxis: [
+                //                 {
+                //                     type: 'value',
+                //                     axisLabel: {
+                //                         textStyle: {
+                //                             color: '#fff'
+                //                         },
+                //                     },
+                //                     splitLine: {
+                //                         show: false
+                //                     },
+                //                     max: 'dataMax',
+                //                 }
 
             ],
             series: [
@@ -742,23 +742,23 @@ export class BigScreenComponent implements OnInit {
                     },
                 },
 
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    axisLabel: {
-                        textStyle: {
-                            color: '#fff'
-                        },
-                    },
-                    splitLine: {
-                        show: false
-                    },
-                    max: 'dataMax',
-                }
+                //             ],
+                //             yAxis: [
+                //                 {
+                //                     type: 'value',
+                //                     axisLabel: {
+                //                         textStyle: {
+                //                             color: '#fff'
+                //                         },
+                //                     },
+                //                     splitLine: {
+                //                         show: false
+                //                     },
+                //                     max: 'dataMax',
+                //                 }
 
-            ],
-            series: [
+                //             ],
+                //             series: [
 
                 {
                     name: '消防验收',
@@ -834,20 +834,20 @@ export class BigScreenComponent implements OnInit {
                     },
                 },
 
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    axisLabel: {
-                        textStyle: {
-                            color: '#fff'
-                        },
-                    },
-                    splitLine: {
-                        show: false
-                    },
-                    max: 'dataMax',
-                }
+                //             ],
+                //             yAxis: [
+                //                 {
+                //                     type: 'value',
+                //                     axisLabel: {
+                //                         textStyle: {
+                //                             color: '#fff'
+                //                         },
+                //                     },
+                //                     splitLine: {
+                //                         show: false
+                //                     },
+                //                     max: 'dataMax',
+                //                 }
 
             ],
             series: [

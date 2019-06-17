@@ -8,14 +8,20 @@ import { SFSchema } from '@delon/form';
   templateUrl: './log-edit.component.html',
 })
 export class SysSettingLogEditComponent implements OnInit {
-  url = `/user`;
-
+  url = [{
+    bh: '100001',
+    czz: '张三',
+    czrq: '2019-01-01',
+    ip: '201.200.150.95',
+    czjl: '编辑单位联系人windir',
+  }];
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
-    { title: '编号', index: 'no' },
-    { title: '调用次数', type: 'number', index: 'callNo' },
-    { title: '头像', type: 'img', width: '50px', index: 'avatar' },
-    { title: '时间', type: 'date', index: 'updatedAt' },
+    { title: '编号', index: 'bh' },
+    { title: '操作者', index: 'czz' },
+    { title: '操作日期', index: 'czrq' },
+    { title: 'IP地址', index: 'ip' },
+    { title: '操作记录', index: 'czjl' },
     {
       title: '',
       buttons: [
