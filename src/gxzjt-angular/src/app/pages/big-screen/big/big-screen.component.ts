@@ -1,11 +1,12 @@
-import { ProjectFlowServcieServiceProxy, SdeclareStatisticsQueryDto, ScreenServiceServiceProxy, ScreenTimeoutStatisticsQueryDto } from './../../../../shared/service-proxies/service-proxies';
+import { ProjectFlowServcieServiceProxy, ScreenServiceServiceProxy, ScreenTimeoutStatisticsQueryDto, DeclareRateQueryDto, YearApplyNumberQueryDto } from './../../../../shared/service-proxies/service-proxies';
 import { OnInit, Component } from "@angular/core";
 import { _HttpClient } from "@delon/theme";
 
 @Component({
     selector: 'app-big-screen',
     templateUrl: './big-screen.component.html',
-    styleUrls: ['./big-screen.component.less']
+    styleUrls: ['./big-screen.component.less'],
+    providers: [ScreenServiceServiceProxy]
 })
 
 export class BigScreenComponent implements OnInit {
@@ -23,7 +24,7 @@ export class BigScreenComponent implements OnInit {
     constructor(
         private http: _HttpClient,
         private service: ProjectFlowServcieServiceProxy,
-        // private screenService: ScreenServiceServiceProxy
+        private screenService: ScreenServiceServiceProxy
     ) {
         let currComponent = this;
         if (document.body.scrollHeight === window.screen.height && document.body.scrollWidth === window.screen.width) {
@@ -61,13 +62,13 @@ export class BigScreenComponent implements OnInit {
     pagesize = 4;
     pageindex = 1;
     ngOnInit() {
-        // this.Line();
-        // this.OverTimeBar1();
-        // this.OverTimeBar2();
-        // this.OverTimeBar3();
-        // this.Bar2();
-        // this.Bar3();
-        // this.Bar4();
+        this.Line();
+        this.OverTimeBar1();
+        this.OverTimeBar2();
+        this.OverTimeBar3();
+        this.Bar2();
+        this.Bar3();
+        this.Bar4();
         this.Pie1();
         this.Pie2();
         this.Pie3();
@@ -106,67 +107,121 @@ export class BigScreenComponent implements OnInit {
             }
         }, 3000);
         this.Post_GetDeclareRate();
-        this.DisposableGetDeclareRate();
-        // this.GetScreenTimeoutStatistics();
+        this.GetATimeByStatistics();
+        this.GetScreenCityTimeoutStatistics();
+        this.GetApplyStatistics();
+        this.GetFireDataList();
+        this.GetScreenYearApplyNumber();
+        this.GetScreenTimeoutList();
     }
-    model = new SdeclareStatisticsQueryDto();
+    model = new DeclareRateQueryDto();
     //申报统计
     Post_GetDeclareRate() {
-        this.model.fireAuditStatus = 2;
-        this.model.fireCompleteStatus = 2;
-        this.model.completeStatus = 3;
+        this.model.processedStatus = 2;
         const CityList = [];
         const completeList = [];
         const fireAudit = [];
         const fireComplete = [];
-        this.service.post_GetDeclareRate(this.model).subscribe((res) => {
-            res.forEach(e => {
-                CityList.push(e.cityName);
-                completeList.push(e.completeNumber);
-                fireAudit.push(e.fireAuditNumber);
-                fireComplete.push(e.fireCompleteNumber);
-            });
-            this.OverTimeBar1(CityList, completeList);
-            this.OverTimeBar2(CityList, fireAudit);
-            this.OverTimeBar3(CityList, fireComplete);
+        this.screenService.post_GetDeclareRate(this.model).subscribe((res) => {
+            console.log(res);
+            if (res != null) {
+                // res.forEach(e => {
+                //     CityList.push(e.cityName);
+                //     completeList.push(e.completeNumber);
+                //     fireAudit.push(e.fireAuditNumber);
+                //     fireComplete.push(e.fireCompleteNumber);
+                // });
+                // this.OverTimeBar1(CityList, completeList);
+                // this.OverTimeBar2(CityList, fireAudit);
+                // this.OverTimeBar3(CityList, fireComplete);
+            }
         });
     }
     // 一次性通过率
-    DisposableGetDeclareRate() {
-        this.model.fireAuditStatus = -1;
-        this.model.fireCompleteStatus = -1;
-        this.model.completeStatus = -1;
+    GetATimeByStatistics() {
         const CityList = [];
-        const completeList = [];
-        const fireAuditList = [];
-        const fireCompleteList = [];
-        this.service.post_GetDeclareRate(this.model).subscribe((res) => {
-            res.forEach(e => {
-                CityList.push(e.cityName);
-                completeList.push(e.completeNumber);
-                fireAuditList.push(e.fireAuditNumber);
-                fireCompleteList.push(e.fireCompleteNumber);
-            });
-            this.Line(CityList, completeList, fireAuditList, fireCompleteList);
-            // this.Bar3(CityList, fireAudit);
+        const flowPathTypeList = [];
+        const throughRateList = [];
+        this.screenService.post_GetATimeByStatistics().subscribe((res) => {
+            console.log(res);
+            if (res != null) {
+                // res.forEach(e => {
+                //     CityList.push(e.cityName);
+                //     flowPathTypeList.push(e.flowPathType);
+                //     throughRateList.push(e.throughRate);
+                // });
+            }
+
+            // this.Line(CityList, flowPathTypeList, throughRateList);
+            // this.Bar3(CityList, flowPathTypeList);
             // this.Bar4(CityList, fireComplete);
         });
     }
     // 超时统计
-    GetScreenTimeoutStatistics() {
-        let model = new ScreenTimeoutStatisticsQueryDto();
-        // model.dateTimeNow =JSON.stringify(new Date());
-        // this.screenService.psot_GetScreenTimeoutStatistics(model).subscribe((res) => {
-        //     console.log(res);
-        // })
+    GetScreenCityTimeoutStatistics() {
+        let model: any = {
+            dateTimeNow: new Date()
+        };
+        model.dateTimeNow = new Date();
+        this.screenService.post_GetScreenCityTimeoutStatistics(model).subscribe((res) => {
+            console.log(res);
+        })
     }
     // 累计办理情况
     GetScreenYearApplyNumber() {
+        let model: any = {
+            dateTimeNow: new Date(),
+            startDateTime: "2019-02-17T03:50:49.853Z",
+            endDateTime: new Date(),
+            completeStatus: 2,
+            page: 1,
+            sorting: "CityName",
+            skipCount: 0,
+            maxResultCount: 10
+        };
+        this.screenService.post_GetScreenYearApplyNumber(model).subscribe(res => {
+            console.log(res);
+        });
+    }
+    // 申请 办结
+    GetApplyStatistics() {
+        let model: any = {
+            startTime: new Date(),
+            endTime: new Date(),
+        }
+        this.screenService.post_GetApplyStatistics(model).subscribe(res => {
+            console.log(res);
+        });
+    }
+    // 超时办理
+    GetScreenTimeoutList() {
+        let model: any = {
+            dateTimeNow: new Date(),
+            orderStatus: 2,
+            page: 1,
+            sorting: "ProjectName",
+            skipCount: 0,
+            maxResultCount: 10,
+        }
+        this.screenService.post_GetScreenTimeoutList(model).subscribe(res => {
+            console.log(res);
+        });
+    }
+    // 消防统计数据
+    GetFireDataList() {
+        let model: any = {
+            statisticsType: 0,
+            dateTimeNow: new Date(),
+            processedStatus: 0
+        }
+        this.screenService.post_GetFireDataList(model).subscribe(res => {
+            console.log(res);
 
+        });
     }
     GetData() {
         this.data = [];
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 2; i++) {
             if (i % 2 === 0) {
                 this.data.push({
                     name: '市政建设工程一',
@@ -198,7 +253,7 @@ export class BigScreenComponent implements OnInit {
 
     }
     option: any;
-    Line(city, completeList, fireAuditList, fireCompleteList) {
+    Line() { //city, flowPathTypeList, throughRateList
         this.option = {
             tooltip: {
                 trigger: 'axis',
@@ -215,7 +270,7 @@ export class BigScreenComponent implements OnInit {
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: city,//['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+                data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
                 axisLabel: {
                     textStyle: {
                         color: '#fff'
@@ -252,31 +307,31 @@ export class BigScreenComponent implements OnInit {
             },
             series: [
                 {
-                    data: completeList,//[820, 932, 901, 934, 1290, 1330, 1320, 820, 932, 901, 934, 1290, 1330],
+                    data: [820, 932, 901, 934, 1290, 1330, 1320, 820, 932, 901, 934, 1290, 1330],
                     type: 'line',
-                    areaStyle: {
-                        color: '#201756',
-                    },
+                    // areaStyle: {
+                    //     color: '#201756',
+                    // },
                     itemStyle: {
                         color: '#9013fe',
                     }
                 },
                 {
-                    data: fireAuditList,//[820, 932, 901, 934, 1290, 1330, 1320, 820, 932, 901, 934, 1290, 1330],
+                    data: [820, 932, 901, 901, 934, 1290, 1330, 934, 1290, 1330, 1320, 820, 932,],
                     type: 'line',
-                    areaStyle: {
-                        color: '#201756',
-                    },
+                    // areaStyle: {
+                    //     color: '#201756',
+                    // },
                     itemStyle: {
                         color: 'red',
                     }
                 },
                 {
-                    data: fireCompleteList,// [820, 932, 901, 934, 1290, 1330, 1320, 820, 932, 901, 934, 1290, 1330],
+                    data: [1320, 820, 932, 901, 934, 1290, 820, 932, 901, 934, 1290, 1330, , 1330],
                     type: 'line',
-                    areaStyle: {
-                        color: '#201756',
-                    },
+                    // areaStyle: {
+                    //     color: '#201756',
+                    // },
                     itemStyle: {
                         color: '#008000',
                     }
@@ -285,7 +340,7 @@ export class BigScreenComponent implements OnInit {
         };
     }
     OverTimebar1: any;
-    OverTimeBar1(city, data) {
+    OverTimeBar1() { //city, data
         this.OverTimebar1 = {
             legend: {
                 x: 'center',
@@ -310,7 +365,7 @@ export class BigScreenComponent implements OnInit {
             xAxis: [
                 {
                     type: 'category',
-                    data: city,//['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+                    data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
                     axisLabel: {
                         textStyle: {
                             color: '#fff'
@@ -343,7 +398,7 @@ export class BigScreenComponent implements OnInit {
                 {
                     name: '消防设计审查',
                     type: 'bar',
-                    data: data, //[5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
+                    data: [5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
                     barWidth: 20, // 柱形宽度
                     itemStyle: {
                         normal: {
@@ -376,7 +431,7 @@ export class BigScreenComponent implements OnInit {
         };
     }
     OverTimebar2: any;
-    OverTimeBar2(city, data) {
+    OverTimeBar2() { //city, data
         this.OverTimebar2 = {
             legend: {
                 x: 'center',
@@ -401,7 +456,7 @@ export class BigScreenComponent implements OnInit {
             xAxis: [
                 {
                     type: 'category',
-                    data: city,//['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+                    data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
                     axisLabel: {
                         textStyle: {
                             color: '#fff'
@@ -434,7 +489,7 @@ export class BigScreenComponent implements OnInit {
                 {
                     name: '消防验收',
                     type: 'bar',
-                    data: data,//[5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
+                    data: [5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
                     barWidth: 20, // 柱形宽度
                     itemStyle: {
                         normal: {
@@ -467,7 +522,7 @@ export class BigScreenComponent implements OnInit {
         };
     }
     OverTimebar3: any;
-    OverTimeBar3(city, data) {
+    OverTimeBar3() { //city, data
         this.OverTimebar3 = {
             legend: {
                 x: 'center',
@@ -492,7 +547,7 @@ export class BigScreenComponent implements OnInit {
             xAxis: [
                 {
                     type: 'category',
-                    data: city,//['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+                    data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
                     axisLabel: {
                         textStyle: {
                             color: '#fff'
@@ -525,7 +580,7 @@ export class BigScreenComponent implements OnInit {
                 {
                     name: '竣工验收备案',
                     type: 'bar',
-                    data: data,//[5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
+                    data: [5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
                     barWidth: 20, // 柱形宽度
                     itemStyle: {
                         normal: {
@@ -558,7 +613,7 @@ export class BigScreenComponent implements OnInit {
         };
     }
     bar2: any;
-    Bar2(city, data) {
+    Bar2() { //city, data
         this.bar2 = {
             tooltip: {
                 trigger: 'axis',
@@ -649,7 +704,7 @@ export class BigScreenComponent implements OnInit {
         };
     }
     bar3: any;
-    Bar3(city, data) {
+    Bar3() { //city, data
         this.bar3 = {
             tooltip: {
                 trigger: 'axis',
@@ -741,7 +796,7 @@ export class BigScreenComponent implements OnInit {
         };
     }
     bar4: any;
-    Bar4(city, data) {
+    Bar4() { //city, data
         this.bar4 = {
             tooltip: {
                 trigger: 'axis',
@@ -834,38 +889,35 @@ export class BigScreenComponent implements OnInit {
     pie1: any;
     Pie1() {
         this.pie1 = {
-            title: {
-                left: 'left',
-                text: '消防设计审查数量',
-                textStyle: {
-                    color: '#fff',
-                    fontSize: 14,
-                    fontWeight: '400',
-                },
-                padding: [50, 0, 0, 50]
-            },
+            // title: {
+            //     left: 'left',
+            //     text: '消防设计审查数量',
+            //     textStyle: {
+            //         color: '#fff',
+            //         fontSize: 14,
+            //         fontWeight: '400',
+            //     },
+            //     padding: [50, 0, 0, 50]
+            // },
             tooltip: {
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
-            legend: {
-                x: 'right',
-                orient: 'vertical',
-                data: ['日数量', '月数量', '季度数量'],
-                padding: [20, 50, 0, 0],
-                textStyle: {
-                    color: '#fff'
-                },
-            },
-
+            // legend: {
+            //     x: 'right',
+            //     orient: 'vertical',
+            //     data: ['日数量', '月数量', '季度数量'],
+            //     padding: [20, 50, 0, 0],
+            //     textStyle: {
+            //         color: '#fff'
+            //     },
+            // },
             series: [
 
                 {
                     name: '数量',
                     type: 'pie',
                     radius: [30, 50],
-                    // center : ['75%', '50%'],
-                    roseType: 'area',
                     data: [
                         { value: 1, name: '日数量', itemStyle: { color: '#24e236' } },
                         { value: 5, name: '月数量', itemStyle: { color: '#e5ee28' } },
@@ -879,29 +931,29 @@ export class BigScreenComponent implements OnInit {
     pie2: any;
     Pie2() {
         this.pie2 = {
-            title: {
-                left: 'left',
-                text: '消防竣工验收数量',
-                textStyle: {
-                    color: '#fff',
-                    fontSize: 14,
-                    fontWeight: '400',
-                },
-                padding: [50, 0, 0, 50]
-            },
+            // title: {
+            //     left: 'left',
+            //     text: '消防竣工验收数量',
+            //     textStyle: {
+            //         color: '#fff',
+            //         fontSize: 14,
+            //         fontWeight: '400',
+            //     },
+            //     padding: [50, 0, 0, 50]
+            // },
             tooltip: {
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
-            legend: {
-                x: 'right',
-                orient: 'vertical',
-                data: ['日数量', '月数量', '季度数量'],
-                padding: [20, 50, 0, 0],
-                textStyle: {
-                    color: '#fff'
-                },
-            },
+            // legend: {
+            //     x: 'right',
+            //     orient: 'vertical',
+            //     data: ['日数量', '月数量', '季度数量'],
+            //     padding: [20, 50, 0, 0],
+            //     textStyle: {
+            //         color: '#fff'
+            //     },
+            // },
 
             series: [
 
@@ -909,8 +961,6 @@ export class BigScreenComponent implements OnInit {
                     name: '数量',
                     type: 'pie',
                     radius: [30, 50],
-                    // center : ['75%', '50%'],
-                    roseType: 'area',
                     data: [
                         { value: 3, name: '日数量', itemStyle: { color: '#24d5e2' } },
                         { value: 15, name: '月数量', itemStyle: { color: '#2886ee' } },
