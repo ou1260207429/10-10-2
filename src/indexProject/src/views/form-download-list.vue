@@ -2,11 +2,11 @@
 <template>
   <div style="width:100%;overflow:hidden;">
     <div class="content">
-      <el-row>
+      <el-row id="banner">
         <img style="width:100%;" src="../assets/images/表格下载_03.jpg" alt>
       </el-row>
       <el-row>
-        <el-card style="min-height:450px;">
+        <el-card :style="{minHeight:tableHight}">
           <div v-if="downLoadList.length==0" class="noData">暂无数据</div>
           <div v-if="downLoadList.length>0">
             <div nz-row style="padding:20px">
@@ -32,7 +32,10 @@ import { laws, table } from "../assets/js/apiValue";
 import moment from "moment";
 export default {
   data() {
-    return { downLoadList: [] };
+    return {
+       downLoadList: [],
+       tableHight:"450px",
+       };
   },
 
   components: {},
@@ -40,6 +43,7 @@ export default {
   computed: {},
 
   mounted() {
+    this.tableHight = app.clentHeight();
     this.getTableList();
   },
 
@@ -55,7 +59,13 @@ export default {
         _this.downLoadList = req.result.data;
       
       });
-    }
+    },
+    /**
+     * 下载表格
+     */
+    downList(){
+
+    },
   }
 };
 </script>

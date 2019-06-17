@@ -11,61 +11,75 @@
           </el-breadcrumb>
         </div>
       </el-row>
-      <el-row :gutter="10">
-        <el-col :span="18">
-          <el-card style="min-height:650px;">
-            <h1>{{data.title}}</h1>
-            <p style="text-align: center;color:#A3A3A3">发布日期：{{data.creationTime}}</p>
-            <div style="padding:20px">{{data.content}}</div>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card style="min-height:650px;">
-            <img style="width:100%;" src="../assets/images/办事指南详情_03.jpg" alt>
-            <div>
-              <p id="tip" class="zhinan">
-                <span>其他相关</span>
-              </p>
-            </div>
-            <el-row :gutter="10" class="item" :key="index" v-for="(item,index) in allowList">
-              <router-link
-                :to="{
+      <el-row>
+        <el-card>
+          <el-row :gutter="10">
+            <el-col :span="17">
+              <div v-if="data">
+                <h1>{{data.title}}</h1>
+                <p style="text-align: center;color:#A3A3A3">发布日期：{{data.creationTime}}</p>
+                <div style="padding:20px;margin-bottom:50px;">{{data.content}}</div>
+              </div>
+              <div v-else style="width:100%;height:300px;position:relative;">
+                <div class="noData">暂无数据</div>
+              </div>
+            </el-col>
+            <el-col :span="7">
+              <img style="width:100%;" src="../assets/images/办事指南详情_03.jpg" alt>
+              <div style="border:1px solid #DCDCDC;padding-bottom:20px;">
+                <div>
+                  <p class="zhinan tip">
+                    <span>其他相关</span>
+                  </p>
+                </div>
+                <el-row :gutter="10" class="item" :key="index" v-for="(item,index) in allowList">
+                  <router-link
+                    :to="{
          path: '/handling-guid-list-detail/'+item.id, 
       
    }"
-              >
-                <el-col :span="10" class="cardList">
-                  <img style="width:100%;" :src="allowImg[index]" alt>
-                </el-col>
-                <el-col :span="14" style=" position: relative;height:80px;">
-                  <h4>{{item.title}}</h4>
-                  <p class="itemTip">{{item.Brief}}</p>
-                </el-col>
-              </router-link>
-            </el-row>
-            <div style="margin-top:20px;">
-              <p id="tip" class="zhinan">
-                <span>网上备案</span>
-              </p>
-            </div>
-            <el-row :gutter="10" class="item" :key="index+'l'" v-for="(item,index) in recordList">
-              <router-link
-                :to="{
+                  >
+                    <el-col :span="10" class="cardList">
+                      <img :src="allowImg[index]" alt>
+                    </el-col>
+                    <el-col :span="14" style=" position: relative;height:80px;">
+                      <h4>{{item.title}}</h4>
+                      <p class="itemTip">{{item.Brief}}</p>
+                    </el-col>
+                  </router-link>
+                </el-row>
+              </div>
+              <div style="padding-bottom:20px;border:1px solid #DCDCDC;margin-top:10px;">
+                <div>
+                  <p class="zhinan tip">
+                    <span>网上备案</span>
+                  </p>
+                </div>
+                <el-row
+                  :gutter="10"
+                  class="item"
+                  :key="index+'l'"
+                  v-for="(item,index) in recordList"
+                >
+                  <router-link
+                    :to="{
          path: '/handling-guid-list-detail/'+item.id, 
       
    }"
-              >
-                <el-col :span="10" class="cardList">
-                  <img style="width:100%;" :src="recordImg[index]" alt>
-                </el-col>
-                <el-col :span="14" style=" position: relative;height:80px;">
-                  <h4>{{item.title}}</h4>
-                  <p class="itemTip">{{item.Brief}}</p>
-                </el-col>
-              </router-link>
-            </el-row>
-          </el-card>
-        </el-col>
+                  >
+                    <el-col :span="10" class="cardList">
+                      <img :src="recordImg[index]" alt>
+                    </el-col>
+                    <el-col :span="14" style=" position: relative;height:80px;">
+                      <h4>{{item.title}}</h4>
+                      <p class="itemTip">{{item.Brief}}</p>
+                    </el-col>
+                  </router-link>
+                </el-row>
+              </div>
+            </el-col>
+          </el-row>
+        </el-card>
       </el-row>
     </div>
   </div>
@@ -75,16 +89,17 @@
 import { app } from "../assets/js/app";
 import { handle } from "../assets/js/apiValue";
 import moment from "moment";
+import Vue from "vue";
 export default {
   data() {
     return {
       path: "",
       type: "",
-      data: {},
+      data: null,
       noticeId: "",
       //许可图片
       allowImg: [
-        require("../assets/images/办事指南_03.jpg"),
+        require("../assets/images/办事指南详情_16.jpg"),
         require("../assets/images/办事指南详情_10.jpg")
       ],
       //备案图片
@@ -109,14 +124,17 @@ export default {
           Brief:
             " 备案依据：《中华人民共和国消防法》；《建设工程消防监督管理规定》；"
         }
-      ]
+      ],
+      contentHeight: app.clentHeight
     };
   },
 
   components: {},
   watch: {
     $route(to, from) {
-      this.pnoticeIdath = this.$route.params.id;
+      this.noticeId = this.$route.params.id;
+    },
+    noticeId(news) {
       this.queryData();
     }
   },
@@ -131,15 +149,14 @@ export default {
   methods: {
     queryData() {
       let _this = this;
+      _this.data = null;
       let params = { noticeId: this.noticeId };
       // app.pageSize.noticeId = 6;
       app.post(handle.search_handleDetail, params, "", true).then(req => {
         req.result.creationTime = moment(req.result.creationTime).format(
           "YYYY-MM-DD"
         );
-
         _this.data = req.result;
-        console.log(req);
       });
     },
     //查询办事指南列表 NoticeTypeId：1//行政许可，2//网上备案
@@ -166,9 +183,19 @@ h1 {
   padding: 20px;
   color: #bd1127ff;
 }
+.tip {
+  width: 41%;
+  padding: 8px 0;
+  background-size: 100%;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 .item {
   margin-top: 20px;
-  height: 80px;
+  overflow: hidden;
   .itemTip {
     position: absolute;
     bottom: 0;
@@ -181,10 +208,6 @@ h1 {
   }
 
   .cardList {
-    height: 100%;
-  }
-  img {
-    width: 100%;
     height: 100%;
   }
 }

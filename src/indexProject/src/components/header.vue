@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <el-row>
-    <el-row class="top">
+    <el-row class="top" id="top">
       <el-row class="content">
         <el-col :span="19">
           <img class="logo" src="../assets/images/logo-index.png" alt>
@@ -15,7 +15,7 @@
         </el-col>
       </el-row>
     </el-row>
-    <el-row style="background-color:#fff;">
+    <el-row id="nav" style="background-color:#fff;">
       <ul class="nav content">
         <template v-for="(item,index) in navList">
           <li :key="index">
@@ -113,7 +113,6 @@ export default {
   color: #fff;
   letter-spacing: 2px;
   background: url("../assets/images/head-bg.jpg") no-repeat center;
-  background-size: 100% 100%;
 
   .tip {
     padding-top: 20px;

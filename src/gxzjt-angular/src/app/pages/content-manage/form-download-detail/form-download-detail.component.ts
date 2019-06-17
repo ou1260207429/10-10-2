@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { _HttpClient } from '@delon/theme';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { AttachmentServiceProxy, AttachmentDto } from '@shared/service-proxies/service-proxies';
-import { PublicModel } from 'infrastructure/public-model';
-import { timeTrans } from 'infrastructure/regular-expression';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
-
 @Component({
   selector: 'app-form-download-detail',
   templateUrl: './form-download-detail.component.html',
@@ -16,10 +12,35 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 export class FormDownloadDetailComponent implements OnInit {
   //表单对象
   data: any;
+  fileList: UploadFile[] = [];
+  // acceptType: ".doc,.docx,.xls,.xlsx,.pdf"
+  acceptType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  uploadUrl: "http://demo.rjtx.net:5001/api/Upload/Upload"
+  uploadParams: {
+    files: [],
+    AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
+    module: "table",
+    sourceId: ""
+  }
+  filters: UploadFilter[] = [
+    {
+      name: 'type',
+      fn: (fileList: UploadFile[]) => {
+        console.log(fileList[0].type)
+        const filterFiles = fileList.filter(w => ~['application/vnd.openxmlformats-officedocument.wordprocessingml.document'].indexOf(w.type));
+        if (filterFiles.length !== fileList.length) {
+          this.message.error("上传文件格式不正确，请选择.doc文件");
+          return filterFiles;
+        }
+        return fileList;
+      }
+    },
+  ];
   constructor(private _eventEmiter: EventEmiter, private message: NzMessageService, private _attachmentServiceProxy: AttachmentServiceProxy, private _activatedRoute: ActivatedRoute) {
   }
   ngOnInit() {
-    this.data =new AttachmentDto();
+    this.data = new AttachmentDto();
+    console.log(this.fileList)
   }
   goBack() {
     history.go(-1);
@@ -33,10 +54,10 @@ export class FormDownloadDetailComponent implements OnInit {
     this._attachmentServiceProxy.addAttachmentAsync(this.data).subscribe(data => {
       this.message.success("新增成功");
       this._eventEmiter.emit('init', []);
-      this.goBack()
+      this.goBack();
     })
   }
-  
+
   createguid() {
     var CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('')
     var chars = CHARS,
@@ -58,4 +79,10 @@ export class FormDownloadDetailComponent implements OnInit {
     console.log(ret);
     return ret
   }
+  beforeUpload = (file: UploadFile): boolean => {
+    console.log(file)
+    this.fileList = this.fileList.concat(file);
+    console.log(this.fileList)
+    return false;
+  };
 }
