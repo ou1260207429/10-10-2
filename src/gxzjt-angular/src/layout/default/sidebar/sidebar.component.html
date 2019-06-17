@@ -8,6 +8,11 @@
       </li>
     </ul>
   </div>
+  <!-- <div><a (click)="logout()">
+      <i nz-icon type="logout" theme="outline"></i>
+      退出
+    </a></div> -->
+
   <nz-dropdown nzTrigger="click" class="alain-default__aside-user">
     <div nz-dropdown class="user-block-dropdown">
       <div class="sidebar-nav-user-avatar">
@@ -19,12 +24,13 @@
         <p class="text-truncate mb0">{{emailAddress}}</p>
       </div>
     </div>
-    <ul nz-menu>
+    <!-- <ul nz-menu>
       <li nz-menu-item (click)="logout()">
         <i nz-icon type="logout" theme="outline"></i>
         退出
       </li>
-    </ul>
+    </ul> -->
+
   </nz-dropdown>
   <yoyo-sidebar-nav class="d-block py-lg"></yoyo-sidebar-nav>
 </div>

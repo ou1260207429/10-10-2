@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { SysSettingLogEditComponent } from '../log-edit/log-edit.component';
 
 @Component({
   selector: 'app-sys-setting-log-manage',
@@ -71,9 +72,12 @@ export class SysSettingLogManageComponent implements OnInit {
   }
 
   add() {
+    this.modal
+      .createStatic(SysSettingLogEditComponent)
+      .subscribe(() => this.st.reload());
     // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+    // .createStatic(SysSettingLogEditComponent, { i: { id: 0 } })
+    // .subscribe(() => this.st.reload());
   }
 
   switchFilter() {

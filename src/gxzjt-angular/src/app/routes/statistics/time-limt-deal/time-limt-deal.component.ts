@@ -4,67 +4,52 @@ import { STColumn, STComponent, XlsxService } from '@delon/abc';
 
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
-
 @Component({
-  selector: 'app-statistics-warning-center',
-  templateUrl: './warning-center.component.html',
-  styleUrls: ['./warning-center.component.less'],
+  selector: 'app-statistics-time-limt-deal',
+  templateUrl: './time-limt-deal.component.html',
+  styleUrls: ['./time-limt-deal.less']
 })
-export class StatisticsWarningCenterComponent implements OnInit {
+export class StatisticsTimeLimtDealComponent implements OnInit {
   url = [{
-    pro_type: '',
-    pro_name: '',
-    pro_no: '',
-    org: '',
-    node: '',
-    person: '',
-    repo_time: '',
-    at_time: '',
+    city: '南宁',
+    area: '桂林',
+    gcname: '西南工程1',
+    gccode: 'xn0005',
+    jsname: '王哈哈',
+    gctype: '教育',
+    dealperson: '王亮',
+    arrtime: '2019-06/15',
+    dealtime: '2019-06/17',
+    cztime: '2015-05-05'
 
   }];
   searchKey = '';
   selectedValuePro = "";
   fliterForm: FormGroup;
   hiddenFliter = false;
-
   formData = {};
 
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
 
-
-    { title: '流程类型', index: 'pro_type' },
-    { title: '工程名称', index: 'pro_name' },
-    { title: '工程编号', index: 'pro_no' },
-    { title: '建设单位', index: 'org' },
-    {
-      title: '节点名称', index: 'node',
-      sort: {
-        compare: (a, b) => a.node > b.node ? 1 : 0,
-      },
-      filter: {
-        menus: [
-          { text: '初审', value: 0 },
-          { text: '复审', value: 1 },
-          { text: '审核完毕', value: 2 },
-        ],
-        fn: (filter: any, record: any) =>
-          record.node >= filter.value[0] && record.node <= filter.value[1],
-        multiple: false,
-      }
-    },
-    { title: '流程发起人', index: 'person' },
-
-    { title: '申报时间', type: 'date', index: 'repo_time' },
-    { title: '流程到达时间', type: 'date', index: 'at_time' },
     {
       title: '操作',
       buttons: [
-        { text: '查看', click: (item: any) => `/form/${item.id}` },
+        { text: '详情', click: (item: any) => `/form/${item.id}` },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
-    }
+    },
+    { title: '地市', index: 'city' },
+    { title: '区域', index: 'area' },
+    { title: '工程名称', index: 'gcname' },
+    { title: '工程编号', index: 'gccode' },
+    { title: '建设单位', index: 'jsname' },
+    { title: '工程类型', index: 'gctype' },
+    { title: '当前处理人', index: 'dealperson' },
+    { title: '流程到达时间', index: 'arrtime' },
+    { title: '流程处理时间', index: 'dealtime' },
+    { title: '超时时长', index: 'cstime' },
   ];
 
   constructor(private http: _HttpClient,
@@ -115,4 +100,5 @@ export class StatisticsWarningCenterComponent implements OnInit {
       ],
     });
   }
+
 }
