@@ -3,6 +3,7 @@ import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent, XlsxService } from '@delon/abc';
 
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { StatisticsWarningCenterDetailComponent } from '../warning-center-detail/warning-center-detail.component';
 
 
 @Component({
@@ -12,14 +13,14 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 })
 export class StatisticsWarningCenterComponent implements OnInit {
   url = [{
-    pro_type: '',
-    pro_name: '',
-    pro_no: '',
-    org: '',
-    node: '',
-    person: '',
-    repo_time: '',
-    at_time: '',
+    pro_type: '1',
+    pro_name: '2',
+    pro_no: '3',
+    org: '4',
+    node: '5',
+    person: '6',
+    repo_time: '7',
+    at_time: '8',
 
   }];
   searchKey = '';
@@ -61,7 +62,17 @@ export class StatisticsWarningCenterComponent implements OnInit {
     {
       title: '操作',
       buttons: [
-        { text: '查看', click: (item: any) => `/form/${item.id}` },
+        {
+          text: '查看',
+          type: 'modal',
+          modal: {
+            component: StatisticsWarningCenterDetailComponent,
+            paramsName: 'record',
+          },
+          click: (record: any, modal: any) => {
+
+          },
+        },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
     }
