@@ -16,7 +16,7 @@
           <el-card style="min-height:650px;">
             <h1>{{data.title}}</h1>
             <p style="text-align: center;color:#A3A3A3">发布日期：{{data.creationTime}}</p>
-            <div style="padding:20px">{{data.content}}</div>
+            <div>{{data.content}}</div>
           </el-card>
         </el-col>
         <el-col :span="6">
