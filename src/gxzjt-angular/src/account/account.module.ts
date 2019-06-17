@@ -23,6 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AbpModule } from '@abp/abp.module';
 import { TenantRegisterComponent } from './tenant-register/tenant-register.component';
 import { ForgotPswComponent } from './forgot-psw/forgot-psw.component';
+import { LoginServiceProxy } from '@shared/service-proxies/service-proxies';
 @NgModule({
   imports: [
     CommonModule,
@@ -48,6 +49,6 @@ import { ForgotPswComponent } from './forgot-psw/forgot-psw.component';
     TenantRegisterComponent,
   ],
   entryComponents: [TenantChangeModalComponent],
-  providers: [LoginService],
+  providers: [LoginService, LoginServiceProxy],
 })
 export class AccountModule { }

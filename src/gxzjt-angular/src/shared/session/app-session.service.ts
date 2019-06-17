@@ -1,33 +1,36 @@
 import { Injectable } from '@angular/core';
 import { AbpMultiTenancyService } from '@abp/multi-tenancy/abp-multi-tenancy.service';
 import {
-  SessionServiceProxy,
-  UserLoginInfoDto,
+  LoginServiceProxy,
+  // UserLoginInfoDto,
   TenantLoginInfoDto,
   ApplicationInfoDto,
   GetCurrentLoginInformationsOutput,
+  UserCacheDto,
 } from '@shared/service-proxies/service-proxies';
 
 @Injectable()
 export class AppSessionService {
-  private _user: UserLoginInfoDto;
+  // private _user: UserLoginInfoDto;
+
+  private _user: UserCacheDto;
   private _tenant: TenantLoginInfoDto;
-  private _application: ApplicationInfoDto;
+  // private _application: ApplicationInfoDto;
 
   constructor(
-    private _sessionService: SessionServiceProxy,
+    private _loginServiceProxy: LoginServiceProxy,
     private _abpMultiTenancyService: AbpMultiTenancyService,
   ) { }
 
-  get application(): ApplicationInfoDto {
-    return this._application;
-  }
+  // get application(): ApplicationInfoDto {
+  //   return this._application;
+  // }
 
-  get user(): UserLoginInfoDto {
+  get user(): UserCacheDto {
     return this._user;
   }
 
-  get userId(): number {
+  get userId(): string {
     return this.user ? this.user.id : null;
   }
 
@@ -40,7 +43,7 @@ export class AppSessionService {
   }
 
   getShownLoginName(): string {
-    const userName = this._user.userName;
+    const userName = this._user.eName;
     if (!this._abpMultiTenancyService.isEnabled) {
       return userName;
     }
@@ -50,21 +53,23 @@ export class AppSessionService {
 
   init(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      this._sessionService
-        .getCurrentLoginInformations()
+      this._loginServiceProxy
+        .getCurrentLoginUserInfoByUserId()
         .toPromise()
         .then(
-          (result: GetCurrentLoginInformationsOutput) => {
-            this._application = result.application;
-            this._user = result.user;
-            this._tenant = result.tenant;
+          (result: UserCacheDto) => {
+            // this._application = new ApplicationInfoDto();
+            // this._application.version = "1.0.0";
+            // this._application.releaseDate = new Date();
+            this._user = result;
+            this._tenant = new TenantLoginInfoDto();
 
             resolve(true);
           },
           err => {
             reject(err);
           },
-      );
+        );
     });
   }
 

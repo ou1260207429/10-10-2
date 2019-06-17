@@ -80,11 +80,8 @@ export class AddFireDesignDeclareComponent implements OnInit {
         height: '',
         builtUpArea: '',
         areaCovered: '',
-        firePreventionSum: '',
-        firePreventionMaximumArea: '',
-        smokeControlSum: '',
-        smokeControlMaximumArea: '',
-        fireHazard: '',
+        jzmjaboveGround: '',
+        jzmjunderground: '',
       }
     ],
     storageTank: [

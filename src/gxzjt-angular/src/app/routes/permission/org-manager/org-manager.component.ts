@@ -45,32 +45,14 @@ export class OrgManagerComponent extends PublicFormComponent implements OnInit {
         },
       ]
     },
-    { title: '部门', index: 'pro_type' },
-    { title: '流程流水号', index: 'pro_no' },
+    { title: '部门ID', index: 'pro_type' },
+    { title: '部门名称', index: 'pro_no' },
 
-    { title: '工程名称', index: 'pro_name' },
+    { title: '部门全路径', index: 'pro_name' },
 
-    { title: '建设单位', index: 'org' },
-    {
-      title: '工程类型', index: 'node',
-      sort: {
-        compare: (a, b) => a.node > b.node ? 1 : 0,
-      },
-      filter: {
-        menus: [
-          { text: '初审', value: 0 },
-          { text: '复审', value: 1 },
-          { text: '审核完毕', value: 2 },
-        ],
-        fn: (filter: any, record: any) =>
-          record.node >= filter.value[0] && record.node <= filter.value[1],
-        multiple: false,
-      }
-    },
-    { title: '当前处理人', index: 'person' },
+    { title: '操作人', index: 'org' },
 
-    { title: '申报时间', type: 'date', index: 'repo_time' },
-    { title: '流程超时', index: 'timeout' }
+    { title: '操作时间', type: 'date', index: 'timeout' }
 
   ];
 

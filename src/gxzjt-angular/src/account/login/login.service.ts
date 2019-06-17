@@ -6,12 +6,13 @@ import {
 } from '@shared/service-proxies/service-proxies';
 
 import {
-  TokenAuthServiceProxy,
+  LoginServiceProxy,
   AuthenticateModel,
   AuthenticateResultModel,
 } from '@shared/service-proxies/service-proxies';
 import { UrlHelper } from '@shared/helpers/UrlHelper';
 import { AppConsts } from '@shared/AppConsts';
+
 
 import * as _ from 'lodash';
 import { MessageService } from '@abp/message/message.service';
@@ -31,7 +32,9 @@ export class LoginService {
   // rememberMe: boolean;
 
   constructor(
-    private _tokenAuthService: TokenAuthServiceProxy,
+    private _tokenAuthService: LoginServiceProxy,
+
+    //private _tokenAuthService: TokenAuthServiceProxy,
     private _router: Router,
     private _utilsService: UtilsService,
     private _messageService: MessageService,
@@ -46,8 +49,7 @@ export class LoginService {
 
     finallyCallback = finallyCallback || (() => { });
 
-    this._tokenAuthService
-      .authenticate(this.authenticateModel)
+    this._tokenAuthService.authenticate(this.authenticateModel)
       .pipe(finalize(finallyCallback))
       .subscribe((result: AuthenticateResultModel) => {
         this.processAuthenticateResult(result);
@@ -98,6 +100,7 @@ export class LoginService {
       abp.appPath,
     );
 
+
     let initialUrl = UrlHelper.initialUrl;
     if (initialUrl.indexOf('/login') > 0) {
       initialUrl = AppConsts.appBaseUrl;
@@ -109,7 +112,7 @@ export class LoginService {
 
   private clear(): void {
     this.authenticateModel = new AuthenticateModel();
-    this.authenticateModel.rememberClient = false;
+    // this.authenticateModel.rememberClient = false;
     this.authenticateResult = null;
     // this.rememberMe = false;
   }

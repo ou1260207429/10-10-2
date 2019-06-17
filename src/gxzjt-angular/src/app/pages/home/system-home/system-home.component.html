@@ -205,3 +205,96 @@
     </tr>
   </tbody>
 </table> -->
+<div style='height:10%'>
+  <nz-card class="TopCard">
+    <span style='display:block;font-size: 30px;color:#F5222D'>14</span>
+    <span style='display:block;font-size: 16px;;color:#7B7B7B'>待处理事项</span>
+  </nz-card>
+  <nz-card class="TopCard">
+    <span style='display:block;font-size: 30px;color:#F5222D'>8</span>
+    <span style='display:block;font-size: 16px;;color:#7B7B7B'>超时预警数量</span>
+  </nz-card>
+  <nz-card class="TopCard">
+    <span style='display:block;font-size: 30px;color:#1A993B'>1285</span>
+    <span style='display:block;font-size: 16px;;color:#7B7B7B'>消防设计审查数量</span>
+  </nz-card>
+  <nz-card class="TopCard">
+    <span style='display:block;font-size: 30px;color:#FF7B05'>220</span>
+    <span style='display:block;font-size: 16px;;color:#7B7B7B'>消防竣工验收数量</span>
+  </nz-card>
+  <nz-card class="TopCard">
+    <span style='display:block;font-size: 30px;color:#2B74D9'>189</span>
+    <span style='display:block;font-size: 16px;;color:#7B7B7B'>竣工验收审查数量</span>
+  </nz-card>
+</div>
+<div style='height:80%;width:40%;float: left;'>
+  <nz-card nzTitle="广西竣工验收备案抽查合格情况">
+    <div id="echarts" style="display: block; " style="height:700px;width:100%;">
+    </div>
+  </nz-card>
+</div>
+<div style='height:80%;width:30%;float: left;'>
+  <nz-card nzTitle="超时预警列表" style='height:50%'>
+    <nz-table class='FireTable' nzSize="small" nzBordered='false' [nzData]="data" nzIsPagination='true'
+      [(nzPageSize)]='pagesize' [(nzPageIndex)]='pageindex' nzShowPagination='false'>
+      <thead nz-thead>
+        <tr>
+          <th nz-th>
+            <span>序号</span>
+          </th>
+          <th nz-th>
+            <span>工程名称</span>
+          </th>
+          <th nz-th>
+            <span>申报单位</span>
+          </th>
+          <th nz-th>
+            <span>联系人</span>
+          </th>
+          <th nz-th>
+            <span>审批时间</span>
+          </th>
+          <th nz-th>
+            <span>审批结果</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody nz-tbody>
+        <tr nz-tbody-tr *ngFor='let data of data;let i = index;'>
+          <td nz-td>{{i+1}}</td>
+          <td nz-td>{{data.name}}</td>
+          <td nz-td>{{data.unit}}</td>
+          <td nz-td>{{data.people}}</td>
+          <td nz-td>{{data.time}}</td>
+          <td nz-td *ngIf='data.state == "合格"' style='color:#2EDB63'>{{data.state}}</td>
+          <td nz-td *ngIf='data.state == "不合格"' style='color:red'>{{data.state}}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+  <nz-card style='height:47%' nzTitle="消防设计审查申报数量统计">
+
+  </nz-card>
+</div>
+<div style='height:80%;width:30%;float: left;'>
+  <nz-card style='height:50%' nzTitle="消防竣工验收数量统计">
+
+  </nz-card>
+  <nz-card style='height:47%' nzTitle="竣工验收备案数量统计">
+
+  </nz-card>
+</div>
+<!-- <div style='height:80%;width:44%;float: left;margin-left: 1%;'>
+  <nz-card style='height:30%' nzTitle="消防设计审查申报数量统计">
+
+  </nz-card>
+  <nz-card style='height:30%' nzTitle="消防竣工验收数量统计">
+
+  </nz-card>
+  <nz-card style='height:30%' nzTitle="竣工验收备案数量统计">
+
+  </nz-card>
+</div>
+<div style='height: 40%;width: 55%;float: left;margin-top: -22%;'>
+
+</div> -->

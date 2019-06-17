@@ -1,4 +1,4 @@
-import { ProjectFlowServcieServiceProxy, SdeclareStatisticsQueryDto } from './../../../../shared/service-proxies/service-proxies';
+import { ProjectFlowServcieServiceProxy, SdeclareStatisticsQueryDto, ScreenServiceServiceProxy, ScreenTimeoutStatisticsQueryDto } from './../../../../shared/service-proxies/service-proxies';
 import { OnInit, Component } from "@angular/core";
 import { _HttpClient } from "@delon/theme";
 
@@ -11,6 +11,9 @@ import { _HttpClient } from "@delon/theme";
 export class BigScreenComponent implements OnInit {
     echarts = require('echarts');
 
+    percent = 87;
+    color = '#2f9cff';
+
     clientHeight = 0; //  屏幕可视高度
     clientWidth = 0;
     FireWidth = '';
@@ -19,7 +22,8 @@ export class BigScreenComponent implements OnInit {
     RightWidth = '';
     constructor(
         private http: _HttpClient,
-        private service: ProjectFlowServcieServiceProxy
+        private service: ProjectFlowServcieServiceProxy,
+        // private screenService: ScreenServiceServiceProxy
     ) {
         let currComponent = this;
         if (document.body.scrollHeight === window.screen.height && document.body.scrollWidth === window.screen.width) {
@@ -54,7 +58,7 @@ export class BigScreenComponent implements OnInit {
     dateTime: any = new Date();
     BarTitle = '消防设计审查';
     OverTimeTitle = '消防设计审查';
-    pagesize = 7;
+    pagesize = 4;
     pageindex = 1;
     ngOnInit() {
         // this.Line();
@@ -103,7 +107,7 @@ export class BigScreenComponent implements OnInit {
         }, 3000);
         this.Post_GetDeclareRate();
         this.DisposableGetDeclareRate();
-        this.GetScreenTimeoutStatistics();
+        // this.GetScreenTimeoutStatistics();
     }
     model = new SdeclareStatisticsQueryDto();
     //申报统计
@@ -150,12 +154,10 @@ export class BigScreenComponent implements OnInit {
     }
     // 超时统计
     GetScreenTimeoutStatistics() {
-        let model = {
-            dateTimeNow: new Date()
-        }
-        // this.http.post('/api/services/app/ScreenService/Psot_GetScreenTimeoutStatistics', model).subscribe((res) => {
+        let model = new ScreenTimeoutStatisticsQueryDto();
+        // model.dateTimeNow =JSON.stringify(new Date());
+        // this.screenService.psot_GetScreenTimeoutStatistics(model).subscribe((res) => {
         //     console.log(res);
-
         // })
     }
     // 累计办理情况
@@ -164,7 +166,7 @@ export class BigScreenComponent implements OnInit {
     }
     GetData() {
         this.data = [];
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 4; i++) {
             if (i % 2 === 0) {
                 this.data.push({
                     name: '市政建设工程一',

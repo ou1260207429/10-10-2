@@ -18,17 +18,18 @@ const routes: Routes = [
   // },
   {
     path: '',
-    component: IndexDefaultComponent,
-    // canActivate: [AppRouteGuard],
+    component: LayoutDefaultComponent,
+    canActivate: [AppRouteGuard],
     children: [
-      { path: '', loadChildren: './index/index.module#IndexModule' },
+
+      { path: '', loadChildren: './pages/home/home.module#HomeModule' },
     ],
   },
   {
     path: '',
     component: LayoutDefaultComponent,
     data: { title: '统计', preload: true },
-    // canActivate: [AppRouteGuard],
+    canActivate: [AppRouteGuard],
     children: [
       { path: 'statistics', loadChildren: './routes/statistics/statistics.module#StatisticsModule', },
       { path: 'sys-setting', loadChildren: './routes/sys-setting/sys-setting.module#SysSettingModule', },

@@ -28,6 +28,8 @@ import {
 } from '@shared/service-proxies/service-proxies';
 import { UrlHelper } from '@shared/helpers/UrlHelper';
 
+
+var checkCode: any;
 @Component({
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.less'],
@@ -96,7 +98,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
 
   initSliter() {
-
+    checkCode = "" + Math.ceil(Math.random() * 10000);
     $(".inner").mousedown(function (e) {
       console.log(e)
       var el = $(".inner");
@@ -105,6 +107,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
       var dx;
       var span = $(".outer>span");
       var filter = $(".filter-box");
+
       $("#slider_content").attr("value", "no");
 
       var _differ = $(".outer").width() - el.width();
@@ -132,7 +135,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
           el.html('&radic;');
 
 
-          $("#slider_content").attr("value", "ok");
+          $("#slider_content").attr("value", checkCode);
           // $(this).trigger('change');
 
 
@@ -144,13 +147,14 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     });
   }
   resetSliter() {
+    checkCode = "" + Math.ceil(Math.random() * 10000);
     var el = $(".inner");
     el.css("left", 0);
     el.html('&gt;&gt;');
 
     $(".outer").removeClass("act");
 
-
+    $("#slider_content").attr("value", "no");
     var span = $(".outer>span");
     span.html("请拖动滑块至最右边");
     var filter = $(".filter-box");
@@ -173,9 +177,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
   login(): void {
     var str = $("#slider_content").attr("value");
-    if (str === "ok") {
-
-
+    if (str === checkCode) {
 
       this.submitting = true;
       this.loginService.authenticate(() => {
