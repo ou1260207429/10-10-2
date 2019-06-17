@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { SysSettingUnitInfoEditComponent } from '../unit-info-edit/unit-info-edit.component';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-sys-setting-unit-info-manage',
@@ -34,14 +36,43 @@ export class SysSettingUnitInfoManageComponent implements OnInit {
       title: '操作',
       buttons: [
         {
-          text: '删除', click: (item: any) => {
-
-          }
+          // icon: 'delete',
+          text: '删除',
+          type: 'del',
+          click: (record, modal, comp) => {
+            console.log("record--------" + record);
+            console.log("modal--------" + modal);
+            console.log("comp--------" + comp);
+            if (record.Id) {
+              console.log("有ID");
+              comp.removeRow(record);
+              record.OpeateType = 'delete';
+              this.removeValue(record.Id);
+              this.st.reload();
+            } else {
+              console.log("没有ID");
+              // comp.reload();
+              comp.removeRow(record);
+              // record.OpeateType = 'delete';
+              // this.getcontractinform()
+            }
+          },
         },
         {
-          text: '编辑', click: (item: any) => {
+          text: '编辑', type: 'modal',
+          modal: {
+            component: SysSettingUnitInfoEditComponent,
+            paramsName: 'record',
 
-          }
+          },
+          click: (record: any, modal: any) => {
+            // this.getList();
+            // this.message.success('编辑成功');
+            console.log(record);
+            // this.modal.orgId=record.OrgId
+            // this.getnewdata();
+            // this.st.reload();
+          },
         },
       ]
     },
@@ -64,6 +95,7 @@ export class SysSettingUnitInfoManageComponent implements OnInit {
   constructor(private http: _HttpClient,
     private modal: ModalHelper,
     private formBuilder: FormBuilder,
+    private message: NzMessageService,
   ) { }
 
   ngOnInit() {
@@ -75,6 +107,22 @@ export class SysSettingUnitInfoManageComponent implements OnInit {
 
     });
   }
+  removeValue(i) {
+    // for (var a = 0; a < this.submitModel.Contacts.length; a++) {
+    //   if (this.submitModel.Contacts[a].Id == i) {
+    //     this.submitModel.Contacts.splice(a, 1);
+    //     this.submitModel.Contacts.pop;
+    //     this.HrManageService.DeleteContact({ contactId: i }).subscribe(res => {
+    //       if (res.RV == 0) {
+    //         this.message.success(`${res.Msg}`)
+    //       } else {
+    //         this.message.error(`${res.Msg}`)
+    //       }
+    //     });
+    //     // this.submitModel.Contacts[a].OpeateType='delete';
+    //   }
+  }
+
 
   add() {
     // this.modal

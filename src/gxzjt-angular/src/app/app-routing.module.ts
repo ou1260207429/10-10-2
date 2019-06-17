@@ -18,10 +18,11 @@ const routes: Routes = [
   // },
   {
     path: '',
-    component: IndexDefaultComponent,
+    component: LayoutDefaultComponent,
     canActivate: [AppRouteGuard],
     children: [
-      { path: '', loadChildren: './index/index.module#IndexModule' },
+
+      { path: '', loadChildren: './pages/home/home.module#HomeModule' },
     ],
   },
   {

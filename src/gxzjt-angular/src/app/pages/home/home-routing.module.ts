@@ -5,7 +5,13 @@ import { SystemHomeComponent } from './system-home/system-home.component';
 const routes: Routes = [
   {
     path: 'systemHomeComponent',
-    component: SystemHomeComponent
+    component: SystemHomeComponent,
+    data: { title: '首页' }
+  },
+  {
+    path: '',
+    component: SystemHomeComponent,
+    data: { title: '首页' }
   },
 ];
 

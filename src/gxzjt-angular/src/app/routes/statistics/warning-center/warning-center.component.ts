@@ -11,7 +11,17 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./warning-center.component.less'],
 })
 export class StatisticsWarningCenterComponent implements OnInit {
-  url = `/user`;
+  url = [{
+    pro_type: '',
+    pro_name: '',
+    pro_no: '',
+    org: '',
+    node: '',
+    person: '',
+    repo_time: '',
+    at_time: '',
+
+  }];
   searchKey = '';
   selectedValuePro = "";
   fliterForm: FormGroup;
