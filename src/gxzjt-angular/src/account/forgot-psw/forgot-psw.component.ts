@@ -31,7 +31,7 @@ export class ForgotPswComponent extends AppComponentBase implements OnInit {
   model: any;
   captcha: {};
   count = 0;
-
+  isSetCaptcha = false;
   constructor(
     injector: Injector,
     private _accountService: AccountServiceProxy,

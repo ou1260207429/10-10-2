@@ -1,4 +1,4 @@
-import { ApplyServiceServiceProxy, FlowFormQueryDto, FlowFormDto } from './../../../../shared/service-proxies/service-proxies';
+import { ApplyServiceServiceProxy, FlowFormQueryDto, FlowFormDto, FlowDataDto, ProjectFlowDto } from './../../../../shared/service-proxies/service-proxies';
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ActivatedRoute } from '@angular/router';
@@ -147,6 +147,15 @@ export class AddFireDesignDeclareComponent implements OnInit {
       seal: '',
       name: '',
       opinion: '该项目消防设计文件的编制符合消防设计文件申请要求；建筑的总平面布局和平面布置、耐火等级、建筑构造、安全疏散、消防给水、消防电源及配电、消防设施等的消防设计符合国家工程工程建设消防技术标准。'
+    },
+
+    uploadMaterial: {
+      list0: [],
+      list1: [],
+      list2: [],
+      list3: [],
+      list4: [],
+      list5: [],
     },
 
     //特殊建设工程列表
@@ -501,7 +510,9 @@ export class AddFireDesignDeclareComponent implements OnInit {
    */
   save() {
     const from: GXZJT_From = {
-      frow_TemplateInfo_Data: this.data,
+      frow_TemplateInfo_Data: {
+        Area: "450000"
+      },
       identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {
         applyEID: '10001',
@@ -510,10 +521,37 @@ export class AddFireDesignDeclareComponent implements OnInit {
         deptFullPath: '测试部门',
       }
     };
-    this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe(data => {
-      this.message.success('提交成功')
-      history.go(-1)
+    this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
+
+      const flowDataDto = new FlowDataDto();
+      flowDataDto.formJson = JSON.stringify(this.data);
+      flowDataDto.projectFlowInfo = new ProjectFlowDto();
+
+
+      flowDataDto.projectFlowInfo.timeLimit = data.result.timeLimit
+      //类型  消防设计1   消防验收2   消防竣工3 
+      flowDataDto.projectFlowInfo.flowPathType = 1
+
+      flowDataDto.projectFlowInfo.flowNo = data.result.workFlow_Instance_Id
+
+      flowDataDto.projectFlowInfo.currentNodeId = data.result.cur_Node_Id
+      flowDataDto.projectFlowInfo.currentNodeName = data.result.cur_NodeName
+
+      //待审人数组 等后台改模型
+      // currentHandleUserName: string | undefined;
+
+      //待审人数组 等后台改模型
+      // currentHandleUserCode: string | undefined; 
+
+      this._applyService.investigate(flowDataDto).subscribe(data => {
+        this.message.success('提交成功')
+        history.go(-1)
+      })
+
+      //   this.message.success('提交成功')
+      //   history.go(-1)
     })
+
   }
 
 
@@ -534,8 +572,8 @@ export class AddFireDesignDeclareComponent implements OnInit {
   }
 
   /**
-     * 获取子组件发送的数据
-     */
+  * 获取子组件发送的数据
+  */
   outer(e) {
     this.form = e;
   }

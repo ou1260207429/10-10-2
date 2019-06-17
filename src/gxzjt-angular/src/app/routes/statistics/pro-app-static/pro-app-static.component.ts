@@ -3,6 +3,9 @@ import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent, XlsxService } from '@delon/abc';
 
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { StatisticsProAppStaticDetailComponent } from '../pro-app-static-detail/pro-app-static-detail.component';
+import { StatisticsAcceptCredentialsComponent } from '../accept-credentials/accept-credentials.component';
+import { StatisticsPositionPaperComponent } from '../position-paper/position-paper.component';
 
 @Component({
   selector: 'app-statistics-pro-app-static',
@@ -29,7 +32,7 @@ export class StatisticsProAppStaticComponent implements OnInit {
 
   isAddProducttyepe5 = false;
   submodel = {
-
+    Name: "",
   };
 
   formData = {};
@@ -41,9 +44,39 @@ export class StatisticsProAppStaticComponent implements OnInit {
     {
       title: '操作',
       buttons: [
-        { text: '详情', click: (item: any) => `/form/${item.id}` },
-        { text: '受理凭证', click: (item: any) => `/form/${item.id}` },
-        { text: '意见书', click: (item: any) => `/form/${item.id}` },
+        {
+          text: '查看',
+          type: 'modal',
+          modal: {
+            component: StatisticsProAppStaticDetailComponent,
+            paramsName: 'record',
+          },
+          click: (record: any, modal: any) => {
+
+          },
+        },
+        {
+          text: '受理凭证',
+          type: 'modal',
+          modal: {
+            component: StatisticsAcceptCredentialsComponent,
+            paramsName: 'record',
+          },
+          click: (record: any, modal: any) => {
+
+          },
+        },
+        {
+          text: '意见书',
+          type: 'modal',
+          modal: {
+            component: StatisticsPositionPaperComponent,
+            paramsName: 'record',
+          },
+          click: (record: any, modal: any) => {
+
+          },
+        },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
     },

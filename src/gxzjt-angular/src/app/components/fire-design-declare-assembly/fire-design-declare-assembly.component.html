@@ -463,93 +463,48 @@
         </td>
       </tr>
 
-
-      <!-- <tr>
-        <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
-          style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>同时提交的材料</td>
-        <td rowspan='1' colspan='14' class="textLeft">
-          <div>
-            <label nz-checkbox [(ngModel)]="data.simultaneousMaterials.a1Checkbox"
-              name="simultaneousMaterialsa1Checkbox" required></label>
-            1. 消防设计文件，数量： <se error="这是必填项"><input style="width: 80px" nz-input placeholder="请输入使用性质"
-                [(ngModel)]="data.simultaneousMaterials.a1Input" name="simultaneousMaterialsa1Input" required /></se>
-            份（大写）；
-          </div>
-
-          <div>
-            <label nz-checkbox [(ngModel)]="data.simultaneousMaterials.a2Checkbox"
-              name="simultaneousMaterialsa2Checkbox" required></label>
-            2. 专家评审申报材料（特殊消防设计文件，或者设计采用的国际标准、境外消防技术标准的中文文本，其他有关消防设计的应用实例、产品说明等技术资料），数量： <se error="这是必填项"><input
-                style="width: 80px" nz-input placeholder="请输入使用性质" [(ngModel)]="data.simultaneousMaterials.a2Input"
-                name="simultaneousMaterialsa2Input" required /></se>份（大写）；
-          </div>
-
-          <div>
-            <label nz-checkbox [(ngModel)]="data.simultaneousMaterials.a3Checkbox"
-              name="simultaneousMaterialsa3Checkbox" required></label>
-            3. 建设工程规划许可证明文件；
-          </div>
-
-          <div>
-            <label nz-checkbox [(ngModel)]="data.simultaneousMaterials.a4Checkbox"
-              name="simultaneousMaterialsa4Checkbox" required></label>
-            4. 城乡规划主管部门批准的临时性建筑证明文件
-          </div>
-
-          <div>
-            <label nz-checkbox [(ngModel)]="data.simultaneousMaterials.a5Checkbox"
-              name="simultaneousMaterialsa5Checkbox" required></label>
-            5. 生产工艺和物品有特殊灭火要求的消防设计说明材料。
-          </div>
-
-        </td>
-      </tr> -->
-
-
-
-
       <tr>
         <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
           style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>同时提交的材料</td>
         <td rowspan='1' colspan='14' class="textLeft">
           <div>
             1、建设工程消防设计审查申报表（纸质申报表的图片）
-            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange()">
+            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange(0)">
               <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             2、消防设计文件
-            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange()">
+            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange(1)">
               <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             3、专家评审申报材料
-            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange()">
+            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange(2)">
               <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             4、建设工程规划许可证明文件
-            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange()">
+            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange(3)">
               <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             5、城乡规划主管部门批准的临时性建筑证明文件
-            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange()">
+            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange(4)">
               <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             6、生产工艺和物品有特殊灭火要求的消防设计说明材料
-            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange()">
+            <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" (click)="handleChange(5)">
               <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>

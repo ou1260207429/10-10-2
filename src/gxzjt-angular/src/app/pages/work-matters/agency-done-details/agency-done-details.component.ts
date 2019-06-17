@@ -93,7 +93,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
   uploading = false;
   fileList: UploadFile[] = [];
 
-  textData = {}
+  textData = { projectNumber: "", opinion: "", projectName: "" }
   constructor(private _flowServices: FlowServices, private _activatedRoute: ActivatedRoute, private _ActivatedRoute: ActivatedRoute, ) {
     // console.log(this._activatedRoute.snapshot.paramMap.get('workFlow_TemplateInfoId'))
     // console.log(this._activatedRoute.snapshot.paramMap.get('workFlow_InstanceId'))
@@ -139,5 +139,5 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.fileList = this.fileList.concat(file);
     return false;
   };
-
+  save() { };
 }

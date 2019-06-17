@@ -3,6 +3,7 @@ import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent, XlsxService } from '@delon/abc';
 
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { StatisticsTimeLimtDealDetailComponent } from '../time-limt-deal-detail/time-limt-deal-detail.component';
 
 @Component({
   selector: 'app-statistics-time-limt-deal',
@@ -20,7 +21,8 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     dealperson: '王亮',
     arrtime: '2019-06/15',
     dealtime: '2019-06/17',
-    cztime: '2015-05-05'
+    cztime: '2015-05-05',
+    cstime: '10',
 
   }];
   searchKey = '';
@@ -36,7 +38,17 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     {
       title: '操作',
       buttons: [
-        { text: '详情', click: (item: any) => `/form/${item.id}` },
+        {
+          text: '查看',
+          type: 'modal',
+          modal: {
+            component: StatisticsTimeLimtDealDetailComponent,
+            paramsName: 'record',
+          },
+          click: (record: any, modal: any) => {
+
+          },
+        },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
     },
@@ -84,7 +96,9 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     this.fliterForm.reset();
   }
 
+  addview() {
 
+  }
 
   exportXlsx() {
     const expData = [this.columns.map(i => i.title)];
