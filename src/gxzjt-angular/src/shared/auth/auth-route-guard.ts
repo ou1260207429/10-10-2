@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PermissionCheckerService } from '@abp/auth/permission-checker.service';
 import { AppSessionService } from '@shared/session/app-session.service';
-
+import { TokenService } from '@abp/auth/token.service';
 import {
   CanActivate,
   Router,
@@ -16,13 +16,15 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
     private _permissionChecker: PermissionCheckerService,
     private _router: Router,
     private _sessionService: AppSessionService,
+    private _tokenService: TokenService,
   ) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
+
   ): boolean {
-    if (!this._sessionService.user) {
+    if (!this._sessionService.user || !this._tokenService.getToken()) {
       this._router.navigate(['/account/login']);
       return false;
     }
