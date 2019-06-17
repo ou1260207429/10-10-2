@@ -17,7 +17,7 @@ export class FormDownloadDetailComponent implements OnInit {
   acceptType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
   uploadUrl: "http://demo.rjtx.net:5001/api/Upload/Upload"
   uploadParams: {
-    files: [],
+    files: any,
     AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
     module: "table",
     sourceId: ""
