@@ -16,6 +16,8 @@
     "install": "^0.12.2",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
+    "qs": "^6.7.0",
+    "url-search-params-polyfill": "^6.0.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
