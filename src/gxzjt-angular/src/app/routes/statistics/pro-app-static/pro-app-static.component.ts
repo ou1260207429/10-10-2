@@ -29,7 +29,7 @@ export class StatisticsProAppStaticComponent implements OnInit {
 
   isAddProducttyepe5 = false;
   submodel = {
-
+    Name: "",
   };
 
   formData = {};

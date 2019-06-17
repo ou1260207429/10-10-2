@@ -1,4 +1,8 @@
-import { ProjectFlowServcieServiceProxy, SdeclareStatisticsQueryDto, ScreenServiceServiceProxy, ScreenTimeoutStatisticsQueryDto } from './../../../../shared/service-proxies/service-proxies';
+import {
+    ProjectFlowServcieServiceProxy,
+    // SdeclareStatisticsQueryDto,
+    ScreenServiceServiceProxy, ScreenTimeoutStatisticsQueryDto
+} from './../../../../shared/service-proxies/service-proxies';
 import { OnInit, Component } from "@angular/core";
 import { _HttpClient } from "@delon/theme";
 
@@ -109,48 +113,48 @@ export class BigScreenComponent implements OnInit {
         this.DisposableGetDeclareRate();
         // this.GetScreenTimeoutStatistics();
     }
-    model = new SdeclareStatisticsQueryDto();
+    // model = new SdeclareStatisticsQueryDto();
     //申报统计
     Post_GetDeclareRate() {
-        this.model.fireAuditStatus = 2;
-        this.model.fireCompleteStatus = 2;
-        this.model.completeStatus = 3;
-        const CityList = [];
-        const completeList = [];
-        const fireAudit = [];
-        const fireComplete = [];
-        this.service.post_GetDeclareRate(this.model).subscribe((res) => {
-            res.forEach(e => {
-                CityList.push(e.cityName);
-                completeList.push(e.completeNumber);
-                fireAudit.push(e.fireAuditNumber);
-                fireComplete.push(e.fireCompleteNumber);
-            });
-            this.OverTimeBar1(CityList, completeList);
-            this.OverTimeBar2(CityList, fireAudit);
-            this.OverTimeBar3(CityList, fireComplete);
-        });
+        // this.model.fireAuditStatus = 2;
+        // this.model.fireCompleteStatus = 2;
+        // this.model.completeStatus = 3;
+        // const CityList = [];
+        // const completeList = [];
+        // const fireAudit = [];
+        // const fireComplete = [];
+        // this.service.post_GetDeclareRate(this.model).subscribe((res) => {
+        //     res.forEach(e => {
+        //         CityList.push(e.cityName);
+        //         completeList.push(e.completeNumber);
+        //         fireAudit.push(e.fireAuditNumber);
+        //         fireComplete.push(e.fireCompleteNumber);
+        //     });
+        //     this.OverTimeBar1(CityList, completeList);
+        //     this.OverTimeBar2(CityList, fireAudit);
+        //     this.OverTimeBar3(CityList, fireComplete);
+        // });
     }
     // 一次性通过率
     DisposableGetDeclareRate() {
-        this.model.fireAuditStatus = -1;
-        this.model.fireCompleteStatus = -1;
-        this.model.completeStatus = -1;
-        const CityList = [];
-        const completeList = [];
-        const fireAuditList = [];
-        const fireCompleteList = [];
-        this.service.post_GetDeclareRate(this.model).subscribe((res) => {
-            res.forEach(e => {
-                CityList.push(e.cityName);
-                completeList.push(e.completeNumber);
-                fireAuditList.push(e.fireAuditNumber);
-                fireCompleteList.push(e.fireCompleteNumber);
-            });
-            this.Line(CityList, completeList, fireAuditList, fireCompleteList);
-            // this.Bar3(CityList, fireAudit);
-            // this.Bar4(CityList, fireComplete);
-        });
+        // this.model.fireAuditStatus = -1;
+        // this.model.fireCompleteStatus = -1;
+        // this.model.completeStatus = -1;
+        // const CityList = [];
+        // const completeList = [];
+        // const fireAuditList = [];
+        // const fireCompleteList = [];
+        // this.service.post_GetDeclareRate(this.model).subscribe((res) => {
+        //     res.forEach(e => {
+        //         CityList.push(e.cityName);
+        //         completeList.push(e.completeNumber);
+        //         fireAuditList.push(e.fireAuditNumber);
+        //         fireCompleteList.push(e.fireCompleteNumber);
+        //     });
+        //     this.Line(CityList, completeList, fireAuditList, fireCompleteList);
+        //     // this.Bar3(CityList, fireAudit);
+        //     // this.Bar4(CityList, fireComplete);
+        // });
     }
     // 超时统计
     GetScreenTimeoutStatistics() {
