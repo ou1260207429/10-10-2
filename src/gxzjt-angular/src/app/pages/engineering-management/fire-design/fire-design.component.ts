@@ -51,7 +51,7 @@ export class FireDesignComponent implements OnInit {
   ];
   pageConfig: STPage = publicPageConfig;
   constructor(private _workFlowedService: WorkFlowedServiceProxy, private router: Router, private _flowServices: FlowServices, private eventEmiter: EventEmiter, ) {
-    this.init();
+    // this.init();
   }
 
   /**
@@ -64,15 +64,15 @@ export class FireDesignComponent implements OnInit {
   }
 
   ngOnInit() {
-    let _self = this;
+    // let _self = this;
 
-    this.eventEmiter.on('init', () => {
-      _self.init();
-    });
+    // this.eventEmiter.on('init', () => {
+    //   _self.init();
+    // });
 
-    this.eventEmiter.on('flowadd', () => {
-      _self.init();
-    });
+    // this.eventEmiter.on('flowadd', () => {
+    //   _self.init();
+    // });
   }
 
   /**

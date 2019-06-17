@@ -28,6 +28,60 @@ export class AcceptServiceServiceProxy {
     }
 
     /**
+     * @param flowId (optional) 
+     * @return Success
+     */
+    getAcceptApplyForm(flowId: number | null | undefined): Observable<AcceptApplyFormDto> {
+        let url_ = this.baseUrl + "/api/services/app/AcceptService/GetAcceptApplyForm?";
+        if (flowId !== undefined)
+            url_ += "flowId=" + encodeURIComponent("" + flowId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAcceptApplyForm(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAcceptApplyForm(<any>response_);
+                } catch (e) {
+                    return <Observable<AcceptApplyFormDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AcceptApplyFormDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAcceptApplyForm(response: HttpResponseBase): Observable<AcceptApplyFormDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? AcceptApplyFormDto.fromJS(resultData200) : new AcceptApplyFormDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AcceptApplyFormDto>(<any>null);
+    }
+
+    /**
      * @param acceptApplyFormDto (optional) 
      * @return Success
      */
@@ -331,8 +385,8 @@ export class ApplyServiceServiceProxy {
      * @param flowDataDto (optional) 
      * @return Success
      */
-    applyFlow(flowDataDto: FlowDataDto | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/ApplyService/ApplyFlow";
+    investigate(flowDataDto: FlowDataDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ApplyService/Investigate";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(flowDataDto);
@@ -347,11 +401,11 @@ export class ApplyServiceServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processApplyFlow(response_);
+            return this.processInvestigate(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processApplyFlow(<any>response_);
+                    return this.processInvestigate(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>_observableThrow(e);
                 }
@@ -360,7 +414,7 @@ export class ApplyServiceServiceProxy {
         }));
     }
 
-    protected processApplyFlow(response: HttpResponseBase): Observable<void> {
+    protected processInvestigate(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -377,6 +431,114 @@ export class ApplyServiceServiceProxy {
             }));
         }
         return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param flowDataDto (optional) 
+     * @return Success
+     */
+    acceptance(flowDataDto: FlowDataDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ApplyService/Acceptance";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(flowDataDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAcceptance(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAcceptance(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAcceptance(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param flowDataDto (optional) 
+     * @return Success
+     */
+    post_PutOnRecord(flowDataDto: FlowDataDto | null | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/ApplyService/Post_PutOnRecord";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(flowDataDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_PutOnRecord(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_PutOnRecord(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_PutOnRecord(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
     }
 }
 
@@ -872,6 +1034,110 @@ export class ExamineServiceServiceProxy {
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param examineFormDto (optional) 
+     * @return Success
+     */
+    primaryExamine(examineFormDto: ExamineFormDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ExamineService/PrimaryExamine";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(examineFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPrimaryExamine(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPrimaryExamine(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPrimaryExamine(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param examineFormDto (optional) 
+     * @return Success
+     */
+    finalExamine(examineFormDto: ExamineFormDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ExamineService/FinalExamine";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(examineFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processFinalExamine(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processFinalExamine(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processFinalExamine(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
     }
 
     /**
@@ -2665,66 +2931,6 @@ export class ProjectFlowServcieServiceProxy {
         }
         return _observableOf<ProjectFlowStatisticsDto>(<any>null);
     }
-
-    /**
-     * @param sdeclareStatisticsQueryDto (optional) 
-     * @return Success
-     */
-    post_GetDeclareRate(sdeclareStatisticsQueryDto: SdeclareStatisticsQueryDto | null | undefined): Observable<SdeclareStatisticsDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/ProjectFlowServcie/Post_GetDeclareRate";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(sdeclareStatisticsQueryDto);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPost_GetDeclareRate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processPost_GetDeclareRate(<any>response_);
-                } catch (e) {
-                    return <Observable<SdeclareStatisticsDto[]>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<SdeclareStatisticsDto[]>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processPost_GetDeclareRate(response: HttpResponseBase): Observable<SdeclareStatisticsDto[]> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (resultData200 && resultData200.constructor === Array) {
-                result200 = [];
-                for (let item of resultData200)
-                    result200.push(SdeclareStatisticsDto.fromJS(item));
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<SdeclareStatisticsDto[]>(<any>null);
-    }
 }
 
 @Injectable()
@@ -3993,14 +4199,14 @@ export class ScreenServiceServiceProxy {
     }
 
     /**
-     * @param screenTimeoutStatisticsQueryDto (optional) 
+     * @param applyStatisticsQueryDto (optional) 
      * @return Success
      */
-    psot_GetScreenTimeoutStatistics(screenTimeoutStatisticsQueryDto: ScreenTimeoutStatisticsQueryDto | null | undefined): Observable<TimeoutStatisticsDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/ScreenService/Psot_GetScreenTimeoutStatistics";
+    post_GetApplyStatistics(applyStatisticsQueryDto: ApplyStatisticsQueryDto | null | undefined): Observable<ApplyStatisticsDto> {
+        let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetApplyStatistics";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(screenTimeoutStatisticsQueryDto);
+        const content_ = JSON.stringify(applyStatisticsQueryDto);
 
         let options_ : any = {
             body: content_,
@@ -4013,11 +4219,67 @@ export class ScreenServiceServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPsot_GetScreenTimeoutStatistics(response_);
+            return this.processPost_GetApplyStatistics(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPsot_GetScreenTimeoutStatistics(<any>response_);
+                    return this.processPost_GetApplyStatistics(<any>response_);
+                } catch (e) {
+                    return <Observable<ApplyStatisticsDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ApplyStatisticsDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetApplyStatistics(response: HttpResponseBase): Observable<ApplyStatisticsDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ApplyStatisticsDto.fromJS(resultData200) : new ApplyStatisticsDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ApplyStatisticsDto>(<any>null);
+    }
+
+    /**
+     * @param declareRateQueryDto (optional) 
+     * @return Success
+     */
+    post_GetDeclareRate(declareRateQueryDto: DeclareRateQueryDto | null | undefined): Observable<TimeoutStatisticsDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetDeclareRate";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(declareRateQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetDeclareRate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetDeclareRate(<any>response_);
                 } catch (e) {
                     return <Observable<TimeoutStatisticsDto[]>><any>_observableThrow(e);
                 }
@@ -4026,7 +4288,7 @@ export class ScreenServiceServiceProxy {
         }));
     }
 
-    protected processPsot_GetScreenTimeoutStatistics(response: HttpResponseBase): Observable<TimeoutStatisticsDto[]> {
+    protected processPost_GetDeclareRate(response: HttpResponseBase): Observable<TimeoutStatisticsDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -4053,14 +4315,14 @@ export class ScreenServiceServiceProxy {
     }
 
     /**
-     * @param yearApplyNumberQueryDto (optional) 
+     * @param screenTimeoutStatisticsQueryDto (optional) 
      * @return Success
      */
-    psot_GetScreenYearApplyNumber(yearApplyNumberQueryDto: YearApplyNumberQueryDto | null | undefined): Observable<DataSourceResult> {
-        let url_ = this.baseUrl + "/api/services/app/ScreenService/Psot_GetScreenYearApplyNumber";
+    psot_GetScreenCityTimeoutStatistics(screenTimeoutStatisticsQueryDto: ScreenTimeoutStatisticsQueryDto | null | undefined): Observable<TimeoutStatisticsDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ScreenService/Psot_GetScreenCityTimeoutStatistics";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(yearApplyNumberQueryDto);
+        const content_ = JSON.stringify(screenTimeoutStatisticsQueryDto);
 
         let options_ : any = {
             body: content_,
@@ -4073,20 +4335,20 @@ export class ScreenServiceServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPsot_GetScreenYearApplyNumber(response_);
+            return this.processPsot_GetScreenCityTimeoutStatistics(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPsot_GetScreenYearApplyNumber(<any>response_);
+                    return this.processPsot_GetScreenCityTimeoutStatistics(<any>response_);
                 } catch (e) {
-                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                    return <Observable<TimeoutStatisticsDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+                return <Observable<TimeoutStatisticsDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPsot_GetScreenYearApplyNumber(response: HttpResponseBase): Observable<DataSourceResult> {
+    protected processPsot_GetScreenCityTimeoutStatistics(response: HttpResponseBase): Observable<TimeoutStatisticsDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -4097,7 +4359,11 @@ export class ScreenServiceServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(TimeoutStatisticsDto.fromJS(item));
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -4105,7 +4371,62 @@ export class ScreenServiceServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<DataSourceResult>(<any>null);
+        return _observableOf<TimeoutStatisticsDto[]>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    post_GetATimeByStatistics(): Observable<ATimeByStatisticsDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetATimeByStatistics";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetATimeByStatistics(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetATimeByStatistics(<any>response_);
+                } catch (e) {
+                    return <Observable<ATimeByStatisticsDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ATimeByStatisticsDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetATimeByStatistics(response: HttpResponseBase): Observable<ATimeByStatisticsDto[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(ATimeByStatisticsDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ATimeByStatisticsDto[]>(<any>null);
     }
 
     /**
@@ -4143,6 +4464,62 @@ export class ScreenServiceServiceProxy {
     }
 
     protected processPost_GetScreenTimeoutList(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
+
+    /**
+     * @param yearApplyNumberQueryDto (optional) 
+     * @return Success
+     */
+    psot_GetScreenYearApplyNumber(yearApplyNumberQueryDto: YearApplyNumberQueryDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/ScreenService/Psot_GetScreenYearApplyNumber";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(yearApplyNumberQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPsot_GetScreenYearApplyNumber(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPsot_GetScreenYearApplyNumber(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPsot_GetScreenYearApplyNumber(response: HttpResponseBase): Observable<DataSourceResult> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -4281,6 +4658,74 @@ export class SessionServiceProxy {
             }));
         }
         return _observableOf<GetCurrentLoginInformationsOutput>(<any>null);
+    }
+}
+
+@Injectable()
+export class StatisticalServiceServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param warningCenterQueryDto (optional) 
+     * @return Success
+     */
+    psot_GetWarningCenterList(warningCenterQueryDto: WarningCenterQueryDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/StatisticalService/Psot_GetWarningCenterList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(warningCenterQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPsot_GetWarningCenterList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPsot_GetWarningCenterList(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPsot_GetWarningCenterList(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
     }
 }
 
@@ -5454,17 +5899,21 @@ export class WorkFlowedServiceProxy {
 
 export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     isAccept: boolean | undefined;
-    expireTime: moment.Moment | undefined;
-    expireType: number | undefined;
+    isComplete: boolean | undefined;
     flowId: number | undefined;
-    acceptUserCode: string | undefined;
-    acceptName: string | undefined;
-    acceptOrgName: string | undefined;
-    acceptOrgCode: string | undefined;
-    isDisplay: boolean | undefined;
-    opinion: string | undefined;
-    correctionOrAddItem: string | undefined;
-    refuseItems: number[] | undefined;
+    currentHandleUserName: string | undefined;
+    currentHandleUserCode: string | undefined;
+    currentNodeId: string | undefined;
+    currentNodeName: string | undefined;
+    currentHandleOrgName: string | undefined;
+    currentHandleOrgCode: string | undefined;
+    refuseItems: RefuseItem[] | undefined;
+    fileCodePrefix: string | undefined;
+    companyName: string | undefined;
+    applyDateTime: moment.Moment | undefined;
+    address: string | undefined;
+    attachmentItems: AttachmentItem[] | undefined;
+    timeLimit: number | undefined;
 
     constructor(data?: IAcceptApplyFormDto) {
         if (data) {
@@ -5478,21 +5927,29 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     init(data?: any) {
         if (data) {
             this.isAccept = data["isAccept"];
-            this.expireTime = data["expireTime"] ? moment(data["expireTime"].toString()) : <any>undefined;
-            this.expireType = data["expireType"];
+            this.isComplete = data["isComplete"];
             this.flowId = data["flowId"];
-            this.acceptUserCode = data["acceptUserCode"];
-            this.acceptName = data["acceptName"];
-            this.acceptOrgName = data["acceptOrgName"];
-            this.acceptOrgCode = data["acceptOrgCode"];
-            this.isDisplay = data["isDisplay"];
-            this.opinion = data["opinion"];
-            this.correctionOrAddItem = data["correctionOrAddItem"];
+            this.currentHandleUserName = data["currentHandleUserName"];
+            this.currentHandleUserCode = data["currentHandleUserCode"];
+            this.currentNodeId = data["currentNodeId"];
+            this.currentNodeName = data["currentNodeName"];
+            this.currentHandleOrgName = data["currentHandleOrgName"];
+            this.currentHandleOrgCode = data["currentHandleOrgCode"];
             if (data["refuseItems"] && data["refuseItems"].constructor === Array) {
                 this.refuseItems = [];
                 for (let item of data["refuseItems"])
-                    this.refuseItems.push(item);
+                    this.refuseItems.push(RefuseItem.fromJS(item));
             }
+            this.fileCodePrefix = data["fileCodePrefix"];
+            this.companyName = data["companyName"];
+            this.applyDateTime = data["applyDateTime"] ? moment(data["applyDateTime"].toString()) : <any>undefined;
+            this.address = data["address"];
+            if (data["attachmentItems"] && data["attachmentItems"].constructor === Array) {
+                this.attachmentItems = [];
+                for (let item of data["attachmentItems"])
+                    this.attachmentItems.push(AttachmentItem.fromJS(item));
+            }
+            this.timeLimit = data["timeLimit"];
         }
     }
 
@@ -5506,21 +5963,29 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["isAccept"] = this.isAccept;
-        data["expireTime"] = this.expireTime ? this.expireTime.toISOString() : <any>undefined;
-        data["expireType"] = this.expireType;
+        data["isComplete"] = this.isComplete;
         data["flowId"] = this.flowId;
-        data["acceptUserCode"] = this.acceptUserCode;
-        data["acceptName"] = this.acceptName;
-        data["acceptOrgName"] = this.acceptOrgName;
-        data["acceptOrgCode"] = this.acceptOrgCode;
-        data["isDisplay"] = this.isDisplay;
-        data["opinion"] = this.opinion;
-        data["correctionOrAddItem"] = this.correctionOrAddItem;
+        data["currentHandleUserName"] = this.currentHandleUserName;
+        data["currentHandleUserCode"] = this.currentHandleUserCode;
+        data["currentNodeId"] = this.currentNodeId;
+        data["currentNodeName"] = this.currentNodeName;
+        data["currentHandleOrgName"] = this.currentHandleOrgName;
+        data["currentHandleOrgCode"] = this.currentHandleOrgCode;
         if (this.refuseItems && this.refuseItems.constructor === Array) {
             data["refuseItems"] = [];
             for (let item of this.refuseItems)
-                data["refuseItems"].push(item);
+                data["refuseItems"].push(item.toJSON());
         }
+        data["fileCodePrefix"] = this.fileCodePrefix;
+        data["companyName"] = this.companyName;
+        data["applyDateTime"] = this.applyDateTime ? this.applyDateTime.toISOString() : <any>undefined;
+        data["address"] = this.address;
+        if (this.attachmentItems && this.attachmentItems.constructor === Array) {
+            data["attachmentItems"] = [];
+            for (let item of this.attachmentItems)
+                data["attachmentItems"].push(item.toJSON());
+        }
+        data["timeLimit"] = this.timeLimit;
         return data; 
     }
 
@@ -5534,17 +5999,151 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
 
 export interface IAcceptApplyFormDto {
     isAccept: boolean | undefined;
-    expireTime: moment.Moment | undefined;
-    expireType: number | undefined;
+    isComplete: boolean | undefined;
     flowId: number | undefined;
-    acceptUserCode: string | undefined;
-    acceptName: string | undefined;
-    acceptOrgName: string | undefined;
-    acceptOrgCode: string | undefined;
-    isDisplay: boolean | undefined;
-    opinion: string | undefined;
-    correctionOrAddItem: string | undefined;
-    refuseItems: number[] | undefined;
+    currentHandleUserName: string | undefined;
+    currentHandleUserCode: string | undefined;
+    currentNodeId: string | undefined;
+    currentNodeName: string | undefined;
+    currentHandleOrgName: string | undefined;
+    currentHandleOrgCode: string | undefined;
+    refuseItems: RefuseItem[] | undefined;
+    fileCodePrefix: string | undefined;
+    companyName: string | undefined;
+    applyDateTime: moment.Moment | undefined;
+    address: string | undefined;
+    attachmentItems: AttachmentItem[] | undefined;
+    timeLimit: number | undefined;
+}
+
+export class RefuseItem implements IRefuseItem {
+    itemId: number | undefined;
+    name: string | undefined;
+    describe: string | undefined;
+
+    constructor(data?: IRefuseItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.itemId = data["itemId"];
+            this.name = data["name"];
+            this.describe = data["describe"];
+        }
+    }
+
+    static fromJS(data: any): RefuseItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new RefuseItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["itemId"] = this.itemId;
+        data["name"] = this.name;
+        data["describe"] = this.describe;
+        return data; 
+    }
+
+    clone(): RefuseItem {
+        const json = this.toJSON();
+        let result = new RefuseItem();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IRefuseItem {
+    itemId: number | undefined;
+    name: string | undefined;
+    describe: string | undefined;
+}
+
+export class AttachmentItem implements IAttachmentItem {
+    id: number | undefined;
+    attachmentTypeName: string | undefined;
+    attachmentType: string | undefined;
+    fileUrl: string | undefined;
+    note: string | undefined;
+    fileCount: number | undefined;
+    isSubmit: boolean | undefined;
+    fileNo: number | undefined;
+    flieCode: string | undefined;
+    flowId: number | undefined;
+
+    constructor(data?: IAttachmentItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.attachmentTypeName = data["attachmentTypeName"];
+            this.attachmentType = data["attachmentType"];
+            this.fileUrl = data["fileUrl"];
+            this.note = data["note"];
+            this.fileCount = data["fileCount"];
+            this.isSubmit = data["isSubmit"];
+            this.fileNo = data["fileNo"];
+            this.flieCode = data["flieCode"];
+            this.flowId = data["flowId"];
+        }
+    }
+
+    static fromJS(data: any): AttachmentItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new AttachmentItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["attachmentTypeName"] = this.attachmentTypeName;
+        data["attachmentType"] = this.attachmentType;
+        data["fileUrl"] = this.fileUrl;
+        data["note"] = this.note;
+        data["fileCount"] = this.fileCount;
+        data["isSubmit"] = this.isSubmit;
+        data["fileNo"] = this.fileNo;
+        data["flieCode"] = this.flieCode;
+        data["flowId"] = this.flowId;
+        return data; 
+    }
+
+    clone(): AttachmentItem {
+        const json = this.toJSON();
+        let result = new AttachmentItem();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAttachmentItem {
+    id: number | undefined;
+    attachmentTypeName: string | undefined;
+    attachmentType: string | undefined;
+    fileUrl: string | undefined;
+    note: string | undefined;
+    fileCount: number | undefined;
+    isSubmit: boolean | undefined;
+    fileNo: number | undefined;
+    flieCode: string | undefined;
+    flowId: number | undefined;
 }
 
 export class IsTenantAvailableInput implements IIsTenantAvailableInput {
@@ -5746,6 +6345,7 @@ export interface IRegisterOutput {
 export class FlowFormQueryDto implements IFlowFormQueryDto {
     flowType: number | undefined;
     projectId: number | undefined;
+    flowId: number | undefined;
 
     constructor(data?: IFlowFormQueryDto) {
         if (data) {
@@ -5760,6 +6360,7 @@ export class FlowFormQueryDto implements IFlowFormQueryDto {
         if (data) {
             this.flowType = data["flowType"];
             this.projectId = data["projectId"];
+            this.flowId = data["flowId"];
         }
     }
 
@@ -5774,6 +6375,7 @@ export class FlowFormQueryDto implements IFlowFormQueryDto {
         data = typeof data === 'object' ? data : {};
         data["flowType"] = this.flowType;
         data["projectId"] = this.projectId;
+        data["flowId"] = this.flowId;
         return data; 
     }
 
@@ -5788,6 +6390,7 @@ export class FlowFormQueryDto implements IFlowFormQueryDto {
 export interface IFlowFormQueryDto {
     flowType: number | undefined;
     projectId: number | undefined;
+    flowId: number | undefined;
 }
 
 export class FlowFormAllDataDto implements IFlowFormAllDataDto {
@@ -6136,7 +6739,8 @@ export interface IFlowFormDto {
 export class FlowDataDto implements IFlowDataDto {
     projectId: number | undefined;
     formJson: string | undefined;
-    projectFlowInfo: ProjectFlow | undefined;
+    projectFlowInfo: ProjectFlowDto | undefined;
+    luckNo: number | undefined;
 
     constructor(data?: IFlowDataDto) {
         if (data) {
@@ -6151,7 +6755,8 @@ export class FlowDataDto implements IFlowDataDto {
         if (data) {
             this.projectId = data["projectId"];
             this.formJson = data["formJson"];
-            this.projectFlowInfo = data["projectFlowInfo"] ? ProjectFlow.fromJS(data["projectFlowInfo"]) : <any>undefined;
+            this.projectFlowInfo = data["projectFlowInfo"] ? ProjectFlowDto.fromJS(data["projectFlowInfo"]) : <any>undefined;
+            this.luckNo = data["luckNo"];
         }
     }
 
@@ -6167,6 +6772,7 @@ export class FlowDataDto implements IFlowDataDto {
         data["projectId"] = this.projectId;
         data["formJson"] = this.formJson;
         data["projectFlowInfo"] = this.projectFlowInfo ? this.projectFlowInfo.toJSON() : <any>undefined;
+        data["luckNo"] = this.luckNo;
         return data; 
     }
 
@@ -6181,10 +6787,12 @@ export class FlowDataDto implements IFlowDataDto {
 export interface IFlowDataDto {
     projectId: number | undefined;
     formJson: string | undefined;
-    projectFlowInfo: ProjectFlow | undefined;
+    projectFlowInfo: ProjectFlowDto | undefined;
+    luckNo: number | undefined;
 }
 
-export class ProjectFlow implements IProjectFlow {
+export class ProjectFlowDto implements IProjectFlowDto {
+    timeLimit: number | undefined;
     projectId: number | undefined;
     flowPathType: number | undefined;
     flowNo: string | undefined;
@@ -6194,6 +6802,12 @@ export class ProjectFlow implements IProjectFlow {
     status: number | undefined;
     endTime: moment.Moment | undefined;
     expireTime: moment.Moment | undefined;
+    applyingForms: string | undefined;
+    currentHandleUserName: string | undefined;
+    currentHandleUserCode: string | undefined;
+    currentNodeId: string | undefined;
+    currentNodeName: string | undefined;
+    recordNumber: string | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -6203,7 +6817,7 @@ export class ProjectFlow implements IProjectFlow {
     creatorUserId: number | undefined;
     id: number | undefined;
 
-    constructor(data?: IProjectFlow) {
+    constructor(data?: IProjectFlowDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -6214,6 +6828,7 @@ export class ProjectFlow implements IProjectFlow {
 
     init(data?: any) {
         if (data) {
+            this.timeLimit = data["timeLimit"];
             this.projectId = data["projectId"];
             this.flowPathType = data["flowPathType"];
             this.flowNo = data["flowNo"];
@@ -6223,6 +6838,12 @@ export class ProjectFlow implements IProjectFlow {
             this.status = data["status"];
             this.endTime = data["endTime"] ? moment(data["endTime"].toString()) : <any>undefined;
             this.expireTime = data["expireTime"] ? moment(data["expireTime"].toString()) : <any>undefined;
+            this.applyingForms = data["applyingForms"];
+            this.currentHandleUserName = data["currentHandleUserName"];
+            this.currentHandleUserCode = data["currentHandleUserCode"];
+            this.currentNodeId = data["currentNodeId"];
+            this.currentNodeName = data["currentNodeName"];
+            this.recordNumber = data["recordNumber"];
             this.isDeleted = data["isDeleted"];
             this.deleterUserId = data["deleterUserId"];
             this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
@@ -6234,15 +6855,16 @@ export class ProjectFlow implements IProjectFlow {
         }
     }
 
-    static fromJS(data: any): ProjectFlow {
+    static fromJS(data: any): ProjectFlowDto {
         data = typeof data === 'object' ? data : {};
-        let result = new ProjectFlow();
+        let result = new ProjectFlowDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["timeLimit"] = this.timeLimit;
         data["projectId"] = this.projectId;
         data["flowPathType"] = this.flowPathType;
         data["flowNo"] = this.flowNo;
@@ -6252,6 +6874,12 @@ export class ProjectFlow implements IProjectFlow {
         data["status"] = this.status;
         data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
         data["expireTime"] = this.expireTime ? this.expireTime.toISOString() : <any>undefined;
+        data["applyingForms"] = this.applyingForms;
+        data["currentHandleUserName"] = this.currentHandleUserName;
+        data["currentHandleUserCode"] = this.currentHandleUserCode;
+        data["currentNodeId"] = this.currentNodeId;
+        data["currentNodeName"] = this.currentNodeName;
+        data["recordNumber"] = this.recordNumber;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -6263,15 +6891,16 @@ export class ProjectFlow implements IProjectFlow {
         return data; 
     }
 
-    clone(): ProjectFlow {
+    clone(): ProjectFlowDto {
         const json = this.toJSON();
-        let result = new ProjectFlow();
+        let result = new ProjectFlowDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IProjectFlow {
+export interface IProjectFlowDto {
+    timeLimit: number | undefined;
     projectId: number | undefined;
     flowPathType: number | undefined;
     flowNo: string | undefined;
@@ -6281,6 +6910,12 @@ export interface IProjectFlow {
     status: number | undefined;
     endTime: moment.Moment | undefined;
     expireTime: moment.Moment | undefined;
+    applyingForms: string | undefined;
+    currentHandleUserName: string | undefined;
+    currentHandleUserCode: string | undefined;
+    currentNodeId: string | undefined;
+    currentNodeName: string | undefined;
+    recordNumber: string | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -6686,11 +7321,16 @@ export class ExamineFormDto implements IExamineFormDto {
     attachment: ProjectAttachment[] | undefined;
     isFinalFlow: boolean | undefined;
     isPass: boolean | undefined;
-    expireTime: moment.Moment | undefined;
-    expireType: number | undefined;
     flowId: number | undefined;
     isDisplay: boolean | undefined;
     opinion: string | undefined;
+    attachements: ProjectAttachment[] | undefined;
+    currentHandleUserName: string | undefined;
+    currentHandleUserCode: string | undefined;
+    currentNode: string | undefined;
+    currentHandleOrgName: string | undefined;
+    currentHandleOrgCode: string | undefined;
+    fileCodePrefix: string | undefined;
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -6710,11 +7350,20 @@ export class ExamineFormDto implements IExamineFormDto {
             }
             this.isFinalFlow = data["isFinalFlow"];
             this.isPass = data["isPass"];
-            this.expireTime = data["expireTime"] ? moment(data["expireTime"].toString()) : <any>undefined;
-            this.expireType = data["expireType"];
             this.flowId = data["flowId"];
             this.isDisplay = data["isDisplay"];
             this.opinion = data["opinion"];
+            if (data["attachements"] && data["attachements"].constructor === Array) {
+                this.attachements = [];
+                for (let item of data["attachements"])
+                    this.attachements.push(ProjectAttachment.fromJS(item));
+            }
+            this.currentHandleUserName = data["currentHandleUserName"];
+            this.currentHandleUserCode = data["currentHandleUserCode"];
+            this.currentNode = data["currentNode"];
+            this.currentHandleOrgName = data["currentHandleOrgName"];
+            this.currentHandleOrgCode = data["currentHandleOrgCode"];
+            this.fileCodePrefix = data["fileCodePrefix"];
         }
     }
 
@@ -6734,11 +7383,20 @@ export class ExamineFormDto implements IExamineFormDto {
         }
         data["isFinalFlow"] = this.isFinalFlow;
         data["isPass"] = this.isPass;
-        data["expireTime"] = this.expireTime ? this.expireTime.toISOString() : <any>undefined;
-        data["expireType"] = this.expireType;
         data["flowId"] = this.flowId;
         data["isDisplay"] = this.isDisplay;
         data["opinion"] = this.opinion;
+        if (this.attachements && this.attachements.constructor === Array) {
+            data["attachements"] = [];
+            for (let item of this.attachements)
+                data["attachements"].push(item.toJSON());
+        }
+        data["currentHandleUserName"] = this.currentHandleUserName;
+        data["currentHandleUserCode"] = this.currentHandleUserCode;
+        data["currentNode"] = this.currentNode;
+        data["currentHandleOrgName"] = this.currentHandleOrgName;
+        data["currentHandleOrgCode"] = this.currentHandleOrgCode;
+        data["fileCodePrefix"] = this.fileCodePrefix;
         return data; 
     }
 
@@ -6754,11 +7412,16 @@ export interface IExamineFormDto {
     attachment: ProjectAttachment[] | undefined;
     isFinalFlow: boolean | undefined;
     isPass: boolean | undefined;
-    expireTime: moment.Moment | undefined;
-    expireType: number | undefined;
     flowId: number | undefined;
     isDisplay: boolean | undefined;
     opinion: string | undefined;
+    attachements: ProjectAttachment[] | undefined;
+    currentHandleUserName: string | undefined;
+    currentHandleUserCode: string | undefined;
+    currentNode: string | undefined;
+    currentHandleOrgName: string | undefined;
+    currentHandleOrgCode: string | undefined;
+    fileCodePrefix: string | undefined;
 }
 
 export class ProjectAttachment implements IProjectAttachment {
@@ -6772,6 +7435,11 @@ export class ProjectAttachment implements IProjectAttachment {
     lastUpdateUserName: string | undefined;
     fileCount: number | undefined;
     isPass: boolean | undefined;
+    fileNo: number | undefined;
+    flieCode: string | undefined;
+    flowNode: string | undefined;
+    recordId: number | undefined;
+    flowId: number | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -6802,6 +7470,11 @@ export class ProjectAttachment implements IProjectAttachment {
             this.lastUpdateUserName = data["lastUpdateUserName"];
             this.fileCount = data["fileCount"];
             this.isPass = data["isPass"];
+            this.fileNo = data["fileNo"];
+            this.flieCode = data["flieCode"];
+            this.flowNode = data["flowNode"];
+            this.recordId = data["recordId"];
+            this.flowId = data["flowId"];
             this.isDeleted = data["isDeleted"];
             this.deleterUserId = data["deleterUserId"];
             this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
@@ -6832,6 +7505,11 @@ export class ProjectAttachment implements IProjectAttachment {
         data["lastUpdateUserName"] = this.lastUpdateUserName;
         data["fileCount"] = this.fileCount;
         data["isPass"] = this.isPass;
+        data["fileNo"] = this.fileNo;
+        data["flieCode"] = this.flieCode;
+        data["flowNode"] = this.flowNode;
+        data["recordId"] = this.recordId;
+        data["flowId"] = this.flowId;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -6862,6 +7540,11 @@ export interface IProjectAttachment {
     lastUpdateUserName: string | undefined;
     fileCount: number | undefined;
     isPass: boolean | undefined;
+    fileNo: number | undefined;
+    flieCode: string | undefined;
+    flowNode: string | undefined;
+    recordId: number | undefined;
+    flowId: number | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -6981,6 +7664,7 @@ export class NoticeViewModel implements INoticeViewModel {
     lastUpdateTime: moment.Moment | undefined;
     lastUpdateUserCode: string | undefined;
     lastUpdateUserName: string | undefined;
+    brief: string | undefined;
     visitCount: number | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
@@ -7011,6 +7695,7 @@ export class NoticeViewModel implements INoticeViewModel {
             this.lastUpdateTime = data["lastUpdateTime"] ? moment(data["lastUpdateTime"].toString()) : <any>undefined;
             this.lastUpdateUserCode = data["lastUpdateUserCode"];
             this.lastUpdateUserName = data["lastUpdateUserName"];
+            this.brief = data["brief"];
             this.visitCount = data["visitCount"];
             this.isDeleted = data["isDeleted"];
             this.deleterUserId = data["deleterUserId"];
@@ -7041,6 +7726,7 @@ export class NoticeViewModel implements INoticeViewModel {
         data["lastUpdateTime"] = this.lastUpdateTime ? this.lastUpdateTime.toISOString() : <any>undefined;
         data["lastUpdateUserCode"] = this.lastUpdateUserCode;
         data["lastUpdateUserName"] = this.lastUpdateUserName;
+        data["brief"] = this.brief;
         data["visitCount"] = this.visitCount;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
@@ -7071,6 +7757,7 @@ export interface INoticeViewModel {
     lastUpdateTime: moment.Moment | undefined;
     lastUpdateUserCode: string | undefined;
     lastUpdateUserName: string | undefined;
+    brief: string | undefined;
     visitCount: number | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
@@ -8799,112 +9486,6 @@ export interface IProjectFlowStatisticsDayDto {
     dayTime: moment.Moment | undefined;
 }
 
-export class SdeclareStatisticsQueryDto implements ISdeclareStatisticsQueryDto {
-    fireAuditStatus: number | undefined;
-    fireCompleteStatus: number | undefined;
-    completeStatus: number | undefined;
-
-    constructor(data?: ISdeclareStatisticsQueryDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.fireAuditStatus = data["fireAuditStatus"];
-            this.fireCompleteStatus = data["fireCompleteStatus"];
-            this.completeStatus = data["completeStatus"];
-        }
-    }
-
-    static fromJS(data: any): SdeclareStatisticsQueryDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new SdeclareStatisticsQueryDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["fireAuditStatus"] = this.fireAuditStatus;
-        data["fireCompleteStatus"] = this.fireCompleteStatus;
-        data["completeStatus"] = this.completeStatus;
-        return data; 
-    }
-
-    clone(): SdeclareStatisticsQueryDto {
-        const json = this.toJSON();
-        let result = new SdeclareStatisticsQueryDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ISdeclareStatisticsQueryDto {
-    fireAuditStatus: number | undefined;
-    fireCompleteStatus: number | undefined;
-    completeStatus: number | undefined;
-}
-
-export class SdeclareStatisticsDto implements ISdeclareStatisticsDto {
-    cityName: string | undefined;
-    fireAuditNumber: number | undefined;
-    fireCompleteNumber: number | undefined;
-    completeNumber: number | undefined;
-
-    constructor(data?: ISdeclareStatisticsDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.cityName = data["cityName"];
-            this.fireAuditNumber = data["fireAuditNumber"];
-            this.fireCompleteNumber = data["fireCompleteNumber"];
-            this.completeNumber = data["completeNumber"];
-        }
-    }
-
-    static fromJS(data: any): SdeclareStatisticsDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new SdeclareStatisticsDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["cityName"] = this.cityName;
-        data["fireAuditNumber"] = this.fireAuditNumber;
-        data["fireCompleteNumber"] = this.fireCompleteNumber;
-        data["completeNumber"] = this.completeNumber;
-        return data; 
-    }
-
-    clone(): SdeclareStatisticsDto {
-        const json = this.toJSON();
-        let result = new SdeclareStatisticsDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ISdeclareStatisticsDto {
-    cityName: string | undefined;
-    fireAuditNumber: number | undefined;
-    fireCompleteNumber: number | undefined;
-    completeNumber: number | undefined;
-}
-
 export class ListResultDtoOfRegulationListDto implements IListResultDtoOfRegulationListDto {
     items: RegulationListDto[] | undefined;
 
@@ -9801,11 +10382,132 @@ export interface IPagedResultDtoOfRoleDto {
     items: RoleDto[] | undefined;
 }
 
-export class ScreenTimeoutStatisticsQueryDto implements IScreenTimeoutStatisticsQueryDto {
-    processedStatus: number | undefined;
-    dateTimeNow: moment.Moment | undefined;
+export class ApplyStatisticsQueryDto implements IApplyStatisticsQueryDto {
+    startTime: moment.Moment | undefined;
+    endTime: moment.Moment | undefined;
 
-    constructor(data?: IScreenTimeoutStatisticsQueryDto) {
+    constructor(data?: IApplyStatisticsQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.startTime = data["startTime"] ? moment(data["startTime"].toString()) : <any>undefined;
+            this.endTime = data["endTime"] ? moment(data["endTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): ApplyStatisticsQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApplyStatisticsQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
+        data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): ApplyStatisticsQueryDto {
+        const json = this.toJSON();
+        let result = new ApplyStatisticsQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IApplyStatisticsQueryDto {
+    startTime: moment.Moment | undefined;
+    endTime: moment.Moment | undefined;
+}
+
+export class ApplyStatisticsDto implements IApplyStatisticsDto {
+    statisticsNumberCount: number | undefined;
+    fireCompleteNumberCount: number | undefined;
+    completeNumberCount: number | undefined;
+    hasStatisticsNumber: number | undefined;
+    notStatisticsNumber: number | undefined;
+    hasFireCompleteNumber: number | undefined;
+    notFireCompleteNumber: number | undefined;
+    hasCompleteNumber: number | undefined;
+    notCompleteNumber: number | undefined;
+
+    constructor(data?: IApplyStatisticsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.statisticsNumberCount = data["statisticsNumberCount"];
+            this.fireCompleteNumberCount = data["fireCompleteNumberCount"];
+            this.completeNumberCount = data["completeNumberCount"];
+            this.hasStatisticsNumber = data["hasStatisticsNumber"];
+            this.notStatisticsNumber = data["notStatisticsNumber"];
+            this.hasFireCompleteNumber = data["hasFireCompleteNumber"];
+            this.notFireCompleteNumber = data["notFireCompleteNumber"];
+            this.hasCompleteNumber = data["hasCompleteNumber"];
+            this.notCompleteNumber = data["notCompleteNumber"];
+        }
+    }
+
+    static fromJS(data: any): ApplyStatisticsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApplyStatisticsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["statisticsNumberCount"] = this.statisticsNumberCount;
+        data["fireCompleteNumberCount"] = this.fireCompleteNumberCount;
+        data["completeNumberCount"] = this.completeNumberCount;
+        data["hasStatisticsNumber"] = this.hasStatisticsNumber;
+        data["notStatisticsNumber"] = this.notStatisticsNumber;
+        data["hasFireCompleteNumber"] = this.hasFireCompleteNumber;
+        data["notFireCompleteNumber"] = this.notFireCompleteNumber;
+        data["hasCompleteNumber"] = this.hasCompleteNumber;
+        data["notCompleteNumber"] = this.notCompleteNumber;
+        return data; 
+    }
+
+    clone(): ApplyStatisticsDto {
+        const json = this.toJSON();
+        let result = new ApplyStatisticsDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IApplyStatisticsDto {
+    statisticsNumberCount: number | undefined;
+    fireCompleteNumberCount: number | undefined;
+    completeNumberCount: number | undefined;
+    hasStatisticsNumber: number | undefined;
+    notStatisticsNumber: number | undefined;
+    hasFireCompleteNumber: number | undefined;
+    notFireCompleteNumber: number | undefined;
+    hasCompleteNumber: number | undefined;
+    notCompleteNumber: number | undefined;
+}
+
+export class DeclareRateQueryDto implements IDeclareRateQueryDto {
+    processedStatus: number | undefined;
+
+    constructor(data?: IDeclareRateQueryDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -9817,13 +10519,12 @@ export class ScreenTimeoutStatisticsQueryDto implements IScreenTimeoutStatistics
     init(data?: any) {
         if (data) {
             this.processedStatus = data["processedStatus"];
-            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
         }
     }
 
-    static fromJS(data: any): ScreenTimeoutStatisticsQueryDto {
+    static fromJS(data: any): DeclareRateQueryDto {
         data = typeof data === 'object' ? data : {};
-        let result = new ScreenTimeoutStatisticsQueryDto();
+        let result = new DeclareRateQueryDto();
         result.init(data);
         return result;
     }
@@ -9831,25 +10532,24 @@ export class ScreenTimeoutStatisticsQueryDto implements IScreenTimeoutStatistics
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["processedStatus"] = this.processedStatus;
-        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
         return data; 
     }
 
-    clone(): ScreenTimeoutStatisticsQueryDto {
+    clone(): DeclareRateQueryDto {
         const json = this.toJSON();
-        let result = new ScreenTimeoutStatisticsQueryDto();
+        let result = new DeclareRateQueryDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IScreenTimeoutStatisticsQueryDto {
+export interface IDeclareRateQueryDto {
     processedStatus: number | undefined;
-    dateTimeNow: moment.Moment | undefined;
 }
 
 export class TimeoutStatisticsDto implements ITimeoutStatisticsDto {
     cityName: string | undefined;
+    flowPathType: number | undefined;
     fireAuditNumber: number | undefined;
     fireCompleteNumber: number | undefined;
     completeNumber: number | undefined;
@@ -9866,6 +10566,7 @@ export class TimeoutStatisticsDto implements ITimeoutStatisticsDto {
     init(data?: any) {
         if (data) {
             this.cityName = data["cityName"];
+            this.flowPathType = data["flowPathType"];
             this.fireAuditNumber = data["fireAuditNumber"];
             this.fireCompleteNumber = data["fireCompleteNumber"];
             this.completeNumber = data["completeNumber"];
@@ -9882,6 +10583,7 @@ export class TimeoutStatisticsDto implements ITimeoutStatisticsDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["cityName"] = this.cityName;
+        data["flowPathType"] = this.flowPathType;
         data["fireAuditNumber"] = this.fireAuditNumber;
         data["fireCompleteNumber"] = this.fireCompleteNumber;
         data["completeNumber"] = this.completeNumber;
@@ -9898,9 +10600,167 @@ export class TimeoutStatisticsDto implements ITimeoutStatisticsDto {
 
 export interface ITimeoutStatisticsDto {
     cityName: string | undefined;
+    flowPathType: number | undefined;
     fireAuditNumber: number | undefined;
     fireCompleteNumber: number | undefined;
     completeNumber: number | undefined;
+}
+
+export class ScreenTimeoutStatisticsQueryDto implements IScreenTimeoutStatisticsQueryDto {
+    dateTimeNow: moment.Moment | undefined;
+
+    constructor(data?: IScreenTimeoutStatisticsQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): ScreenTimeoutStatisticsQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ScreenTimeoutStatisticsQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): ScreenTimeoutStatisticsQueryDto {
+        const json = this.toJSON();
+        let result = new ScreenTimeoutStatisticsQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IScreenTimeoutStatisticsQueryDto {
+    dateTimeNow: moment.Moment | undefined;
+}
+
+export class ATimeByStatisticsDto implements IATimeByStatisticsDto {
+    cityName: string | undefined;
+    flowPathType: number | undefined;
+    throughRate: number | undefined;
+
+    constructor(data?: IATimeByStatisticsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.cityName = data["cityName"];
+            this.flowPathType = data["flowPathType"];
+            this.throughRate = data["throughRate"];
+        }
+    }
+
+    static fromJS(data: any): ATimeByStatisticsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ATimeByStatisticsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["cityName"] = this.cityName;
+        data["flowPathType"] = this.flowPathType;
+        data["throughRate"] = this.throughRate;
+        return data; 
+    }
+
+    clone(): ATimeByStatisticsDto {
+        const json = this.toJSON();
+        let result = new ATimeByStatisticsDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IATimeByStatisticsDto {
+    cityName: string | undefined;
+    flowPathType: number | undefined;
+    throughRate: number | undefined;
+}
+
+export class ScreenTimeoutListQueryDto implements IScreenTimeoutListQueryDto {
+    dateTimeNow: moment.Moment | undefined;
+    orderStatus: number | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+
+    constructor(data?: IScreenTimeoutListQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
+            this.orderStatus = data["orderStatus"];
+            this.page = data["page"];
+            this.sorting = data["sorting"];
+            this.skipCount = data["skipCount"];
+            this.maxResultCount = data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): ScreenTimeoutListQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ScreenTimeoutListQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
+        data["orderStatus"] = this.orderStatus;
+        data["page"] = this.page;
+        data["sorting"] = this.sorting;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+
+    clone(): ScreenTimeoutListQueryDto {
+        const json = this.toJSON();
+        let result = new ScreenTimeoutListQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IScreenTimeoutListQueryDto {
+    dateTimeNow: moment.Moment | undefined;
+    orderStatus: number | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
 }
 
 export class YearApplyNumberQueryDto implements IYearApplyNumberQueryDto {
@@ -9968,69 +10828,6 @@ export interface IYearApplyNumberQueryDto {
     startDateTime: moment.Moment | undefined;
     endDateTime: moment.Moment | undefined;
     completeStatus: number | undefined;
-    page: number | undefined;
-    sorting: string | undefined;
-    skipCount: number | undefined;
-    maxResultCount: number | undefined;
-}
-
-export class ScreenTimeoutListQueryDto implements IScreenTimeoutListQueryDto {
-    dateTimeNow: moment.Moment | undefined;
-    processedStatus: number | undefined;
-    page: number | undefined;
-    sorting: string | undefined;
-    skipCount: number | undefined;
-    maxResultCount: number | undefined;
-
-    constructor(data?: IScreenTimeoutListQueryDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
-            this.processedStatus = data["processedStatus"];
-            this.page = data["page"];
-            this.sorting = data["sorting"];
-            this.skipCount = data["skipCount"];
-            this.maxResultCount = data["maxResultCount"];
-        }
-    }
-
-    static fromJS(data: any): ScreenTimeoutListQueryDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ScreenTimeoutListQueryDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
-        data["processedStatus"] = this.processedStatus;
-        data["page"] = this.page;
-        data["sorting"] = this.sorting;
-        data["skipCount"] = this.skipCount;
-        data["maxResultCount"] = this.maxResultCount;
-        return data; 
-    }
-
-    clone(): ScreenTimeoutListQueryDto {
-        const json = this.toJSON();
-        let result = new ScreenTimeoutListQueryDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IScreenTimeoutListQueryDto {
-    dateTimeNow: moment.Moment | undefined;
-    processedStatus: number | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
@@ -10436,6 +11233,81 @@ export interface ITenantLoginInfoDto {
     tenancyName: string | undefined;
     name: string | undefined;
     id: number | undefined;
+}
+
+export class WarningCenterQueryDto implements IWarningCenterQueryDto {
+    flowNo: string | undefined;
+    projectName: string | undefined;
+    flowPathType: number | undefined;
+    startApplyTime: moment.Moment | undefined;
+    endApplyTime: moment.Moment | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+
+    constructor(data?: IWarningCenterQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.flowNo = data["flowNo"];
+            this.projectName = data["projectName"];
+            this.flowPathType = data["flowPathType"];
+            this.startApplyTime = data["startApplyTime"] ? moment(data["startApplyTime"].toString()) : <any>undefined;
+            this.endApplyTime = data["endApplyTime"] ? moment(data["endApplyTime"].toString()) : <any>undefined;
+            this.page = data["page"];
+            this.sorting = data["sorting"];
+            this.skipCount = data["skipCount"];
+            this.maxResultCount = data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): WarningCenterQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new WarningCenterQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["flowNo"] = this.flowNo;
+        data["projectName"] = this.projectName;
+        data["flowPathType"] = this.flowPathType;
+        data["startApplyTime"] = this.startApplyTime ? this.startApplyTime.toISOString() : <any>undefined;
+        data["endApplyTime"] = this.endApplyTime ? this.endApplyTime.toISOString() : <any>undefined;
+        data["page"] = this.page;
+        data["sorting"] = this.sorting;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+
+    clone(): WarningCenterQueryDto {
+        const json = this.toJSON();
+        let result = new WarningCenterQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IWarningCenterQueryDto {
+    flowNo: string | undefined;
+    projectName: string | undefined;
+    flowPathType: number | undefined;
+    startApplyTime: moment.Moment | undefined;
+    endApplyTime: moment.Moment | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
 }
 
 export class CreateTenantDto implements ICreateTenantDto {
@@ -11181,6 +12053,7 @@ export class PendingWorkFlow_NodeAuditorRecordDto implements IPendingWorkFlow_No
     applyTimeStart: moment.Moment | undefined;
     applyTimeEnd: moment.Moment | undefined;
     projectTypeStatu: number | undefined;
+    isAlreadyDone: boolean | undefined;
 
     constructor(data?: IPendingWorkFlow_NodeAuditorRecordDto) {
         if (data) {
@@ -11200,6 +12073,7 @@ export class PendingWorkFlow_NodeAuditorRecordDto implements IPendingWorkFlow_No
             this.applyTimeStart = data["applyTimeStart"] ? moment(data["applyTimeStart"].toString()) : <any>undefined;
             this.applyTimeEnd = data["applyTimeEnd"] ? moment(data["applyTimeEnd"].toString()) : <any>undefined;
             this.projectTypeStatu = data["projectTypeStatu"];
+            this.isAlreadyDone = data["isAlreadyDone"];
         }
     }
 
@@ -11219,6 +12093,7 @@ export class PendingWorkFlow_NodeAuditorRecordDto implements IPendingWorkFlow_No
         data["applyTimeStart"] = this.applyTimeStart ? this.applyTimeStart.toISOString() : <any>undefined;
         data["applyTimeEnd"] = this.applyTimeEnd ? this.applyTimeEnd.toISOString() : <any>undefined;
         data["projectTypeStatu"] = this.projectTypeStatu;
+        data["isAlreadyDone"] = this.isAlreadyDone;
         return data; 
     }
 
@@ -11238,6 +12113,7 @@ export interface IPendingWorkFlow_NodeAuditorRecordDto {
     applyTimeStart: moment.Moment | undefined;
     applyTimeEnd: moment.Moment | undefined;
     projectTypeStatu: number | undefined;
+    isAlreadyDone: boolean | undefined;
 }
 
 export enum IsTenantAvailableOutputState {

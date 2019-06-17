@@ -15,6 +15,7 @@ import { AuthInterceptor } from 'infrastructure/http-interceptor';
 import { ContentManageModule } from './pages/content-manage/content-manage.module';
 import { UEditorModule } from 'ngx-ueditor';
 import { PublicModel } from 'infrastructure/public-model';
+import { PublicServices } from 'services/public.services';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { PublicModel } from 'infrastructure/public-model';
     PoliciesAndRegulationsServices,
     PublicModel,
     EventEmiter,
+    PublicServices,
     [
       {
         provide: HTTP_INTERCEPTORS,

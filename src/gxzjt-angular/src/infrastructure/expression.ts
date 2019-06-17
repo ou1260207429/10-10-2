@@ -8,6 +8,9 @@ export const FLOW_SERVICES_URL = 'http://localhost:21021'
 //谢峰的服务地址
 export const XIEFENG_SERVICES_URL = 'http://localhost:3521/';
 
+//庞博的服务器上传图片地址
+export const PANGBO_SERVICES_URL = ' http://demo.rjtx.net:5001/';
+
 ///通用变量
 export let publicPageConfig: STPage = {
   front: false,

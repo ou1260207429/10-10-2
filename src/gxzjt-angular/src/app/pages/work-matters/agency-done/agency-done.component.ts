@@ -5,7 +5,7 @@ import { STColumn, STComponent, XlsxService } from '@delon/abc';
 import { _HttpClient } from '@delon/theme';
 
 
-import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, DataSourceResult } from '@shared/service-proxies/service-proxies'
+import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, DataSourceResult, PagedAndFilteredInputDto } from '@shared/service-proxies/service-proxies'
 
 import { PublicFormComponent } from '../public/public-form.component';
 
@@ -71,27 +71,34 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
 
 
-    var jsonData = {
-      "applyTimeStart": this.rangeTime ? this.rangeTime[0] : null,
-      "applyTimeEnd": this.rangeTime ? this.rangeTime[1] : new Date(),
-      "companyName": this.orgName,
-      "projectName": this.proName,
-      "pagedAndFilteredInputDto": {
-        "filterText": "",
-        "page": this.page,
-        "sorting": "",
-        "skipCount": this.page * this.pageSize,
-        "maxResultCount": this.pageSize
-      },
-    };
+    // var jsonData = {
+    //   "applyTimeStart": this.rangeTime ? this.rangeTime[0] : null,
+    //   "applyTimeEnd": this.rangeTime ? this.rangeTime[1] : new Date(),
+    //   "companyName": this.orgName,
+    //   "projectName": this.proName,
+    //   "pagedAndFilteredInputDto": {
+    //     "filterText": "",
+    //     "page": this.page,
+    //     "sorting": "",
+    //     "skipCount": this.page * this.pageSize,
+    //     "maxResultCount": this.pageSize
+    //   },
+    // };
 
-    searchParam.init(jsonData);
-
+    // searchParam.init(jsonData);
+    searchParam.pagedAndFilteredInputDto = new PagedAndFilteredInputDto();
+    searchParam.pagedAndFilteredInputDto.page = 1;
+    searchParam.pagedAndFilteredInputDto.maxResultCount = 10;
     this.isSearchForm = true;
-    this._flowServices.tenant_PendingWorkFlow_NodeAuditorRecord(searchParam).subscribe(data => {
-      this.formResultData = data.result.data;
-      this.isSearchForm = false;
+
+    this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(searchParam).subscribe((data: any) => {
+      console.log(data.data);
+      console.log(data)
     })
+    // this._flowServices.tenant_PendingWorkFlow_NodeAuditorRecord(searchParam).subscribe(data => {
+    //   this.formResultData = data.result.data;
+    //   this.isSearchForm = false;
+    // })
 
   }
 
