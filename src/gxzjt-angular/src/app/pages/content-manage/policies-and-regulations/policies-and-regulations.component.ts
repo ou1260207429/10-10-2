@@ -7,27 +7,33 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 import { RegulationServiceProxy } from '@shared/service-proxies/service-proxies';
 import { PublicModel } from 'infrastructure/public-model';
 import { timeTrans } from 'infrastructure/regular-expression';
+
+import { PublicFormComponent } from '../public/public-form.component';
+
+
 @Component({
   selector: 'app-policies-and-regulations',
-  templateUrl: './policies-and-regulations.component.html',
+  templateUrl: '../public/public-form.html',
   styleUrls: []
 })
 
-export class PoliciesAndRegulationsComponent implements OnInit {
+export class PoliciesAndRegulationsComponent extends PublicFormComponent implements OnInit {
   @ViewChild('treeCom') treeCom;
   @ViewChild('st') st: STComponent;
+
   params: any = {
     page: 1,
-    size: 10,
+    size: 200,
     sort: "",
     isAsc: false,
     orderby: "",
-    totalCount: 20,
-    //search: 11,
-    //startTime: null,
-    //endTime: null,
+    totalCount: 200,
+    search: "",
+    startTime: "",
+    endTime: "",
   };
-  data
+
+
   columns: STColumn[] = [
     { title: '法规编号', index: 'regulationCode' },
     { title: '法规类型', index: 'regulationType' },
@@ -52,9 +58,9 @@ export class PoliciesAndRegulationsComponent implements OnInit {
     {
       title: '浏览量', index: 'visitCount'
     },
-    {
-      title: '删除人id', index: '删除人id'
-    },
+    // {
+    //   title: '删除人id', index: '删除人id'
+    // },
 
     {
       title: '操作', className: 'text-center', buttons: [
@@ -83,11 +89,12 @@ export class PoliciesAndRegulationsComponent implements OnInit {
 
   pageConfig: STPage = publicPageConfig;
   constructor(private _eventEmiter: EventEmiter, private _publicModel: PublicModel, private _regulationServiceProxy: RegulationServiceProxy, private router: Router) {
+    super();
+    this.searchHolder = "标题名称";
   }
 
   ngOnInit() {
-    this.params.startTime = new Date(new Date(new Date().toLocaleDateString()).getTime());
-    this.params.endTime = new Date(new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1);
+
     let _self = this;
     this.init();
     this._eventEmiter.on('init', () => {
@@ -99,7 +106,7 @@ export class PoliciesAndRegulationsComponent implements OnInit {
    * 初始化
    */
   init() {
-  
+
     this.workFlow_NodeAuditorRecords(this.params);
 
   }
@@ -117,9 +124,12 @@ export class PoliciesAndRegulationsComponent implements OnInit {
    * 获取列表 
    */
   workFlow_NodeAuditorRecords(params?: any) {
-    this.data = "";
+    this.isSearchForm = true;
+
     this._regulationServiceProxy.regulationListAsync(params).subscribe(data => {
-      this.data = data;
+      this.isSearchForm = false;
+
+      this.formResultData = data.data;
     })
   }
   /**
@@ -127,6 +137,9 @@ export class PoliciesAndRegulationsComponent implements OnInit {
    */
   query() {
     this.params.page = 1;
+    this.params.startTime = this.rangeTime[0];
+    this.params.endTime = this.rangeTime[1];
+    this.params.search = this.searchKey;
     this.workFlow_NodeAuditorRecords(this.params);
   }
 
@@ -136,6 +149,9 @@ export class PoliciesAndRegulationsComponent implements OnInit {
     })
   }
 
+  refresh() {
+    this.query();
+  }
 
   add() {
     this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/1`, { operate: 0 }]);

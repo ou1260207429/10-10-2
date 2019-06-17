@@ -29,8 +29,14 @@ export class RoleManagerComponent extends PublicFormComponent implements OnInit 
     {
       searchKey: "",
       formControlName: "search",
-      placeholder: "组织名称"
-    }
+      placeholder: "角色组名称"
+    },
+    {
+      searchKey: "",
+      formControlName: "search",
+      placeholder: "角色名称"
+    },
+
   ];
 
   @ViewChild('st') st: STComponent;
@@ -56,12 +62,12 @@ export class RoleManagerComponent extends PublicFormComponent implements OnInit 
         },
       ]
     },
-    { title: '部门ID', index: 'pro_type' },
-    { title: '部门名称', index: 'pro_no' },
+    { title: '内部编号', index: 'pro_type' },
+    { title: '角色名称', index: 'pro_no' },
 
-    { title: '部门全路径', index: 'pro_name' },
+    { title: '橘色组名', index: 'pro_name' },
 
-    { title: '操作人', index: 'org' },
+    { title: '配置人员', index: 'org' },
 
     { title: '操作时间', type: 'date', index: 'timeout' }
 

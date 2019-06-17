@@ -31,7 +31,6 @@ export class PublicFormComponent {
 
     isSearchForm = false;
 
-    useSelect = false;
 
     searchInputs = [
         // {
@@ -46,7 +45,7 @@ export class PublicFormComponent {
     needRxport = false;
     needTreeForm = false;
     needSingleForm = true;
-
+    needPagination = false
     //过滤菜单
     resetSearchFliterForm(): void {
         this.fliterForm.reset();
