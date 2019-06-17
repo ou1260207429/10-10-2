@@ -4,6 +4,7 @@ import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum } from 'infrastructur
 import { objDeleteType } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
+import { PublicServices, UploadFileModel } from 'services/public.services';
 
 /**
  * 消防设计的表单模块
@@ -31,7 +32,10 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
-  constructor(public publicModel: PublicModel, ) { }
+
+  //判断上传的焦点
+  uoloadIndex: number = -1;
+  constructor(public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
@@ -68,13 +72,20 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
    * 上传文件之前的钩子
    */
   beforeUpload = (file: UploadFile): boolean => {
-    console.log('11')
+    console.log(file)
+    const arr: UploadFileModel = {
+      files: [file]
+    }
+    console.log(arr);
+    this._publicServices.upload(arr).subscribe(data => {
+      console.log(data);
+    })
     // this.fileList = this.fileList.concat(file);
     return false;
   };
 
-  handleChange(box, index) {
-    console.log('00')
+  handleChange(index) {
+    this.uoloadIndex = index
   }
 
 }
