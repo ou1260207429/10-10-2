@@ -1,13 +1,4 @@
-<<<<<<< HEAD
-import {
-    ProjectFlowServcieServiceProxy,
-    // SdeclareStatisticsQueryDto,
-    ScreenServiceServiceProxy, ScreenTimeoutStatisticsQueryDto
-} from './../../../../shared/service-proxies/service-proxies';
-import { OnInit, Component } from "@angular/core";
-=======
 import { Component } from "@angular/core";
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
 import { _HttpClient } from "@delon/theme";
 
 @Component({
@@ -49,129 +40,6 @@ export class BigScreenComponent {
 
     //         window.onresize = () => {
 
-<<<<<<< HEAD
-            if (document.body.scrollHeight === window.screen.height && document.body.scrollWidth === window.screen.width) {
-                currComponent.clientHeight = window.screen.height - 5; // 网页可见区域高
-                currComponent.clientWidth = window.screen.width;
-            } else {
-                currComponent.clientHeight = document.body.clientHeight - 5; // 网页可见区域高
-                currComponent.clientWidth = document.body.clientWidth;
-            }
-            currComponent.FireHeight = currComponent.clientHeight * 0.5 + 'px';
-            currComponent.FireWidth = currComponent.clientWidth * 0.32 + 'px';
-            currComponent.MiddleWidth = currComponent.clientWidth * 0.47 + 'px';
-            currComponent.RightWidth = currComponent.clientWidth * 0.18 + 'px';
-        };
-    }
-    data: any = [{}];
-    dateTime: any = new Date();
-    BarTitle = '消防设计审查';
-    OverTimeTitle = '消防设计审查';
-    pagesize = 4;
-    pageindex = 1;
-    ngOnInit() {
-        // this.Line();
-        // this.OverTimeBar1();
-        // this.OverTimeBar2();
-        // this.OverTimeBar3();
-        // this.Bar2();
-        // this.Bar3();
-        // this.Bar4();
-        this.Pie1();
-        this.Pie2();
-        this.Pie3();
-        this.Pie4();
-        this.Pie5();
-        this.Pie6();
-        this.EchartsMap();
-        this.GetData();
-        setInterval(() => {
-            this.dateTime = new Date();
-        }, 1000);
-        setInterval(() => {
-            switch (this.BarTitle) {
-                case '消防设计审查':
-                    this.BarTitle = '消防验收';
-                    break;
-                case '消防验收':
-                    this.BarTitle = '竣工验收备案';
-                    break;
-                case '竣工验收备案':
-                    this.BarTitle = '消防设计审查';
-                    break;
-            }
-        }, 5000);
-        setInterval(() => {
-            switch (this.OverTimeTitle) {
-                case '消防设计审查':
-                    this.OverTimeTitle = '消防验收';
-                    break;
-                case '消防验收':
-                    this.OverTimeTitle = '竣工验收备案';
-                    break;
-                case '竣工验收备案':
-                    this.OverTimeTitle = '消防设计审查';
-                    break;
-            }
-        }, 3000);
-        this.Post_GetDeclareRate();
-        this.DisposableGetDeclareRate();
-        // this.GetScreenTimeoutStatistics();
-    }
-    // model = new SdeclareStatisticsQueryDto();
-    //申报统计
-    Post_GetDeclareRate() {
-        // this.model.fireAuditStatus = 2;
-        // this.model.fireCompleteStatus = 2;
-        // this.model.completeStatus = 3;
-        // const CityList = [];
-        // const completeList = [];
-        // const fireAudit = [];
-        // const fireComplete = [];
-        // this.service.post_GetDeclareRate(this.model).subscribe((res) => {
-        //     res.forEach(e => {
-        //         CityList.push(e.cityName);
-        //         completeList.push(e.completeNumber);
-        //         fireAudit.push(e.fireAuditNumber);
-        //         fireComplete.push(e.fireCompleteNumber);
-        //     });
-        //     this.OverTimeBar1(CityList, completeList);
-        //     this.OverTimeBar2(CityList, fireAudit);
-        //     this.OverTimeBar3(CityList, fireComplete);
-        // });
-    }
-    // 一次性通过率
-    DisposableGetDeclareRate() {
-        // this.model.fireAuditStatus = -1;
-        // this.model.fireCompleteStatus = -1;
-        // this.model.completeStatus = -1;
-        // const CityList = [];
-        // const completeList = [];
-        // const fireAuditList = [];
-        // const fireCompleteList = [];
-        // this.service.post_GetDeclareRate(this.model).subscribe((res) => {
-        //     res.forEach(e => {
-        //         CityList.push(e.cityName);
-        //         completeList.push(e.completeNumber);
-        //         fireAuditList.push(e.fireAuditNumber);
-        //         fireCompleteList.push(e.fireCompleteNumber);
-        //     });
-        //     this.Line(CityList, completeList, fireAuditList, fireCompleteList);
-        //     // this.Bar3(CityList, fireAudit);
-        //     // this.Bar4(CityList, fireComplete);
-        // });
-    }
-    // 超时统计
-    GetScreenTimeoutStatistics() {
-        let model = new ScreenTimeoutStatisticsQueryDto();
-        // model.dateTimeNow =JSON.stringify(new Date());
-        // this.screenService.psot_GetScreenTimeoutStatistics(model).subscribe((res) => {
-        //     console.log(res);
-        // })
-    }
-    // 累计办理情况
-    GetScreenYearApplyNumber() {
-=======
     //             if (document.body.scrollHeight === window.screen.height && document.body.scrollWidth === window.screen.width) {
     //                 currComponent.clientHeight = window.screen.height - 5; // 网页可见区域高
     //                 currComponent.clientWidth = window.screen.width;
@@ -293,7 +161,6 @@ export class BigScreenComponent {
     //     }
     //     // 累计办理情况
     //     GetScreenYearApplyNumber() {
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
 
     //     }
     //     GetData() {

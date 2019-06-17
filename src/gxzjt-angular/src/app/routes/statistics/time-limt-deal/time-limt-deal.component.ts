@@ -96,7 +96,9 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     this.fliterForm.reset();
   }
 
+  addview() {
 
+  }
 
   exportXlsx() {
     const expData = [this.columns.map(i => i.title)];

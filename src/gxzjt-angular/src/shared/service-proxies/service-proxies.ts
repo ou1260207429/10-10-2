@@ -4318,18 +4318,8 @@ export class ScreenServiceServiceProxy {
      * @param screenTimeoutStatisticsQueryDto (optional) 
      * @return Success
      */
-<<<<<<< HEAD
-<<<<<<< HEAD
     post_GetScreenCityTimeoutStatistics(screenTimeoutStatisticsQueryDto: ScreenTimeoutStatisticsQueryDto | null | undefined): Observable<TimeoutStatisticsDto[]> {
         let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetScreenCityTimeoutStatistics";
-=======
-    psot_GetScreenCityTimeoutStatistics(screenTimeoutStatisticsQueryDto: ScreenTimeoutStatisticsQueryDto | null | undefined): Observable<TimeoutStatisticsDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/ScreenService/Psot_GetScreenCityTimeoutStatistics";
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
-    post_GetScreenCityTimeoutStatistics(screenTimeoutStatisticsQueryDto: ScreenTimeoutStatisticsQueryDto | null | undefined): Observable<TimeoutStatisticsDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetScreenCityTimeoutStatistics";
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(screenTimeoutStatisticsQueryDto);
@@ -4345,27 +4335,11 @@ export class ScreenServiceServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-<<<<<<< HEAD
-<<<<<<< HEAD
             return this.processPost_GetScreenCityTimeoutStatistics(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
                     return this.processPost_GetScreenCityTimeoutStatistics(<any>response_);
-=======
-            return this.processPsot_GetScreenCityTimeoutStatistics(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processPsot_GetScreenCityTimeoutStatistics(<any>response_);
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
-            return this.processPost_GetScreenCityTimeoutStatistics(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processPost_GetScreenCityTimeoutStatistics(<any>response_);
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
                 } catch (e) {
                     return <Observable<TimeoutStatisticsDto[]>><any>_observableThrow(e);
                 }
@@ -4374,15 +4348,7 @@ export class ScreenServiceServiceProxy {
         }));
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     protected processPost_GetScreenCityTimeoutStatistics(response: HttpResponseBase): Observable<TimeoutStatisticsDto[]> {
-=======
-    protected processPsot_GetScreenCityTimeoutStatistics(response: HttpResponseBase): Observable<TimeoutStatisticsDto[]> {
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
-    protected processPost_GetScreenCityTimeoutStatistics(response: HttpResponseBase): Observable<TimeoutStatisticsDto[]> {
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -4523,18 +4489,8 @@ export class ScreenServiceServiceProxy {
      * @param yearApplyNumberQueryDto (optional) 
      * @return Success
      */
-<<<<<<< HEAD
-<<<<<<< HEAD
     post_GetScreenYearApplyNumber(yearApplyNumberQueryDto: YearApplyNumberQueryDto | null | undefined): Observable<DataSourceResult> {
         let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetScreenYearApplyNumber";
-=======
-    psot_GetScreenYearApplyNumber(yearApplyNumberQueryDto: YearApplyNumberQueryDto | null | undefined): Observable<DataSourceResult> {
-        let url_ = this.baseUrl + "/api/services/app/ScreenService/Psot_GetScreenYearApplyNumber";
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
-    post_GetScreenYearApplyNumber(yearApplyNumberQueryDto: YearApplyNumberQueryDto | null | undefined): Observable<DataSourceResult> {
-        let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetScreenYearApplyNumber";
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(yearApplyNumberQueryDto);
@@ -4550,27 +4506,11 @@ export class ScreenServiceServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-<<<<<<< HEAD
-<<<<<<< HEAD
             return this.processPost_GetScreenYearApplyNumber(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
                     return this.processPost_GetScreenYearApplyNumber(<any>response_);
-=======
-            return this.processPsot_GetScreenYearApplyNumber(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processPsot_GetScreenYearApplyNumber(<any>response_);
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
-            return this.processPost_GetScreenYearApplyNumber(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processPost_GetScreenYearApplyNumber(<any>response_);
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
                 } catch (e) {
                     return <Observable<DataSourceResult>><any>_observableThrow(e);
                 }
@@ -4579,15 +4519,7 @@ export class ScreenServiceServiceProxy {
         }));
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     protected processPost_GetScreenYearApplyNumber(response: HttpResponseBase): Observable<DataSourceResult> {
-=======
-    protected processPsot_GetScreenYearApplyNumber(response: HttpResponseBase): Observable<DataSourceResult> {
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
-    protected processPost_GetScreenYearApplyNumber(response: HttpResponseBase): Observable<DataSourceResult> {
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -4775,133 +4707,6 @@ export class StatisticalServiceServiceProxy {
     }
 
     protected processPsot_GetWarningCenterList(response: HttpResponseBase): Observable<DataSourceResult> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<DataSourceResult>(<any>null);
-<<<<<<< HEAD
-=======
-    }
-}
-
-@Injectable()
-export class TenantServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "";
-    }
-
-    /**
-     * @param input (optional) 
-     * @return Success
-     */
-    create(input: CreateTenantDto | null | undefined): Observable<TenantDto> {
-        let url_ = this.baseUrl + "/api/services/app/Tenant/Create";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(input);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreate(<any>response_);
-                } catch (e) {
-                    return <Observable<TenantDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<TenantDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processCreate(response: HttpResponseBase): Observable<TenantDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? TenantDto.fromJS(resultData200) : new TenantDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<TenantDto>(<any>null);
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-    }
-
-    /**
-     * @param projectApplyQueryDto (optional) 
-     * @return Success
-     */
-    post_GetProjectApplyList(projectApplyQueryDto: ProjectApplyQueryDto | null | undefined): Observable<DataSourceResult> {
-        let url_ = this.baseUrl + "/api/services/app/StatisticalService/Post_GetProjectApplyList";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(projectApplyQueryDto);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPost_GetProjectApplyList(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processPost_GetProjectApplyList(<any>response_);
-                } catch (e) {
-                    return <Observable<DataSourceResult>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<DataSourceResult>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processPost_GetProjectApplyList(response: HttpResponseBase): Observable<DataSourceResult> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -6154,14 +5959,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     flowId: number | undefined;
     currentHandleUserName: string | undefined;
     currentHandleUserCode: string | undefined;
-<<<<<<< HEAD
-<<<<<<< HEAD
     handleUserList: UserBaseDto[] | undefined;
-=======
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
-    handleUserList: UserBaseDto[] | undefined;
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
     currentNodeId: string | undefined;
     currentNodeName: string | undefined;
     currentHandleOrgName: string | undefined;
@@ -6190,20 +5988,11 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
             this.flowId = data["flowId"];
             this.currentHandleUserName = data["currentHandleUserName"];
             this.currentHandleUserCode = data["currentHandleUserCode"];
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
             if (data["handleUserList"] && data["handleUserList"].constructor === Array) {
                 this.handleUserList = [];
                 for (let item of data["handleUserList"])
                     this.handleUserList.push(UserBaseDto.fromJS(item));
             }
-<<<<<<< HEAD
-=======
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
             this.currentNodeId = data["currentNodeId"];
             this.currentNodeName = data["currentNodeName"];
             this.currentHandleOrgName = data["currentHandleOrgName"];
@@ -6212,7 +6001,6 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
                 this.refuseItems = [];
                 for (let item of data["refuseItems"])
                     this.refuseItems.push(RefuseItem.fromJS(item));
-<<<<<<< HEAD
             }
             this.fileCodePrefix = data["fileCodePrefix"];
             this.companyName = data["companyName"];
@@ -6223,18 +6011,6 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
                 for (let item of data["attachmentItems"])
                     this.attachmentItems.push(AttachmentItem.fromJS(item));
             }
-=======
-            }
-            this.fileCodePrefix = data["fileCodePrefix"];
-            this.companyName = data["companyName"];
-            this.applyDateTime = data["applyDateTime"] ? moment(data["applyDateTime"].toString()) : <any>undefined;
-            this.address = data["address"];
-            if (data["attachmentItems"] && data["attachmentItems"].constructor === Array) {
-                this.attachmentItems = [];
-                for (let item of data["attachmentItems"])
-                    this.attachmentItems.push(AttachmentItem.fromJS(item));
-            }
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
             this.timeLimit = data["timeLimit"];
         }
     }
@@ -6253,20 +6029,11 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
         data["flowId"] = this.flowId;
         data["currentHandleUserName"] = this.currentHandleUserName;
         data["currentHandleUserCode"] = this.currentHandleUserCode;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
         if (this.handleUserList && this.handleUserList.constructor === Array) {
             data["handleUserList"] = [];
             for (let item of this.handleUserList)
                 data["handleUserList"].push(item.toJSON());
         }
-<<<<<<< HEAD
-=======
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
         data["currentNodeId"] = this.currentNodeId;
         data["currentNodeName"] = this.currentNodeName;
         data["currentHandleOrgName"] = this.currentHandleOrgName;
@@ -6300,7 +6067,6 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
 export interface IAcceptApplyFormDto {
     isAccept: boolean | undefined;
     isComplete: boolean | undefined;
-<<<<<<< HEAD
     flowId: number | undefined;
     currentHandleUserName: string | undefined;
     currentHandleUserCode: string | undefined;
@@ -6316,200 +6082,6 @@ export interface IAcceptApplyFormDto {
     address: string | undefined;
     attachmentItems: AttachmentItem[] | undefined;
     timeLimit: number | undefined;
-=======
-    flowId: number | undefined;
-    currentHandleUserName: string | undefined;
-    currentHandleUserCode: string | undefined;
-    handleUserList: UserBaseDto[] | undefined;
-    currentNodeId: string | undefined;
-    currentNodeName: string | undefined;
-    currentHandleOrgName: string | undefined;
-    currentHandleOrgCode: string | undefined;
-    refuseItems: RefuseItem[] | undefined;
-    fileCodePrefix: string | undefined;
-    companyName: string | undefined;
-    applyDateTime: moment.Moment | undefined;
-    address: string | undefined;
-    attachmentItems: AttachmentItem[] | undefined;
-    timeLimit: number | undefined;
-}
-
-export class UserBaseDto implements IUserBaseDto {
-    userName: string | undefined;
-    userCode: string | undefined;
-
-    constructor(data?: IUserBaseDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.userName = data["userName"];
-            this.userCode = data["userCode"];
-        }
-    }
-
-    static fromJS(data: any): UserBaseDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserBaseDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["userName"] = this.userName;
-        data["userCode"] = this.userCode;
-        return data; 
-    }
-
-    clone(): UserBaseDto {
-        const json = this.toJSON();
-        let result = new UserBaseDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IUserBaseDto {
-    userName: string | undefined;
-    userCode: string | undefined;
-}
-
-export class RefuseItem implements IRefuseItem {
-    itemId: number | undefined;
-    name: string | undefined;
-    describe: string | undefined;
-
-    constructor(data?: IRefuseItem) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.itemId = data["itemId"];
-            this.name = data["name"];
-            this.describe = data["describe"];
-        }
-    }
-
-    static fromJS(data: any): RefuseItem {
-        data = typeof data === 'object' ? data : {};
-        let result = new RefuseItem();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["itemId"] = this.itemId;
-        data["name"] = this.name;
-        data["describe"] = this.describe;
-        return data; 
-    }
-
-    clone(): RefuseItem {
-        const json = this.toJSON();
-        let result = new RefuseItem();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IRefuseItem {
-    itemId: number | undefined;
-    name: string | undefined;
-    describe: string | undefined;
-}
-
-export class AttachmentItem implements IAttachmentItem {
-    id: number | undefined;
-    attachmentTypeName: string | undefined;
-    attachmentType: string | undefined;
-    fileUrl: string | undefined;
-    note: string | undefined;
-    fileCount: number | undefined;
-    isSubmit: boolean | undefined;
-    fileNo: number | undefined;
-    flieCode: string | undefined;
-    flowId: number | undefined;
-
-    constructor(data?: IAttachmentItem) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.id = data["id"];
-            this.attachmentTypeName = data["attachmentTypeName"];
-            this.attachmentType = data["attachmentType"];
-            this.fileUrl = data["fileUrl"];
-            this.note = data["note"];
-            this.fileCount = data["fileCount"];
-            this.isSubmit = data["isSubmit"];
-            this.fileNo = data["fileNo"];
-            this.flieCode = data["flieCode"];
-            this.flowId = data["flowId"];
-        }
-    }
-
-    static fromJS(data: any): AttachmentItem {
-        data = typeof data === 'object' ? data : {};
-        let result = new AttachmentItem();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["attachmentTypeName"] = this.attachmentTypeName;
-        data["attachmentType"] = this.attachmentType;
-        data["fileUrl"] = this.fileUrl;
-        data["note"] = this.note;
-        data["fileCount"] = this.fileCount;
-        data["isSubmit"] = this.isSubmit;
-        data["fileNo"] = this.fileNo;
-        data["flieCode"] = this.flieCode;
-        data["flowId"] = this.flowId;
-        return data; 
-    }
-
-    clone(): AttachmentItem {
-        const json = this.toJSON();
-        let result = new AttachmentItem();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IAttachmentItem {
-    id: number | undefined;
-    attachmentTypeName: string | undefined;
-    attachmentType: string | undefined;
-    fileUrl: string | undefined;
-    note: string | undefined;
-    fileCount: number | undefined;
-    isSubmit: boolean | undefined;
-    fileNo: number | undefined;
-    flieCode: string | undefined;
-    flowId: number | undefined;
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
 }
 
 export class UserBaseDto implements IUserBaseDto {
@@ -6732,7 +6304,6 @@ export interface IIsTenantAvailableInput {
     tenancyName: string;
 }
 
-<<<<<<< HEAD
 export class IsTenantAvailableOutput implements IIsTenantAvailableOutput {
     state: IsTenantAvailableOutputState | undefined;
     tenantId: number | undefined;
@@ -6886,8 +6457,6 @@ export interface IRegisterOutput {
     canLogin: boolean | undefined;
 }
 
-=======
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
 export class FlowFormQueryDto implements IFlowFormQueryDto {
     flowType: number | undefined;
     projectId: number | undefined;
@@ -7287,14 +6856,7 @@ export class FlowDataDto implements IFlowDataDto {
     formJson: string | undefined;
     projectFlowInfo: ProjectFlowDto | undefined;
     luckNo: number | undefined;
-<<<<<<< HEAD
-<<<<<<< HEAD
     handleUserList: UserBaseDto[] | undefined;
-=======
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
-    handleUserList: UserBaseDto[] | undefined;
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
 
     constructor(data?: IFlowDataDto) {
         if (data) {
@@ -7311,20 +6873,11 @@ export class FlowDataDto implements IFlowDataDto {
             this.formJson = data["formJson"];
             this.projectFlowInfo = data["projectFlowInfo"] ? ProjectFlowDto.fromJS(data["projectFlowInfo"]) : <any>undefined;
             this.luckNo = data["luckNo"];
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
             if (data["handleUserList"] && data["handleUserList"].constructor === Array) {
                 this.handleUserList = [];
                 for (let item of data["handleUserList"])
                     this.handleUserList.push(UserBaseDto.fromJS(item));
             }
-<<<<<<< HEAD
-=======
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
         }
     }
 
@@ -7341,20 +6894,11 @@ export class FlowDataDto implements IFlowDataDto {
         data["formJson"] = this.formJson;
         data["projectFlowInfo"] = this.projectFlowInfo ? this.projectFlowInfo.toJSON() : <any>undefined;
         data["luckNo"] = this.luckNo;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
         if (this.handleUserList && this.handleUserList.constructor === Array) {
             data["handleUserList"] = [];
             for (let item of this.handleUserList)
                 data["handleUserList"].push(item.toJSON());
         }
-<<<<<<< HEAD
-=======
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
         return data; 
     }
 
@@ -7371,14 +6915,7 @@ export interface IFlowDataDto {
     formJson: string | undefined;
     projectFlowInfo: ProjectFlowDto | undefined;
     luckNo: number | undefined;
-<<<<<<< HEAD
-<<<<<<< HEAD
     handleUserList: UserBaseDto[] | undefined;
-=======
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
-    handleUserList: UserBaseDto[] | undefined;
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
 }
 
 export class ProjectFlowDto implements IProjectFlowDto {
@@ -7921,14 +7458,7 @@ export class ExamineFormDto implements IExamineFormDto {
     currentHandleOrgName: string | undefined;
     currentHandleOrgCode: string | undefined;
     fileCodePrefix: string | undefined;
-<<<<<<< HEAD
-<<<<<<< HEAD
     handleUserList: UserBaseDto[] | undefined;
-=======
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
-    handleUserList: UserBaseDto[] | undefined;
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -7962,20 +7492,11 @@ export class ExamineFormDto implements IExamineFormDto {
             this.currentHandleOrgName = data["currentHandleOrgName"];
             this.currentHandleOrgCode = data["currentHandleOrgCode"];
             this.fileCodePrefix = data["fileCodePrefix"];
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
             if (data["handleUserList"] && data["handleUserList"].constructor === Array) {
                 this.handleUserList = [];
                 for (let item of data["handleUserList"])
                     this.handleUserList.push(UserBaseDto.fromJS(item));
             }
-<<<<<<< HEAD
-=======
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
         }
     }
 
@@ -8009,20 +7530,11 @@ export class ExamineFormDto implements IExamineFormDto {
         data["currentHandleOrgName"] = this.currentHandleOrgName;
         data["currentHandleOrgCode"] = this.currentHandleOrgCode;
         data["fileCodePrefix"] = this.fileCodePrefix;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
         if (this.handleUserList && this.handleUserList.constructor === Array) {
             data["handleUserList"] = [];
             for (let item of this.handleUserList)
                 data["handleUserList"].push(item.toJSON());
         }
-<<<<<<< HEAD
-=======
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
         return data; 
     }
 
@@ -8048,14 +7560,7 @@ export interface IExamineFormDto {
     currentHandleOrgName: string | undefined;
     currentHandleOrgCode: string | undefined;
     fileCodePrefix: string | undefined;
-<<<<<<< HEAD
-<<<<<<< HEAD
     handleUserList: UserBaseDto[] | undefined;
-=======
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
-    handleUserList: UserBaseDto[] | undefined;
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
 }
 
 export class ProjectAttachment implements IProjectAttachment {
@@ -11875,14 +11380,7 @@ export class WarningCenterQueryDto implements IWarningCenterQueryDto {
     flowPathType: number | undefined;
     startApplyTime: moment.Moment | undefined;
     endApplyTime: moment.Moment | undefined;
-<<<<<<< HEAD
-<<<<<<< HEAD
     dateTimeNow: moment.Moment | undefined;
-=======
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
-    dateTimeNow: moment.Moment | undefined;
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
@@ -11904,14 +11402,7 @@ export class WarningCenterQueryDto implements IWarningCenterQueryDto {
             this.flowPathType = data["flowPathType"];
             this.startApplyTime = data["startApplyTime"] ? moment(data["startApplyTime"].toString()) : <any>undefined;
             this.endApplyTime = data["endApplyTime"] ? moment(data["endApplyTime"].toString()) : <any>undefined;
-<<<<<<< HEAD
-<<<<<<< HEAD
             this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
-=======
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
-            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
             this.page = data["page"];
             this.sorting = data["sorting"];
             this.skipCount = data["skipCount"];
@@ -11933,14 +11424,7 @@ export class WarningCenterQueryDto implements IWarningCenterQueryDto {
         data["flowPathType"] = this.flowPathType;
         data["startApplyTime"] = this.startApplyTime ? this.startApplyTime.toISOString() : <any>undefined;
         data["endApplyTime"] = this.endApplyTime ? this.endApplyTime.toISOString() : <any>undefined;
-<<<<<<< HEAD
-<<<<<<< HEAD
         data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
-=======
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
-        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
         data["page"] = this.page;
         data["sorting"] = this.sorting;
         data["skipCount"] = this.skipCount;
@@ -11962,10 +11446,6 @@ export interface IWarningCenterQueryDto {
     flowPathType: number | undefined;
     startApplyTime: moment.Moment | undefined;
     endApplyTime: moment.Moment | undefined;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
     dateTimeNow: moment.Moment | undefined;
     page: number | undefined;
     sorting: string | undefined;
@@ -12042,11 +11522,6 @@ export interface IProjectApplyQueryDto {
     startApplyTime: moment.Moment | undefined;
     endApplyTime: moment.Moment | undefined;
     dateTimeNow: moment.Moment | undefined;
-<<<<<<< HEAD
-=======
->>>>>>> b185eee7a9c62b7680ba1b44ea68f6ea00565224
-=======
->>>>>>> b211ff9007d4705d9d8b5a972b7cec40feaf6080
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
