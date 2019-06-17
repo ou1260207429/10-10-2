@@ -4318,8 +4318,8 @@ export class ScreenServiceServiceProxy {
      * @param screenTimeoutStatisticsQueryDto (optional) 
      * @return Success
      */
-    psot_GetScreenCityTimeoutStatistics(screenTimeoutStatisticsQueryDto: ScreenTimeoutStatisticsQueryDto | null | undefined): Observable<TimeoutStatisticsDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/ScreenService/Psot_GetScreenCityTimeoutStatistics";
+    post_GetScreenCityTimeoutStatistics(screenTimeoutStatisticsQueryDto: ScreenTimeoutStatisticsQueryDto | null | undefined): Observable<TimeoutStatisticsDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetScreenCityTimeoutStatistics";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(screenTimeoutStatisticsQueryDto);
@@ -4335,11 +4335,11 @@ export class ScreenServiceServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPsot_GetScreenCityTimeoutStatistics(response_);
+            return this.processPost_GetScreenCityTimeoutStatistics(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPsot_GetScreenCityTimeoutStatistics(<any>response_);
+                    return this.processPost_GetScreenCityTimeoutStatistics(<any>response_);
                 } catch (e) {
                     return <Observable<TimeoutStatisticsDto[]>><any>_observableThrow(e);
                 }
@@ -4348,7 +4348,7 @@ export class ScreenServiceServiceProxy {
         }));
     }
 
-    protected processPsot_GetScreenCityTimeoutStatistics(response: HttpResponseBase): Observable<TimeoutStatisticsDto[]> {
+    protected processPost_GetScreenCityTimeoutStatistics(response: HttpResponseBase): Observable<TimeoutStatisticsDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -4489,8 +4489,8 @@ export class ScreenServiceServiceProxy {
      * @param yearApplyNumberQueryDto (optional) 
      * @return Success
      */
-    psot_GetScreenYearApplyNumber(yearApplyNumberQueryDto: YearApplyNumberQueryDto | null | undefined): Observable<DataSourceResult> {
-        let url_ = this.baseUrl + "/api/services/app/ScreenService/Psot_GetScreenYearApplyNumber";
+    post_GetScreenYearApplyNumber(yearApplyNumberQueryDto: YearApplyNumberQueryDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetScreenYearApplyNumber";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(yearApplyNumberQueryDto);
@@ -4506,11 +4506,11 @@ export class ScreenServiceServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPsot_GetScreenYearApplyNumber(response_);
+            return this.processPost_GetScreenYearApplyNumber(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPsot_GetScreenYearApplyNumber(<any>response_);
+                    return this.processPost_GetScreenYearApplyNumber(<any>response_);
                 } catch (e) {
                     return <Observable<DataSourceResult>><any>_observableThrow(e);
                 }
@@ -4519,7 +4519,7 @@ export class ScreenServiceServiceProxy {
         }));
     }
 
-    protected processPsot_GetScreenYearApplyNumber(response: HttpResponseBase): Observable<DataSourceResult> {
+    protected processPost_GetScreenYearApplyNumber(response: HttpResponseBase): Observable<DataSourceResult> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -4707,6 +4707,62 @@ export class StatisticalServiceServiceProxy {
     }
 
     protected processPsot_GetWarningCenterList(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
+
+    /**
+     * @param projectApplyQueryDto (optional) 
+     * @return Success
+     */
+    post_GetProjectApplyList(projectApplyQueryDto: ProjectApplyQueryDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/StatisticalService/Post_GetProjectApplyList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(projectApplyQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetProjectApplyList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetProjectApplyList(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetProjectApplyList(response: HttpResponseBase): Observable<DataSourceResult> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -5903,6 +5959,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     flowId: number | undefined;
     currentHandleUserName: string | undefined;
     currentHandleUserCode: string | undefined;
+    handleUserList: UserBaseDto[] | undefined;
     currentNodeId: string | undefined;
     currentNodeName: string | undefined;
     currentHandleOrgName: string | undefined;
@@ -5931,6 +5988,11 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
             this.flowId = data["flowId"];
             this.currentHandleUserName = data["currentHandleUserName"];
             this.currentHandleUserCode = data["currentHandleUserCode"];
+            if (data["handleUserList"] && data["handleUserList"].constructor === Array) {
+                this.handleUserList = [];
+                for (let item of data["handleUserList"])
+                    this.handleUserList.push(UserBaseDto.fromJS(item));
+            }
             this.currentNodeId = data["currentNodeId"];
             this.currentNodeName = data["currentNodeName"];
             this.currentHandleOrgName = data["currentHandleOrgName"];
@@ -5967,6 +6029,11 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
         data["flowId"] = this.flowId;
         data["currentHandleUserName"] = this.currentHandleUserName;
         data["currentHandleUserCode"] = this.currentHandleUserCode;
+        if (this.handleUserList && this.handleUserList.constructor === Array) {
+            data["handleUserList"] = [];
+            for (let item of this.handleUserList)
+                data["handleUserList"].push(item.toJSON());
+        }
         data["currentNodeId"] = this.currentNodeId;
         data["currentNodeName"] = this.currentNodeName;
         data["currentHandleOrgName"] = this.currentHandleOrgName;
@@ -6003,6 +6070,7 @@ export interface IAcceptApplyFormDto {
     flowId: number | undefined;
     currentHandleUserName: string | undefined;
     currentHandleUserCode: string | undefined;
+    handleUserList: UserBaseDto[] | undefined;
     currentNodeId: string | undefined;
     currentNodeName: string | undefined;
     currentHandleOrgName: string | undefined;
@@ -6014,6 +6082,53 @@ export interface IAcceptApplyFormDto {
     address: string | undefined;
     attachmentItems: AttachmentItem[] | undefined;
     timeLimit: number | undefined;
+}
+
+export class UserBaseDto implements IUserBaseDto {
+    userName: string | undefined;
+    userCode: string | undefined;
+
+    constructor(data?: IUserBaseDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.userName = data["userName"];
+            this.userCode = data["userCode"];
+        }
+    }
+
+    static fromJS(data: any): UserBaseDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserBaseDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userName"] = this.userName;
+        data["userCode"] = this.userCode;
+        return data; 
+    }
+
+    clone(): UserBaseDto {
+        const json = this.toJSON();
+        let result = new UserBaseDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserBaseDto {
+    userName: string | undefined;
+    userCode: string | undefined;
 }
 
 export class RefuseItem implements IRefuseItem {
@@ -6741,6 +6856,7 @@ export class FlowDataDto implements IFlowDataDto {
     formJson: string | undefined;
     projectFlowInfo: ProjectFlowDto | undefined;
     luckNo: number | undefined;
+    handleUserList: UserBaseDto[] | undefined;
 
     constructor(data?: IFlowDataDto) {
         if (data) {
@@ -6757,6 +6873,11 @@ export class FlowDataDto implements IFlowDataDto {
             this.formJson = data["formJson"];
             this.projectFlowInfo = data["projectFlowInfo"] ? ProjectFlowDto.fromJS(data["projectFlowInfo"]) : <any>undefined;
             this.luckNo = data["luckNo"];
+            if (data["handleUserList"] && data["handleUserList"].constructor === Array) {
+                this.handleUserList = [];
+                for (let item of data["handleUserList"])
+                    this.handleUserList.push(UserBaseDto.fromJS(item));
+            }
         }
     }
 
@@ -6773,6 +6894,11 @@ export class FlowDataDto implements IFlowDataDto {
         data["formJson"] = this.formJson;
         data["projectFlowInfo"] = this.projectFlowInfo ? this.projectFlowInfo.toJSON() : <any>undefined;
         data["luckNo"] = this.luckNo;
+        if (this.handleUserList && this.handleUserList.constructor === Array) {
+            data["handleUserList"] = [];
+            for (let item of this.handleUserList)
+                data["handleUserList"].push(item.toJSON());
+        }
         return data; 
     }
 
@@ -6789,6 +6915,7 @@ export interface IFlowDataDto {
     formJson: string | undefined;
     projectFlowInfo: ProjectFlowDto | undefined;
     luckNo: number | undefined;
+    handleUserList: UserBaseDto[] | undefined;
 }
 
 export class ProjectFlowDto implements IProjectFlowDto {
@@ -7331,6 +7458,7 @@ export class ExamineFormDto implements IExamineFormDto {
     currentHandleOrgName: string | undefined;
     currentHandleOrgCode: string | undefined;
     fileCodePrefix: string | undefined;
+    handleUserList: UserBaseDto[] | undefined;
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -7364,6 +7492,11 @@ export class ExamineFormDto implements IExamineFormDto {
             this.currentHandleOrgName = data["currentHandleOrgName"];
             this.currentHandleOrgCode = data["currentHandleOrgCode"];
             this.fileCodePrefix = data["fileCodePrefix"];
+            if (data["handleUserList"] && data["handleUserList"].constructor === Array) {
+                this.handleUserList = [];
+                for (let item of data["handleUserList"])
+                    this.handleUserList.push(UserBaseDto.fromJS(item));
+            }
         }
     }
 
@@ -7397,6 +7530,11 @@ export class ExamineFormDto implements IExamineFormDto {
         data["currentHandleOrgName"] = this.currentHandleOrgName;
         data["currentHandleOrgCode"] = this.currentHandleOrgCode;
         data["fileCodePrefix"] = this.fileCodePrefix;
+        if (this.handleUserList && this.handleUserList.constructor === Array) {
+            data["handleUserList"] = [];
+            for (let item of this.handleUserList)
+                data["handleUserList"].push(item.toJSON());
+        }
         return data; 
     }
 
@@ -7422,6 +7560,7 @@ export interface IExamineFormDto {
     currentHandleOrgName: string | undefined;
     currentHandleOrgCode: string | undefined;
     fileCodePrefix: string | undefined;
+    handleUserList: UserBaseDto[] | undefined;
 }
 
 export class ProjectAttachment implements IProjectAttachment {
@@ -11241,6 +11380,7 @@ export class WarningCenterQueryDto implements IWarningCenterQueryDto {
     flowPathType: number | undefined;
     startApplyTime: moment.Moment | undefined;
     endApplyTime: moment.Moment | undefined;
+    dateTimeNow: moment.Moment | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
@@ -11262,6 +11402,7 @@ export class WarningCenterQueryDto implements IWarningCenterQueryDto {
             this.flowPathType = data["flowPathType"];
             this.startApplyTime = data["startApplyTime"] ? moment(data["startApplyTime"].toString()) : <any>undefined;
             this.endApplyTime = data["endApplyTime"] ? moment(data["endApplyTime"].toString()) : <any>undefined;
+            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
             this.page = data["page"];
             this.sorting = data["sorting"];
             this.skipCount = data["skipCount"];
@@ -11283,6 +11424,7 @@ export class WarningCenterQueryDto implements IWarningCenterQueryDto {
         data["flowPathType"] = this.flowPathType;
         data["startApplyTime"] = this.startApplyTime ? this.startApplyTime.toISOString() : <any>undefined;
         data["endApplyTime"] = this.endApplyTime ? this.endApplyTime.toISOString() : <any>undefined;
+        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
         data["page"] = this.page;
         data["sorting"] = this.sorting;
         data["skipCount"] = this.skipCount;
@@ -11304,6 +11446,82 @@ export interface IWarningCenterQueryDto {
     flowPathType: number | undefined;
     startApplyTime: moment.Moment | undefined;
     endApplyTime: moment.Moment | undefined;
+    dateTimeNow: moment.Moment | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+}
+
+export class ProjectApplyQueryDto implements IProjectApplyQueryDto {
+    recordNumber: string | undefined;
+    projectName: string | undefined;
+    startApplyTime: moment.Moment | undefined;
+    endApplyTime: moment.Moment | undefined;
+    dateTimeNow: moment.Moment | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+
+    constructor(data?: IProjectApplyQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.recordNumber = data["recordNumber"];
+            this.projectName = data["projectName"];
+            this.startApplyTime = data["startApplyTime"] ? moment(data["startApplyTime"].toString()) : <any>undefined;
+            this.endApplyTime = data["endApplyTime"] ? moment(data["endApplyTime"].toString()) : <any>undefined;
+            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
+            this.page = data["page"];
+            this.sorting = data["sorting"];
+            this.skipCount = data["skipCount"];
+            this.maxResultCount = data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): ProjectApplyQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectApplyQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["recordNumber"] = this.recordNumber;
+        data["projectName"] = this.projectName;
+        data["startApplyTime"] = this.startApplyTime ? this.startApplyTime.toISOString() : <any>undefined;
+        data["endApplyTime"] = this.endApplyTime ? this.endApplyTime.toISOString() : <any>undefined;
+        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
+        data["page"] = this.page;
+        data["sorting"] = this.sorting;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+
+    clone(): ProjectApplyQueryDto {
+        const json = this.toJSON();
+        let result = new ProjectApplyQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectApplyQueryDto {
+    recordNumber: string | undefined;
+    projectName: string | undefined;
+    startApplyTime: moment.Moment | undefined;
+    endApplyTime: moment.Moment | undefined;
+    dateTimeNow: moment.Moment | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
