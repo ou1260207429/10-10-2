@@ -7,67 +7,11 @@
   </nz-tabset>
 
   <div [ngClass]="{hide: selectedIndex != 0}">
-<<<<<<< HEAD
-
-
     <app-fire-design-declare-assembly *ngIf="formJson" [data]="formJson" type=1></app-fire-design-declare-assembly>
 
     <form nz-form #f="ngForm" se-container="1">
       <table class="tables" style="box-sizing: border-box;" *ngIf="formDto">
-=======
-    11111
-    <!-- <form nz-form #f="ngForm" se-container="1">
-      <table class="tables" style="box-sizing: border-box;">
-        <tr>
-          <td style="width: 37px;background-color: #ffedcc;color: #ff9c35;font-weight: 600;border-right: 0" rowspan='5'>
-            附件上传
-          </td>
-        </tr>
-        <tr style="text-align: left;border-top: 1px solid #e2e2e2;">
-          <td colspan="20">
-            <div>
-              <span class="fontweight">1、建设工程消防设计审核申报</span>
-              <button class="btn downLoad" nz-button>下载</button>
-              <button (click)="checkAll('checkOptionsOne')" class="btn checkAll" nz-button>全选</button>
 
-            </div>
-            <div class="blockCheck">
-              <nz-checkbox-group [(ngModel)]="test.data" name="test11"></nz-checkbox-group>
-            </div>
-          </td>
-        </tr>
-        <tr style="text-align: left;">
-          <td colspan="20">
-            <div>
-              <span class="fontweight">2、建设单位的工商营业执照等合法身份证明文件</span> <button class="btn downLoad" nz-button>下载</button>
-              <button (click)="checkAll('checkOptionsTwo')" class="btn checkAll" nz-button>全选</button></div>
-            <div class="blockCheck">
-              <nz-checkbox-group [(ngModel)]="test.data" name="test22"></nz-checkbox-group>
-            </div>
-          </td>
-        </tr>
-        <tr style="text-align: left;">
-          <td colspan="20">
-            <div>
-              <span class="fontweight">3、设计单位资质证明文件</span> <button class="btn downLoad" nz-button>下载</button>
-              <button (click)="checkAll('checkOptionsThree')" class="btn checkAll" nz-button>全选</button>
-            </div>
-            <div class="blockCheck">
-              <nz-checkbox-group [(ngModel)]="test.data" name="test33"></nz-checkbox-group>
-            </div>
-          </td>
-        </tr>
-        <tr style="text-align: left;">
-          <td colspan="20">
-            <div><span class="fontweight">4、消防设计文件</span> <button class="btn downLoad" nz-button>下载</button>
-              <button (click)="checkAll('checkOptionsFour')" class="btn checkAll" nz-button>全选</button></div>
-            <div class="blockCheck">
-              <nz-checkbox-group [(ngModel)]="test.data" name="test44"></nz-checkbox-group>
-            </div>
-          </td>
-        </tr>
-
->>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
         <tr>
           <td style="width: 37px;background-color: #ffedcc;color: #ff9c35;font-weight: 600;border-right: 0" rowspan='4'>
             流程审批
@@ -75,13 +19,8 @@
         </tr>
         <tr style="text-align: left;border-top: 1px solid #e2e2e2;">
           <td colspan="20">
-<<<<<<< HEAD
-            <se error="这是必填项" label="是否通过">
-              <nz-select [(ngModel)]="formDto.isAccept" name="isAccept">
-=======
             <se error="这是必填项" label="是否通过" required>
               <nz-select [(ngModel)]="test.type" name="jbtype{{index}}" required>
->>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
                 <nz-option *ngFor="let option of adoptEnum" [nzLabel]="option.label" [nzValue]="option.value">
                 </nz-option>
               </nz-select>
@@ -90,14 +29,8 @@
         </tr>
         <tr style="text-align: left;">
           <td colspan="20">
-<<<<<<< HEAD
             <se error="这是必填项" label="审批意见书">
               <app-fire-design-declare-assembly-handle [data]="formDto"></app-fire-design-declare-assembly-handle>
-=======
-            <se error="这是必填项" label="审批意见" required>
-              <textarea nz-input placeholder="请输入审批意见" [(ngModel)]="test.opinion" name="constructionUnitopinion"
-                required>
-                </textarea>
             </se>
           </td>
         </tr>
@@ -107,29 +40,21 @@
               <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
                 <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
               </nz-upload>
->>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
             </se>
           </td>
         </tr>
       </table>
-<<<<<<< HEAD
     </form>
 
     <div class="textCenter" style="margin-bottom: 40px;">
       <button nz-button nzType="primary" (click)="save()">提交</button>
-    </div>
-=======
-    </form> -->
->>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
+    </div> 
   </div>
   <div [ngClass]="{hide: selectedIndex != 1}">
     <app-flow-route *ngIf="data" [data]="data"></app-flow-route>
   </div>
 </nz-spin>
 
-<<<<<<< HEAD
-<!-- 
-=======
 
 
 <table class="tables d_table" style="box-sizing: border-box;">
@@ -341,7 +266,6 @@
     </tr>
   </tbody>
 </table>
->>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
 
 **********************************************************************************************
 
@@ -763,18 +687,15 @@
       <td class="fontweight fontLeft leftTitle">本意见书一式两份，一份交建设单位，一份存档。 </td>
     </tr>
   </tbody>
-<<<<<<< HEAD
-</table> -->
+
+</table>
+
+
+
 
 
 
 <!-- <form nz-form #f="ngForm" se-container="1">
-=======
-</table>
-
-
-<form nz-form #f="ngForm" se-container="1">
->>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
   <table class="tables" style="box-sizing: border-box;">
     <thead>
       <tr>
@@ -881,11 +802,4 @@
       </tr>
     </tbody>
   </table>
-<<<<<<< HEAD
-</form> -->
-=======
-</form>
-<div class="textCenter" style="margin-bottom: 40px;">
-  <button nz-button nzType="primary" (click)="save()">提交</button>
-</div>
->>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
+</form>  -->

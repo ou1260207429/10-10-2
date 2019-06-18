@@ -6,11 +6,13 @@ import { CompletedAcceptanceAssemblyComponent } from './completed-acceptance-ass
 
 import { FireDesignDeclareAssemblyComponent } from './fire-design-declare-assembly/fire-design-declare-assembly.component';
 import { FireDesignDeclareAssemblyHandleComponent } from './fire-design-declare-assembly-handle/fire-design-declare-assembly-handle.component';
+import { FireAcceptanceAssemblyComponent } from './fire-acceptance-assembly/fire-acceptance-assembly.component';
 
 @NgModule({
 	declarations: [
 		FlowRouteComponent,
 		CompletedAcceptanceAssemblyComponent,
+		FireAcceptanceAssemblyComponent,
 		FireDesignDeclareAssemblyComponent,
 		FireDesignDeclareAssemblyHandleComponent,
 	],
@@ -21,12 +23,14 @@ import { FireDesignDeclareAssemblyHandleComponent } from './fire-design-declare-
 	exports: [
 		FlowRouteComponent,
 		CompletedAcceptanceAssemblyComponent,
+		FireAcceptanceAssemblyComponent,
 		FireDesignDeclareAssemblyComponent,
 		FireDesignDeclareAssemblyHandleComponent,
 	],
 	entryComponents: [
 		FlowRouteComponent,
 		CompletedAcceptanceAssemblyComponent,
+		FireAcceptanceAssemblyComponent,
 		FireDesignDeclareAssemblyComponent,
 		FireDesignDeclareAssemblyHandleComponent,
 	]
