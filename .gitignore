@@ -292,15 +292,15 @@ __pycache__/
 
 
 
-src/indexProject/.DS_Store
-src/indexProject/node_modules/
-src/indexProject/dist/
-src/indexProject/npm-debug.log*
-src/indexProject/yarn-debug.log*
-src/indexProject/yarn-error.log*
-src/indexProject//test/unit/coverage/
-src/indexProject//test/e2e/reports/
-src/indexProject/selenium-debug.log
+/src/indexProject/.DS_Store
+/src/indexProject/node_modules/
+/src/indexProject/dist/
+/src/indexProject/npm-debug.log*
+/src/indexProject/yarn-debug.log*
+/src/indexProject/yarn-error.log*
+/src/indexProject/test/unit/coverage/
+/src/indexProject/test/e2e/reports/
+/src/indexProject/selenium-debug.log
 
 # Editor directories and files
 .idea
