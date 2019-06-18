@@ -10,7 +10,7 @@
         <input type="text" style="width: 300px;" nz-input [(ngModel)]="data.attachmentName" name="attachmentName"
           required>
       </se>
-      <se label="附件上传" required>
+      <se label="表格上传" required>
         <nz-upload [nzFileList]="fileList" nzMultiple nzLimit="1" [nzAction]="uploadUrl" [nzFilter]="filters"
           [nzBeforeUpload]="beforeUpload" [nzRemove]="removeFile">
           <button style="width: 300px;" nz-button><i nz-icon type="upload"

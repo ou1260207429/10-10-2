@@ -7,14 +7,12 @@
   <div nz-col nzSpan="12" style="padding-top: 40px;height: 100%;">
     <form nz-form #f="ngForm" se-container="1">
       <se label="标题名称" required>
-        <input type="text" style="width: 300px;" nz-input [(ngModel)]="data.attachmentName" name="attachmentName"
-          required>
+        <input type="text" style="width: 300px;" nz-input [(ngModel)]="data.attachmentName" name="attachmentName" required>
       </se>
-      <se label="附件上传" required>
+      <se label="表格上传" required>
         <nz-upload [nzFileList]="fileList" nzMultiple nzLimit="1" [nzAction]="uploadUrl" [nzFilter]="filters"
           [nzBeforeUpload]="beforeUpload" [nzRemove]="removeFile">
-          <button style="width: 300px;" nz-button><i nz-icon type="upload"
-              nzTheme="outline"></i><span>上传</span></button>
+          <button style="width: 300px;" nz-button><i nz-icon type="upload" nzTheme="outline"></i><span>上传</span></button>
         </nz-upload>
       </se>
       <se>
