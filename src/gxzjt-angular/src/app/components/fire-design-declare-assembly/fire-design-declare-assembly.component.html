@@ -2,12 +2,20 @@
   <div nz-row *ngIf="data!=''">
     <table class="tables" style="box-sizing: border-box;">
       <thead>
+<<<<<<< HEAD
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+        <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
           <td colspan='20' rowspan='1'>建设工程消防设计审查申报表 </td>
         </tr>
       </thead>
       <tbody>
+<<<<<<< HEAD
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+        <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>建设单位:</td>
           <td rowspan='1' colspan='3'>
             <se error="这是必填项">
@@ -31,7 +39,11 @@
           </td>
         </tr>
 
+<<<<<<< HEAD
          <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+        <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程名称:</td>
           <td rowspan='1' colspan='3'>
             <se error="这是必填项">
@@ -52,7 +64,11 @@
           </td>
         </tr>
 
+<<<<<<< HEAD
          <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+        <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程地址:</td>
           <td rowspan='1' colspan='3'>
             <nz-cascader [nzPlaceHolder]="'请设置工程地址'" [nzSize]="'large'" [nzChangeOnSelect]="true" [nzShowSearch]="true"
@@ -74,7 +90,11 @@
           </td>
         </tr>
 
+<<<<<<< HEAD
          <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+        <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
           <td colspan='3' class="fontweight fontLeft leftTitle" required=true>类别： </td>
           <td colspan="15" style="text-align: left;">
             <nz-radio-group [(ngModel)]="data.projectCategoryId" name="projectCategoryIdA">
@@ -97,7 +117,11 @@
           <td rowspan='1'>联系电话</td>
           <td rowspan='1'>操作</td>
         </tr>
+<<<<<<< HEAD
          <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+        <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>设计单位:</td>
           <td rowspan='1' colspan='5'>
             <se error="这是必填项">
@@ -144,7 +168,11 @@
             <a (click)="deleteArray(data.constructionUnit,a)">删除</a>
           </td>
         </tr>
+<<<<<<< HEAD
          <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+        <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">监理单位:</td>
           <td rowspan='1' colspan='5'><input nz-input placeholder="请输入监理单位"
               [(ngModel)]="data.constructionControlUnit.designUnit" name="constructionControlUnitDesignUnit" /></td>
@@ -161,7 +189,11 @@
           </td>
           <td rowspan='1'>无</td>
         </tr>
+<<<<<<< HEAD
          <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+        <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>审图单位:</td>
           <td rowspan='1' colspan='5'>
             <se error="这是必填项">
@@ -191,7 +223,11 @@
           </td>
           <td rowspan='1'>无</td>
         </tr>
+<<<<<<< HEAD
          <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+        <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>
             审图编号
           </td>
@@ -204,7 +240,11 @@
         </tr>
 
         <!-- 使用性质 -->
+<<<<<<< HEAD
          <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+        <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
           <td colspan='1' class="fontweight fontLeft leftTitle"
             style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true> 使用性质 </td>
           <td colspan='2' class="fontweight fontLeft leftTitle" style="width: 110px;">特殊建设工程:</td>
@@ -219,7 +259,11 @@
           </td>
         </tr>
 
+<<<<<<< HEAD
          <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+        <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
           <td style="width: 37px;background-color: #d0e8fe;color: #5a95e9;font-weight: 600;border-right: 0;"
             [attr.rowspan]="data.basicInformation.length+3" colspan='1' required=true>
             工程基本情况
@@ -236,7 +280,11 @@
           <td colspan='2' rowspan="1" class="fontweight">建筑面积<br />（m<sup>2</sup>）</td>
           <td colspan='1' rowspan="2" class="fontweight">操作</td>
         </tr>
+<<<<<<< HEAD
          <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+        <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
           <td colspan='1' rowspan="1" class="fontweight">地上</td>
           <td colspan='1' rowspan="1" class="fontweight">地下</td>
           <td colspan='1' rowspan="1" class="fontweight">地上</td>
@@ -262,7 +310,11 @@
           <!-- 请输入耐火等级 -->
           <td>
             <se error="这是必填项">
+<<<<<<< HEAD
               <nz-select [(ngModel)]="item.grade" name="jbgrade{{index}}">
+=======
+              <nz-select [(ngModel)]="item.grade" name="jbgrade{{index}}" required>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
                 <nz-option *ngFor="let option of refractoryEnum" [nzLabel]="option.label" [nzValue]="option.value">
                 </nz-option>
               </nz-select>
@@ -310,7 +362,11 @@
         </tr>
 
       <tbody *ngFor="let item of data.storageTank;let index = index">
+<<<<<<< HEAD
          <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+        <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
           <td colspan='1' rowspan="3" class="fontweight fontLeft leftTitle"
             style="width: 36px;background-color: #f8f8f8;text-align: center;">储 罐</td>
           <td colspan='4' class="fontweight fontLeft leftTitle">设置位置</td>
@@ -325,7 +381,11 @@
           <td rowspan="1" colspan='1'>操作</td>
         </tr>
 
+<<<<<<< HEAD
          <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+        <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
           <td colspan='2' class="fontweight fontLeft leftTitle">设置型式</td>
           <td colspan="13" style="text-align: left;">
             浮顶罐(<nz-radio-group [(ngModel)]="item.setupType" name="storagesetupType11{{index}}">
@@ -353,7 +413,11 @@
             <a (click)="deleteArray(data.storageTank,index)">删除</a></td>
         </tr>
 
+<<<<<<< HEAD
          <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+        <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
           <td colspan='4' class="fontweight fontLeft leftTitle">储存形式</td>
           <td rowspan='1' colspan='4'>
             <nz-radio-group [(ngModel)]="item.storageForm" name="storagestorageForm{{index}}"><label
@@ -385,7 +449,11 @@
       </tr>
 
 
+<<<<<<< HEAD
        <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+      <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
         <td colspan='3' rowspan="2" class="fontweight fontLeft leftTitle"
           style="width: 36px;background-color: #f8f8f8;text-align: center;">建筑保温</td>
         <td colspan='3' class="fontweight fontLeft leftTitle">材料类别</td>
@@ -403,7 +471,11 @@
         </td>
       </tr>
 
+<<<<<<< HEAD
        <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+      <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
         <td colspan='3' class="fontweight fontLeft leftTitle">使用性质</td>
         <td rowspan='1' colspan='4'>
           <input nz-input placeholder="请输入使用性质" [(ngModel)]="data.buildingThermalInsulation.useNature"
@@ -416,7 +488,11 @@
         </td>
       </tr>
 
+<<<<<<< HEAD
        <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+      <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
         <td colspan='3' rowspan="3" class="fontweight fontLeft leftTitle"
           style="width: 36px;background-color: #f8f8f8;text-align: center;">装修工程</td>
         <td colspan='3' class="fontweight fontLeft leftTitle">装修部位</td>
@@ -427,7 +503,11 @@
         </td>
       </tr>
 
+<<<<<<< HEAD
        <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+      <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
         <td colspan='3' class="fontweight fontLeft leftTitle">装修面积（m2）</td>
         <td rowspan='1' colspan='4'>
           <input nz-input placeholder="请输入装修面积（m2）" [(ngModel)]="data.decorationProject.decorationArea"
@@ -440,7 +520,11 @@
         </td>
       </tr>
 
+<<<<<<< HEAD
        <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+      <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
         <td colspan='3' class="fontweight fontLeft leftTitle">使用性质</td>
         <td rowspan='1' colspan='4'>
           <input nz-input placeholder="请输入使用性质" [(ngModel)]="data.decorationProject.useNature"
@@ -453,7 +537,11 @@
         </td>
       </tr>
 
+<<<<<<< HEAD
        <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+      <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
         <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
           style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>消防设施</td>
         <td rowspan='1' colspan='14'>
@@ -513,7 +601,11 @@
         </td>
       </tr>
 
+<<<<<<< HEAD
       <tr [ngClass]="{pointerf5f5f5: type == 1}">
+=======
+      <tr>
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
         <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
           style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>审图公司意见</td>
         <td rowspan='1' colspan='14' class="textLeft">

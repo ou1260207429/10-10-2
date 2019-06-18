@@ -6195,7 +6195,10 @@ export interface IAcceptApplyFormDto {
     attachmentItems: AttachmentItem[] | undefined;
     timeLimit: number | undefined;
     timeLimitOfDay: number | undefined;
+<<<<<<< HEAD
     projectId: number | undefined;
+=======
+>>>>>>> 566d6e6937a356bac890bc6fac3cc9d3f13cab55
     projectName: string | undefined;
     completeContent: string | undefined;
 }

@@ -3,7 +3,7 @@ import { SharedModule } from '@shared/shared.module';
 import { FlowRouteComponent } from './flow-route/flow-route.component';
 import { PipesModule } from 'pipes/pipes.module';
 import { CompletedAcceptanceAssemblyComponent } from './completed-acceptance-assembly/completed-acceptance-assembly.component';
-import { FireAcceptanceAssemblyComponent } from './fire-acceptance-assembly/fire-acceptance-assembly.component';
+
 import { FireDesignDeclareAssemblyComponent } from './fire-design-declare-assembly/fire-design-declare-assembly.component';
 import { FireDesignDeclareAssemblyHandleComponent } from './fire-design-declare-assembly-handle/fire-design-declare-assembly-handle.component';
 
@@ -11,7 +11,6 @@ import { FireDesignDeclareAssemblyHandleComponent } from './fire-design-declare-
 	declarations: [
 		FlowRouteComponent,
 		CompletedAcceptanceAssemblyComponent,
-		FireAcceptanceAssemblyComponent,
 		FireDesignDeclareAssemblyComponent,
 		FireDesignDeclareAssemblyHandleComponent,
 	],
@@ -22,14 +21,12 @@ import { FireDesignDeclareAssemblyHandleComponent } from './fire-design-declare-
 	exports: [
 		FlowRouteComponent,
 		CompletedAcceptanceAssemblyComponent,
-		FireAcceptanceAssemblyComponent,
 		FireDesignDeclareAssemblyComponent,
 		FireDesignDeclareAssemblyHandleComponent,
 	],
 	entryComponents: [
 		FlowRouteComponent,
 		CompletedAcceptanceAssemblyComponent,
-		FireAcceptanceAssemblyComponent,
 		FireDesignDeclareAssemblyComponent,
 		FireDesignDeclareAssemblyHandleComponent,
 	]

@@ -71,7 +71,6 @@ export class AgencyDoneDetailsComponent implements OnInit {
   };
 
 
-
   uploading = false;
   fileList: UploadFile[] = [];
 
