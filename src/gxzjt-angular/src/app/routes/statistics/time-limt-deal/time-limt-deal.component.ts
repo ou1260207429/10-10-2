@@ -19,7 +19,7 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
   formResultData = [];
   rangeTime = [];
   param = new HandleLimitQueryDto();
-  cityarray=[
+  cityarray = [
     {
       value: 450100,
       label: "南宁市",
@@ -800,12 +800,14 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     { title: '工程名称', index: 'projectName' },
     { title: '工程编号', index: 'projectCode' },
     { title: '建设单位', index: 'companyName' },
-    { title: '工程类型', index: 'flowPathType',type: 'tag', tag: {
-      1: { text: '消防设计审查', color: '' },
-      2: { text: '消防验收', color: '' },
-      3:{ text: '竣工验收消防备案', color: '' },
+    {
+      title: '工程类型', index: 'flowPathType', type: 'tag', tag: {
+        1: { text: '消防设计审查', color: '' },
+        2: { text: '消防验收', color: '' },
+        3: { text: '竣工验收消防备案', color: '' },
 
-    }},
+      }
+    },
     { title: '当前处理人', index: 'applyName' },
     { title: '流程到达时间', index: 'applyTime' },
     { title: '流程处理时间', index: 'acceptTime' },
@@ -837,16 +839,14 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
   }
 
   refresh() {
-    // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+    this.getList();
   }
   search() {
-    this.param.cityName=this.fliterForm.controls.city.value;
-    this.param.area=this.fliterForm.controls.count.value;
-    this.param.flowPathType=Number(this.fliterForm.controls.proType.value);
-    if(this.param.flowPathType==0){
-      this.param.flowPathType=-1;
+    this.param.cityName = this.fliterForm.controls.city.value;
+    this.param.area = this.fliterForm.controls.count.value;
+    this.param.flowPathType = Number(this.fliterForm.controls.proType.value);
+    if (this.param.flowPathType == 0) {
+      this.param.flowPathType = -1;
     }
     this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
     this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
@@ -925,7 +925,7 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     startTime.setDate(startTime.getDate() - 1)
     this.rangeTime = [startTime, new Date()];
   }
-  cityChange(e){
+  cityChange(e) {
     this.fliterForm = this.formBuilder.group({
       city: [e],
       count: [null],
@@ -935,13 +935,13 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
       dateRange: [this.rangeTime],
 
     });
-    this.countyarray=[]
+    this.countyarray = []
     this.cityarray.forEach(element => {
-    if(element.label==e){
-      this.countyarray=element.children
-    }
+      if (element.label == e) {
+        this.countyarray = element.children
+      }
 
-  });
+    });
 
   }
 }

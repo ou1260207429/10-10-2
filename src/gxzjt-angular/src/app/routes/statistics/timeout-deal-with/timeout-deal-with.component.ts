@@ -111,9 +111,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
   }
 
   refresh() {
-    // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+    this.getList();
   }
   search() {
     this.param.recordNumber=this.fliterForm.controls.proNo.value;
