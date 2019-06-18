@@ -98,7 +98,7 @@ export class SystemHomeComponent implements OnInit {
   }
   GetData() {
     this.data = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 7; i++) {
       if (i % 2 === 0) {
         this.data.push({
           name: '市政建设工程一',
