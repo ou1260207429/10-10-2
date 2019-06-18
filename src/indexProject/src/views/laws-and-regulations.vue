@@ -1,22 +1,23 @@
 <!--  -->
 <template>
-  <div style="width:100%;overflow:hidden;">
+  <div style="width:100%;overflow:hidden;margin-bottom: 20px;">
     <div class="content">
+     
       <div ref="banner">
         <img style="width:100%;" src="../assets/images/法律法规_03.jpg" alt>
       </div>
       <el-row :gutter="16">
         <el-col :span="12">
-          <el-card  v-loading="!lawsList" :style="{minHeight:tableHight}">
+          <el-card v-loading="!lawsList" :style="{minHeight:tableHight}">
             <div style="overflow:hidden;">
-                <p class="tips" style="float: left">
-                  <img src="../assets/images/img_bg_flfg.png" alt>
-                  <span>法律法规</span>
-                </p>
-              </div>
+              <p class="tips" style="float: left">
+                <img src="../assets/images/img_bg_flfg.png" alt>
+                <span>法律法规</span>
+              </p>
+            </div>
             <ul class="listParent">
               <li v-for="(item,index) in lawsList" :key="index" class="list">
-                <router-link :to="'/laws-and-regulations-detail/'+item.id">
+                <router-link :to="'/laws-and-regulations/detail/'+item.id">
                   <div style="overflow: hidden">
                     <span class="title">{{item.title}}</span>
                     <span class="time">{{item.creationTime}}</span>
@@ -30,16 +31,16 @@
           </el-card>
         </el-col>
         <el-col :span="12">
-          <el-card  v-loading="!lawsFiles" :style="{minHeight:tableHight}">
+          <el-card v-loading="!lawsFiles" :style="{minHeight:tableHight}">
             <div style="overflow:hidden;">
-                <p class="tips" style="float: right">
-                  <img src="../assets/images/法律法规_03.png" alt>
-                  <span>规范性文件</span>
-                </p>
-              </div>
+              <p class="tips" style="float: right">
+                <img src="../assets/images/法律法规_03.png" alt>
+                <span>规范性文件</span>
+              </p>
+            </div>
             <ul class="listParent">
               <li v-for="(item,index) in lawsFiles" :key="index" class="list">
-                <router-link :to="'/laws-and-regulations-detail/'+item.id">
+                <router-link :to="'/laws-and-regulations/detail/'+item.id">
                   <div style="overflow: hidden">
                     <span class="title">{{item.title}}</span>
                     <span class="time">{{item.creationTime}}</span>
@@ -64,7 +65,7 @@ import moment from "moment";
 export default {
   data() {
     return {
-      lawsList:null,
+      lawsList: null,
       lawsFiles: null,
       tableHight: "200px"
     };
@@ -75,15 +76,13 @@ export default {
   computed: {},
 
   mounted() {
-    let params1 = Object.assign({ group: "Regulation" }, app.pageSize);
-    this.getlawsList(params1);
-    let params2 = Object.assign({ group: "Normative" }, app.pageSize);
-    this.getlawsList(params2);
+    let params1 = Object.assign(app.pageSize);
+    this.getlawsList(app.pageSize);
     const that = this;
     setTimeout(function() {
       that.tableHight =
         app.clentHeight() - that.$refs.banner.offsetHeight + "px";
-    },100);
+    }, 100);
     window.onresize = function() {
       that.tableHight = app.clentHeight() + "px";
     };
@@ -92,20 +91,20 @@ export default {
   methods: {
     getlawsList(params) {
       let _this = this;
-      _this.lawsList = null;
-      _this.lawsFiles = null;
+      _this.lawsList = [];
+      _this.lawsFiles = [];
       app.post(laws.serach_lawsList, params).then(req => {
         if (req.success) {
           req.result.data.forEach(element => {
             element.creationTime = moment(element.creationTime).format(
               "YYYY-MM-DD hh:mm:ss"
             );
+            if (element.regulationTypeId == "1") {
+              _this.lawsList.push(element);
+            } else if (element.regulationTypeId == "2") {
+              _this.lawsFiles.push(element);
+            }
           });
-          if (params.group == "Normative") {
-            _this.lawsFiles = req.result.data;
-          } else {
-            _this.lawsList = req.result.data;
-          }
         }
       });
     }

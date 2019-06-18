@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div style="width:100%;overflow:hidden;">
+  <div style="width:100%;overflow:hidden;margin-bottom: 20px;">
     <div class="content">
       <div ref="banner">
         <img style="width:100%;" src="../assets/images/表格下载_03.jpg" alt>

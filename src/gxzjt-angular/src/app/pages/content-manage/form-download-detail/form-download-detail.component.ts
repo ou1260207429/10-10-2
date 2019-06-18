@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { _HttpClient } from '@delon/theme';
 import { AttachmentServiceProxy, AttachmentDto } from '@shared/service-proxies/service-proxies';
 import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
+import { filter } from 'rxjs/operators';
+import { PublicServices, UploadFileModel } from 'services/public.services';
 @Component({
   selector: 'app-form-download-detail',
   templateUrl: './form-download-detail.component.html',
@@ -13,20 +14,16 @@ export class FormDownloadDetailComponent implements OnInit {
   //表单对象
   data: any;
   fileList: UploadFile[] = [];
+  uploading = false;
   // acceptType: ".doc,.docx,.xls,.xlsx,.pdf"
-  acceptType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-  uploadUrl: "http://demo.rjtx.net:5001/api/Upload/Upload"
-  uploadParams: {
-    files: any,
-    AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
-    module: "table",
-    sourceId: ""
-  }
+  acceptType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  uploadUrl = "http://demo.rjtx.net:5001/api/Upload/Upload"
+  files = []
+  sourceId: string
   filters: UploadFilter[] = [
     {
       name: 'type',
       fn: (fileList: UploadFile[]) => {
-        console.log(fileList[0].type)
         const filterFiles = fileList.filter(w => ~['application/vnd.openxmlformats-officedocument.wordprocessingml.document'].indexOf(w.type));
         if (filterFiles.length !== fileList.length) {
           this.message.error("上传文件格式不正确，请选择.doc文件");
@@ -36,11 +33,10 @@ export class FormDownloadDetailComponent implements OnInit {
       }
     },
   ];
-  constructor(private _eventEmiter: EventEmiter, private message: NzMessageService, private _attachmentServiceProxy: AttachmentServiceProxy, private _activatedRoute: ActivatedRoute) {
+  constructor(private _publicServices: PublicServices, private _eventEmiter: EventEmiter, private message: NzMessageService, private _attachmentServiceProxy: AttachmentServiceProxy, private _activatedRoute: ActivatedRoute) {
   }
   ngOnInit() {
     this.data = new AttachmentDto();
-    console.log(this.fileList)
   }
   goBack() {
     history.go(-1);
@@ -51,10 +47,26 @@ export class FormDownloadDetailComponent implements OnInit {
    */
   save() {
     this.data.guid = this.createguid();
+    this.sourceId = this.createguid();
+    this.uploadFiles();
     this._attachmentServiceProxy.addAttachmentAsync(this.data).subscribe(data => {
       this.message.success("新增成功");
       this._eventEmiter.emit('init', []);
       this.goBack();
+    })
+  }
+  /**
+   * 上传文件
+   */
+  uploadFiles() {
+    let uploadFileModel: UploadFileModel = {
+      files: this.fileList,
+      sourceId: this.data.guid(),
+      AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
+      module: "table"
+    }
+    this._publicServices.upload(uploadFileModel).subscribe(data => {
+      console.log(data)
     })
   }
 
@@ -76,13 +88,17 @@ export class FormDownloadDetailComponent implements OnInit {
     }
 
     var ret = uuid.join('')
-    console.log(ret);
     return ret
   }
   beforeUpload = (file: UploadFile): boolean => {
+    this.fileList = [file];
     console.log(file)
-    this.fileList = this.fileList.concat(file);
     console.log(this.fileList)
+
     return false;
   };
+  removeFile = (file: UploadFile): boolean => {
+    this.fileList = [];
+    return true;
+  }
 }

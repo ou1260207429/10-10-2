@@ -1,13 +1,13 @@
 <!--  -->
 <template>
-  <div style="width:100%;overflow:hidden;">
+  <div style="width:100%;overflow:hidden;margin-bottom: 20px;">
     <div class="content">
       <el-row>
         <div id="breadcrumb" style="padding:10px 0px;">
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item>建设大厅</el-breadcrumb-item>
             <el-breadcrumb-item>法律法规</el-breadcrumb-item>
-            <el-breadcrumb-item class="breadcrumb">{{data.title}}</el-breadcrumb-item>
+            <el-breadcrumb-item v-if="data" class="breadcrumb">{{data.title}}</el-breadcrumb-item>
           </el-breadcrumb>
         </div>
       </el-row>
@@ -16,10 +16,12 @@
       </div>
       <el-row>
         <el-card v-loading="!data" :style="{minHeight:tableHight}">
-          <h1
+         <div v-if="data">
+            <h1
             style="color:#BD1127FF;text-align:center;padding:20px 0;letter-spacing:3px; box-sizing: border-box;"
           >{{data.title}}</h1>
           <div class="lawContent">{{data.content}}</div>
+         </div>
         </el-card>
       </el-row>
     </div>
@@ -38,23 +40,7 @@ export default {
       searchData: {
         regulationId: null
       },
-      data: {
-        content: "",
-        contentUrl: null,
-        creationTime: null,
-        guid: null,
-        id: 0,
-        issueDate: null,
-        issueOrg: null,
-        lastUpdateTime: null,
-        lastUpdateUserCode: null,
-        lastUpdateUserName: null,
-        regulationCode: null,
-        regulationType: null,
-        regulationTypeId: null,
-        title: null,
-        visitCount: null
-      }
+      data: null
     };
   },
 
@@ -83,6 +69,9 @@ export default {
       app.post(laws.serach_lawsDetail, params).then(req => {
         _this.isLoading = false;
         if (req.success) {
+          if (req.result.content) {
+            req.result.content = req.result.content.replace(/<[^>]+>|&[^>]+;/g, "").trim();
+          }
           _this.data = req.result;
         }
       });

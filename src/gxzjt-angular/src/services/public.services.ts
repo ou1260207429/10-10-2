@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Rx';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PANGBO_SERVICES_URL } from 'infrastructure/expression';
 
@@ -12,8 +12,13 @@ export class PublicServices {
     /**
      * 统一上传
      */
+
     upload(page: UploadFileModel): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + 'api/Upload/Upload', page);
+        return this.http.post(PANGBO_SERVICES_URL + 'api/Upload/Upload', page, {
+            headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+        }
+
+        );
     }
 
 }
