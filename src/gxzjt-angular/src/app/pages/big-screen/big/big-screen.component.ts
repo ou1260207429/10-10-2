@@ -12,7 +12,7 @@ import { _HttpClient } from "@delon/theme";
 export class BigScreenComponent {
     echarts = require('echarts');
 
-    //     percent = 87;
+        percent = 87;
     //     color = '#2f9cff';
 
     clientHeight = 0; //  屏幕可视高度

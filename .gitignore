@@ -292,6 +292,7 @@ __pycache__/
 
 
 
+
 /src/indexProject/.DS_Store
 /src/indexProject/node_modules/
 /src/indexProject/dist/
@@ -309,3 +310,7 @@ __pycache__/
 *.ntvs*
 *.njsproj
 *.sln
+
+
+
+/src/gxzjt-angular/dist/
