@@ -1,5 +1,6 @@
 import { _HttpClient } from '@delon/theme';
 import { Component, OnInit } from '@angular/core';
+import { ProjectFlowServcieServiceProxy } from '@shared/service-proxies/service-proxies';
 
 /**
  * 系统首页
@@ -16,11 +17,13 @@ export class SystemHomeComponent implements OnInit {
   data: any = [{}];
   constructor(
     private http: _HttpClient,
+    private service: ProjectFlowServcieServiceProxy
   ) { }
 
   ngOnInit() {
     this.EchartsMap();
     this.GetData();
+    this.GetProjectFlowIndexTopCount();
   }
   map: any;
   myChart: any;
@@ -115,5 +118,36 @@ export class SystemHomeComponent implements OnInit {
       }
 
     }
+  }
+  // Top数据
+  TopData:any;
+  GetProjectFlowIndexTopCount() {
+    let model: any = {
+      processedStatus: 2,
+      fireAuditStatus: 3,
+      fireCompleteStatus: 2,
+      completeStatus: 3,
+      dateTimeNow: new Date(),
+    }
+    this.service.post_GetProjectFlowIndexTopCount(model).subscribe(res => {
+      this.TopData = res;
+    });
+  }
+  // 超时列表
+  pageIndex = 1;
+  pageSize = 10;
+  GetProjectsTimeout(){
+    let model:any ={
+      processedStatus:'',
+      dateTimeNow:'',
+     
+      sorting:'',
+      skipCount:'',
+      maxResultCount:'',
+    };
+    model.page = this.pageIndex;
+    this.service.post_GetProjectsTimeout(model).subscribe(res=>{
+
+    });
   }
 }

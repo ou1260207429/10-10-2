@@ -207,23 +207,23 @@
 </table> -->
 <div style='height:10%'>
   <nz-card class="TopCard">
-    <span style='display:block;font-size: 30px;color:#F5222D'>14</span>
+    <span style='display:block;font-size: 30px;color:#F5222D'>{{TopData?.processedCount}}</span>
     <span style='display:block;font-size: 16px;;color:#7B7B7B'>待处理事项</span>
   </nz-card>
   <nz-card class="TopCard">
-    <span style='display:block;font-size: 30px;color:#F5222D'>8</span>
+    <span style='display:block;font-size: 30px;color:#F5222D'>{{TopData?.timeoutCount}}</span>
     <span style='display:block;font-size: 16px;;color:#7B7B7B'>超时预警数量</span>
   </nz-card>
   <nz-card class="TopCard">
-    <span style='display:block;font-size: 30px;color:#1A993B'>1285</span>
+    <span style='display:block;font-size: 30px;color:#1A993B'>{{TopData?.fireAuditCount}}</span>
     <span style='display:block;font-size: 16px;;color:#7B7B7B'>消防设计审查数量</span>
   </nz-card>
   <nz-card class="TopCard">
-    <span style='display:block;font-size: 30px;color:#FF7B05'>220</span>
+    <span style='display:block;font-size: 30px;color:#FF7B05'>{{TopData?.fireCompleteCount}}</span>
     <span style='display:block;font-size: 16px;;color:#7B7B7B'>消防竣工验收数量</span>
   </nz-card>
   <nz-card class="TopCard">
-    <span style='display:block;font-size: 30px;color:#2B74D9'>189</span>
+    <span style='display:block;font-size: 30px;color:#2B74D9'>{{TopData?.completeCount}}</span>
     <span style='display:block;font-size: 16px;;color:#7B7B7B'>竣工验收审查数量</span>
   </nz-card>
 </div>
