@@ -3,7 +3,7 @@
   <div style="width:100%;overflow:hidden;">
     <div class="content">
       <el-row>
-        <div style="padding:10px 0px;">
+        <div id="breadcrumb" style="padding:10px 0px;">
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item>建设大厅</el-breadcrumb-item>
             <el-breadcrumb-item>办事指南</el-breadcrumb-item>
@@ -12,17 +12,15 @@
         </div>
       </el-row>
       <el-row>
-        <el-card>
+        <el-card :style="{minHeight:tableHight}">
           <el-row :gutter="10">
-            <el-col :span="17">
+            <el-col :span="17" v-loading="!data">
               <div v-if="data">
                 <h1>{{data.title}}</h1>
                 <p style="text-align: center;color:#A3A3A3">发布日期：{{data.creationTime}}</p>
                 <div style="padding:20px;margin-bottom:50px;">{{data.content}}</div>
               </div>
-              <div v-else style="width:100%;height:300px;position:relative;">
-                <div class="noData">暂无数据</div>
-              </div>
+              <div v-else style="width:100%;height:300px;position:relative;"></div>
             </el-col>
             <el-col :span="7">
               <img style="width:100%;" src="../assets/images/办事指南详情_03.jpg" alt>
@@ -93,6 +91,8 @@ import Vue from "vue";
 export default {
   data() {
     return {
+      tableHight: "450px",
+
       path: "",
       type: "",
       data: null,
@@ -124,8 +124,7 @@ export default {
           Brief:
             " 备案依据：《中华人民共和国消防法》；《建设工程消防监督管理规定》；"
         }
-      ],
-      contentHeight: app.clentHeight
+      ]
     };
   },
 
@@ -144,6 +143,13 @@ export default {
     this.noticeId = this.$route.params.id;
     this.queryData();
     this.initList();
+    const that = this;
+    setTimeout(function() {
+      that.tableHight = app.clentHeight() + "px";
+    }, 100);
+    window.onresize = function() {
+      that.tableHight = app.clentHeight() + "px";
+    };
   },
 
   methods: {
@@ -185,7 +191,7 @@ h1 {
 }
 .tip {
   width: 41%;
-  padding: 8px 0;
+  padding: 5px 0;
   background-size: 100%;
   color: #fff;
   text-align: center;

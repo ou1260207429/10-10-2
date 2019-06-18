@@ -4,40 +4,45 @@
     <div class="content">
       <el-row :gutter="16">
         <el-col :span="12">
-          <div class="comeIn">消防设计审查和验收办事入口</div>
-          <el-card style="min-height:270px;">
-            <div style="overflow:hidden;">
-               <p class="tips" style="float: left">
-                <img src="../assets/images/img_bg_bszn.png" alt="">
-                <span>办事指南</span>
-              </p>
-            </div>
-            <el-row :gutter="50" style="padding:20px 40px;">
-              <el-col
-                class="item"
-                :span="8"
-                :key="index"
-                v-for="(item,index) in handleList"
-                @click="getNoticeDetail('handle',item.type,item.name)"
-              >
-                <router-link
-                  :to="{
+          <div ref="leftTop">
+            <el-card class="comeIn">
+              <img style="width:100%;" src="../assets/images/img_bg_bsrk.png" alt>
+              <p>消防设计审查和验收办事入口</p>
+            </el-card>
+            <el-card style="margin-top:8px;">
+              <div style="overflow:hidden;">
+                <p class="tips" style="float: left">
+                  <img src="../assets/images/img_bg_bszn.png" alt>
+                  <span>办事指南</span>
+                </p>
+              </div>
+              <el-row :gutter="50" style="padding:20px 40px;overflow:hidden;">
+                <el-col
+                  class="item"
+                  :span="8"
+                  :key="index"
+                  v-for="(item,index) in handleList"
+                  @click="getNoticeDetail('handle',item.type,item.name)"
+                >
+                  <router-link
+                    :to="{
          path: '/handling-guid-list-detail/'+item.id, 
       
    }"
-                >
-                  <div class="cardList">
-                    <img :src="item.src" alt>
-                  </div>
-                </router-link>
-                <div>{{item.title}}</div>
-              </el-col>
-            </el-row>
-          </el-card>
-          <el-card nz-card style="margin-top:8px; position: relative;">
+                  >
+                    <div class="cardList">
+                      <img :src="item.src" alt>
+                    </div>
+                  </router-link>
+                  <div>{{item.title}}</div>
+                </el-col>
+              </el-row>
+            </el-card>
+          </div>
+          <el-card :style="{minHeight:leftHeight,marginTop:'8px', position: 'relative'}">
             <div style="overflow:hidden;">
               <p class="tips" style="float: left">
-                <img src="../assets/images/img_bg_flfg.png" alt="">
+                <img src="../assets/images/img_bg_flfg.png" alt>
                 <span>法律法规</span>
               </p>
             </div>
@@ -58,39 +63,41 @@
           </el-card>
         </el-col>
         <el-col :span="12">
-          <el-card style="min-height: 301px; position: relative;">
-            <div style="overflow:hidden">
-              <p class="tips" style="float: right">
-                <img src="../assets/images/img_bg_ggxx.png" alt="">
-                <span>公告信息</span>
-              </p>
-            </div>
-            <el-row :gutter="50" style="padding:20px 40px;" class="listParent">
-              <el-col class="item" :span="8" :key="index" v-for="(item,index) in infoList">
-                <router-link :to="'/announcement-information/'+item.type">
-                  <div class="cardList">
-                    <img :src="infoImg[index]" alt>
-                  </div>
-                </router-link>
+          <el-card style="position: relative;">
+            <div ref="rightTop">
+              <div style="overflow:hidden">
+                <p class="tips" style="float: right">
+                  <img src="../assets/images/img_bg_ggxx.png" alt>
+                  <span>公告信息</span>
+                </p>
+              </div>
+              <el-row :gutter="50" style="padding:15px 40px;" class="listParent">
+                <el-col class="item" :span="8" :key="index" v-for="(item,index) in infoList">
+                  <router-link :to="'/announcement-information/'+item.type">
+                    <div class="cardList">
+                      <img :src="infoImg[index]" alt>
+                    </div>
+                  </router-link>
                   <div>{{item.name}}</div>
-              </el-col>
-            </el-row>
-            <div style="position: absolute;bottom: 0;left: 0;width:100%;">
-              <p class="more">
-                <span>更多 ></span>
-              </p>
+                </el-col>
+              </el-row>
+              <div style="position: absolute;bottom: 0;left: 0;width:100%;">
+                <p class="more">
+                  <span>更多 ></span>
+                </p>
+              </div>
             </div>
           </el-card>
-          <el-card nz-card style="margin-top:8px; position: relative;">
+          <el-card :style="{minHeight:rightHeight,marginTop:'16px', position: 'relative'}">
             <div style="overflow:hidden">
               <p class="tips" style="float: right">
-                <img src="../assets/images/img_bgxz.png" alt="">
+                <img src="../assets/images/img_bgxz.png" alt>
                 <span>表格下载</span>
               </p>
             </div>
-            <div v-if="!lawsList" class="noData">暂无数据</div>
+            <!-- <div v-if="!lawsList" class="noData">暂无数据</div> -->
             <div v-if="lawsList">
-              <div class="listParent" style="padding:20px">
+              <div class="listParent" >
                 <div :key="index" v-for="(item,index) in tableList" class="list">
                   {{ item.attachmentName }}
                   <span style="float: right">{{ item.creationTime }}</span>
@@ -113,9 +120,12 @@
 import { app } from "../assets/js/app";
 import { laws, table, handle } from "../assets/js/apiValue";
 import moment from "moment";
+import { setTimeout } from "timers";
 export default {
   data() {
     return {
+      leftHeight: "200px",
+      rightHeight: "200px",
       lawsList: [],
       tableList: [],
       handleImg: [
@@ -124,24 +134,27 @@ export default {
         require("../assets/images/img_zn_jgys.png")
       ],
       handleList: [
-        // {
-        //   type: "Audit",
-        //   name: "建设工程消防设计审核指南",
-        //   src: require("../assets/images/img_zn_sjsc.png")
-        // },
-        // {
-        //   type: "Acceptance",
-        //   src: require("../assets/images/img_zn_xfys.png"),
-
-        //   name: "建设工程消防验收指南"
-        // },
-        // {
-        //   type: "Record",
-        //   name: "建设工程竣工验收消防备案指南",
-        //   src: require("../assets/images/img_zn_jgys.png")
-        // }
+        {
+          type: "Audit",
+          name: "建设工程消防设计审核指南",
+          src: require("../assets/images/img_zn_sjsc.png")
+        },
+        {
+          type: "Acceptance",
+          src: require("../assets/images/img_zn_xfys.png"),
+          name: "建设工程消防验收指南"
+        },
+        {
+          type: "Record",
+          name: "建设工程竣工验收消防备案指南",
+          src: require("../assets/images/img_zn_jgys.png")
+        }
       ],
-      infoImg:[require("../assets/images/img_xx_sjsc.png"),require("../assets/images/img_xx_xfys.png"), require("../assets/images/img_xx_jgys.png")],
+      infoImg: [
+        require("../assets/images/img_xx_sjsc.png"),
+        require("../assets/images/img_xx_xfys.png"),
+        require("../assets/images/img_xx_jgys.png")
+      ],
       infoList: [
         {
           type: "1",
@@ -167,17 +180,32 @@ export default {
   computed: {},
 
   mounted() {
-    this.getlawsList();
-    this.getTableList();
-    this.initHandleList();
+    const that = this;
+    that.getlawsList();
+    that.getTableList();
+    that.initHandleList();
+    setTimeout(function() {
+      that.initHeight();
+    }, 100);
+    window.onresize = function() {
+      that.initHeight();
+    };
   },
 
   methods: {
+    initHeight(obj) {
+      let _this = this;
+      let resHeight = app.clentHeight();
+      let leftheight = _this.$refs.leftTop.offsetHeight;
+      let rightheight = _this.$refs.rightTop.offsetHeight;
+      _this.leftHeight = (resHeight - leftheight)<200?"210px":(resHeight - leftheight) + "px";
+      _this.rightHeight =(resHeight - rightheight)<350?"350px":(resHeight - rightheight)+ "px";
+    },
     getlawsList() {
       let _this = this;
       app.post(laws.serach_lawsList, app.pageSize).then(req => {
         _this.lawsList = req.result.data;
-        console.log(req);
+        // _this.tabHeight = app.clentHeight();
       });
     },
     getTableList() {
@@ -217,6 +245,7 @@ export default {
             _this.recordList.push(item);
           }
         });
+        _this.tabHeight = app.clentHeight();
       });
     }
   }
@@ -235,18 +264,24 @@ export default {
 
 .comeIn {
   width: 100%;
-  height: 160px;
-  line-height: 160px;
+  box-sizing: border-box;
   font-size: 28px;
   color: #fff;
-  letter-spacing: 4px;
   text-align: center;
-  background: url("../assets/images/img_bg_bsrk.png") no-repeat center;
-  background-size: 100%;
+  position: relative;
   cursor: pointer;
+  overflow: hidden;
+
+  p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -14px;
+    margin-left: -182px;
+  }
 }
-.listParent{
- margin-bottom: 4%;
+.listParent {
+  margin-bottom: 4%;
 }
 .more {
   width: 10%;

@@ -2,18 +2,17 @@
 <template>
   <div style="width:100%;overflow:hidden;">
     <div class="content">
-      <el-row id="banner">
+      <div ref="banner">
         <img style="width:100%;" src="../assets/images/表格下载_03.jpg" alt>
-      </el-row>
+      </div>
       <el-row>
-        <el-card :style="{minHeight:tableHight}">
-          <div v-if="downLoadList.length==0" class="noData">暂无数据</div>
-          <div v-if="downLoadList.length>0">
+        <el-card v-loading="!downLoadList" :style="{minHeight:tableHight}">
+          <div v-if="downLoadList">
             <div nz-row style="padding:20px">
               <div
                 :key="index"
                 v-for="(item,index) in downLoadList"
-                style="background-color:#f7f7f7;padding:5px 30px;margin-bottom: 10px;cursor: pointer;"
+                class="list"
               >
                 {{ item.attachmentName }}
                 <span style="float: right">{{ item.creationTime }}</span>
@@ -33,9 +32,9 @@ import moment from "moment";
 export default {
   data() {
     return {
-       downLoadList: [],
-       tableHight:"450px",
-       };
+      downLoadList: null,
+      tableHight: "100px"
+    };
   },
 
   components: {},
@@ -43,13 +42,21 @@ export default {
   computed: {},
 
   mounted() {
-    this.tableHight = app.clentHeight();
     this.getTableList();
+    const that = this;
+    setTimeout(function() {
+      that.tableHight =
+        app.clentHeight() - that.$refs.banner.offsetHeight + "px";
+    },100);
+    window.onresize = function() {
+      that.tableHight = app.clentHeight() + "px";
+    };
   },
 
   methods: {
     getTableList() {
       let _this = this;
+      this.downLoadList = null;
       app.post(table.search_tableList, app.pageSize).then(req => {
         req.result.data.forEach(element => {
           element.creationTime = moment(element.creationTime).format(
@@ -57,15 +64,12 @@ export default {
           );
         });
         _this.downLoadList = req.result.data;
-      
       });
     },
     /**
      * 下载表格
      */
-    downList(){
-
-    },
+    downList() {}
   }
 };
 </script>

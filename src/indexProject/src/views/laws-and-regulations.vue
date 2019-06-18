@@ -2,18 +2,18 @@
 <template>
   <div style="width:100%;overflow:hidden;">
     <div class="content">
-      <el-row id="banner">
+      <div ref="banner">
         <img style="width:100%;" src="../assets/images/法律法规_03.jpg" alt>
-      </el-row>
+      </div>
       <el-row :gutter="16">
         <el-col :span="12">
-          <el-card :style="{minHeight:tableHight}">
-            <div>
-              <p class="zhinan tip">
-                <span>法律法规</span>
-              </p>
-            </div>
-            <div v-if="!lawsList" class="noData">暂无数据</div>
+          <el-card  v-loading="!lawsList" :style="{minHeight:tableHight}">
+            <div style="overflow:hidden;">
+                <p class="tips" style="float: left">
+                  <img src="../assets/images/img_bg_flfg.png" alt>
+                  <span>法律法规</span>
+                </p>
+              </div>
             <ul class="listParent">
               <li v-for="(item,index) in lawsList" :key="index" class="list">
                 <router-link :to="'/laws-and-regulations-detail/'+item.id">
@@ -30,16 +30,13 @@
           </el-card>
         </el-col>
         <el-col :span="12">
-          <el-card :style="{minHeight:tableHight}">
-            <div style="overflow:hidden">
-              <p
-                class="info tip"
-                style="float: right;background-position: right; text-indent: 48%;"
-              >
-                <span>规范性文件</span>
-              </p>
-            </div>
-            <div v-if="!lawsFiles" class="noData">暂无数据</div>
+          <el-card  v-loading="!lawsFiles" :style="{minHeight:tableHight}">
+            <div style="overflow:hidden;">
+                <p class="tips" style="float: right">
+                  <img src="../assets/images/法律法规_03.png" alt>
+                  <span>规范性文件</span>
+                </p>
+              </div>
             <ul class="listParent">
               <li v-for="(item,index) in lawsFiles" :key="index" class="list">
                 <router-link :to="'/laws-and-regulations-detail/'+item.id">
@@ -67,15 +64,9 @@ import moment from "moment";
 export default {
   data() {
     return {
-      lawsList: [
-        // {
-        //   title: "中华民族共和国消防法",
-        //   creationTime: "2019-02-01 12:12:12",
-        //   issueOrg: "hahahah"
-        // }
-      ],
-      lawsFiles: [],
-      tableHight: "450px"
+      lawsList:null,
+      lawsFiles: null,
+      tableHight: "200px"
     };
   },
 
@@ -86,14 +77,23 @@ export default {
   mounted() {
     let params1 = Object.assign({ group: "Regulation" }, app.pageSize);
     this.getlawsList(params1);
-    this.tableHight = app.clentHeight();
     let params2 = Object.assign({ group: "Normative" }, app.pageSize);
     this.getlawsList(params2);
+    const that = this;
+    setTimeout(function() {
+      that.tableHight =
+        app.clentHeight() - that.$refs.banner.offsetHeight + "px";
+    },100);
+    window.onresize = function() {
+      that.tableHight = app.clentHeight() + "px";
+    };
   },
 
   methods: {
     getlawsList(params) {
       let _this = this;
+      _this.lawsList = null;
+      _this.lawsFiles = null;
       app.post(laws.serach_lawsList, params).then(req => {
         if (req.success) {
           req.result.data.forEach(element => {
@@ -121,7 +121,7 @@ export default {
 }
 .tip {
   width: 32%;
-  padding: 10px 0;
+  padding: 5px 0;
   text-indent: 20%;
   background-repeat: no-repeat;
   background-position: left;

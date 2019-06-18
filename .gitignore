@@ -301,7 +301,7 @@ __pycache__/
 /src/indexProject/test/unit/coverage/
 /src/indexProject/test/e2e/reports/
 /src/indexProject/selenium-debug.log
-
+/src/indexProject/.history
 # Editor directories and files
 .idea
 .vscode

@@ -5,7 +5,7 @@
       <el-row :gutter="8">
         <el-col :span="4" style="background-color: transparent;">
           <div
-            style="background-color: #BD1127FF;color: #fff;font-size: 18px;padding: 6px 0;text-align:center;"
+            style="background-color: #397CC8;color: #fff;font-size: 18px;padding: 6px 0;text-align:center;"
           >公告信息</div>
           <p
             :class="{activeInfo:index+1==searchForm.flowType}"
@@ -16,69 +16,85 @@
           >{{item.name}}</p>
         </el-col>
         <el-col :span="20">
-          <el-card style="padding:20px;">
-            <el-form :inline="true" status-icon ref="searchForm">
-              <el-form-item>
-                <el-select
-                  clearable
-                  size="small"
-                  @change="handleChange"
-                  v-model="searchForm.sheng"
-                  placeholder="请选择（市）"
-                >
-                  <el-option
-                    v-for="(item,index) in shengList"
-                    :key="index"
-                    :label="item.label"
-                    :value="item.value"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item>
-                <el-select clearable size="small" v-model="searchForm.xian" placeholder="请选择（区/县）">
-                  <el-option
-                    v-for="item in xianList"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item>
-                <el-date-picker
-                  :format="'yyyy-MM-dd'"
-                  size="small"
-                  v-model="dateTime"
-                  type="daterange"
-                  range-separator="~"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                ></el-date-picker>
-              </el-form-item>
-              <el-form-item>
-                <el-button
-                  size="small"
-                  style="background-color:#bd1127ff;border-color:#bd1127ff;"
-                  type="primary"
-                  @click="initTable"
-                >提交</el-button>
-              </el-form-item>
-            </el-form>
+          <el-card style="padding:25px;">
+            <div ref="searchForm">
+              <el-form id="search" :inline="true" status-icon>
+                <el-form-item>
+                  <el-select
+                    clearable
+                    size="small"
+                    @change="handleChange"
+                    v-model="searchForm.sheng"
+                    placeholder="请选择（市）"
+                  >
+                    <el-option
+                      v-for="(item,index) in shengList"
+                      :key="index"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item>
+                  <el-select
+                    clearable
+                    size="small"
+                    v-model="searchForm.xian"
+                    placeholder="请选择（区/县）"
+                  >
+                    <el-option
+                      v-for="item in xianList"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item>
+                  <el-date-picker
+                    :format="'yyyy-MM-dd'"
+                    size="small"
+                    v-model="dateTime"
+                    type="daterange"
+                    range-separator="~"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                  ></el-date-picker>
+                </el-form-item>
+                <el-form-item>
+                  <el-button
+                    size="small"
+                    style="background-color:#397CC8;border-color:#397CC8;"
+                    type="primary"
+                    @click="initTable"
+                  >提交</el-button>
+                </el-form-item>
+              </el-form>
+            </div>
           </el-card>
-          <el-card style="min-height:640px;">
-            <el-table :data="tableData" style="width: 100%">
+          <el-card :style="{minHeight:tableHight}">
+            <el-table v-loading="!tableData" :data="tableData" style="width: 100%">
               <template v-for="(item,index) in tableCols">
                 <template v-if="item.key=='recordCode'">
-                <el-table-column v-if="searchForm.flowType==3" :key="index" :prop="item.key" :label="item.label"></el-table-column>
+                  <el-table-column
+                    v-if="searchForm.flowType==3"
+                    :key="index"
+                    :prop="item.key"
+                    :label="item.label"
+                  ></el-table-column>
                 </template>
                 <template v-else-if="item.key=='DocumentCode'">
-                <el-table-column v-if="searchForm.flowType==1||searchForm.flowType==2"   :key="index" :prop="item.key" :label="item.label"></el-table-column>
+                  <el-table-column
+                    v-if="searchForm.flowType==1||searchForm.flowType==2"
+                    :key="index"
+                    :prop="item.key"
+                    :label="item.label"
+                  ></el-table-column>
                 </template>
                 <el-table-column v-else :key="index" :prop="item.key" :label="item.label"></el-table-column>
-                
               </template>
             </el-table>
-            <el-row style="margin-top:20px;">
+            <el-row style="margin-top:40px;margin-bottom:25px;">
               <el-pagination
                 style="float:right;"
                 :page-size="pageSize.size"
@@ -103,6 +119,7 @@ export default {
     return {
       //分页查询条件
       pageSize: app.pageSize,
+      tableHight: "200px",
       //时间
       dateTime: [],
       //
@@ -401,7 +418,7 @@ export default {
       //区、县列表
       xianList: [],
       //表格数据
-      tableData: [],
+      tableData: null,
       //数据总条数
       total: 0,
       //表头数据
@@ -410,7 +427,7 @@ export default {
           key: "Id",
           label: "序号"
         },
-         {
+        {
           key: "recordCode",
           label: "备案编号"
         },
@@ -418,7 +435,7 @@ export default {
           key: "projectName",
           label: "工程名称"
         },
-         {
+        {
           key: "CompanyName",
           label: "单位名称"
         },
@@ -426,11 +443,11 @@ export default {
           key: "address",
           label: "工程地址"
         },
-         {
+        {
           key: "DocumentCode",
           label: "文书编号"
         },
-         {
+        {
           key: "FinishTime",
           label: "办结时间"
         },
@@ -472,6 +489,15 @@ export default {
       this.searchForm.flowType = this.$route.params.id;
     }
     this.initTable();
+    const that = this;
+    setTimeout(function() {
+      that.tableHight =
+        app.clentHeight() - that.$refs.searchForm.offsetHeight + "px";
+    }, 100);
+    window.onresize = function() {
+      that.tableHight =
+        app.clentHeight() - that.$refs.searchForm.offsetHeight + 100 + "px";
+    };
   },
 
   methods: {
@@ -488,7 +514,7 @@ export default {
 
       let _this = this;
       let params = Object.assign(this.searchForm, this.pageSize);
-      _this.tableData = [];
+      _this.tableData = null;
       app.post(infO.SEARCH_INFO, params).then(req => {
         if (req.success) {
           req.result.data.forEach(element => {
@@ -506,6 +532,8 @@ export default {
       this.searchForm.flowType = type;
       app.setData("activeType", type);
       this.initTable();
+      this.tableHight =
+        app.clentHeight() - this.$refs.searchForm.offsetHeight + "px";
     },
     //切换省份查询区/县
     handleChange(value) {
@@ -521,7 +549,6 @@ export default {
      */
     changeCurrent(page) {
       this.pageSize.page = page;
-      console.log(page);
       this.initTable();
     }
   }
@@ -530,6 +557,6 @@ export default {
 <style lang='less' scoped>
 .activeInfo {
   background-color: transparent !important;
-  color: #bd1127ff;
+  color: #397cc8;
 }
 </style>

@@ -17,7 +17,8 @@ import {
   FormItem,
   Cascader,
   DatePicker,
-  Pagination
+  Pagination,
+  Loading
 } from 'element-ui'
 const element = {
   install: function (Vue) {
@@ -39,6 +40,7 @@ const element = {
     Vue.use(Cascader)
     Vue.use(DatePicker)
     Vue.use(Pagination)
+    Vue.use(Loading)
 
 
   }
