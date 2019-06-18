@@ -2,14 +2,13 @@
   <div class="modal-title">查看信息-预警中心</div>
 </div>
 <div sv-container *ngIf="i">
-  <sv label="流程类型">{{ i.pro_type }}</sv>
-  <sv label="工程名称">{{ i.pro_name }}</sv>
-  <sv label="工程编号">{{ i.pro_no }}</sv>
-  <sv label="建设单位">{{ i.org }}</sv>
-  <sv label="节点名称">{{ i.node }}</sv>
-  <sv label="流程发起人">{{ i.person }}</sv>
-  <sv label="申报事件">{{ i.repo_time }}</sv>
-  <sv label="流程到达时间">{{ i.at_time }}</sv>
+  <sv label="流程类型">{{ i.flowPathType }}</sv>
+  <sv label="工程名称">{{ i.projectName }}</sv>
+  <sv label="工程编号">{{ i.projectCode }}</sv>
+  <sv label="建设单位">{{ i.companyName }}</sv>
+  <sv label="流程发起人">{{ i.applyName }}</sv>
+  <sv label="申报时间">{{ i.applyTime }}</sv>
+  <sv label="流程到达时间">{{ i.acceptTime }}</sv>
   <!-- <sv label="数据来源">{{ i.Access==0?'平台获取':'导入获取' }}</sv> -->
 </div>
 <div class="modal-footer">

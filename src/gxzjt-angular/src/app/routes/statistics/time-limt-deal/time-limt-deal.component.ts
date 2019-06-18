@@ -11,20 +11,6 @@ import { StatisticsTimeLimtDealDetailComponent } from '../time-limt-deal-detail/
   styleUrls: ['./time-limt-deal.less']
 })
 export class StatisticsTimeLimtDealComponent implements OnInit {
-  url = [{
-    city: '南宁',
-    area: '桂林',
-    gcname: '西南工程1',
-    gccode: 'xn0005',
-    jsname: '王哈哈',
-    gctype: '教育',
-    dealperson: '王亮',
-    arrtime: '2019-06/15',
-    dealtime: '2019-06/17',
-    cztime: '2015-05-05',
-    cstime: '10',
-
-  }];
   searchKey = '';
   selectedValuePro = "";
   fliterForm: FormGroup;
@@ -32,7 +18,7 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
   formData = {};
   formResultData = [];
   rangeTime = [];
-
+  param = new HandleLimitQueryDto();
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
@@ -54,16 +40,21 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
     },
-    { title: '地市', index: 'city' },
+    { title: '地市', index: 'cityName' },
     { title: '区域', index: 'area' },
-    { title: '工程名称', index: 'gcname' },
-    { title: '工程编号', index: 'gccode' },
-    { title: '建设单位', index: 'jsname' },
-    { title: '工程类型', index: 'gctype' },
-    { title: '当前处理人', index: 'dealperson' },
-    { title: '流程到达时间', index: 'arrtime' },
-    { title: '流程处理时间', index: 'dealtime' },
-    { title: '超时时长', index: 'cstime' },
+    { title: '工程名称', index: 'projectName' },
+    { title: '工程编号', index: 'projectCode' },
+    { title: '建设单位', index: 'companyName' },
+    { title: '工程类型', index: 'flowPathType',type: 'tag', tag: {
+      1: { text: '消防设计审查', color: '' },
+      2: { text: '消防验收', color: '' },
+      3:{ text: '竣工验收消防备案', color: '' },
+
+    }},
+    { title: '当前处理人', index: 'applyName' },
+    { title: '流程到达时间', index: 'applyTime' },
+    { title: '流程处理时间', index: 'acceptTime' },
+    { title: '超时时长', index: 'approvalRemainingTime' },
   ];
 
   constructor(private http: _HttpClient,
@@ -75,6 +66,8 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
   ngOnInit() {
     this.resetTime();
     this.fliterForm = this.formBuilder.group({
+      city: [null],
+      count: [null],
       proNo: [null],
       proName: [null],
       proType: [null],
@@ -94,11 +87,37 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     //   .subscribe(() => this.st.reload());
   }
   search() {
+    this.param.flowPathType=Number(this.fliterForm.controls.proType.value);
+    if(this.param.flowPathType==0){
+      this.param.flowPathType=-1;
+    }
+    this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+    this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
+    this.statisticalServiceServiceProxy.post_GetHandleLimitList(this.param).subscribe((result: any) => {
+      if (result.data) {
+        this.formResultData = result.data;
+      } else {
+        this.formResultData = [];
+      }
+      this.st.reload()
+    }, err => {
+      console.log(err);
+      this.st.reload()
+
+    });
 
   }
 
   resetForm(): void {
-    this.fliterForm.reset();
+    this.fliterForm = this.formBuilder.group({
+      city: [null],
+      count: [null],
+      proNo: [null],
+      proName: [null],
+      proType: [null],
+      dateRange: [this.rangeTime],
+
+    });
   }
 
   addview() {
@@ -121,23 +140,23 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
   // }
   getList() {
 
-    var param = new HandleLimitQueryDto();
-    param.init(
+
+    this.param.init(
 
       {
         "cityName": "",
         "area": "",
         "flowPathType": -1,
-        "startApplyTime": "2019-02-17T08:54:38.985Z",
-        "endApplyTime": "2019-06-17T08:54:38.985Z",
-        "dateTimeNow": "2019-06-17T08:54:38.985Z",
+        "startApplyTime": "2019-01-18T01:16:28.542Z",
+        "endApplyTime": "2019-07-18T01:16:28.543Z",
+        "dateTimeNow": "2019-06-18T01:16:28.543Z",
         "page": 1,
-        "sorting": "",
+        "sorting": "CityName",
         "skipCount": 0,
         "maxResultCount": 10
       });
 
-    this.statisticalServiceServiceProxy.post_GetHandleLimitList(param).subscribe((result: any) => {
+    this.statisticalServiceServiceProxy.post_GetHandleLimitList(this.param).subscribe((result: any) => {
       this.formResultData = result.data;
     }, err => {
       console.log(err);
