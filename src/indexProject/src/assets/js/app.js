@@ -7,13 +7,10 @@ import 'url-search-params-polyfill'
 var app = {
   clentHeight() {
     let clientHeight = document.body.clientHeight;
-    let topHeight = document.getElementById('top').clientHeight;
-    let navHeight = document.getElementById('nav').clientHeight ? document.getElementById('nav').clientHeight : 0;
-    let bannerHeight = 0;
-    if (document.getElementById('banner')) {
-      bannerHeight = document.getElementById('banner').clientHeight == 18 ? 240 : document.getElementById('banner').clientHeight;
-    }
-    let contentHeight = clientHeight - topHeight - navHeight - bannerHeight - 80 + 'px';
+    let topHeight = document.getElementById('top') ? document.getElementById('top').clientHeight : 0;
+    let navHeight = document.getElementById('nav') ? document.getElementById('nav').clientHeight : 0;
+    let breadcrumb = document.getElementById('breadcrumb') ? document.getElementById('breadcrumb').clientHeight : 0;
+    let contentHeight = clientHeight - topHeight - navHeight - breadcrumb - 120;
     return contentHeight;
   },
   pageSize: {
