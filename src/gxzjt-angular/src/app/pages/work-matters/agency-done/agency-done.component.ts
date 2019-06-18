@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { STColumn, STComponent, XlsxService } from '@delon/abc';
+import { STColumn, STComponent, XlsxService, STPage } from '@delon/abc';
 
 
 import { _HttpClient } from '@delon/theme';
@@ -13,22 +13,21 @@ import { Router } from '@angular/router';
 
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 import { FlowServices } from 'services/flow.services';
+import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
+import { timeTrans } from 'infrastructure/regular-expression';
 /**
  * 待办流程
  */
 @Component({
   selector: 'app-agency-done',
-  templateUrl: '../public/public-form.html',
+  templateUrl: 'agency-done.component.html',
   styles: [],
 })
-export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
+export class AgencyDoneComponent  implements OnInit {
 
 
-  searchKey = '';
-
-
-  page = 1;
-
+ 
+  formResultData
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
@@ -42,84 +41,78 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
         },
       ]
     },
-    { title: '表单', index: 'fromName' },
-    { title: '创建人员', index: 'createEName' },
-    { title: '申报时间', index: 'completionTime' },
+    { title: '表单', index: 'companyName' },
+    // { title: '创建人员', index: 'createEName' },
+    { title: '申报时间', index: 'applyTime' },
   ];
 
+  searchParam = new PendingWorkFlow_NodeAuditorRecordDto();
+
+  pageConfig: STPage = publicPageConfig;
+
+  //类型
+  flowPathTypeEnum = FlowPathTypeEnum
+
+  //时间
+  rangeTime
   constructor(private workFlowedServiceProxy: WorkFlowedServiceProxy,
     private _flowServices: FlowServices,
     private router: Router,
     private http: _HttpClient,
     private xlsx: XlsxService) {
-    super();
+
+
   }
 
   ngOnInit() {
-    this.search();
+    this.init()
+  }
+
+  init() {
+    this.searchParam.pagedAndFilteredInputDto = new PagedAndFilteredInputDto();
+    this.searchParam.pagedAndFilteredInputDto.page = 1;
+    this.searchParam.pagedAndFilteredInputDto.maxResultCount = 10;
+    this.getList();
   }
 
 
-
-  refresh() {
-    this.search();
-  }
-
-  search() {
-
-    var searchParam = new PendingWorkFlow_NodeAuditorRecordDto();
-
-
-
-    // var jsonData = {
-    //   "applyTimeStart": this.rangeTime ? this.rangeTime[0] : null,
-    //   "applyTimeEnd": this.rangeTime ? this.rangeTime[1] : new Date(),
-    //   "companyName": this.orgName,
-    //   "projectName": this.proName,
-    //   "pagedAndFilteredInputDto": {
-    //     "filterText": "",
-    //     "page": this.page,
-    //     "sorting": "",
-    //     "skipCount": this.page * this.pageSize,
-    //     "maxResultCount": this.pageSize
-    //   },
-    // };
-
-    // searchParam.init(jsonData);
-    searchParam.pagedAndFilteredInputDto = new PagedAndFilteredInputDto();
-    searchParam.pagedAndFilteredInputDto.page = 1;
-    searchParam.pagedAndFilteredInputDto.maxResultCount = 10;
-    this.isSearchForm = true;
-
-    this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(searchParam).subscribe((data: any) => {
-      console.log(data.data);
-      console.log(data)
+  /**
+   * 获取所有列表
+   * @param TemplateInfoListByClassIdEntity 参数
+   */
+  getList() {
+    this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(this.searchParam).subscribe((data: any) => {
+      this.formResultData = data
+      console.log(this.formResultData)
     })
-    // this._flowServices.tenant_PendingWorkFlow_NodeAuditorRecord(searchParam).subscribe(data => {
-    //   this.formResultData = data.result.data;
-    //   this.isSearchForm = false;
-    // })
+  }
 
+  /**
+   * 点击查询
+   */
+  query() {
+    this.searchParam.pagedAndFilteredInputDto.page = 1; 
+    this.getList();
   }
 
 
   watchItem(item) {
-    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.workFlow_TemplateInfo_Id}/${item.workFlow_Instance_Id}/${item.workFlow_NodeRecord_Id}`]);
+    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.flowId}/${item.flowPathType}`]);
   }
 
-  exportXlsx() {
-    const expData = [this.columns.map(i => i.title)];
+  change(v) {
+    pageOnChange(v, this.searchParam.pagedAndFilteredInputDto, () => {
+      this.getList();
+    })
+  }
 
-    expData.push(['1', '1', '1', '1',]);
-
-    this.xlsx.export({
-      sheets: [
-        {
-          data: expData,
-          name: 'sheet name',
-        },
-      ],
-    });
+  okRangeTime(v){
+    console.log(v); 
+    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')  
+    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')   
+    // this.searchParam.applyTimeStart = applyTimeStart;
+    // this.searchParam.applyTimeEnd = applyTimeEnd;
+    // console.log(applyTimeEnd);
   }
 
 

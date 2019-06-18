@@ -14,18 +14,6 @@ import { StatisticalServiceServiceProxy, ProjectApplyQueryDto } from '@shared/se
   styleUrls: ['./pro-app-static.component.less'],
 })
 export class StatisticsProAppStaticComponent implements OnInit {
-  url = [{
-    jgbh: '10000005',
-    gcname: '西南大厦',
-    jsdanw: '未来科技',
-    lxr: '王哈哈',
-    phone: '13333333',
-    lc: '否',
-    sh: '通过',
-    czr: '操作人A',
-    cztime: '2015-05-05'
-
-  }];
   searchKey = '';
   selectedValuePro = "";
   fliterForm: FormGroup;
@@ -38,6 +26,7 @@ export class StatisticsProAppStaticComponent implements OnInit {
   rangeTime = [];
 
   formData = {};
+  param = new ProjectApplyQueryDto();
 
 
   @ViewChild('st') st: STComponent;
@@ -60,37 +49,43 @@ export class StatisticsProAppStaticComponent implements OnInit {
         {
           text: '受理凭证',
           type: 'modal',
-          modal: {
-            component: StatisticsAcceptCredentialsComponent,
-            paramsName: 'record',
-          },
-          click: (record: any, modal: any) => {
+          // modal: {
+          //   component: StatisticsAcceptCredentialsComponent,
+          //   paramsName: 'record',
+          // },
+          // click: (record: any, modal: any) => {
 
-          },
+          // },
         },
         {
           text: '意见书',
           type: 'modal',
-          modal: {
-            component: StatisticsPositionPaperComponent,
-            paramsName: 'record',
-          },
-          click: (record: any, modal: any) => {
+          // modal: {
+          //   component: StatisticsPositionPaperComponent,
+          //   paramsName: 'record',
+          // },
+          // click: (record: any, modal: any) => {
 
-          },
+          // },
         },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
     },
-    { title: '竣工验收申报编号', index: 'jgbh' },
-    { title: '工程名称', index: 'gcname' },
-    { title: '建设单位', index: 'jsdanw' },
-    { title: '联系人', index: 'lxr' },
-    { title: '联系电话', index: 'phone' },
-    { title: '流程是否超时', index: 'lc' },
-    { title: '审核结果', index: 'sh' },
-    { title: '操作人', index: 'czr' },
-    { title: '操作时间', index: 'cztime' },
+    { title: '竣工验收申报编号', index: 'recordNumber' },
+    { title: '工程名称', index: 'projectName' },
+    { title: '建设单位', index: 'companyName' },
+    { title: '联系人', index: 'contactPerson' },
+    { title: '联系电话', index: 'contactNumber' },
+    { title: '审核结果', index: 'status',type: 'tag', tag: {
+      0: { text: '未处理', color: '' },
+      1: { text: '受理', color: 'green' },
+      2:{ text: '不受理', color: '' },
+      3:{ text: '不合格', color: '' },
+      4:{ text: '合格', color: '' },
+      5:{ text: '未抽中', color: '' },
+    }},
+    { title: '操作人', index: 'acceptUserCode' },
+    { title: '操作时间', index: 'acceptTime' },
   ];
 
   constructor(private http: _HttpClient,
@@ -108,7 +103,7 @@ export class StatisticsProAppStaticComponent implements OnInit {
       proNo: [null],
       proName: [null],
       proType: [null],
-      dateRange: [[this.rangeTime]],
+      dateRange: [this.rangeTime],
 
     });
     this.getList();
@@ -119,16 +114,44 @@ export class StatisticsProAppStaticComponent implements OnInit {
   }
 
   refresh() {
+    this.getList();
+    this.st.reload();
     // this.modal
     //   .createStatic(FormEditComponent, { i: { id: 0 } })
     //   .subscribe(() => this.st.reload());
   }
   search() {
+    this.param.recordNumber=this.fliterForm.controls.proNo.value;
+    this.param.projectName=this.fliterForm.controls.proName.value;
+    this.param.status=this.fliterForm.controls.proType.value;
+    if(this.param.status==null){
+      this.param.status=-1;
+    }
+    this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+    this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
 
+    this.statisticalServiceServiceProxy.post_GetProjectApplyList(this.param).subscribe((result: any) => {
+      if(result.data){
+         this.formResultData = result.data;
+      }else{
+        this.formResultData=[];
+      }
+      this.st.reload()
+    }, err => {
+      console.log(err);
+      this.st.reload()
+
+    });
   }
 
   resetForm(): void {
-    this.fliterForm.reset();
+    this.fliterForm = this.formBuilder.group({
+      proNo: [null],
+      proName: [null],
+      proType: [null],
+      dateRange: [this.rangeTime],
+
+    });
   }
 
 
@@ -158,22 +181,22 @@ export class StatisticsProAppStaticComponent implements OnInit {
   }
   getList() {
 
-    var param = new ProjectApplyQueryDto();
-    param.init(
+
+    this.param.init(
 
       {
         "recordNumber": "",
         "projectName": "",
         "status": -1,
-        "startApplyTime": "2019-06-17T08:52:36.883Z",
-        "endApplyTime": "2019-06-17T08:52:36.883Z",
+        "startApplyTime": "2019-02-17T10:19:49.251Z",
+        "endApplyTime": "2019-06-17T18:19:49.251Z",
         "page": 1,
-        "sorting": "",
+        "sorting": "ProjectName",
         "skipCount": 0,
-        "maxResultCount": 10
+        "maxResultCount": 1000,
       });
 
-    this.statisticalServiceServiceProxy.post_GetProjectApplyList(param).subscribe((result: any) => {
+    this.statisticalServiceServiceProxy.post_GetProjectApplyList(this.param).subscribe((result: any) => {
       this.formResultData = result.data;
     }, err => {
       console.log(err);

@@ -1,69 +1,44 @@
-<!-- <div class="myBox">
-  <div class="boxRight">
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
 
-    <page-header [action]="phActionTpl">
-      <ng-template #phActionTpl>
+    <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
+        type="{{ hiddenFliter?'down':'up'}}"></i>{{ hiddenFliter?'展开条件':'收起条件'}}</button>
+    <button (click)="refresh()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
+    <button (click)="exportXlsx()" nz-button nzType="primary"><i nz-icon type="export"></i>导出</button>
+  </ng-template>
+</page-header>
+<nz-card>
 
-        <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
-            type="{{ hiddenFliter?'down':'up'}}"></i>{{ hiddenFliter?'展开条件':'收起条件'}}</button>
-        <button (click)="refresh()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
-        <button (click)="exportXlsx()" nz-button nzType="primary"><i nz-icon type="export"></i>导出</button>
-      </ng-template>
-    </page-header>
-    <nz-card>
+  <form nz-form class="mb-md" [hidden]="hiddenFliter"> 
 
-      <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
+      <input nz-input [(ngModel)]="searchParam.number"  name="number" placeholder="流程流水号"
+      style="margin-right: 10px;margin-top: 10px;width: 200px;">
 
-        <input nz-input [(ngModel)]="searchKey" formControlName="pro_no" placeholder="流程流水号"
-          style="margin-right: 10px;margin-top: 10px;width: 200px;">
+    <input nz-input [(ngModel)]="searchParam.projectName"  name="projectName" placeholder="工程名称"
+      style="margin-right: 10px;margin-top: 10px;width: 200px;">
 
+    <input nz-input [(ngModel)]="searchParam.companyName" name="flowPathType"  placeholder="建设单位"
+      style="margin-right: 10px;margin-top: 10px;width: 200px;">
 
-        <input [hidden]="useSelect" nz-input [(ngModel)]="proName" formControlName="pro_no" placeholder="工程名称"
-          style="margin-right: 10px;margin-top: 10px;width: 200px;">
-
-        <input [hidden]="useSelect" nz-input [(ngModel)]="orgName" formControlName="org_name" placeholder="建设单位"
-          style="margin-right: 10px;margin-top: 10px;width: 200px;">
-
-        <nz-select [hidden]="!useSelect" style="margin-right: 10px;margin-top: 10px;width: 200px;" nzMode="multiple"
-          [(ngModel)]="selectedPro" nzPlaceHolder="工程名称" nzAllowClear nzShowSearch [nzServerSearch]="true"
-          (nzOnSearch)="onSearchPro($event)" formControlName="pro_name">
-          <ng-container *ngFor="let item of proList">
-            <nz-option *ngIf="!isProSearchLoading" [nzValue]="item.value" [nzLabel]="item.text"></nz-option>
-          </ng-container>
-          <nz-option *ngIf="isProSearchLoading" nzDisabled nzCustomContent>
-            <i nz-icon type="loading" class="loading-icon"></i> 加载中...
-          </nz-option>
-        </nz-select>
-
-        <nz-select [hidden]="!useSelect" style="margin-right: 10px;margin-top: 10px;width: 200px;" nzMode="multiple"
-          [(ngModel)]="selectedOrg" nzPlaceHolder="请选择建设单位" nzAllowClear nzShowSearch [nzServerSearch]="true"
-          (nzOnSearch)="onSearchOrg($event)" formControlName="org_name">
-          <ng-container *ngFor="let item of orgList">
-            <nz-option *ngIf="!isOrgSearchLoading" [nzValue]="item.value" [nzLabel]="item.text"></nz-option>
-          </ng-container>
-          <nz-option *ngIf="isOrgSearchLoading" nzDisabled nzCustomContent>
-            <i nz-icon type="loading" class="loading-icon"></i> 加载中...
-          </nz-option>
-        </nz-select>
+    <nz-select [(ngModel)]="searchParam.flowPathType" name="jbgrade{{index}}" required style="margin-right: 10px;margin-top: 10px;width: 200px;">
+      <nz-option *ngFor="let option of flowPathTypeEnum" [nzLabel]="option.label" [nzValue]="option.value">
+      </nz-option>
+    </nz-select>
 
 
 
+    <nz-range-picker [(ngModel)]="rangeTime" name="rangeTime" nzFormat="yyyy/MM/dd"  
+      style="margin-right: 10px;margin-top: 10px;"  (ngModelChange)="okRangeTime($event)"></nz-range-picker>
 
-        <nz-range-picker [(ngModel)]="rangeTime" nzFormat="yyyy/MM/dd" formControlName="date_range"
-          style="margin-right: 10px;margin-top: 10px;"></nz-range-picker>
+    <button nz-button (click)="init()" style="margin-right: 10px;margin-top: 10px;">重置</button>
 
-        <button nz-button (click)="resetSearchFliterForm()" style="margin-right: 10px;margin-top: 10px;">重置</button>
+    <button nz-button (click)="query()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>
+  </form>
+  <nz-spin [nzSpinning]="!formResultData"></nz-spin>
 
-        <button nz-button (click)="search()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>
-      </form>
-      <st #st [data]="formResultData" [columns]="columns" [loading]="isSearchForm"></st>
-      <br>
-      <nz-pagination [(nzPageIndex)]="page" [nzTotal]="500" nzShowQuickJumper (nzPageIndexChange)="search()"
-        [nzPageSize]="pageSize"></nz-pagination>
-    </nz-card>
-
-    <st *ngIf="data" #st [data]="data.data" [columns]="columns" [page]="pageConfig" [total]="data.total"
-      [pi]="params.page" [ps]="params.pagedAndFilteredInputDto.maxResultCount" (change)="change($event)"></st>
-
-  </div>
-</div> -->
+  <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns" [page]="pageConfig"
+    [total]="formResultData.total" [pi]="searchParam.pagedAndFilteredInputDto.page"
+    [ps]="searchParam.pagedAndFilteredInputDto.maxResultCount" (change)="change($event)" [noResult]=noResult>
+  </st>
+  <br>
+</nz-card>

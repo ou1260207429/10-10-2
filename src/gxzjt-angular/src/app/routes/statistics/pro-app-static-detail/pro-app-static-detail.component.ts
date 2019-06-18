@@ -32,6 +32,7 @@ export class StatisticsProAppStaticDetailComponent implements OnInit {
 
   ngOnInit() {
     this.i = this.record;
+    console.log(this.i);
   }
 
   add() {

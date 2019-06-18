@@ -7,18 +7,19 @@ import { UploadFile } from 'ng-zorro-antd';
 import { PublicServices, UploadFileModel } from 'services/public.services';
 
 /**
- * 消防设计的表单模块
+ * 消防设计的表单模块的办理或者结果
  */
 @Component({
-  selector: 'app-fire-design-declare-assembly',
-  templateUrl: './fire-design-declare-assembly.component.html',
+  selector: 'app-fire-design-declare-assembly-handle',
+  templateUrl: './fire-design-declare-assembly-handle.component.html',
   styles: []
 })
-export class FireDesignDeclareAssemblyComponent implements OnInit {
+export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
 
-  //判断是新增或者办理  0是新增 1是办理
-  @Input() type: number = 0
+  //0是受理凭证  1是合格  2是不合格
+  @Input() type = 0
 
+  //从父页面传来的数据
   @Input() data: any
 
   //市县区
@@ -38,6 +39,21 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
   //判断上传的焦点
   uoloadIndex: number = -1;
+
+
+  //测试
+  simultaneousMaterials = {
+    a1Checkbox: false,
+    a2Input: '',
+    a2Checkbox: false,
+    a5Input: '',
+    a3Checkbox: false,
+    a4Checkbox: false,
+    a5Checkbox: false,
+    complete: '',
+    notGrant: '',
+  }
+
   constructor(public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
   ngOnInit() {

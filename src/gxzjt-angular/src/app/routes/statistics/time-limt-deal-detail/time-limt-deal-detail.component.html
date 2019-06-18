@@ -3,16 +3,16 @@
 </div>
 
 <div sv-container *ngIf="i">
-  <sv label="地市">{{ i.city }}</sv>
+  <sv label="地市">{{ i.cityName }}</sv>
   <sv label="区域">{{ i.area }}</sv>
-  <sv label="工程名称">{{ i.gcname }}</sv>
-  <sv label="工程编号">{{ i.gccode }}</sv>
-  <sv label="建设单位">{{ i.jsname }}</sv>
-  <sv label="工程类型">{{ i.gctype }}</sv>
-  <sv label="当前处理人">{{ i.dealperson }}</sv>
-  <sv label="流程到达时间">{{ i.arrtime }}</sv>
-  <sv label="流程处理时间">{{ i.dealtime }}</sv>
-  <sv label="超时时长">{{ i.cstime }}小时</sv>
+  <sv label="工程名称">{{ i.projectName }}</sv>
+  <sv label="工程编号">{{ i.projectCode }}</sv>
+  <sv label="建设单位">{{ i.companyName }}</sv>
+  <sv label="工程类型">{{ i.flowPathType }}</sv>
+  <sv label="当前处理人">{{ i.applyName }}</sv>
+  <sv label="流程到达时间">{{ i.applyTime }}</sv>
+  <sv label="流程处理时间">{{ i.acceptTime }}</sv>
+  <sv label="超时时长">{{ i.approvalRemainingTime }}小时</sv>
 
   <!-- <sv label="数据来源">{{ i.Access==0?'平台获取':'导入获取' }}</sv> -->
 </div>
