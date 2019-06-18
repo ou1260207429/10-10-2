@@ -14,13 +14,14 @@
       <el-row>
         <el-card :style="{minHeight:tableHight}">
           <el-row :gutter="10">
-            <el-col :span="17" v-loading="!data">
+            <el-col :span="17"  v-loading="!data">
               <div v-if="data">
                 <h1>{{data.title}}</h1>
                 <p style="text-align: center;color:#A3A3A3">发布日期：{{data.creationTime}}</p>
                 <div style="padding:20px;margin-bottom:50px;">{{data.content}}</div>
               </div>
-              <div v-else style="width:100%;height:300px;position:relative;"></div>
+              <div v-else style="width:100%;height:300px;position:relative;">
+              </div>
             </el-col>
             <el-col :span="7">
               <img style="width:100%;" src="../assets/images/办事指南详情_03.jpg" alt>
@@ -146,7 +147,7 @@ export default {
     const that = this;
     setTimeout(function() {
       that.tableHight = app.clentHeight() + "px";
-    }, 100);
+    },100);
     window.onresize = function() {
       that.tableHight = app.clentHeight() + "px";
     };

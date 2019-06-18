@@ -8,7 +8,7 @@
             <div style="overflow:hidden;">
               <p class="tips" style="float: left">
                 <img src="../assets/images/img_bg_bszn.png" alt>
-                <span>行政许可</span>
+                <span>办事指南</span>
               </p>
             </div>
             <ul style="margin-top: 30px;padding-left: 0">
@@ -33,7 +33,7 @@
              <div style="overflow:hidden;">
               <p class="tips" style="float: right">
                 <img src="../assets/images/img_bg_bsznr.png" alt>
-                <span>网上备案</span>
+                <span>办事指南</span>
               </p>
             </div>
             <ul style="margin-top: 10px;padding-left: 0">

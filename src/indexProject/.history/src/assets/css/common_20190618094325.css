@@ -107,13 +107,12 @@ ul {
 }
 
 th .cell {
-  color: #000;
+  color: #397cc8;
 }
 
-.el-breadcrumb {
+.el-breadcrumb{
   font-size: 12px;
 }
-
-.el-card__body {
-  padding: 0 !important;
+.el-card__body{
+  padding: 0!important;
 }

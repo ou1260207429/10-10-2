@@ -5,9 +5,8 @@
       <el-row :gutter="16">
         <el-col :span="12">
           <el-card :style="{minHeight:tableHight}">
-            <div style="overflow:hidden;">
-              <p class="tips" style="float: left">
-                <img src="../assets/images/img_bg_bszn.png" alt>
+            <div>
+              <p class="zhinan tip">
                 <span>行政许可</span>
               </p>
             </div>
@@ -30,9 +29,11 @@
         </el-col>
         <el-col :span="12">
           <el-card :style="{minHeight:tableHight}">
-             <div style="overflow:hidden;">
-              <p class="tips" style="float: right">
-                <img src="../assets/images/img_bg_bsznr.png" alt>
+            <div style="overflow:hidden">
+              <p
+                class="info tip"
+                style="float: right;background-position: right; text-indent: 48%;"
+              >
                 <span>网上备案</span>
               </p>
             </div>
@@ -127,6 +128,9 @@ export default {
 };
 </script>
 <style lang='less' scoped>
+.zhinan {
+  background-image: url("../assets/images/img_bg_bszn.png");
+}
 li {
   margin-top: 30px;
   overflow: hidden;

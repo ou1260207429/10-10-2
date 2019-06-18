@@ -88,14 +88,14 @@
               </div>
             </div>
           </el-card>
-          <el-card :style="{minHeight:rightHeight,marginTop:'16px', position: 'relative'}">
+          <el-card :style="{minHeight:rightHeight,marginTop:'8px', position: 'relative'}">
             <div style="overflow:hidden">
               <p class="tips" style="float: right">
                 <img src="../assets/images/img_bgxz.png" alt>
                 <span>表格下载</span>
               </p>
             </div>
-            <!-- <div v-if="!lawsList" class="noData">暂无数据</div> -->
+            <div v-if="!lawsList" class="noData">暂无数据</div>
             <div v-if="lawsList">
               <div class="listParent" >
                 <div :key="index" v-for="(item,index) in tableList" class="list">

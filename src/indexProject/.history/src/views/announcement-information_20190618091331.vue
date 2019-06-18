@@ -64,7 +64,7 @@
                 <el-form-item>
                   <el-button
                     size="small"
-                    style="background-color:#397CC8;border-color:#397CC8;"
+                    style="background-color:#bd1127ff;border-color:#bd1127ff;"
                     type="primary"
                     @click="initTable"
                   >提交</el-button>
@@ -73,7 +73,7 @@
             </div>
           </el-card>
           <el-card :style="{minHeight:tableHight}">
-            <el-table v-loading="!tableData" :data="tableData" style="width: 100%">
+            <el-table :data="tableData" style="width: 100%">
               <template v-for="(item,index) in tableCols">
                 <template v-if="item.key=='recordCode'">
                   <el-table-column
@@ -418,7 +418,7 @@ export default {
       //区、县列表
       xianList: [],
       //表格数据
-      tableData: null,
+      tableData: [],
       //数据总条数
       total: 0,
       //表头数据
@@ -493,7 +493,7 @@ export default {
     setTimeout(function() {
       that.tableHight =
         app.clentHeight() - that.$refs.searchForm.offsetHeight + "px";
-    }, 100);
+    },100);
     window.onresize = function() {
       that.tableHight =
         app.clentHeight() - that.$refs.searchForm.offsetHeight + 100 + "px";
@@ -514,7 +514,7 @@ export default {
 
       let _this = this;
       let params = Object.assign(this.searchForm, this.pageSize);
-      _this.tableData = null;
+      _this.tableData = [];
       app.post(infO.SEARCH_INFO, params).then(req => {
         if (req.success) {
           req.result.data.forEach(element => {
@@ -534,6 +534,7 @@ export default {
       this.initTable();
       this.tableHight =
         app.clentHeight() - this.$refs.searchForm.offsetHeight + "px";
+      console.log(this.$refs.searchForm.offsetHeight);
     },
     //切换省份查询区/县
     handleChange(value) {
@@ -549,6 +550,7 @@ export default {
      */
     changeCurrent(page) {
       this.pageSize.page = page;
+      console.log(page);
       this.initTable();
     }
   }
@@ -557,6 +559,6 @@ export default {
 <style lang='less' scoped>
 .activeInfo {
   background-color: transparent !important;
-  color: #397cc8;
+  color: #bd1127ff;
 }
 </style>

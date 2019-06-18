@@ -7,13 +7,13 @@
       </div>
       <el-row :gutter="16">
         <el-col :span="12">
-          <el-card  v-loading="!lawsList" :style="{minHeight:tableHight}">
-            <div style="overflow:hidden;">
-                <p class="tips" style="float: left">
-                  <img src="../assets/images/img_bg_flfg.png" alt>
-                  <span>法律法规</span>
-                </p>
-              </div>
+          <el-card :style="{minHeight:tableHight}">
+            <div>
+              <p class="zhinan tip">
+                <span>法律法规</span>
+              </p>
+            </div>
+            <div v-if="!lawsList" class="noData">暂无数据</div>
             <ul class="listParent">
               <li v-for="(item,index) in lawsList" :key="index" class="list">
                 <router-link :to="'/laws-and-regulations-detail/'+item.id">
@@ -30,13 +30,14 @@
           </el-card>
         </el-col>
         <el-col :span="12">
-          <el-card  v-loading="!lawsFiles" :style="{minHeight:tableHight}">
+          <el-card :style="{minHeight:tableHight}">
             <div style="overflow:hidden;">
                 <p class="tips" style="float: right">
                   <img src="../assets/images/法律法规_03.png" alt>
                   <span>规范性文件</span>
                 </p>
               </div>
+            <div v-if="!lawsFiles" class="noData">暂无数据</div>
             <ul class="listParent">
               <li v-for="(item,index) in lawsFiles" :key="index" class="list">
                 <router-link :to="'/laws-and-regulations-detail/'+item.id">
@@ -64,8 +65,14 @@ import moment from "moment";
 export default {
   data() {
     return {
-      lawsList:null,
-      lawsFiles: null,
+      lawsList: [
+        // {
+        //   title: "中华民族共和国消防法",
+        //   creationTime: "2019-02-01 12:12:12",
+        //   issueOrg: "hahahah"
+        // }
+      ],
+      lawsFiles: [],
       tableHight: "200px"
     };
   },
@@ -92,8 +99,6 @@ export default {
   methods: {
     getlawsList(params) {
       let _this = this;
-      _this.lawsList = null;
-      _this.lawsFiles = null;
       app.post(laws.serach_lawsList, params).then(req => {
         if (req.success) {
           req.result.data.forEach(element => {

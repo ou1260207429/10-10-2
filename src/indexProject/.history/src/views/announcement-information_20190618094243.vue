@@ -534,6 +534,7 @@ export default {
       this.initTable();
       this.tableHight =
         app.clentHeight() - this.$refs.searchForm.offsetHeight + "px";
+      console.log(this.$refs.searchForm.offsetHeight);
     },
     //切换省份查询区/县
     handleChange(value) {
@@ -549,6 +550,7 @@ export default {
      */
     changeCurrent(page) {
       this.pageSize.page = page;
+      console.log(page);
       this.initTable();
     }
   }

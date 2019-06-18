@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       tableHight: "200px",
-      isLoading: true,
+      isLoading:true,
       path: "",
       searchData: {
         regulationId: null
@@ -65,11 +65,11 @@ export default {
   mounted() {
     this.searchData.regulationId = this.$route.params.id;
     this.initData();
-    const that = this;
+     const that = this;
     setTimeout(function() {
       that.tableHight =
         app.clentHeight() - that.$refs.banner.offsetHeight + "px";
-    }, 100);
+    },100);
     window.onresize = function() {
       that.tableHight = app.clentHeight() + "px";
     };
@@ -79,9 +79,8 @@ export default {
     initData() {
       let _this = this;
       let params = Object.assign(this.searchData, app.pageSize);
-      _this.isLoading = true;
+      this.isLoading = true;
       app.post(laws.serach_lawsDetail, params).then(req => {
-        _this.isLoading = false;
         if (req.success) {
           _this.data = req.result;
         }

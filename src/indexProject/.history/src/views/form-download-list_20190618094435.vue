@@ -32,7 +32,7 @@ import moment from "moment";
 export default {
   data() {
     return {
-      downLoadList: null,
+      downLoadList: [],
       tableHight: "100px"
     };
   },
@@ -56,7 +56,6 @@ export default {
   methods: {
     getTableList() {
       let _this = this;
-      this.downLoadList = null;
       app.post(table.search_tableList, app.pageSize).then(req => {
         req.result.data.forEach(element => {
           element.creationTime = moment(element.creationTime).format(

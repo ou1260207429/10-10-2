@@ -65,7 +65,7 @@ export default {
   data() {
     return {
       lawsList:null,
-      lawsFiles: null,
+      lawsFiles: [],
       tableHight: "200px"
     };
   },
@@ -92,8 +92,6 @@ export default {
   methods: {
     getlawsList(params) {
       let _this = this;
-      _this.lawsList = null;
-      _this.lawsFiles = null;
       app.post(laws.serach_lawsList, params).then(req => {
         if (req.success) {
           req.result.data.forEach(element => {

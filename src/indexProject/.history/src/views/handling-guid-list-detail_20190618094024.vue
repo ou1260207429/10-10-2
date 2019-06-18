@@ -14,7 +14,7 @@
       <el-row>
         <el-card :style="{minHeight:tableHight}">
           <el-row :gutter="10">
-            <el-col :span="17" v-loading="!data">
+            <el-col :span="17" v-loading="true">
               <div v-if="data">
                 <h1>{{data.title}}</h1>
                 <p style="text-align: center;color:#A3A3A3">发布日期：{{data.creationTime}}</p>

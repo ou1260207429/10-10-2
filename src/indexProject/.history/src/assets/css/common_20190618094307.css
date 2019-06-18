@@ -98,22 +98,21 @@ ul {
 .el-pager li:hover,
 .el-select-dropdown__item.selected,
 .el-date-table .today span {
-  color: #397cc8 !important;
+  color: #BD1127FF !important;
 }
 
 .el-date-table td.start-date span,
 .el-date-table td.end-date span {
-  background-color: #397cc8 !important;
+  background-color: #BD1127FF !important;
 }
 
 th .cell {
   color: #000;
 }
 
-.el-breadcrumb {
+.el-breadcrumb{
   font-size: 12px;
 }
-
-.el-card__body {
-  padding: 0 !important;
+.el-card__body{
+  padding: 0!important;
 }

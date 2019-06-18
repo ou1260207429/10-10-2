@@ -6,8 +6,9 @@
         <img style="width:100%;" src="../assets/images/表格下载_03.jpg" alt>
       </div>
       <el-row>
-        <el-card v-loading="!downLoadList" :style="{minHeight:tableHight}">
-          <div v-if="downLoadList">
+        <el-card :style="{minHeight:tableHight}">
+          <div v-if="downLoadList.length==0" class="noData">暂无数据</div>
+          <div v-if="downLoadList.length>0">
             <div nz-row style="padding:20px">
               <div
                 :key="index"
@@ -32,7 +33,7 @@ import moment from "moment";
 export default {
   data() {
     return {
-      downLoadList: null,
+      downLoadList: [],
       tableHight: "100px"
     };
   },
@@ -56,7 +57,6 @@ export default {
   methods: {
     getTableList() {
       let _this = this;
-      this.downLoadList = null;
       app.post(table.search_tableList, app.pageSize).then(req => {
         req.result.data.forEach(element => {
           element.creationTime = moment(element.creationTime).format(

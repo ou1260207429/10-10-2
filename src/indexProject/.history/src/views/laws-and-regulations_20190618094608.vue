@@ -64,8 +64,14 @@ import moment from "moment";
 export default {
   data() {
     return {
-      lawsList:null,
-      lawsFiles: null,
+      lawsList: [
+        // {
+        //   title: "中华民族共和国消防法",
+        //   creationTime: "2019-02-01 12:12:12",
+        //   issueOrg: "hahahah"
+        // }
+      ],
+      lawsFiles: [],
       tableHight: "200px"
     };
   },
@@ -92,8 +98,6 @@ export default {
   methods: {
     getlawsList(params) {
       let _this = this;
-      _this.lawsList = null;
-      _this.lawsFiles = null;
       app.post(laws.serach_lawsList, params).then(req => {
         if (req.success) {
           req.result.data.forEach(element => {

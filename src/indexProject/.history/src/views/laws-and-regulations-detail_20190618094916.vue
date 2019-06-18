@@ -81,7 +81,7 @@ export default {
       let params = Object.assign(this.searchData, app.pageSize);
       _this.isLoading = true;
       app.post(laws.serach_lawsDetail, params).then(req => {
-        _this.isLoading = false;
+        _this.isLoading = fase;
         if (req.success) {
           _this.data = req.result;
         }

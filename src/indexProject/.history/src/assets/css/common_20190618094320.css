@@ -110,10 +110,9 @@ th .cell {
   color: #000;
 }
 
-.el-breadcrumb {
+.el-breadcrumb{
   font-size: 12px;
 }
-
-.el-card__body {
-  padding: 0 !important;
+.el-card__body{
+  padding: 0!important;
 }

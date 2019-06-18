@@ -16,10 +16,12 @@
       </div>
       <el-row>
         <el-card v-loading="!data" :style="{minHeight:tableHight}">
-          <h1
+         <div v-if="data">
+            <h1
             style="color:#BD1127FF;text-align:center;padding:20px 0;letter-spacing:3px; box-sizing: border-box;"
           >{{data.title}}</h1>
           <div class="lawContent">{{data.content}}</div>
+         </div>
         </el-card>
       </el-row>
     </div>
@@ -33,28 +35,11 @@ export default {
   data() {
     return {
       tableHight: "200px",
-      isLoading: true,
       path: "",
       searchData: {
         regulationId: null
       },
-      data: {
-        content: "",
-        contentUrl: null,
-        creationTime: null,
-        guid: null,
-        id: 0,
-        issueDate: null,
-        issueOrg: null,
-        lastUpdateTime: null,
-        lastUpdateUserCode: null,
-        lastUpdateUserName: null,
-        regulationCode: null,
-        regulationType: null,
-        regulationTypeId: null,
-        title: null,
-        visitCount: null
-      }
+      data: null
     };
   },
 
@@ -65,11 +50,11 @@ export default {
   mounted() {
     this.searchData.regulationId = this.$route.params.id;
     this.initData();
-    const that = this;
+     const that = this;
     setTimeout(function() {
       that.tableHight =
         app.clentHeight() - that.$refs.banner.offsetHeight + "px";
-    }, 100);
+    },100);
     window.onresize = function() {
       that.tableHight = app.clentHeight() + "px";
     };
@@ -78,10 +63,9 @@ export default {
   methods: {
     initData() {
       let _this = this;
+      _this.data = null;
       let params = Object.assign(this.searchData, app.pageSize);
-      _this.isLoading = true;
       app.post(laws.serach_lawsDetail, params).then(req => {
-        _this.isLoading = false;
         if (req.success) {
           _this.data = req.result;
         }
