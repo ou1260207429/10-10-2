@@ -20,7 +20,7 @@ export class PublicServices {
 
 export interface UploadFileModel {
     files: Array<any>,
-    AppId?: string,
+    AppId: string,
     module?: string,
     sourceId?: string,
 }

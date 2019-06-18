@@ -2,7 +2,7 @@ import { PublicModel } from './../../../../infrastructure/public-model';
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { timeTrans } from 'infrastructure/regular-expression';
-import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto } from '@shared/service-proxies/service-proxies';
+import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto, FlowDataDto, ProjectFlowDto } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute } from '@angular/router';
 import { FlowServices, GXZJT_From } from 'services/flow.services';
 import { FormGroup } from '@angular/forms';
@@ -377,10 +377,11 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     })
   }
   save() {
-    debugger
     const from: GXZJT_From = {
-      frow_TemplateInfo_Data: this.data,
-      identify: 'jgys',
+      frow_TemplateInfo_Data: {
+        Area: "450000"
+      },
+      identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {
         applyEID: '10001',
         applyEName: '测试人员',
@@ -388,11 +389,32 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         deptFullPath: '测试部门',
       }
     };
+    this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
+
+      const flowDataDto = new FlowDataDto();
+      flowDataDto.formJson = JSON.stringify(this.data);
+      flowDataDto.projectFlowInfo = new ProjectFlowDto();
 
 
-    this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe(data => {
-      this.message.success('提交成功')
-      history.go(-1)
+      flowDataDto.projectFlowInfo.timeLimit = data.result.timeLimit
+      //类型  消防设计1   消防验收2   消防竣工3 
+      flowDataDto.projectFlowInfo.flowPathType = 3
+
+      flowDataDto.projectFlowInfo.flowNo = data.result.workFlow_Instance_Id
+
+      flowDataDto.projectFlowInfo.currentNodeId = data.result.cur_Node_Id
+      flowDataDto.projectFlowInfo.currentNodeName = data.result.cur_NodeName
+
+      //待审人数组 等后台改模型
+      // currentHandleUserName: string | undefined;
+
+      //待审人数组 等后台改模型
+      // currentHandleUserCode: string | undefined; 
+
+      this._applyService.post_PutOnRecord(flowDataDto).subscribe(data => {
+        this.message.success('提交成功')
+        history.go(-1)
+      })
     })
   }
 

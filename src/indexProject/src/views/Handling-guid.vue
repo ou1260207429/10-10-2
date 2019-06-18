@@ -4,9 +4,10 @@
     <div class="content">
       <el-row :gutter="16">
         <el-col :span="12">
-          <el-card style="min-height:640px;">
-            <div>
-              <p class="zhinan tip">
+          <el-card :style="{minHeight:tableHight}">
+            <div style="overflow:hidden;">
+              <p class="tips" style="float: left">
+                <img src="../assets/images/img_bg_bszn.png" alt>
                 <span>行政许可</span>
               </p>
             </div>
@@ -28,12 +29,10 @@
           </el-card>
         </el-col>
         <el-col :span="12">
-          <el-card style="min-height:640px;">
-            <div style="overflow:hidden">
-              <p
-                class="info tip"
-                style="float: right;background-position: right; text-indent: 48%;"
-              >
+          <el-card :style="{minHeight:tableHight}">
+             <div style="overflow:hidden;">
+              <p class="tips" style="float: right">
+                <img src="../assets/images/img_bg_bsznr.png" alt>
                 <span>网上备案</span>
               </p>
             </div>
@@ -93,16 +92,19 @@ export default {
             " 备案依据：《中华人民共和国消防法》；《建设工程消防监督管理规定》；"
         }
       ],
-       tableHight:"450px",
-
+      tableHight: "450px"
     };
   },
 
   mounted() {
-    this.tableHight = app.clentHeight();
+    const that = this;
     this.initList();
-    console.log(this.tableHight)
-
+    setTimeout(function() {
+      that.tableHight = app.clentHeight() + "px";
+    }, 100);
+    window.onresize = function() {
+      that.tableHight = app.clentHeight() + "px";
+    };
   },
 
   methods: {
@@ -146,13 +148,12 @@ li {
 }
 .tip {
   width: 32%;
-  padding: 10px 0;
+  padding: 5px 0;
   text-indent: 20%;
   background-repeat: no-repeat;
   background-position: left;
   font-size: 22px;
   color: #fff;
-
 }
 .detail {
   width: 63%;

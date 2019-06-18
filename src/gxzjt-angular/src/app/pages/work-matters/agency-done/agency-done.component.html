@@ -1,3 +1,10 @@
+
+<nz-spin [nzSpinning]="!formResultData"></nz-spin>
+
+<st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns" [page]="pageConfig"
+  [total]="formResultData.total" [pi]="searchParam.pagedAndFilteredInputDto.page"
+  [ps]="searchParam.pagedAndFilteredInputDto.maxResultCount" (change)="change($event)" [noResult]=noResult>
+</st>
 <!-- <div class="myBox">
   <div class="boxRight">
 

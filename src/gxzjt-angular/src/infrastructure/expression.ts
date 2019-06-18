@@ -174,8 +174,8 @@ export const ArchitectureTypeEnum = [
 ]
 
 export const AdoptEnum = [
-  { label: '通过', value: '通过' },
-  { label: '不通过', value: '不通过' }
+  { label: '通过', value: true },
+  { label: '不通过', value: false }
 ]
 
 /**

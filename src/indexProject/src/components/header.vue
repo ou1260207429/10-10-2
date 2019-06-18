@@ -28,7 +28,7 @@
         </template>
       </ul>
     </el-row>
-    <el-row v-if="showPath">
+    <el-row v-if="showPath" id="breadcrumb">
       <div style="padding:10px 0px;" class="content">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item>建设大厅</el-breadcrumb-item>
@@ -113,6 +113,7 @@ export default {
   color: #fff;
   letter-spacing: 2px;
   background: url("../assets/images/head-bg.jpg") no-repeat center;
+  background-size: 100%;
 
   .tip {
     padding-top: 20px;
