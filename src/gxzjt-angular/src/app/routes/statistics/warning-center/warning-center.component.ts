@@ -111,7 +111,6 @@ export class StatisticsWarningCenterComponent implements OnInit {
   }
   search() {
     this.param.projectName=this.fliterForm.controls.proName.value;
-    debugger
     this.param.flowPathType=Number(this.fliterForm.controls.proType.value);
     if(this.param.flowPathType==0){
       this.param.flowPathType=-1;

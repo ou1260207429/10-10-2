@@ -49,24 +49,24 @@ export class StatisticsProAppStaticComponent implements OnInit {
         {
           text: '受理凭证',
           type: 'modal',
-          modal: {
-            component: StatisticsAcceptCredentialsComponent,
-            paramsName: 'record',
-          },
-          click: (record: any, modal: any) => {
+          // modal: {
+          //   component: StatisticsAcceptCredentialsComponent,
+          //   paramsName: 'record',
+          // },
+          // click: (record: any, modal: any) => {
 
-          },
+          // },
         },
         {
           text: '意见书',
           type: 'modal',
-          modal: {
-            component: StatisticsPositionPaperComponent,
-            paramsName: 'record',
-          },
-          click: (record: any, modal: any) => {
+          // modal: {
+          //   component: StatisticsPositionPaperComponent,
+          //   paramsName: 'record',
+          // },
+          // click: (record: any, modal: any) => {
 
-          },
+          // },
         },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
