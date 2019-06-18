@@ -6,6 +6,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { StatisticsTimeoutDealDetailComponent } from '../timeout-deal-detail/timeout-deal-detail.component';
 import { StatisticsAcceptCredentialsComponent } from '../accept-credentials/accept-credentials.component';
 import { StatisticsPositionPaperComponent } from '../position-paper/position-paper.component';
+import { StatisticalServiceServiceProxy, TimeoutQuetyDto } from '@shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'app-statistics-timeout-deal-with',
@@ -29,6 +30,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
   selectedValuePro = "";
   fliterForm: FormGroup;
   hiddenFliter = false;
+  formResultData = [];
 
   isAddProducttyepe5 = false;
   submodel = {
@@ -94,6 +96,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
   constructor(private http: _HttpClient,
     private modal: ModalHelper,
     private formBuilder: FormBuilder,
+    private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
     private xlsx: XlsxService) { }
 
   ngOnInit() {
@@ -104,6 +107,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
       dateRange: [[]],
 
     });
+    this.getList();
   }
 
   switchFilter() {
@@ -147,5 +151,30 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
   }
   addview() {
     this.isAddProducttyepe5 = true;
+  }
+  getList() {
+
+    var param = new TimeoutQuetyDto();
+    param.init(
+
+      {
+        "recordNumber": "",
+        "projectName": "",
+        "status": -1,
+        "startApplyTime": "2019-02-17T08:53:21.525Z",
+        "endApplyTime": "2019-06-17T08:53:21.525Z",
+        "dateTimeNow": "2019-06-17T08:53:21.525Z",
+        "page": 1,
+        "sorting": "",
+        "skipCount": 0,
+        "maxResultCount": 10
+      });
+
+    this.statisticalServiceServiceProxy.post_GetTimeoutList(param).subscribe((result: any) => {
+      this.formResultData = result.data;
+    }, err => {
+      console.log(err);
+
+    });
   }
 }
