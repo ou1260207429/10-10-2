@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <div class="modal-title">请选择流程返回的节点</div>
+</div>
+<nz-spin [nzSpinning]="!data">
+
+</nz-spin>
+
+<nz-radio-group [(ngModel)]="radioValue" *ngIf="data">
+  <nz-timeline>
+    <nz-timeline-item *ngFor="let item of data;let index = index">{{item.nodeName}} <label nz-radio
+        nzValue="{{index}}"></label></nz-timeline-item>
+  </nz-timeline>
+</nz-radio-group>
+
+<div class="modal-footer">
+  <button nz-button type="button" (click)="close()">关闭</button>
+  <button nz-button type="button" (click)="save()">提交</button>
+</div>
