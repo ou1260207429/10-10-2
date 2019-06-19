@@ -6,6 +6,7 @@ import { LayoutDefaultComponent } from '../layout/default/layout-default.compone
 import { LayoutFullScreenComponent } from '@layout/fullscreen/fullscreen.component';
 import { IndexDefaultComponent } from '@layout/index-default/index-default.component';
 
+import { ACLGuard, ACLType } from '@delon/acl';
 
 const routes: Routes = [
   // {
@@ -19,25 +20,64 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutDefaultComponent,
-    canActivate: [AppRouteGuard],
+    canActivate: [AppRouteGuard, ACLGuard],
     children: [
 
-      { path: '', loadChildren: './pages/home/home.module#HomeModule' },
+      {
+        path: '', loadChildren: './pages/home/home.module#HomeModule',
+        data: {
+          guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
+        }
+      },
     ],
   },
   {
     path: '',
     component: LayoutDefaultComponent,
     data: { title: '统计', preload: true },
-    canActivate: [AppRouteGuard],
+    canActivate: [AppRouteGuard, ACLGuard],
     children: [
-      { path: 'statistics', loadChildren: './routes/statistics/statistics.module#StatisticsModule', },
-      { path: 'sys-setting', loadChildren: './routes/sys-setting/sys-setting.module#SysSettingModule', },
-      { path: 'permission', loadChildren: './routes/permission/permission.module#PermissionModule', },
-      { path: 'home', loadChildren: './pages/home/home.module#HomeModule' },
-      { path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule' },
-      { path: 'engineering-management', loadChildren: './pages/engineering-management/engineering-management.module#EngineeringManagementModule' },
-      { path: 'content-manage', loadChildren: './pages/content-manage/content-manage.module#ContentManageModule' },
+      {
+        path: 'statistics', loadChildren: './routes/statistics/statistics.module#StatisticsModule',
+        data: {
+          guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
+        }
+      },
+      {
+        path: 'sys-setting', loadChildren: './routes/sys-setting/sys-setting.module#SysSettingModule',
+        data: {
+          guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
+        }
+      },
+      {
+        path: 'permission', loadChildren: './routes/permission/permission.module#PermissionModule',
+        data: {
+          guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
+        }
+      },
+      {
+        path: 'home', loadChildren: './pages/home/home.module#HomeModule',
+        data: {
+          guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
+        }
+      },
+      {
+        path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule', data: {
+          guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
+        }
+      },
+      {
+        path: 'engineering-management',
+        loadChildren: './pages/engineering-management/engineering-management.module#EngineeringManagementModule',
+        data: {
+          guard: <ACLType>{ role: ['sys', 'reg'], mode: 'oneOf' }
+        }
+      },
+      {
+        path: 'content-manage', loadChildren: './pages/content-manage/content-manage.module#ContentManageModule', data: {
+          guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
+        }
+      },
 
     ],
   },

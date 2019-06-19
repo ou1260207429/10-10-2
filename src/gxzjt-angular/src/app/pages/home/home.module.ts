@@ -1,3 +1,4 @@
+import { NgxEchartsModule } from 'ngx-echarts';
 import { HomeRoutingModule } from './home-routing.module';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
@@ -10,7 +11,8 @@ const COMPONENTS_NOROUNT = [
 @NgModule({
   imports: [
     SharedModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    NgxEchartsModule
   ],
   declarations: [
     ...COMPONENTS,

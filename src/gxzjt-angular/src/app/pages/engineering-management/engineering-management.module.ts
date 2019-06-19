@@ -9,6 +9,7 @@ import { AddFireDesignDeclareComponent } from './add-fire-design-declare/add-fir
 import { AddCompletedAcceptanceComponent } from './add-completed-acceptance/add-completed-acceptance.component';
 import { AddFireAcceptanceComponent } from './add-fire-acceptance/add-fire-acceptance.component';
 import { ComponentsModule } from '@app/components/components.module';
+import { FireDesignComponent } from './fire-design/fire-design.component';
 
 
 const COMPONENTS = [];
@@ -16,6 +17,7 @@ const COMPONENTS_NOROUNT = [
   CompletedAcceptanceComponent,
   EngineeringListComponent,
   FireAcceptanceComponent, 
+  FireDesignComponent,
   AddFireDesignDeclareComponent,
   AddCompletedAcceptanceComponent,
   AddFireAcceptanceComponent,

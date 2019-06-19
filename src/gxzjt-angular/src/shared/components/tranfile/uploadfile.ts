@@ -1,13 +1,14 @@
 import { HttpClient, HttpEvent, HttpEventType, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { Component, Input, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, Output } from '@angular/core';
-import { UploadXHRArgs, UploadFile } from 'ng-zorro-antd';
+import { Component, Input, Output } from '@angular/core';
+import { UploadXHRArgs, UploadFile, NzMessageService } from 'ng-zorro-antd';
 // import { forkJoin } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 import { TokenService } from 'abp-ng2-module/dist/src/auth/token.service';
 
 @Component({
     selector: 'nz-rj-upload-file',
     template: `
-    <nz-upload [nzAction]="uploadUrl" [nzCustomRequest]="customReq"  [nzRemove]="remove">
+    <nz-upload [nzAction]="uploadUrl" [nzCustomRequest]="customReq"  [nzRemove]="remove" nzMultiple="true" [nzBeforeUpload]="beforeUpload" [(nzFileList)]="fileList">
       <button nz-button><i nz-icon type="upload"></i><span>点击上传</span></button>
     </nz-upload>
   `,
@@ -15,16 +16,48 @@ import { TokenService } from 'abp-ng2-module/dist/src/auth/token.service';
 })
 export class UploadFileComponent {
     constructor(private http: HttpClient,
+        private msg: NzMessageService,
         private _tokenService: TokenService) { }
 
+
+    @Input()
+    @Output()
+    fileList: any;
+
+    @Input()
+    @Output()
+    nzFileType = "";
+
+
+    @Input()
+    @Output()
+    errMsg = "";
+
+    beforeUpload = (file: File) => {
+
+        if (this.nzFileType != "" && this.nzFileType !== file.type) {
+            this.msg.error(this.errMsg);
+            return false;
+        }
+
+        return true;
+
+    };
+
+
+    @Input()
+    @Output()
     public uploadUrl = "http://demo.rjtx.net:5001/api/Attachment/AttachmentListBySourceId";
     // appId = “9F947774-8CB4-4504-B441-2B9AAEEAF450”
+
     @Input()
     @Output()
     public module: any;
+
     @Input()
     @Output()
     public sourceId: any;
+    
     @Input()
     @Output()
     customReq = (item: UploadXHRArgs) => {
@@ -59,8 +92,12 @@ export class UploadFileComponent {
                     // 处理上传进度条，必须指定 `percent` 属性来表示进度
                     item.onProgress!(event, item.file!);
                 } else if (event instanceof HttpResponse) {
+
+
+
                     // 处理成功
                     item.onSuccess!(event.body, item.file!, event);
+
                 }
             },
             err => {
@@ -69,6 +106,7 @@ export class UploadFileComponent {
             }
         );
     };
+    
     @Input()
     @Output()
     remove = (file: UploadFile) => {

@@ -59,6 +59,8 @@ export class LocalizationService implements AlainI18NService {
         return str.replace(new RegExp(fix, 'g'), replacement);
     };
 
+    languages:any;
+    currentLanguage:any;
     /**
    * 填充数据
    * @param localization

@@ -11,20 +11,19 @@
   
     <form nz-form class="mb-md" [hidden]="hiddenFliter"> 
   
-        <input nz-input [(ngModel)]="searchParam.recordNumber"  name="number" placeholder="流程流水号"
+        <input nz-input [(ngModel)]="param.recordNumber"  name="number" placeholder="流程流水号"
         style="margin-right: 10px;margin-top: 10px;width: 200px;">
   
      
   
-      <input nz-input [(ngModel)]="searchParam.projectName" name="companyName"  placeholder="建设单位"
+      <input nz-input [(ngModel)]="param.projectName" name="companyName"  placeholder="建设单位"
         style="margin-right: 10px;margin-top: 10px;width: 200px;">
 
   
   
   
       <nz-range-picker [(ngModel)]="rangeTime" name="rangeTime" nzFormat="yyyy/MM/dd"  
-        style="margin-right: 10px;margin-top: 10px;"  (ngModelChange)="okRangeTime($event)"></nz-range-picker>
-  
+        style="margin-right: 10px;margin-top: 10px;" ></nz-range-picker>
         <button nz-button (click)="addDeclare()" nzType="primary"  style="margin-right: 10px;margin-top: 10px;">新增申报</button>
       <button nz-button (click)="init()" style="margin-right: 10px;margin-top: 10px;">重置</button>
   
@@ -33,8 +32,8 @@
     <nz-spin [nzSpinning]="!formResultData"></nz-spin>
   
     <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns" [page]="pageConfig"
-      [total]="formResultData.total" [pi]="searchParam.page"
-      [ps]="searchParam.maxResultCount" (change)="change($event)" >
+      [total]="formResultData.total" [pi]="param.page"
+      [ps]="param.maxResultCount" (change)="change($event)" >
     </st>
     <br>
   </nz-card>

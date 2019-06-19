@@ -29,13 +29,10 @@ export class AcceptanceFileServiceProxy {
 
     /**
      * @param projectFlow (optional) 
-     * @param fileCodePrefix (optional) 
      * @return Success
      */
-    createApplyFile(projectFlow: ProjectFlow | null | undefined, fileCodePrefix: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/CreateApplyFile?";
-        if (fileCodePrefix !== undefined)
-            url_ += "fileCodePrefix=" + encodeURIComponent("" + fileCodePrefix) + "&"; 
+    createApplyFile(projectFlow: ProjectFlow | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/CreateApplyFile";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(projectFlow);
@@ -174,64 +171,6 @@ export class AcceptanceFileServiceProxy {
     }
 
     protected processCreateRefuseFile(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param acceptApplyFormDto (optional) 
-     * @param acceptRecordId (optional) 
-     * @param template (optional) 
-     * @return Success
-     */
-    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/AcceptFile?";
-        if (acceptRecordId !== undefined)
-            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
-        if (template !== undefined)
-            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(acceptApplyFormDto);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processAcceptFile(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processAcceptFile(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processAcceptFile(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -394,67 +333,6 @@ export class AcceptanceFileServiceProxy {
     }
 
     protected processCreateQualifiedFile(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param examineFormDto (optional) 
-     * @param acceptRecordId (optional) 
-     * @param template (optional) 
-     * @param attachmentType (optional) 
-     * @return Success
-     */
-    opinionFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/OpinionFile?";
-        if (acceptRecordId !== undefined)
-            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
-        if (template !== undefined)
-            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
-        if (attachmentType !== undefined)
-            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(examineFormDto);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processOpinionFile(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processOpinionFile(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processOpinionFile(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -2116,13 +1994,10 @@ export class InvestigateFileServiceProxy {
 
     /**
      * @param projectFlow (optional) 
-     * @param fileCodePrefix (optional) 
      * @return Success
      */
-    createApplyFile(projectFlow: ProjectFlow | null | undefined, fileCodePrefix: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateApplyFile?";
-        if (fileCodePrefix !== undefined)
-            url_ += "fileCodePrefix=" + encodeURIComponent("" + fileCodePrefix) + "&"; 
+    createApplyFile(projectFlow: ProjectFlow | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateApplyFile";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(projectFlow);
@@ -2280,64 +2155,6 @@ export class InvestigateFileServiceProxy {
     }
 
     /**
-     * @param acceptApplyFormDto (optional) 
-     * @param acceptRecordId (optional) 
-     * @param template (optional) 
-     * @return Success
-     */
-    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/AcceptFile?";
-        if (acceptRecordId !== undefined)
-            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
-        if (template !== undefined)
-            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(acceptApplyFormDto);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processAcceptFile(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processAcceptFile(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processAcceptFile(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
      * @param examineFormDto (optional) 
      * @param acceptRecordId (optional) 
      * @return Success
@@ -2429,67 +2246,6 @@ export class InvestigateFileServiceProxy {
     }
 
     protected processCreateQualifiedFile(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param examineFormDto (optional) 
-     * @param acceptRecordId (optional) 
-     * @param template (optional) 
-     * @param attachmentType (optional) 
-     * @return Success
-     */
-    opinionFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/OpinionFile?";
-        if (acceptRecordId !== undefined)
-            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
-        if (template !== undefined)
-            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
-        if (attachmentType !== undefined)
-            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(examineFormDto);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processOpinionFile(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processOpinionFile(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processOpinionFile(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -3974,13 +3730,10 @@ export class PutOnRecordFileServiceProxy {
 
     /**
      * @param projectFlow (optional) 
-     * @param fileCodePrefix (optional) 
      * @return Success
      */
-    createApplyFile(projectFlow: ProjectFlow | null | undefined, fileCodePrefix: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/CreateApplyFile?";
-        if (fileCodePrefix !== undefined)
-            url_ += "fileCodePrefix=" + encodeURIComponent("" + fileCodePrefix) + "&"; 
+    createApplyFile(projectFlow: ProjectFlow | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/CreateApplyFile";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(projectFlow);
@@ -4193,67 +3946,6 @@ export class PutOnRecordFileServiceProxy {
     }
 
     /**
-     * @param acceptApplyFormDto (optional) 
-     * @param acceptRecordId (optional) 
-     * @param template (optional) 
-     * @param attachmentType (optional) 
-     * @return Success
-     */
-    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/AcceptFile?";
-        if (acceptRecordId !== undefined)
-            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
-        if (template !== undefined)
-            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
-        if (attachmentType !== undefined)
-            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(acceptApplyFormDto);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processAcceptFile(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processAcceptFile(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processAcceptFile(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
      * @param reviewFormDto (optional) 
      * @return Success
      */
@@ -4397,67 +4089,6 @@ export class PutOnRecordFileServiceProxy {
     }
 
     protected processCreateQualifiedFile(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param examineFormDto (optional) 
-     * @param acceptRecordId (optional) 
-     * @param template (optional) 
-     * @param attachmentType (optional) 
-     * @return Success
-     */
-    opinionFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/OpinionFile?";
-        if (acceptRecordId !== undefined)
-            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
-        if (template !== undefined)
-            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
-        if (attachmentType !== undefined)
-            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(examineFormDto);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processOpinionFile(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processOpinionFile(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processOpinionFile(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -8254,7 +7885,6 @@ export interface IAttachmentItem {
 }
 
 export class ReviewFormDto implements IReviewFormDto {
-    fileCodePrefix: string | undefined;
     projectId: number | undefined;
     flowId: number | undefined;
     constructOrg: ProjectCompany | undefined;
@@ -8265,7 +7895,6 @@ export class ReviewFormDto implements IReviewFormDto {
     unqualifiedFileCode: string | undefined;
     situation: string | undefined;
     note: string | undefined;
-    applyName: string | undefined;
     handleUserList: FlowNodeUser[] | undefined;
     timeLimit: number | undefined;
     currentHandleUserName: string | undefined;
@@ -8291,7 +7920,6 @@ export class ReviewFormDto implements IReviewFormDto {
 
     init(data?: any) {
         if (data) {
-            this.fileCodePrefix = data["fileCodePrefix"];
             this.projectId = data["projectId"];
             this.flowId = data["flowId"];
             this.constructOrg = data["constructOrg"] ? ProjectCompany.fromJS(data["constructOrg"]) : <any>undefined;
@@ -8302,7 +7930,6 @@ export class ReviewFormDto implements IReviewFormDto {
             this.unqualifiedFileCode = data["unqualifiedFileCode"];
             this.situation = data["situation"];
             this.note = data["note"];
-            this.applyName = data["applyName"];
             if (data["handleUserList"] && data["handleUserList"].constructor === Array) {
                 this.handleUserList = [];
                 for (let item of data["handleUserList"])
@@ -8332,7 +7959,6 @@ export class ReviewFormDto implements IReviewFormDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["fileCodePrefix"] = this.fileCodePrefix;
         data["projectId"] = this.projectId;
         data["flowId"] = this.flowId;
         data["constructOrg"] = this.constructOrg ? this.constructOrg.toJSON() : <any>undefined;
@@ -8343,7 +7969,6 @@ export class ReviewFormDto implements IReviewFormDto {
         data["unqualifiedFileCode"] = this.unqualifiedFileCode;
         data["situation"] = this.situation;
         data["note"] = this.note;
-        data["applyName"] = this.applyName;
         if (this.handleUserList && this.handleUserList.constructor === Array) {
             data["handleUserList"] = [];
             for (let item of this.handleUserList)
@@ -8373,7 +7998,6 @@ export class ReviewFormDto implements IReviewFormDto {
 }
 
 export interface IReviewFormDto {
-    fileCodePrefix: string | undefined;
     projectId: number | undefined;
     flowId: number | undefined;
     constructOrg: ProjectCompany | undefined;
@@ -8384,7 +8008,6 @@ export interface IReviewFormDto {
     unqualifiedFileCode: string | undefined;
     situation: string | undefined;
     note: string | undefined;
-    applyName: string | undefined;
     handleUserList: FlowNodeUser[] | undefined;
     timeLimit: number | undefined;
     currentHandleUserName: string | undefined;
@@ -8529,7 +8152,6 @@ export class ExamineFormDto implements IExamineFormDto {
     acceptFileCode: string | undefined;
     drawingOrg: ProjectCompany | undefined;
     testingOrg: ProjectCompany | undefined;
-    designOrg: ProjectCompany | undefined;
     nodeAuditorRecordId: number | undefined;
     workFlow_NodeRecord_Id: number | undefined;
     workFlow_Instance_Id: number | undefined;
@@ -8580,7 +8202,6 @@ export class ExamineFormDto implements IExamineFormDto {
             this.acceptFileCode = data["acceptFileCode"];
             this.drawingOrg = data["drawingOrg"] ? ProjectCompany.fromJS(data["drawingOrg"]) : <any>undefined;
             this.testingOrg = data["testingOrg"] ? ProjectCompany.fromJS(data["testingOrg"]) : <any>undefined;
-            this.designOrg = data["designOrg"] ? ProjectCompany.fromJS(data["designOrg"]) : <any>undefined;
             this.nodeAuditorRecordId = data["nodeAuditorRecordId"];
             this.workFlow_NodeRecord_Id = data["workFlow_NodeRecord_Id"];
             this.workFlow_Instance_Id = data["workFlow_Instance_Id"];
@@ -8631,7 +8252,6 @@ export class ExamineFormDto implements IExamineFormDto {
         data["acceptFileCode"] = this.acceptFileCode;
         data["drawingOrg"] = this.drawingOrg ? this.drawingOrg.toJSON() : <any>undefined;
         data["testingOrg"] = this.testingOrg ? this.testingOrg.toJSON() : <any>undefined;
-        data["designOrg"] = this.designOrg ? this.designOrg.toJSON() : <any>undefined;
         data["nodeAuditorRecordId"] = this.nodeAuditorRecordId;
         data["workFlow_NodeRecord_Id"] = this.workFlow_NodeRecord_Id;
         data["workFlow_Instance_Id"] = this.workFlow_Instance_Id;
@@ -8674,7 +8294,6 @@ export interface IExamineFormDto {
     acceptFileCode: string | undefined;
     drawingOrg: ProjectCompany | undefined;
     testingOrg: ProjectCompany | undefined;
-    designOrg: ProjectCompany | undefined;
     nodeAuditorRecordId: number | undefined;
     workFlow_NodeRecord_Id: number | undefined;
     workFlow_Instance_Id: number | undefined;
@@ -9409,7 +9028,6 @@ export class FlowDataDto implements IFlowDataDto {
     projectFlowInfo: ProjectFlowDto | undefined;
     luckNo: number | undefined;
     handleUserList: FlowNodeUser[] | undefined;
-    fileCodePrefix: string | undefined;
 
     constructor(data?: IFlowDataDto) {
         if (data) {
@@ -9431,7 +9049,6 @@ export class FlowDataDto implements IFlowDataDto {
                 for (let item of data["handleUserList"])
                     this.handleUserList.push(FlowNodeUser.fromJS(item));
             }
-            this.fileCodePrefix = data["fileCodePrefix"];
         }
     }
 
@@ -9453,7 +9070,6 @@ export class FlowDataDto implements IFlowDataDto {
             for (let item of this.handleUserList)
                 data["handleUserList"].push(item.toJSON());
         }
-        data["fileCodePrefix"] = this.fileCodePrefix;
         return data; 
     }
 
@@ -9471,7 +9087,6 @@ export interface IFlowDataDto {
     projectFlowInfo: ProjectFlowDto | undefined;
     luckNo: number | undefined;
     handleUserList: FlowNodeUser[] | undefined;
-    fileCodePrefix: string | undefined;
 }
 
 export class ProjectFlowDto implements IProjectFlowDto {

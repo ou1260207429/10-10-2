@@ -15,6 +15,7 @@ import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import { timeTrans } from 'infrastructure/regular-expression';
 import { PublicFormComponent } from '../public/public-form.component';
+import * as moment from 'moment';
 
 /**
  * 消防验收
@@ -54,7 +55,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
   flowPathTypeEnum = FlowPathTypeEnum
 
   //时间
-  rangeTime
+  rangeTime = ['2019-02-19T05:46:09.135Z','2019-06-19T05:46:09.135Z'];
   constructor(private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
     private _flowServices: FlowServices,
     private router: Router,
@@ -74,6 +75,8 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     this.searchParam.maxResultCount = 10;
     this.searchParam.flowPathType = 2 
     this.searchParam.sorting = 'ProjectName';
+    this.searchParam.startApplyTime = moment(this.rangeTime[0])
+    this.searchParam.endApplyTime =moment(this.rangeTime[1])  
     this.getList();
   }
 
@@ -94,27 +97,20 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
    */
   query() {
     this.searchParam.page = 1; 
+    this.searchParam.startApplyTime = moment(this.rangeTime[0])
+    this.searchParam.endApplyTime =moment(this.rangeTime[1])  
     this.getList();
   }
 
 
   watchItem(item) {
-    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.flowId}/${item.flowPathType}`]);
+    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`]);
   }
 
   change(v) {
     pageOnChange(v, this.searchParam, () => {
       this.getList();
     })
-  }
-
-  okRangeTime(v){
-    console.log(v); 
-    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')  
-    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')   
-    // this.searchParam.applyTimeStart = applyTimeStart;
-    // this.searchParam.applyTimeEnd = applyTimeEnd;
-    // console.log(applyTimeEnd);
   }
 
   /**

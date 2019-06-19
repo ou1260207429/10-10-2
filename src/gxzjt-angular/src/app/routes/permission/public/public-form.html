@@ -4,13 +4,14 @@
     <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
         type="{{ hiddenFliter?'down':'up'}}"></i>{{ hiddenFliter?'展开条件':'收起条件'}}</button>
     <button (click)="refresh()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
-    <button *ngIf="needAdd" (click)="add()" nz-button nzType="primary"><i nz-icon type="add"></i>添加</button>
+    <button *ngIf="needAdd" (click)="add()" nz-button nzType="primary"><i nz-icon type="plus"></i>添加</button>
     <button *ngIf="needInport" (click)="inportXlsx()" nz-button nzType="primary"><i nz-icon
         type="inport"></i>导入</button>
     <button *ngIf="needRxport" (click)="exportXlsx()" nz-button nzType="primary"><i nz-icon
         type="export"></i>导出</button>
   </ng-template>
-  <!-- <nz-rj-upload-file></nz-rj-upload-file> -->
+  <!-- <nz-rj-upload-file #upload1></nz-rj-upload-file> -->
+  <!-- <nz-rj-upload-file #upload2></nz-rj-upload-file> -->
 </page-header>
 <nz-card>
 

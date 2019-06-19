@@ -24,6 +24,10 @@ export class SystemHomeComponent implements OnInit {
     this.EchartsMap();
     this.GetData();
     this.GetProjectFlowIndexTopCount();
+    this.GetProjectsTimeout();
+    this.GetProjectFlowDataStatisticsType1();
+    this.GetProjectFlowDataStatisticsType2();
+    this.GetProjectFlowDataStatisticsType3();
   }
   map: any;
   myChart: any;
@@ -39,7 +43,8 @@ export class SystemHomeComponent implements OnInit {
           realtime: false,
           calculable: true,
           inRange: {
-            color: ['#469ffb', '#42a5fc', '#24cbff', '#5b54e6', '#5142cc', '#494bda', '#d0b210', '#6b249a', '#6728a1', '#6b2499',]
+            // color: ['#469ffb', '#42a5fc', '#24cbff', '#5b54e6', '#5142cc', '#494bda', '#d0b210', '#6b249a', '#6728a1', '#6b2499',]
+            color: ['#90ccff', '#2f98ff', '#074ec1']
           },
           textStyle: {
             color: '#fff',
@@ -120,7 +125,7 @@ export class SystemHomeComponent implements OnInit {
     }
   }
   // Top数据
-  TopData:any;
+  TopData: any;
   GetProjectFlowIndexTopCount() {
     let model: any = {
       processedStatus: 2,
@@ -135,19 +140,181 @@ export class SystemHomeComponent implements OnInit {
   }
   // 超时列表
   pageIndex = 1;
-  pageSize = 10;
-  GetProjectsTimeout(){
-    let model:any ={
-      processedStatus:'',
-      dateTimeNow:'',
-     
-      sorting:'',
-      skipCount:'',
-      maxResultCount:'',
+  pageSize = 7;
+  TimeOutData: any;
+  GetProjectsTimeout() {
+    let model: any = {
+      processedStatus: 2,
+      dateTimeNow: new Date(),
+      sorting: 'ProjectId',
+      skipCount: 0,
+      page: 0,
+      maxResultCount: 0,
     };
     model.page = this.pageIndex;
-    this.service.post_GetProjectsTimeout(model).subscribe(res=>{
-
+    model.maxResultCount = this.pageSize;
+    this.service.post_GetProjectsTimeout(model).subscribe(res => {
+      this.TimeOutData = res.data;
     });
+  }
+  PageIndexChange(e){
+    this.pageIndex  = e;
+    this.GetProjectsTimeout();
+  }
+  fireAuditData;
+  // 消防设计审查申报数量统计
+  // currentMonthCount1:any;
+  // currentWeekCount1:any;
+  // comparedMonthRate1:any;
+  // comparedWeekRate1:any;
+  FlowData1:any;
+  GetProjectFlowDataStatisticsType1() {
+    let model: any = {
+      stateDate: new Date(),
+      statisticsType: 1
+    }
+    this.service.post_GetProjectFlowDataStatistics(model).subscribe(res => {
+      const Xdata = [];
+      const YData = [];
+      this.FlowData1 = res;
+      res.items.forEach(e => {
+        Xdata.push(new Date(e.dayTime).getMonth() + 1 + '-' + new Date(e.dayTime).getDate());
+        YData.push(e.dayCount);
+      });
+      this.Line1(Xdata, YData);
+    });
+  }
+  // 消防竣工验收数量统计
+  FlowData2:any;
+  GetProjectFlowDataStatisticsType2() {
+    let model: any = {
+      stateDate: new Date(),
+      statisticsType: 2
+    }
+    this.service.post_GetProjectFlowDataStatistics(model).subscribe(res => {
+      const Xdata = [];
+      const YData = [];
+      this.FlowData2 = res;
+      res.items.forEach(e => {
+        Xdata.push(new Date(e.dayTime).getMonth() + 1 + '-' + new Date(e.dayTime).getDate());
+        YData.push(e.dayCount);
+      });
+      this.Line2(Xdata, YData);
+    });
+  }
+  // 竣工验收备案数量统计
+  FlowData3:any;
+  GetProjectFlowDataStatisticsType3() {
+    let model: any = {
+      stateDate: new Date(),
+      statisticsType: 3
+    }
+    this.service.post_GetProjectFlowDataStatistics(model).subscribe(res => {
+      const Xdata = [];
+      const YData = [];
+      this.FlowData3 = res;
+      res.items.forEach(e => {
+        Xdata.push(new Date(e.dayTime).getMonth() + 1 + '-' + new Date(e.dayTime).getDate());
+        YData.push(e.dayCount);
+      });
+      this.Line3(Xdata, YData);
+    });
+  }
+  option1: any;
+  option2: any;
+  option3: any;
+  Line1(Xdata, YData) {
+    this.option1 = {
+      title: {
+        text: '近一周消防设计审查申报统计',
+        textStyle: {
+          fontSize: 14,
+        },
+        padding: [10, 0, 0, 0]
+    },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: Xdata
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [{
+        data: YData,
+        type: 'line',
+        label: {
+          normal: {
+            show: true,
+            position: 'inside',
+            color: '#000'
+          }
+        },
+        areaStyle: {}
+      }]
+    };
+  }
+  Line2(Xdata, YData) {
+    this.option2 = {
+      title: {
+        text: '近一周消防竣工验收申报统计',
+        textStyle: {
+          fontSize: 14,
+        },
+        padding: [10, 0, 0, 0]
+    },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: Xdata
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [{
+        data: YData,
+        type: 'line',
+        label: {
+          normal: {
+            show: true,
+            position: 'inside',
+            color: '#000'
+          }
+        },
+        areaStyle: {}
+      }]
+    };
+  }
+  Line3(Xdata, YData) {
+    
+    this.option3 = {
+      title: {
+        text: '近一周竣工验收备案申报统计',
+        textStyle: {
+          fontSize: 14,
+        },
+        padding: [10, 0, 0, 0]
+    },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: Xdata
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [{
+        data: YData,
+        type: 'line',
+        label: {
+          normal: {
+            show: true,
+            position: 'inside',
+            color: '#000'
+          }
+        },
+        areaStyle: {}
+      }]
+    };
   }
 }
