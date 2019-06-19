@@ -37,12 +37,12 @@
               <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-lock" nzHasFeedback>
                 <input nz-input name="password" #password="ngModel"
                   [(ngModel)]="loginService.authenticateModel.password" placeholder="请输入密码" type="password" required
-                  maxlength="32" minlength="6">
+                  maxlength="18" minlength="8">
               </nz-input-group>
               <nz-form-explain *ngIf="password.control.dirty&&password.control.errors">
 
                 <ng-container>
-                  请输入6-32位密码!</ng-container>
+                  请输入8-18位密码!</ng-container>
               </nz-form-explain>
             </nz-form-control>
           </nz-form-item>
