@@ -86,13 +86,12 @@ export class AppSessionService {
                 break
               case '企业用户':
                 this._ACLService.setRole(['reg']);
-                this._DelonACLConfig.guard_url = '/app/engineering-management/engineeringListComponent';
-
+                // this._DelonACLConfig.guard_url = '#/app/engineering-management/engineeringListComponent';
 
                 break
               default:
                 this._ACLService.setRole(['reg']);
-                this._DelonACLConfig.guard_url = '/app/engineering-management/engineeringListComponent';
+                // this._DelonACLConfig.guard_url = '#/app/engineering-management/engineeringListComponent';
 
 
                 break;
