@@ -27,7 +27,7 @@ const routes: Routes = [
     data: { title: '待办流程' },
   },
   {
-    path: 'agencyDoneDetailsComponent/:flowNo/:flowId/:flowPathType',
+    path: 'agencyDoneDetailsComponent/:flowNo/:flowId/:flowPathType/:operationType',
     component: AgencyDoneDetailsComponent,
     data: { title: '待办流程详情' },
   },

@@ -179,6 +179,15 @@ export const AdoptEnum = [
 ]
 
 /**
+ * 单位类型
+ */
+export const  FlowPathTypeEnum = [
+  { label: '消防设计审查', value: 1 },
+  { label: '消防验收', value: 2 },
+  { label: '竣工验收消防备案', value: 3 }, 
+]
+
+/**
  * 市县区的json 
  */
 export const OptionsEnum = [

@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div style="width:100%;overflow:hidden;">
+ <div style="width:100%;overflow:hidden;margin-bottom: 20px;">
     <div class="content">
       <el-row :gutter="8">
         <el-col :span="4" style="background-color: transparent;">

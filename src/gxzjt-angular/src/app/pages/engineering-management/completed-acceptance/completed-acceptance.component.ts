@@ -1,14 +1,21 @@
-import { FlowServices } from './../../../../services/flow.services';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { STColumn, STPage, STComponent } from '@delon/abc';
-import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
+import { STColumn, STComponent, XlsxService, STPage } from '@delon/abc';
+
+
+import { _HttpClient } from '@delon/theme';
+
+
+import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, DataSourceResult, PagedAndFilteredInputDto, ProjectFlowServcieServiceProxy, FireAuditCompleteQueryDto } from '@shared/service-proxies/service-proxies'
+
+
 import { Router } from '@angular/router';
-import { EventEmiter } from 'infrastructure/eventEmiter';
-import { AppConsts } from '@shared/AppConsts';
-import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, PagedAndFilteredInputDto } from '@shared/service-proxies/service-proxies';
 
-
-
+import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
+import { FlowServices } from 'services/flow.services';
+import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
+import { timeTrans } from 'infrastructure/regular-expression';
+import * as moment from 'moment';
+import { PublicFormComponent } from '../public/public-form.component';
 /**
  * 竣工验收
  */
@@ -17,94 +24,68 @@ import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, PagedAndF
   templateUrl: './completed-acceptance.component.html',
   styles: []
 })
-export class CompletedAcceptanceComponent implements OnInit {
+export class CompletedAcceptanceComponent extends PublicFormComponent implements OnInit {
+  
+  formResultData;
+
   @ViewChild('st') st: STComponent;
-  params: PendingWorkFlow_NodeAuditorRecordDto
-  data;
   columns: STColumn[] = [
     {
-      title: '操作', className: 'text-center', buttons: [
+      title: '操作',
+      buttons: [
         {
-          text: '<font class="stButton">详情</font>', click: (record: any) => {
-            this.router.navigate([`/app/engineering-management/addCompletedAcceptanceComponent/2/${record.projectId}`]);
-          }
-        },
-        {
-          text: '<font class="stButton">受理凭证</font>', click: (record: any) => {
-
-          }
-        },
-        {
-          text: '<font class="stButton">意见书</font>', click: (record: any) => {
-
+          text: '执行', click: (item: any) => {
+            this.watchItem(item);
           }
         },
       ]
     },
-    { title: '工程编号', index: 'projectCode' },
-    { title: '工程名称', index: 'projectName' },
-    { title: '表单名称', index: 'name' },
-    { title: '创建人单位', index: 'companyName' },
-    { title: '创建人名', index: 'createEName' },
-    {
-      title: '申请时间', index: 'applyTime', type: 'date'
-    },
-
+    { title: '表单', index: 'companyName' },
+    // { title: '创建人员', index: 'createEName' },
+    { title: '申报时间', index: 'applyTime' },
   ];
+
+  searchParam = new FireAuditCompleteQueryDto();
+
   pageConfig: STPage = publicPageConfig;
-  constructor(private _workFlowedService: WorkFlowedServiceProxy, private router: Router, private _flowServices: FlowServices, private eventEmiter: EventEmiter, ) {
 
-  }
+  //类型
+  flowPathTypeEnum = FlowPathTypeEnum
 
-  /**
-   * 判断发起流程
-   * @param key 
-   * @param index 
-   */
-  isSen(key) {
-    return key
+  //时间
+  rangeTime = ['2019-02-19T05:46:09.135Z','2019-06-19T05:46:09.135Z'];
+  constructor(private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
+    private _flowServices: FlowServices,
+    private router: Router,
+    private http: _HttpClient, 
+    private xlsx: XlsxService) {
+   super();
+
   }
 
   ngOnInit() {
-    // let _self = this;
-
-    // this.eventEmiter.on('init', () => {
-    //   _self.init();
-    // });
-
-    // this.eventEmiter.on('flowadd', () => {
-    //   _self.init();
-    // });
+    this.init()
   }
 
-  /**
-   * 初始化
-   */
   init() {
-    this.params = new PendingWorkFlow_NodeAuditorRecordDto();
-    this.params.pagedAndFilteredInputDto = new PagedAndFilteredInputDto()
-    this.params.pagedAndFilteredInputDto.page = 1;
-    this.params.pagedAndFilteredInputDto.maxResultCount = AppConsts.grid.defaultPageSize;
-    this.params.projectTypeStatu = 2;
-    this.workFlow_NodeAuditorRecords(this.params);
+    this.searchParam.page = 1;
+    this.searchParam.maxResultCount = 10;
+    this.searchParam.flowPathType = 3
+    this.searchParam.sorting = 'ProjectName';
+    this.searchParam.startApplyTime = moment(this.rangeTime[0])
+    this.searchParam.endApplyTime =moment(this.rangeTime[1])  
+    this.getList();
   }
 
-  /**
-   * 回车
-   */
-  onEnter(v) {
-    if (v.which === 13) {
-      this.query();
-    }
-  }
 
   /**
-   * 获取列表 
+   * 获取所有列表
+   * @param TemplateInfoListByClassIdEntity 参数
    */
-  workFlow_NodeAuditorRecords(params?: any) {
-    this.data = '';
-    this._workFlowedService.queryWorkFlow_InstanceList(this.params).subscribe(data => {
-      this.data = data;
+  getList() {
+    this._projectFlowServcieServiceProxy.post_GetFireAuditCompleteList(this.searchParam).subscribe((data: any) => {
+      this.formResultData = data
+      console.log(this.formResultData)
     })
   }
 
@@ -112,16 +93,30 @@ export class CompletedAcceptanceComponent implements OnInit {
    * 点击查询
    */
   query() {
-    this.params.pagedAndFilteredInputDto.page = 1;
-    this.params.pagedAndFilteredInputDto.maxResultCount = AppConsts.grid.defaultPageSize;
-    this.workFlow_NodeAuditorRecords(this.params);
+    this.searchParam.page = 1; 
+    this.searchParam.startApplyTime = moment(this.rangeTime[0])
+    this.searchParam.endApplyTime =moment(this.rangeTime[1])  
+    this.getList();
   }
 
-  /**
-   * 导出
-   */
-  export() {
 
+  watchItem(item) {
+    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`]);
+  }
+
+  change(v) {
+    pageOnChange(v, this.searchParam, () => {
+      this.getList();
+    })
+  }
+
+  okRangeTime(v){
+    console.log(v); 
+    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')  
+    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')   
+    // this.searchParam.applyTimeStart = applyTimeStart;
+    // this.searchParam.applyTimeEnd = applyTimeEnd;
+    // console.log(applyTimeEnd);
   }
 
   /**
@@ -131,10 +126,11 @@ export class CompletedAcceptanceComponent implements OnInit {
     this.router.navigate([`/app/engineering-management/addCompletedAcceptanceComponent/0/null`]);
   }
 
-  change(v) {
-    pageOnChange(v, this.params.pagedAndFilteredInputDto, () => {
-      this.workFlow_NodeAuditorRecords(this.params);
-    })
+  /**
+   * 导出
+   */
+  exportXlsx(){
+    // this._publicModel.exportXlsx(this.columns,this.formResultData.data);
   }
 
 }

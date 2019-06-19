@@ -1,15 +1,26 @@
-import { FlowServices } from './../../../../services/flow.services';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { STColumn, STPage, STComponent } from '@delon/abc';
-import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
+import { STColumn, STComponent, XlsxService, STPage } from '@delon/abc';
+
+
+import { _HttpClient } from '@delon/theme';
+
+import { ModalHelper } from '@delon/theme';
+
+import { FormControl, FormGroup } from '@angular/forms';
+import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, DataSourceResult, PagedAndFilteredInputDto, ProjectFlowServcieServiceProxy, FireAuditCompleteQueryDto, StatisticalServiceServiceProxy, WarningCenterQueryDto } from '@shared/service-proxies/service-proxies'
+
+import { PublicModel } from 'infrastructure/public-model';
 import { Router } from '@angular/router';
-import { EventEmiter } from 'infrastructure/eventEmiter';
-import { AppConsts } from '@shared/AppConsts';
-import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, PagedAndFilteredInputDto } from '@shared/service-proxies/service-proxies';
 
-
+import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
+import { FlowServices } from 'services/flow.services';
+import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
+import { timeTrans } from 'infrastructure/regular-expression';
+import { PublicFormComponent } from '../public/public-form.component';
+import { FormBuilder } from '@angular/forms';
+import * as moment from 'moment';
 /**
- * 消防设计审查
+ * 消防設計
  */
 @Component({
   selector: 'app-fire-design',
@@ -17,122 +28,86 @@ import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, PagedAndF
   styles: []
 })
 export class FireDesignComponent implements OnInit {
+  param = new FireAuditCompleteQueryDto();
+  formResultData = [];
+  rangeTime = ['2019-02-19T05:46:09.135Z','2019-06-19T05:46:09.135Z'];
   @ViewChild('st') st: STComponent;
-  params: PendingWorkFlow_NodeAuditorRecordDto
-  data;
   columns: STColumn[] = [
     {
-      title: '操作', className: 'text-center', buttons: [
+      title: '操作',
+      buttons: [
         {
-          text: '<font class="stButton">详情</font>', click: (record: any) => {
-            this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/2/${record.projectId}`]);
-          }
-        },
-        {
-          text: '<font class="stButton">受理凭证</font>', click: (record: any) => {
-
-          }
-        },
-        {
-          text: '<font class="stButton">意见书</font>', click: (record: any) => {
-
+          text: '执行', click: (item: any) => {
+            this.watchItem(item);
           }
         },
       ]
     },
-    { title: '工程编号', index: 'projectCode' },
-    { title: '工程名称', index: 'projectName' },
-    { title: '表单名称', index: 'name' },
-    { title: '创建人单位', index: 'companyName' },
-    { title: '创建人名', index: 'createEName' },
-    {
-      title: '申请时间', index: 'applyTime', type: 'date'
-    }
+    { title: '表单', index: 'companyName' },
+    // { title: '创建人员', index: 'createEName' },
+    { title: '申报时间', index: 'applyTime' },
   ];
-  pageConfig: STPage = publicPageConfig;
-  constructor(private _workFlowedService: WorkFlowedServiceProxy, private router: Router, private _flowServices: FlowServices, private eventEmiter: EventEmiter, ) {
-    // this.init();
-  }
 
-  /**
-   * 判断发起流程
-   * @param key 
-   * @param index 
-   */
-  isSen(key) {
-    return key
-  }
+  pageConfig: STPage = publicPageConfig;
+  constructor(private http: _HttpClient,
+    private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
+    private modal: ModalHelper,
+    private router: Router,
+    private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
+    private formBuilder: FormBuilder,
+    private xlsx: XlsxService) { }
 
   ngOnInit() {
-    // let _self = this;
-
-    // this.eventEmiter.on('init', () => {
-    //   _self.init();
-    // });
-
-    // this.eventEmiter.on('flowadd', () => {
-    //   _self.init();
-    // });
+    this.init();
   }
 
-  /**
-   * 初始化
-   */
-  init() {
-    this.params = new PendingWorkFlow_NodeAuditorRecordDto();
-    this.params.pagedAndFilteredInputDto = new PagedAndFilteredInputDto()
-    this.params.pagedAndFilteredInputDto.page = 1;
-    this.params.pagedAndFilteredInputDto.maxResultCount = AppConsts.grid.defaultPageSize;
-    this.params.projectTypeStatu = 1;
-    this.workFlow_NodeAuditorRecords(this.params);
-  }
 
-  /**
-   * 回车
-   */
-  onEnter(v) {
-    if (v.which === 13) {
-      this.query();
-    }
-  }
-
-  /**
-   * 获取列表 
-   */
-  workFlow_NodeAuditorRecords(params?: any) {
-    this.data = '';
-    this._workFlowedService.queryWorkFlow_InstanceList(this.params).subscribe(data => {
-      this.data = data;
-    })
+  init() { 
+    this.param.page = 1;
+    this.param.maxResultCount = 10;
+    this.param.flowPathType = 1 
+    this.param.sorting = 'ProjectName';
+    this.param.startApplyTime = moment(this.rangeTime[0])
+    this.param.endApplyTime =moment(this.rangeTime[1])  
+    this.getList();
   }
 
   /**
    * 点击查询
    */
   query() {
-    this.params.pagedAndFilteredInputDto.page = 1;
-    this.params.pagedAndFilteredInputDto.maxResultCount = AppConsts.grid.defaultPageSize;
-    this.workFlow_NodeAuditorRecords(this.params);
+    this.param.page = 1;
+    this.param.startApplyTime = moment(this.rangeTime[0])
+    this.param.endApplyTime =moment(this.rangeTime[1])  
+    this.getList();
   }
 
-  /**
-   * 导出
-   */
-  export() {
 
+
+  exportXlsx() {
+    const expData = [this.columns.map(i => i.title)];
+
+    expData.push(['1', '1', '1', '1',]);
+
+    this.xlsx.export({
+      sheets: [
+        {
+          data: expData,
+          name: 'sheet name',
+        },
+      ],
+    });
   }
+  getList() {
 
-  /**
-   * 新增申报
-   */
-  addDeclare() {
-    this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/null`]);
-  }
 
-  change(v) {
-    pageOnChange(v, this.params.pagedAndFilteredInputDto, () => {
-      this.workFlow_NodeAuditorRecords(this.params);
+    this._projectFlowServcieServiceProxy.post_GetFireAuditCompleteList(this.param).subscribe((data: any) => {
+      this.formResultData = data
+      console.log(this.formResultData)
     })
   }
 
+  watchItem(item) { 
+    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`]);
+  }
 }

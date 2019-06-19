@@ -15,6 +15,9 @@ import { PublicModel } from 'infrastructure/public-model';
 })
 export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
+  //判断是新增或者办理  0是新增 1是办理
+  @Input() type: number = 0
+  
   @Input() data: any
 
   //市县区
@@ -31,7 +34,15 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
-  constructor(public publicModel: PublicModel, ) { }
+
+  //抽取号
+  decimationnumber
+  constructor(public publicModel: PublicModel, ) {
+    this.decimationnumber = [];
+    for (let index = 1; index < 101; index++) { 
+      this.decimationnumber.push({ label: index, value: index },)
+    }
+  }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去

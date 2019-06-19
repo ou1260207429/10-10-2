@@ -5,6 +5,7 @@ import header from '@/components/header'
 Vue.use(Router)
 
 export default new Router({
+  //mode: "history",
   routes: [{
     path: '/',
     name: 'header',
@@ -19,7 +20,7 @@ export default new Router({
         show: true
       }
     }, {
-      path: '/handling-guid',
+      path: '/handling-guid-list',
       name: 'handling-guid',
       component: resolve => require(['../views/Handling-guid.vue'], resolve),
       meta: {
@@ -51,7 +52,7 @@ export default new Router({
         show: true
       }
     }, {
-      path: '/handling-guid-list-detail/:id',
+      path: '/handling-guid-list/detail/:id',
       name: 'handling-guid-list-detail',
       component: resolve => require(['../views/handling-guid-list-detail.vue'], resolve),
       meta: {
@@ -59,7 +60,7 @@ export default new Router({
         show: false,
       }
     }, {
-      path: '/laws-and-regulations-detail/:id',
+      path: '/laws-and-regulations/detail/:id',
       name: 'laws-and-regulations-detail',
       component: resolve => require(['../views/laws-and-regulations-detail.vue'], resolve),
       meta: {

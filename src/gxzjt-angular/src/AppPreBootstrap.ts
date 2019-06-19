@@ -14,7 +14,8 @@ import { PermissionService } from '@shared/auth/permission.service';
 import { ALAIN_I18N_TOKEN, MenuService } from '@delon/theme';
 import { LocalizationService } from '@shared/i18n/localization.service';
 import { AppMenus } from '@shared/AppMenus';
-
+import { Menu } from '@delon/theme';
+import { ACLService } from '@delon/acl';
 export class AppPreBootstrap {
     static run(injector: Injector, callback: () => void): void {
         let httpClient = injector.get(HttpClient);
@@ -99,6 +100,14 @@ export class AppPreBootstrap {
             localization.extend(abp.localization);
             // 写入菜单
             const menuService = injector.get(MenuService);
+
+            // var menus=[];
+            // for(let menu in AppMenus.Menus){
+            //     if(menu.acl&&menu.acl){
+
+            //     }
+            // }
+
             menuService.add(AppMenus.Menus);
 
 

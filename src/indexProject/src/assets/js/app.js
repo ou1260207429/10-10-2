@@ -3,7 +3,9 @@ import axios from 'axios';
 import Vue from "vue"
 import qs from 'qs';
 import 'url-search-params-polyfill'
-
+import {
+  tbale
+} from './apiValue'
 var app = {
   clentHeight() {
     let clientHeight = document.body.clientHeight;
@@ -118,8 +120,20 @@ var app = {
   /**
    * 下载表格
    */
-  downList() {
-
+  downList(url, method, data, succCallBack, errorCallBack) {
+    let downLoadUrl = Vue.prototype.downLoadUrl;
+    let finalUrl = url + "?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&module=table&sourceId=A49E658F-DF7E-4512-9A6D-4106EBBFCAFF"
+    return new Promise(function (resolve, reject) {
+      axios({
+        method: method,
+        url: downLoadUrl + finalUrl,
+        // data: qs.stringify(data)
+      }).then(function (req) {
+        if (req.status == 200) {
+          resolve(req.data);
+        }
+      })
+    })
   },
 
 

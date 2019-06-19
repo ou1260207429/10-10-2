@@ -3,7 +3,7 @@ import { objDeleteType } from 'infrastructure/regular-expression';
 import { NzMessageService } from 'ng-zorro-antd';
 import { OptionsEnum, ArchitectureTypeEnum } from 'infrastructure/expression';
 import { PublicModel } from 'infrastructure/public-model';
-import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto, FlowDataDto, ProjectFlowDto } from '@shared/service-proxies/service-proxies';
+import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto, FlowDataDto, ProjectFlowDto, FlowNodeUser } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute } from '@angular/router';
 import { GXZJT_From, FlowServices } from 'services/flow.services';
 import { FormGroup } from '@angular/forms';
@@ -217,6 +217,16 @@ export class AddFireAcceptanceComponent implements OnInit {
 
       flowDataDto.projectFlowInfo.currentNodeId = data.result.cur_Node_Id
       flowDataDto.projectFlowInfo.currentNodeName = data.result.cur_NodeName
+
+      flowDataDto.projectFlowInfo.workFlow_Instance_Id = data.result.workFlow_Instance_Id
+      flowDataDto.projectFlowInfo.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id 
+ 
+       flowDataDto.handleUserList = [];
+       data.result.auditorRecords.forEach(element => {
+         const flowNodeUser = new FlowNodeUser()
+         flowNodeUser.userFlowId = element.id
+         flowDataDto.handleUserList.push(flowNodeUser)
+       });
 
       //待审人数组 等后台改模型
       // currentHandleUserName: string | undefined;

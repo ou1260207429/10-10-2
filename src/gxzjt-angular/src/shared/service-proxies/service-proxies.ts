@@ -29,10 +29,13 @@ export class AcceptanceFileServiceProxy {
 
     /**
      * @param projectFlow (optional) 
+     * @param fileCodePrefix (optional) 
      * @return Success
      */
-    createApplyFile(projectFlow: ProjectFlow | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/CreateApplyFile";
+    createApplyFile(projectFlow: ProjectFlow | null | undefined, fileCodePrefix: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/CreateApplyFile?";
+        if (fileCodePrefix !== undefined)
+            url_ += "fileCodePrefix=" + encodeURIComponent("" + fileCodePrefix) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(projectFlow);
@@ -190,16 +193,79 @@ export class AcceptanceFileServiceProxy {
     }
 
     /**
+     * @param acceptApplyFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @param template (optional) 
      * @return Success
      */
-    createReviewFile(): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/CreateReviewFile";
+    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/AcceptFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        if (template !== undefined)
+            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(acceptApplyFormDto);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAcceptFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAcceptFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAcceptFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param reviewFormDto (optional) 
+     * @return Success
+     */
+    createReviewFile(reviewFormDto: ReviewFormDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/CreateReviewFile";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(reviewFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
             })
         };
 
@@ -237,16 +303,24 @@ export class AcceptanceFileServiceProxy {
     }
 
     /**
+     * @param examineFormDto (optional) 
+     * @param acceptRecordId (optional) 
      * @return Success
      */
-    createUnqualifiedFile(): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/CreateUnqualifiedFile";
+    createUnqualifiedFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/CreateUnqualifiedFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(examineFormDto);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json", 
             })
         };
 
@@ -284,16 +358,24 @@ export class AcceptanceFileServiceProxy {
     }
 
     /**
+     * @param examineFormDto (optional) 
+     * @param acceptRecordId (optional) 
      * @return Success
      */
-    createQualifiedFile(): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/CreateQualifiedFile";
+    createQualifiedFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/CreateQualifiedFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(examineFormDto);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json", 
             })
         };
 
@@ -312,6 +394,67 @@ export class AcceptanceFileServiceProxy {
     }
 
     protected processCreateQualifiedFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param examineFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @param template (optional) 
+     * @param attachmentType (optional) 
+     * @return Success
+     */
+    opinionFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/OpinionFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        if (template !== undefined)
+            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
+        if (attachmentType !== undefined)
+            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(examineFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processOpinionFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processOpinionFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processOpinionFile(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -855,6 +998,112 @@ export class ApplyServiceServiceProxy {
         }
         return _observableOf<boolean>(<any>null);
     }
+
+    /**
+     * @param flowId (optional) 
+     * @return Success
+     */
+    getReview(flowId: number | null | undefined): Observable<ReviewFormDto> {
+        let url_ = this.baseUrl + "/api/services/app/ApplyService/GetReview?";
+        if (flowId !== undefined)
+            url_ += "flowId=" + encodeURIComponent("" + flowId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetReview(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetReview(<any>response_);
+                } catch (e) {
+                    return <Observable<ReviewFormDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ReviewFormDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetReview(response: HttpResponseBase): Observable<ReviewFormDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ReviewFormDto.fromJS(resultData200) : new ReviewFormDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ReviewFormDto>(<any>null);
+    }
+
+    /**
+     * @param reviewFormDto (optional) 
+     * @return Success
+     */
+    reviewApply(reviewFormDto: ReviewFormDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ApplyService/ReviewApply";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(reviewFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processReviewApply(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processReviewApply(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processReviewApply(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
 }
 
 @Injectable()
@@ -1352,6 +1601,60 @@ export class ExamineServiceServiceProxy {
     }
 
     /**
+     * @param flowId (optional) 
+     * @return Success
+     */
+    getPrimaryExamine(flowId: number | null | undefined): Observable<ExamineFormDto> {
+        let url_ = this.baseUrl + "/api/services/app/ExamineService/GetPrimaryExamine?";
+        if (flowId !== undefined)
+            url_ += "flowId=" + encodeURIComponent("" + flowId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPrimaryExamine(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPrimaryExamine(<any>response_);
+                } catch (e) {
+                    return <Observable<ExamineFormDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ExamineFormDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPrimaryExamine(response: HttpResponseBase): Observable<ExamineFormDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ExamineFormDto.fromJS(resultData200) : new ExamineFormDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ExamineFormDto>(<any>null);
+    }
+
+    /**
      * @param examineFormDto (optional) 
      * @return Success
      */
@@ -1798,6 +2101,56 @@ export class HomeServiceProxy {
         }
         return _observableOf<PageModel>(<any>null);
     }
+
+    /**
+     * @param attachmentId (optional) 
+     * @return Success
+     */
+    homeTableDownloadAddVisitCount(attachmentId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Home/HomeTableDownloadAddVisitCount?";
+        if (attachmentId !== undefined)
+            url_ += "attachmentId=" + encodeURIComponent("" + attachmentId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHomeTableDownloadAddVisitCount(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHomeTableDownloadAddVisitCount(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processHomeTableDownloadAddVisitCount(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
 }
 
 @Injectable()
@@ -1813,10 +2166,13 @@ export class InvestigateFileServiceProxy {
 
     /**
      * @param projectFlow (optional) 
+     * @param fileCodePrefix (optional) 
      * @return Success
      */
-    createApplyFile(projectFlow: ProjectFlow | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateApplyFile";
+    createApplyFile(projectFlow: ProjectFlow | null | undefined, fileCodePrefix: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateApplyFile?";
+        if (fileCodePrefix !== undefined)
+            url_ += "fileCodePrefix=" + encodeURIComponent("" + fileCodePrefix) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(projectFlow);
@@ -1974,16 +2330,82 @@ export class InvestigateFileServiceProxy {
     }
 
     /**
+     * @param acceptApplyFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @param template (optional) 
      * @return Success
      */
-    createUnqualifiedFile(): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateUnqualifiedFile";
+    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/AcceptFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        if (template !== undefined)
+            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(acceptApplyFormDto);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAcceptFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAcceptFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAcceptFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param examineFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @return Success
+     */
+    createUnqualifiedFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateUnqualifiedFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(examineFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
             })
         };
 
@@ -2021,16 +2443,24 @@ export class InvestigateFileServiceProxy {
     }
 
     /**
+     * @param examineFormDto (optional) 
+     * @param acceptRecordId (optional) 
      * @return Success
      */
-    createQualifiedFile(): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateQualifiedFile";
+    createQualifiedFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateQualifiedFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(examineFormDto);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json", 
             })
         };
 
@@ -2049,6 +2479,67 @@ export class InvestigateFileServiceProxy {
     }
 
     protected processCreateQualifiedFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param examineFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @param template (optional) 
+     * @param attachmentType (optional) 
+     * @return Success
+     */
+    opinionFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/OpinionFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        if (template !== undefined)
+            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
+        if (attachmentType !== undefined)
+            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(examineFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processOpinionFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processOpinionFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processOpinionFile(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -3461,6 +3952,578 @@ export class ProjectFlowServcieServiceProxy {
             }));
         }
         return _observableOf<ProjectFlowStatisticsDto>(<any>null);
+    }
+
+    /**
+     * @param fireAuditCompleteQueryDto (optional) 
+     * @return Success
+     */
+    post_GetFireAuditCompleteList(fireAuditCompleteQueryDto: FireAuditCompleteQueryDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/ProjectFlowServcie/Post_GetFireAuditCompleteList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(fireAuditCompleteQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetFireAuditCompleteList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetFireAuditCompleteList(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetFireAuditCompleteList(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
+}
+
+@Injectable()
+export class PutOnRecordFileServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param projectFlow (optional) 
+     * @param fileCodePrefix (optional) 
+     * @return Success
+     */
+    createApplyFile(projectFlow: ProjectFlow | null | undefined, fileCodePrefix: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/CreateApplyFile?";
+        if (fileCodePrefix !== undefined)
+            url_ += "fileCodePrefix=" + encodeURIComponent("" + fileCodePrefix) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(projectFlow);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateApplyFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateApplyFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateApplyFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param acceptApplyFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @return Success
+     */
+    createAcceptFileBySelect(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/CreateAcceptFileBySelect?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(acceptApplyFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateAcceptFileBySelect(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateAcceptFileBySelect(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateAcceptFileBySelect(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param acceptApplyFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @return Success
+     */
+    createAcceptFileByNotSelect(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/CreateAcceptFileByNotSelect?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(acceptApplyFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateAcceptFileByNotSelect(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateAcceptFileByNotSelect(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateAcceptFileByNotSelect(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param acceptApplyFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @return Success
+     */
+    createMakeupFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/CreateMakeupFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(acceptApplyFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateMakeupFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateMakeupFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateMakeupFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param acceptApplyFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @param template (optional) 
+     * @param attachmentType (optional) 
+     * @return Success
+     */
+    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/AcceptFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        if (template !== undefined)
+            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
+        if (attachmentType !== undefined)
+            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(acceptApplyFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAcceptFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAcceptFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAcceptFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param reviewFormDto (optional) 
+     * @return Success
+     */
+    createReviewFile(reviewFormDto: ReviewFormDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/CreateReviewFile";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(reviewFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateReviewFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateReviewFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateReviewFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param examineFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @return Success
+     */
+    createUnqualifiedFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/CreateUnqualifiedFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(examineFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateUnqualifiedFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateUnqualifiedFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateUnqualifiedFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param examineFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @return Success
+     */
+    createQualifiedFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/CreateQualifiedFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(examineFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateQualifiedFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateQualifiedFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateQualifiedFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param examineFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @param template (optional) 
+     * @param attachmentType (optional) 
+     * @return Success
+     */
+    opinionFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/OpinionFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        if (template !== undefined)
+            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
+        if (attachmentType !== undefined)
+            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(examineFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processOpinionFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processOpinionFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processOpinionFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
     }
 }
 
@@ -6405,6 +7468,123 @@ export class UserServiceProxy {
 }
 
 @Injectable()
+export class UserHelperServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    currentUser(): Observable<UserBaseDto> {
+        let url_ = this.baseUrl + "/api/services/app/UserHelper/CurrentUser";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCurrentUser(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCurrentUser(<any>response_);
+                } catch (e) {
+                    return <Observable<UserBaseDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UserBaseDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCurrentUser(response: HttpResponseBase): Observable<UserBaseDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? UserBaseDto.fromJS(resultData200) : new UserBaseDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<UserBaseDto>(<any>null);
+    }
+
+    /**
+     * @param flowId (optional) 
+     * @return Success
+     */
+    currentFlowNodeUser(flowId: number | null | undefined): Observable<FlowNodeUser> {
+        let url_ = this.baseUrl + "/api/services/app/UserHelper/CurrentFlowNodeUser?";
+        if (flowId !== undefined)
+            url_ += "flowId=" + encodeURIComponent("" + flowId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCurrentFlowNodeUser(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCurrentFlowNodeUser(<any>response_);
+                } catch (e) {
+                    return <Observable<FlowNodeUser>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FlowNodeUser>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCurrentFlowNodeUser(response: HttpResponseBase): Observable<FlowNodeUser> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? FlowNodeUser.fromJS(resultData200) : new FlowNodeUser();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FlowNodeUser>(<any>null);
+    }
+}
+
+@Injectable()
 export class WorkFlowedServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -6741,7 +7921,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     flowId: number | undefined;
     currentHandleUserName: string | undefined;
     currentHandleUserCode: string | undefined;
-    handleUserList: UserBaseDto[] | undefined;
+    handleUserList: FlowNodeUser[] | undefined;
     currentNodeId: string | undefined;
     currentNodeName: string | undefined;
     currentHandleOrgName: string | undefined;
@@ -6761,6 +7941,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     workFlow_NodeRecord_Id: number | undefined;
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
+    flowNodeUserInfo: FlowNodeUser | undefined;
 
     constructor(data?: IAcceptApplyFormDto) {
         if (data) {
@@ -6781,7 +7962,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
             if (data["handleUserList"] && data["handleUserList"].constructor === Array) {
                 this.handleUserList = [];
                 for (let item of data["handleUserList"])
-                    this.handleUserList.push(UserBaseDto.fromJS(item));
+                    this.handleUserList.push(FlowNodeUser.fromJS(item));
             }
             this.currentNodeId = data["currentNodeId"];
             this.currentNodeName = data["currentNodeName"];
@@ -6810,6 +7991,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
             this.workFlow_NodeRecord_Id = data["workFlow_NodeRecord_Id"];
             this.workFlow_Instance_Id = data["workFlow_Instance_Id"];
             this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
+            this.flowNodeUserInfo = data["flowNodeUserInfo"] ? FlowNodeUser.fromJS(data["flowNodeUserInfo"]) : <any>undefined;
         }
     }
 
@@ -6859,6 +8041,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
         data["workFlow_NodeRecord_Id"] = this.workFlow_NodeRecord_Id;
         data["workFlow_Instance_Id"] = this.workFlow_Instance_Id;
         data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
+        data["flowNodeUserInfo"] = this.flowNodeUserInfo ? this.flowNodeUserInfo.toJSON() : <any>undefined;
         return data; 
     }
 
@@ -6876,7 +8059,7 @@ export interface IAcceptApplyFormDto {
     flowId: number | undefined;
     currentHandleUserName: string | undefined;
     currentHandleUserCode: string | undefined;
-    handleUserList: UserBaseDto[] | undefined;
+    handleUserList: FlowNodeUser[] | undefined;
     currentNodeId: string | undefined;
     currentNodeName: string | undefined;
     currentHandleOrgName: string | undefined;
@@ -6896,15 +8079,25 @@ export interface IAcceptApplyFormDto {
     workFlow_NodeRecord_Id: number | undefined;
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
+    flowNodeUserInfo: FlowNodeUser | undefined;
 }
 
-export class UserBaseDto implements IUserBaseDto {
-    userName: string | undefined;
+export class FlowNodeUser implements IFlowNodeUser {
     userCode: string | undefined;
-    orgCode: string | undefined;
-    orgName: string | undefined;
+    userName: string | undefined;
+    userFlowId: string | undefined;
+    nodeId: string | undefined;
+    flowId: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
 
-    constructor(data?: IUserBaseDto) {
+    constructor(data?: IFlowNodeUser) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -6915,42 +8108,69 @@ export class UserBaseDto implements IUserBaseDto {
 
     init(data?: any) {
         if (data) {
-            this.userName = data["userName"];
             this.userCode = data["userCode"];
-            this.orgCode = data["orgCode"];
-            this.orgName = data["orgName"];
+            this.userName = data["userName"];
+            this.userFlowId = data["userFlowId"];
+            this.nodeId = data["nodeId"];
+            this.flowId = data["flowId"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
         }
     }
 
-    static fromJS(data: any): UserBaseDto {
+    static fromJS(data: any): FlowNodeUser {
         data = typeof data === 'object' ? data : {};
-        let result = new UserBaseDto();
+        let result = new FlowNodeUser();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["userName"] = this.userName;
         data["userCode"] = this.userCode;
-        data["orgCode"] = this.orgCode;
-        data["orgName"] = this.orgName;
+        data["userName"] = this.userName;
+        data["userFlowId"] = this.userFlowId;
+        data["nodeId"] = this.nodeId;
+        data["flowId"] = this.flowId;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
         return data; 
     }
 
-    clone(): UserBaseDto {
+    clone(): FlowNodeUser {
         const json = this.toJSON();
-        let result = new UserBaseDto();
+        let result = new FlowNodeUser();
         result.init(json);
         return result;
     }
 }
 
-export interface IUserBaseDto {
-    userName: string | undefined;
+export interface IFlowNodeUser {
     userCode: string | undefined;
-    orgCode: string | undefined;
-    orgName: string | undefined;
+    userName: string | undefined;
+    userFlowId: string | undefined;
+    nodeId: string | undefined;
+    flowId: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
 }
 
 export class RefuseItem implements IRefuseItem {
@@ -7081,6 +8301,566 @@ export interface IAttachmentItem {
     fileNo: number | undefined;
     flieCode: string | undefined;
     flowId: number | undefined;
+}
+
+export class ReviewFormDto implements IReviewFormDto {
+    fileCodePrefix: string | undefined;
+    projectId: number | undefined;
+    flowId: number | undefined;
+    constructOrg: ProjectCompany | undefined;
+    projectName: string | undefined;
+    projectCode: string | undefined;
+    address: string | undefined;
+    putOnRecordFileCode: string | undefined;
+    unqualifiedFileCode: string | undefined;
+    situation: string | undefined;
+    note: string | undefined;
+    applyName: string | undefined;
+    handleUserList: FlowNodeUser[] | undefined;
+    timeLimit: number | undefined;
+    currentHandleUserName: string | undefined;
+    currentHandleUserCode: string | undefined;
+    currentNodeId: string | undefined;
+    currentNodeName: string | undefined;
+    currentHandleOrgName: string | undefined;
+    currentHandleOrgCode: string | undefined;
+    nodeAuditorRecordId: number | undefined;
+    workFlow_NodeRecord_Id: number | undefined;
+    workFlow_Instance_Id: number | undefined;
+    workFlow_TemplateInfo_Id: number | undefined;
+    flowNo: string | undefined;
+
+    constructor(data?: IReviewFormDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.fileCodePrefix = data["fileCodePrefix"];
+            this.projectId = data["projectId"];
+            this.flowId = data["flowId"];
+            this.constructOrg = data["constructOrg"] ? ProjectCompany.fromJS(data["constructOrg"]) : <any>undefined;
+            this.projectName = data["projectName"];
+            this.projectCode = data["projectCode"];
+            this.address = data["address"];
+            this.putOnRecordFileCode = data["putOnRecordFileCode"];
+            this.unqualifiedFileCode = data["unqualifiedFileCode"];
+            this.situation = data["situation"];
+            this.note = data["note"];
+            this.applyName = data["applyName"];
+            if (data["handleUserList"] && data["handleUserList"].constructor === Array) {
+                this.handleUserList = [];
+                for (let item of data["handleUserList"])
+                    this.handleUserList.push(FlowNodeUser.fromJS(item));
+            }
+            this.timeLimit = data["timeLimit"];
+            this.currentHandleUserName = data["currentHandleUserName"];
+            this.currentHandleUserCode = data["currentHandleUserCode"];
+            this.currentNodeId = data["currentNodeId"];
+            this.currentNodeName = data["currentNodeName"];
+            this.currentHandleOrgName = data["currentHandleOrgName"];
+            this.currentHandleOrgCode = data["currentHandleOrgCode"];
+            this.nodeAuditorRecordId = data["nodeAuditorRecordId"];
+            this.workFlow_NodeRecord_Id = data["workFlow_NodeRecord_Id"];
+            this.workFlow_Instance_Id = data["workFlow_Instance_Id"];
+            this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
+            this.flowNo = data["flowNo"];
+        }
+    }
+
+    static fromJS(data: any): ReviewFormDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ReviewFormDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["fileCodePrefix"] = this.fileCodePrefix;
+        data["projectId"] = this.projectId;
+        data["flowId"] = this.flowId;
+        data["constructOrg"] = this.constructOrg ? this.constructOrg.toJSON() : <any>undefined;
+        data["projectName"] = this.projectName;
+        data["projectCode"] = this.projectCode;
+        data["address"] = this.address;
+        data["putOnRecordFileCode"] = this.putOnRecordFileCode;
+        data["unqualifiedFileCode"] = this.unqualifiedFileCode;
+        data["situation"] = this.situation;
+        data["note"] = this.note;
+        data["applyName"] = this.applyName;
+        if (this.handleUserList && this.handleUserList.constructor === Array) {
+            data["handleUserList"] = [];
+            for (let item of this.handleUserList)
+                data["handleUserList"].push(item.toJSON());
+        }
+        data["timeLimit"] = this.timeLimit;
+        data["currentHandleUserName"] = this.currentHandleUserName;
+        data["currentHandleUserCode"] = this.currentHandleUserCode;
+        data["currentNodeId"] = this.currentNodeId;
+        data["currentNodeName"] = this.currentNodeName;
+        data["currentHandleOrgName"] = this.currentHandleOrgName;
+        data["currentHandleOrgCode"] = this.currentHandleOrgCode;
+        data["nodeAuditorRecordId"] = this.nodeAuditorRecordId;
+        data["workFlow_NodeRecord_Id"] = this.workFlow_NodeRecord_Id;
+        data["workFlow_Instance_Id"] = this.workFlow_Instance_Id;
+        data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
+        data["flowNo"] = this.flowNo;
+        return data; 
+    }
+
+    clone(): ReviewFormDto {
+        const json = this.toJSON();
+        let result = new ReviewFormDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IReviewFormDto {
+    fileCodePrefix: string | undefined;
+    projectId: number | undefined;
+    flowId: number | undefined;
+    constructOrg: ProjectCompany | undefined;
+    projectName: string | undefined;
+    projectCode: string | undefined;
+    address: string | undefined;
+    putOnRecordFileCode: string | undefined;
+    unqualifiedFileCode: string | undefined;
+    situation: string | undefined;
+    note: string | undefined;
+    applyName: string | undefined;
+    handleUserList: FlowNodeUser[] | undefined;
+    timeLimit: number | undefined;
+    currentHandleUserName: string | undefined;
+    currentHandleUserCode: string | undefined;
+    currentNodeId: string | undefined;
+    currentNodeName: string | undefined;
+    currentHandleOrgName: string | undefined;
+    currentHandleOrgCode: string | undefined;
+    nodeAuditorRecordId: number | undefined;
+    workFlow_NodeRecord_Id: number | undefined;
+    workFlow_Instance_Id: number | undefined;
+    workFlow_TemplateInfo_Id: number | undefined;
+    flowNo: string | undefined;
+}
+
+export class ProjectCompany implements IProjectCompany {
+    projectId: number | undefined;
+    orgType: number | undefined;
+    companyName: string | undefined;
+    qualifications: string | undefined;
+    legalRepresentative: string | undefined;
+    legalRepresentativeNo: string | undefined;
+    contactPerson: string | undefined;
+    contactNumber: string | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IProjectCompany) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.projectId = data["projectId"];
+            this.orgType = data["orgType"];
+            this.companyName = data["companyName"];
+            this.qualifications = data["qualifications"];
+            this.legalRepresentative = data["legalRepresentative"];
+            this.legalRepresentativeNo = data["legalRepresentativeNo"];
+            this.contactPerson = data["contactPerson"];
+            this.contactNumber = data["contactNumber"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): ProjectCompany {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectCompany();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["projectId"] = this.projectId;
+        data["orgType"] = this.orgType;
+        data["companyName"] = this.companyName;
+        data["qualifications"] = this.qualifications;
+        data["legalRepresentative"] = this.legalRepresentative;
+        data["legalRepresentativeNo"] = this.legalRepresentativeNo;
+        data["contactPerson"] = this.contactPerson;
+        data["contactNumber"] = this.contactNumber;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): ProjectCompany {
+        const json = this.toJSON();
+        let result = new ProjectCompany();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectCompany {
+    projectId: number | undefined;
+    orgType: number | undefined;
+    companyName: string | undefined;
+    qualifications: string | undefined;
+    legalRepresentative: string | undefined;
+    legalRepresentativeNo: string | undefined;
+    contactPerson: string | undefined;
+    contactNumber: string | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class ExamineFormDto implements IExamineFormDto {
+    flowId: number | undefined;
+    attachment: ProjectAttachment[] | undefined;
+    isFinalFlow: boolean | undefined;
+    isPass: boolean | undefined;
+    isDisplay: boolean | undefined;
+    opinion: string | undefined;
+    describeList: string | undefined;
+    currentHandleUserName: string | undefined;
+    currentHandleUserCode: string | undefined;
+    handleUserList: FlowNodeUser[] | undefined;
+    currentNodeId: string | undefined;
+    currentNodeName: string | undefined;
+    currentHandleOrgName: string | undefined;
+    currentHandleOrgCode: string | undefined;
+    fileCodePrefix: string | undefined;
+    companyName: string | undefined;
+    applyDateTime: moment.Moment | undefined;
+    address: string | undefined;
+    projectId: number | undefined;
+    projectName: string | undefined;
+    projectCode: string | undefined;
+    recordNumber: string | undefined;
+    acceptFileCode: string | undefined;
+    drawingOrg: ProjectCompany | undefined;
+    testingOrg: ProjectCompany | undefined;
+    designOrg: ProjectCompany | undefined;
+    nodeAuditorRecordId: number | undefined;
+    workFlow_NodeRecord_Id: number | undefined;
+    workFlow_Instance_Id: number | undefined;
+    workFlow_TemplateInfo_Id: number | undefined;
+    flowNodeUserInfo: FlowNodeUser | undefined;
+
+    constructor(data?: IExamineFormDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.flowId = data["flowId"];
+            if (data["attachment"] && data["attachment"].constructor === Array) {
+                this.attachment = [];
+                for (let item of data["attachment"])
+                    this.attachment.push(ProjectAttachment.fromJS(item));
+            }
+            this.isFinalFlow = data["isFinalFlow"];
+            this.isPass = data["isPass"];
+            this.isDisplay = data["isDisplay"];
+            this.opinion = data["opinion"];
+            this.describeList = data["describeList"];
+            this.currentHandleUserName = data["currentHandleUserName"];
+            this.currentHandleUserCode = data["currentHandleUserCode"];
+            if (data["handleUserList"] && data["handleUserList"].constructor === Array) {
+                this.handleUserList = [];
+                for (let item of data["handleUserList"])
+                    this.handleUserList.push(FlowNodeUser.fromJS(item));
+            }
+            this.currentNodeId = data["currentNodeId"];
+            this.currentNodeName = data["currentNodeName"];
+            this.currentHandleOrgName = data["currentHandleOrgName"];
+            this.currentHandleOrgCode = data["currentHandleOrgCode"];
+            this.fileCodePrefix = data["fileCodePrefix"];
+            this.companyName = data["companyName"];
+            this.applyDateTime = data["applyDateTime"] ? moment(data["applyDateTime"].toString()) : <any>undefined;
+            this.address = data["address"];
+            this.projectId = data["projectId"];
+            this.projectName = data["projectName"];
+            this.projectCode = data["projectCode"];
+            this.recordNumber = data["recordNumber"];
+            this.acceptFileCode = data["acceptFileCode"];
+            this.drawingOrg = data["drawingOrg"] ? ProjectCompany.fromJS(data["drawingOrg"]) : <any>undefined;
+            this.testingOrg = data["testingOrg"] ? ProjectCompany.fromJS(data["testingOrg"]) : <any>undefined;
+            this.designOrg = data["designOrg"] ? ProjectCompany.fromJS(data["designOrg"]) : <any>undefined;
+            this.nodeAuditorRecordId = data["nodeAuditorRecordId"];
+            this.workFlow_NodeRecord_Id = data["workFlow_NodeRecord_Id"];
+            this.workFlow_Instance_Id = data["workFlow_Instance_Id"];
+            this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
+            this.flowNodeUserInfo = data["flowNodeUserInfo"] ? FlowNodeUser.fromJS(data["flowNodeUserInfo"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): ExamineFormDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExamineFormDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["flowId"] = this.flowId;
+        if (this.attachment && this.attachment.constructor === Array) {
+            data["attachment"] = [];
+            for (let item of this.attachment)
+                data["attachment"].push(item.toJSON());
+        }
+        data["isFinalFlow"] = this.isFinalFlow;
+        data["isPass"] = this.isPass;
+        data["isDisplay"] = this.isDisplay;
+        data["opinion"] = this.opinion;
+        data["describeList"] = this.describeList;
+        data["currentHandleUserName"] = this.currentHandleUserName;
+        data["currentHandleUserCode"] = this.currentHandleUserCode;
+        if (this.handleUserList && this.handleUserList.constructor === Array) {
+            data["handleUserList"] = [];
+            for (let item of this.handleUserList)
+                data["handleUserList"].push(item.toJSON());
+        }
+        data["currentNodeId"] = this.currentNodeId;
+        data["currentNodeName"] = this.currentNodeName;
+        data["currentHandleOrgName"] = this.currentHandleOrgName;
+        data["currentHandleOrgCode"] = this.currentHandleOrgCode;
+        data["fileCodePrefix"] = this.fileCodePrefix;
+        data["companyName"] = this.companyName;
+        data["applyDateTime"] = this.applyDateTime ? this.applyDateTime.toISOString() : <any>undefined;
+        data["address"] = this.address;
+        data["projectId"] = this.projectId;
+        data["projectName"] = this.projectName;
+        data["projectCode"] = this.projectCode;
+        data["recordNumber"] = this.recordNumber;
+        data["acceptFileCode"] = this.acceptFileCode;
+        data["drawingOrg"] = this.drawingOrg ? this.drawingOrg.toJSON() : <any>undefined;
+        data["testingOrg"] = this.testingOrg ? this.testingOrg.toJSON() : <any>undefined;
+        data["designOrg"] = this.designOrg ? this.designOrg.toJSON() : <any>undefined;
+        data["nodeAuditorRecordId"] = this.nodeAuditorRecordId;
+        data["workFlow_NodeRecord_Id"] = this.workFlow_NodeRecord_Id;
+        data["workFlow_Instance_Id"] = this.workFlow_Instance_Id;
+        data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
+        data["flowNodeUserInfo"] = this.flowNodeUserInfo ? this.flowNodeUserInfo.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): ExamineFormDto {
+        const json = this.toJSON();
+        let result = new ExamineFormDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IExamineFormDto {
+    flowId: number | undefined;
+    attachment: ProjectAttachment[] | undefined;
+    isFinalFlow: boolean | undefined;
+    isPass: boolean | undefined;
+    isDisplay: boolean | undefined;
+    opinion: string | undefined;
+    describeList: string | undefined;
+    currentHandleUserName: string | undefined;
+    currentHandleUserCode: string | undefined;
+    handleUserList: FlowNodeUser[] | undefined;
+    currentNodeId: string | undefined;
+    currentNodeName: string | undefined;
+    currentHandleOrgName: string | undefined;
+    currentHandleOrgCode: string | undefined;
+    fileCodePrefix: string | undefined;
+    companyName: string | undefined;
+    applyDateTime: moment.Moment | undefined;
+    address: string | undefined;
+    projectId: number | undefined;
+    projectName: string | undefined;
+    projectCode: string | undefined;
+    recordNumber: string | undefined;
+    acceptFileCode: string | undefined;
+    drawingOrg: ProjectCompany | undefined;
+    testingOrg: ProjectCompany | undefined;
+    designOrg: ProjectCompany | undefined;
+    nodeAuditorRecordId: number | undefined;
+    workFlow_NodeRecord_Id: number | undefined;
+    workFlow_Instance_Id: number | undefined;
+    workFlow_TemplateInfo_Id: number | undefined;
+    flowNodeUserInfo: FlowNodeUser | undefined;
+}
+
+export class ProjectAttachment implements IProjectAttachment {
+    projectId: number | undefined;
+    attachmentName: string | undefined;
+    attachmentType: string | undefined;
+    fileUrl: string | undefined;
+    note: string | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+    fileCount: number | undefined;
+    isPass: boolean | undefined;
+    fileNo: number | undefined;
+    flieCode: string | undefined;
+    flowNode: string | undefined;
+    recordId: number | undefined;
+    flowId: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IProjectAttachment) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.projectId = data["projectId"];
+            this.attachmentName = data["attachmentName"];
+            this.attachmentType = data["attachmentType"];
+            this.fileUrl = data["fileUrl"];
+            this.note = data["note"];
+            this.lastUpdateTime = data["lastUpdateTime"] ? moment(data["lastUpdateTime"].toString()) : <any>undefined;
+            this.lastUpdateUserCode = data["lastUpdateUserCode"];
+            this.lastUpdateUserName = data["lastUpdateUserName"];
+            this.fileCount = data["fileCount"];
+            this.isPass = data["isPass"];
+            this.fileNo = data["fileNo"];
+            this.flieCode = data["flieCode"];
+            this.flowNode = data["flowNode"];
+            this.recordId = data["recordId"];
+            this.flowId = data["flowId"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): ProjectAttachment {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectAttachment();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["projectId"] = this.projectId;
+        data["attachmentName"] = this.attachmentName;
+        data["attachmentType"] = this.attachmentType;
+        data["fileUrl"] = this.fileUrl;
+        data["note"] = this.note;
+        data["lastUpdateTime"] = this.lastUpdateTime ? this.lastUpdateTime.toISOString() : <any>undefined;
+        data["lastUpdateUserCode"] = this.lastUpdateUserCode;
+        data["lastUpdateUserName"] = this.lastUpdateUserName;
+        data["fileCount"] = this.fileCount;
+        data["isPass"] = this.isPass;
+        data["fileNo"] = this.fileNo;
+        data["flieCode"] = this.flieCode;
+        data["flowNode"] = this.flowNode;
+        data["recordId"] = this.recordId;
+        data["flowId"] = this.flowId;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): ProjectAttachment {
+        const json = this.toJSON();
+        let result = new ProjectAttachment();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectAttachment {
+    projectId: number | undefined;
+    attachmentName: string | undefined;
+    attachmentType: string | undefined;
+    fileUrl: string | undefined;
+    note: string | undefined;
+    lastUpdateTime: moment.Moment | undefined;
+    lastUpdateUserCode: string | undefined;
+    lastUpdateUserName: string | undefined;
+    fileCount: number | undefined;
+    isPass: boolean | undefined;
+    fileNo: number | undefined;
+    flieCode: string | undefined;
+    flowNode: string | undefined;
+    recordId: number | undefined;
+    flowId: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
 }
 
 export class IsTenantAvailableInput implements IIsTenantAvailableInput {
@@ -7678,7 +9458,8 @@ export class FlowDataDto implements IFlowDataDto {
     formJson: string | undefined;
     projectFlowInfo: ProjectFlowDto | undefined;
     luckNo: number | undefined;
-    handleUserList: UserBaseDto[] | undefined;
+    handleUserList: FlowNodeUser[] | undefined;
+    fileCodePrefix: string | undefined;
 
     constructor(data?: IFlowDataDto) {
         if (data) {
@@ -7698,8 +9479,9 @@ export class FlowDataDto implements IFlowDataDto {
             if (data["handleUserList"] && data["handleUserList"].constructor === Array) {
                 this.handleUserList = [];
                 for (let item of data["handleUserList"])
-                    this.handleUserList.push(UserBaseDto.fromJS(item));
+                    this.handleUserList.push(FlowNodeUser.fromJS(item));
             }
+            this.fileCodePrefix = data["fileCodePrefix"];
         }
     }
 
@@ -7721,6 +9503,7 @@ export class FlowDataDto implements IFlowDataDto {
             for (let item of this.handleUserList)
                 data["handleUserList"].push(item.toJSON());
         }
+        data["fileCodePrefix"] = this.fileCodePrefix;
         return data; 
     }
 
@@ -7737,7 +9520,8 @@ export interface IFlowDataDto {
     formJson: string | undefined;
     projectFlowInfo: ProjectFlowDto | undefined;
     luckNo: number | undefined;
-    handleUserList: UserBaseDto[] | undefined;
+    handleUserList: FlowNodeUser[] | undefined;
+    fileCodePrefix: string | undefined;
 }
 
 export class ProjectFlowDto implements IProjectFlowDto {
@@ -8272,244 +10056,6 @@ export interface IEnumConfig {
     isNote: boolean | undefined;
     isDisable: boolean | undefined;
     value: string | undefined;
-    isDeleted: boolean | undefined;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-}
-
-export class ExamineFormDto implements IExamineFormDto {
-    attachment: ProjectAttachment[] | undefined;
-    isFinalFlow: boolean | undefined;
-    isPass: boolean | undefined;
-    flowId: number | undefined;
-    isDisplay: boolean | undefined;
-    opinion: string | undefined;
-    currentHandleUserName: string | undefined;
-    currentHandleUserCode: string | undefined;
-    currentNode: string | undefined;
-    currentHandleOrgName: string | undefined;
-    currentHandleOrgCode: string | undefined;
-    fileCodePrefix: string | undefined;
-    handleUserList: UserBaseDto[] | undefined;
-
-    constructor(data?: IExamineFormDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            if (data["attachment"] && data["attachment"].constructor === Array) {
-                this.attachment = [];
-                for (let item of data["attachment"])
-                    this.attachment.push(ProjectAttachment.fromJS(item));
-            }
-            this.isFinalFlow = data["isFinalFlow"];
-            this.isPass = data["isPass"];
-            this.flowId = data["flowId"];
-            this.isDisplay = data["isDisplay"];
-            this.opinion = data["opinion"];
-            this.currentHandleUserName = data["currentHandleUserName"];
-            this.currentHandleUserCode = data["currentHandleUserCode"];
-            this.currentNode = data["currentNode"];
-            this.currentHandleOrgName = data["currentHandleOrgName"];
-            this.currentHandleOrgCode = data["currentHandleOrgCode"];
-            this.fileCodePrefix = data["fileCodePrefix"];
-            if (data["handleUserList"] && data["handleUserList"].constructor === Array) {
-                this.handleUserList = [];
-                for (let item of data["handleUserList"])
-                    this.handleUserList.push(UserBaseDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): ExamineFormDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ExamineFormDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (this.attachment && this.attachment.constructor === Array) {
-            data["attachment"] = [];
-            for (let item of this.attachment)
-                data["attachment"].push(item.toJSON());
-        }
-        data["isFinalFlow"] = this.isFinalFlow;
-        data["isPass"] = this.isPass;
-        data["flowId"] = this.flowId;
-        data["isDisplay"] = this.isDisplay;
-        data["opinion"] = this.opinion;
-        data["currentHandleUserName"] = this.currentHandleUserName;
-        data["currentHandleUserCode"] = this.currentHandleUserCode;
-        data["currentNode"] = this.currentNode;
-        data["currentHandleOrgName"] = this.currentHandleOrgName;
-        data["currentHandleOrgCode"] = this.currentHandleOrgCode;
-        data["fileCodePrefix"] = this.fileCodePrefix;
-        if (this.handleUserList && this.handleUserList.constructor === Array) {
-            data["handleUserList"] = [];
-            for (let item of this.handleUserList)
-                data["handleUserList"].push(item.toJSON());
-        }
-        return data; 
-    }
-
-    clone(): ExamineFormDto {
-        const json = this.toJSON();
-        let result = new ExamineFormDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IExamineFormDto {
-    attachment: ProjectAttachment[] | undefined;
-    isFinalFlow: boolean | undefined;
-    isPass: boolean | undefined;
-    flowId: number | undefined;
-    isDisplay: boolean | undefined;
-    opinion: string | undefined;
-    currentHandleUserName: string | undefined;
-    currentHandleUserCode: string | undefined;
-    currentNode: string | undefined;
-    currentHandleOrgName: string | undefined;
-    currentHandleOrgCode: string | undefined;
-    fileCodePrefix: string | undefined;
-    handleUserList: UserBaseDto[] | undefined;
-}
-
-export class ProjectAttachment implements IProjectAttachment {
-    projectId: number | undefined;
-    attachmentName: string | undefined;
-    attachmentType: string | undefined;
-    fileUrl: string | undefined;
-    note: string | undefined;
-    lastUpdateTime: moment.Moment | undefined;
-    lastUpdateUserCode: string | undefined;
-    lastUpdateUserName: string | undefined;
-    fileCount: number | undefined;
-    isPass: boolean | undefined;
-    fileNo: number | undefined;
-    flieCode: string | undefined;
-    flowNode: string | undefined;
-    recordId: number | undefined;
-    flowId: number | undefined;
-    isDeleted: boolean | undefined;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: IProjectAttachment) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.projectId = data["projectId"];
-            this.attachmentName = data["attachmentName"];
-            this.attachmentType = data["attachmentType"];
-            this.fileUrl = data["fileUrl"];
-            this.note = data["note"];
-            this.lastUpdateTime = data["lastUpdateTime"] ? moment(data["lastUpdateTime"].toString()) : <any>undefined;
-            this.lastUpdateUserCode = data["lastUpdateUserCode"];
-            this.lastUpdateUserName = data["lastUpdateUserName"];
-            this.fileCount = data["fileCount"];
-            this.isPass = data["isPass"];
-            this.fileNo = data["fileNo"];
-            this.flieCode = data["flieCode"];
-            this.flowNode = data["flowNode"];
-            this.recordId = data["recordId"];
-            this.flowId = data["flowId"];
-            this.isDeleted = data["isDeleted"];
-            this.deleterUserId = data["deleterUserId"];
-            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
-            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = data["lastModifierUserId"];
-            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = data["creatorUserId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): ProjectAttachment {
-        data = typeof data === 'object' ? data : {};
-        let result = new ProjectAttachment();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["projectId"] = this.projectId;
-        data["attachmentName"] = this.attachmentName;
-        data["attachmentType"] = this.attachmentType;
-        data["fileUrl"] = this.fileUrl;
-        data["note"] = this.note;
-        data["lastUpdateTime"] = this.lastUpdateTime ? this.lastUpdateTime.toISOString() : <any>undefined;
-        data["lastUpdateUserCode"] = this.lastUpdateUserCode;
-        data["lastUpdateUserName"] = this.lastUpdateUserName;
-        data["fileCount"] = this.fileCount;
-        data["isPass"] = this.isPass;
-        data["fileNo"] = this.fileNo;
-        data["flieCode"] = this.flieCode;
-        data["flowNode"] = this.flowNode;
-        data["recordId"] = this.recordId;
-        data["flowId"] = this.flowId;
-        data["isDeleted"] = this.isDeleted;
-        data["deleterUserId"] = this.deleterUserId;
-        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): ProjectAttachment {
-        const json = this.toJSON();
-        let result = new ProjectAttachment();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IProjectAttachment {
-    projectId: number | undefined;
-    attachmentName: string | undefined;
-    attachmentType: string | undefined;
-    fileUrl: string | undefined;
-    note: string | undefined;
-    lastUpdateTime: moment.Moment | undefined;
-    lastUpdateUserCode: string | undefined;
-    lastUpdateUserName: string | undefined;
-    fileCount: number | undefined;
-    isPass: boolean | undefined;
-    fileNo: number | undefined;
-    flieCode: string | undefined;
-    flowNode: string | undefined;
-    recordId: number | undefined;
-    flowId: number | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -10406,7 +11952,7 @@ export interface IProjectFlowStatisticsDto {
 
 export class ProjectFlowStatisticsDayDto implements IProjectFlowStatisticsDayDto {
     dayCount: number | undefined;
-    dayTime: moment.Moment | undefined;
+    dayTime: string | undefined;
 
     constructor(data?: IProjectFlowStatisticsDayDto) {
         if (data) {
@@ -10420,7 +11966,7 @@ export class ProjectFlowStatisticsDayDto implements IProjectFlowStatisticsDayDto
     init(data?: any) {
         if (data) {
             this.dayCount = data["dayCount"];
-            this.dayTime = data["dayTime"] ? moment(data["dayTime"].toString()) : <any>undefined;
+            this.dayTime = data["dayTime"];
         }
     }
 
@@ -10434,7 +11980,7 @@ export class ProjectFlowStatisticsDayDto implements IProjectFlowStatisticsDayDto
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["dayCount"] = this.dayCount;
-        data["dayTime"] = this.dayTime ? this.dayTime.toISOString() : <any>undefined;
+        data["dayTime"] = this.dayTime;
         return data; 
     }
 
@@ -10448,7 +11994,90 @@ export class ProjectFlowStatisticsDayDto implements IProjectFlowStatisticsDayDto
 
 export interface IProjectFlowStatisticsDayDto {
     dayCount: number | undefined;
-    dayTime: moment.Moment | undefined;
+    dayTime: string | undefined;
+}
+
+export class FireAuditCompleteQueryDto implements IFireAuditCompleteQueryDto {
+    recordNumber: string | undefined;
+    projectName: string | undefined;
+    status: number | undefined;
+    flowPathType: number | undefined;
+    startApplyTime: moment.Moment | undefined;
+    endApplyTime: moment.Moment | undefined;
+    dateTimeNow: moment.Moment | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+
+    constructor(data?: IFireAuditCompleteQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.recordNumber = data["recordNumber"];
+            this.projectName = data["projectName"];
+            this.status = data["status"];
+            this.flowPathType = data["flowPathType"];
+            this.startApplyTime = data["startApplyTime"] ? moment(data["startApplyTime"].toString()) : <any>undefined;
+            this.endApplyTime = data["endApplyTime"] ? moment(data["endApplyTime"].toString()) : <any>undefined;
+            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
+            this.page = data["page"];
+            this.sorting = data["sorting"];
+            this.skipCount = data["skipCount"];
+            this.maxResultCount = data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): FireAuditCompleteQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new FireAuditCompleteQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["recordNumber"] = this.recordNumber;
+        data["projectName"] = this.projectName;
+        data["status"] = this.status;
+        data["flowPathType"] = this.flowPathType;
+        data["startApplyTime"] = this.startApplyTime ? this.startApplyTime.toISOString() : <any>undefined;
+        data["endApplyTime"] = this.endApplyTime ? this.endApplyTime.toISOString() : <any>undefined;
+        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
+        data["page"] = this.page;
+        data["sorting"] = this.sorting;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+
+    clone(): FireAuditCompleteQueryDto {
+        const json = this.toJSON();
+        let result = new FireAuditCompleteQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFireAuditCompleteQueryDto {
+    recordNumber: string | undefined;
+    projectName: string | undefined;
+    status: number | undefined;
+    flowPathType: number | undefined;
+    startApplyTime: moment.Moment | undefined;
+    endApplyTime: moment.Moment | undefined;
+    dateTimeNow: moment.Moment | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
 }
 
 export class ListResultDtoOfRegulationListDto implements IListResultDtoOfRegulationListDto {
@@ -13347,6 +14976,61 @@ export class PagedResultDtoOfUserDto implements IPagedResultDtoOfUserDto {
 export interface IPagedResultDtoOfUserDto {
     totalCount: number | undefined;
     items: UserDto[] | undefined;
+}
+
+export class UserBaseDto implements IUserBaseDto {
+    userName: string | undefined;
+    userCode: string | undefined;
+    orgCode: string | undefined;
+    orgName: string | undefined;
+
+    constructor(data?: IUserBaseDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.userName = data["userName"];
+            this.userCode = data["userCode"];
+            this.orgCode = data["orgCode"];
+            this.orgName = data["orgName"];
+        }
+    }
+
+    static fromJS(data: any): UserBaseDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserBaseDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userName"] = this.userName;
+        data["userCode"] = this.userCode;
+        data["orgCode"] = this.orgCode;
+        data["orgName"] = this.orgName;
+        return data; 
+    }
+
+    clone(): UserBaseDto {
+        const json = this.toJSON();
+        let result = new UserBaseDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserBaseDto {
+    userName: string | undefined;
+    userCode: string | undefined;
+    orgCode: string | undefined;
+    orgName: string | undefined;
 }
 
 export class PendingWorkFlow_NodeAuditorRecordDto implements IPendingWorkFlow_NodeAuditorRecordDto {

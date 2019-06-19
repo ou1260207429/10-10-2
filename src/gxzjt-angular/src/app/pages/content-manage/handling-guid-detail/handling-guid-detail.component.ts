@@ -3,15 +3,37 @@ import { ActivatedRoute } from '@angular/router';
 import { _HttpClient } from '@delon/theme';
 import { RegulationServiceProxy, NoticeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { timeTrans } from 'infrastructure/regular-expression';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
+import { PublicServices } from 'services/public.services';
 @Component({
   selector: 'app-handling-guid-detail',
   templateUrl: './handling-guid-detail.component.html',
   styleUrls: ['./handling-guid-detail.less']
 })
 export class HandlingGuidDetailComponent implements OnInit {
-
+  fileList: UploadFile[] = [];
+  // acceptType: ".doc,.docx,.xls,.xlsx,.pdf"
+  acceptType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"//只上传.doc文件
+  uploadUrl = "http://demo.rjtx.net:5001/api/Upload/Upload"
+  files = []
+  sourceId: string
+  /**
+  * 过滤上传文件类型
+  */
+  filters: UploadFilter[] = [
+    {
+      name: 'type',
+      fn: (fileList: UploadFile[]) => {
+        const filterFiles = fileList.filter(w => ~['application/vnd.openxmlformats-officedocument.wordprocessingml.document'].indexOf(w.type));
+        if (filterFiles.length !== fileList.length) {
+          this.message.error("上传文件格式不正确，请选择.doc文件");
+          return filterFiles;
+        }
+        return fileList;
+      }
+    },
+  ];
   operate
   //0是新增  1是查看 2是编辑
   type
@@ -22,7 +44,7 @@ export class HandlingGuidDetailComponent implements OnInit {
 
   };
   RegulationType: any
-  constructor(private _eventEmiter: EventEmiter, private message: NzMessageService, private _noticeServiceProxy: NoticeServiceProxy, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute) {
+  constructor(private _publicServices: PublicServices, private _eventEmiter: EventEmiter, private message: NzMessageService, private _noticeServiceProxy: NoticeServiceProxy, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute) {
     this.id = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
     this.operate = parseInt(this._activatedRoute.snapshot.paramMap.get('operate'));
     this.initType()
@@ -94,14 +116,15 @@ export class HandlingGuidDetailComponent implements OnInit {
     } else {
       this.data.noticeId = this.id;
     }
-    console.log(this.data)
-
+    if (this.fileList.length > 0) {
+      this.uploadFiles(this.data.guid);
+    }
     const src = this.operate == 0 ? this._noticeServiceProxy.addNoticeAsync(this.data) : this._noticeServiceProxy.editNoticeAsync(this.data)
     src.subscribe(data => {
       const name = this.operate == 0 ? '新增成功' : '修改成功';
       this.message.success(name);
       this._eventEmiter.emit('init', []);
-      this.goBack()
+      this.goBack();
     })
   }
 
@@ -123,7 +146,37 @@ export class HandlingGuidDetailComponent implements OnInit {
     }
 
     var ret = uuid.join('')
-    console.log(ret);
     return ret
+  }
+  /**
+    * 上传文件
+    */
+  uploadFiles(guid) {
+    const formData = new FormData();
+    this.fileList.forEach((file: any) => {
+      formData.append('files', file);
+    });
+    console.log(formData.getAll("files"));
+    let params = {
+      sourceId: guid,
+      AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
+      module: "table",
+    }
+    this._publicServices.newUpload(formData, params).subscribe(data => {
+    })
+  }
+
+  beforeUpload = (file: UploadFile): boolean => {
+    this.fileList = this.fileList.concat(file);
+
+    return false;
+  };
+  removeFile = (file: UploadFile): boolean => {
+    this.fileList.forEach((item, index) => {
+      if (item.uid == file.uid) {
+        this.fileList.splice(index, 1);
+      }
+    });
+    return true;
   }
 }

@@ -1,11 +1,11 @@
 <div class="reg_content">
   <div [@routerTransition]>
-    <nz-spin [nzTip]="l('Registering')" [nzSpinning]="saving">
+    <nz-spin nzTip="正在注册" [nzSpinning]="saving">
       <nz-card [nzTitle]="nzTitle" nzHoverable='true' style="width: 400px">
         <ng-template #nzTitle>
           <div class="text-center yoyo__block">
             <i class="anticon anticon-login"></i>
-            <span>{{l('Register')}}</span>
+            <span>注册</span>
           </div>
         </ng-template>
         <form nz-form #validateForm="ngForm" (ngSubmit)="register()">

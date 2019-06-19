@@ -27,43 +27,6 @@
                 <label nz-checkbox name="item{{item}}"
                   [(ngModel)]="item.isSubmit">{{index+1}}、{{item.attachmentTypeName}}</label>
               </li>
-              <!-- <li>
-                <label nz-checkbox name="newcheckboxEngineering1"
-                  [(ngModel)]="simultaneousMaterials.a1Checkbox">1.建设工程消防设计审查申报表；</label>
-              </li>
-              <li>
-                <label nz-checkbox name="newcheckboxEngineering2"
-                  [(ngModel)]="simultaneousMaterials.a2Checkbox"></label>2.消防设计文件，数量：<select
-                  class="simultaneousMaterials.a2Input">
-                  <option value="0">零</option>
-                  <option value="1">壹</option>
-                  <option value="2">贰</option>
-                  <option value="3">叁</option>
-                  <option value="4">肆</option>
-                </select>
-                份（大写）；
-              </li>
-              <li>
-                <label nz-checkbox name="newcheckboxEngineering3"
-                  [(ngModel)]="simultaneousMaterials.a3Checkbox">3.需要办理建设工程规划许可项目的建设工程规划许可证明文件复印件；</label>
-              </li>
-              <li>
-                <label nz-checkbox name="newcheckboxEngineering4"
-                  [(ngModel)]="simultaneousMaterials.a4Checkbox">4.依法需要批准的临时性建筑证明文件复印件；</label>
-              </li>
-              <li>
-                <label nz-checkbox name="newcheckboxEngineering5" [(ngModel)]="simultaneousMaterials.a5Checkbox">
-                </label>
-                5.专家评审申报材料（特殊消防设计文件，设计采用的国际标准、境外消防技术标准的中文文本，其他有关消防设计的技术资料），数量：<select
-                  class="simultaneousMaterials.a5Input">
-                  <option value="0">零</option>
-                  <option value="1">壹</option>
-                  <option value="2">贰</option>
-                  <option value="3">叁</option>
-                  <option value="4">肆</option>
-                </select>
-                份（大写）；
-              </li> -->
             </ul>
             <div class="table_add_info">
               <p>经核，申报材料项目（<nz-radio-group [(ngModel)]="data.isComplete" name="isComplete11">
@@ -80,14 +43,7 @@
             </div>
 
           </td>
-        </tr>
-        <tr>
-          <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">建设单位签收：<input class="table_input_2" />
-            <p class="table_time">
-              <nz-date-picker name="t2"></nz-date-picker>
-            </p>
-          </td>
-        </tr>
+        </tr> 
         <tr>
           <td class="fontweight fontLeft leftTitle">一式两份，一份交建设单位，一份存档。 </td>
         </tr>
@@ -101,7 +57,7 @@
       <thead>
         <tr>
           <td colspan='20' rowspan='1' class="table_title">
-            <h3>××市住房和城乡建设局<br />建设工程消防设计审查意见书（合格）</h3>
+            <h3>××市住房和城乡建设局<br />建设工程消防设计审查意见书</h3>
           </td>
         </tr>
       </thead>
@@ -119,6 +75,7 @@
                 你单位申请的“新建B栋教学楼”建设工程（受理凭证：×住建消审凭字〔201×〕第××××号，201×年×月××日收）消防设计图纸材料及有关资料收悉。该工程位于××市××路××号，××小学校园内。新建B栋教学楼建筑高度为19.6m，建筑层数为5层，建筑面积为2902.76㎡，设计用途一层为生活用房、二至四层为教室、五层为教师办公室、会议室等，属多层民用建筑。该工程消防设施主要有室内、室外消火栓系统。设计单位为×××设计有限公司，设计资质为建设工程×级。按照图纸审查机构（××××公司）对该工程设计图纸的技术审查结论，我局提出以下意见：
               </p>
             </div>
+            
             <ul class="table_list">
               <li>
                 一、同意该工程消防设计，请按照审查批准的消防设计图纸资料进行施工。
@@ -143,72 +100,6 @@
         <tr>
           <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">建设单位收件人签名：<input
               class="table_input_2" />
-            <p class="table_time">
-              <nz-date-picker name="t2"></nz-date-picker>
-            </p>
-          </td>
-        </tr>
-        <tr>
-          <td class="fontweight fontLeft leftTitle">本意见书一式两份，一份交建设单位，一份存档。 </td>
-        </tr>
-      </tbody>
-    </table>
-
-  </div>
-
-  <!-- 消防设计的审查意见书（不合格）  -->
-  <div *ngSwitchCase="2">
-    <table class="tables d_table" style="box-sizing: border-box;">
-      <thead>
-        <tr>
-          <td colspan='20' rowspan='1' class="table_title">
-            <h3>××市住房和城乡建设局<br />建设工程消防设计审查意见书（不合格）</h3>
-          </td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-            ×住建消审凭字〔2019〕第0059号
-          </td>
-        </tr>
-        <tr>
-          <td rowspan='1' colspan='20'>
-            <div class="table_detail">
-              <h3>×市××区××××：</h3>
-              <p>
-                你单位申请的“新建B栋教学楼”建设工程（受理凭证：×住建消审凭字〔201×〕第××××号，201×年×月××日收）消防设计图纸材料及有关资料收悉。该工程位于××市××路××号，××小学校园内。新建B栋教学楼建筑高度为19.6m，建筑层数为5层，建筑面积为2902.76㎡，设计用途一层为生活用房、二至四层为教室、五层为教师办公室、会议室等，属多层民用建筑。该工程消防设施主要有室内、室外消火栓系统。设计单位为×××设计有限公司，设计资质为建设工程×级。按照图纸审查机构（××××公司）对该工程设计图纸的技术审查结论，我局提出以下意见：
-              </p>
-            </div>
-            <ul class="table_list">
-              <li>
-                一、不同意该工程消防设计，应修改设计后重新申报。
-              </li>
-              <li>
-                二、问题1：×××（存在问题），不符合《××》第×条第×款（规范名称及条文号）的规定。
-              </li>
-              <li>
-                三、问题2：（同上）。
-              </li>
-              <li>
-                四、问题3：（同上）。
-              </li>
-              <li>
-                五、提供图纸审查的技术服务机构和人员对出具的技术审查意见负责。
-              </li>
-              <li>
-                六、如不服本决定，可以在收到本意见书之日起六十日内向××市人民政府申请行政复议或者三个月内依法向××人民法院提起行政诉讼。
-              </li>
-            </ul>
-
-            <div class="table_seal">
-              由后台提供的当前时间 年月日
-            </div>
-
-          </td>
-        </tr>
-        <tr>
-          <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">建设单位收件人：<input class="table_input_2" />
             <p class="table_time">
               <nz-date-picker name="t2"></nz-date-picker>
             </p>

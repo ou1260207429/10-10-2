@@ -127,7 +127,7 @@
             </td>
             <td rowspan='1'>无</td>
           </tr>
-          <tr *ngFor="let item of data.constructionUnit;let a = index">
+          <tr *ngFor="let item of data.constructionUnit;let a = index" [ngClass]="{pointerf5f5f5: type == 1}"> 
             <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">施工单位:</td>
             <td rowspan='1' colspan='5'><input nz-input placeholder="请输入施工单位" [(ngModel)]="item.designUnit"
                 name="constructionUnitDesignUnit{{a}}" /></td>
@@ -225,7 +225,7 @@
               工程基本情况
             </td>
           </tr>
-          <tr style="border-top: 1px solid #e2e2e2;">
+          <tr style="border-top: 1px solid #e2e2e2;" [ngClass]="{pointerf5f5f5: type == 1}">
             <td colspan='5' rowspan="2" class="fontweight">单位建筑名称</td>
             <td colspan='2' rowspan="2" class="fontweight">结构类型</td>
             <td colspan='1' rowspan="2" class="fontweight">耐火等级</td>
@@ -243,7 +243,7 @@
             <td colspan='1' rowspan="1" class="fontweight">地下</td>
           </tr>
   
-          <tr *ngFor="let item of data.basicInformation;let index = index">
+          <tr *ngFor="let item of data.basicInformation;let index = index" [ngClass]="{pointerf5f5f5: type == 1}"> 
             <!-- 请输入单位建筑名称 -->
             <td colspan="5">
               <se error="这是必填项">
@@ -369,7 +369,7 @@
           </tr>
         </tbody>
   
-        <tr *ngFor="let item of data.yard;let index = index">
+        <tr *ngFor="let item of data.yard;let index = index" [ngClass]="{pointerf5f5f5: type == 1}"> 
           <td colspan='1' rowspan="1" class="fontweight fontLeft leftTitle"
             style="width: 36px;background-color: #f8f8f8;text-align: center;">堆 场</td>
           <td colspan='4' class="fontweight fontLeft leftTitle">储 量</td>

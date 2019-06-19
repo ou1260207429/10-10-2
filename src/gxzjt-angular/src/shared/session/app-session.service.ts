@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AbpMultiTenancyService } from '@abp/multi-tenancy/abp-multi-tenancy.service';
+import { ACLService, DelonACLConfig } from '@delon/acl';
+import { MenuService } from '@delon/theme';
+
 import {
   LoginServiceProxy,
   // UserLoginInfoDto,
@@ -20,6 +23,9 @@ export class AppSessionService {
   constructor(
     private _loginServiceProxy: LoginServiceProxy,
     private _abpMultiTenancyService: AbpMultiTenancyService,
+    private _ACLService: ACLService,
+    private _MenuService: MenuService,
+    private _DelonACLConfig: DelonACLConfig
   ) { }
 
   // get application(): ApplicationInfoDto {
@@ -62,11 +68,45 @@ export class AppSessionService {
             // this._application.version = "1.0.0";
             // this._application.releaseDate = new Date();
             this._user = result;
+
+            // result.roleName = '公众注册用户';
+            
+            switch (result.roleName) {
+              case '系统管理员':
+                this._ACLService.setFull(true);
+                break
+              case '大厅':
+                this._ACLService.setRole(['sys']);
+                break
+              case '承办人':
+                this._ACLService.setRole(['sys']);
+                break
+              case '负责人':
+                this._ACLService.setRole(['sys']);
+                break
+              case '公众注册用户':
+                this._ACLService.setRole(['reg']);
+                this._DelonACLConfig.guard_url = '/app/engineering-management/engineeringListComponent';
+
+
+                break
+              default:
+                this._ACLService.setRole(['reg']);
+                this._DelonACLConfig.guard_url = '/app/engineering-management/engineeringListComponent';
+
+
+                break;
+            }
+
+
+            this._MenuService.resume();
+
             this._tenant = new TenantLoginInfoDto();
 
             resolve(true);
           },
           err => {
+            resolve(true);
             reject(err);
           },
         );

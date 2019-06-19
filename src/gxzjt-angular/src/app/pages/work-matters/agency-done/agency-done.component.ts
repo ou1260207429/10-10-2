@@ -13,7 +13,9 @@ import { Router } from '@angular/router';
 
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 import { FlowServices } from 'services/flow.services';
-import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
+import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
+import { timeTrans } from 'infrastructure/regular-expression';
+import { PublicModel } from 'infrastructure/public-model';
 /**
  * 待办流程
  */
@@ -22,14 +24,11 @@ import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
   templateUrl: 'agency-done.component.html',
   styles: [],
 })
-export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
+export class AgencyDoneComponent  extends PublicFormComponent implements OnInit {
+  index;
 
-
-  searchKey = '';
-
-
-  page = 1;
-
+ 
+  formResultData
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
@@ -52,13 +51,19 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
   pageConfig: STPage = publicPageConfig;
 
+  //类型
+  flowPathTypeEnum = FlowPathTypeEnum
+
+  //时间
+  rangeTime
   constructor(private workFlowedServiceProxy: WorkFlowedServiceProxy,
     private _flowServices: FlowServices,
     private router: Router,
+    private _publicModel:PublicModel,
     private http: _HttpClient,
     private xlsx: XlsxService) {
-    super();
-
+    
+      super();
 
   }
 
@@ -82,19 +87,42 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(this.searchParam).subscribe((data: any) => {
       this.formResultData = data
       console.log(this.formResultData)
-      this.isSearchForm = false;
     })
+  }
+
+  /**
+   * 点击查询
+   */
+  query() {
+    this.searchParam.pagedAndFilteredInputDto.page = 1; 
+    this.getList();
   }
 
 
   watchItem(item) {
-    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.flowId}/${item.flowPathType}`]);
+    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.flowId}/${item.flowPathType}/0`]);
   }
 
   change(v) {
     pageOnChange(v, this.searchParam.pagedAndFilteredInputDto, () => {
       this.getList();
     })
+  }
+
+  /**
+   * 导出
+   */
+  exportXlsx(){
+    this._publicModel.exportXlsx(this.columns,this.formResultData.data);
+  }
+
+  okRangeTime(v){
+    console.log(v); 
+    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')  
+    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')   
+    // this.searchParam.applyTimeStart = applyTimeStart;
+    // this.searchParam.applyTimeEnd = applyTimeEnd;
+    // console.log(applyTimeEnd);
   }
 
 
