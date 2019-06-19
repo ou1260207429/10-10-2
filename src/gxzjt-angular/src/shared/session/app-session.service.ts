@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbpMultiTenancyService } from '@abp/multi-tenancy/abp-multi-tenancy.service';
-import { ACLService } from '@delon/acl';
+import { ACLService, DelonACLConfig } from '@delon/acl';
 import { MenuService } from '@delon/theme';
 
 import {
@@ -24,7 +24,8 @@ export class AppSessionService {
     private _loginServiceProxy: LoginServiceProxy,
     private _abpMultiTenancyService: AbpMultiTenancyService,
     private _ACLService: ACLService,
-    private _MenuService: MenuService
+    private _MenuService: MenuService,
+    private _DelonACLConfig: DelonACLConfig
   ) { }
 
   // get application(): ApplicationInfoDto {
@@ -67,7 +68,9 @@ export class AppSessionService {
             // this._application.version = "1.0.0";
             // this._application.releaseDate = new Date();
             this._user = result;
-            // this._ACLService.setRole([result.roleName]);
+
+            // result.roleName = '公众注册用户';
+            
             switch (result.roleName) {
               case '系统管理员':
                 this._ACLService.setFull(true);
@@ -83,9 +86,15 @@ export class AppSessionService {
                 break
               case '公众注册用户':
                 this._ACLService.setRole(['reg']);
+                this._DelonACLConfig.guard_url = '/app/engineering-management/engineeringListComponent';
+
+
                 break
               default:
                 this._ACLService.setRole(['reg']);
+                this._DelonACLConfig.guard_url = '/app/engineering-management/engineeringListComponent';
+
+
                 break;
             }
 
