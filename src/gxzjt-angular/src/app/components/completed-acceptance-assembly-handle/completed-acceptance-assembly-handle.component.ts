@@ -4,7 +4,7 @@ import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum } from 'infrastructur
 import { objDeleteType, genID } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
-import { PublicServices, UploadFileModel } from 'services/public.services';
+import { PublicServices } from 'services/public.services';
 
 /**
  * 消竣工验收的表单模块的办理或者结果

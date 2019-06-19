@@ -4,7 +4,7 @@ import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum } from 'infrastructur
 import { objDeleteType, genID } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
-import { PublicServices, UploadFileModel } from 'services/public.services';
+import { PublicServices } from 'services/public.services';
 
 /**
  * 消防设计的表单模块
@@ -38,6 +38,27 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
   //判断上传的焦点
   uoloadIndex: number = -1;
+
+  arr = [
+    {
+      type:0,
+      imgList:[
+        {name:'图片名字',uid:''}
+      ]
+    },
+    {
+      type:1,
+      imgList:[
+        
+      ]
+    },
+    {
+      type:2,
+      imgList:[
+        
+      ]
+    }
+  ]
   constructor(public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
@@ -77,30 +98,30 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   beforeUpload = (file: UploadFile): boolean => {
     console.log(file);
 
-    const arr: UploadFileModel = {
-      files: [file],
-      AppId: '9F947774-8CB4-4504-B441-2B9AAEEAF450',
-      module: 'xfsj'
-    }
+    // const arr: UploadFileModel = {
+    //   files: [file],
+    //   AppId: '9F947774-8CB4-4504-B441-2B9AAEEAF450',
+    //   module: 'xfsj'
+    // }
 
 
     // console.log(genID(1).length);
     // console.log(arr);
     // return false;
-    this._publicServices.upload(arr).subscribe(data => {
-      // if (data.uploadAttachments.length > 0) {
+    // this._publicServices.upload(arr).subscribe(data => {
+    //   // if (data.uploadAttachments.length > 0) {
 
-      // } else {
-      //   // this.data.push({
-      //   //   type: this.uoloadIndex,
-      //   //   imgList: [{}]
-      //   // })
-      // }
-      // this.data.push({
-      //   type:this.uoloadIndex,
-      // })
-      console.log(data);
-    })
+    //   // } else {
+    //   //   // this.data.push({
+    //   //   //   type: this.uoloadIndex,
+    //   //   //   imgList: [{}]
+    //   //   // })
+    //   // }
+    //   // this.data.push({
+    //   //   type:this.uoloadIndex,
+    //   // })
+    //   console.log(data);
+    // })
     // this.fileList = this.fileList.concat(file);
     return false;
   };

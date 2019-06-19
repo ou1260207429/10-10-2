@@ -32,10 +32,10 @@ export class PoliciesAndRegulationsComponent extends PublicFormComponent impleme
     startTime: "",
     endTime: "",
   };
-
+  isShowAdd = false;
 
   columns: STColumn[] = [
-    { title: '法规编号', index: 'regulationCode' },
+    // { title: '法规编号', index: 'regulationCode' },
     { title: '法规类型', index: 'regulationType' },
     { title: '标题名称', index: 'title' },
     { title: '颁布机关', index: 'issueOrg' },
@@ -43,18 +43,18 @@ export class PoliciesAndRegulationsComponent extends PublicFormComponent impleme
       title: '发布时间', index: 'creationTime', type: 'date'
     },
     { title: '生效日期', index: 'issueDate', type: 'date' },
-    {
-      title: '内容存放路径', index: 'contentUrl'
-    },
+    // {
+    //   title: '内容存放路径', index: 'contentUrl'
+    // },
     {
       title: '最近修改时间', index: 'lastUpdateTime', type: 'date'
     },
     {
       title: '最近操作人账号', index: 'lastUpdateUserCode'
     },
-    {
-      title: '最近操作人名字', index: 'lastUpdateUserName'
-    },
+    // {
+    //   title: '最近操作人名字', index: 'lastUpdateUserName'
+    // },
     {
       title: '浏览量', index: 'visitCount'
     },
@@ -124,12 +124,13 @@ export class PoliciesAndRegulationsComponent extends PublicFormComponent impleme
    * 获取列表 
    */
   workFlow_NodeAuditorRecords(params?: any) {
+    this.formResultData=[];
     this.isSearchForm = true;
-
     this._regulationServiceProxy.regulationListAsync(params).subscribe(data => {
       this.isSearchForm = false;
-
-      this.formResultData = data.data;
+      if(data.data){
+        this.formResultData = data.data;
+      }
     })
   }
   /**
@@ -137,8 +138,10 @@ export class PoliciesAndRegulationsComponent extends PublicFormComponent impleme
    */
   query() {
     this.params.page = 1;
-    this.params.startTime = this.rangeTime[0];
-    this.params.endTime = this.rangeTime[1];
+    if(this.rangeTime){
+      this.params.startTime = this.rangeTime[0];
+      this.params.endTime = this.rangeTime[1];
+    }
     this.params.search = this.searchKey;
     this.workFlow_NodeAuditorRecords(this.params);
   }

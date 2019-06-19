@@ -57,7 +57,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   constructor(private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
     private _flowServices: FlowServices,
     private router: Router,
-    private http: _HttpClient,
+    private http: _HttpClient, 
     private xlsx: XlsxService) {
    super();
 
@@ -120,6 +120,13 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
    */
   addDeclare() {
     this.router.navigate([`/app/engineering-management/addCompletedAcceptanceComponent/0/null`]);
+  }
+
+  /**
+   * 导出
+   */
+  exportXlsx(){
+    // this._publicModel.exportXlsx(this.columns,this.formResultData.data);
   }
 
 }

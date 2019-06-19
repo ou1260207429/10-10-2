@@ -18,7 +18,7 @@
               <div v-if="data">
                 <h1>{{data.title}}</h1>
                 <p style="text-align: center;color:#A3A3A3">发布日期：{{data.creationTime}}</p>
-                <div style="padding:20px;margin-bottom:50px;">{{data.content}}</div>
+                <div v-html="data.content" style="padding:20px;margin-bottom:50px;"></div>
               </div>
               <div v-else style="width:100%;height:300px;position:relative;"></div>
             </el-col>
@@ -170,10 +170,6 @@ export default {
         req.result.creationTime = moment(req.result.creationTime).format(
           "YYYY-MM-DD"
         );
-
-        if (req.result.content) {
-          req.result.content = req.result.content.replace(/<[^>]+>|&[^>]+;/g, "").trim();
-        }
 
         _this.data = req.result;
       });

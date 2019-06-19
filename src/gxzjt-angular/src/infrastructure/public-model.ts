@@ -1,13 +1,14 @@
 import { Injectable } from "@angular/core";
 import { MessageService } from "abp-ng2-module/dist/src/message/message.service";
 import { NzMessageService } from "ng-zorro-antd";
+import { STColumn, XlsxService } from "@delon/abc";
 
 /**
  * 通用的方法
  */
 @Injectable()
 export class PublicModel {
-  constructor(private message: MessageService, private nzMessage: NzMessageService, ) { }
+  constructor(private xlsx: XlsxService,private message: MessageService, private nzMessage: NzMessageService, ) { }
   isDeleteModal(then?: Function) {
     this.message.confirm(
       '是否确认删除',
@@ -31,6 +32,28 @@ export class PublicModel {
       return false
     }
     arr.splice(index, 1)
+  }
+
+  exportXlsx(columns:STColumn[],array:Array<any>) {
+    const expData = [columns.map(i => i.title)];
+    
+    array.forEach((item,index)=>{
+      const list = [];
+      columns.forEach((box,i)=>{ 
+        const value = box.index?item[box.index.toString()]:''
+        list.push(value) 
+      })
+      expData.push(list)  
+    }) 
+   
+    this.xlsx.export({
+      sheets: [
+        {
+          data: expData,
+          name: 'sheet name',
+        },
+      ],
+    });
   }
 
 

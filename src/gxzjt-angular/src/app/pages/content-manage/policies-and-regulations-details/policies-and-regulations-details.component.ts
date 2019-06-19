@@ -190,9 +190,9 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
       AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
       module: "table"
     }
-    this._publicServices.upload(uploadFileModel).subscribe(data => {
-      console.log(data)
-    })
+    // this._publicServices.upload(uploadFileModel).subscribe(data => {
+    //   console.log(data)
+    // })
   }
   beforeUpload = (file: UploadFile): boolean => {
     this.fileList = this.fileList.concat(file);

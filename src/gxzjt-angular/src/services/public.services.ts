@@ -13,11 +13,17 @@ export class PublicServices {
      * 统一上传
      */
 
-    upload(page: UploadFileModel): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + 'api/Upload/Upload', page, {
-            headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+    upload(page: any): Observable<any> {
+        return this.http.post(PANGBO_SERVICES_URL + "api/Upload/Upload", page
+        );
+    }
+    newUpload(files: any, params): Observable<any> {
+        let url = "api/Upload/Upload?" + "AppId=" + params.AppId + "&module=" + params.module + "&sourceId=" + params.sourceId
+        return this.http.post(PANGBO_SERVICES_URL + url, files, {
+            headers: new HttpHeaders({
+                responseType: 'text'
+            })
         }
-
         );
     }
 

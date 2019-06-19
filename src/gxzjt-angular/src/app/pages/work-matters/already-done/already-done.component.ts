@@ -15,8 +15,7 @@ import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 
 import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import { timeTrans } from 'infrastructure/regular-expression';
-
-
+import { PublicModel } from 'infrastructure/public-model';
 /**
  * 已办流程
  */
@@ -60,7 +59,7 @@ export class AlreadyDoneComponent
 
   //时间
   rangeTime
-  constructor(private workFlowedServiceProxy: WorkFlowedServiceProxy,
+  constructor(private _publicModel:PublicModel,private workFlowedServiceProxy: WorkFlowedServiceProxy,
     private _flowServices: FlowServices,
     private router: Router,
     private http: _HttpClient,
@@ -116,6 +115,13 @@ export class AlreadyDoneComponent
     // this.searchParam.applyTimeStart = applyTimeStart;
     // this.searchParam.applyTimeEnd = applyTimeEnd;
     // console.log(applyTimeEnd);
+  }
+
+  /**
+   * 导出
+   */
+  exportXlsx(){
+    this._publicModel.exportXlsx(this.columns,this.formResultData.data);
   }
 
 }
