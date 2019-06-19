@@ -15,7 +15,7 @@ import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import { timeTrans } from 'infrastructure/regular-expression';
 
-
+import { PublicFormComponent } from '../public/public-form.component';
 /**
  * 竣工验收
  */
@@ -24,9 +24,9 @@ import { timeTrans } from 'infrastructure/regular-expression';
   templateUrl: './completed-acceptance.component.html',
   styles: []
 })
-export class CompletedAcceptanceComponent implements OnInit {
+export class CompletedAcceptanceComponent extends PublicFormComponent implements OnInit {
   
-  formResultData
+  formResultData;
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
@@ -59,7 +59,7 @@ export class CompletedAcceptanceComponent implements OnInit {
     private router: Router,
     private http: _HttpClient,
     private xlsx: XlsxService) {
-
+   super();
 
   }
 

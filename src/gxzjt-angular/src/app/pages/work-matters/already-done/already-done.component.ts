@@ -15,6 +15,8 @@ import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 
 import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import { timeTrans } from 'infrastructure/regular-expression';
+
+
 /**
  * 已办流程
  */
@@ -23,10 +25,11 @@ import { timeTrans } from 'infrastructure/regular-expression';
   templateUrl: 'already-done.component.html',
   styles: [],
 })
-export class AlreadyDoneComponent  implements OnInit {
+export class AlreadyDoneComponent
+  extends PublicFormComponent implements OnInit {
 
- 
 
+    index;
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
@@ -49,7 +52,8 @@ export class AlreadyDoneComponent  implements OnInit {
 
   pageConfig: STPage = publicPageConfig;
 
-  formResultData
+  formResultData: any;
+
 
   //类型
   flowPathTypeEnum = FlowPathTypeEnum
@@ -61,7 +65,7 @@ export class AlreadyDoneComponent  implements OnInit {
     private router: Router,
     private http: _HttpClient,
     private xlsx: XlsxService) {
-
+    super();
   }
 
   ngOnInit() {
@@ -82,7 +86,7 @@ export class AlreadyDoneComponent  implements OnInit {
    */
   getList() {
     this.workFlowedServiceProxy.processedWorkFlow_NodeAuditorRecord(this.searchParam).subscribe((data: any) => {
-      this.formResultData = data 
+      this.formResultData = data
     })
   }
 

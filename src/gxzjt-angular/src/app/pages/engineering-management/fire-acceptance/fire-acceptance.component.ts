@@ -14,6 +14,7 @@ import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 
 import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import { timeTrans } from 'infrastructure/regular-expression';
+import { PublicFormComponent } from '../public/public-form.component';
 
 /**
  * 消防验收
@@ -23,11 +24,11 @@ import { timeTrans } from 'infrastructure/regular-expression';
   templateUrl: './fire-acceptance.component.html',
   styles: []
 })
-export class FireAcceptanceComponent implements OnInit {
+export class FireAcceptanceComponent  extends PublicFormComponent implements OnInit {
   
  
-  formResultData
-
+  formResultData;
+  companyName;
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     {
@@ -59,7 +60,7 @@ export class FireAcceptanceComponent implements OnInit {
     private router: Router,
     private http: _HttpClient,
     private xlsx: XlsxService) {
-
+     super();
 
   }
 

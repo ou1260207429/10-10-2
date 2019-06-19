@@ -5,12 +5,11 @@ import { NoDataComponent } from '@shared/components/no-data/no-data.component';
 import { ValidationMessagesComponent } from './validation-messages/validation-messages.component';
 import { UploadFileComponent } from './tranfile/uploadfile';
 
-import { NzUploadModule } from 'ng-zorro-antd';
-
 const COMPONENTS = [
   NoDataComponent,
   UploadFileComponent,
-  ValidationMessagesComponent
+  ValidationMessagesComponent,
+  
 ];
 
 
@@ -18,7 +17,6 @@ const COMPONENTS = [
 @NgModule({
   imports: [
     CommonModule,
-    NzUploadModule,
   ],
   declarations: [
     ...COMPONENTS

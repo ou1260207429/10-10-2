@@ -6,7 +6,7 @@ import { _HttpClient } from '@delon/theme';
 
 
 import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, DataSourceResult, PagedAndFilteredInputDto, ProjectFlowServcieServiceProxy, FireAuditCompleteQueryDto } from '@shared/service-proxies/service-proxies'
-
+import { PublicFormComponent } from '../public/public-form.component';
 
 import { Router } from '@angular/router';
 
@@ -22,7 +22,7 @@ import { timeTrans } from 'infrastructure/regular-expression';
   templateUrl: './fire-design.component.html',
   styles: []
 })
-export class FireDesignComponent implements OnInit {
+export class FireDesignComponent extends PublicFormComponent implements OnInit {
   
  
   formResultData
@@ -58,7 +58,7 @@ export class FireDesignComponent implements OnInit {
     private router: Router,
     private http: _HttpClient,
     private xlsx: XlsxService) {
-
+    super();
 
   }
 

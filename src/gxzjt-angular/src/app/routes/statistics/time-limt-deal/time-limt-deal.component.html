@@ -11,13 +11,13 @@
 
   <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
     <!-- <span>地市：</span> -->
-    <nz-select class="search_menu_input" formControlName="city" nzShowSearch nzAllowClear nzPlaceHolder="选择市区"[(ngModel)]="city" (ngModelChange)="cityChange($event)">
+    <nz-select class="search_menu_input" formControlName="city" nzShowSearch nzAllowClear nzPlaceHolder="选择市区"[(ngModel)]="cityarray" (ngModelChange)="cityChange($event)">
       <div *ngFor="let item of cityarray">
         <nz-option nzLabel="{{item.label}}" nzValue="{{item.label}}"></nz-option>
       </div>
     </nz-select>
     <!-- <span>区域：</span> -->
-    <nz-select class="search_menu_input" formControlName="count" nzShowSearch nzAllowClear nzPlaceHolder="选择区县" [(ngModel)]="county">
+    <nz-select class="search_menu_input" formControlName="count" nzShowSearch nzAllowClear nzPlaceHolder="选择区县" [(ngModel)]="countyarray">
       <div *ngFor="let item of countyarray">
         <nz-option nzLabel="{{item.label}}" nzValue="{{item.label}}"></nz-option>
       </div>

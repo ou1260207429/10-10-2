@@ -14,7 +14,7 @@ import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 
 import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import { timeTrans } from 'infrastructure/regular-expression';
-
+import { PublicFormComponent } from '../public/public-form.component';
 /**
  * 工程列表
  */
@@ -23,9 +23,10 @@ import { timeTrans } from 'infrastructure/regular-expression';
   templateUrl: './engineering-list.component.html',
   styles: []
 })
-export class EngineeringListComponent implements OnInit {
- 
-  formResultData
+export class EngineeringListComponent extends PublicFormComponent implements OnInit {
+
+  formResultData;
+
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
@@ -58,7 +59,7 @@ export class EngineeringListComponent implements OnInit {
     private router: Router,
     private http: _HttpClient,
     private xlsx: XlsxService) {
-
+    super();
 
   }
 
@@ -90,7 +91,7 @@ export class EngineeringListComponent implements OnInit {
    * 点击查询
    */
   query() {
-    this.searchParam.page = 1; 
+    this.searchParam.page = 1;
     this.getList();
   }
 
@@ -105,8 +106,8 @@ export class EngineeringListComponent implements OnInit {
     })
   }
 
-  okRangeTime(v){
-    console.log(v); 
+  okRangeTime(v) {
+    console.log(v);
     // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')  
     // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')   
     // this.searchParam.applyTimeStart = applyTimeStart;
@@ -115,4 +116,8 @@ export class EngineeringListComponent implements OnInit {
   }
 
 
+
+
+  
+  
 }

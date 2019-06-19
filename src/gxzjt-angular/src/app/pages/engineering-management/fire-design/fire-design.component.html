@@ -3,8 +3,8 @@
   
       <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
           type="{{ hiddenFliter?'down':'up'}}"></i>{{ hiddenFliter?'展开条件':'收起条件'}}</button>
-      <button (click)="refresh()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
-      <button (click)="exportXlsx()" nz-button nzType="primary"><i nz-icon type="export"></i>导出</button>
+      <button (click)="query()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
+      <button (click)="st.export()" nz-button nzType="primary"><i nz-icon type="export"></i>导出</button>
     </ng-template>
   </page-header>
   <nz-card>
@@ -16,7 +16,7 @@
   
      
   
-      <input nz-input [(ngModel)]="searchParam.companyName" name="companyName"  placeholder="建设单位"
+      <input nz-input [(ngModel)]="searchParam.projectName" name="companyName"  placeholder="建设单位"
         style="margin-right: 10px;margin-top: 10px;width: 200px;">
 
   
@@ -34,7 +34,7 @@
   
     <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns" [page]="pageConfig"
       [total]="formResultData.total" [pi]="searchParam.page"
-      [ps]="searchParam.maxResultCount" (change)="change($event)" [noResult]=noResult>
+      [ps]="searchParam.maxResultCount" (change)="change($event)" >
     </st>
     <br>
   </nz-card>

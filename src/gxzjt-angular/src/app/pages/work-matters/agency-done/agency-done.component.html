@@ -20,7 +20,7 @@
     <input nz-input [(ngModel)]="searchParam.companyName" name="flowPathType"  placeholder="建设单位"
       style="margin-right: 10px;margin-top: 10px;width: 200px;">
 
-    <nz-select [(ngModel)]="searchParam.flowPathType" name="jbgrade{{index}}" required style="margin-right: 10px;margin-top: 10px;width: 200px;">
+    <nz-select [(ngModel)]="searchParam.projectTypeStatu" name="jbgrade{{index}}" required style="margin-right: 10px;margin-top: 10px;width: 200px;">
       <nz-option *ngFor="let option of flowPathTypeEnum" [nzLabel]="option.label" [nzValue]="option.value">
       </nz-option>
     </nz-select>
@@ -38,7 +38,7 @@
 
   <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns" [page]="pageConfig"
     [total]="formResultData.total" [pi]="searchParam.pagedAndFilteredInputDto.page"
-    [ps]="searchParam.pagedAndFilteredInputDto.maxResultCount" (change)="change($event)" [noResult]=noResult>
+    [ps]="searchParam.pagedAndFilteredInputDto.maxResultCount" (change)="change($event)" >
   </st>
   <br>
 </nz-card>
