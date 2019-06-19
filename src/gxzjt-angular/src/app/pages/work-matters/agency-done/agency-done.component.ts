@@ -23,8 +23,8 @@ import { timeTrans } from 'infrastructure/regular-expression';
   templateUrl: 'agency-done.component.html',
   styles: [],
 })
-export class AgencyDoneComponent  implements OnInit {
-
+export class AgencyDoneComponent  extends PublicFormComponent implements OnInit {
+  index;
 
  
   formResultData
@@ -60,7 +60,8 @@ export class AgencyDoneComponent  implements OnInit {
     private router: Router,
     private http: _HttpClient,
     private xlsx: XlsxService) {
-
+    
+      super();
 
   }
 

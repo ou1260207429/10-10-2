@@ -24,6 +24,8 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 
 import { environment } from 'environments/environment'
 
+import { NzModalService } from 'ng-zorro-antd';
+
 @Component({
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.less'],
@@ -43,6 +45,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
     private readonly _loginService: LoginService,
     public http: HttpClient,
     private fb: FormBuilder,
+    private modalService: NzModalService,
   ) {
     super(injector);
   }
@@ -115,13 +118,25 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
     let url = environment.REGISTER_URL + "/api/User/Register";
 
 
-    this.http.post(url, this.model, this.httpOptions).subscribe(res => {
+    this.http.post(url, this.model, this.httpOptions).subscribe((res: any) => {
 
       console.log(res);
+      if (res.code) {
+        if (res.code == 1) {
+          this.showErr(res.message);
+        }
+      }
       this.saving = false;
     }, err => {
-      console.log(err);
+      this.showErr(err);
       this.saving = false;
+    });
+  }
+
+  showErr(msg) {
+    this.modalService.error({
+      nzTitle: '出错啦',
+      nzContent: msg,
     });
   }
 
