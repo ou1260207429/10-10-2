@@ -54,7 +54,7 @@ export class StatisticsProAppStaticComponent implements OnInit {
           //   paramsName: 'record',
           // },
           click: (record: any, modal: any) => {
-            window.open("assets/images/big2/img_bg_bjqk.png")
+            window.open(record.acceptAttachmentFileUrl)
           },
         },
         {
@@ -65,7 +65,8 @@ export class StatisticsProAppStaticComponent implements OnInit {
           //   paramsName: 'record',
           // },
           click: (record: any, modal: any) => {
-            window.open("assets/images/big2/img_bg_bjqk.png")
+
+            window.open(record.opinionFileUrl)
           },
         },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
@@ -188,8 +189,8 @@ export class StatisticsProAppStaticComponent implements OnInit {
         "recordNumber": "",
         "projectName": "",
         "status": -1,
-        "startApplyTime": "2019-02-17T10:19:49.251Z",
-        "endApplyTime": "2019-06-17T18:19:49.251Z",
+        "startApplyTime": "",
+        "endApplyTime": "",
         "page": 1,
         "sorting": "ProjectName",
         "skipCount": 0,

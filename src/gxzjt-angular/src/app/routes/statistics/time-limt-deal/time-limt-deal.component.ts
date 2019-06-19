@@ -850,6 +850,7 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
   }
   search() {
     this.param.cityName = this.fliterForm.controls.city.value;
+    debugger
     this.param.area = this.fliterForm.controls.count.value;
     this.param.flowPathType = Number(this.fliterForm.controls.proType.value);
     if (this.param.flowPathType == 0) {
@@ -911,9 +912,9 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
         "cityName": "",
         "area": "",
         "flowPathType": -1,
-        "startApplyTime": "2019-01-18T01:16:28.542Z",
-        "endApplyTime": "2019-07-18T01:16:28.543Z",
-        "dateTimeNow": "2019-06-18T01:16:28.543Z",
+        "startApplyTime": "",
+        "endApplyTime": "",
+        "dateTimeNow": "",
         "page": 1,
         "sorting": "CityName",
         "skipCount": 0,

@@ -54,7 +54,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
           //   paramsName: 'record',
           // },
           click: (record: any, modal: any) => {
-            window.open("assets/images/big2/img_bg_bjqk.png")
+            window.open(record.acceptAttachmentFileUrl)
           },
         },
         {
@@ -65,7 +65,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
           //   paramsName: 'record',
           // },
           click: (record: any, modal: any) => {
-            window.open("assets/images/big2/img_bg_bjqk.png")
+            window.open(record.opinionFileUrl)
           },
         },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
@@ -181,9 +181,9 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
         "recordNumber": "",
         "projectName": "",
         "status": -1,
-        "startApplyTime": "2019-02-17T10:30:39.940Z",
-        "endApplyTime": "2019-06-17T10:30:39.940Z",
-        "dateTimeNow": "2019-06-17T10:30:39.940Z",
+        "startApplyTime": "",
+        "endApplyTime": "",
+        "dateTimeNow": "",
         "page": 1,
         "sorting": "ProjectName",
         "skipCount": 0,

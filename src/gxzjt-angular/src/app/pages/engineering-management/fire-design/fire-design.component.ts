@@ -43,9 +43,26 @@ export class FireDesignComponent implements OnInit {
         },
       ]
     },
-    { title: '表单', index: 'companyName' },
-    // { title: '创建人员', index: 'createEName' },
-    { title: '申报时间', index: 'applyTime' },
+    { title: '设计审查申报编号', index: 'investigateNumber' },
+    { title: '工程名称', index: 'projectName' },
+    { title: '建设单位', index: 'companyName' },
+    { title: '联系人', index: 'contactPerson' },
+    { title: '当前处理环节', index: 'currentNodeName' },
+    { title: '当前处理人', index: 'currentHandleUserName' },
+    { title: '流程是否超时', index: 'isExpireTime',type: 'tag', tag: {
+      true: { text: '是', color: '' },
+      false: { text: '否', color: '' },
+    }},
+    // { title: '审核结果', index: 'status',type: 'tag', tag: {
+    //   0: { text: '未处理', color: '' },
+    //   1: { text: '受理', color: 'green' },
+    //   2:{ text: '不受理', color: '' },
+    //   3:{ text: '不合格', color: '' },
+    //   4:{ text: '合格', color: '' },
+    //   5:{ text: '未抽中', color: '' },
+    // }},
+    { title: '操作人', index: 'currentHandleUserName' },
+    { title: '操作时间', index: 'applyTime' },
   ];
 
   pageConfig: STPage = publicPageConfig;
@@ -62,13 +79,13 @@ export class FireDesignComponent implements OnInit {
   }
 
 
-  init() { 
+  init() {
     this.param.page = 1;
     this.param.maxResultCount = 10;
-    this.param.flowPathType = 1 
+    this.param.flowPathType = 1
     this.param.sorting = 'ProjectName';
     this.param.startApplyTime = moment(this.rangeTime[0])
-    this.param.endApplyTime =moment(this.rangeTime[1])  
+    this.param.endApplyTime =moment(this.rangeTime[1])
     this.getList();
   }
 
@@ -78,7 +95,7 @@ export class FireDesignComponent implements OnInit {
   query() {
     this.param.page = 1;
     this.param.startApplyTime = moment(this.rangeTime[0])
-    this.param.endApplyTime =moment(this.rangeTime[1])  
+    this.param.endApplyTime =moment(this.rangeTime[1])
     this.getList();
   }
 
@@ -107,7 +124,7 @@ export class FireDesignComponent implements OnInit {
     })
   }
 
-  watchItem(item) { 
+  watchItem(item) {
     this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`]);
   }
 }
