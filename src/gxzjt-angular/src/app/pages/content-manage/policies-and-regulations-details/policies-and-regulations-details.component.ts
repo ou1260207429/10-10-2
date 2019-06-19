@@ -147,9 +147,8 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     } else {
       this.data.regulationId = this.id;
     }
+    this.uploadFiles(this.data.guid);
     this.data.issueDate = new Date(timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'))
-    console.log(this.data)
-
     const src = this.operate == 0 ? this._regulationServiceProxy.addRegulationAsync(this.data) : this._regulationServiceProxy.editRegulationAsync(this.data)
     src.subscribe(data => {
       const name = this.operate == 0 ? '新增成功' : '修改成功';
@@ -183,16 +182,20 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   /**
  * 上传文件
  */
-  uploadFiles() {
-    let uploadFileModel: UploadFileModel = {
-      files: this.fileList,
-      sourceId: this.data.guid(),
+  uploadFiles(guid) {
+    let params = {
+      sourceId: guid,
       AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
-      module: "table"
+      module: "table",
     }
-    // this._publicServices.upload(uploadFileModel).subscribe(data => {
-    //   console.log(data)
-    // })
+
+    this.fileList.forEach((file: any) => {
+      const formData = new FormData();
+      formData.append('files', file);
+      this._publicServices.newUpload(formData, params).subscribe(data => {
+        console.log(data)
+      })
+    });
   }
   beforeUpload = (file: UploadFile): boolean => {
     this.fileList = this.fileList.concat(file);
