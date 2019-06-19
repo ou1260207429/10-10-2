@@ -152,18 +152,19 @@ export class HandlingGuidDetailComponent implements OnInit {
     * 上传文件
     */
   uploadFiles(guid) {
-    const formData = new FormData();
-    this.fileList.forEach((file: any) => {
-      formData.append('files', file);
-    });
-    console.log(formData.getAll("files"));
     let params = {
       sourceId: guid,
       AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
       module: "table",
     }
-    this._publicServices.newUpload(formData, params).subscribe(data => {
-    })
+
+    this.fileList.forEach((file: any) => {
+      const formData = new FormData();
+      formData.append('files', file);
+      this._publicServices.newUpload(formData, params).subscribe(data => {
+        console.log(data)
+      })
+    });
   }
 
   beforeUpload = (file: UploadFile): boolean => {

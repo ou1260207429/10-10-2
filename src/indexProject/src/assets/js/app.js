@@ -122,7 +122,7 @@ var app = {
    */
   downList(url, method, data, succCallBack, errorCallBack) {
     let downLoadUrl = Vue.prototype.downLoadUrl;
-    let finalUrl = url + "?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&module=table&sourceId=A49E658F-DF7E-4512-9A6D-4106EBBFCAFF"
+    let finalUrl = url + "?appId="+data.appId+"&id="+data.id
     return new Promise(function (resolve, reject) {
       axios({
         method: method,
