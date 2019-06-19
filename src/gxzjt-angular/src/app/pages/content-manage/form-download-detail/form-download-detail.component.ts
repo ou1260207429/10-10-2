@@ -4,7 +4,7 @@ import { AttachmentServiceProxy, AttachmentDto } from '@shared/service-proxies/s
 import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { filter } from 'rxjs/operators';
-import { PublicServices, UploadFileModel } from 'services/public.services';
+import { PublicServices } from 'services/public.services';
 @Component({
   selector: 'app-form-download-detail',
   templateUrl: './form-download-detail.component.html',
@@ -49,11 +49,11 @@ export class FormDownloadDetailComponent implements OnInit {
     this.data.guid = this.createguid();
     this.sourceId = this.createguid();
     this.uploadFiles();
-    // this._attachmentServiceProxy.addAttachmentAsync(this.data).subscribe(data => {
-    //   this.message.success("新增成功");
-    //   this._eventEmiter.emit('init', []);
-    //   this.goBack();
-    // })
+    this._attachmentServiceProxy.addAttachmentAsync(this.data).subscribe(data => {
+      this.message.success("新增成功");
+      this._eventEmiter.emit('init', []);
+      this.goBack();
+    })
   }
   /**
    * 上传文件
