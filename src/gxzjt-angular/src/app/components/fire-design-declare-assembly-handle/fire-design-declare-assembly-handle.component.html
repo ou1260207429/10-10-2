@@ -1,0 +1,114 @@
+<div [ngSwitch]="type">
+  <!-- 消防设计的办理凭证  -->
+  <div *ngSwitchCase="0">
+    <table class="tables d_table" style="box-sizing: border-box;">
+      <thead>
+        <tr>
+          <td colspan='20' rowspan='1' class="table_title">
+            <h3>××市住房和城乡建设局<br />建设工程消防设计审查申请受理/不予受理凭证</h3>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
+            <input class="table_input" [(ngModel)]="data.fileCodePrefix" name="fileCodePrefix" />住建消审凭字〔2019〕第0059号
+          </td>
+        </tr>
+        <tr>
+          <td rowspan='1' colspan='20'>
+            <div class="table_detail">
+              <h3>{{data.companyName}}：</h3>
+              <p>根据《中华人民共和国消防法》第十一条和《建设工程消防监督管理规定》第十五条的规定，你单位{{data.applyDateTime|date:'yyyy年MM月dd日'}}申请的 新建B栋教学楼
+                建设工程（地址：{{data.address}}）消防设计审查，提供了下列材料：</p>
+            </div>
+            <ul class="table_list">
+              <li *ngFor="let item of data.attachmentItems;let index=index">
+                <label nz-checkbox name="item{{item}}"
+                  [(ngModel)]="item.isSubmit">{{index+1}}、{{item.attachmentTypeName}}</label>
+              </li>
+            </ul>
+            <div class="table_add_info">
+              <p>经核，申报材料项目（<nz-radio-group [(ngModel)]="data.isComplete" name="isComplete11">
+                  <label style="padding-left: 20px;" nz-radio nzValue="true">齐全</label>
+                  <label nz-radio nzValue="false">不齐全</label>
+                </nz-radio-group>）</p>
+              <p>需要补正第<input class="table_input" [(ngModel)]="data.completeContent" name="completeContent" />项材料。</p>
+              <p>审查时限<input class="table_input" [(ngModel)]="data.timeLimitOfDay"
+                  name="timeLimitOfDay" />日内，依法需要听证和专家评审的，所需时间不计算在内。</p>
+            </div>
+
+            <div class="table_seal">
+              由后台提供的当前时间 年月日
+            </div>
+
+          </td>
+        </tr> 
+        <tr>
+          <td class="fontweight fontLeft leftTitle">一式两份，一份交建设单位，一份存档。 </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 消防设计的审查意见书（合格）  -->
+  <div *ngSwitchCase="1">
+    <table class="tables d_table" style="box-sizing: border-box;">
+      <thead>
+        <tr>
+          <td colspan='20' rowspan='1' class="table_title">
+            <h3>××市住房和城乡建设局<br />建设工程消防设计审查意见书</h3>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
+            ×住建消审凭字〔2019〕第0059号
+          </td>
+        </tr>
+        <tr>
+          <td rowspan='1' colspan='20'>
+            <div class="table_detail">
+              <h3>×市××区××××：</h3>
+              <p>
+                你单位申请的“新建B栋教学楼”建设工程（受理凭证：×住建消审凭字〔201×〕第××××号，201×年×月××日收）消防设计图纸材料及有关资料收悉。该工程位于××市××路××号，××小学校园内。新建B栋教学楼建筑高度为19.6m，建筑层数为5层，建筑面积为2902.76㎡，设计用途一层为生活用房、二至四层为教室、五层为教师办公室、会议室等，属多层民用建筑。该工程消防设施主要有室内、室外消火栓系统。设计单位为×××设计有限公司，设计资质为建设工程×级。按照图纸审查机构（××××公司）对该工程设计图纸的技术审查结论，我局提出以下意见：
+              </p>
+            </div>
+            
+            <ul class="table_list">
+              <li>
+                一、同意该工程消防设计，请按照审查批准的消防设计图纸资料进行施工。
+              </li>
+              <li>
+                二、建设单位应当依法选用具有规定资质等级的施工、工程监理等单位，并查验其合法身份证明和资质等级证明文件。
+              </li>
+              <li>
+                三、提供图纸审查的技术服务机构和人员对出具的技术审查意见负责。
+              </li>
+              <li>
+                四、经此次审查的建设工程消防设计如需变更，应当重新报送我单位审查。该工程竣工后，应当向我单位申报消防验收，验收合格后方可投入使用。
+              </li>
+            </ul>
+
+            <div class="table_seal">
+              由后台提供的当前时间 年月日
+            </div>
+
+          </td>
+        </tr>
+        <tr>
+          <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">建设单位收件人签名：<input
+              class="table_input_2" />
+            <p class="table_time">
+              <nz-date-picker name="t2"></nz-date-picker>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td class="fontweight fontLeft leftTitle">本意见书一式两份，一份交建设单位，一份存档。 </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

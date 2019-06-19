@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum } from 'infrastructure/expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum } from 'infrastructure/expression';
 import { objDeleteType } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 
@@ -15,6 +15,9 @@ import { PublicModel } from 'infrastructure/public-model';
 })
 export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
+  //判断是新增或者办理  0是新增 1是办理
+  @Input() type: number = 0
+  
   @Input() data: any
 
   //市县区
@@ -23,12 +26,23 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   //结构类型
   typeSelect = ArchitectureTypeEnum
 
+  //耐火结构
+  refractoryEnum = RefractoryEnum
+
   //获取表单对象
   @ViewChild('f') f: FormGroup;
 
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
-  constructor(public publicModel: PublicModel, ) { }
+
+  //抽取号
+  decimationnumber
+  constructor(public publicModel: PublicModel, ) {
+    this.decimationnumber = [];
+    for (let index = 1; index < 101; index++) { 
+      this.decimationnumber.push({ label: index, value: index },)
+    }
+  }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去

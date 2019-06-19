@@ -1,4 +1,4 @@
-import { ApplyServiceServiceProxy, FlowFormQueryDto, FlowFormDto, FlowDataDto, ProjectFlowDto } from './../../../../shared/service-proxies/service-proxies';
+import { ApplyServiceServiceProxy, FlowFormQueryDto, FlowFormDto, FlowDataDto, ProjectFlowDto, FlowNodeUser } from './../../../../shared/service-proxies/service-proxies';
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ActivatedRoute } from '@angular/router';
@@ -6,6 +6,9 @@ import { timeTrans } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { GXZJT_From, FlowServices } from 'services/flow.services';
 import { FormGroup } from '@angular/forms';
+import { SSL_OP_ALL } from 'constants';
+
+import { PublicFormComponent } from '../public/public-form.component'
 
 /**
  * 工程管理->消防设计审查管理->新增申报
@@ -15,8 +18,7 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './add-fire-design-declare.component.html',
   styles: []
 })
-export class AddFireDesignDeclareComponent implements OnInit {
-
+export class AddFireDesignDeclareComponent extends PublicFormComponent implements OnInit {
 
   flowFormQueryDto = new FlowFormQueryDto();
 
@@ -471,14 +473,28 @@ export class AddFireDesignDeclareComponent implements OnInit {
         }]
     },
 
+    uploadAttachments: [
+      // {
+      //   ty0e:1,
+      //   xfgcImg: [
+      //     { name: '360exe.exe', gid: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' },
+      //     { name: '360exe.exe', gid: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' },
+      //   ],
+      // },
+      ,
+
+    ]
+
   }
 
   //子组件的表单对象
   form: FormGroup
   constructor(private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
+    super();
     this.flowFormQueryDto.flowType = 1;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
+
   }
 
   ngOnInit() {
@@ -537,19 +553,30 @@ export class AddFireDesignDeclareComponent implements OnInit {
       flowDataDto.projectFlowInfo.currentNodeId = data.result.cur_Node_Id
       flowDataDto.projectFlowInfo.currentNodeName = data.result.cur_NodeName
 
+      flowDataDto.projectFlowInfo.workFlow_Instance_Id = data.result.workFlow_Instance_Id
+      flowDataDto.projectFlowInfo.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
+
+      flowDataDto.handleUserList = [];
+      data.result.auditorRecords.forEach(element => {
+        const flowNodeUser = new FlowNodeUser()
+        flowNodeUser.userFlowId = element.id
+        flowDataDto.handleUserList.push(flowNodeUser)
+      });
+
+
+
       //待审人数组 等后台改模型
       // currentHandleUserName: string | undefined;
 
       //待审人数组 等后台改模型
       // currentHandleUserCode: string | undefined; 
 
+      console.log(this.data);
+      console.log(flowDataDto);
       this._applyService.investigate(flowDataDto).subscribe(data => {
         this.message.success('提交成功')
         history.go(-1)
       })
-
-      //   this.message.success('提交成功')
-      //   history.go(-1)
     })
 
   }

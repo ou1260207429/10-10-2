@@ -3,7 +3,7 @@ import { objDeleteType } from 'infrastructure/regular-expression';
 import { NzMessageService } from 'ng-zorro-antd';
 import { OptionsEnum, ArchitectureTypeEnum } from 'infrastructure/expression';
 import { PublicModel } from 'infrastructure/public-model';
-import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto } from '@shared/service-proxies/service-proxies';
+import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto, FlowDataDto, ProjectFlowDto, FlowNodeUser } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute } from '@angular/router';
 import { GXZJT_From, FlowServices } from 'services/flow.services';
 import { FormGroup } from '@angular/forms';
@@ -191,8 +191,10 @@ export class AddFireAcceptanceComponent implements OnInit {
   }
   save() {
     const from: GXZJT_From = {
-      frow_TemplateInfo_Data: this.data,
-      identify: 'xfys',
+      frow_TemplateInfo_Data: {
+        Area: "450000"
+      },
+      identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {
         applyEID: '10001',
         applyEName: '测试人员',
@@ -200,9 +202,42 @@ export class AddFireAcceptanceComponent implements OnInit {
         deptFullPath: '测试部门',
       }
     };
-    this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe(data => {
-      this.message.success('提交成功')
-      history.go(-1)
+    this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
+
+      const flowDataDto = new FlowDataDto();
+      flowDataDto.formJson = JSON.stringify(this.data);
+      flowDataDto.projectFlowInfo = new ProjectFlowDto();
+
+
+      flowDataDto.projectFlowInfo.timeLimit = data.result.timeLimit
+      //类型  消防设计1   消防验收2   消防竣工3 
+      flowDataDto.projectFlowInfo.flowPathType = 2
+
+      flowDataDto.projectFlowInfo.flowNo = data.result.workFlow_Instance_Id
+
+      flowDataDto.projectFlowInfo.currentNodeId = data.result.cur_Node_Id
+      flowDataDto.projectFlowInfo.currentNodeName = data.result.cur_NodeName
+
+      flowDataDto.projectFlowInfo.workFlow_Instance_Id = data.result.workFlow_Instance_Id
+      flowDataDto.projectFlowInfo.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id 
+ 
+       flowDataDto.handleUserList = [];
+       data.result.auditorRecords.forEach(element => {
+         const flowNodeUser = new FlowNodeUser()
+         flowNodeUser.userFlowId = element.id
+         flowDataDto.handleUserList.push(flowNodeUser)
+       });
+
+      //待审人数组 等后台改模型
+      // currentHandleUserName: string | undefined;
+
+      //待审人数组 等后台改模型
+      // currentHandleUserCode: string | undefined; 
+
+      this._applyService.acceptance(flowDataDto).subscribe(data => {
+        this.message.success('提交成功')
+        history.go(-1)
+      })
     })
   }
 

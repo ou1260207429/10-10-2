@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum } from 'infrastructure/expression';
-import { objDeleteType } from 'infrastructure/regular-expression';
+import { objDeleteType, genID } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
-import { PublicServices, UploadFileModel } from 'services/public.services';
+import { PublicServices } from 'services/public.services';
 
 /**
  * 消防设计的表单模块
@@ -15,6 +15,9 @@ import { PublicServices, UploadFileModel } from 'services/public.services';
   styles: []
 })
 export class FireDesignDeclareAssemblyComponent implements OnInit {
+
+  //判断是新增或者办理  0是新增 1是办理
+  @Input() type: number = 0
 
   @Input() data: any
 
@@ -35,6 +38,27 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
   //判断上传的焦点
   uoloadIndex: number = -1;
+
+  arr = [
+    {
+      type:0,
+      imgList:[
+        {name:'图片名字',uid:''}
+      ]
+    },
+    {
+      type:1,
+      imgList:[
+        
+      ]
+    },
+    {
+      type:2,
+      imgList:[
+        
+      ]
+    }
+  ]
   constructor(public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
@@ -72,14 +96,32 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
    * 上传文件之前的钩子
    */
   beforeUpload = (file: UploadFile): boolean => {
-    console.log(file)
-    const arr: UploadFileModel = {
-      files: [file]
-    }
-    console.log(arr);
-    this._publicServices.upload(arr).subscribe(data => {
-      console.log(data);
-    })
+    console.log(file);
+
+    // const arr: UploadFileModel = {
+    //   files: [file],
+    //   AppId: '9F947774-8CB4-4504-B441-2B9AAEEAF450',
+    //   module: 'xfsj'
+    // }
+
+
+    // console.log(genID(1).length);
+    // console.log(arr);
+    // return false;
+    // this._publicServices.upload(arr).subscribe(data => {
+    //   // if (data.uploadAttachments.length > 0) {
+
+    //   // } else {
+    //   //   // this.data.push({
+    //   //   //   type: this.uoloadIndex,
+    //   //   //   imgList: [{}]
+    //   //   // })
+    //   // }
+    //   // this.data.push({
+    //   //   type:this.uoloadIndex,
+    //   // })
+    //   console.log(data);
+    // })
     // this.fileList = this.fileList.concat(file);
     return false;
   };

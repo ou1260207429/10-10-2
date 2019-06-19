@@ -10,15 +10,17 @@
 <nz-card>
 
   <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
-    <!-- <span>工程流程：</span> -->
-    <input nz-input formControlName="proNo" placeholder="工程流水号" class="search_menu_input">
+    <!-- <span>工程流程：</span>
+    <input nz-input formControlName="proNo" placeholder="工程流水号" class="search_menu_input"> -->
 
     <!-- <nz-select class="search_menu_input" nzShowSearch nzAllowClear nzPlaceHolder="工程名称" [(ngModel)]="selectedValuePro">     </nz-select>-->
     <!-- <span>工程名称：</span> -->
     <input nz-input formControlName="proName" placeholder="工程名称" class="search_menu_input">
     <!-- <span>流程类型：</span> -->
-    <nz-select class="search_menu_input" formControlName="proType" nzShowSearch nzAllowClear nzPlaceHolder="流程类型">
-
+    <nz-select class="search_menu_input" formControlName="proType" nzShowSearch nzAllowClear nzPlaceHolder="工程类型">
+      <nz-option nzLabel="消防设计审查" nzValue="1"></nz-option>
+      <nz-option nzLabel="消防验收" nzValue="2"></nz-option>
+      <nz-option nzLabel="竣工验收消防备案" nzValue="3"></nz-option>
     </nz-select>
     <!-- <span>申报时间：</span> -->
     <nz-range-picker nzFormat="yyyy/MM/dd" formControlName="dateRange" class="search_menu"></nz-range-picker>
@@ -27,7 +29,7 @@
 
     <button nz-button (click)="search()" nzType="primary">搜索</button>
   </form>
-  <st #st [data]="url" [columns]="columns"></st>
+  <st #st [data]="formResultData" [columns]="columns"></st>
   <!-- <br>
   <nz-pagination [nzPageIndex]="2" [nzTotal]="500" nzShowQuickJumper></nz-pagination> -->
 </nz-card>

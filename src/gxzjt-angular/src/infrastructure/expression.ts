@@ -3,7 +3,7 @@
 import { STPage, STComponent } from "@delon/abc";
 
 
-export const FLOW_SERVICES_URL = 'http://localhost:21021'
+export const FLOW_SERVICES_URL = 'http://222.84.250.158:8111'
 
 //谢峰的服务地址
 export const XIEFENG_SERVICES_URL = 'http://localhost:3521/';
@@ -174,8 +174,17 @@ export const ArchitectureTypeEnum = [
 ]
 
 export const AdoptEnum = [
-  { label: '通过', value: '通过' },
-  { label: '不通过', value: '不通过' }
+  { label: '通过', value: true },
+  { label: '不通过', value: false }
+]
+
+/**
+ * 单位类型
+ */
+export const  FlowPathTypeEnum = [
+  { label: '消防设计审查', value: 1 },
+  { label: '消防验收', value: 2 },
+  { label: '竣工验收消防备案', value: 3 }, 
 ]
 
 /**

@@ -29,6 +29,7 @@ import {
 import { UrlHelper } from '@shared/helpers/UrlHelper';
 
 
+
 var checkCode: any;
 @Component({
   templateUrl: './login.component.html',
@@ -99,6 +100,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
   initSliter() {
     checkCode = "" + Math.ceil(Math.random() * 10000);
+    
     $(".inner").mousedown(function (e) {
       console.log(e)
       var el = $(".inner");

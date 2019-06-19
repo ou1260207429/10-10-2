@@ -19,8 +19,8 @@ export class FlowServices {
   /**
    * 查询待办流程
    */
-  tenant_PendingWorkFlow_NodeAuditorRecord(page?: any): Observable<any> {
-    return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/PendingWorkFlow_NodeAuditorRecord', page);
+  pendingWorkFlow_NodeAuditorRecord(page?: any): Observable<any> {
+    return this.http.post(FLOW_SERVICES_URL + '/api/services/app/WorkFlowed/PendingWorkFlow_NodeAuditorRecord', page);
   }
 
   /**
@@ -41,15 +41,48 @@ export class FlowServices {
     return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/Tenant_GetWorkFlowInstanceFrowTemplateInfoById', data);
   }
 
+  /**
+   * 通过操作
+   */
+  tenant_NodeToNextNodeByPass(data: any) {
+    return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/Tenant_NodeToNextNodeByPass', data);
+  }
+
+  /**
+   * 不通过操作
+   */
+  tenant_NodeToNextNodeByNoPass(data: any) {
+    return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/Tenant_NodeToNextNodeByNoPass', data);
+  }
+
+  /**
+   * 不通过的操作要选择指定的节点
+   */
+  getAuditedNodeRecords(id){
+    return this.http.get(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/GetAuditedNodeRecords', {
+      params:{
+        Id:id
+      }
+    });
+  }
+
+  /**
+   * 撤销接口
+   * @param data  参数
+   */
+  tenant_NodeToNextNodeByCancel(data: GXZJT_From) {
+    return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/Tenant_NodeToNextNodeByCancel', data);
+  }
+
   GXZJT_StartWorkFlowInstanceAsync(data: GXZJT_From) {
     return this.http.post(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/GXZJT_StartWorkFlowInstanceAsync', data);
   }
 }
 
 export interface WorkFlow {
-  workFlow_TemplateInfoId: string,
-  workFlow_InstanceId: string,
-  workFlow_NodeAuditorRecordId: string,
+  workFlow_TemplateInfoId?: string|number,
+  workFlow_InstanceId: string|number,
+  workFlow_NodeAuditorRecordId: string|number,
 }
 
 

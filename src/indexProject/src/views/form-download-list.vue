@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div style="width:100%;overflow:hidden;">
+  <div style="width:100%;overflow:hidden;margin-bottom: 20px;">
     <div class="content">
       <div ref="banner">
         <img style="width:100%;" src="../assets/images/表格下载_03.jpg" alt>
@@ -13,6 +13,7 @@
                 :key="index"
                 v-for="(item,index) in downLoadList"
                 class="list"
+                @click="downList(item.guid,item.id)"
               >
                 {{ item.attachmentName }}
                 <span style="float: right">{{ item.creationTime }}</span>
@@ -47,7 +48,7 @@ export default {
     setTimeout(function() {
       that.tableHight =
         app.clentHeight() - that.$refs.banner.offsetHeight + "px";
-    },100);
+    }, 100);
     window.onresize = function() {
       that.tableHight = app.clentHeight() + "px";
     };
@@ -66,10 +67,27 @@ export default {
         _this.downLoadList = req.result.data;
       });
     },
+
     /**
      * 下载表格
      */
-    downList() {}
+    downList(sourceId, id) {
+      let data = {
+        appId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
+        module: "table",
+        sourceId: sourceId
+      };
+      app.downList(table.downLoadList, "POST", data).then(req => {
+        if (req == "success") {
+          ///计算下载次数
+          app
+            .post(table.compute_downLoad, { attachmentId: id })
+            .then(result => {
+              console.log(result);
+            });
+        }
+      });
+    }
   }
 };
 </script>

@@ -1,11 +1,39 @@
-<div class="myBox">
-  <div class="boxRight">
-    <div nz-row class="more">
-      <div nz-col [nzSpan]="24" class="textRight">
-        <button nz-button nzType="primary" (click)="init()">刷新</button>
-      </div>
-    </div>
-    <st loading="!data" #st [data]="data.data" [columns]="columns" [page]="pageConfig" [total]="data.total"
-      [pi]="params.page" [ps]="params.maxResultCount" (change)="change($event)"></st>
-  </div>
-</div>
+<page-header [action]="phActionTpl">
+    <ng-template #phActionTpl>
+  
+      <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
+          type="{{ hiddenFliter?'down':'up'}}"></i>{{ hiddenFliter?'展开条件':'收起条件'}}</button>
+      <button (click)="init()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
+      <button (click)="exportXlsx()" nz-button nzType="primary"><i nz-icon type="export"></i>导出</button>
+    </ng-template>
+  </page-header>
+  <nz-card>
+  
+    <form nz-form class="mb-md" [hidden]="hiddenFliter"> 
+  
+        <input nz-input [(ngModel)]="searchParam.number"  name="number" placeholder="流程流水号"
+        style="margin-right: 10px;margin-top: 10px;width: 200px;">
+  
+     
+  
+      <input nz-input [(ngModel)]="searchParam.companyName" name="companyName"  placeholder="建设单位"
+        style="margin-right: 10px;margin-top: 10px;width: 200px;">
+
+  
+  
+  
+      <nz-range-picker [(ngModel)]="rangeTime" name="rangeTime" nzFormat="yyyy/MM/dd"  
+        style="margin-right: 10px;margin-top: 10px;"  (ngModelChange)="okRangeTime($event)"></nz-range-picker>
+  
+      <button nz-button (click)="init()" style="margin-right: 10px;margin-top: 10px;">重置</button>
+  
+      <button nz-button (click)="query()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>
+    </form>
+    <nz-spin [nzSpinning]="!formResultData"></nz-spin>
+  
+    <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns" [page]="pageConfig"
+      [total]="formResultData.total" [pi]="searchParam.page"
+      [ps]="searchParam.maxResultCount" (change)="change($event)" >
+    </st>
+    <br>
+  </nz-card>

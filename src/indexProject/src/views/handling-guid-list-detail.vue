@@ -1,13 +1,13 @@
 <!--  -->
 <template>
-  <div style="width:100%;overflow:hidden;">
+  <div style="width:100%;overflow:hidden;margin-bottom: 20px;">
     <div class="content">
       <el-row>
         <div id="breadcrumb" style="padding:10px 0px;">
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item>建设大厅</el-breadcrumb-item>
             <el-breadcrumb-item>办事指南</el-breadcrumb-item>
-            <el-breadcrumb-item class="breadcrumb">{{path}}</el-breadcrumb-item>
+            <el-breadcrumb-item v-if="data" class="breadcrumb">{{data.title}}</el-breadcrumb-item>
           </el-breadcrumb>
         </div>
       </el-row>
@@ -18,22 +18,29 @@
               <div v-if="data">
                 <h1>{{data.title}}</h1>
                 <p style="text-align: center;color:#A3A3A3">发布日期：{{data.creationTime}}</p>
-                <div style="padding:20px;margin-bottom:50px;">{{data.content}}</div>
+                <div v-html="data.content" style="padding:20px;margin-bottom:50px;"></div>
               </div>
               <div v-else style="width:100%;height:300px;position:relative;"></div>
             </el-col>
             <el-col :span="7">
               <img style="width:100%;" src="../assets/images/办事指南详情_03.jpg" alt>
               <div style="border:1px solid #DCDCDC;padding-bottom:20px;">
-                <div>
+                <div style="overflow:hidden;">
+                  <p class="tips" style="float: left">
+                    <img style="height:28px;" src="../assets/images/img_bg_bszn00.png" alt>
+                    <span style="font-size:16px;">其他相关</span>
+                  </p>
+                </div>
+                <!-- <div>
                   <p class="zhinan tip">
                     <span>其他相关</span>
                   </p>
-                </div>
+                  img_bg_bsznr
+                </div>-->
                 <el-row :gutter="10" class="item" :key="index" v-for="(item,index) in allowList">
                   <router-link
                     :to="{
-         path: '/handling-guid-list-detail/'+item.id, 
+         path: '/handling-guid-list/detail/'+item.id, 
       
    }"
                   >
@@ -48,9 +55,10 @@
                 </el-row>
               </div>
               <div style="padding-bottom:20px;border:1px solid #DCDCDC;margin-top:10px;">
-                <div>
-                  <p class="zhinan tip">
-                    <span>网上备案</span>
+                <div style="overflow:hidden;">
+                  <p class="tips" style="float: left">
+                    <img style="height:28px;" src="../assets/images/img_bg_bszn00.png" alt>
+                    <span style="font-size:16px;">网上备案</span>
                   </p>
                 </div>
                 <el-row
@@ -61,7 +69,7 @@
                 >
                   <router-link
                     :to="{
-         path: '/handling-guid-list-detail/'+item.id, 
+         path: '/handling-guid-list/detail/'+item.id, 
       
    }"
                   >
@@ -162,6 +170,7 @@ export default {
         req.result.creationTime = moment(req.result.creationTime).format(
           "YYYY-MM-DD"
         );
+
         _this.data = req.result;
       });
     },

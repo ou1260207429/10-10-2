@@ -21,11 +21,14 @@
           <li :key="index">
             <router-link
               :to="item.path"
-              :class="[{activeNav:$route.path==item.path},item.activeName]"
+              :class="[item.activeName]"
               :active-class="item.acitve"
             >{{item.name}}</router-link>
           </li>
         </template>
+        <li>
+          <a class="antivelogin" href="http://222.84.250.158:8880/#/account/login">登录</a>
+        </li>
       </ul>
     </el-row>
     <el-row v-if="showPath" id="breadcrumb">
@@ -39,6 +42,13 @@
       </div>
     </el-row>
     <router-view></router-view>
+    <!-- <el-row>
+      <div class="content">
+        <el-row>
+
+        </el-row>
+      </div>
+    </el-row>-->
   </el-row>
 </template>
 
@@ -56,7 +66,7 @@ export default {
           acitve: "nowIndex"
         },
         {
-          path: "/handling-guid",
+          path: "/handling-guid-list",
           name: "办事指南",
           activeName: "antivehandling",
           acitve: "nowhandling"
@@ -78,13 +88,13 @@ export default {
           name: "法律法规",
           activeName: "antivelaws",
           acitve: "nowlaws"
-        },
-        {
-          path: "/account/login",
-          name: "登录",
-          activeName: "antivelogin",
-          acitve: "nowlogin"
         }
+        // {
+        //   path: "/account/login",
+        //   name: "登录",
+        //   activeName: "antivelogin",
+        //   acitve: "nowlogin"
+        // }
       ]
     };
   },
@@ -164,6 +174,8 @@ ul {
 
 .nowIndex {
   background-image: url("../assets/images/表格下载_132.png") !important;
+  border-bottom: 2px solid #bd1127ff;
+  color: #bd1127ff !important;
 }
 
 .antivehandling {
@@ -172,6 +184,8 @@ ul {
 
 .nowhandling {
   background-image: url("../assets/images/表格下载_152.png") !important;
+  border-bottom: 2px solid #bd1127ff;
+  color: #bd1127ff !important;
 }
 
 .antiveinformation {
@@ -180,6 +194,8 @@ ul {
 
 .nowinformation {
   background-image: url("../assets/images/表格下载_032.png") !important;
+  border-bottom: 2px solid #bd1127ff;
+  color: #bd1127ff !important;
 }
 
 .antiveform {
@@ -188,6 +204,8 @@ ul {
 
 .nowform {
   background-image: url("../assets/images/表格下载_05.png") !important;
+  border-bottom: 2px solid #bd1127ff;
+  color: #bd1127ff !important;
 }
 
 .antivelaws {
@@ -196,6 +214,8 @@ ul {
 
 .nowlaws {
   background-image: url("../assets/images/表格下载_072.png") !important;
+  border-bottom: 2px solid #bd1127ff;
+  color: #bd1127ff !important;
 }
 
 .antivelogin {
@@ -204,5 +224,7 @@ ul {
 
 .nowlogin {
   background-image: url("../assets/images/表格下载_102.png") !important;
+  border-bottom: 2px solid #bd1127ff;
+  color: #bd1127ff !important;
 }
 </style>

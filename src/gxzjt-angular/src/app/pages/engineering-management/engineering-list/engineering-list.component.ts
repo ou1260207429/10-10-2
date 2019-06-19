@@ -1,12 +1,21 @@
-import { FlowServices } from './../../../../services/flow.services';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { STColumn, STPage, STComponent } from '@delon/abc';
-import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
+import { STColumn, STComponent, XlsxService, STPage } from '@delon/abc';
+
+
+import { _HttpClient } from '@delon/theme';
+
+
+import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, DataSourceResult, PagedAndFilteredInputDto, ProjectFlowServcieServiceProxy, FireAuditCompleteQueryDto } from '@shared/service-proxies/service-proxies'
+import { PublicModel } from 'infrastructure/public-model';
+
 import { Router } from '@angular/router';
-import { EventEmiter } from 'infrastructure/eventEmiter';
-import { AppConsts } from '@shared/AppConsts';
 
-
+import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
+import { FlowServices } from 'services/flow.services';
+import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
+import { timeTrans } from 'infrastructure/regular-expression';
+import { PublicFormComponent } from '../public/public-form.component';
+import * as moment from 'moment';
 /**
  * 工程列表
  */
@@ -15,100 +24,70 @@ import { AppConsts } from '@shared/AppConsts';
   templateUrl: './engineering-list.component.html',
   styles: []
 })
-export class EngineeringListComponent implements OnInit {
-  noResult: any;
+export class EngineeringListComponent extends PublicFormComponent implements OnInit {
 
-  @ViewChild('treeCom') treeCom;
+  formResultData;
+
+
   @ViewChild('st') st: STComponent;
-  flowAddType: any = {
-    type: '',
-    name: ''
-  };
-  nodes = [{
-    title: '全部',
-    key: '',
-    icon: 'folder-open',
-    isLeaf: true
-  }];
-
-  chooseAuditors;
-
-  params: any = {};
-  data;
   columns: STColumn[] = [
-    { title: '流水号', index: 'number' },
-    { title: '流程名称', index: 'name' },
-    { title: '发起人', index: 'createEName' },
-    { title: '当前节点', index: 'curNodeName' },
-    { title: '当前审核人', index: 'applyEName' },
     {
-      title: '创建时间', index: 'creationTime', type: 'date'
-    },
-    {
-      title: '操作', className: 'text-center', buttons: [
+      title: '操作',
+      buttons: [
         {
-          text: '<font class="stButton">办理</font>', iif: (record) => this.isSen(record.isCustom), click: (record: any) => {
-            this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${record.workFlow_Instance_Id}`]);
+          text: '执行', click: (item: any) => {
+            this.watchItem(item);
           }
         },
       ]
-    }
+    },
+    { title: '表单', index: 'companyName' },
+    // { title: '创建人员', index: 'createEName' },
+    { title: '申报时间', index: 'applyTime' },
   ];
 
+  searchParam = new FireAuditCompleteQueryDto();
 
   pageConfig: STPage = publicPageConfig;
-  constructor(private router: Router, private _flowServices: FlowServices, private eventEmiter: EventEmiter, ) {
-    this.init();
-  }
 
-  /**
-   * 判断发起流程
-   * @param key 
-   * @param index 
-   */
-  isSen(key) {
-    return key
+  //类型
+  flowPathTypeEnum = FlowPathTypeEnum
+
+  //时间
+  rangeTime = ['2019-02-19T05:46:09.135Z','2019-06-19T05:46:09.135Z'];
+  constructor(private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
+    private _flowServices: FlowServices,
+    private router: Router,
+    private http: _HttpClient,
+    private _publicModel:PublicModel,
+    private xlsx: XlsxService) {
+    super();
+
   }
 
   ngOnInit() {
-    let _self = this;
-
-    this.eventEmiter.on('init', () => {
-      _self.init();
-    });
-
-    this.eventEmiter.on('flowadd', () => {
-      _self.init();
-    });
+    this.init()
   }
 
-  /**
-   * 初始化
-   */
   init() {
-    this.params.page = 1;
-    this.params.maxResultCount = AppConsts.grid.defaultPageSize;
-    this.params.filterText = '';
-    this.params.result = 4;
-    this.workFlow_NodeAuditorRecords(this.params);
+    this.searchParam.page = 1;
+    this.searchParam.maxResultCount = 10;
+    this.searchParam.flowPathType = 1
+    this.searchParam.sorting = 'ProjectName';
+    this.searchParam.startApplyTime = moment(this.rangeTime[0])
+    this.searchParam.endApplyTime =moment(this.rangeTime[1])  
+    this.getList();
   }
 
-  /**
-   * 回车
-   */
-  onEnter(v) {
-    if (v.which === 13) {
-      this.query();
-    }
-  }
 
   /**
-   * 获取列表 
+   * 获取所有列表
+   * @param TemplateInfoListByClassIdEntity 参数
    */
-  workFlow_NodeAuditorRecords(params?: any) {
-    this.data = '';
-    this._flowServices.tenant_PendingWorkFlow_NodeAuditorRecord(params).subscribe(data => {
-      this.data = data.result;
+  getList() {
+    this._projectFlowServcieServiceProxy.post_GetFireAuditCompleteList(this.searchParam).subscribe((data: any) => {
+      this.formResultData = data
+      console.log(this.formResultData)
     })
   }
 
@@ -116,22 +95,42 @@ export class EngineeringListComponent implements OnInit {
    * 点击查询
    */
   query() {
-    this.params.page = 1;
-    this.params.maxResultCount = AppConsts.grid.defaultPageSize;
-    this.workFlow_NodeAuditorRecords(this.params);
+    this.searchParam.page = 1;
+    this.searchParam.startApplyTime = moment(this.rangeTime[0])
+    this.searchParam.endApplyTime =moment(this.rangeTime[1])  
+    this.getList();
+  }
+
+
+  watchItem(item) {
+    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`]);
+  }
+
+  change(v) {
+    pageOnChange(v, this.searchParam, () => {
+      this.getList();
+    })
+  }
+
+  okRangeTime(v) {
+    console.log(v);
+    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')  
+    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')   
+    // this.searchParam.applyTimeStart = applyTimeStart;
+    // this.searchParam.applyTimeEnd = applyTimeEnd;
+    // console.log(applyTimeEnd);
   }
 
   /**
    * 导出
    */
-  export() {
-
+  exportXlsx(){
+    this._publicModel.exportXlsx(this.columns,this.formResultData.data);
   }
 
-  change(v) {
-    pageOnChange(v, this.params, () => {
-      this.workFlow_NodeAuditorRecords(this.params);
-    })
-  }
 
+
+
+  
+  
 }

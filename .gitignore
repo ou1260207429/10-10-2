@@ -292,6 +292,7 @@ __pycache__/
 
 
 
+
 /src/indexProject/.DS_Store
 /src/indexProject/node_modules/
 /src/indexProject/dist/
@@ -301,7 +302,7 @@ __pycache__/
 /src/indexProject/test/unit/coverage/
 /src/indexProject/test/e2e/reports/
 /src/indexProject/selenium-debug.log
-
+/src/indexProject/.history
 # Editor directories and files
 .idea
 .vscode
@@ -309,3 +310,7 @@ __pycache__/
 *.ntvs*
 *.njsproj
 *.sln
+
+/src/gxzjt-angular/.history
+
+/src/gxzjt-angular/dist/

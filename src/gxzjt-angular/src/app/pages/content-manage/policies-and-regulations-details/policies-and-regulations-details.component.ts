@@ -5,8 +5,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { RegulationServiceProxy } from '@shared/service-proxies/service-proxies';
 import { PublicModel } from 'infrastructure/public-model';
 import { timeTrans } from 'infrastructure/regular-expression';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
+import { UploadFileModel, PublicServices } from 'services/public.services';
 @Component({
   selector: 'app-policies-and-regulations-details',
   templateUrl: './policies-and-regulations-details.component.html',
@@ -37,6 +38,26 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   //     fileUrl: "string"
   //   }
   // ]
+  fileList: UploadFile[] = [];
+  uploading = false;
+  // acceptType: ".doc,.docx,.xls,.xlsx,.pdf"
+  acceptType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  uploadUrl = "http://demo.rjtx.net:5001/api/Upload/Upload"
+  files = []
+  sourceId: string
+  filters: UploadFilter[] = [
+    {
+      name: 'type',
+      fn: (fileList: UploadFile[]) => {
+        const filterFiles = fileList.filter(w => ~['application/vnd.openxmlformats-officedocument.wordprocessingml.document'].indexOf(w.type));
+        if (filterFiles.length !== fileList.length) {
+          this.message.error("上传文件格式不正确，请选择.doc文件");
+          return filterFiles;
+        }
+        return fileList;
+      }
+    },
+  ];
 
   //表单对象
   data: any = {
@@ -47,7 +68,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     content: '',
   };
   RegulationType: any
-  constructor(private _eventEmiter: EventEmiter, private message: NzMessageService, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute) {
+  constructor(private _publicServices: PublicServices, private _eventEmiter: EventEmiter, private message: NzMessageService, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute) {
     this.id = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
     this.operate = parseInt(this._activatedRoute.snapshot.paramMap.get('operate'));
     this.initType();
@@ -158,5 +179,34 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     var ret = uuid.join('')
     console.log(ret);
     return ret
+  }
+  /**
+ * 上传文件
+ */
+  uploadFiles() {
+    let uploadFileModel: UploadFileModel = {
+      files: this.fileList,
+      sourceId: this.data.guid(),
+      AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
+      module: "table"
+    }
+    // this._publicServices.upload(uploadFileModel).subscribe(data => {
+    //   console.log(data)
+    // })
+  }
+  beforeUpload = (file: UploadFile): boolean => {
+    this.fileList = this.fileList.concat(file);
+    console.log(file)
+    console.log(this.fileList)
+
+    return false;
+  };
+  removeFile = (file: UploadFile): boolean => {
+    this.fileList.forEach((item, index) => {
+      if (item.uid == file.uid) {
+        this.fileList.splice(index, 1);
+      }
+    });
+    return true;
   }
 }

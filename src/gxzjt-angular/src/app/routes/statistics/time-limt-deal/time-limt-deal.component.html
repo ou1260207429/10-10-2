@@ -4,26 +4,31 @@
     <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
         type="{{ hiddenFliter?'down':'up'}}"></i>{{ hiddenFliter?'展开条件':'收起条件'}}</button>
     <button (click)="refresh()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
+    <button nz-button nzType="primary" (click)="st.export()">导出</button>
   </ng-template>
 </page-header>
 <nz-card>
 
   <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
     <!-- <span>地市：</span> -->
-    <nz-select class="search_menu_input" formControlName="city" nzShowSearch nzAllowClear nzPlaceHolder="选择市区">
-
+    <nz-select class="search_menu_input" formControlName="city" nzShowSearch nzAllowClear nzPlaceHolder="选择市区"[(ngModel)]="cityarray" (ngModelChange)="cityChange($event)">
+      <div *ngFor="let item of cityarray">
+        <nz-option nzLabel="{{item.label}}" nzValue="{{item.label}}"></nz-option>
+      </div>
     </nz-select>
     <!-- <span>区域：</span> -->
-    <nz-select class="search_menu_input" formControlName="count" nzShowSearch nzAllowClear nzPlaceHolder="选择区县">
-
+    <nz-select class="search_menu_input" formControlName="count" nzShowSearch nzAllowClear nzPlaceHolder="选择区县" [(ngModel)]="countyarray">
+      <div *ngFor="let item of countyarray">
+        <nz-option nzLabel="{{item.label}}" nzValue="{{item.label}}"></nz-option>
+      </div>
     </nz-select>
     <!-- <nz-select class="search_menu_input" nzShowSearch nzAllowClear nzPlaceHolder="工程名称" [(ngModel)]="selectedValuePro">     </nz-select>-->
     <!-- <span>工程类型：</span> -->
-    <input nz-input [(ngModel)]="searchKey" formControlName="proName" placeholder="请输入工程类型" class="search_menu_input">
-
-    <!-- <span>当前处理人：</span> -->
-    <nz-select class="search_menu_input" formControlName="proType" nzShowSearch nzAllowClear nzPlaceHolder="流程类型">
-
+    <!-- <input nz-input  formControlName="proName" placeholder="请输入工程类型" class="search_menu_input"> -->
+    <nz-select class="search_menu_input" formControlName="proType" nzShowSearch nzAllowClear nzPlaceHolder="工程类型">
+      <nz-option nzLabel="消防设计审查" nzValue="1"></nz-option>
+      <nz-option nzLabel="消防验收" nzValue="2"></nz-option>
+      <nz-option nzLabel="竣工验收消防备案" nzValue="3"></nz-option>
     </nz-select>
     <!-- <span>申报时间：</span> -->
     <nz-range-picker nzFormat="yyyy/MM/dd" formControlName="dateRange" class="search_menu"></nz-range-picker>
@@ -34,9 +39,9 @@
   </form>
   <div style="margin-bottom: 10px">
     <!-- <button nz-button nzType="primary" (click)="addview()">新增申报</button> -->
-    <button nz-button nzType="primary" (click)="st.export()">导出</button>
+
   </div>
-  <st #st [data]="url" [columns]="columns"></st>
+  <st #st [data]="formResultData" [columns]="columns"></st>
   <!-- <br>
   <nz-pagination [nzPageIndex]="2" [nzTotal]="500" nzShowQuickJumper></nz-pagination> -->
 </nz-card>
