@@ -70,7 +70,7 @@ export class AppSessionService {
             this._user = result;
 
             // result.roleName = '公众注册用户';
-            
+
             switch (result.roleName) {
               case '系统管理员':
                 this._ACLService.setFull(true);
@@ -84,7 +84,7 @@ export class AppSessionService {
               case '负责人':
                 this._ACLService.setRole(['sys']);
                 break
-              case '公众注册用户':
+              case '企业用户':
                 this._ACLService.setRole(['reg']);
                 this._DelonACLConfig.guard_url = '/app/engineering-management/engineeringListComponent';
 

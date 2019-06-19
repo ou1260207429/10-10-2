@@ -19,6 +19,8 @@ import { timeTrans } from 'infrastructure/regular-expression';
 import { PublicFormComponent } from '../public/public-form.component';
 import { FormBuilder } from '@angular/forms';
 import * as moment from 'moment';
+
+
 /**
  * 消防設計
  */
@@ -27,7 +29,7 @@ import * as moment from 'moment';
   templateUrl: './fire-design.component.html',
   styles: []
 })
-export class FireDesignComponent implements OnInit {
+export class FireDesignComponent extends PublicFormComponent implements  OnInit {
   param = new FireAuditCompleteQueryDto();
   formResultData = [];
   rangeTime = ['2019-02-19T05:46:09.135Z','2019-06-19T05:46:09.135Z'];
@@ -55,7 +57,9 @@ export class FireDesignComponent implements OnInit {
     private router: Router,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
     private formBuilder: FormBuilder,
-    private xlsx: XlsxService) { }
+    private xlsx: XlsxService) {
+      super();
+     }
 
   ngOnInit() {
     this.init();
@@ -72,6 +76,9 @@ export class FireDesignComponent implements OnInit {
     this.getList();
   }
 
+  addDeclare(){
+    
+  }
   /**
    * 点击查询
    */

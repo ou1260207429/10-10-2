@@ -15,7 +15,7 @@ import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import { AppConsts } from '@shared/AppConsts';
 import { PublicModel } from 'infrastructure/public-model';
-
+import { PublicFormComponent } from '../public/public-form.component';
 /**
  *  草稿箱
  */
@@ -24,8 +24,8 @@ import { PublicModel } from 'infrastructure/public-model';
   templateUrl: './drafts.component.html',
   styles: []
 })
-export class DraftsComponent implements OnInit {
-  formResultData
+export class DraftsComponent extends PublicFormComponent implements OnInit {
+
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
@@ -46,7 +46,7 @@ export class DraftsComponent implements OnInit {
         },
       ]
     },
-    { title: '表单编号', index: 'projectId' }, 
+    { title: '表单编号', index: 'projectId' },
     { title: '表单名称', index: 'projectName' },
   ];
 
@@ -61,11 +61,11 @@ export class DraftsComponent implements OnInit {
   rangeTime
   constructor(private _projectFlowServcieService: ProjectFlowServcieServiceProxy,
     private _flowServices: FlowServices,
-    private _publicModel:PublicModel,
+    private _publicModel: PublicModel,
     private router: Router,
     private http: _HttpClient,
     private xlsx: XlsxService) {
-
+    super();
 
   }
 
@@ -101,7 +101,7 @@ export class DraftsComponent implements OnInit {
     this.searchParam.page = 1;
     this.getList();
   }
- 
+
 
   change(v) {
     pageOnChange(v, this.searchParam, () => {
@@ -109,11 +109,11 @@ export class DraftsComponent implements OnInit {
     })
   }
 
-   /**
-   * 导出
-   */
-  exportXlsx(){
-    this._publicModel.exportXlsx(this.columns,this.formResultData.data);
+  /**
+  * 导出
+  */
+  exportXlsx() {
+    this._publicModel.exportXlsx(this.columns, this.formResultData.data);
   }
 
   okRangeTime(v) {
