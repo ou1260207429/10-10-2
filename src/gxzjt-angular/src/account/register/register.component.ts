@@ -51,13 +51,13 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
-    this.titleSrvice.setTitle(this.l('CreateAnAccount'));
+    this.titleSrvice.setTitle("创建用户");
 
 
     // this.model = {new RegisterInput()};
 
     this.model = {
-      MerchantId: "C8793952-540E-414C-98FF-9C65D61",
+      MerchantId: "C8793952-540E-414C-98FF-9C65D6",
       EId: "",//登录手机号
       EName: "",
       Password: "",
@@ -80,32 +80,30 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
   }
   isSetCaptcha = false;
 
-  save(): void {
-    // this.saving = true;
-    // this._accountService
-    //   .register(this.model)
-    //   .pipe(finalize(() => {
-    //     this.saving = false;
-    //   }))
-    //   .subscribe((result: RegisterOutput) => {
-    //     if (!result.canLogin) {
-    //       this.notify.success(this.l('SuccessfullyRegistered'));
-    //       this._router.navigate(['/login']);
-    //       return;
-    //     }
+  // save(): void {
+  // this.saving = true;
+  // this._accountService
+  //   .register(this.model)
+  //   .pipe(finalize(() => {
+  //     this.saving = false;
+  //   }))
+  //   .subscribe((result: RegisterOutput) => {
+  //     if (!result.canLogin) {
+  //       this.notify.success(this.l('SuccessfullyRegistered'));
+  //       this._router.navigate(['/login']);
+  //       return;
+  //     }
 
-    //     this.saving = true;
+  //     this.saving = true;
 
-    //     // Autheticate
-    //     this._loginService.authenticateModel.userNameOrEmailAddress = this.model.userName;
-    //     this._loginService.authenticateModel.password = this.model.password;
-    //     this._loginService.authenticate(() => {
-    //       this.saving = false;
-    //     });
-    //   });
-
-
-  }
+  //     // Autheticate
+  //     this._loginService.authenticateModel.userNameOrEmailAddress = this.model.userName;
+  //     this._loginService.authenticateModel.password = this.model.password;
+  //     this._loginService.authenticate(() => {
+  //       this.saving = false;
+  //     });
+  //   });
+  // }
 
 
   httpOptions = {
@@ -121,9 +119,11 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
     this.http.post(url, this.model, this.httpOptions).subscribe((res: any) => {
 
       console.log(res);
-      if (res.code) {
-        if (res.code == 1) {
+      if (res) {
+        if (res.code == 0) {
           this.showErr(res.message);
+        } else {
+
         }
       }
       this.saving = false;

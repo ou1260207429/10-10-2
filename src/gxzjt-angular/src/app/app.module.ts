@@ -18,6 +18,8 @@ import { PublicModel } from 'infrastructure/public-model';
 import { PublicServices } from 'services/public.services';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 
+import { DelonACLModule } from '@delon/acl';
+
 
 @NgModule({
   imports: [
@@ -31,6 +33,7 @@ import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module
     LayoutModule,
     SharedModule,
     NgxEchartsModule,
+    DelonACLModule.forRoot(),
     UEditorModule.forRoot({
       js: [
         `/assets/js/ueditor.config.js`,

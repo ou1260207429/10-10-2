@@ -2,11 +2,15 @@ import { Menu } from '@delon/theme';
 
 // 全局的左侧导航菜单
 export class AppMenus {
+
+  static aclCompany = ["reg", "sys"];
+  static aclSys = "sys";
   static Menus: Menu[] = [
     {
       text: "",
       i18n: "首页",
       icon: { type: "icon", value: "home" },// 图标
+      acl: AppMenus.aclSys,
       children: [
         {
           text: "",
@@ -36,6 +40,7 @@ export class AppMenus {
       text: "",
       i18n: "工作事项",
       icon: { type: "icon", value: "bars" },// 图标
+      acl: AppMenus.aclSys,
       children: [
         {
           text: "",
@@ -72,6 +77,7 @@ export class AppMenus {
     {
       text: "统计分析",
       icon: { type: "icon", value: "area-chart" },// 图标
+      acl: AppMenus.aclSys,
       children: [
         {
           text: "预警中心",
@@ -96,7 +102,8 @@ export class AppMenus {
     {
       text: "",
       i18n: "内容管理",
-      icon: { type: "icon", value: "form" },// 图标
+      icon: { type: "icon", value: "form" },// 图标\
+      acl: AppMenus.aclSys,
       children: [
         {
           text: "",
@@ -119,6 +126,7 @@ export class AppMenus {
       text: "",
       i18n: "工程管理",
       icon: { type: "icon", value: "project" },// 图标
+      acl: AppMenus.aclCompany,
       children: [
         {
           text: "",
@@ -146,6 +154,7 @@ export class AppMenus {
       text: "系统管理",
 
       icon: { type: "icon", value: "account-book" },// 图标
+      acl: AppMenus.aclSys,
       children: [
         {
           text: "抽查比例中心",
@@ -163,24 +172,25 @@ export class AppMenus {
 
       ]
     },
-    {
-      text: "权限管理",
-      icon: { type: "icon", value: "team" },// 图标
-      children: [
-        {
-          text: "组织架构管理",
-          link: "/app/permission/org-manager",
-        },
-        {
-          text: "用户管理",
-          link: "/app/permission/user-manager",
-        },
-        {
-          text: "角色管理",
-          link: "/app/permission/role-manager",
-        },
-      ]
-    },
+    // {
+    //   text: "权限管理",
+    //   icon: { type: "icon", value: "team" },// 图标
+    //   acl: AppMenus.aclSys,
+    //   children: [
+    //     {
+    //       text: "组织架构管理",
+    //       link: "/app/permission/org-manager",
+    //     },
+    //     {
+    //       text: "用户管理",
+    //       link: "/app/permission/user-manager",
+    //     },
+    //     {
+    //       text: "角色管理",
+    //       link: "/app/permission/role-manager",
+    //     },
+    //   ]
+    // },
 
   ];
 }

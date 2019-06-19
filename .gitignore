@@ -311,6 +311,6 @@ __pycache__/
 *.njsproj
 *.sln
 
-
+/src/gxzjt-angular/.history
 
 /src/gxzjt-angular/dist/

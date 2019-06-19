@@ -1,7 +1,19 @@
 
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { _HttpClient } from '@delon/theme';
+
+// import {  ViewChild } from '@angular/core';
+
+// import { UploadFileComponent} from "@shared/components/tranfile/uploadfile"
+
 export class PublicFormComponent {
+
+    
+    // @ViewChild('upload1')
+    // view1:UploadFileComponent
+    // @ViewChild('upload1')
+    // view2:UploadFileComponent
+
     treeCardTitle = "结构";
     treeData = [
         {
@@ -48,6 +60,9 @@ export class PublicFormComponent {
     needPagination = false
     //过滤菜单
     resetSearchFliterForm(): void {
+
+        // console.log(this.view1.fileList);
+        // console.log(this.view2.fileList);
         this.fliterForm.reset();
     }
     hiddenFliter = false;
