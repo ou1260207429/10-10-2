@@ -12,15 +12,15 @@
   <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
 
 
-    <button nz-button (click)="add()" nzType="primary" style="margin-right: 10px;margin-top: 10px;"><i nz-icon
-        type="plus"></i>增加</button>
+    <button *ngIf="isShowAdd" nz-button (click)="add()" nzType="primary" style="margin-right: 10px;margin-top: 10px;"><i
+        nz-icon type="plus"></i>增加</button>
 
     <input nz-input [(ngModel)]="searchKey" formControlName="pro_no" [placeholder]="searchHolder"
       style="margin-right: 10px;margin-top: 10px;width: 200px;">
 
 
-    <nz-range-picker [(ngModel)]="rangeTime" nzFormat="yyyy/MM/dd" formControlName="date_range"
-      style="margin-right: 10px;margin-top: 10px;"></nz-range-picker>
+    <nz-range-picker [nzPlaceHolder]="['发布开始时间','发布结束时间']" [(ngModel)]="rangeTime" nzFormat="yyyy/MM/dd"
+      formControlName="date_range" l style="margin-right: 10px;margin-top: 10px;"></nz-range-picker>
 
     <button nz-button (click)="resetSearchFliterForm()" style="margin-right: 10px;margin-top: 10px;">重置</button>
 

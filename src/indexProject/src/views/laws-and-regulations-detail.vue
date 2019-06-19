@@ -20,7 +20,7 @@
             <h1
             style="color:#BD1127FF;text-align:center;padding:20px 0;letter-spacing:3px; box-sizing: border-box;"
           >{{data.title}}</h1>
-          <div class="lawContent">{{data.content}}</div>
+          <div class="lawContent" v-html="data.content"></div>
          </div>
         </el-card>
       </el-row>
@@ -69,9 +69,6 @@ export default {
       app.post(laws.serach_lawsDetail, params).then(req => {
         _this.isLoading = false;
         if (req.success) {
-          if (req.result.content) {
-            req.result.content = req.result.content.replace(/<[^>]+>|&[^>]+;/g, "").trim();
-          }
           _this.data = req.result;
         }
       });

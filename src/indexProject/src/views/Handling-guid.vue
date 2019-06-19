@@ -23,7 +23,7 @@
    }"
                 >
                   <p class="title">{{item.title}}</p>
-                  <div class="tip">{{item.brief}}</div>
+                  <div class="tip" v-html="item.brief"></div>
                   <p class="detail">了解详情</p>
                 </router-link>
               </li>
@@ -48,7 +48,7 @@
    }"
                 >
                   <p class="title">{{item.title}}</p>
-                  <p class="tip">{{item.brief}}</p>
+                  <div class="tip" v-html="item.brief"></div>
                   <p class="detail">了解详情</p>
                 </router-link>
               </li>

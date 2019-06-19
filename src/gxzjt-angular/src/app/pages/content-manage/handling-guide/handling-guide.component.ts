@@ -124,10 +124,13 @@ export class HandlingGuideComponent extends PublicFormComponent implements OnIni
    */
   query_noticeRecords(params?: any) {
     this.params.page = 1;
-    this.params.startTime = this.rangeTime[0];
-    this.params.endTime = this.rangeTime[1];
+    if (this.rangeTime) {
+      this.params.startTime = this.rangeTime[0];
+      this.params.endTime = this.rangeTime[1];
+    }
     this.params.search = this.searchKey;
     this.isSearchForm = true;
+    this.formResultData = []
     this._noticeServiceProxy.noticeListAsync(params).subscribe(data => {
       this.isSearchForm = false;
       this.formResultData = data.data;

@@ -14,12 +14,14 @@ export class FormDownloadDetailComponent implements OnInit {
   //表单对象
   data: any;
   fileList: UploadFile[] = [];
-  uploading = false;
   // acceptType: ".doc,.docx,.xls,.xlsx,.pdf"
   acceptType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
   uploadUrl = "http://demo.rjtx.net:5001/api/Upload/Upload"
   files = []
   sourceId: string
+  /**
+   * 过滤
+   */
   filters: UploadFilter[] = [
     {
       name: 'type',
@@ -48,42 +50,21 @@ export class FormDownloadDetailComponent implements OnInit {
   save() {
     this.data.guid = this.createguid();
     this.sourceId = this.createguid();
-    this.uploadFiles();
+
     this._attachmentServiceProxy.addAttachmentAsync(this.data).subscribe(data => {
       this.message.success("新增成功");
       this._eventEmiter.emit('init', []);
       this.goBack();
     })
-  }
-  /**
-   * 上传文件
-   */
-  uploadFiles() {
-    const formData = new FormData();
-    // tslint:disable-next-line:no-any
-    this.fileList.forEach((file: any) => {
-      formData.append('files[]', file);
-    });
-    // formData.append('sourceId', this.data.guid);
-    // formData.append('module', "table");
-    // formData.append('AppId', "9F947774-8CB4-4504-B441-2B9AAEEAF450");
-    // let uploadFileModel: UploadFileModel = {
-    //   files: this.fileList,
-    //   sourceId: this.data.guid,
-    //   AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
-    //   module: "table"
-    // }
-    let params = {
-      sourceId: this.data.guid,
-      AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
-      module: "table",
+    //上传文件：判断是否选择了文件
+    if (this.fileList.length > 0) {
+      this.uploadFiles(this.data.guid);
     }
-    console.log(formData)
-    this._publicServices.upload(formData, params).subscribe(data => {
-      console.log(data)
-    })
   }
 
+  /**
+   * 生成36位guid码
+   */
   createguid() {
     var CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('')
     var chars = CHARS,
@@ -104,13 +85,29 @@ export class FormDownloadDetailComponent implements OnInit {
     var ret = uuid.join('')
     return ret
   }
+  /**
+  * 上传文件
+  */
+  uploadFiles(guid) {
+    const formData = new FormData();
+    // tslint:disable-next-line:no-any
+    this.fileList.forEach((file: any) => {
+      formData.append('files', file);
+    });
+    let params = {
+      sourceId: guid,
+      AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
+      module: "table",
+    }
+    this._publicServices.newUpload(formData, params).subscribe(data => {
+    })
+  }
+  //阻止自动上传
   beforeUpload = (file: UploadFile): boolean => {
     this.fileList = [file];
-    console.log(file)
-    console.log(this.fileList)
-
     return false;
   };
+  //删除上传文件
   removeFile = (file: UploadFile): boolean => {
     this.fileList = [];
     return true;

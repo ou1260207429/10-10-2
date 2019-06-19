@@ -38,6 +38,27 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
   //判断上传的焦点
   uoloadIndex: number = -1;
+
+  arr = [
+    {
+      type:0,
+      imgList:[
+        {name:'图片名字',uid:''}
+      ]
+    },
+    {
+      type:1,
+      imgList:[
+        
+      ]
+    },
+    {
+      type:2,
+      imgList:[
+        
+      ]
+    }
+  ]
   constructor(public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
   ngOnInit() {

@@ -36,7 +36,7 @@ export class FormDownloadComponent extends PublicFormComponent implements OnInit
     { title: '创建时间', index: 'creationTime', type: 'date' },
     // { title: '最近操作时间', index: 'lastUpdateTime', type: 'date' },
     { title: '最近操作人账号', index: 'lastUpdateUserCode' },
-    { title: '最近操作人姓名', index: 'lastUpdateUserName' },
+    // { title: '最近操作人姓名', index: 'lastUpdateUserName' },
     {
       title: '访问量', index: 'visitCount'
     },
@@ -65,8 +65,8 @@ export class FormDownloadComponent extends PublicFormComponent implements OnInit
 
   ngOnInit() {
     let _self = this;
-    this.params.startTime = new Date(new Date(new Date().toLocaleDateString()).getTime());
-    this.params.endTime = new Date(new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1);
+    // this.params.startTime = new Date(new Date(new Date().toLocaleDateString()).getTime());
+    // this.params.endTime = new Date(new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1);
     this.init();
     this._eventEmiter.on('init', () => {
       _self.init();
@@ -98,10 +98,14 @@ export class FormDownloadComponent extends PublicFormComponent implements OnInit
   workFlow_NodeAuditorRecords(params?: any) {
 
     this.params.page = 1;
-    this.params.startTime = this.rangeTime[0];
-    this.params.endTime = this.rangeTime[1];
+    if (this.rangeTime) {
+      this.params.startTime = this.rangeTime[0];
+      this.params.endTime = this.rangeTime[1];
+    }
     this.params.search = this.searchKey;
     this.isSearchForm = true;
+    this.formResultData = []
+
     this._attachmentServiceProxy.attachmentListAsync(params).subscribe(data => {
       this.isSearchForm = false;
       this.formResultData = data.data;
