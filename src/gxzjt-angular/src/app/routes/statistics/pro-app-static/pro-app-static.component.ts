@@ -196,7 +196,8 @@ export class StatisticsProAppStaticComponent implements OnInit {
         "skipCount": 0,
         "maxResultCount": 1000,
       });
-
+      this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+      this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
     this.statisticalServiceServiceProxy.post_GetProjectApplyList(this.param).subscribe((result: any) => {
       this.formResultData = result.data;
     }, err => {

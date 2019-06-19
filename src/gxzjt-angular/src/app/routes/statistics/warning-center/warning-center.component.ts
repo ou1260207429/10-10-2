@@ -173,7 +173,8 @@ export class StatisticsWarningCenterComponent implements OnInit {
         "skipCount": 0,
         "maxResultCount": 10
       });
-
+      this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+      this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
     this.statisticalServiceServiceProxy.post_GetWarningCenterList(this.param).subscribe((result: any) => {
       this.formResultData = result.data;
     }, err => {
