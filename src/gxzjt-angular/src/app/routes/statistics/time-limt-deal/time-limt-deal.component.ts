@@ -792,6 +792,13 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
 
           },
         },
+        // {
+        //   text: '测试',
+        //   type: 'link',
+        //   click: (record: any, modal: any) => {
+
+        //   }
+        // },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
     },

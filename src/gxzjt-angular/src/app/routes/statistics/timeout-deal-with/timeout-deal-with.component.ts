@@ -48,24 +48,24 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
         },
         {
           text: '受理凭证',
-          type: 'modal',
+          type: 'link',
           // modal: {
           //   component: StatisticsAcceptCredentialsComponent,
           //   paramsName: 'record',
           // },
-          // click: (record: any, modal: any) => {
-
-          // },
+          click: (record: any, modal: any) => {
+            window.open("assets/images/big2/img_bg_bjqk.png")
+          },
         },
         {
           text: '意见书',
-          type: 'modal',
-          modal: {
-            component: StatisticsPositionPaperComponent,
-            paramsName: 'record',
-          },
+          type: 'link',
+          // modal: {
+          //   component: StatisticsPositionPaperComponent,
+          //   paramsName: 'record',
+          // },
           click: (record: any, modal: any) => {
-
+            window.open("assets/images/big2/img_bg_bjqk.png")
           },
         },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
@@ -76,14 +76,16 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
     { title: '建设单位', index: 'companyName' },
     { title: '联系人', index: 'contactPerson' },
     { title: '联系电话', index: 'contactNumber' },
-    { title: '审核结果', index: 'status',type: 'tag', tag: {
-      0: { text: '未处理', color: '' },
-      1: { text: '受理', color: '' },
-      2:{ text: '不受理', color: '' },
-      3:{ text: '不合格', color: '' },
-      4:{ text: '合格', color: '' },
-      5:{ text: '未抽中', color: '' },
-    }},
+    {
+      title: '审核结果', index: 'status', type: 'tag', tag: {
+        0: { text: '未处理', color: '' },
+        1: { text: '受理', color: '' },
+        2: { text: '不受理', color: '' },
+        3: { text: '不合格', color: '' },
+        4: { text: '合格', color: '' },
+        5: { text: '未抽中', color: '' },
+      }
+    },
     { title: '操作人', index: 'acceptUserCode' },
     { title: '操作时间', index: 'acceptTime' },
   ];
@@ -114,19 +116,19 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
     this.getList();
   }
   search() {
-    this.param.recordNumber=this.fliterForm.controls.proNo.value;
-    this.param.projectName=this.fliterForm.controls.proName.value;
-    this.param.status=this.fliterForm.controls.proType.value;
-    if(this.param.status==null){
-      this.param.status=-1;
+    this.param.recordNumber = this.fliterForm.controls.proNo.value;
+    this.param.projectName = this.fliterForm.controls.proName.value;
+    this.param.status = this.fliterForm.controls.proType.value;
+    if (this.param.status == null) {
+      this.param.status = -1;
     }
     this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
     this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
     this.statisticalServiceServiceProxy.post_GetTimeoutList(this.param).subscribe((result: any) => {
-      if(result.data){
-         this.formResultData = result.data;
-      }else{
-        this.formResultData=[];
+      if (result.data) {
+        this.formResultData = result.data;
+      } else {
+        this.formResultData = [];
       }
       this.st.reload()
     }, err => {
