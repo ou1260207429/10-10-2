@@ -59,13 +59,13 @@ export class StatisticsProAppStaticComponent implements OnInit {
         },
         {
           text: '受理凭证',
-          type: 'modal',
-          modal: {
-            component: StatisticsAcceptCredentialsComponent,
-            paramsName: 'record',
-          },
+          type: 'link',
+          // modal: {
+          //   component: StatisticsAcceptCredentialsComponent,
+          //   paramsName: 'record',
+          // },
           click: (record: any, modal: any) => {
-
+            window.open('http://ecds.rjtx.net:10018/dist/assets/img/weather-icon/sun-cloudy.png');
           },
         },
         {

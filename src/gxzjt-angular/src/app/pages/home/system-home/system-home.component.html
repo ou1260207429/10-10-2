@@ -205,7 +205,8 @@
     </tr>
   </tbody>
 </table> -->
-<div style='height:10%'>
+
+<div>
   <nz-card class="TopCard">
     <span style='display:block;font-size: 30px;color:#F5222D'>{{TopData?.processedCount}}</span>
     <span style='display:block;font-size: 16px;;color:#7B7B7B'>待处理事项</span>
@@ -227,74 +228,170 @@
     <span style='display:block;font-size: 16px;;color:#7B7B7B'>竣工验收审查数量</span>
   </nz-card>
 </div>
-<div style='height:80%;width:40%;float: left;'>
-  <nz-card nzTitle="广西竣工验收备案抽查合格情况">
-    <div id="echarts" style="display: block; " style="height:700px;width:100%;">
+<div nz-row>
+  <div nz-col nzSpan="10">
+    <nz-card nzTitle="广西竣工验收备案抽查合格情况">
+      <div id="echarts" style="display: block; " style="height:350px;width:100%;">
+      </div>
+    </nz-card>
+  </div>
+  <div nz-col nzSpan="14">
+    <nz-card nzTitle="超时预警列表" style='height:456px'>
+      <nz-table class='FireTable' nzSize="small" nzBordered='false' [nzData]="TimeOutData" nzIsPagination='true'
+        [(nzPageSize)]='pagesize' [(nzPageIndex)]='pageindex' (nzPageIndexChange)='PageIndexChange($event)'>
+        <thead nz-thead>
+          <tr>
+            <th nz-th>
+              <span>序号</span>
+            </th>
+            <th nz-th>
+              <span>流程流水号</span>
+            </th>
+            <th nz-th>
+              <span>流程类型</span>
+            </th>
+            <th nz-th>
+              <span>工程名称</span>
+            </th>
+            <th nz-th>
+              <span>流程到达时间</span>
+            </th>
+            <th nz-th>
+              <span>审批剩余时间(时)</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody nz-tbody>
+          <tr nz-tbody-tr *ngFor='let data of TimeOutData;let i = index;'>
+            <td nz-td>{{i+1}}</td>
+            <td nz-td>{{data?.projectCode}}</td>
+            <td nz-td>
+              {{data?.flowPathType == 1 ?'消防设计审查': data?.flowPathType == 2 ?'消防验收':data?.flowPathType == 3 ?'竣工验收消防备案':''}}
+            </td>
+            <td nz-td>{{data?.projectName}}</td>
+            <td nz-td>{{data?.applyTime | _date:'YYYY-MM-DD'}}</td>
+            <td nz-td>{{data?.timeout}}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+  </div>
+</div>
+<div nz-row>
+  <div nz-col nzSpan="8" style='height:500px'>
+    <nz-card style='height:100%;width:100%;float: left;margin-left: 0.3%' nzTitle="消防设计审查申报数量统计">
+      <div
+        style='background-image:url("./assets/images/big2/left.png");background-size: 100% 100%;width:49%;height:20%;float: left;'>
+        <span
+          style='font-size: 30px;color: #FF9600;position: relative;left: 15%;margin-top:15%;'>{{FlowData1?.currentMonthCount}}</span>
+        <span
+          style='font-size: 18px;color: #FF9600;position: relative;left: 60%;margin-top:15%;'>{{FlowData1?.comparedMonthRate}}%</span>
+        <img src='./assets/images/big2/yup.png' style="position: relative;left: 60%;" />
+      </div>
+      <div
+        style='background-image:url("./assets/images/big2/right.png");background-size: 100% 100%;width:49%;height:20%;float: left;margin-left: 2%'>
+        <span
+          style='font-size: 30px;color: #2B74D9;position: relative;left: 15%;margin-top:15%;'>{{FlowData1?.currentWeekCount}}</span>
+        <span
+          style='font-size: 18px;color: #2B74D9;position: relative;left: 60%;margin-top:15%;'>{{FlowData1?.comparedWeekRate}}%</span>
+        <img src='./assets/images/big2/bup.png' style="position: relative;left: 60%;" />
+      </div>
+      <div echarts [options]="option1" class="echartsStyle" style="height:100%;width:100%">
+      </div>
+    </nz-card>
+  </div>
+  <div nz-col nzSpan="8"style='height:500px'>
+    <nz-card style='height:100%;width:100%;float: left;;margin-left: 0.3%' nzTitle="消防竣工验收数量统计">
+      <div
+        style='background-image:url("./assets/images/big2/left.png");background-size: 100% 100%;width:49%;height:20%;float: left;'>
+        <span
+          style='font-size: 30px;color: #FF9600;position: relative;left: 15%;margin-top:15%;'>{{FlowData2?.currentMonthCount}}</span>
+        <span
+          style='font-size: 18px;color: #FF9600;position: relative;left: 60%;margin-top:15%;'>{{FlowData2?.comparedMonthRate}}%</span>
+        <img src='./assets/images/big2/yup.png' style="position: relative;left: 60%;" />
+      </div>
+      <div
+        style='background-image:url("./assets/images/big2/right.png");background-size: 100% 100%;width:49%;height:20%;float: left;margin-left: 2%'>
+        <span
+          style='font-size: 30px;color: #2B74D9;position: relative;left: 15%;margin-top:15%;'>{{FlowData2?.currentWeekCount}}</span>
+        <span
+          style='font-size: 18px;color: #2B74D9;position: relative;left: 60%;margin-top:15%;'>{{FlowData2?.comparedWeekRate}}%</span>
+        <img src='./assets/images/big2/bup.png' style="position: relative;left: 60%;" />
+      </div>
+      <div echarts [options]="option2" class="echartsStyle" style="height:100%;width:100%">
+      </div>
+    </nz-card>
+  </div>
+  <div nz-col nzSpan="8"style='height:500px'>
+    <nz-card style='height:100%;width:100%;float: left;;margin-left: 0.3%' nzTitle="竣工验收备案数量统计">
+      <div
+        style='background-image:url("./assets/images/big2/left.png");background-size: 100% 100%;width:49%;height:20%;float: left;'>
+        <span
+          style='font-size: 30px;color: #FF9600;position: relative;left: 15%;margin-top:15%;'>{{FlowData3?.currentMonthCount}}</span>
+        <span
+          style='font-size: 18px;color: #FF9600;position: relative;left: 60%;margin-top:15%;'>{{FlowData3?.comparedMonthRate}}%</span>
+        <img src='./assets/images/big2/yup.png' style="position: relative;left: 60%;" />
+      </div>
+      <div
+        style='background-image:url("./assets/images/big2/right.png");background-size: 100% 100%;width:49%;height:20%;float: left;margin-left: 2%'>
+        <span
+          style='font-size: 30px;color: #2B74D9;position: relative;left: 15%;margin-top:15%;'>{{FlowData3?.currentWeekCount}}</span>
+        <span
+          style='font-size: 18px;color: #2B74D9;position: relative;left: 60%;margin-top:15%;'>{{FlowData3?.comparedWeekRate}}%</span>
+        <img src='./assets/images/big2/bup.png' style="position: relative;left: 60%;" />
+      </div>
+      <div echarts [options]="option3" class="echartsStyle" style="height:100%;width:100%">
+      </div>
+    </nz-card>
+  </div>
+</div>
+<!-- <div style='height:45%;width:100%;float: left;'>
+  <nz-card style='height:100%;width:33%;float: left;margin-left: 0.3%' nzTitle="消防设计审查申报数量统计">
+    <div
+      style='background-image:url("./assets/images/big2/left.png");background-size: 100% 100%;width:49%;height:20%;float: left;'>
+      <span style='font-size: 30px;color: #FF9600;position: relative;left: 15%;margin-top:15%;'>{{FlowData1?.currentMonthCount}}</span>
+      <span style='font-size: 18px;color: #FF9600;position: relative;left: 60%;margin-top:15%;'>{{FlowData1?.comparedMonthRate}}%</span>
+      <img src='./assets/images/big2/yup.png' style="position: relative;left: 60%;" />
+    </div>
+    <div
+      style='background-image:url("./assets/images/big2/right.png");background-size: 100% 100%;width:49%;height:20%;float: left;margin-left: 2%'>
+      <span style='font-size: 30px;color: #2B74D9;position: relative;left: 15%;margin-top:15%;'>{{FlowData1?.currentWeekCount}}</span>
+      <span style='font-size: 18px;color: #2B74D9;position: relative;left: 60%;margin-top:15%;'>{{FlowData1?.comparedWeekRate}}%</span>
+      <img src='./assets/images/big2/bup.png' style="position: relative;left: 60%;" />
+    </div>
+    <div echarts [options]="option1" class="echartsStyle" style="height:100%;width:100%">
     </div>
   </nz-card>
-</div>
-<div style='height:80%;width:30%;float: left;'>
-  <nz-card nzTitle="超时预警列表" style='height:50%'>
-    <nz-table class='FireTable' nzSize="small" nzBordered='false' [nzData]="data" nzIsPagination='true'
-      [(nzPageSize)]='pagesize' [(nzPageIndex)]='pageindex' nzShowPagination='false'>
-      <thead nz-thead>
-        <tr>
-          <th nz-th>
-            <span>序号</span>
-          </th>
-          <th nz-th>
-            <span>工程名称</span>
-          </th>
-          <th nz-th>
-            <span>申报单位</span>
-          </th>
-          <th nz-th>
-            <span>联系人</span>
-          </th>
-          <th nz-th>
-            <span>审批时间</span>
-          </th>
-          <th nz-th>
-            <span>审批结果</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody nz-tbody>
-        <tr nz-tbody-tr *ngFor='let data of data;let i = index;'>
-          <td nz-td>{{i+1}}</td>
-          <td nz-td>{{data.name}}</td>
-          <td nz-td>{{data.unit}}</td>
-          <td nz-td>{{data.people}}</td>
-          <td nz-td>{{data.time}}</td>
-          <td nz-td *ngIf='data.state == "合格"' style='color:#2EDB63'>{{data.state}}</td>
-          <td nz-td *ngIf='data.state == "不合格"' style='color:red'>{{data.state}}</td>
-        </tr>
-      </tbody>
-    </nz-table>
+  <nz-card style='height:100%;width:33%;float: left;;margin-left: 0.3%' nzTitle="消防竣工验收数量统计">
+    <div
+      style='background-image:url("./assets/images/big2/left.png");background-size: 100% 100%;width:49%;height:20%;float: left;'>
+      <span style='font-size: 30px;color: #FF9600;position: relative;left: 15%;margin-top:15%;'>{{FlowData2?.currentMonthCount}}</span>
+      <span style='font-size: 18px;color: #FF9600;position: relative;left: 60%;margin-top:15%;'>{{FlowData2?.comparedMonthRate}}%</span>
+      <img src='./assets/images/big2/yup.png' style="position: relative;left: 60%;" />
+    </div>
+    <div
+      style='background-image:url("./assets/images/big2/right.png");background-size: 100% 100%;width:49%;height:20%;float: left;margin-left: 2%'>
+      <span style='font-size: 30px;color: #2B74D9;position: relative;left: 15%;margin-top:15%;'>{{FlowData2?.currentWeekCount}}</span>
+      <span style='font-size: 18px;color: #2B74D9;position: relative;left: 60%;margin-top:15%;'>{{FlowData2?.comparedWeekRate}}%</span>
+      <img src='./assets/images/big2/bup.png' style="position: relative;left: 60%;" />
+    </div>
+    <div echarts [options]="option2" class="echartsStyle" style="height:100%;width:100%">
+    </div>
   </nz-card>
-  <nz-card style='height:47%' nzTitle="消防设计审查申报数量统计">
-
+  <nz-card style='height:100%;width:33%;float: left;;margin-left: 0.3%' nzTitle="竣工验收备案数量统计">
+    <div
+      style='background-image:url("./assets/images/big2/left.png");background-size: 100% 100%;width:49%;height:20%;float: left;'>
+      <span style='font-size: 30px;color: #FF9600;position: relative;left: 15%;margin-top:15%;'>{{FlowData3?.currentMonthCount}}</span>
+      <span style='font-size: 18px;color: #FF9600;position: relative;left: 60%;margin-top:15%;'>{{FlowData3?.comparedMonthRate}}%</span>
+      <img src='./assets/images/big2/yup.png' style="position: relative;left: 60%;" />
+    </div>
+    <div
+      style='background-image:url("./assets/images/big2/right.png");background-size: 100% 100%;width:49%;height:20%;float: left;margin-left: 2%'>
+      <span style='font-size: 30px;color: #2B74D9;position: relative;left: 15%;margin-top:15%;'>{{FlowData3?.currentWeekCount}}</span>
+      <span style='font-size: 18px;color: #2B74D9;position: relative;left: 60%;margin-top:15%;'>{{FlowData3?.comparedWeekRate}}%</span>
+      <img src='./assets/images/big2/bup.png' style="position: relative;left: 60%;" />
+    </div>
+    <div echarts [options]="option3" class="echartsStyle" style="height:100%;width:100%">
+    </div>
   </nz-card>
-</div>
-<div style='height:80%;width:30%;float: left;'>
-  <nz-card style='height:50%' nzTitle="消防竣工验收数量统计">
-
-  </nz-card>
-  <nz-card style='height:47%' nzTitle="竣工验收备案数量统计">
-
-  </nz-card>
-</div>
-<!-- <div style='height:80%;width:44%;float: left;margin-left: 1%;'>
-  <nz-card style='height:30%' nzTitle="消防设计审查申报数量统计">
-
-  </nz-card>
-  <nz-card style='height:30%' nzTitle="消防竣工验收数量统计">
-
-  </nz-card>
-  <nz-card style='height:30%' nzTitle="竣工验收备案数量统计">
-
-  </nz-card>
-</div>
-<div style='height: 40%;width: 55%;float: left;margin-top: -22%;'>
-
 </div> -->
