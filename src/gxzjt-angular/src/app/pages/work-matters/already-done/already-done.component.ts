@@ -99,7 +99,7 @@ export class AlreadyDoneComponent
 
 
   watchItem(item) {
-    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.flowId}/${item.flowPathType}`]);
+    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.flowId}/${item.flowPathType}/1`]);
   }
 
   change(v) {

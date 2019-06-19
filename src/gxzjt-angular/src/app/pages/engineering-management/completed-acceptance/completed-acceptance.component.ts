@@ -14,7 +14,7 @@ import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 
 import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import { timeTrans } from 'infrastructure/regular-expression';
-
+import * as moment from 'moment';
 import { PublicFormComponent } from '../public/public-form.component';
 /**
  * 竣工验收
@@ -53,7 +53,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   flowPathTypeEnum = FlowPathTypeEnum
 
   //时间
-  rangeTime
+  rangeTime = ['2019-02-19T05:46:09.135Z','2019-06-19T05:46:09.135Z'];
   constructor(private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
     private _flowServices: FlowServices,
     private router: Router,
@@ -72,6 +72,8 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.searchParam.maxResultCount = 10;
     this.searchParam.flowPathType = 3
     this.searchParam.sorting = 'ProjectName';
+    this.searchParam.startApplyTime = moment(this.rangeTime[0])
+    this.searchParam.endApplyTime =moment(this.rangeTime[1])  
     this.getList();
   }
 
@@ -92,12 +94,14 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
    */
   query() {
     this.searchParam.page = 1; 
+    this.searchParam.startApplyTime = moment(this.rangeTime[0])
+    this.searchParam.endApplyTime =moment(this.rangeTime[1])  
     this.getList();
   }
 
 
   watchItem(item) {
-    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.flowId}/${item.flowPathType}`]);
+    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`]);
   }
 
   change(v) {

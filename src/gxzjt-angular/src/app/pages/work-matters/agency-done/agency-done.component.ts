@@ -100,7 +100,7 @@ export class AgencyDoneComponent  extends PublicFormComponent implements OnInit 
 
 
   watchItem(item) {
-    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.flowId}/${item.flowPathType}`]);
+    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.flowId}/${item.flowPathType}/0`]);
   }
 
   change(v) {
