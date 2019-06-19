@@ -123,15 +123,30 @@ var app = {
   downList(url, method, data, succCallBack, errorCallBack) {
     let downLoadUrl = Vue.prototype.downLoadUrl;
     let finalUrl = url + "?appId="+data.appId+"&id="+data.id
+    // let finalUrl = url + "?appId=" + "9F947774-8CB4-4504-B441-2B9AAEEAF450" + "&id=" + "c10d2c39-15ce-40a5-86f5-636e6a03de52"
     return new Promise(function (resolve, reject) {
       axios({
         method: method,
         url: downLoadUrl + finalUrl,
+        responseType: 'blob'
         // data: qs.stringify(data)
       }).then(function (req) {
-        if (req.status == 200) {
-          resolve(req.data);
+        const content = req
+        const blob = new Blob([content])
+        const fileName = '导出信息.xlsx'
+        if ('download' in document.createElement('a')) { // 非IE下载
+          const elink = document.createElement('a')
+          elink.download = fileName
+          elink.style.display = 'none'
+          elink.href = URL.createObjectURL(blob)
+          document.body.appendChild(elink)
+          elink.click()
+          URL.revokeObjectURL(elink.href) // 释放URL 对象
+          document.body.removeChild(elink)
+        } else { // IE10+下载
+          navigator.msSaveBlob(blob, fileName)
         }
+       
       })
     })
   },
