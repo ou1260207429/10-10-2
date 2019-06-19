@@ -12,8 +12,8 @@ import { _HttpClient } from "@delon/theme";
 export class BigScreenComponent {
     echarts = require('echarts');
 
-        percent = 87;
-    //     color = '#2f9cff';
+    percent = 87;
+    color = '#2f9cff';
 
     clientHeight = 0; //  屏幕可视高度
     clientWidth = 0;
@@ -378,20 +378,20 @@ export class BigScreenComponent {
                     },
                 },
 
-                //             ],
-                //             yAxis: [
-                //                 {
-                //                     type: 'value',
-                //                     axisLabel: {
-                //                         textStyle: {
-                //                             color: '#fff'
-                //                         },
-                //                     },
-                //                     splitLine: {
-                //                         show: false
-                //                     },
-                //                     max: 'dataMax',
-                //                 }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    axisLabel: {
+                        textStyle: {
+                            color: '#fff'
+                        },
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    max: 'dataMax',
+                }
 
             ],
             series: [
@@ -469,20 +469,20 @@ export class BigScreenComponent {
                     },
                 },
 
-                //             ],
-                //             yAxis: [
-                //                 {
-                //                     type: 'value',
-                //                     axisLabel: {
-                //                         textStyle: {
-                //                             color: '#fff'
-                //                         },
-                //                     },
-                //                     splitLine: {
-                //                         show: false
-                //                     },
-                //                     max: 'dataMax',
-                //                 }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    axisLabel: {
+                        textStyle: {
+                            color: '#fff'
+                        },
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    max: 'dataMax',
+                }
 
             ],
             series: [
@@ -560,20 +560,20 @@ export class BigScreenComponent {
                     },
                 },
 
-                //             ],
-                //             yAxis: [
-                //                 {
-                //                     type: 'value',
-                //                     axisLabel: {
-                //                         textStyle: {
-                //                             color: '#fff'
-                //                         },
-                //                     },
-                //                     splitLine: {
-                //                         show: false
-                //                     },
-                //                     max: 'dataMax',
-                //                 }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    axisLabel: {
+                        textStyle: {
+                            color: '#fff'
+                        },
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    max: 'dataMax',
+                }
 
             ],
             series: [
@@ -651,20 +651,20 @@ export class BigScreenComponent {
                     },
                 },
 
-                //             ],
-                //             yAxis: [
-                //                 {
-                //                     type: 'value',
-                //                     axisLabel: {
-                //                         textStyle: {
-                //                             color: '#fff'
-                //                         },
-                //                     },
-                //                     splitLine: {
-                //                         show: false
-                //                     },
-                //                     max: 'dataMax',
-                //                 }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    axisLabel: {
+                        textStyle: {
+                            color: '#fff'
+                        },
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    max: 'dataMax',
+                }
 
             ],
             series: [
@@ -742,23 +742,23 @@ export class BigScreenComponent {
                     },
                 },
 
-                //             ],
-                //             yAxis: [
-                //                 {
-                //                     type: 'value',
-                //                     axisLabel: {
-                //                         textStyle: {
-                //                             color: '#fff'
-                //                         },
-                //                     },
-                //                     splitLine: {
-                //                         show: false
-                //                     },
-                //                     max: 'dataMax',
-                //                 }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    axisLabel: {
+                        textStyle: {
+                            color: '#fff'
+                        },
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    max: 'dataMax',
+                }
 
-                //             ],
-                //             series: [
+            ],
+            series: [
 
                 {
                     name: '消防验收',
@@ -834,20 +834,20 @@ export class BigScreenComponent {
                     },
                 },
 
-                //             ],
-                //             yAxis: [
-                //                 {
-                //                     type: 'value',
-                //                     axisLabel: {
-                //                         textStyle: {
-                //                             color: '#fff'
-                //                         },
-                //                     },
-                //                     splitLine: {
-                //                         show: false
-                //                     },
-                //                     max: 'dataMax',
-                //                 }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    axisLabel: {
+                        textStyle: {
+                            color: '#fff'
+                        },
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    max: 'dataMax',
+                }
 
             ],
             series: [
@@ -1195,7 +1195,8 @@ export class BigScreenComponent {
                     realtime: false,
                     calculable: true,
                     inRange: {
-                        color: ['#469ffb', '#42a5fc', '#24cbff', '#5b54e6', '#5142cc', '#494bda', '#d0b210', '#6b249a', '#6728a1', '#6b2499',]
+                        //color: ['#469ffb', '#42a5fc', '#24cbff', '#5b54e6', '#5142cc', '#494bda', '#d0b210', '#6b249a', '#6728a1', '#6b2499',]
+                        color: ['#90ccff', '#2f98ff', '#074ec1']
                     },
                     textStyle: {
                         color: '#fff',

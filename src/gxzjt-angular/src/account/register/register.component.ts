@@ -57,7 +57,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
     // this.model = {new RegisterInput()};
 
     this.model = {
-      MerchantId: "C8793952-540E-414C-98FF-9C65D6",
+      MerchantId: "C8793952-540E-414C-98FF-9C65D6171F6D",
       EId: "",//登录手机号
       EName: "",
       Password: "",
@@ -113,17 +113,21 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
   };
   register() {
     this.saving = true;
-    let url = environment.REGISTER_URL + "/api/User/Register";
+    let url = environment.REGISTER_URL + "/api/User/Register";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
 
 
     this.http.post(url, this.model, this.httpOptions).subscribe((res: any) => {
 
       console.log(res);
       if (res) {
-        if (res.code == 0) {
-          this.showErr(res.message);
+        if (res.result == 0) {
+          this.modalService.info({
+            nzTitle: '提示',
+            nzContent: "注册成功",
+          });
+          this.back();
         } else {
-
+          this.showErr(res.message);
         }
       }
       this.saving = false;

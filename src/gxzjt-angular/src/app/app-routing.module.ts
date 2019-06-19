@@ -20,14 +20,14 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutDefaultComponent,
-    canActivate: [AppRouteGuard, ACLGuard],
+    canActivate: [AppRouteGuard],
     children: [
 
       {
         path: '', loadChildren: './pages/home/home.module#HomeModule',
-        data: {
-          guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
-        }
+        // data: {
+        //   guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
+        // }
       },
     ],
   },
@@ -35,48 +35,50 @@ const routes: Routes = [
     path: '',
     component: LayoutDefaultComponent,
     data: { title: '统计', preload: true },
-    canActivate: [AppRouteGuard, ACLGuard],
+    canActivate: [AppRouteGuard],
     children: [
       {
         path: 'statistics', loadChildren: './routes/statistics/statistics.module#StatisticsModule',
-        data: {
-          guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
-        }
+        // data: {
+        //   guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
+        // }
       },
       {
         path: 'sys-setting', loadChildren: './routes/sys-setting/sys-setting.module#SysSettingModule',
-        data: {
-          guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
-        }
+        // data: {
+        //   guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
+        // }
       },
       {
         path: 'permission', loadChildren: './routes/permission/permission.module#PermissionModule',
-        data: {
-          guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
-        }
+        // data: {
+        //   guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
+        // }
       },
       {
         path: 'home', loadChildren: './pages/home/home.module#HomeModule',
-        data: {
-          guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
-        }
+        // data: {
+        //   guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
+        // }
       },
       {
-        path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule', data: {
-          guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
-        }
+        path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule',
+        //  data: {
+        //   guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
+        // }
       },
       {
         path: 'engineering-management',
         loadChildren: './pages/engineering-management/engineering-management.module#EngineeringManagementModule',
-        data: {
-          guard: <ACLType>{ role: ['sys', 'reg'], mode: 'oneOf' }
-        }
+        // data: {
+        //   guard: <ACLType>{ role: ['sys', 'reg'], mode: 'oneOf' }
+        // }
       },
       {
-        path: 'content-manage', loadChildren: './pages/content-manage/content-manage.module#ContentManageModule', data: {
-          guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
-        }
+        path: 'content-manage', loadChildren: './pages/content-manage/content-manage.module#ContentManageModule', 
+        // data: {
+        //   guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
+        // }
       },
 
     ],

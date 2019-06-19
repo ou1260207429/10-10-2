@@ -67,7 +67,7 @@ export class AppPreBootstrap {
         return abp.timing.localClockProvider;
     }
 
-    private static getUserConfiguration(injector: Injector, httpClient: HttpClient, callback: () => void) {
+    public static getUserConfiguration(injector: Injector, httpClient: HttpClient, callback: () => void) {
 
         let url = '/assets/serverconfig.json';
         httpClient.get(url).subscribe((response: any) => {
@@ -98,15 +98,13 @@ export class AppPreBootstrap {
             // 本地化
             const localization = injector.get<LocalizationService>(ALAIN_I18N_TOKEN);
             localization.extend(abp.localization);
+
+
+            // const _ACLService = injector.get(ACLService);
+
+            // _ACLService.setRole(['sys']);
             // 写入菜单
             const menuService = injector.get(MenuService);
-
-            // var menus=[];
-            // for(let menu in AppMenus.Menus){
-            //     if(menu.acl&&menu.acl){
-
-            //     }
-            // }
 
             menuService.add(AppMenus.Menus);
 
