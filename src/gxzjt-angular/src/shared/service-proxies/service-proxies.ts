@@ -193,6 +193,7 @@ export class AcceptanceFileServiceProxy {
     }
 
     /**
+<<<<<<< HEAD
      * @param acceptApplyFormDto (optional) 
      * @param acceptRecordId (optional) 
      * @param template (optional) 
@@ -251,6 +252,8 @@ export class AcceptanceFileServiceProxy {
     }
 
     /**
+=======
+>>>>>>> 98f4bb3ca1a372a79715125fac3c167acb86f767
      * @param reviewFormDto (optional) 
      * @return Success
      */

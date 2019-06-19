@@ -24,10 +24,11 @@ import { PublicModel } from 'infrastructure/public-model';
   templateUrl: 'already-done.component.html',
   styles: [],
 })
-export class AlreadyDoneComponent  implements OnInit {
+export class AlreadyDoneComponent
+  extends PublicFormComponent implements OnInit {
 
- 
 
+    index;
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
@@ -50,7 +51,8 @@ export class AlreadyDoneComponent  implements OnInit {
 
   pageConfig: STPage = publicPageConfig;
 
-  formResultData
+  formResultData: any;
+
 
   //类型
   flowPathTypeEnum = FlowPathTypeEnum
@@ -62,7 +64,7 @@ export class AlreadyDoneComponent  implements OnInit {
     private router: Router,
     private http: _HttpClient,
     private xlsx: XlsxService) {
-
+    super();
   }
 
   ngOnInit() {
@@ -83,7 +85,7 @@ export class AlreadyDoneComponent  implements OnInit {
    */
   getList() {
     this.workFlowedServiceProxy.processedWorkFlow_NodeAuditorRecord(this.searchParam).subscribe((data: any) => {
-      this.formResultData = data 
+      this.formResultData = data
     })
   }
 

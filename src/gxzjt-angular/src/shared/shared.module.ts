@@ -35,6 +35,8 @@ import { PermissionService } from './auth';
 import { DirectivesModule } from './directives/directives.module';
 
 
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -52,7 +54,7 @@ import { DirectivesModule } from './directives/directives.module';
     ...THIRDMODULES,
   ],
   declarations: [
-
+    
   ],
   exports: [
     CommonModule,

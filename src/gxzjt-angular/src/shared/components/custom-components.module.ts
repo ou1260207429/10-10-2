@@ -1,19 +1,22 @@
 
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders ,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NoDataComponent } from '@shared/components/no-data/no-data.component';
 import { ValidationMessagesComponent } from './validation-messages/validation-messages.component';
+import { UploadFileComponent } from './tranfile/uploadfile';
 
 const COMPONENTS = [
   NoDataComponent,
-  ValidationMessagesComponent
+  UploadFileComponent,
+  ValidationMessagesComponent,
+  
 ];
 
 
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
   ],
   declarations: [
     ...COMPONENTS
@@ -21,6 +24,7 @@ const COMPONENTS = [
   exports: [
     ...COMPONENTS
   ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 
 /**自定义组件模块 */

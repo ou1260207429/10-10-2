@@ -24,8 +24,8 @@ import { PublicModel } from 'infrastructure/public-model';
   templateUrl: 'agency-done.component.html',
   styles: [],
 })
-export class AgencyDoneComponent  implements OnInit {
-
+export class AgencyDoneComponent  extends PublicFormComponent implements OnInit {
+  index;
 
  
   formResultData
@@ -62,7 +62,8 @@ export class AgencyDoneComponent  implements OnInit {
     private _publicModel:PublicModel,
     private http: _HttpClient,
     private xlsx: XlsxService) {
-
+    
+      super();
 
   }
 
