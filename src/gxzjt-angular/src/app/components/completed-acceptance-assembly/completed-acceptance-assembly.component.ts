@@ -34,7 +34,15 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
-  constructor(public publicModel: PublicModel, ) { }
+
+  //抽取号
+  decimationnumber
+  constructor(public publicModel: PublicModel, ) {
+    this.decimationnumber = [];
+    for (let index = 1; index < 101; index++) { 
+      this.decimationnumber.push({ label: index, value: index },)
+    }
+  }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去

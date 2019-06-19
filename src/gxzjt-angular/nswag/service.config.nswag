@@ -2,7 +2,7 @@
   "runtime": "Default",
   "swaggerGenerator": {
     "fromSwagger": {
-      "url": "http://222.84.250.158:8112/ProjectCenterConfig/v1/swagger.json",
+      "url": "http://localhost:21021/ProjectCenterConfig/v1/swagger.json",
       "output": null
     }
   },

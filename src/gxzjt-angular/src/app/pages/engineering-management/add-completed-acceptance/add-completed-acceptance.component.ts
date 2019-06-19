@@ -322,7 +322,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
       },
       filingTime: '',
-
+      luckNo: '',
     }
 
   }
@@ -407,8 +407,9 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       flowDataDto.projectFlowInfo.currentNodeName = data.result.cur_NodeName
 
       flowDataDto.projectFlowInfo.workFlow_Instance_Id = data.result.workFlow_Instance_Id
-     flowDataDto.projectFlowInfo.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id 
+      flowDataDto.projectFlowInfo.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
 
+      flowDataDto.luckNo = this.data.luckNo;
       flowDataDto.handleUserList = [];
       data.result.auditorRecords.forEach(element => {
         const flowNodeUser = new FlowNodeUser()

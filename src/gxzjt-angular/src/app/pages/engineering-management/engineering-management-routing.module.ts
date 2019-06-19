@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FireDesignComponent } from './fire-design/fire-design.component';
 import { CompletedAcceptanceComponent } from './completed-acceptance/completed-acceptance.component';
 import { EngineeringListComponent } from './engineering-list/engineering-list.component';
 import { FireAcceptanceComponent } from './fire-acceptance/fire-acceptance.component';
@@ -24,10 +23,7 @@ const routes: Routes = [
     component: FireAcceptanceComponent
   },
 
-  {
-    path: 'fireDesignComponent',
-    component: FireDesignComponent
-  },
+  
 
   {
     path: 'addFireDesignDeclareComponent/:type/:projectId',
