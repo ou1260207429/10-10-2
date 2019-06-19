@@ -14,6 +14,9 @@ import { PublicModel } from 'infrastructure/public-model';
 })
 export class FireAcceptanceAssemblyComponent implements OnInit {
 
+  //判断是新增或者办理  0是新增 1是办理
+  @Input() type: number = 0
+  
   @Input() data: any
 
   //市县区

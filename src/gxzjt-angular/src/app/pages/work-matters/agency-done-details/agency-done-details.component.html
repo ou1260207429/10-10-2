@@ -7,8 +7,14 @@
   </nz-tabset>
 
   <div [ngClass]="{hide: selectedIndex != 0}">
-    <app-fire-design-declare-assembly *ngIf="formJson" [data]="formJson" type=1></app-fire-design-declare-assembly>
 
+    <!-- 表单JSON -->
+    <app-fire-design-declare-assembly *ngIf="formJson && flowPathType ==1" [data]="formJson" type=1></app-fire-design-declare-assembly>
+
+    <app-fire-acceptance-assembly [data]="formJson" type=1 *ngIf="formJson && flowPathType ==2" ></app-fire-acceptance-assembly>
+
+    <app-completed-acceptance-assembly [data]="formJson" type=1 *ngIf="formJson && flowPathType ==3"></app-completed-acceptance-assembly>
+    <!-- 表单JSON -->
     <form nz-form #f="ngForm" se-container="1">
       <table class="tables" style="box-sizing: border-box;" *ngIf="formDto">
 
@@ -20,7 +26,7 @@
         <tr style="text-align: left;border-top: 1px solid #e2e2e2;">
           <td colspan="20">
             <se error="这是必填项" label="是否通过" required>
-              <nz-select [(ngModel)]="test.type" name="jbtype{{index}}" required>
+              <nz-select [(ngModel)]="formDto.isAccept" name="isAccept{{index}}" required>
                 <nz-option *ngFor="let option of adoptEnum" [nzLabel]="option.label" [nzValue]="option.value">
                 </nz-option>
               </nz-select>
@@ -30,24 +36,19 @@
         <tr style="text-align: left;">
           <td colspan="20">
             <se error="这是必填项" label="审批意见书">
-              <app-fire-design-declare-assembly-handle [data]="formDto"></app-fire-design-declare-assembly-handle>
+              <app-fire-design-declare-assembly-handle [data]="formDto" *ngIf="flowPathType ==1"></app-fire-design-declare-assembly-handle>
+              <app-fire-acceptance-assembly-handle [data]="formDto" *ngIf="flowPathType ==2"></app-fire-acceptance-assembly-handle>
+              <app-completed-acceptance-assembly-handle [data]="formDto" *ngIf="flowPathType ==3"></app-completed-acceptance-assembly-handle>
             </se>
           </td>
-        </tr>
-        <tr style="text-align: left;">
-          <td colspan="20">
-            <se label="附件上传">
-              <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
-                <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
-              </nz-upload>
-            </se>
-          </td>
-        </tr>
+        </tr> 
       </table>
     </form>
 
     <div class="textCenter" style="margin-bottom: 40px;">
-      <button nz-button nzType="primary" (click)="save()">提交</button>
+      <button nz-button nzType="primary" (click)="save()">提交</button> 
+      <button nz-button nzType="primary" (click)="revoke()">撤销</button>
+      
     </div> 
   </div>
   <div [ngClass]="{hide: selectedIndex != 1}">
@@ -55,7 +56,7 @@
   </div>
 </nz-spin>
 
-
+<!-- 
 
 <table class="tables d_table" style="box-sizing: border-box;">
   <thead>
@@ -269,64 +270,7 @@
 
 **********************************************************************************************
 
-<table class="tables d_table" style="box-sizing: border-box;">
-  <thead>
-    <tr>
-      <td colspan='20' rowspan='1' class="table_title">
-        <h3>××市住房和城乡建设局<br />建设工程消防验收意见书</h3>
-      </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-        ×住建消验字〔2019〕第0059号
-      </td>
-    </tr>
-    <tr>
-      <td rowspan='1' colspan='20'>
-        <div class="table_detail">
-          <h3>××××：</h3>
-          <p>
-            你单位报来××××××建设工程消防验收资料收悉（受理凭证：×住建消验凭字〔2019〕第59号）。该工程位于××市阳光大道8号，建筑高度98m，地上29层，地下2层，总建筑面积421000m2，属一类高层民用建筑。××年××月××日，××市住房和城乡建设局组织你单位及设计、施工、监理、检测等单位有关人员对该工程进行了消防验收。经对验收资料、建设消防设施技术检测报告进行审查，对总平面布置和平面布置中涉及消防安全的防火间距、消防车道、消防水源，建设防火防烟分区和建设构造，安全疏散和消防电梯，消防给水和自动灭火系统，防烟、排烟和通风系统的防火设计，消防电源及其配电，火灾应急照明、应急广播和疏散指示标志，火灾自动报警系统和消防控制室，建筑灭火器等项目情况和性能进行抽查，按照你单位提供的XXXXX消防设施检测公司出具的《建筑消防设施检测报告》（项目编号：XXXXX），现提出以下意见：
-          </p>
-        </div>
-        <ul class="table_list">
-          <li>
-            一、综合评定该工程消防验收合格。
-          </li>
-          <li>
-            二、会议室未设置火灾应急照明。
-          </li>
-          <li>
-            三、建设消防设施应当定期维修保养，保持完整有效。
-          </li>
-          <li>
-            四、提供消防检测的技术服务机构和人员对出具的检测意见负责。
-          </li>
-          <li>
-            五、此次验收的工程如需改变使用功能或扩建、改建、内部装修等，应按国家有关消防技术规范规定进行设计并报我单位审查同意后方可施工。
-          </li>
-        </ul>
 
-        <div class="table_seal">
-          由后台提供的当前时间 年月日
-        </div>
-
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">建设单位签收：<input class="table_input_2" />
-        <p class="table_time">
-          <nz-date-picker name="t2"></nz-date-picker>
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle">一式两份，一份交建设单位，一份存档。 </td>
-    </tr>
-  </tbody>
-</table>
 
 **********************************************************************************************
 
@@ -458,71 +402,7 @@
 
 **********************************************************************************************
 
-<table class="tables d_table" style="box-sizing: border-box;">
-  <thead>
-    <tr>
-      <td colspan='20' rowspan='1' class="table_title">
-        <h3>××市住房和城乡建设局<br />建设工程竣工验收消防备案凭证（未抽中）</h3>
-      </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-        ×住建消竣备字[2019]第0059 号
-      </td>
-    </tr>
-    <tr>
-      <td rowspan='1' colspan='20'>
-        <div class="table_detail">
-          <h3>××市××区：</h3>
-          <p>根据《中华人民共和国消防法》第十三条和《建设工程消防监督管理规定》第二十四条的规定，你单位于 ×× 年 ××月 ××日向 ××市住房和城乡建设局 申请了 ××××××××工程（地址： ××市××路11
-            号）的竣工验收消防备案，备案号：45000XXXYSBA00001，并提交了下列备案材料：</p>
-        </div>
-        <ul class="table_list">
-          <li>
-            <label nz-checkbox name="newcheckboxEngineering1"
-              [(ngModel)]="simultaneousMaterials.a1Checkbox">1、建设工程消防验收备案表；</label>
-          </li>
-          <li>
-            <label nz-checkbox name="newcheckboxEngineering2"
-              [(ngModel)]="simultaneousMaterials.a2Checkbox">2、有关消防设施的工程竣工图纸；</label>
-          </li>
-          <li>
-            <label nz-checkbox name="newcheckboxEngineering3"
-              [(ngModel)]="simultaneousMaterials.a3Checkbox">3、符合要求的检测机构出具的消防设施及系统检测合格文件。
-              经核，备案材料项目齐全，依法核发备案凭证。</label>
-          </li>
-        </ul>
-        <div class="table_add_info">
-          <p>根据《中华人民共和国消防法》等法律法规的规定，按照预设程序随机确定抽查对象的方式，你单位<nz-radio-group [(ngModel)]="simultaneousMaterials.notGrant">
-              <label style="padding-left: 20px;" nz-radio nzValue="已">已</label>
-              <label nz-radio nzValue="未">未</label>
-            </nz-radio-group>）被确定为抽查对象。</p>
-          <p>已经依法进行竣工验收消防备案的建设工程，如需扩建、改建（含室内外装修、建筑保温、用途变更）的，应当工程竣工验收合格之日起七个工作日内，依法申报消防验收备案。</p>
-        </div>
 
-        <div class="table_seal">
-          由后台提供的当前时间 年月日
-        </div>
-
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">承 办 人<input class="table_input_2" />
-
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">备案人<input class="table_input_2" />
-
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle">一式两份，一份交建设单位，一份存档。 </td>
-    </tr>
-  </tbody>
-</table>
 
 
 <table class="tables d_table" style="box-sizing: border-box;">
@@ -585,114 +465,14 @@
 </table>
 
 
-<table class="tables d_table" style="box-sizing: border-box;">
-  <thead>
-    <tr>
-      <td colspan='20' rowspan='1' class="table_title">
-        <h3>××市住房和城乡建设局<br />建设工程竣工验收消防备案抽查不合格通知书</h3>
-      </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-        ×住建消竣备字[2019]第0059 号
-      </td>
-    </tr>
-    <tr>
-      <td rowspan='1' colspan='20'>
-        <div class="table_detail">
-          <h3>xxxxx</h3>
-          <p>
-            经随机抽查，你单位XX市XX路XX号XXXXXXXXX工程(备案凭证文号：X住建消验备字〔2019〕第XX号，工程备案号为XXXXXXXXXXXXX。该工程地上XX层，建筑高度XX米，建筑面积XXX平方米，现装修XXXXXXXX，装修面积为XXXXXXXX㎡，使用性质为XXXXXXXX。为二类高层住宅楼)被确定为检查对象。
-          </p>
-          <p>我局按照建设工程消防验收评定标准进行了检查。经审查资料及现场检查测试，综合评定该工程为不合格。主要存在下列问题：</p>
-        </div>
-        <ul class="table_list">
-          <li>
-            1、XXXXXXXXXXXXXXXXXXXXX；
-          </li>
-          <li>
-            2、XXXXXXXXXXXXXXXXXXXXX；
-          </li>
-          <li>
-            3、XXXXXXXXXXXXXXXXXXXXX；
-          </li>
-        </ul>
-        <div class="table_add_info">
-          <p>你单位应当组织对上述问题进行整改，整改后向我单位申请复查。未经抽查合格，工程不得投入使用，已经使用的，应当自即日起停止使用。</p>
-          <p>如不服本通知书要求，可以在收到本通知书之日起六十日内向××市××住建局或××市××区人民政府申请行政复议，或者在三个月内向××市××区人民法院提起行政诉讼。</p>
-        </div>
-
-        <div class="table_seal">
-          由后台提供的当前时间 年月日
-        </div>
-
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">建设单位签收：<input class="table_input_2" />
-        <p class="table_time">
-          <nz-date-picker name="t2"></nz-date-picker>
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle">本通知书一式两份，一份交建设单位，一份存档。 </td>
-    </tr>
-  </tbody>
-</table>
-
-
-<table class="tables d_table" style="box-sizing: border-box;">
-  <thead>
-    <tr>
-      <td colspan='20' rowspan='1' class="table_title">
-        <h3>××市住房和城乡建设局<br />建设工程竣工验收消防备案复查意见书</h3>
-      </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-        ×住建消竣备字[2019]第0059 号
-      </td>
-    </tr>
-    <tr>
-      <td rowspan='1' colspan='20'>
-        <div class="table_detail">
-          <h3>xxxxx</h3>
-          <p>
-            你单位备案的XXXXXXXXX工程(备案凭证文号：X住建消验备字〔2019〕第XX号，工程备案号：45000XXXYSBA00001，该工程地上XX层，建筑高度XX米，建筑面积XXX平方米，为二类高层住宅楼)，经我单位竣工验收消防备案抽查不合格。你单位于XX年XX月XX日申请复验，我单位根据X住建消验备查字〔2019〕第XX号《建设工程竣工验收消防备案抽查不合格通知书》进行复查，存在问题均予以整改。该工程竣工验收消防备案复查合格，同意该工程恢复使用。
-          </p>
-          <p>该工程竣工验收消防备案合格投入使用后，管理单位应当对建筑消防设施进行定期维护保养，确保完好有效。</p>
-          <p>工程如有扩建、改建（含室内外装修、建筑保温、用途变更），应当工程竣工验收合格之日起七个工作日内，依法向我单位申报消防验收消防备案。</p>
-        </div>
-
-
-        <div class="table_seal">
-          由后台提供的当前时间 年月日
-        </div>
-
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">建设单位签收：<input class="table_input_2" />
-        <p class="table_time">
-          <nz-date-picker name="t2"></nz-date-picker>
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle">本意见书一式两份，一份交建设单位，一份存档。 </td>
-    </tr>
-  </tbody>
-
-</table>
 
 
 
 
+
+
+
+ -->
 
 
 <!-- <form nz-form #f="ngForm" se-container="1">

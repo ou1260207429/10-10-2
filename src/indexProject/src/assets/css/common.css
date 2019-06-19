@@ -2,7 +2,9 @@
   margin: 0;
   padding: 0;
 }
-
+body{
+  background-color: #f0f2f5;
+}
 a {
   text-decoration: none;
   color: #000;
@@ -18,13 +20,11 @@ ul {
   margin: 0 auto;
 }
 
-.activeNav {
-  border-bottom: 2px solid #bd1127ff;
-  color: #bd1127ff !important;
-}
 
 .item {
   cursor: pointer;
+  margin-top: 25px;
+  
 }
 
 .tips {
@@ -60,7 +60,7 @@ ul {
 
 .list {
   background-color: #f7f7f7;
-  padding: 12px 30px;
+  padding: 9px 30px;
   margin-bottom: 10px;
   cursor: pointer;
   overflow: hidden;

@@ -7,6 +7,9 @@ import { CompletedAcceptanceAssemblyComponent } from './completed-acceptance-ass
 import { FireDesignDeclareAssemblyComponent } from './fire-design-declare-assembly/fire-design-declare-assembly.component';
 import { FireDesignDeclareAssemblyHandleComponent } from './fire-design-declare-assembly-handle/fire-design-declare-assembly-handle.component';
 import { FireAcceptanceAssemblyComponent } from './fire-acceptance-assembly/fire-acceptance-assembly.component';
+import { FireAcceptanceAssemblyHandleComponent } from './fire-acceptance-assembly-handle/fire-acceptance-assembly-handle.component';
+import { CompletedAcceptanceAssemblyHandleComponent } from './completed-acceptance-assembly-handle/completed-acceptance-assembly-handle.component';
+import { FlowProcessRejectComponent } from './flow-process-reject/flow-process-reject.component';
 
 @NgModule({
 	declarations: [
@@ -14,7 +17,9 @@ import { FireAcceptanceAssemblyComponent } from './fire-acceptance-assembly/fire
 		CompletedAcceptanceAssemblyComponent,
 		FireAcceptanceAssemblyComponent,
 		FireDesignDeclareAssemblyComponent,
-		FireDesignDeclareAssemblyHandleComponent,
+		FireDesignDeclareAssemblyHandleComponent, 
+		FireAcceptanceAssemblyHandleComponent, 
+		CompletedAcceptanceAssemblyHandleComponent, FlowProcessRejectComponent,
 	],
 	imports: [
 		PipesModule,
@@ -26,6 +31,9 @@ import { FireAcceptanceAssemblyComponent } from './fire-acceptance-assembly/fire
 		FireAcceptanceAssemblyComponent,
 		FireDesignDeclareAssemblyComponent,
 		FireDesignDeclareAssemblyHandleComponent,
+		FireAcceptanceAssemblyHandleComponent, 
+		CompletedAcceptanceAssemblyHandleComponent,
+		FlowProcessRejectComponent,
 	],
 	entryComponents: [
 		FlowRouteComponent,
@@ -33,6 +41,9 @@ import { FireAcceptanceAssemblyComponent } from './fire-acceptance-assembly/fire
 		FireAcceptanceAssemblyComponent,
 		FireDesignDeclareAssemblyComponent,
 		FireDesignDeclareAssemblyHandleComponent,
+		FireAcceptanceAssemblyHandleComponent, 
+		CompletedAcceptanceAssemblyHandleComponent,
+		FlowProcessRejectComponent,
 	]
 
 })

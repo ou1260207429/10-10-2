@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div style="width:100%;overflow:hidden;">
+  <div style="width:100%;overflow:hidden;margin-bottom: 20px;">
     <div class="content">
       <el-row :gutter="16">
         <el-col :span="12">
@@ -16,17 +16,11 @@
                   <span>办事指南</span>
                 </p>
               </div>
-              <el-row :gutter="50" style="padding:20px 40px;overflow:hidden;">
-                <el-col
-                  class="item"
-                  :span="8"
-                  :key="index"
-                  v-for="(item,index) in handleList"
-                  @click="getNoticeDetail('handle',item.type,item.name)"
-                >
+              <el-row :gutter="50" style="padding:20px 40px;overflow:hidden;padding-top:0;">
+                <el-col class="item" :span="8" :key="index" v-for="(item,index) in handleList">
                   <router-link
                     :to="{
-         path: '/handling-guid-list-detail/'+item.id, 
+         path: '/handling-guid-list/detail/'+item.id, 
       
    }"
                   >
@@ -34,7 +28,7 @@
                       <img :src="item.src" alt>
                     </div>
                   </router-link>
-                  <div>{{item.title}}</div>
+                  <div class="ttt">{{item.title}}</div>
                 </el-col>
               </el-row>
             </el-card>
@@ -51,13 +45,15 @@
             <div v-if="lawsList">
               <div class="listParent">
                 <div :key="index" v-for="(item,index) in lawsList" class="list">
-                  <router-link :to="'/laws-and-regulations-detail/'+item.id">{{ item.title }}</router-link>
+                  <router-link :to="'/laws-and-regulations/detail/'+item.id">{{ item.title }}</router-link>
                 </div>
               </div>
               <div style="position: absolute;bottom: 0;left: 0;width:100%;">
-                <p class="more">
-                  <span>更多 ></span>
-                </p>
+                <router-link to="/laws-and-regulations">
+                  <p class="more">
+                    <span>更多 ></span>
+                  </p>
+                </router-link>
               </div>
             </div>
           </el-card>
@@ -71,7 +67,7 @@
                   <span>公告信息</span>
                 </p>
               </div>
-              <el-row :gutter="50" style="padding:15px 40px;" class="listParent">
+              <el-row :gutter="50" style="padding:15px 40px;padding-top:0;" class="listParent">
                 <el-col class="item" :span="8" :key="index" v-for="(item,index) in infoList">
                   <router-link :to="'/announcement-information/'+item.type">
                     <div class="cardList">
@@ -82,13 +78,15 @@
                 </el-col>
               </el-row>
               <div style="position: absolute;bottom: 0;left: 0;width:100%;">
-                <p class="more">
-                  <span>更多 ></span>
-                </p>
+                <router-link to="/announcement-information/1">
+                  <p class="more">
+                    <span>更多 ></span>
+                  </p>
+                </router-link>
               </div>
             </div>
           </el-card>
-          <el-card :style="{minHeight:rightHeight,marginTop:'16px', position: 'relative'}">
+          <el-card :style="{minHeight:rightHeight,marginTop:'8px', position: 'relative'}">
             <div style="overflow:hidden">
               <p class="tips" style="float: right">
                 <img src="../assets/images/img_bgxz.png" alt>
@@ -97,7 +95,7 @@
             </div>
             <!-- <div v-if="!lawsList" class="noData">暂无数据</div> -->
             <div v-if="lawsList">
-              <div class="listParent" >
+              <div class="listParent">
                 <div :key="index" v-for="(item,index) in tableList" class="list">
                   {{ item.attachmentName }}
                   <span style="float: right">{{ item.creationTime }}</span>
@@ -105,9 +103,11 @@
               </div>
             </div>
             <div style="position: absolute;bottom: 0;left: 0;width:100%;">
-              <p class="more">
-                <span>更多 ></span>
-              </p>
+              <router-link to="/form-download">
+                <p class="more">
+                  <span>更多 ></span>
+                </p>
+              </router-link>
             </div>
           </el-card>
         </el-col>
@@ -198,19 +198,29 @@ export default {
       let resHeight = app.clentHeight();
       let leftheight = _this.$refs.leftTop.offsetHeight;
       let rightheight = _this.$refs.rightTop.offsetHeight;
-      _this.leftHeight = (resHeight - leftheight)<200?"210px":(resHeight - leftheight) + "px";
-      _this.rightHeight =(resHeight - rightheight)<350?"350px":(resHeight - rightheight)+ "px";
+      _this.leftHeight =
+        resHeight - leftheight < 200 ? "210px" : resHeight - leftheight + "px";
+      _this.rightHeight =
+        resHeight - rightheight < 350
+          ? "350px"
+          : resHeight - rightheight + "px";
     },
     getlawsList() {
       let _this = this;
-      app.post(laws.serach_lawsList, app.pageSize).then(req => {
+      let lwaParams = Object.assign({}, app.pageSize);
+      lwaParams.size = 3;
+
+      app.post(laws.serach_lawsList, lwaParams).then(req => {
         _this.lawsList = req.result.data;
         // _this.tabHeight = app.clentHeight();
       });
     },
     getTableList() {
       let _this = this;
-      app.post(table.search_tableList, app.pageSize).then(req => {
+      let tabParams = Object.assign({}, app.pageSize);
+      tabParams.size = 6;
+
+      app.post(table.search_tableList, tabParams).then(req => {
         req.result.data.forEach(element => {
           element.creationTime = moment(element.creationTime).format(
             "YYYY-MM-DD hh:mm:ss"
@@ -296,6 +306,13 @@ export default {
   cursor: pointer;
 }
 .item {
+  .ttt {
+    height: 40px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
   a {
     width: 100%;
     display: block;

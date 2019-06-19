@@ -13,17 +13,6 @@ import { StatisticalServiceServiceProxy, WarningCenterQueryDto } from '@shared/s
   styleUrls: ['./warning-center.component.less'],
 })
 export class StatisticsWarningCenterComponent implements OnInit {
-  url = [{
-    pro_type: '1',
-    pro_name: '2',
-    pro_no: '3',
-    org: '4',
-    node: '5',
-    person: '6',
-    repo_time: '7',
-    at_time: '8',
-
-  }];
   param = new WarningCenterQueryDto();
   searchKey = '';
   selectedValuePro = "";
@@ -42,31 +31,6 @@ export class StatisticsWarningCenterComponent implements OnInit {
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
 
-
-    { title: '流程类型', index: 'pro_type' },
-    { title: '工程名称', index: 'pro_name' },
-    { title: '工程编号', index: 'pro_no' },
-    { title: '建设单位', index: 'org' },
-    {
-      title: '节点名称', index: 'node',
-      sort: {
-        compare: (a, b) => a.node > b.node ? 1 : 0,
-      },
-      filter: {
-        menus: [
-          { text: '初审', value: 0 },
-          { text: '复审', value: 1 },
-          { text: '审核完毕', value: 2 },
-        ],
-        fn: (filter: any, record: any) =>
-          record.node >= filter.value[0] && record.node <= filter.value[1],
-        multiple: false,
-      }
-    },
-    { title: '流程发起人', index: 'person' },
-
-    { title: '申报时间', type: 'date', index: 'repo_time' },
-    { title: '流程到达时间', type: 'date', index: 'at_time' },
     {
       title: '操作',
       buttons: [
@@ -83,7 +47,37 @@ export class StatisticsWarningCenterComponent implements OnInit {
         },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
-    }
+    },
+    { title: '工程类型', index: 'flowPathType',type: 'tag', tag: {
+      1: { text: '消防设计审查', color: '' },
+      2: { text: '消防验收', color: '' },
+      3:{ text: '激竣工验收消防备案活', color: '' },
+    }},
+    { title: '工程名称', index: 'projectName' },
+    { title: '工程编号', index: 'projectCode' },
+    { title: '建设单位', index: 'companyName' },
+    // {
+    //   title: '节点名称', index: 'flowPathType',
+    //   sort: {
+    //     compare: (a, b) => a.node > b.node ? 1 : 0,
+    //   },
+    //   filter: {
+    //     menus: [
+    //       { text: '初审', value: 0 },
+    //       { text: '复审', value: 1 },
+    //       { text: '审核完毕', value: 2 },
+    //     ],
+    //     fn: (filter: any, record: any) =>
+    //       record.node >= filter.value[0] && record.node <= filter.value[1],
+    //     multiple: false,
+    //   }
+    // },
+    { title: '流程发起人', index: 'applyName' },
+
+    { title: '申报时间', type: 'date', index: 'applyTime' },
+    { title: '流程到达时间', type: 'date', index: 'acceptTime' },
+    { title: '剩余审批时间',index: 'approvalRemainingTime' },
+
   ];
 
   constructor(private http: _HttpClient,
@@ -98,7 +92,7 @@ export class StatisticsWarningCenterComponent implements OnInit {
       proNo: [null],
       proName: [null],
       proType: [null],
-      dateRange: [[this.rangeTime]],
+      dateRange: [this.rangeTime],
 
     });
     this.getList();
@@ -112,15 +106,27 @@ export class StatisticsWarningCenterComponent implements OnInit {
     // this.modal
     //   .createStatic(FormEditComponent, { i: { id: 0 } })
     //   .subscribe(() => this.st.reload());
+    this.getList();
+    this.st.reload();
   }
   search() {
-    console.log(this.rangeTime)
+    this.param.projectName=this.fliterForm.controls.proName.value;
+    this.param.flowPathType=Number(this.fliterForm.controls.proType.value);
+    if(this.param.flowPathType==0){
+      this.param.flowPathType=-1;
+    }
     this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
     this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
     this.statisticalServiceServiceProxy.post_GetWarningCenterList(this.param).subscribe((result: any) => {
-      this.formResultData = result.data;
+      if(result.data){
+         this.formResultData = result.data;
+      }else{
+        this.formResultData=[];
+      }
+      this.st.reload()
     }, err => {
       console.log(err);
+      this.st.reload()
 
     });
 
@@ -131,7 +137,7 @@ export class StatisticsWarningCenterComponent implements OnInit {
       proNo: [null],
       proName: [null],
       proType: [null],
-      dateRange: [[this.rangeTime]],
+      dateRange: [this.rangeTime],
 
     });
     // this.fliterForm.reset();
@@ -159,11 +165,11 @@ export class StatisticsWarningCenterComponent implements OnInit {
         "flowNo": "",
         "projectName": "",
         "flowPathType": -1,
-        "startApplyTime": "2019-02-17T08:51:45.854Z",
-        "endApplyTime": "2019-06-17T08:51:45.854Z",
-        "dateTimeNow": "2019-06-17T08:51:45.854Z",
+        "startApplyTime": "2019-02-17T10:04:36.137Z",
+        "endApplyTime": "2019-06-17T21:04:36.137Z",
+        "dateTimeNow": "2019-06-17T21:04:36.138Z",
         "page": 1,
-        "sorting": "",
+        "sorting": "ProjectId",
         "skipCount": 0,
         "maxResultCount": 10
       });

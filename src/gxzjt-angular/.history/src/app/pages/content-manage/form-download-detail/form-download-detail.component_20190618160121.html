@@ -1,0 +1,23 @@
+<div nz-row>
+  <div nz-col nzSpan="4" style="letter-spacing: 2px;font-size: 15px;">
+    <button (click)="goBack()" nz-button style="margin-bottom: 40px;" nzType="default">返回</button>
+    <!-- <div class="leftTitle">基本信息</div> -->
+  </div>
+
+  <div nz-col nzSpan="12" style="padding-top: 40px;height: 100%;">
+    <form nz-form #f="ngForm" se-container="1">
+      <se label="标题名称" required>
+        <input type="text" nz-input [(ngModel)]="data.attachmentName" name="attachmentName" required>
+      </se>
+      <se label="表格上传" required>
+        <nz-upload [nzFileList]="fileList" nzMultiple nzLimit="1" [nzAction]="uploadUrl" [nzFilter]="filters"
+          [nzBeforeUpload]="beforeUpload" [nzRemove]="removeFile">
+          <button nz-button><i nz-icon type="upload" nzTheme="outline"></i><span>上传</span></button>
+        </nz-upload>
+      </se>
+      <se>
+        <button nz-button nzType="primary" (click)="save()" [disabled]="f.invalid">提交</button>
+      </se>
+    </form>
+  </div>
+</div>
