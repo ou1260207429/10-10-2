@@ -48,25 +48,26 @@ export class StatisticsProAppStaticComponent implements OnInit {
         },
         {
           text: '受理凭证',
-          type: 'modal',
+          type: 'link',
           // modal: {
           //   component: StatisticsAcceptCredentialsComponent,
           //   paramsName: 'record',
           // },
-          // click: (record: any, modal: any) => {
-
-          // },
+          click: (record: any, modal: any) => {
+            window.open(record.acceptAttachmentFileUrl)
+          },
         },
         {
           text: '意见书',
-          type: 'modal',
+          type: 'link',
           // modal: {
           //   component: StatisticsPositionPaperComponent,
           //   paramsName: 'record',
           // },
-          // click: (record: any, modal: any) => {
+          click: (record: any, modal: any) => {
 
-          // },
+            window.open(record.opinionFileUrl)
+          },
         },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
@@ -188,14 +189,15 @@ export class StatisticsProAppStaticComponent implements OnInit {
         "recordNumber": "",
         "projectName": "",
         "status": -1,
-        "startApplyTime": "2019-02-17T10:19:49.251Z",
-        "endApplyTime": "2019-06-17T18:19:49.251Z",
+        "startApplyTime": "",
+        "endApplyTime": "",
         "page": 1,
         "sorting": "ProjectName",
         "skipCount": 0,
         "maxResultCount": 1000,
       });
-
+      this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+      this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
     this.statisticalServiceServiceProxy.post_GetProjectApplyList(this.param).subscribe((result: any) => {
       this.formResultData = result.data;
     }, err => {

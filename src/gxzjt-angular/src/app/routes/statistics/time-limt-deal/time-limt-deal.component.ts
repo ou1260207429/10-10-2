@@ -792,6 +792,13 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
 
           },
         },
+        // {
+        //   text: '测试',
+        //   type: 'link',
+        //   click: (record: any, modal: any) => {
+
+        //   }
+        // },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
     },
@@ -843,6 +850,7 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
   }
   search() {
     this.param.cityName = this.fliterForm.controls.city.value;
+    debugger
     this.param.area = this.fliterForm.controls.count.value;
     this.param.flowPathType = Number(this.fliterForm.controls.proType.value);
     if (this.param.flowPathType == 0) {
@@ -904,15 +912,16 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
         "cityName": "",
         "area": "",
         "flowPathType": -1,
-        "startApplyTime": "2019-01-18T01:16:28.542Z",
-        "endApplyTime": "2019-07-18T01:16:28.543Z",
-        "dateTimeNow": "2019-06-18T01:16:28.543Z",
+        "startApplyTime": "",
+        "endApplyTime": "",
+        "dateTimeNow": "",
         "page": 1,
         "sorting": "CityName",
         "skipCount": 0,
         "maxResultCount": 10
       });
-
+      this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+      this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
     this.statisticalServiceServiceProxy.post_GetHandleLimitList(this.param).subscribe((result: any) => {
       this.formResultData = result.data;
     }, err => {
