@@ -5,7 +5,7 @@ import { RegulationServiceProxy, NoticeServiceProxy } from '@shared/service-prox
 import { timeTrans } from 'infrastructure/regular-expression';
 import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
-import { PublicServices, UploadFileModel } from 'services/public.services';
+import { PublicServices } from 'services/public.services';
 @Component({
   selector: 'app-handling-guid-detail',
   templateUrl: './handling-guid-detail.component.html',
@@ -13,12 +13,14 @@ import { PublicServices, UploadFileModel } from 'services/public.services';
 })
 export class HandlingGuidDetailComponent implements OnInit {
   fileList: UploadFile[] = [];
-  uploading = false;
   // acceptType: ".doc,.docx,.xls,.xlsx,.pdf"
-  acceptType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  acceptType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"//只上传.doc文件
   uploadUrl = "http://demo.rjtx.net:5001/api/Upload/Upload"
   files = []
   sourceId: string
+  /**
+  * 过滤上传文件类型
+  */
   filters: UploadFilter[] = [
     {
       name: 'type',
@@ -114,14 +116,15 @@ export class HandlingGuidDetailComponent implements OnInit {
     } else {
       this.data.noticeId = this.id;
     }
-    console.log(this.data)
-
+    if (this.fileList.length > 0) {
+      this.uploadFiles(this.data.guid);
+    }
     const src = this.operate == 0 ? this._noticeServiceProxy.addNoticeAsync(this.data) : this._noticeServiceProxy.editNoticeAsync(this.data)
     src.subscribe(data => {
       const name = this.operate == 0 ? '新增成功' : '修改成功';
       this.message.success(name);
       this._eventEmiter.emit('init', []);
-      this.goBack()
+      this.goBack();
     })
   }
 
@@ -143,23 +146,26 @@ export class HandlingGuidDetailComponent implements OnInit {
     }
 
     var ret = uuid.join('')
-    console.log(ret);
     return ret
   }
   /**
-  * 上传文件
-  */
-  uploadFiles() {
-    let uploadFileModel: UploadFileModel = {
-      files: this.fileList,
-      sourceId: this.data.guid(),
+    * 上传文件
+    */
+  uploadFiles(guid) {
+    const formData = new FormData();
+    this.fileList.forEach((file: any) => {
+      formData.append('files', file);
+    });
+    console.log(formData.getAll("files"));
+    let params = {
+      sourceId: guid,
       AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
-      module: "table"
+      module: "table",
     }
-    // this._publicServices.upload(uploadFileModel).subscribe(data => {
-    //   console.log(data)
-    // })
+    this._publicServices.newUpload(formData, params).subscribe(data => {
+    })
   }
+
   beforeUpload = (file: UploadFile): boolean => {
     this.fileList = this.fileList.concat(file);
 

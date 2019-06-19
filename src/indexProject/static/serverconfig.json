@@ -1,1 +1,4 @@
-{"ApiUrl":"http://localhost:21021/"}
+{
+  "ApiUrl": "http://localhost:21021/",
+  "downLoadUrl": "http://demo.rjtx.net:5001/"
+}

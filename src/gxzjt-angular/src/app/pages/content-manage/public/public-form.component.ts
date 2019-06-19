@@ -17,6 +17,7 @@ export class PublicFormComponent {
     isSearchForm = false;
 
     useSelect = false;
+    isShowAdd = true;
 
 
 
@@ -46,9 +47,9 @@ export class PublicFormComponent {
     }
 
     resetTime() {
-        var startTime = new Date();
-        startTime.setDate(startTime.getDate() - 1)
-        this.rangeTime = [startTime, new Date()];
+        // var startTime = new Date();
+        // startTime.setDate(startTime.getDate() - 1)
+        // this.rangeTime = [startTime, new Date()];
     }
 
 

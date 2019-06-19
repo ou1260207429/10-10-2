@@ -1,6 +1,5 @@
 <div nz-row id="wrap">
   <div nz-col nzSpan="4" style="letter-spacing: 2px;font-size: 15px;">
-    <button (click)="goBack()" nz-button style="margin-bottom: 40px;" nzType="default">返回</button>
     <!-- <div class="leftTitle">基本信息</div>
     <div class="leftTitle" style="margin-top: 335px;">专题正文</div> -->
   </div>
@@ -52,6 +51,8 @@
       </se>
       <se *ngIf="operate!=1">
         <button nz-button nzType="primary" (click)="save()" [disabled]="f.invalid">提交</button>
+    <button (click)="goBack()" nz-button nzType="default">返回</button>
+
       </se>
     </form>
   </div>

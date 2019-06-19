@@ -1,6 +1,5 @@
 <div nz-row>
   <div nz-col nzSpan="4" style="letter-spacing: 2px;font-size: 15px;">
-    <button (click)="goBack()" nz-button style="margin-bottom: 40px;" nzType="default">返回</button>
     <!-- <div class="leftTitle">基本信息</div> -->
     <!-- <div class="leftTitle" style="margin-top: 189px;">专题正文</div> -->
   </div>
@@ -23,11 +22,12 @@
         </nz-select>
       </se>
       <se label="附件上传" required>
-          <nz-upload [nzFileList]="fileList" nzMultiple [nzAction]="uploadUrl" [nzFilter]="filters"
-            [nzBeforeUpload]="beforeUpload" [nzRemove]="removeFile">
-            <button style="width: 250px;" nz-button><i nz-icon type="upload" nzTheme="outline"></i><span>上传</span></button>
-          </nz-upload>
-        </se>
+        <nz-upload [nzFileList]="fileList" nzMultiple [nzAction]="uploadUrl" [nzFilter]="filters"
+          [nzBeforeUpload]="beforeUpload" [nzRemove]="removeFile">
+          <button style="width: 250px;" nz-button><i nz-icon type="upload"
+              nzTheme="outline"></i><span>上传</span></button>
+        </nz-upload>
+      </se>
       <!-- <se label="附件上传" required>
         <div style="min-height:120px;padding:5px 10px;border:1px solid #d9d9d9;width: 944px!important;overflow: hidden;">
           <nz-upload style="float: left;margin:0 0px;" nzAction="https://jsonplaceholder.typicode.com/posts/">
@@ -47,6 +47,8 @@
       </se>
       <se *ngIf="operate!=1">
         <button nz-button nzType="primary" (click)="save()" [disabled]="f.invalid">提交</button>
+        <button (click)="goBack()" nz-button nzType="default">返回</button>
+
       </se>
     </form>
   </div>
