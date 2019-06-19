@@ -6,7 +6,7 @@ import { _HttpClient } from '@delon/theme';
 
 
 import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, DataSourceResult, PagedAndFilteredInputDto, ProjectFlowServcieServiceProxy, FireAuditCompleteQueryDto } from '@shared/service-proxies/service-proxies'
-
+import { PublicModel } from 'infrastructure/public-model';
 
 import { Router } from '@angular/router';
 
@@ -57,6 +57,7 @@ export class EngineeringListComponent implements OnInit {
     private _flowServices: FlowServices,
     private router: Router,
     private http: _HttpClient,
+    private _publicModel:PublicModel,
     private xlsx: XlsxService) {
 
 
@@ -112,6 +113,13 @@ export class EngineeringListComponent implements OnInit {
     // this.searchParam.applyTimeStart = applyTimeStart;
     // this.searchParam.applyTimeEnd = applyTimeEnd;
     // console.log(applyTimeEnd);
+  }
+
+  /**
+   * 导出
+   */
+  exportXlsx(){
+    this._publicModel.exportXlsx(this.columns,this.formResultData.data);
   }
 
 

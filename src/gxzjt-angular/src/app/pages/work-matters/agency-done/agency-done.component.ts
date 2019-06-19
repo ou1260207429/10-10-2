@@ -15,6 +15,7 @@ import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 
 import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import { timeTrans } from 'infrastructure/regular-expression';
+import { PublicModel } from 'infrastructure/public-model';
 /**
  * 待办流程
  */
@@ -58,6 +59,7 @@ export class AgencyDoneComponent  implements OnInit {
   constructor(private workFlowedServiceProxy: WorkFlowedServiceProxy,
     private _flowServices: FlowServices,
     private router: Router,
+    private _publicModel:PublicModel,
     private http: _HttpClient,
     private xlsx: XlsxService) {
 
@@ -104,6 +106,13 @@ export class AgencyDoneComponent  implements OnInit {
     pageOnChange(v, this.searchParam.pagedAndFilteredInputDto, () => {
       this.getList();
     })
+  }
+
+  /**
+   * 导出
+   */
+  exportXlsx(){
+    this._publicModel.exportXlsx(this.columns,this.formResultData.data);
   }
 
   okRangeTime(v){

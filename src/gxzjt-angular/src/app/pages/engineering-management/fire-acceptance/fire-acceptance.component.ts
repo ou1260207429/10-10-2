@@ -7,7 +7,7 @@ import { _HttpClient } from '@delon/theme';
 
 import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, DataSourceResult, PagedAndFilteredInputDto, ProjectFlowServcieServiceProxy, FireAuditCompleteQueryDto } from '@shared/service-proxies/service-proxies'
 
-
+import { PublicModel } from 'infrastructure/public-model';
 import { Router } from '@angular/router';
 
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
@@ -58,6 +58,7 @@ export class FireAcceptanceComponent implements OnInit {
     private _flowServices: FlowServices,
     private router: Router,
     private http: _HttpClient,
+    private _publicModel:PublicModel,
     private xlsx: XlsxService) {
 
 
@@ -120,6 +121,13 @@ export class FireAcceptanceComponent implements OnInit {
    */
   addDeclare() {
     this.router.navigate([`/app/engineering-management/addFireAcceptanceComponent/0/null`]);
+  }
+
+  /**
+   * 导出
+   */
+  exportXlsx(){
+    this._publicModel.exportXlsx(this.columns,this.formResultData.data);
   }
 
 

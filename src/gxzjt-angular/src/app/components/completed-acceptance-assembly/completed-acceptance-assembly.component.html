@@ -2,7 +2,7 @@
   <div nz-row *ngIf="data!=''">
     <table class="tables" style="box-sizing: border-box;">
       <thead>
-        <tr [ngClass]="{pointerf5f5f5: type == 1}"> 
+        <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td colspan='20' rowspan='1'>建设工程竣工验收消防备案表</td>
         </tr>
       </thead>
@@ -372,7 +372,8 @@
         <td colspan='2'>场所</td>
         <td colspan='12'>类型</td>
       </tr>
-      <tr [ngClass]="{pointerf5f5f5: type == 1}" *ngFor="let item of data.fireControlLinkageEngineering;let index = index">
+      <tr [ngClass]="{pointerf5f5f5: type == 1}"
+        *ngFor="let item of data.fireControlLinkageEngineering;let index = index">
         <td colspan='6' class="fontweight fontLeft leftTitle">
           <nz-radio-group [(ngModel)]="item.value" name="xxLabel{{index}}">
             <label nz-radio nzValue="{{item.label}}">{{item.label}}</label>
@@ -543,7 +544,7 @@
             </se>
           </div>
         </td>
-      </tr> 
+      </tr>
       <tr [ngClass]="{pointerf5f5f5: type == 1}">
         <td colspan='15' rowspan='1' style="text-align: right">备案时间:
         </td>
@@ -576,6 +577,17 @@
               <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
+        </td>
+      </tr>
+
+      <tr [ngClass]="{pointerf5f5f5: type == 1}">
+        <td colspan='1' rowspan="1" class="fontweight fontLeft leftTitle"
+          style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>抽查信息</td>
+        <td rowspan='1' colspan='20' class="textLeft">
+          <nz-select [(ngModel)]="data.luckNo" name="luckNo{{index}}" required>
+            <nz-option *ngFor="let option of decimationnumber" [nzLabel]="option.label" [nzValue]="option.value">
+            </nz-option>
+          </nz-select>
         </td>
       </tr>
       </tbody>

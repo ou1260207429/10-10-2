@@ -17,7 +17,6 @@ export class PublicServices {
         return this.http.post(PANGBO_SERVICES_URL + 'api/Upload/Upload', page, {
             headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
         }
-
         );
     }
 
