@@ -163,24 +163,24 @@ export class AppMenus {
 
       ]
     },
-    // {
-    //   text: "权限管理",
-    //   icon: { type: "icon", value: "team" },// 图标
-    //   children: [
-    //     {
-    //       text: "组织架构管理",
-    //       link: "/app/permission/org-manager",
-    //     },
-    //     {
-    //       text: "用户管理",
-    //       link: "/app/permission/user-manager",
-    //     },
-    //     {
-    //       text: "角色管理",
-    //       link: "/app/permission/role-manager",
-    //     },
-    //   ]
-    // },
+    {
+      text: "权限管理",
+      icon: { type: "icon", value: "team" },// 图标
+      children: [
+        {
+          text: "组织架构管理",
+          link: "/app/permission/org-manager",
+        },
+        {
+          text: "用户管理",
+          link: "/app/permission/user-manager",
+        },
+        {
+          text: "角色管理",
+          link: "/app/permission/role-manager",
+        },
+      ]
+    },
 
   ];
 }

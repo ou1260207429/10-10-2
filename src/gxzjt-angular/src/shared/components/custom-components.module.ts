@@ -1,11 +1,15 @@
 
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders ,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NoDataComponent } from '@shared/components/no-data/no-data.component';
 import { ValidationMessagesComponent } from './validation-messages/validation-messages.component';
+import { UploadFileComponent } from './tranfile/uploadfile';
+
+import { NzUploadModule } from 'ng-zorro-antd';
 
 const COMPONENTS = [
   NoDataComponent,
+  UploadFileComponent,
   ValidationMessagesComponent
 ];
 
@@ -13,7 +17,8 @@ const COMPONENTS = [
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    NzUploadModule,
   ],
   declarations: [
     ...COMPONENTS
@@ -21,6 +26,7 @@ const COMPONENTS = [
   exports: [
     ...COMPONENTS
   ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 
 /**自定义组件模块 */

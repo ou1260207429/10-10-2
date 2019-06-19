@@ -1,11 +1,21 @@
 {
-  "/app1": {
-    "target": "http://localhost:21021",
-    "secure": false,
-    "logLevel": "debug",
-    "changeOrigin": true,
-    "pathRewrite": {
-      "^/app1": ""
+  "/appi1": {
+    "target":"http://222.84.250.158:8111",
+    "secure":false,
+    "logLevel":"debug",
+    "changeOrigin":true,
+    "pathRewrite":{
+      "^/appi1":""
+    }
+
+  },
+  "/upload1": {
+    "target": "http://demo.rjtx.net:5001",
+    "secure":false,
+    "logLevel":"debug",
+    "changeOrigin":true,
+    "pathRewrite":{
+      "^/appi2":""
     }
   }
 }

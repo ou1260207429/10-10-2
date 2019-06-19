@@ -67,6 +67,7 @@ export class AppSessionService {
             resolve(true);
           },
           err => {
+            resolve(true);
             reject(err);
           },
         );
