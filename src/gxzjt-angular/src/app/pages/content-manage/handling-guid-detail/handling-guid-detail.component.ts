@@ -5,7 +5,7 @@ import { RegulationServiceProxy, NoticeServiceProxy } from '@shared/service-prox
 import { timeTrans } from 'infrastructure/regular-expression';
 import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
-import { UploadFileModel, PublicServices } from 'services/public.services';
+import { PublicServices, UploadFileModel } from 'services/public.services';
 @Component({
   selector: 'app-handling-guid-detail',
   templateUrl: './handling-guid-detail.component.html',
@@ -156,9 +156,9 @@ export class HandlingGuidDetailComponent implements OnInit {
       AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
       module: "table"
     }
-    this._publicServices.upload(uploadFileModel).subscribe(data => {
-      console.log(data)
-    })
+    // this._publicServices.upload(uploadFileModel).subscribe(data => {
+    //   console.log(data)
+    // })
   }
   beforeUpload = (file: UploadFile): boolean => {
     this.fileList = this.fileList.concat(file);

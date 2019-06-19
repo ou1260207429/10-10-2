@@ -14,8 +14,8 @@ import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 
 import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import { timeTrans } from 'infrastructure/regular-expression';
-import { PublicModel } from 'infrastructure/public-model';
 
+import { PublicFormComponent } from '../public/public-form.component';
 /**
  * 竣工验收
  */
@@ -24,9 +24,9 @@ import { PublicModel } from 'infrastructure/public-model';
   templateUrl: './completed-acceptance.component.html',
   styles: []
 })
-export class CompletedAcceptanceComponent implements OnInit {
+export class CompletedAcceptanceComponent extends PublicFormComponent implements OnInit {
   
-  formResultData
+  formResultData;
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
@@ -57,10 +57,9 @@ export class CompletedAcceptanceComponent implements OnInit {
   constructor(private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
     private _flowServices: FlowServices,
     private router: Router,
-    private http: _HttpClient,
-    private _publicModel:PublicModel,
+    private http: _HttpClient, 
     private xlsx: XlsxService) {
-
+   super();
 
   }
 
@@ -127,7 +126,7 @@ export class CompletedAcceptanceComponent implements OnInit {
    * 导出
    */
   exportXlsx(){
-    this._publicModel.exportXlsx(this.columns,this.formResultData.data);
+    // this._publicModel.exportXlsx(this.columns,this.formResultData.data);
   }
 
 }

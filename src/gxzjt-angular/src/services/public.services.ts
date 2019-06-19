@@ -25,10 +25,10 @@ export class PublicServices {
 
 }
 
-// export interface UploadFileModel {
-//     files: Array<any>,
-//     AppId: string,
-//     module?: string,
-//     sourceId?: string,
-// }
+export interface UploadFileModel {
+    files: Array<any>,
+    AppId: string,
+    module?: string,
+    sourceId?: string,
+}
 
