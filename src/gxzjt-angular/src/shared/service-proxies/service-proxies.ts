@@ -190,16 +190,21 @@ export class AcceptanceFileServiceProxy {
     }
 
     /**
+     * @param reviewFormDto (optional) 
      * @return Success
      */
-    createReviewFile(): Observable<void> {
+    createReviewFile(reviewFormDto: ReviewFormDto | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/CreateReviewFile";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(reviewFormDto);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json", 
             })
         };
 
@@ -3941,16 +3946,21 @@ export class PutOnRecordFileServiceProxy {
     }
 
     /**
+     * @param reviewFormDto (optional) 
      * @return Success
      */
-    createReviewFile(): Observable<void> {
+    createReviewFile(reviewFormDto: ReviewFormDto | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/CreateReviewFile";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(reviewFormDto);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json", 
             })
         };
 
@@ -7874,6 +7884,248 @@ export interface IAttachmentItem {
     flowId: number | undefined;
 }
 
+export class ReviewFormDto implements IReviewFormDto {
+    projectId: number | undefined;
+    flowId: number | undefined;
+    constructOrg: ProjectCompany | undefined;
+    projectName: string | undefined;
+    projectCode: string | undefined;
+    address: string | undefined;
+    putOnRecordFileCode: string | undefined;
+    unqualifiedFileCode: string | undefined;
+    situation: string | undefined;
+    note: string | undefined;
+    handleUserList: FlowNodeUser[] | undefined;
+    timeLimit: number | undefined;
+    currentHandleUserName: string | undefined;
+    currentHandleUserCode: string | undefined;
+    currentNodeId: string | undefined;
+    currentNodeName: string | undefined;
+    currentHandleOrgName: string | undefined;
+    currentHandleOrgCode: string | undefined;
+    nodeAuditorRecordId: number | undefined;
+    workFlow_NodeRecord_Id: number | undefined;
+    workFlow_Instance_Id: number | undefined;
+    workFlow_TemplateInfo_Id: number | undefined;
+    flowNo: string | undefined;
+
+    constructor(data?: IReviewFormDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.projectId = data["projectId"];
+            this.flowId = data["flowId"];
+            this.constructOrg = data["constructOrg"] ? ProjectCompany.fromJS(data["constructOrg"]) : <any>undefined;
+            this.projectName = data["projectName"];
+            this.projectCode = data["projectCode"];
+            this.address = data["address"];
+            this.putOnRecordFileCode = data["putOnRecordFileCode"];
+            this.unqualifiedFileCode = data["unqualifiedFileCode"];
+            this.situation = data["situation"];
+            this.note = data["note"];
+            if (data["handleUserList"] && data["handleUserList"].constructor === Array) {
+                this.handleUserList = [];
+                for (let item of data["handleUserList"])
+                    this.handleUserList.push(FlowNodeUser.fromJS(item));
+            }
+            this.timeLimit = data["timeLimit"];
+            this.currentHandleUserName = data["currentHandleUserName"];
+            this.currentHandleUserCode = data["currentHandleUserCode"];
+            this.currentNodeId = data["currentNodeId"];
+            this.currentNodeName = data["currentNodeName"];
+            this.currentHandleOrgName = data["currentHandleOrgName"];
+            this.currentHandleOrgCode = data["currentHandleOrgCode"];
+            this.nodeAuditorRecordId = data["nodeAuditorRecordId"];
+            this.workFlow_NodeRecord_Id = data["workFlow_NodeRecord_Id"];
+            this.workFlow_Instance_Id = data["workFlow_Instance_Id"];
+            this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
+            this.flowNo = data["flowNo"];
+        }
+    }
+
+    static fromJS(data: any): ReviewFormDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ReviewFormDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["projectId"] = this.projectId;
+        data["flowId"] = this.flowId;
+        data["constructOrg"] = this.constructOrg ? this.constructOrg.toJSON() : <any>undefined;
+        data["projectName"] = this.projectName;
+        data["projectCode"] = this.projectCode;
+        data["address"] = this.address;
+        data["putOnRecordFileCode"] = this.putOnRecordFileCode;
+        data["unqualifiedFileCode"] = this.unqualifiedFileCode;
+        data["situation"] = this.situation;
+        data["note"] = this.note;
+        if (this.handleUserList && this.handleUserList.constructor === Array) {
+            data["handleUserList"] = [];
+            for (let item of this.handleUserList)
+                data["handleUserList"].push(item.toJSON());
+        }
+        data["timeLimit"] = this.timeLimit;
+        data["currentHandleUserName"] = this.currentHandleUserName;
+        data["currentHandleUserCode"] = this.currentHandleUserCode;
+        data["currentNodeId"] = this.currentNodeId;
+        data["currentNodeName"] = this.currentNodeName;
+        data["currentHandleOrgName"] = this.currentHandleOrgName;
+        data["currentHandleOrgCode"] = this.currentHandleOrgCode;
+        data["nodeAuditorRecordId"] = this.nodeAuditorRecordId;
+        data["workFlow_NodeRecord_Id"] = this.workFlow_NodeRecord_Id;
+        data["workFlow_Instance_Id"] = this.workFlow_Instance_Id;
+        data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
+        data["flowNo"] = this.flowNo;
+        return data; 
+    }
+
+    clone(): ReviewFormDto {
+        const json = this.toJSON();
+        let result = new ReviewFormDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IReviewFormDto {
+    projectId: number | undefined;
+    flowId: number | undefined;
+    constructOrg: ProjectCompany | undefined;
+    projectName: string | undefined;
+    projectCode: string | undefined;
+    address: string | undefined;
+    putOnRecordFileCode: string | undefined;
+    unqualifiedFileCode: string | undefined;
+    situation: string | undefined;
+    note: string | undefined;
+    handleUserList: FlowNodeUser[] | undefined;
+    timeLimit: number | undefined;
+    currentHandleUserName: string | undefined;
+    currentHandleUserCode: string | undefined;
+    currentNodeId: string | undefined;
+    currentNodeName: string | undefined;
+    currentHandleOrgName: string | undefined;
+    currentHandleOrgCode: string | undefined;
+    nodeAuditorRecordId: number | undefined;
+    workFlow_NodeRecord_Id: number | undefined;
+    workFlow_Instance_Id: number | undefined;
+    workFlow_TemplateInfo_Id: number | undefined;
+    flowNo: string | undefined;
+}
+
+export class ProjectCompany implements IProjectCompany {
+    projectId: number | undefined;
+    orgType: number | undefined;
+    companyName: string | undefined;
+    qualifications: string | undefined;
+    legalRepresentative: string | undefined;
+    legalRepresentativeNo: string | undefined;
+    contactPerson: string | undefined;
+    contactNumber: string | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IProjectCompany) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.projectId = data["projectId"];
+            this.orgType = data["orgType"];
+            this.companyName = data["companyName"];
+            this.qualifications = data["qualifications"];
+            this.legalRepresentative = data["legalRepresentative"];
+            this.legalRepresentativeNo = data["legalRepresentativeNo"];
+            this.contactPerson = data["contactPerson"];
+            this.contactNumber = data["contactNumber"];
+            this.isDeleted = data["isDeleted"];
+            this.deleterUserId = data["deleterUserId"];
+            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = data["lastModifierUserId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): ProjectCompany {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectCompany();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["projectId"] = this.projectId;
+        data["orgType"] = this.orgType;
+        data["companyName"] = this.companyName;
+        data["qualifications"] = this.qualifications;
+        data["legalRepresentative"] = this.legalRepresentative;
+        data["legalRepresentativeNo"] = this.legalRepresentativeNo;
+        data["contactPerson"] = this.contactPerson;
+        data["contactNumber"] = this.contactNumber;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): ProjectCompany {
+        const json = this.toJSON();
+        let result = new ProjectCompany();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectCompany {
+    projectId: number | undefined;
+    orgType: number | undefined;
+    companyName: string | undefined;
+    qualifications: string | undefined;
+    legalRepresentative: string | undefined;
+    legalRepresentativeNo: string | undefined;
+    contactPerson: string | undefined;
+    contactNumber: string | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
 export class ExamineFormDto implements IExamineFormDto {
     flowId: number | undefined;
     attachment: ProjectAttachment[] | undefined;
@@ -8170,109 +8422,6 @@ export interface IProjectAttachment {
     flowNode: string | undefined;
     recordId: number | undefined;
     flowId: number | undefined;
-    isDeleted: boolean | undefined;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-}
-
-export class ProjectCompany implements IProjectCompany {
-    projectId: number | undefined;
-    orgType: number | undefined;
-    companyName: string | undefined;
-    qualifications: string | undefined;
-    legalRepresentative: string | undefined;
-    legalRepresentativeNo: string | undefined;
-    contactPerson: string | undefined;
-    contactNumber: string | undefined;
-    isDeleted: boolean | undefined;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment | undefined;
-    creatorUserId: number | undefined;
-    id: number | undefined;
-
-    constructor(data?: IProjectCompany) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.projectId = data["projectId"];
-            this.orgType = data["orgType"];
-            this.companyName = data["companyName"];
-            this.qualifications = data["qualifications"];
-            this.legalRepresentative = data["legalRepresentative"];
-            this.legalRepresentativeNo = data["legalRepresentativeNo"];
-            this.contactPerson = data["contactPerson"];
-            this.contactNumber = data["contactNumber"];
-            this.isDeleted = data["isDeleted"];
-            this.deleterUserId = data["deleterUserId"];
-            this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
-            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = data["lastModifierUserId"];
-            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = data["creatorUserId"];
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): ProjectCompany {
-        data = typeof data === 'object' ? data : {};
-        let result = new ProjectCompany();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["projectId"] = this.projectId;
-        data["orgType"] = this.orgType;
-        data["companyName"] = this.companyName;
-        data["qualifications"] = this.qualifications;
-        data["legalRepresentative"] = this.legalRepresentative;
-        data["legalRepresentativeNo"] = this.legalRepresentativeNo;
-        data["contactPerson"] = this.contactPerson;
-        data["contactNumber"] = this.contactNumber;
-        data["isDeleted"] = this.isDeleted;
-        data["deleterUserId"] = this.deleterUserId;
-        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): ProjectCompany {
-        const json = this.toJSON();
-        let result = new ProjectCompany();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IProjectCompany {
-    projectId: number | undefined;
-    orgType: number | undefined;
-    companyName: string | undefined;
-    qualifications: string | undefined;
-    legalRepresentative: string | undefined;
-    legalRepresentativeNo: string | undefined;
-    contactPerson: string | undefined;
-    contactNumber: string | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -9089,85 +9238,6 @@ export interface IProjectFlowDto {
     creationTime: moment.Moment | undefined;
     creatorUserId: number | undefined;
     id: number | undefined;
-}
-
-export class ReviewFormDto implements IReviewFormDto {
-    projectId: number | undefined;
-    flowId: number | undefined;
-    constructOrg: ProjectCompany | undefined;
-    projectName: string | undefined;
-    projectCode: string | undefined;
-    address: string | undefined;
-    putOnRecordFileCode: string | undefined;
-    unqualifiedFileCode: string | undefined;
-    situation: string | undefined;
-    note: string | undefined;
-
-    constructor(data?: IReviewFormDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.projectId = data["projectId"];
-            this.flowId = data["flowId"];
-            this.constructOrg = data["constructOrg"] ? ProjectCompany.fromJS(data["constructOrg"]) : <any>undefined;
-            this.projectName = data["projectName"];
-            this.projectCode = data["projectCode"];
-            this.address = data["address"];
-            this.putOnRecordFileCode = data["putOnRecordFileCode"];
-            this.unqualifiedFileCode = data["unqualifiedFileCode"];
-            this.situation = data["situation"];
-            this.note = data["note"];
-        }
-    }
-
-    static fromJS(data: any): ReviewFormDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ReviewFormDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["projectId"] = this.projectId;
-        data["flowId"] = this.flowId;
-        data["constructOrg"] = this.constructOrg ? this.constructOrg.toJSON() : <any>undefined;
-        data["projectName"] = this.projectName;
-        data["projectCode"] = this.projectCode;
-        data["address"] = this.address;
-        data["putOnRecordFileCode"] = this.putOnRecordFileCode;
-        data["unqualifiedFileCode"] = this.unqualifiedFileCode;
-        data["situation"] = this.situation;
-        data["note"] = this.note;
-        return data; 
-    }
-
-    clone(): ReviewFormDto {
-        const json = this.toJSON();
-        let result = new ReviewFormDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IReviewFormDto {
-    projectId: number | undefined;
-    flowId: number | undefined;
-    constructOrg: ProjectCompany | undefined;
-    projectName: string | undefined;
-    projectCode: string | undefined;
-    address: string | undefined;
-    putOnRecordFileCode: string | undefined;
-    unqualifiedFileCode: string | undefined;
-    situation: string | undefined;
-    note: string | undefined;
 }
 
 export class AttachmentDto implements IAttachmentDto {

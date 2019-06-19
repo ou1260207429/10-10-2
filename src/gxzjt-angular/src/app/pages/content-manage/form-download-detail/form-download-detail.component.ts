@@ -49,23 +49,37 @@ export class FormDownloadDetailComponent implements OnInit {
     this.data.guid = this.createguid();
     this.sourceId = this.createguid();
     this.uploadFiles();
-    this._attachmentServiceProxy.addAttachmentAsync(this.data).subscribe(data => {
-      this.message.success("新增成功");
-      this._eventEmiter.emit('init', []);
-      this.goBack();
-    })
+    // this._attachmentServiceProxy.addAttachmentAsync(this.data).subscribe(data => {
+    //   this.message.success("新增成功");
+    //   this._eventEmiter.emit('init', []);
+    //   this.goBack();
+    // })
   }
   /**
    * 上传文件
    */
   uploadFiles() {
-    let uploadFileModel: UploadFileModel = {
-      files: this.fileList,
-      sourceId: this.data.guid(),
+    const formData = new FormData();
+    // tslint:disable-next-line:no-any
+    this.fileList.forEach((file: any) => {
+      formData.append('files[]', file);
+    });
+    // formData.append('sourceId', this.data.guid);
+    // formData.append('module', "table");
+    // formData.append('AppId', "9F947774-8CB4-4504-B441-2B9AAEEAF450");
+    // let uploadFileModel: UploadFileModel = {
+    //   files: this.fileList,
+    //   sourceId: this.data.guid,
+    //   AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
+    //   module: "table"
+    // }
+    let params = {
+      sourceId: this.data.guid,
       AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
-      module: "table"
+      module: "table",
     }
-    this._publicServices.upload(uploadFileModel).subscribe(data => {
+    console.log(formData)
+    this._publicServices.upload(formData, params).subscribe(data => {
       console.log(data)
     })
   }
