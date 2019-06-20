@@ -71,7 +71,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
     },
-    { title: '竣工验收申报编号', index: 'recordNumber' },
+    { title: '竣工验收申报编号',default:'0', index: 'recordNumber' ,format: (item: any) => `${item.flowPathType?item.flowPathType:0}` },
     { title: '工程名称', index: 'projectName' },
     { title: '建设单位', index: 'companyName' },
     { title: '联系人', index: 'contactPerson' },
@@ -79,9 +79,9 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
     {
       title: '审核结果', index: 'status', type: 'tag', tag: {
         0: { text: '未处理', color: '' },
-        1: { text: '受理', color: '' },
-        2: { text: '不受理', color: '' },
-        3: { text: '不合格', color: '' },
+        1: { text: '受理', color: 'green' },
+        2: { text: '不受理', color: 'red' },
+        3: { text: '不合格', color: 'red' },
         4: { text: '合格', color: '' },
         5: { text: '未抽中', color: '' },
       }

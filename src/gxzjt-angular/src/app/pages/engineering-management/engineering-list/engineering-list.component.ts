@@ -42,15 +42,24 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
       ]
     },
     { title: '工程名称', index: 'projectName' },
-    { title: '工程编号', index: 'projectCode' },
+    { title: '工程编号', index: 'projectCode', },
     { title: '建设单位', index: 'companyName' },
-    { title: '消防设计', index: 'investigateStatus' },
-    // { title: '消防设计', index: 'investigateStatus',type: 'tag', tag: {
-    //   0: { text: '不合格', color: '' },
-
-    // }},
-    { title: '消防验收管理', index: 'acceptanceStatus' },
-    { title: '竣工验收备案', index: 'putOnRecordStatus' },
+    { title: '消防设计', index: 'investigateStatus',format: (item: any) => `${item.investigateStatus?item.investigateStatus:4001}`,type: 'tag', tag: {
+      4001:{text:'未申请',color: 'red' },
+      0: { text: '不合格', color: 'red' },
+      1: { text: '合格', color: 'green' },
+    }},
+    { title: '消防验收管理', index: 'acceptanceStatus',format: (item: any) => `${item.acceptanceStatus?item.acceptanceStatus:4001}`,type: 'tag', tag: {
+      4001:{text:'未申请',color: 'red' },
+      0: { text: '不合格', color: 'red' },
+      1: { text: '合格', color: 'green' },
+    }},
+    { title: '竣工验收备案', index: 'putOnRecordStatus',format: (item: any) => `${item.putOnRecordStatus?item.putOnRecordStatus:4001}`,type: 'tag', tag: {
+      4001:{text:'未申请',color: 'red' },
+      0: { text: '不合格', color: 'red' },
+      1: { text: '合格', color: 'green' },
+      2: { text: '未抽中', color: '' },
+    }},
   ];
 
   searchParam = new FireAuditCompleteQueryDto();

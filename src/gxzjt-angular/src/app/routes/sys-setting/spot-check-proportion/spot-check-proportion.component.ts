@@ -47,7 +47,13 @@ export class SpotCheckProportionComponent implements OnInit {
     { title: '编号', index: 'natureCode' },
     { title: '使用性质名称', index: 'natureName' },
 
+<<<<<<< HEAD
     { title: '抽查比例(%)', index: 'ratio' ,},
+=======
+    { title: '抽查比例(%)', index: 'ratio',
+    format: (item: any) => `${item.ratio?item.ratio:0}`
+  },
+>>>>>>> a52ff3479a4a4b9be76f6282b54866485efb69b5
 
     { title: '操作人', index: 'lastUpdateUserName' },
 
