@@ -208,7 +208,7 @@ export class AddFireAcceptanceComponent implements OnInit {
     this.flowFormDto.projectTypeStatu = 1;
 
     this.data.dateOfReview = this.data.dateOfReview == '' ? '' : timeTrans(Date.parse(this.data.dateOfReview) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
-    
+    console.log(this.data);
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')

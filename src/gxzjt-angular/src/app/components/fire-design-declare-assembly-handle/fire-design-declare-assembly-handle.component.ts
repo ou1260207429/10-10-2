@@ -46,7 +46,9 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.data);
+    setTimeout(()=>{
+      console.log(this.data);
+    },3000) 
 
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);

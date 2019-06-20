@@ -79,7 +79,6 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.flowId = this._activatedRoute.snapshot.paramMap.get('flowId')
     this.flowPathType = this._activatedRoute.snapshot.paramMap.get('flowPathType')
     this.operationType = this._activatedRoute.snapshot.paramMap.get('operationType')
-    console.log(this.flowPathType);
 
   }
 
@@ -97,6 +96,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       flowFormQueryDto.projectId = this.formDto.projectId;
       flowFormQueryDto.flowId = this.flowId
 
+      console.log(this.formDto);
       const workFlow: WorkFlow = {
         workFlow_InstanceId: this.formDto.workFlow_Instance_Id,
         workFlow_TemplateInfoId: 10171,
@@ -107,12 +107,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
         this.formJson = JSON.parse(value[0].formJson);
         this.tenantWorkFlowInstanceDto = this.workFlowData = value[1].result;
         this.tenantWorkFlowInstanceDto.workFlow_InstanceId = this.formDto.workFlow_Instance_Id
-
-        console.log(this.tenantWorkFlowInstanceDto)
+ 
 
         //获取当前节点 由这个判断提交的接口
-        this.curNodeName = this.workFlowData.nodeViewInfo.curNodeName
-        console.log(this.workFlowData)
+        this.curNodeName = this.workFlowData.nodeViewInfo.curNodeName 
         if (this.curNodeName != '大厅受理') {
           this.getPrimaryExamine(() => {
             this.type = false
@@ -180,7 +178,22 @@ export class AgencyDoneDetailsComponent implements OnInit {
  
     if (!bo && this.curNodeName == '业务审批负责人审批') {
       this.noResult((data) => {
-        this.acceptApply(data);
+        this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
+          this.examineFormDto.handleUserList = [];
+          this.examineFormDto .currentNodeId = data.result.cur_Node_Id
+          this.examineFormDto .currentNodeName = data.result.cur_NodeName
+          this.examineFormDto .workFlow_Instance_Id = data.result.workFlow_Instance_Id
+          this.examineFormDto .workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
+          data.result.auditorRecords.forEach(element => {
+            const flowNodeUser = new FlowNodeUser()
+            flowNodeUser.userFlowId = element.id
+            flowNodeUser.userCode = element.applyEID
+            flowNodeUser.userName = element.applyEName
+            this.examineFormDto.handleUserList.push(flowNodeUser)
+          });
+  
+          this.finalExamine(this.examineFormDto);
+        })
       })
       return false;
     }
@@ -191,18 +204,34 @@ export class AgencyDoneDetailsComponent implements OnInit {
       this.examineFormDto.isPass = bo;
       let form: any = this.curNodeName == '大厅受理' ? this.formDto : this.examineFormDto;
 
-      form.handleUserList = [];
-      form.currentNodeId = data.result.cur_Node_Id
-      form.currentNodeName = data.result.cur_NodeName
-      form.workFlow_Instance_Id = data.result.workFlow_Instance_Id
-      form.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
+      this.formDto .handleUserList = [];
+      this.formDto .currentNodeId = data.result.cur_Node_Id
+      this.formDto .currentNodeName = data.result.cur_NodeName
+      this.formDto .workFlow_Instance_Id = data.result.workFlow_Instance_Id
+      this.formDto .workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
       data.result.auditorRecords.forEach(element => {
         const flowNodeUser = new FlowNodeUser()
         flowNodeUser.userFlowId = element.id
         flowNodeUser.userCode = element.applyEID
         flowNodeUser.userName = element.applyEName
-        form.handleUserList.push(flowNodeUser)
+        this.formDto.handleUserList.push(flowNodeUser)
       });
+
+      this.examineFormDto.handleUserList = [];
+      this.examineFormDto .currentNodeId = data.result.cur_Node_Id
+      this.examineFormDto .currentNodeName = data.result.cur_NodeName
+      this.examineFormDto .workFlow_Instance_Id = data.result.workFlow_Instance_Id
+      this.examineFormDto .workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
+      data.result.auditorRecords.forEach(element => {
+        const flowNodeUser = new FlowNodeUser()
+        flowNodeUser.userFlowId = element.id
+        flowNodeUser.userCode = element.applyEID
+        flowNodeUser.userName = element.applyEName
+        this.examineFormDto.handleUserList.push(flowNodeUser)
+      });
+
+      console.log(this.curNodeName)
+
 
       switch (this.curNodeName) {
         case '大厅受理':
@@ -215,8 +244,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
 
         //按钮名字是通过 或者不通过
-        case '业务审批负责人审批':
-          this.finalExamine(form);
+        case '业务审批负责人审批': 
+          this.finalExamine(this.examineFormDto);
           break;
 
         default:
