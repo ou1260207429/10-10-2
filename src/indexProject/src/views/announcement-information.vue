@@ -1,6 +1,6 @@
 <!--  -->
 <template>
- <div style="width:100%;overflow:hidden;margin-bottom: 20px;">
+  <div style="width:100%;overflow:hidden;margin-bottom: 20px;">
     <div class="content">
       <el-row :gutter="8">
         <el-col :span="4" style="background-color: transparent;">
@@ -57,8 +57,8 @@
                     v-model="dateTime"
                     type="daterange"
                     range-separator="~"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
+                    start-placeholder="公告开始日期"
+                    end-placeholder="公告结束日期"
                   ></el-date-picker>
                 </el-form-item>
                 <el-form-item>
@@ -460,7 +460,7 @@ export default {
           label: "联系人"
         },
         {
-          key: "announceTime ",
+          key: "announceTime",
           label: "公告时间"
         },
         {
@@ -507,9 +507,9 @@ export default {
     initTable() {
       if (this.dateTime.length > 0) {
         this.searchForm.startTime = moment(this.dateTime[0]).format(
-          "YYYY-MM-DD"
+          "YYYY-MM-DD 00:00:00"
         );
-        this.searchForm.endTime = moment(this.dateTime[1]).format("YYYY-MM-DD");
+        this.searchForm.endTime = moment(this.dateTime[1]).format("YYYY-MM-DD 23:59:59");
       }
 
       let _this = this;
@@ -518,9 +518,16 @@ export default {
       app.post(infO.SEARCH_INFO, params).then(req => {
         if (req.success) {
           req.result.data.forEach(element => {
-            element.AnnounceTime = moment(element.AnnounceTime).format(
-              "YYYY-MM-DD"
-            );
+            if (element.finishTime) {
+              element.finishTime = moment(element.finishTime).format(
+                "YYYY-MM-DD"
+              );
+            }
+            if (element.announceTime) {
+              element.announceTime = moment(element.announceTime).format(
+                "YYYY-MM-DD"
+              );
+            }
           });
           _this.tableData = req.result.data;
           _this.total = req.result.totalCount;

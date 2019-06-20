@@ -4,7 +4,7 @@ import Vue from "vue"
 import qs from 'qs';
 import 'url-search-params-polyfill'
 import {
-  tbale
+  table
 } from './apiValue'
 var app = {
   clentHeight() {
@@ -117,36 +117,56 @@ var app = {
     });
 
   },
-  /**
-   * 下载表格
-   */
-  downList(url, method, data, succCallBack, errorCallBack) {
+  downLoadFile(url, data) {
     let downLoadUrl = Vue.prototype.downLoadUrl;
-    let finalUrl = url + "?appId="+data.appId+"&id="+data.id
-    // let finalUrl = url + "?appId=" + "9F947774-8CB4-4504-B441-2B9AAEEAF450" + "&id=" + "c10d2c39-15ce-40a5-86f5-636e6a03de52"
+    let finalUrl = url + "?appId=" + data.appId + "&id=" + "c10d2c39-15ce-40a5-86f5-636e6a03de52"
+    // let finalUrl = url + "?appId=" + data.appId + "&id=" + data.id
     return new Promise(function (resolve, reject) {
       axios({
-        method: method,
+        method: "POST",
         url: downLoadUrl + finalUrl,
         responseType: 'blob'
-        // data: qs.stringify(data)
       }).then(function (req) {
-        const content = req
-        const blob = new Blob([content])
-        const fileName = '导出信息.xlsx'
-        if ('download' in document.createElement('a')) { // 非IE下载
-          const elink = document.createElement('a')
-          elink.download = fileName
-          elink.style.display = 'none'
-          elink.href = URL.createObjectURL(blob)
-          document.body.appendChild(elink)
-          elink.click()
-          URL.revokeObjectURL(elink.href) // 释放URL 对象
-          document.body.removeChild(elink)
-        } else { // IE10+下载
-          navigator.msSaveBlob(blob, fileName)
-        }
-       
+        resolve(req);
+
+      })
+    })
+  },
+  //下载表格
+  downLoad(data, fileName) {
+    app.downLoadFile(table.downLoadList, data).then(req => {
+      console.log(req)
+      const content = req
+      const blob = new Blob([content])
+      // const fileName = 'test.docx'
+      if ('download' in document.createElement('a')) { // 非IE下载
+        const elink = document.createElement('a')
+        elink.download = fileName
+        elink.style.display = 'none'
+        elink.href = URL.createObjectURL(blob)
+        document.body.appendChild(elink)
+        elink.click()
+        URL.revokeObjectURL(elink.href) // 释放URL 对象
+        document.body.removeChild(elink)
+      } else { // IE10+下载
+        navigator.msSaveBlob(blob, fileName)
+      }
+
+    })
+  },
+  /**
+   * 查询表格详情
+   */
+  downList(data, guid) {
+    data.id = guid
+    let finalUrl = table.search_downLoadDetail + "?appId=" + data.appId + "&id=" + "c10d2c39-15ce-40a5-86f5-636e6a03de52"
+    let downLoadUrl = Vue.prototype.downLoadUrl;
+    return new Promise(function (resolve, reject) {
+      axios({
+        method: "POST",
+        url: downLoadUrl + finalUrl,
+      }).then(function (req) {
+        app.downLoad(data,req.data.fileName)
       })
     })
   },

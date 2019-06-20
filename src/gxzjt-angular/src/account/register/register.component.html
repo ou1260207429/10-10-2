@@ -86,11 +86,11 @@
           <nz-form-item>
             <nz-form-control nzHasFeedback>
               <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-team">
-                <input nz-input name="name" #name='ngModel' [(ngModel)]="model.EnterpriseName" placeholder="企业名称"
+                <input nz-input name="EnterpriseName" #EnterpriseName='ngModel' [(ngModel)]="model.EnterpriseName" placeholder="企业名称"
                   required>
               </nz-input-group>
-              <nz-form-explain *ngIf="name.control.dirty&&name.control.errors">
-                <ng-container *ngIf="name.control.hasError('required')">企业名称不能为空！</ng-container>
+              <nz-form-explain *ngIf="EnterpriseName.control.dirty&&EnterpriseName.control.errors">
+                <ng-container *ngIf="EnterpriseName.control.hasError('required')">企业名称不能为空！</ng-container>
               </nz-form-explain>
             </nz-form-control>
           </nz-form-item>
@@ -113,11 +113,11 @@
           <nz-form-item>
             <nz-form-control nzHasFeedback>
               <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-user">
-                <input nz-input name="name" #emailAddress="ngModel" [(ngModel)]="model.Leader" placeholder="法定代表人/负责人"
+                <input nz-input name="Leader" #Leader="ngModel" [(ngModel)]="model.Leader" placeholder="法定代表人/负责人"
                   required>
               </nz-input-group>
-              <nz-form-explain *ngIf="name.control.dirty&&name.control.errors">
-                <ng-container *ngIf="name.control.hasError('required')">法定代表人/负责人不能为空！</ng-container>
+              <nz-form-explain *ngIf="Leader.control.dirty&&Leader.control.errors">
+                <ng-container *ngIf="Leader.control.hasError('required')">法定代表人/负责人不能为空！</ng-container>
               </nz-form-explain>
             </nz-form-control>
           </nz-form-item>

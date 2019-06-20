@@ -13,19 +13,28 @@
             </div>
             <ul style="margin-top: 30px;padding-left: 0">
               <li :key="index" v-for="(item,index) in allowList">
-                <div class="img">
-                  <img :src="allowImg[index]" alt>
-                </div>
-                <router-link
-                  :to="{
+                <el-row :gutter="16">
+                  <el-col :span="10">
+                    <div ref="imgHeight">
+                      <img style="width:100%;" :src="allowImg[index]?allowImg[index]:allowImg[0]" alt>
+                    </div>
+                  </el-col>
+                  <el-col :span="14">
+                    <div ref="routHeight">
+                      <p class="title">{{item.title}}</p>
+                      <div class="tip" v-html="item.brief"></div>
+                    </div>
+                  </el-col>
+
+                  <p class="detail">
+                    <router-link
+                      :to="{
          path: '/handling-guid-list/detail/'+item.id, 
       
    }"
-                >
-                  <p class="title">{{item.title}}</p>
-                  <div class="tip" v-html="item.brief"></div>
-                  <p class="detail">了解详情</p>
-                </router-link>
+                    >了解详情</router-link>
+                  </p>
+                </el-row>
               </li>
             </ul>
           </el-card>
@@ -40,17 +49,27 @@
             </div>
             <ul style="margin-top: 10px;padding-left: 0">
               <li :key="index" v-for="(item,index) in recordList">
-                <img style="float:left;margin-right:16px;" :src="recordImg[index]" alt>
-                <router-link
-                  :to="{
+                <el-row :gutter="16">
+                  <el-col :span="10">
+                    <div ref="imgHeight">
+                      <img style="width:100%;" :src="recordImg[index]?recordImg[index]:recordImg[0]" alt>
+                    </div>
+                  </el-col>
+                  <el-col :span="14">
+                    <div ref="routHeight" style="position:relative">
+                      <p class="title">{{item.title}}</p>
+                      <div class="tip" v-html="item.brief"></div>
+                    </div>
+                  </el-col>
+                  <p class="detail">
+                    <router-link
+                      :to="{
          path: '/handling-guid-list/detail/'+item.id, 
       
    }"
-                >
-                  <p class="title">{{item.title}}</p>
-                  <div class="tip" v-html="item.brief"></div>
-                  <p class="detail">了解详情</p>
-                </router-link>
+                    >了解详情</router-link>
+                  </p>
+                </el-row>
               </li>
             </ul>
           </el-card>
@@ -106,9 +125,18 @@ export default {
     this.initList();
     setTimeout(function() {
       that.tableHight = app.clentHeight() + "px";
+      that.$refs.imgHeight.forEach((item, index) => {
+        that.$refs.routHeight[index].clentHeight = item.offsetHeight + 30;
+      });
     }, 100);
     window.onresize = function() {
       that.tableHight = app.clentHeight() + "px";
+      that.tableHight = app.clentHeight() + "px";
+      that.$refs.imgHeight.forEach((item, index) => {
+        that.$refs.routHeight[index].clentHeight = item.offsetHeight + 30;
+        console.log(that.$refs.routHeight[index].clentHeight);
+        console.log(item.offsetHeight);
+      });
     };
   },
 
@@ -155,23 +183,36 @@ li {
   font-weight: bold;
 }
 .tip {
-  width: 32%;
+  width: 100%;
   padding: 5px 0;
-  text-indent: 20%;
   background-repeat: no-repeat;
   background-position: left;
   color: #c9c9c9 !important;
   font-size: 14px !important;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  padding-right: 8px;
+  box-sizing: border-box;
 }
 .detail {
-  width: 63%;
+  width: 125px;
   text-indent: 8%;
   line-height: 25px;
   position: absolute;
   left: 10px;
-  bottom: 0;
+  bottom: 3px;
+  margin-left: 41.66667%;
   background: url("/../../assets/images/办事指南_08.png") no-repeat;
+  background-size: 100%;
   font-size: 8px !important;
   color: #fff;
+  cursor: pointer;
+  a {
+    width: 100%;
+    height: auto;
+    color: #fff;
+  }
 }
 </style>

@@ -45,7 +45,7 @@
    }"
                   >
                     <el-col :span="10" class="cardList">
-                      <img :src="allowImg[index]" alt>
+                      <img :src="allowImg[index]?allowImg[index]:allowImg[0]" alt>
                     </el-col>
                     <el-col :span="14" style=" position: relative;height:80px;">
                       <h4>{{item.title}}</h4>
@@ -74,7 +74,7 @@
    }"
                   >
                     <el-col :span="10" class="cardList">
-                      <img :src="recordImg[index]" alt>
+                      <img :src="recordImg[index]?recordImg[index]:recordImg[0]" alt>
                     </el-col>
                     <el-col :span="14" style=" position: relative;height:80px;">
                       <h4>{{item.title}}</h4>

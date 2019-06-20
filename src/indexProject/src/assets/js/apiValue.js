@@ -5,6 +5,7 @@ const laws = {
 const table = {
   search_tableList: "api/services/app/Home/HomeTableDownloadList", //查询表格下载列表
   compute_downLoad: "api/services/app/Home/HomeTableDownloadAddVisitCount", //计算下载次数
+  search_downLoadDetail: "api/Attachment/AttachmentById", //获取附件信息
   downLoadList: "api/Attachment/Download" //下载表格
 }
 const infO = {

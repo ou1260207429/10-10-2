@@ -1,4 +1,4 @@
 {
-  "ApiUrl": "http://222.84.250.158:8111/",
+  "ApiUrl": "http://localhost:21021/",
   "downLoadUrl": "http://demo.rjtx.net:5001/"
 }
