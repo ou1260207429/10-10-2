@@ -98,7 +98,7 @@ ul {
 .el-pager li:hover,
 .el-select-dropdown__item.selected,
 .el-date-table .today span {
-  color: #397cc8 !important;
+  color: #397cc8;
 }
 
 .el-date-table td.start-date span,

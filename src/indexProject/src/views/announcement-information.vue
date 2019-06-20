@@ -74,6 +74,7 @@
           </el-card>
           <el-card :style="{minHeight:tableHight}">
             <el-table v-loading="!tableData" :data="tableData" style="width: 100%">
+              <el-table-column type="index" label="序号" width="50"></el-table-column>
               <template v-for="(item,index) in tableCols">
                 <template v-if="item.key=='recordCode'">
                   <el-table-column
@@ -83,7 +84,7 @@
                     :label="item.label"
                   ></el-table-column>
                 </template>
-                <template v-else-if="item.key=='DocumentCode'">
+                <template v-else-if="item.key=='documentCode'">
                   <el-table-column
                     v-if="searchForm.flowType==1||searchForm.flowType==2"
                     :key="index"
@@ -423,10 +424,11 @@ export default {
       total: 0,
       //表头数据
       tableCols: [
-        {
-          key: "Id",
-          label: "序号"
-        },
+        // {
+        //   key: "id",
+        //   label: "序号"
+        // },
+
         {
           key: "recordCode",
           label: "备案编号"
@@ -436,19 +438,23 @@ export default {
           label: "工程名称"
         },
         {
-          key: "CompanyName",
+          key: "companyName",
           label: "单位名称"
         },
+        // {
+        //   key: "cityName",
+        //   label: "单位名称"
+        // },
         {
           key: "address",
           label: "工程地址"
         },
         {
-          key: "DocumentCode",
+          key: "documentCode",
           label: "文书编号"
         },
         {
-          key: "FinishTime",
+          key: "finishTime",
           label: "办结时间"
         },
         {
@@ -505,11 +511,16 @@ export default {
      * 查询表格数据
      */
     initTable() {
-      if (this.dateTime.length > 0) {
+      if (this.dateTime) {
         this.searchForm.startTime = moment(this.dateTime[0]).format(
           "YYYY-MM-DD 00:00:00"
         );
-        this.searchForm.endTime = moment(this.dateTime[1]).format("YYYY-MM-DD 23:59:59");
+        this.searchForm.endTime = moment(this.dateTime[1]).format(
+          "YYYY-MM-DD 23:59:59"
+        );
+      }else{
+        this.searchForm.endTime=""
+        this.searchForm.startTime=""
       }
 
       let _this = this;
