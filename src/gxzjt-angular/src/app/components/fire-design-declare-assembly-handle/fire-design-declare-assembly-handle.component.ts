@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum } from 'infrastructure/expression';
-import { objDeleteType, genID } from 'infrastructure/regular-expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId } from 'infrastructure/expression';
+import { objDeleteType, genID, createguid } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
@@ -41,22 +41,15 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
   uoloadIndex: number = -1;
 
 
-  //测试
-  simultaneousMaterials = {
-    a1Checkbox: false,
-    a2Input: '',
-    a2Checkbox: false,
-    a5Input: '',
-    a3Checkbox: false,
-    a4Checkbox: false,
-    a5Checkbox: false,
-    complete: '',
-    notGrant: '',
-  }
+
+  fileList: UploadFile[] = [];
 
   constructor(public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
+
+    console.log(this.data);
+
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
   }
@@ -85,44 +78,47 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
   deleteArray(arr, index) {
     this.publicModel.engineeringDeleteArray(arr, index)
   }
-
-  fileList: UploadFile[] = [];
-  /**
-   * 上传文件之前的钩子
-   */
-  beforeUpload = (file: UploadFile): boolean => {
-    console.log(file);
-
-    // const arr: UploadFileModel = {
-    //   files: [file],
-    //   AppId: '9F947774-8CB4-4504-B441-2B9AAEEAF450',
-    //   module: 'xfsj'
-    // }
-
-
-    // console.log(genID(1).length);
-    // console.log(arr);
-    // return false;
-    // this._publicServices.upload(arr).subscribe(data => {
-    //   // if (data.uploadAttachments.length > 0) {
-
-    //   // } else {
-    //   //   // this.data.push({
-    //   //   //   type: this.uoloadIndex,
-    //   //   //   imgList: [{}]
-    //   //   // })
-    //   // }
-    //   // this.data.push({
-    //   //   type:this.uoloadIndex,
-    //   // })
-    //   console.log(data);
-    // })
-    // this.fileList = this.fileList.concat(file);
-    return false;
-  };
+  
 
   handleChange(index) {
     this.uoloadIndex = index
+  }
+
+  
+
+   /**
+    * 上传文件
+    */
+   uploadFiles(guid) {
+    let params = {
+      sourceId: guid,
+      AppId: AppId,
+      module: "table",
+    }
+
+    this.data.attachment.forEach((file: any) => {
+      const formData = new FormData();
+      formData.append('files', file);
+      this._publicServices.newUpload(formData, params).subscribe(data => {
+        console.log(data)
+      })
+    });
+  }
+
+  beforeUpload = (file: UploadFile): boolean => {
+    this.data.attachment = this.data.attachment?this.data.attachment:[]
+    this.uploadFiles(createguid())
+    this.data.attachment =this.data.attachment.concat(file);
+    return false;
+  };
+
+  removeFile = (file: UploadFile): boolean => {
+    this.data.attachment.forEach((item, index) => {
+      if (item.uid == file.uid) {
+        this.data.attachment.splice(index, 1);
+      }
+    });
+    return true;
   }
 
 }

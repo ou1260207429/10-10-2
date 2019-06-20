@@ -11,6 +11,9 @@ export const XIEFENG_SERVICES_URL = 'http://localhost:3521/';
 //庞博的服务器上传图片地址
 export const PANGBO_SERVICES_URL = ' http://demo.rjtx.net:5001/';
 
+//庞博的上传图片的ID验证
+export const AppId = '9F947774-8CB4-4504-B441-2B9AAEEAF450'
+
 ///通用变量
 export let publicPageConfig: STPage = {
   front: false,

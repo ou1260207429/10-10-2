@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum } from 'infrastructure/expression';
-import { objDeleteType, genID } from 'infrastructure/regular-expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId } from 'infrastructure/expression';
+import { objDeleteType, genID, createguid } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
-import { UploadFile } from 'ng-zorro-antd';
+import { UploadFile, NzMessageService } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 
 /**
@@ -41,24 +41,48 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
   uoloadIndex: number = -1;
 
 
-  //测试
-  simultaneousMaterials = {
-    a1Checkbox: false,
-    a2Input: '',
-    a2Checkbox: false,
-    a5Input: '',
-    a3Checkbox: false,
-    a4Checkbox: false,
-    a5Checkbox: false,
-    complete: '',
-    notGrant: '',
-  }
 
-  constructor(public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
+  constructor(private message: NzMessageService, public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
+    this.data.attachment = this.data.attachment ? this.data.attachment : []
+  }
+
+  /**
+    * 上传文件
+    */
+  uploadFiles(guid, file, then?: Function) {
+    let params = {
+      sourceId: guid,
+      AppId: AppId,
+      module: "table",
+    }
+
+    const formData = new FormData();
+    formData.append('files', file);
+    this._publicServices.newUpload(formData, params).subscribe(data => {
+      console.log(data)
+      if (then) then()
+    })
+  }
+
+  beforeUpload = (file: UploadFile): boolean => {
+    this.uploadFiles(createguid(), file, () => {
+      this.data.attachment = this.data.attachment.concat(file);
+      console.log(this.data.attachment);
+    })
+    return false;
+  };
+
+  removeFile = (file: UploadFile): boolean => {
+    this.data.attachment.forEach((item, index) => {
+      if (item.uid == file.uid) {
+        this.data.attachment.splice(index, 1);
+      }
+    });
+    return true;
   }
 
 }

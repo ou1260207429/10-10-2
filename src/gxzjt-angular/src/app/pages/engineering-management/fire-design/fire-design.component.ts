@@ -94,7 +94,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
   }
 
   addDeclare(){
-    
+    this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/null`]);
   }
   /**
    * 点击查询
@@ -132,6 +132,6 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
   }
 
   watchItem(item) {
-    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`]);
+    this.router.navigate([`/app/work-matters/alreadyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}`]);
   }
 }
