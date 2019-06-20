@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { UserCenterRoutingModule } from './user-center-routing.module';
+import { UserCenterModifyPswComponent } from './modify-psw/modify-psw.component';
 
-const COMPONENTS = [];
+
+const COMPONENTS = [
+
+  UserCenterModifyPswComponent];
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({
