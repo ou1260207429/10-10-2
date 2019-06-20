@@ -17,7 +17,7 @@ const routes: Routes = [
     data: { title: '已办流程' },
   },
   {
-    path: 'alreadyDoneDetailsComponent/:workFlow_Instance_Id',
+    path: 'alreadyDoneDetailsComponent/:flowNo/:flowId/:flowPathType',
     component: AlreadyDoneDetailsComponent,
     data: { title: '已办流程详情' },
   },

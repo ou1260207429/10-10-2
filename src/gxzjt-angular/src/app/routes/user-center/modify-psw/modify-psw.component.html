@@ -1,0 +1,78 @@
+<div class="reg_content">
+  <div [@routerTransition]>
+    <nz-spin nzTip="正在注册" [nzSpinning]="saving">
+      <nz-card [nzTitle]="nzTitle" nzHoverable='true' style="width: 400px">
+        <ng-template #nzTitle>
+          <div class="text-center yoyo__block">
+            <i class="anticon anticon-login"></i>
+            <span>注册</span>
+          </div>
+        </ng-template>
+        <form nz-form #validateForm="ngForm" (ngSubmit)="register()">
+
+          <br>
+
+
+          <!-- 旧密码 -->
+          <nz-form-item>
+            <nz-form-control nzHasFeedback>
+              <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-lock">
+                <input nz-input type="password" name="OldPassword" #OldPassword="ngModel" [(ngModel)]="model.OldPassword"
+                  type="password" placeholder="请输入8-18位新密码" required maxlength="18" minlength="8">
+              </nz-input-group>
+              <nz-form-explain *ngIf="OldPassword.control.dirty&&password.control.errors">
+                <ng-container *ngIf="OldPassword.control.hasError('required')">不能为空！</ng-container>
+                <ng-container *ngIf="OldPassword.control.hasError('minlength')">请输入8-18个字符</ng-container>
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+
+          
+
+          <!-- 新密码 -->
+          <nz-form-item>
+            <nz-form-control nzHasFeedback>
+              <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-lock">
+                <input nz-input type="password" name="password" #password="ngModel" [(ngModel)]="model.Password"
+                  type="password" placeholder="请输入8-18位新密码" required maxlength="18" minlength="8">
+              </nz-input-group>
+              <nz-form-explain *ngIf="password.control.dirty&&password.control.errors">
+                <ng-container *ngIf="password.control.hasError('required')">不能为空！</ng-container>
+                <ng-container *ngIf="password.control.hasError('minlength')">请输入8-18个字符</ng-container>
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+
+
+
+          <!-- 确认密码 -->
+          <nz-form-item>
+            <nz-form-control nzHasFeedback>
+              <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-lock">
+                <input nz-input type="password" name="ConfirmPassword" #ConfirmPassword="ngModel"
+                  [(ngModel)]="model.ConfirmPassword" placeholder="确认新密码" required maxlength="18" minlength="8"
+                  [pattern]="model.Password" />
+              </nz-input-group>
+              <nz-form-explain *ngIf="ConfirmPassword.control.dirty&&ConfirmPassword.control.errors">
+
+                <ng-container *ngIf="model.Password!=model.ConfirmPassword">两次输入密码不同</ng-container>
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+
+
+
+          <!-- 功能按钮 -->
+          <nz-form-item>
+
+            <nz-col [nzSpan]="12" class="text-right">
+              <button nz-button nzType="primary" type="submit" [disabled]="!validateForm.valid||saving">提交</button>
+            </nz-col>
+          </nz-form-item>
+
+        </form>
+
+      </nz-card>
+    </nz-spin>
+  </div>
+</div>

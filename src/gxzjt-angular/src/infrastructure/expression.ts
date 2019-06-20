@@ -3,13 +3,18 @@
 import { STPage, STComponent } from "@delon/abc";
 
 
-export const FLOW_SERVICES_URL = 'http://localhost:21021'
+export const FLOW_SERVICES_URL = 'http://222.84.250.158:8111'
 
 //谢峰的服务地址
-export const XIEFENG_SERVICES_URL = 'http://localhost:3521/';
+export const XIEFENG_SERVICES_URL = 'http://222.84.250.158:8113/';
 
 //庞博的服务器上传图片地址
-export const PANGBO_SERVICES_URL = ' http://demo.rjtx.net:5001/';
+export const PANGBO_SERVICES_URL = ' http://222.84.250.158:8000/';
+
+export const REGISTER_URL = ' http://222.84.250.158:8000/';
+
+//庞博的上传图片的ID验证
+export const AppId = '9F947774-8CB4-4504-B441-2B9AAEEAF450'
 
 ///通用变量
 export let publicPageConfig: STPage = {
