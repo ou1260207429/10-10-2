@@ -95,7 +95,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
       5:{ text: '未抽中', color: '' },
     }},
     { title: '操作人', index: 'currentHandleUserName' },
-    { title: '操作时间', index: 'applyTime' },
+    { title: '操作时间', index: 'applyTime',type:'date' },
   ];
 
   pageConfig: STPage = publicPageConfig;

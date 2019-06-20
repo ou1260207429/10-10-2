@@ -95,7 +95,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
       5:{ text: '未抽中', color: '' },
     }},
     { title: '操作人', index: 'companyName' },
-    { title: '操作时间', index: 'applyTime' },
+    { title: '操作时间', index: 'applyTime',type:'date' },
   ];
 
   searchParam = new FireAuditCompleteQueryDto();

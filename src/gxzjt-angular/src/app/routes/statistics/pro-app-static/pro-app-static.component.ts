@@ -86,7 +86,7 @@ export class StatisticsProAppStaticComponent implements OnInit {
       5:{ text: '未抽中', color: '' },
     }},
     { title: '操作人', index: 'acceptUserCode' },
-    { title: '操作时间', index: 'acceptTime' },
+    { title: '操作时间', index: 'acceptTime',type:'date' },
   ];
 
   constructor(private http: _HttpClient,
