@@ -165,15 +165,16 @@ export class StatisticsWarningCenterComponent implements OnInit {
         "flowNo": "",
         "projectName": "",
         "flowPathType": -1,
-        "startApplyTime": "2019-02-17T10:04:36.137Z",
-        "endApplyTime": "2019-06-17T21:04:36.137Z",
-        "dateTimeNow": "2019-06-17T21:04:36.138Z",
+        "startApplyTime": "",
+        "endApplyTime": "",
+        "dateTimeNow": "",
         "page": 1,
         "sorting": "ProjectId",
         "skipCount": 0,
         "maxResultCount": 10
       });
-
+      this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+      this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
     this.statisticalServiceServiceProxy.post_GetWarningCenterList(this.param).subscribe((result: any) => {
       this.formResultData = result.data;
     }, err => {

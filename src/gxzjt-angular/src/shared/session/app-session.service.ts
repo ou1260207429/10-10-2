@@ -3,6 +3,7 @@ import { AbpMultiTenancyService } from '@abp/multi-tenancy/abp-multi-tenancy.ser
 import { ACLService, DelonACLConfig } from '@delon/acl';
 import { MenuService } from '@delon/theme';
 
+
 import {
   LoginServiceProxy,
   // UserLoginInfoDto,
@@ -86,13 +87,12 @@ export class AppSessionService {
                 break
               case '企业用户':
                 this._ACLService.setRole(['reg']);
-                this._DelonACLConfig.guard_url = '/app/engineering-management/engineeringListComponent';
-
+                // this._DelonACLConfig.guard_url = '#/app/engineering-management/engineeringListComponent';
 
                 break
               default:
                 this._ACLService.setRole(['reg']);
-                this._DelonACLConfig.guard_url = '/app/engineering-management/engineeringListComponent';
+                // this._DelonACLConfig.guard_url = '#/app/engineering-management/engineeringListComponent';
 
 
                 break;

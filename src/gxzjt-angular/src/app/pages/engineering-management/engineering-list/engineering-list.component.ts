@@ -41,9 +41,16 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
         },
       ]
     },
-    { title: '表单', index: 'companyName' },
-    // { title: '创建人员', index: 'createEName' },
-    { title: '申报时间', index: 'applyTime' },
+    { title: '工程名称', index: 'projectName' },
+    { title: '工程编号', index: 'projectCode' },
+    { title: '建设单位', index: 'companyName' },
+    { title: '消防设计', index: 'investigateStatus' },
+    // { title: '消防设计', index: 'investigateStatus',type: 'tag', tag: {
+    //   0: { text: '不合格', color: '' },
+
+    // }},
+    { title: '消防验收管理', index: 'acceptanceStatus' },
+    { title: '竣工验收备案', index: 'putOnRecordStatus' },
   ];
 
   searchParam = new FireAuditCompleteQueryDto();
@@ -75,7 +82,7 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
     this.searchParam.flowPathType = 1
     this.searchParam.sorting = 'ProjectName';
     this.searchParam.startApplyTime = moment(this.rangeTime[0])
-    this.searchParam.endApplyTime =moment(this.rangeTime[1])  
+    this.searchParam.endApplyTime =moment(this.rangeTime[1])
     this.getList();
   }
 
@@ -97,7 +104,7 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
   query() {
     this.searchParam.page = 1;
     this.searchParam.startApplyTime = moment(this.rangeTime[0])
-    this.searchParam.endApplyTime =moment(this.rangeTime[1])  
+    this.searchParam.endApplyTime =moment(this.rangeTime[1])
     this.getList();
   }
 
@@ -114,8 +121,8 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
 
   okRangeTime(v) {
     console.log(v);
-    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')  
-    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')   
+    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')
+    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')
     // this.searchParam.applyTimeStart = applyTimeStart;
     // this.searchParam.applyTimeEnd = applyTimeEnd;
     // console.log(applyTimeEnd);
@@ -131,6 +138,6 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
 
 
 
-  
-  
+
+
 }

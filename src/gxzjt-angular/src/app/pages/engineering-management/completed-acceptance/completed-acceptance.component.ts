@@ -25,7 +25,7 @@ import { PublicFormComponent } from '../public/public-form.component';
   styles: []
 })
 export class CompletedAcceptanceComponent extends PublicFormComponent implements OnInit {
-  
+
   formResultData;
 
   @ViewChild('st') st: STComponent;
@@ -40,9 +40,32 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
         },
       ]
     },
-    { title: '表单', index: 'companyName' },
-    // { title: '创建人员', index: 'createEName' },
-    { title: '申报时间', index: 'applyTime' },
+    { title: '竣工验收备案申报编号', index: 'acceptanceNumber' },
+    { title: '工程名称', index: 'projectName' },
+    { title: '建设单位', index: 'companyName' },
+    // { title: '是否被抽中', index: 'isSelected',type: 'tag', tag: {
+    //   // null:{text:'asda',color:''},
+    //   true: { text: '是', color: '' },
+    //   false: { text: '否', color: '' },
+    // }},
+    // { title: '验证码', index: '无此字段返回' },
+    { title: '当前处理环节', index: 'currentNodeName' },
+    { title: '当前处理人', index: 'currentHandleUserName' },
+    { title: '流程是否超时', index: 'isExpireTime',type: 'tag', tag: {
+      true: { text: '是', color: '' },
+      false: { text: '否', color: '' },
+    }},
+    { title: '审核结果', index: 'status' },
+    // { title: '审核结果', index: 'status',type: 'tag', tag: {
+    //   0: { text: '未处理', color: '' },
+    //   1: { text: '受理', color: 'green' },
+    //   2:{ text: '不受理', color: '' },
+    //   3:{ text: '不合格', color: '' },
+    //   4:{ text: '合格', color: '' },
+    //   5:{ text: '未抽中', color: '' },
+    // }},
+    // { title: '操作人', index: 'companyName' },
+    { title: '操作时间', index: 'applyTime' },
   ];
 
   searchParam = new FireAuditCompleteQueryDto();
@@ -57,7 +80,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   constructor(private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
     private _flowServices: FlowServices,
     private router: Router,
-    private http: _HttpClient, 
+    private http: _HttpClient,
     private xlsx: XlsxService) {
    super();
 
@@ -73,7 +96,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.searchParam.flowPathType = 3
     this.searchParam.sorting = 'ProjectName';
     this.searchParam.startApplyTime = moment(this.rangeTime[0])
-    this.searchParam.endApplyTime =moment(this.rangeTime[1])  
+    this.searchParam.endApplyTime =moment(this.rangeTime[1])
     this.getList();
   }
 
@@ -93,9 +116,9 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
    * 点击查询
    */
   query() {
-    this.searchParam.page = 1; 
+    this.searchParam.page = 1;
     this.searchParam.startApplyTime = moment(this.rangeTime[0])
-    this.searchParam.endApplyTime =moment(this.rangeTime[1])  
+    this.searchParam.endApplyTime =moment(this.rangeTime[1])
     this.getList();
   }
 
@@ -111,9 +134,9 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   }
 
   okRangeTime(v){
-    console.log(v); 
-    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')  
-    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')   
+    console.log(v);
+    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')
+    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')
     // this.searchParam.applyTimeStart = applyTimeStart;
     // this.searchParam.applyTimeEnd = applyTimeEnd;
     // console.log(applyTimeEnd);
