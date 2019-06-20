@@ -42,6 +42,7 @@
     "abp-ng2-module": "^3.2.3",
     "abp-web-resources": "^3.8.4",
     "ajv": "^6.4.0",
+    "buffer": "^5.2.1",
     "core-js": "^2.5.4",
     "echarts": "^4.2.1",
     "famfamfam-flags": "^1.0.0",

@@ -8,6 +8,7 @@ import { timeTrans } from 'infrastructure/regular-expression';
 import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { UploadFileModel, PublicServices } from 'services/public.services';
+import { Buffer } from "buffer"
 @Component({
   selector: 'app-policies-and-regulations-details',
   templateUrl: './policies-and-regulations-details.component.html',
@@ -149,6 +150,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     }
     this.uploadFiles(this.data.guid);
     this.data.issueDate = new Date(timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'))
+    this.data.content = new Buffer(this.data.content).toString('base64');
     const src = this.operate == 0 ? this._regulationServiceProxy.addRegulationAsync(this.data) : this._regulationServiceProxy.editRegulationAsync(this.data)
     src.subscribe(data => {
       const name = this.operate == 0 ? '新增成功' : '修改成功';
