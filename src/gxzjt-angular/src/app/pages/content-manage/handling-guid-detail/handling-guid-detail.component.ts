@@ -7,6 +7,7 @@ import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { PublicServices } from 'services/public.services';
 import { Buffer } from "buffer"
+import { PANGBO_SERVICES_URL } from 'infrastructure/expression';
 
 @Component({
   selector: 'app-handling-guid-detail',
@@ -36,12 +37,12 @@ export class HandlingGuidDetailComponent implements OnInit {
       }
     },
   ];
-  
   operate
   //0是新增  1是查看 2是编辑
   type
   id
-
+  fileUrl: string
+  fileUrlList = []
   //表单对象
   data: any = {
 
@@ -51,6 +52,7 @@ export class HandlingGuidDetailComponent implements OnInit {
     this.id = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
     this.operate = parseInt(this._activatedRoute.snapshot.paramMap.get('operate'));
     this.initType()
+    this.fileUrl = PANGBO_SERVICES_URL;
   }
   ngOnInit() {
     this.init()
@@ -81,7 +83,9 @@ export class HandlingGuidDetailComponent implements OnInit {
    */
   getRegulationDetailsByIdAsync() {
     this._noticeServiceProxy.noticeDetailsByIdAsync(this.id).subscribe((data: any) => {
+      this.queryFiles(data.guid)
       this.data = {
+        brief: data.brief,
         id: data.id,
         content: data.content,
         guid: data.guid,
@@ -164,7 +168,24 @@ export class HandlingGuidDetailComponent implements OnInit {
       })
     });
   }
+  queryFiles(guid) {
+    let params = {
+      sourceId: guid,
+      AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
+      module: "table",
+    }
+    this.fileUrlList = [];
+    this._publicServices.getFilesDetail(params).subscribe(data => {
+      data.forEach(element => {
+        this.fileUrlList.push({
+          name: element.fileName,
+          url: "api/Attachment/Download?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&id=" + element.id
+        })
+      });
 
+    })
+
+  }
   beforeUpload = (file: UploadFile): boolean => {
     this.fileList = this.fileList.concat(file);
 

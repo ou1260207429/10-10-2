@@ -156,8 +156,6 @@ export default {
         this.filePageSize.page = page;
         this.getFileList();
       }
-      console.log(type);
-      console.log(page);
     }
   }
 };

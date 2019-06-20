@@ -19,7 +19,6 @@ var app = {
     "size": 10,
     "page": 1,
     "isAsc": true,
-    "totalCount":0
   },
   /**
    * 存储数据（可以是字符串或者对象的格式）
@@ -118,59 +117,51 @@ var app = {
     });
 
   },
-  downLoadFile(url, data) {
+  /**
+   * 
+   * @param {*下载文件的} id 
+   */
+  countDownLoadTimes(id) {
+    app.post(table.compute_downLoad + "?attachmentId=" + id).then(result => {});
+  },
+  //获取附件详情
+  getFileDetail(guid, id) {
+    console.log(id)
+    let finalUrl =
+      table.search_downLoadDetail +
+      "?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&module=table&sourceId=" +
+      guid;
+    app.downLoadFile(finalUrl, id).then(req => {})
+
+
+  },
+  downLoadFile(url, id) {
     let downLoadUrl = Vue.prototype.downLoadUrl;
-    let finalUrl = url + "?appId=" + data.appId + "&id=" + "c10d2c39-15ce-40a5-86f5-636e6a03de52"
-    // let finalUrl = url + "?appId=" + data.appId + "&id=" + data.id
     return new Promise(function (resolve, reject) {
       axios({
         method: "POST",
-        url: downLoadUrl + finalUrl,
-        responseType: 'blob'
+        url: downLoadUrl + url,
       }).then(function (req) {
         resolve(req);
+        if (req.status == 200) {
+          if (req.data.length > 0) {
+            let link = document.createElement("a");
+            link.style.display = "none";
+            link.href = downLoadUrl + table.download + "?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&id=" + req.data[0].id;
+            link.setAttribute("download", req.data[0].fileName);
+            document.body.appendChild(link);
+            link.click();
+            app.countDownLoadTimes(id)
+            resolve(req);
+          }
+
+        }
+
 
       })
     })
   },
-  //下载表格
-  downLoad(data, fileName) {
-    app.downLoadFile(table.downLoadList, data).then(req => {
-      console.log(req)
-      const content = req
-      const blob = new Blob([content])
-      // const fileName = 'test.docx'
-      if ('download' in document.createElement('a')) { // 非IE下载
-        const elink = document.createElement('a')
-        elink.download = fileName
-        elink.style.display = 'none'
-        elink.href = URL.createObjectURL(blob)
-        document.body.appendChild(elink)
-        elink.click()
-        URL.revokeObjectURL(elink.href) // 释放URL 对象
-        document.body.removeChild(elink)
-      } else { // IE10+下载
-        navigator.msSaveBlob(blob, fileName)
-      }
 
-    })
-  },
-  /**
-   * 查询表格详情
-   */
-  downList(data, guid) {
-    data.id = guid
-    let finalUrl = table.search_downLoadDetail + "?appId=" + data.appId + "&id=" + "c10d2c39-15ce-40a5-86f5-636e6a03de52"
-    let downLoadUrl = Vue.prototype.downLoadUrl;
-    return new Promise(function (resolve, reject) {
-      axios({
-        method: "POST",
-        url: downLoadUrl + finalUrl,
-      }).then(function (req) {
-        app.downLoad(data,req.data.fileName)
-      })
-    })
-  },
 
 
 
