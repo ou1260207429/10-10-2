@@ -39,9 +39,38 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
       title: '操作',
       buttons: [
         {
-          text: '执行', click: (item: any) => {
-            this.watchItem(item);
-          }
+          text: '查看',
+          type: 'modal',
+          // modal: {
+          //   component: StatisticsProAppStaticDetailComponent,
+          //   paramsName: 'record',
+          // },
+          // click: (record: any, modal: any) => {
+
+          // },
+        },
+        {
+          text: '受理凭证',
+          type: 'link',
+          // modal: {
+          //   component: StatisticsAcceptCredentialsComponent,
+          //   paramsName: 'record',
+          // },
+          click: (record: any, modal: any) => {
+            window.open(record.acceptAttachmentFileUrl)
+          },
+        },
+        {
+          text: '意见书',
+          type: 'link',
+          // modal: {
+          //   component: StatisticsPositionPaperComponent,
+          //   paramsName: 'record',
+          // },
+          click: (record: any, modal: any) => {
+
+            window.open(record.opinionFileUrl)
+          },
         },
       ]
     },
@@ -57,7 +86,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     }},
     { title: '审核结果', index: 'status',format: (item: any) => `${item.status?item.status:4001}`,
     type: 'tag', tag: {
-      4001:{text: '数据非法', color: 'red' },
+      4001:{text: '待处理', color: '' },
       0: { text: '未处理', color: '' },
       1: { text: '受理', color: 'green' },
       2:{ text: '不受理', color: '' },

@@ -918,7 +918,7 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
         "page": 1,
         "sorting": "CityName",
         "skipCount": 0,
-        "maxResultCount": 10
+        "maxResultCount": 1000
       });
       this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
       this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
