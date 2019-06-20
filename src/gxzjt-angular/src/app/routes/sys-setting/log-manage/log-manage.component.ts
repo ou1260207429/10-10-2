@@ -42,7 +42,7 @@ export class SysSettingLogManageComponent implements OnInit {
         },
       ]
     },
-    { title: '时间', index: 'time' },
+    { title: '时间', index: 'time',type:'date' },
     { title: 'IP', index: 'IP' },
     { title: '地区', index: 'area' },
     { title: '登录方式', index: 'logintype' },
