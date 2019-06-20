@@ -49,19 +49,19 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     { title: '当前处理环节', index: 'currentNodeName' },
     { title: '当前处理人', index: 'currentHandleUserName' },
     { title: '流程是否超时', index: 'isExpireTime',type: 'tag', tag: {
-      true: { text: '是', color: '' },
+      true: { text: '是', color: 'red' },
       false: { text: '否', color: '' },
     }},
-    { title: '审核结果', index: 'status' },
-    // { title: '审核结果', index: 'status',type: 'tag', tag: {
-    //   0: { text: '未处理', color: '' },
-    //   1: { text: '受理', color: 'green' },
-    //   2:{ text: '不受理', color: '' },
-    //   3:{ text: '不合格', color: '' },
-    //   4:{ text: '合格', color: '' },
-    //   5:{ text: '未抽中', color: '' },
-    // }},
-    // { title: '操作人', index: 'companyName' },
+    { title: '审核结果', index: 'status',format: (item: any) => `${item.status?item.status:4001}`,type: 'tag', tag: {
+      4001:{text:'数据非法',color: 'red'},
+      0: { text: '未处理', color: '' },
+      1: { text: '受理', color: 'green' },
+      2:{ text: '不受理', color: 'red' },
+      3:{ text: '不合格', color: 'red' },
+      4:{ text: '合格', color: '' },
+      5:{ text: '未抽中', color: '' },
+    }},
+    { title: '操作人', index: 'companyName' },
     { title: '操作时间', index: 'applyTime' },
   ];
 

@@ -40,7 +40,7 @@ export class AppMenus {
       text: "",
       i18n: "工作事项",
       icon: { type: "icon", value: "bars" },// 图标
-      acl: AppMenus.aclSys,
+      acl: AppMenus.aclCompany,
       children: [
         {
           text: "",
@@ -52,11 +52,11 @@ export class AppMenus {
           i18n: "已办",
           link: "/app/work-matters/alreadyDoneComponent",
         },
-        {
-          text: "",
-          i18n: "草稿",
-          link: "/app/work-matters/draf",
-        },
+        // {
+        //   text: "",
+        //   i18n: "草稿",
+        //   link: "/app/work-matters/draf",
+        // },
         {
           text: "",
           i18n: "流程",
@@ -67,11 +67,11 @@ export class AppMenus {
           i18n: "草稿箱",
           link: "/app/work-matters/draftsComponent",
         },
-        {
-          text: "",
-          i18n: "表单",
-          link: "/app/work-matters/formModuleComponent",
-        },
+        // {
+        //   text: "",
+        //   i18n: "表单",
+        //   link: "/app/work-matters/formModuleComponent",
+        // },
       ]
     },
     {

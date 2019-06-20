@@ -27,7 +27,7 @@ import { PublicModel } from 'infrastructure/public-model';
 export class AgencyDoneComponent  extends PublicFormComponent implements OnInit {
   index;
 
- 
+
   formResultData
 
   @ViewChild('st') st: STComponent;
@@ -42,9 +42,16 @@ export class AgencyDoneComponent  extends PublicFormComponent implements OnInit 
         },
       ]
     },
-    { title: '表单', index: 'companyName' },
-    // { title: '创建人员', index: 'createEName' },
+    { title: '工程编号', index: 'projectCode' },
+    { title: '建设单位', index: 'companyName' },
+    { title: '工程类型', index: 'flowTypeName' },
+    { title: '当前处理人', index: 'cur_NodeAuditorName' },
     { title: '申报时间', index: 'applyTime' },
+    { title: '受理时间', index: 'acceptTime' },
+    { title: '流程是否超时', index: 'isExpire',type: 'tag', tag: {
+      true: { text: '超时', color: 'red' },
+      false: { text: '未超时', color: 'green' },
+    }},
   ];
 
   searchParam = new PendingWorkFlow_NodeAuditorRecordDto();
@@ -62,7 +69,7 @@ export class AgencyDoneComponent  extends PublicFormComponent implements OnInit 
     private _publicModel:PublicModel,
     private http: _HttpClient,
     private xlsx: XlsxService) {
-    
+
       super();
 
   }
@@ -94,7 +101,7 @@ export class AgencyDoneComponent  extends PublicFormComponent implements OnInit 
    * 点击查询
    */
   query() {
-    this.searchParam.pagedAndFilteredInputDto.page = 1; 
+    this.searchParam.pagedAndFilteredInputDto.page = 1;
     this.getList();
   }
 
@@ -117,9 +124,9 @@ export class AgencyDoneComponent  extends PublicFormComponent implements OnInit 
   }
 
   okRangeTime(v){
-    console.log(v); 
-    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')  
-    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')   
+    console.log(v);
+    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')
+    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')
     // this.searchParam.applyTimeStart = applyTimeStart;
     // this.searchParam.applyTimeEnd = applyTimeEnd;
     // console.log(applyTimeEnd);
