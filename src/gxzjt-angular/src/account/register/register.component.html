@@ -129,7 +129,7 @@
             <nz-form-control nzHasFeedback>
               <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-phone">
                 <input nz-input name="LeaderPhone" #LeaderPhone="ngModel" [(ngModel)]="model.LeaderPhone"
-                  placeholder="企业法人/负责人联系电话" required maxlength="12" 
+                  placeholder="法定代表人/负责人联系电话" required maxlength="12" 
                   pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)">
               </nz-input-group>
               <nz-form-explain *ngIf="LeaderPhone.control.dirty&&LeaderPhone.control.errors">
