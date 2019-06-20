@@ -310,7 +310,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
           }, {
             name: "图书馆",
             checked: false,
-            value: "图书馆"
+            value: "图书馆1"
           }, {
             name: "食堂",
             checked: false,
