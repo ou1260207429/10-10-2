@@ -7,7 +7,7 @@ import { _HttpClient } from '@delon/theme';
 
 
 /**
- * 抽查比例
+ * 
  */
 @Component({
   selector: 'sys-welcome',
