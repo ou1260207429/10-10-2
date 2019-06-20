@@ -43,6 +43,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
         },
       ]
     },
+    { title: '工程名称', index: 'projectName' },
     { title: '工程编号', index: 'projectCode' },
     { title: '建设单位', index: 'companyName' },
     { title: '工程类型', index: 'flowTypeName' },
@@ -90,6 +91,10 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.searchParam.pagedAndFilteredInputDto = new PagedAndFilteredInputDto();
     this.searchParam.pagedAndFilteredInputDto.page = 1;
     this.searchParam.pagedAndFilteredInputDto.maxResultCount = 10;
+    this.searchParam.number='';
+    this.searchParam.projectName='';
+    this.searchParam.companyName='';
+    this.searchParam.projectTypeStatu=null;
     this.getList();
   }
 
@@ -133,8 +138,8 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
   okRangeTime(v) {
     console.log(v);
-    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')  
-    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')   
+    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')
+    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')
     // this.searchParam.applyTimeStart = applyTimeStart;
     // this.searchParam.applyTimeEnd = applyTimeEnd;
     // console.log(applyTimeEnd);

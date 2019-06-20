@@ -42,7 +42,7 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
       ]
     },
     { title: '工程名称', index: 'projectName' },
-    { title: '工程编号', index: 'projectCode', },
+    { title: '工程编号', index: 'investigateNumber', },
     { title: '建设单位', index: 'companyName' },
     { title: '消防设计', index: 'investigateStatus',format: (item: any) => `${item.investigateStatus?item.investigateStatus:4001}`,type: 'tag', tag: {
       4001:{text:'未申请',color: 'red' },
