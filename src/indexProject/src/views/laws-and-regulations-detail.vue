@@ -16,12 +16,12 @@
       </div>
       <el-row>
         <el-card v-loading="!data" :style="{minHeight:tableHight}">
-         <div v-if="data">
+          <div v-if="data">
             <h1
-            style="color:#BD1127FF;text-align:center;padding:20px 0;letter-spacing:3px; box-sizing: border-box;"
-          >{{data.title}}</h1>
-          <div class="lawContent" v-html="data.content"></div>
-         </div>
+              style="color:#BD1127FF;text-align:center;padding:20px 0;letter-spacing:3px; box-sizing: border-box;"
+            >{{data.title}}</h1>
+            <div class="lawContent" v-html="data.content"></div>
+          </div>
         </el-card>
       </el-row>
     </div>
@@ -49,8 +49,7 @@ export default {
   computed: {},
 
   mounted() {
-    this.searchData.regulationId = this.$route.params.id;
-    this.initData();
+    this.initData(this.$route.params.id);
     const that = this;
     setTimeout(function() {
       that.tableHight =
@@ -62,11 +61,10 @@ export default {
   },
 
   methods: {
-    initData() {
+    initData(id) {
       let _this = this;
-      let params = Object.assign(this.searchData, app.pageSize);
       _this.isLoading = true;
-      app.post(laws.serach_lawsDetail, params).then(req => {
+      app.post(laws.serach_lawsDetail+"?regulationId="+id).then(req => {
         _this.isLoading = false;
         if (req.success) {
           _this.data = req.result;
