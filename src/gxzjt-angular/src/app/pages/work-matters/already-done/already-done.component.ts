@@ -42,6 +42,7 @@ export class AlreadyDoneComponent
         },
       ]
     },
+    { title: '工程名称', index: 'projectName' },
     { title: '工程编号', index: 'projectCode' },
     { title: '建设单位', index: 'companyName' },
     { title: '工程类型', index: 'flowTypeName' },
@@ -82,6 +83,10 @@ export class AlreadyDoneComponent
     this.searchParam.pagedAndFilteredInputDto = new PagedAndFilteredInputDto();
     this.searchParam.pagedAndFilteredInputDto.page = 1;
     this.searchParam.pagedAndFilteredInputDto.maxResultCount = 10;
+    this.searchParam.number='';
+    this.searchParam.projectName='';
+    this.searchParam.companyName='';
+    this.searchParam.projectTypeStatu=null;
     this.getList();
   }
 
@@ -106,7 +111,7 @@ export class AlreadyDoneComponent
 
 
   watchItem(item) {
-    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.flowId}/${item.flowPathType}/1`]);
+    this.router.navigate([`/app/work-matters/alreadyDoneDetailsComponent/${item.flowNo}/${item.flowId}/${item.flowPathType}`]);
   }
 
   change(v) {

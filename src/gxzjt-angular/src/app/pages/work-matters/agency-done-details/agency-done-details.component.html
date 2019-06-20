@@ -26,580 +26,69 @@
             流程审批
           </td>
         </tr>
-        <tr style="text-align: left;" [ngClass]="{pointerf5f5f5: curNodeName!='大厅受理'}">
+        <tr style="text-align: left;">
           <td colspan="20">
-            <se error="这是必填项" label="审批意见书">
-              <app-fire-design-declare-assembly-handle [data]="formDto" *ngIf="flowPathType ==1 && this.curNodeName=='大厅受理'">
-              </app-fire-design-declare-assembly-handle>
-              
 
-              <app-fire-design-declare-assembly-handle [data]="formDto" type="1"  *ngIf="flowPathType ==1 && this.curNodeName=='业务承办人审核'">
+            <div [ngSwitch]="flowPathType">
+              <div *ngSwitchCase="1">
+                <!-- 消防设计的受理凭证 -->
+                <app-fire-design-declare-assembly-handle [data]="formDto" *ngIf="this.curNodeName=='大厅受理'"
+                  [ngClass]="{pointerf5f5f5: curNodeName!='大厅受理'}">
                 </app-fire-design-declare-assembly-handle>
+                <!-- 消防设计的受理凭证 -->
 
-              <app-fire-acceptance-assembly-handle [data]="formDto" *ngIf="flowPathType ==2">
-              </app-fire-acceptance-assembly-handle>
-              <app-completed-acceptance-assembly-handle [data]="formDto" *ngIf="flowPathType ==3">
-              </app-completed-acceptance-assembly-handle>
-            </se>
+                <!-- 消防设计的意见书 -->
+                <app-fire-design-declare-assembly-handle [data]="formDto" type="1" *ngIf="this.curNodeName=='业务承办人审核'"
+                  [ngClass]="{pointerf5f5f5: curNodeName!='业务承办人审核'}">
+                </app-fire-design-declare-assembly-handle>
+                <!-- 消防设计的意见书 -->
+
+                <!-- 消防设计的意见书2 -->
+                <app-fire-design-declare-assembly-handle [data]="formDto" type="2" *ngIf="this.curNodeName=='业务审批负责人审批'"
+                  [ngClass]="{pointerf5f5f5: curNodeName!='业务审批负责人审批'}">
+                </app-fire-design-declare-assembly-handle>
+                <!-- 消防设计的意见书 -->
+
+              </div>
+              <div *ngSwitchCase="2">
+
+                <!-- 消防验收的受理凭证 -->
+                <app-fire-acceptance-assembly-handle [data]="formDto" *ngIf="this.curNodeName=='大厅受理'"
+                  [ngClass]="{pointerf5f5f5: curNodeName!='大厅受理'}"></app-fire-acceptance-assembly-handle>
+                <!-- 消防验收的受理凭证 -->
+
+                <!-- 消防验收的意见书 -->
+                <app-fire-acceptance-assembly-handle [data]="formDto" *ngIf="this.curNodeName=='业务承办人审核'" type="1"
+                  [ngClass]="{pointerf5f5f5: curNodeName!='业务承办人审核'}"></app-fire-acceptance-assembly-handle>
+                <!-- 消防验收的意见书 -->
+
+              </div>
+              <div *ngSwitchCase="3">
+                <!-- 竣工备案的抽中或者未抽中 -->
+                <app-completed-acceptance-assembly-handle [data]="formDto" type="{{formDto.isSelect==true?'3':'4'}}"
+                  *ngIf="this.curNodeName=='大厅受理'">
+                </app-completed-acceptance-assembly-handle>
+                <!-- 竣工备案的抽中或者未抽中 -->
+              </div>
+            </div>
+
+
+
+
+
           </td>
         </tr>
 
-        <tr *ngIf="curNodeName == '业务承办人审核'">
-          <td colspan="20">
-
-            <!-- <nz-upload > -->
-            <button nz-button><i nz-icon nzType="upload"></i><span>上传附件</span></button>
-            <!-- </nz-upload> -->
-            <!-- </div> -->
-
-          </td>
-        </tr>
-
-        <tr *ngIf="curNodeName != '大厅受理'">
-          <td colspan="20">
-            <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion"
-              name="constructionSituationopinion11" required>
-                </textarea>
-          </td>
-        </tr>
       </table>
     </form>
 
     <div class="textCenter" style="margin-bottom: 40px;" *ngIf="operationType == 0">
       <button nz-button nzType="primary" (click)="save(true)">{{curNodeName=='业务承办人审核'?'合格':'通过'}}</button>
       <button nz-button nzType="primary" (click)="save(false)">{{curNodeName=='业务承办人审核'?'不合格':'不通过'}}</button>
-      <button nz-button nzType="primary" (click)="revoke()" *ngIf="curNodeName!='业务承办人审核'">撤销</button> 
+      <button nz-button nzType="primary" (click)="revoke()" *ngIf="curNodeName!='业务承办人审核'">撤销</button>
     </div>
   </div>
   <div [ngClass]="{hide: selectedIndex != 1}">
     <app-flow-route *ngIf="data" [data]="data"></app-flow-route>
   </div>
 </nz-spin>
-
-<!-- 
-
-<table class="tables d_table" style="box-sizing: border-box;">
-  <thead>
-    <tr>
-      <td colspan='20' rowspan='1' class="table_title">
-        <h3>××市住房和城乡建设局<br />建设工程消防设计审查意见书（合格）</h3>
-      </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-        ×住建消审凭字〔2019〕第0059号
-      </td>
-    </tr>
-    <tr>
-      <td rowspan='1' colspan='20'>
-        <div class="table_detail">
-          <h3>×市××区××××：</h3>
-          <p>
-            你单位申请的“新建B栋教学楼”建设工程（受理凭证：×住建消审凭字〔201×〕第××××号，201×年×月××日收）消防设计图纸材料及有关资料收悉。该工程位于××市××路××号，××小学校园内。新建B栋教学楼建筑高度为19.6m，建筑层数为5层，建筑面积为2902.76㎡，设计用途一层为生活用房、二至四层为教室、五层为教师办公室、会议室等，属多层民用建筑。该工程消防设施主要有室内、室外消火栓系统。设计单位为×××设计有限公司，设计资质为建设工程×级。按照图纸审查机构（××××公司）对该工程设计图纸的技术审查结论，我局提出以下意见：
-          </p>
-        </div>
-        <ul class="table_list">
-          <li>
-            一、同意该工程消防设计，请按照审查批准的消防设计图纸资料进行施工。
-          </li>
-          <li>
-            二、建设单位应当依法选用具有规定资质等级的施工、工程监理等单位，并查验其合法身份证明和资质等级证明文件。
-          </li>
-          <li>
-            三、提供图纸审查的技术服务机构和人员对出具的技术审查意见负责。
-          </li>
-          <li>
-            四、经此次审查的建设工程消防设计如需变更，应当重新报送我单位审查。该工程竣工后，应当向我单位申报消防验收，验收合格后方可投入使用。
-          </li>
-        </ul>
-
-        <div class="table_seal">
-          由后台提供的当前时间 年月日
-        </div>
-
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">建设单位收件人签名：<input class="table_input_2" />
-        <p class="table_time">
-          <nz-date-picker name="t2"></nz-date-picker>
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle">本意见书一式两份，一份交建设单位，一份存档。 </td>
-    </tr>
-  </tbody>
-</table>
-
-<table class="tables d_table" style="box-sizing: border-box;">
-  <thead>
-    <tr>
-      <td colspan='20' rowspan='1' class="table_title">
-        <h3>××市住房和城乡建设局<br />建设工程消防设计审查意见书（不合格）</h3>
-      </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-        ×住建消审凭字〔2019〕第0059号
-      </td>
-    </tr>
-    <tr>
-      <td rowspan='1' colspan='20'>
-        <div class="table_detail">
-          <h3>×市××区××××：</h3>
-          <p>
-            你单位申请的“新建B栋教学楼”建设工程（受理凭证：×住建消审凭字〔201×〕第××××号，201×年×月××日收）消防设计图纸材料及有关资料收悉。该工程位于××市××路××号，××小学校园内。新建B栋教学楼建筑高度为19.6m，建筑层数为5层，建筑面积为2902.76㎡，设计用途一层为生活用房、二至四层为教室、五层为教师办公室、会议室等，属多层民用建筑。该工程消防设施主要有室内、室外消火栓系统。设计单位为×××设计有限公司，设计资质为建设工程×级。按照图纸审查机构（××××公司）对该工程设计图纸的技术审查结论，我局提出以下意见：
-          </p>
-        </div>
-        <ul class="table_list">
-          <li>
-            一、不同意该工程消防设计，应修改设计后重新申报。
-          </li>
-          <li>
-            二、问题1：×××（存在问题），不符合《××》第×条第×款（规范名称及条文号）的规定。
-          </li>
-          <li>
-            三、问题2：（同上）。
-          </li>
-          <li>
-            四、问题3：（同上）。
-          </li>
-          <li>
-            五、提供图纸审查的技术服务机构和人员对出具的技术审查意见负责。
-          </li>
-          <li>
-            六、如不服本决定，可以在收到本意见书之日起六十日内向××市人民政府申请行政复议或者三个月内依法向××人民法院提起行政诉讼。
-          </li>
-        </ul>
-
-        <div class="table_seal">
-          由后台提供的当前时间 年月日
-        </div>
-
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">建设单位收件人：<input class="table_input_2" />
-        <p class="table_time">
-          <nz-date-picker name="t2"></nz-date-picker>
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle">本意见书一式两份，一份交建设单位，一份存档。 </td>
-    </tr>
-  </tbody>
-</table>
-
-
-
-<table class="tables d_table" style="box-sizing: border-box;">
-  <thead>
-    <tr>
-      <td colspan='20' rowspan='1' class="table_title">
-        <h3>××市住房和城乡建设局<br />建设工程消防设计审查申请受理/不予受理凭证</h3>
-      </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-        ×住建消审凭字〔2019〕第0059号
-      </td>
-    </tr>
-    <tr>
-      <td rowspan='1' colspan='20'>
-        <div class="table_detail">
-          <h3>××市××区：</h3>
-          <p>根据《中华人民共和国消防法》第十一条和《建设工程消防监督管理规定》第十五条的规定，你单位 ×××× 年 ×× 月 ×× 日申请的 新建B栋教学楼 建设工程（地址：
-            ××市××路××号）消防设计审查，提供了下列材料：</p>
-        </div>
-        <ul class="table_list">
-          <li>
-            <label nz-checkbox name="newcheckboxEngineering1"
-              [(ngModel)]="simultaneousMaterials.a1Checkbox">1.建设工程消防设计审查申报表；</label>
-          </li>
-          <li>
-            <label nz-checkbox name="newcheckboxEngineering2"
-              [(ngModel)]="simultaneousMaterials.a2Checkbox"></label>2.消防设计文件，数量：<select
-              class="simultaneousMaterials.a2Input">
-              <option value="0">零</option>
-              <option value="1">壹</option>
-              <option value="2">贰</option>
-              <option value="3">叁</option>
-              <option value="4">肆</option>
-            </select>
-            份（大写）；
-          </li>
-          <li>
-            <label nz-checkbox name="newcheckboxEngineering3"
-              [(ngModel)]="simultaneousMaterials.a3Checkbox">3.需要办理建设工程规划许可项目的建设工程规划许可证明文件复印件；</label>
-          </li>
-          <li>
-            <label nz-checkbox name="newcheckboxEngineering4"
-              [(ngModel)]="simultaneousMaterials.a4Checkbox">4.依法需要批准的临时性建筑证明文件复印件；</label>
-          </li>
-          <li>
-            <label nz-checkbox name="newcheckboxEngineering5" [(ngModel)]="simultaneousMaterials.a5Checkbox">
-            </label>
-            5.专家评审申报材料（特殊消防设计文件，设计采用的国际标准、境外消防技术标准的中文文本，其他有关消防设计的技术资料），数量：<select class="simultaneousMaterials.a5Input">
-              <option value="0">零</option>
-              <option value="1">壹</option>
-              <option value="2">贰</option>
-              <option value="3">叁</option>
-              <option value="4">肆</option>
-            </select>
-            份（大写）；
-          </li>
-        </ul>
-        <div class="table_add_info">
-          <p>经核，申报材料项目（<nz-radio-group [(ngModel)]="simultaneousMaterials.complete">
-              <label style="padding-left: 20px;" nz-radio nzValue="齐全">齐全</label>
-              <label nz-radio nzValue="不齐全">不齐全</label>
-            </nz-radio-group>），（<nz-radio-group [(ngModel)]="simultaneousMaterials.notGrant">
-              <label style="padding-left: 20px;" nz-radio nzValue="予以">予以</label>
-              <label nz-radio nzValue="不予">不予</label>
-            </nz-radio-group>）受理。</p>
-          <p>需要补正第<input class="table_input" />项材料。</p>
-          <p>审查时限<input class="table_input" />日内，依法需要听证和专家评审的，所需时间不计算在内。</p>
-        </div>
-
-        <div class="table_seal">
-          由后台提供的当前时间 年月日
-        </div>
-
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">建设单位签收：<input class="table_input_2" />
-        <p class="table_time">
-          <nz-date-picker name="t2"></nz-date-picker>
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle">一式两份，一份交建设单位，一份存档。 </td>
-    </tr>
-  </tbody>
-</table>
-
-**********************************************************************************************
-
-
-
-**********************************************************************************************
-
-<table class="tables d_table" style="box-sizing: border-box;">
-  <thead>
-    <tr>
-      <td colspan='20' rowspan='1' class="table_title">
-        <h3>××市住房和城乡建设局<br />建设工程消防验收意见书</h3>
-      </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-        ×住建消验字〔2019〕第0059号
-      </td>
-    </tr>
-    <tr>
-      <td rowspan='1' colspan='20'>
-        <div class="table_detail">
-          <h3>××××：</h3>
-          <p>
-            你单位报来××××××建设工程消防验收资料收悉（受理凭证：×住建消验凭字〔2019〕第XX号）。该工程位于××市阳光大道8号，建筑高度98m，地上29层，地下2层，总建筑面积421000m2，属一类高层民用建筑。××年××月××日，××市住房和城乡建设局组织你单位及设计、施工、监理、检测等单位有关人员对该工程进行了消防验收。经对验收资料、建设消防设施技术检测报告进行审查，对总平面布置和平面布置中涉及消防安全的防火间距、消防车道、消防水源，建设防火防烟分区和建设构造，安全疏散和消防电梯，消防给水和自动灭火系统，防烟、排烟和通风系统的防火设计，消防电源及其配电，火灾应急照明、应急广播和疏散指示标志，火灾自动报警系统和消防控制室，建筑灭火器等项目情况和性能进行抽查，按照你单位提供的XXXXX消防设施检测公司出具的《建筑消防设施检测报告》（项目编号：XXXXX），现提出以下意见：
-          </p>
-        </div>
-        <ul class="table_list">
-          <li>
-            一、综合评定该工程消防验收不合格。
-          </li>
-          <li>
-            二、问题1，×××（存在问题），不符合《××》第×条第×款（规范名称及条文号）的规定。
-          </li>
-          <li>
-            三、问题2，同上。
-          </li>
-          <li>
-            四、问题3，同上。
-          </li>
-          <li>
-            五、提供消防检测的技术服务机构和人员对出具的检测意见负责。
-          </li>
-          <li>以上问题请建设、施工单位落实整改，整改完毕后再申请复验。</li>
-          <li>如不服本决定，可以在收到本意见书之日起六十日内向××市人民政府申请行政复议或者三个月内依法向××人民法院提起行政诉讼。</li>
-        </ul>
-
-        <div class="table_seal">
-          由后台提供的当前时间 年月日
-        </div>
-
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">建设单位签收：<input class="table_input_2" />
-        <p class="table_time">
-          <nz-date-picker name="t2"></nz-date-picker>
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle">一式两份，一份交建设单位，一份存档。 </td>
-    </tr>
-  </tbody>
-</table>
-
-----------------------------------------------------------------------------------------------------------
-
-
-<table class="tables d_table" style="box-sizing: border-box;">
-  <thead>
-    <tr>
-      <td colspan='20' rowspan='1' class="table_title">
-        <h3>××市住房和城乡建设局<br />建设工程消防验收申请受理/不予受理凭证</h3>
-      </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-        ×住建消审凭字〔2019〕第0059号
-      </td>
-    </tr>
-    <tr>
-      <td rowspan='1' colspan='20'>
-        <div class="table_detail">
-          <h3>××××有限公司：</h3>
-          <p>根据《中华人民共和国消防法》第十三条和《建设工程消防监督管理规定》第二十一条的规定，你单位 201×年 × 月×× 日申请的
-            ×××大厦 建设工程（地址： ××市××区××路×××号 ）消防验收，提供了下列材料：</p>
-        </div>
-        <ul class="table_list">
-          <li>
-            <label nz-checkbox name="newcheckboxEngineering1"
-              [(ngModel)]="simultaneousMaterials.a1Checkbox">1、建设工程消防验收申请表；</label>
-          </li>
-          <li>
-            <label nz-checkbox name="newcheckboxEngineering2"
-              [(ngModel)]="simultaneousMaterials.a2Checkbox">2、与消防验收有关的竣工图纸及隐蔽工程记录；</label>
-          </li>
-          <li>
-            <label nz-checkbox name="newcheckboxEngineering3"
-              [(ngModel)]="simultaneousMaterials.a3Checkbox">3、符合要求的检测机构出具出具的消防设施及系统检测合格证明文件。</label>
-          </li>
-
-        </ul>
-        <div class="table_add_info">
-          <p>经核，申请材料项目符合规定，予以受理。我<input class="table_input" />将自受理消防验收申请之日起<input
-              class="table_input" />个工作日内组织消防验收，并出具消防验收意见。依法需要听证、检验、检测、鉴定的，所需时间不计算在内。</p>
-          <p>经核，存在以下情形，不予受理：□1．依法不需要消防验收；□2．依法不属于本消防设计审查机关管辖，应当向有关行政机关申请；□3．提交的上列第<input
-              class="table_input" />项材料为虚假材料；□4．申请材料不齐全或者不符合法定形式，需要补正上列第<input class="table_input" />项材料。</p>
-        </div>
-
-        <div class="table_seal">
-          由后台提供的当前时间 年月日
-        </div>
-
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">建设单位签收：<input class="table_input_2" />
-        <p class="table_time">
-          <nz-date-picker name="t2"></nz-date-picker>
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle">一式两份，一份交建设单位，一份存档。 </td>
-    </tr>
-  </tbody>
-</table>
-
-**********************************************************************************************
-
-
-
-
-<table class="tables d_table" style="box-sizing: border-box;">
-  <thead>
-    <tr>
-      <td colspan='20' rowspan='1' class="table_title">
-        <h3>××市住房和城乡建设局<br />建设工程竣工验收消防备案材料补正通知书</h3>
-      </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-        ×住建消竣备字[2019]第0059 号
-      </td>
-    </tr>
-    <tr>
-      <td rowspan='1' colspan='20'>
-        <div class="table_detail">
-          <h3>××市××房地产开发有限公司：</h3>
-          <p>根据《中华人民共和国消防法》第十三条和《建设工程消防监督管理规定》第二十四条的规定，你单位于 ×× 年 ××月 ××日向 ××市住房和城乡建设局 申请了 ××××××××工程（地址： ××市××路11
-            号）的竣工验收消防备案，备案号：45000XXXYSBA00001，并提交了下列备案材料：</p>
-        </div>
-        <ul class="table_list">
-          <li>
-            <label nz-checkbox name="newcheckboxEngineering1"
-              [(ngModel)]="simultaneousMaterials.a1Checkbox">1、建设工程消防验收备案表；</label>
-          </li>
-          <li>
-            <label nz-checkbox name="newcheckboxEngineering2"
-              [(ngModel)]="simultaneousMaterials.a2Checkbox">2、有关消防设施的工程竣工图纸；</label>
-          </li>
-          <li>
-            <label nz-checkbox name="newcheckboxEngineering3"
-              [(ngModel)]="simultaneousMaterials.a3Checkbox">3、符合要求的检测机构出具的消防设施及系统检测合格文件</label>
-          </li>
-        </ul>
-        <div class="table_add_info">
-          <p>经核，备案材料不符合规定，需要补正上列第<input class="table_input_2" />项材料。请在<input
-              class="table_input_2" />个工作日内补正并备案；逾期不备案的，消防验收备案机关将依法予以处罚并确定该工程为检查对象；如已投入使用，你单位应当将该工程停止使用。</p>
-        </div>
-
-        <div class="table_seal">
-          由后台提供的当前时间 年月日
-        </div>
-
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">建设单位签收：<input class="table_input_2" />
-        <p class="table_time">
-          <nz-date-picker name="t2"></nz-date-picker>
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td class="fontweight fontLeft leftTitle">一式两份，一份交建设单位，一份存档。 </td>
-    </tr>
-  </tbody>
-</table>
-
-
-
-
-
-
-
-
-
- -->
-
-
-<!-- <form nz-form #f="ngForm" se-container="1">
-  <table class="tables" style="box-sizing: border-box;">
-    <thead>
-      <tr>
-        <td colspan='20' rowspan='1'>××市住房和城乡建设局</td>
-      </tr>
-      <tr>
-        <td colspan='20' rowspan='1'>建设工程消防验收复验/竣工验收消防备案复查申请表</td>
-
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-
-        <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>申请单位:</td>
-        <td rowspan='1' colspan='7'>
-          <se error="这是必填项">
-            <input nz-input placeholder="请输入申请单位" [(ngModel)]="textData.projectName" name="projectName" required />
-          </se>
-        </td>
-        <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>申请时间:</td>
-        <td rowspan='1' colspan='7'>
-          <se error="这是必填项">
-            <input nz-input placeholder="请输入申请时间" [(ngModel)]="textData.projectNumber" name="projectNumber" required />
-          </se>
-        </td>
-      </tr>
-      <tr>
-        <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>建设单位:</td>
-        <td rowspan='1' colspan='7'>
-          <se error="这是必填项">
-            <input nz-input placeholder="请输入建设单位" [(ngModel)]="textData.projectName" name="projectName" required />
-          </se>
-        </td>
-        <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>申请人:</td>
-        <td rowspan='1' colspan='7'>
-          <se error="这是必填项">
-            <input nz-input placeholder="请输入申请人" [(ngModel)]="textData.projectNumber" name="projectNumber" required />
-          </se>
-        </td>
-      </tr>
-
-      <tr>
-        <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程名称:</td>
-        <td rowspan='1' colspan='17'>
-          <se error="这是必填项">
-            <input nz-input placeholder="请输入工程名称" [(ngModel)]="textData.projectName" name="projectName" required />
-          </se>
-        </td>
-
-      </tr>
-      <tr>
-        <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程地址:</td>
-        <td rowspan='1' colspan='17'>
-          <se error="这是必填项">
-            <input nz-input placeholder="请输入工程地址" [(ngModel)]="textData.projectName" name="projectName" required />
-          </se>
-        </td>
-
-      </tr>
-      <tr>
-        <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>联系人:</td>
-        <td rowspan='1' colspan='7'>
-          <se error="这是必填项">
-            <input nz-input placeholder="请输入联系人" [(ngModel)]="textData.projectName" name="projectName" required />
-          </se>
-        </td>
-        <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>联系电话:</td>
-        <td rowspan='1' colspan='7'>
-          <se error="这是必填项">
-            <input nz-input placeholder="请输入联系电话" [(ngModel)]="textData.projectNumber" name="projectNumber" required />
-          </se>
-        </td>
-      </tr>
-      <tr>
-        <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>备案文号:</td>
-        <td rowspan='1' colspan='7'>
-          <se error="这是必填项">
-            <input nz-input placeholder="请输入备案文号" [(ngModel)]="textData.projectName" name="projectName" required />
-          </se>
-        </td>
-        <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>建设工程消防验收意见书/竣工验收备案检查不合格通知书文号:</td>
-        <td rowspan='1' colspan='7'>
-          <se error="这是必填项">
-            <input nz-input placeholder="请输入" [(ngModel)]="textData.projectNumber" name="projectNumber" required />
-          </se>
-        </td>
-      </tr>
-      <tr>
-        <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>违规或者违法问题整改情况:</td>
-        <td rowspan='1' colspan='17'>
-          <se error="这是必填项">
-            <input nz-input placeholder="请输入建设单位" [(ngModel)]="textData.projectName" name="projectName" required />
-          </se>
-        </td>
-      </tr>
-      <tr>
-        <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>说明:</td>
-        <td rowspan='1' colspan='17'>
-          <se error="这是必填项">
-            <textarea nz-input placeholder="请输入说明" [(ngModel)]="textData.opinion" name="supervisionopinion" required>
-              </textarea>
-          </se>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</form>  -->

@@ -27,6 +27,11 @@ export class PublicServices {
         );
     }
 
+    delete(page: any): Observable<any> {
+        return this.http.post(PANGBO_SERVICES_URL + "/api/Attachment/Delete", page
+        );
+    }
+
 }
 
 export interface UploadFileModel {

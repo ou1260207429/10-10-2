@@ -11,6 +11,7 @@ import { AppSessionService } from '@shared/session/app-session.service';
 import { FlowProcessRejectComponent } from '@app/components/flow-process-reject/flow-process-reject.component';
 import { ReuseTabService } from '@delon/abc';
 import lodash from 'lodash'
+import { EventEmiter } from 'infrastructure/eventEmiter';
 /**
  * 待办详情->办理页面
  */
@@ -39,41 +40,6 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   //通过和不通过
   adoptEnum = AdoptEnum
-
-  test = {
-
-  }
-
-  //测试
-  checkOptionsOne = {
-    isAllChecked: false,
-    data: [
-      { label: '润健股份有限公司——润健创研院大楼', value: 'Apple', checked: false },
-      { label: '润健股份有限公司——润健创研院大楼', value: 'Pear', checked: false },
-    ]
-  }
-  checkOptionsTwo = {
-    isAllChecked: false,
-    data: [
-      { label: '润健股份有限公司——润健创研院大楼', value: 'Apple', checked: false },
-      { label: '润健股份有限公司——润健创研院大楼', value: 'Pear', checked: false },
-    ]
-  };
-  checkOptionsThree = {
-    isAllChecked: false,
-    data: [
-      { label: '润健股份有限公司——润健创研院大楼', value: 'Apple', checked: false },
-      { label: '润健股份有限公司——润健创研院大楼', value: 'Pear', checked: false },
-    ]
-  };
-  checkOptionsFour = {
-    isAllChecked: false,
-    data: [
-      { label: '润健股份有限公司——润健创研院大楼', value: 'Apple', checked: false },
-      { label: '润健股份有限公司——润健创研院大楼', value: 'Pear', checked: false },
-    ]
-  };
-
 
   uploading = false;
   fileList: UploadFile[] = [];
@@ -108,11 +74,11 @@ export class AgencyDoneDetailsComponent implements OnInit {
   //走流程或者查看  0是走流程  1是查看
   operationType
 
-  constructor(private _examineService: ExamineServiceServiceProxy, private reuseTabService: ReuseTabService, private ModelHelp: ModalHelper, public appSession: AppSessionService, private message: NzMessageService, private _applyService: ApplyServiceServiceProxy, private _acceptServiceServiceProxy: AcceptServiceServiceProxy, private _flowServices: FlowServices, private _activatedRoute: ActivatedRoute, private _ActivatedRoute: ActivatedRoute, ) {
+  constructor(private _eventEmiter: EventEmiter, private _examineService: ExamineServiceServiceProxy, private reuseTabService: ReuseTabService, private ModelHelp: ModalHelper, public appSession: AppSessionService, private message: NzMessageService, private _applyService: ApplyServiceServiceProxy, private _acceptServiceServiceProxy: AcceptServiceServiceProxy, private _flowServices: FlowServices, private _activatedRoute: ActivatedRoute, private _ActivatedRoute: ActivatedRoute, ) {
     this.flowNo = this._activatedRoute.snapshot.paramMap.get('flowNo')
     this.flowId = this._activatedRoute.snapshot.paramMap.get('flowId')
     this.flowPathType = this._activatedRoute.snapshot.paramMap.get('flowPathType')
-    this.operationType = this._activatedRoute.snapshot.paramMap.get('operationType') 
+    this.operationType = this._activatedRoute.snapshot.paramMap.get('operationType')
     console.log(this.flowPathType);
 
   }
@@ -123,10 +89,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
   }
 
   init() {
-    Promise.all([this.getWorkFlow_NodeRecordAndAuditorRecords(), this.getAcceptApplyForm(), this.getPrimaryExamine()]).then((data: any) => {
+    Promise.all([this.getWorkFlow_NodeRecordAndAuditorRecords(), this.getAcceptApplyForm()]).then((data: any) => {
       this.data = data[0].result
       this.formDto = data[1]
-      if (data[2]) this.examineFormDto = data[2]
+      // if (data[2]) this.examineFormDto = data[2]
       const flowFormQueryDto = new FlowFormQueryDto();
       flowFormQueryDto.flowType = this.flowPathType
       flowFormQueryDto.projectId = this.formDto.projectId;
@@ -140,14 +106,20 @@ export class AgencyDoneDetailsComponent implements OnInit {
       console.log(this.formDto.workFlow_Instance_Id)
       //获取JSON和节点信息
       Promise.all([this.post_GetFlowFormData(flowFormQueryDto), this.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow)]).then((value: any) => {
-        this.formJson = JSON.parse(value[0].formJson); 
+        this.formJson = JSON.parse(value[0].formJson);
         this.tenantWorkFlowInstanceDto = this.workFlowData = value[1].result;
         this.tenantWorkFlowInstanceDto.workFlow_InstanceId = this.formDto.workFlow_Instance_Id
 
         //获取当前节点 由这个判断提交的接口
         this.curNodeName = this.workFlowData.nodeViewInfo.curNodeName
         console.log(this.workFlowData)
-        this.type = false
+        if(this.curNodeName!='大厅受理'){
+          this.getPrimaryExamine(()=>{
+            this.type = false
+          })
+        }else{
+          this.type = false
+        }
       })
 
     })
@@ -237,7 +209,6 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
         case '业务承办人审核':
           form.isPass = bo
-
           this.primaryExamine(form);
           break;
 
@@ -259,8 +230,11 @@ export class AgencyDoneDetailsComponent implements OnInit {
   /**
    * 获取业务审批负责人审批详情的接口 
    */
-  getPrimaryExamine() {
-    return this._examineService.getPrimaryExamine(this.flowId).toPromise();
+  getPrimaryExamine(then?:Function) {
+    this._examineService.getPrimaryExamine(this.flowId).subscribe(data=>{
+      this.examineFormDto = data
+      if(then) then()
+    })
   }
 
   /**
@@ -268,8 +242,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
    */
   primaryExamine(examineFormDto: ExamineFormDto) {
     this._examineService.primaryExamine(examineFormDto).subscribe(data => {
-      this.message.success('提交成功')
-      history.go(-1)
+      this.serveResult();
     })
   }
 
@@ -278,8 +251,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
    */
   finalExamine(examineFormDto: ExamineFormDto) {
     this._examineService.finalExamine(examineFormDto).subscribe(data => {
-      this.message.success('提交成功')
-      history.go(-1)
+      this.serveResult();
     })
   }
 
@@ -290,9 +262,14 @@ export class AgencyDoneDetailsComponent implements OnInit {
    */
   acceptApply(formDto: AcceptApplyFormDto) {
     this._acceptServiceServiceProxy.acceptApply(this.formDto).subscribe(data => {
-      this.message.success('提交成功')
-      history.go(-1)
+      this.serveResult();
     })
+  }
+
+  serveResult() {
+    this.message.success('提交成功')
+    history.go(-1)
+    this._eventEmiter.emit('agencyDoneInit', []);
   }
 
   //不通过选择返回指定的节点

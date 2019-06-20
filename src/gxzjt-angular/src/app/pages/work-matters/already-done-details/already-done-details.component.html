@@ -1,3 +1,82 @@
-<nz-spin [nzSpinning]="!data">
-  <app-flow-route [data]="data"></app-flow-route>
+<nz-spin [nzSpinning]="type">
+  <nz-tabset [(nzSelectedIndex)]="selectedIndex" [nzType]="'card'">
+    <div *ngFor="let tab of tabs">
+      <nz-tab [nzTitle]="tab.name">
+      </nz-tab>
+    </div>
+  </nz-tabset>
+
+  <div [ngClass]="{hide: selectedIndex != 0}">
+
+    <!-- 表单JSON -->
+    <app-fire-design-declare-assembly *ngIf="formJson && flowPathType ==1" [data]="formJson" type=1>
+    </app-fire-design-declare-assembly>
+
+    <app-fire-acceptance-assembly [data]="formJson" type=1 *ngIf="formJson && flowPathType ==2">
+    </app-fire-acceptance-assembly>
+
+    <app-completed-acceptance-assembly [data]="formJson" type=1 *ngIf="formJson && flowPathType ==3">
+    </app-completed-acceptance-assembly>
+    <!-- 表单JSON -->
+    <form nz-form #f="ngForm" se-container="1">
+      <table class="tables" style="box-sizing: border-box;" *ngIf="formDto">
+
+        <tr>
+          <td style="width: 37px;background-color: #ffedcc;color: #ff9c35;font-weight: 600;border-right: 0" rowspan='4'>
+            流程审批
+          </td>
+        </tr>
+        <tr style="text-align: left;">
+          <td colspan="20">
+
+
+            <div [ngSwitch]="flowPathType">
+              <div *ngSwitchCase="1">
+
+                <!-- 消防设计的受理凭证 -->
+                <app-fire-design-declare-assembly-handle [data]="formDto"
+                  *ngIf="flowPathType ==1 && this.curNodeName=='大厅受理'" [ngClass]="{pointerf5f5f5: curNodeName!='大厅受理'}">
+                </app-fire-design-declare-assembly-handle>
+                <!-- 消防设计的受理凭证 -->
+
+                <!-- 消防设计的意见书 -->
+                <app-fire-design-declare-assembly-handle [data]="formDto" type="1" *ngIf="flowPathType ==1">
+                </app-fire-design-declare-assembly-handle>
+                <!-- 消防设计的意见书 -->
+              </div>
+              <div *ngSwitchCase="2">
+                <!-- 消防验收的受理凭证 -->
+                <app-fire-acceptance-assembly-handle [data]="formDto" *ngIf="flowPathType ==2"
+                  [ngClass]="{pointerf5f5f5: curNodeName!='大厅受理'}"></app-fire-acceptance-assembly-handle>
+                <!-- 消防验收的受理凭证 -->
+
+                <!-- 消防验收的意见书 -->
+                <app-fire-acceptance-assembly-handle [data]="formDto" *ngIf="flowPathType ==2" type="1"
+                  [ngClass]="{pointerf5f5f5: curNodeName!='业务承办人审核'}"></app-fire-acceptance-assembly-handle>
+                <!-- 消防验收的意见书 -->
+              </div>
+              <div *ngSwitchCase="3">
+                <!-- 竣工备案的补正材料 -->
+                <app-completed-acceptance-assembly-handle [data]="formDto">
+                </app-completed-acceptance-assembly-handle>
+                <!-- 竣工备案的补正材料 -->
+              </div>
+            </div>
+
+
+
+
+
+
+
+          </td>
+        </tr>
+
+      </table>
+    </form>
+
+  </div>
+  <div [ngClass]="{hide: selectedIndex != 1}">
+    <app-flow-route *ngIf="data" [data]="data"></app-flow-route>
+  </div>
 </nz-spin>

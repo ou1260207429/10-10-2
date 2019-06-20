@@ -191,7 +191,20 @@ export class AppMenus {
     //     },
     //   ]
     // },
+    {
+      text: "",
+      i18n: "用户中心",
+      icon: { type: "icon", value: "user" },// 图标
+      acl: AppMenus.aclCompany,
+      children: [
+        {
+          text: "修改密码",
 
+          link: "/app/user-center/modify-psw",
+        },
+
+      ]
+    },
   ];
 }
 
