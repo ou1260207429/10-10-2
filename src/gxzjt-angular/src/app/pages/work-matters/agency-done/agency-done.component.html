@@ -9,26 +9,27 @@
 </page-header>
 <nz-card>
 
-  <form nz-form class="mb-md" [hidden]="hiddenFliter"> 
+  <form nz-form class="mb-md" [hidden]="hiddenFliter">
 
-      <input nz-input [(ngModel)]="searchParam.number"  name="number" placeholder="流程流水号"
+    <!-- <input nz-input [(ngModel)]="searchParam.number" name="number" placeholder="流程流水号"
+      style="margin-right: 10px;margin-top: 10px;width: 200px;"> -->
+
+    <input nz-input [(ngModel)]="searchParam.projectName" name="projectName" placeholder="工程名称"
       style="margin-right: 10px;margin-top: 10px;width: 200px;">
 
-    <input nz-input [(ngModel)]="searchParam.projectName"  name="projectName" placeholder="工程名称"
+    <!-- <input nz-input [(ngModel)]="searchParam.companyName" name="companyName"  placeholder="建设单位"
+      style="margin-right: 10px;margin-top: 10px;width: 200px;"> -->
+    <span>工程类型：</span>
+    <nz-select [(ngModel)]="searchParam.projectTypeStatu" name="jbgrade{{index}}" required
       style="margin-right: 10px;margin-top: 10px;width: 200px;">
-
-    <input nz-input [(ngModel)]="searchParam.companyName" name="flowPathType"  placeholder="建设单位"
-      style="margin-right: 10px;margin-top: 10px;width: 200px;">
-
-    <nz-select [(ngModel)]="searchParam.projectTypeStatu" name="jbgrade{{index}}" required style="margin-right: 10px;margin-top: 10px;width: 200px;">
       <nz-option *ngFor="let option of flowPathTypeEnum" [nzLabel]="option.label" [nzValue]="option.value">
       </nz-option>
     </nz-select>
 
 
 
-    <nz-range-picker [(ngModel)]="rangeTime" name="rangeTime" nzFormat="yyyy/MM/dd"  
-      style="margin-right: 10px;margin-top: 10px;"  (ngModelChange)="okRangeTime($event)"></nz-range-picker>
+    <nz-range-picker [(ngModel)]="rangeTime" name="rangeTime" nzFormat="yyyy/MM/dd"
+      style="margin-right: 10px;margin-top: 10px;" (ngModelChange)="okRangeTime($event)"></nz-range-picker>
 
     <button nz-button (click)="init()" style="margin-right: 10px;margin-top: 10px;">重置</button>
 
@@ -38,7 +39,7 @@
 
   <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns" [page]="pageConfig"
     [total]="formResultData.total" [pi]="searchParam.pagedAndFilteredInputDto.page"
-    [ps]="searchParam.pagedAndFilteredInputDto.maxResultCount" (change)="change($event)" >
+    [ps]="searchParam.pagedAndFilteredInputDto.maxResultCount" (change)="change($event)">
   </st>
   <br>
 </nz-card>

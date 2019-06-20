@@ -82,6 +82,10 @@ export class AgencyDoneComponent  extends PublicFormComponent implements OnInit 
     this.searchParam.pagedAndFilteredInputDto = new PagedAndFilteredInputDto();
     this.searchParam.pagedAndFilteredInputDto.page = 1;
     this.searchParam.pagedAndFilteredInputDto.maxResultCount = 10;
+    this.searchParam.number='';
+    this.searchParam.projectName='';
+    this.searchParam.companyName='';
+    this.searchParam.projectTypeStatu=null;
     this.getList();
   }
 
