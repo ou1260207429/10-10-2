@@ -86,10 +86,9 @@ export class CompletedAcceptanceAssemblyHandleComponent implements OnInit {
   
 
   beforeUpload = (file: any): boolean => {
-    const tid = file.uid
+    const name = file.name;
     const projectAttachment = new ProjectAttachment();
-    projectAttachment.attachmentName = file.name;
-    projectAttachment.fileCount = tid;
+    projectAttachment.attachmentName = file.name; 
     this.examineFormDto.attachment.push(projectAttachment)
 
     let params = {
@@ -100,9 +99,9 @@ export class CompletedAcceptanceAssemblyHandleComponent implements OnInit {
     const formData = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
-      const index = checkArrayString(this.examineFormDto.attachment, 'fileNo', tid)  
-      this.examineFormDto.attachment[index].fileNo = data.data[0].id 
-      this.examineFormDto.attachment[index].fileUrl =PANGBO_SERVICES_URL+ data.data[0].localUrl 
+      const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)  
+      // this.examineFormDto.attachment[index].fileNo = data.data[0].id 
+      this.examineFormDto.attachment[index].fileUrl =PANGBO_SERVICES_URL+data.data[0].localUrl 
     }) 
     return false;
   };

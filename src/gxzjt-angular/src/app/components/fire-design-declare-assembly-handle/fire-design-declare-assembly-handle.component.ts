@@ -89,12 +89,12 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
       this.examineFormDto.attachment = this.examineFormDto.attachment?this.examineFormDto.attachment:[]
       console.log(this.examineFormDto.attachment);
     }
-
-    const tid = file.uid
+ 
+    const name = file.name;
     const projectAttachment = new ProjectAttachment();
     projectAttachment['name'] = file.name;
     projectAttachment.attachmentName = file.name;
-    projectAttachment.fileCount = tid; 
+    // projectAttachment.flieCode = tid; 
     this.examineFormDto.attachment.push(projectAttachment)
 
     let params = {
@@ -105,8 +105,8 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
     const formData = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
-      const index = checkArrayString(this.examineFormDto.attachment, 'fileCount', tid)  
-      this.examineFormDto.attachment[index].fileNo = data.data[0].id 
+      const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)  
+      // this.examineFormDto.attachment[index].fileNo = data.data[0].id 
       this.examineFormDto.attachment[index].fileUrl =PANGBO_SERVICES_URL+data.data[0].localUrl 
     }) 
     return false;

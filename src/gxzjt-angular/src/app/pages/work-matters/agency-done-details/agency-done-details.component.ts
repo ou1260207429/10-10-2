@@ -270,6 +270,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
    * 业务审批负责人审批提交的接口 -->执行人
    */
   primaryExamine(examineFormDto: ExamineFormDto) {
+    console.log(examineFormDto); 
     this._examineService.primaryExamine(examineFormDto).subscribe(data => {
       this.serveResult();
     })
