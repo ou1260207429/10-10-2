@@ -1,6 +1,6 @@
 <!--  -->
 <template>
- <div style="width:100%;overflow:hidden;margin-bottom: 20px;">
+  <div style="width:100%;overflow:hidden;margin-bottom: 20px;">
     <div class="content">
       <el-row :gutter="8">
         <el-col :span="4" style="background-color: transparent;">
@@ -57,8 +57,8 @@
                     v-model="dateTime"
                     type="daterange"
                     range-separator="~"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
+                    start-placeholder="公告开始日期"
+                    end-placeholder="公告结束日期"
                   ></el-date-picker>
                 </el-form-item>
                 <el-form-item>
@@ -74,6 +74,7 @@
           </el-card>
           <el-card :style="{minHeight:tableHight}">
             <el-table v-loading="!tableData" :data="tableData" style="width: 100%">
+              <el-table-column type="index" label="序号" width="50"></el-table-column>
               <template v-for="(item,index) in tableCols">
                 <template v-if="item.key=='recordCode'">
                   <el-table-column
@@ -83,7 +84,7 @@
                     :label="item.label"
                   ></el-table-column>
                 </template>
-                <template v-else-if="item.key=='DocumentCode'">
+                <template v-else-if="item.key=='documentCode'">
                   <el-table-column
                     v-if="searchForm.flowType==1||searchForm.flowType==2"
                     :key="index"
@@ -423,10 +424,11 @@ export default {
       total: 0,
       //表头数据
       tableCols: [
-        {
-          key: "Id",
-          label: "序号"
-        },
+        // {
+        //   key: "id",
+        //   label: "序号"
+        // },
+
         {
           key: "recordCode",
           label: "备案编号"
@@ -436,19 +438,23 @@ export default {
           label: "工程名称"
         },
         {
-          key: "CompanyName",
+          key: "companyName",
           label: "单位名称"
         },
+        // {
+        //   key: "cityName",
+        //   label: "单位名称"
+        // },
         {
           key: "address",
           label: "工程地址"
         },
         {
-          key: "DocumentCode",
+          key: "documentCode",
           label: "文书编号"
         },
         {
-          key: "FinishTime",
+          key: "finishTime",
           label: "办结时间"
         },
         {
@@ -460,7 +466,7 @@ export default {
           label: "联系人"
         },
         {
-          key: "announceTime ",
+          key: "announceTime",
           label: "公告时间"
         },
         {
@@ -505,11 +511,16 @@ export default {
      * 查询表格数据
      */
     initTable() {
-      if (this.dateTime.length > 0) {
+      if (this.dateTime) {
         this.searchForm.startTime = moment(this.dateTime[0]).format(
-          "YYYY-MM-DD"
+          "YYYY-MM-DD 00:00:00"
         );
-        this.searchForm.endTime = moment(this.dateTime[1]).format("YYYY-MM-DD");
+        this.searchForm.endTime = moment(this.dateTime[1]).format(
+          "YYYY-MM-DD 23:59:59"
+        );
+      }else{
+        this.searchForm.endTime=""
+        this.searchForm.startTime=""
       }
 
       let _this = this;
@@ -518,9 +529,16 @@ export default {
       app.post(infO.SEARCH_INFO, params).then(req => {
         if (req.success) {
           req.result.data.forEach(element => {
-            element.AnnounceTime = moment(element.AnnounceTime).format(
-              "YYYY-MM-DD"
-            );
+            if (element.finishTime) {
+              element.finishTime = moment(element.finishTime).format(
+                "YYYY-MM-DD"
+              );
+            }
+            if (element.announceTime) {
+              element.announceTime = moment(element.announceTime).format(
+                "YYYY-MM-DD"
+              );
+            }
           });
           _this.tableData = req.result.data;
           _this.total = req.result.totalCount;
