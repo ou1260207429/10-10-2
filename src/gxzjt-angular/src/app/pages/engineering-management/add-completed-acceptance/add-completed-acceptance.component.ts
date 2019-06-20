@@ -6,6 +6,7 @@ import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto, FlowDataDto, P
 import { ActivatedRoute } from '@angular/router';
 import { FlowServices, GXZJT_From } from 'services/flow.services';
 import { FormGroup } from '@angular/forms';
+import { AppSessionService } from '@shared/session/app-session.service';
 /**
  * 工程管理->竣工验收->新增申报
  */
@@ -359,7 +360,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   flowFormQueryDto = new FlowFormQueryDto();
   //子组件的表单对象
   form: FormGroup
-  constructor(private _flowServices: FlowServices, private _ActivatedRoute: ActivatedRoute, private _applyService: ApplyServiceServiceProxy, private message: NzMessageService, public publicModel: PublicModel, ) {
+  constructor(private _appSessionService:AppSessionService,private _flowServices: FlowServices, private _ActivatedRoute: ActivatedRoute, private _applyService: ApplyServiceServiceProxy, private message: NzMessageService, public publicModel: PublicModel, ) {
     this.flowFormQueryDto.flowType = 3;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
@@ -408,10 +409,10 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       },
       identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {
-        applyEID: '10001',
-        applyEName: '测试人员',
-        deptId: 1,
-        deptFullPath: '测试部门',
+        applyEID: this._appSessionService.user.id,
+        applyEName: this._appSessionService.user.eName,
+        deptId: this._appSessionService.user.organizationsId,
+        deptFullPath: this._appSessionService.user.organizationsName,
       }
     };
 

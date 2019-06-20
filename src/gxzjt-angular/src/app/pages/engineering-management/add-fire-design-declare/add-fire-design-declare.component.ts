@@ -10,6 +10,7 @@ import { SSL_OP_ALL } from 'constants';
 
 import { PublicFormComponent } from '../public/public-form.component'
 import { PANGBO_SERVICES_URL } from 'infrastructure/expression';
+import { AppSessionService } from '@shared/session/app-session.service';
 
 /**
  * 工程管理->消防设计审查管理->新增申报
@@ -524,7 +525,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
 
   //子组件的表单对象
   form: FormGroup
-  constructor(private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
+  constructor(private _appSessionService:AppSessionService,private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     super();
     this.flowFormQueryDto.flowType = 1;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
@@ -561,6 +562,8 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
    * 申请提交
    */
   save() {
+
+    console.log(this._appSessionService.user)
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
         // Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length-1]
@@ -568,10 +571,10 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
       },
       identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {
-        applyEID: '10001',
-        applyEName: '测试人员',
-        deptId: 1,
-        deptFullPath: '测试部门',
+        applyEID: this._appSessionService.user.id,
+        applyEName: this._appSessionService.user.eName,
+        deptId: this._appSessionService.user.organizationsId,
+        deptFullPath: this._appSessionService.user.organizationsName,
       }
     };
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {

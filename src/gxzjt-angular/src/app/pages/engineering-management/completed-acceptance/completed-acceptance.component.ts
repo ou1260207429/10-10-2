@@ -15,6 +15,7 @@ import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import * as moment from 'moment';
 import { PublicFormComponent } from '../public/public-form.component';
+import { NzMessageService } from 'ng-zorro-antd';
 
 /**
  * 竣工验收
@@ -52,7 +53,12 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
           //   paramsName: 'record',
           // },
           click: (record: any, modal: any) => {
-            window.open(record.acceptAttachmentFileUrl)
+            if(record.acceptAttachmentUrl){
+              window.open(record.acceptAttachmentUrl)
+            }else{
+              this.message.error('暂无受理凭证');
+            }
+            
           },
         },
         {
@@ -63,8 +69,12 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
           //   paramsName: 'record',
           // },
           click: (record: any, modal: any) => {
-
-            window.open(record.opinionFileUrl)
+            if(record.opinionAttachmentUrl){
+              window.open(record.opinionAttachmentUrl)
+            }else{
+              this.message.error('暂无意见书');
+            }
+            
           },
         },
       ]
@@ -109,9 +119,10 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   rangeTime = ['2019-02-19T05:46:09.135Z','2019-06-19T05:46:09.135Z'];
   constructor(private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
     private _flowServices: FlowServices,
+    
     private router: Router,
     private http: _HttpClient,
-    private xlsx: XlsxService) {
+    private xlsx: XlsxService, private message: NzMessageService) {
    super();
 
   }

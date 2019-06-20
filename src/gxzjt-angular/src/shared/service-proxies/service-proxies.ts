@@ -9074,6 +9074,10 @@ export class ExamineFormDto implements IExamineFormDto {
     workFlow_TemplateInfo_Id: number | undefined;
     flowNodeUserInfo: FlowNodeUser | undefined;
     flowNodeItems: FlowNodeItem[] | undefined;
+    provinceName: string | undefined;
+    cityName: string | undefined;
+    regionAndCountyName: string | undefined;
+    area: string | undefined;
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -9130,6 +9134,10 @@ export class ExamineFormDto implements IExamineFormDto {
                 for (let item of data["flowNodeItems"])
                     this.flowNodeItems.push(FlowNodeItem.fromJS(item));
             }
+            this.provinceName = data["provinceName"];
+            this.cityName = data["cityName"];
+            this.regionAndCountyName = data["regionAndCountyName"];
+            this.area = data["area"];
         }
     }
 
@@ -9186,6 +9194,10 @@ export class ExamineFormDto implements IExamineFormDto {
             for (let item of this.flowNodeItems)
                 data["flowNodeItems"].push(item.toJSON());
         }
+        data["provinceName"] = this.provinceName;
+        data["cityName"] = this.cityName;
+        data["regionAndCountyName"] = this.regionAndCountyName;
+        data["area"] = this.area;
         return data; 
     }
 
@@ -9230,6 +9242,10 @@ export interface IExamineFormDto {
     workFlow_TemplateInfo_Id: number | undefined;
     flowNodeUserInfo: FlowNodeUser | undefined;
     flowNodeItems: FlowNodeItem[] | undefined;
+    provinceName: string | undefined;
+    cityName: string | undefined;
+    regionAndCountyName: string | undefined;
+    area: string | undefined;
 }
 
 export class ProjectAttachment implements IProjectAttachment {

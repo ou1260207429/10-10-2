@@ -15,6 +15,7 @@ import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import { PublicFormComponent } from '../public/public-form.component';
 import * as moment from 'moment';
+import { NzMessageService } from 'ng-zorro-antd';
 
 /**
  * 消防验收
@@ -53,7 +54,11 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
           //   paramsName: 'record',
           // },
           click: (record: any, modal: any) => {
-            window.open(record.acceptAttachmentFileUrl)
+            if(record.acceptAttachmentUrl){
+              window.open(record.acceptAttachmentUrl)
+            }else{
+              this.message.error('暂无受理凭证');
+            }
           },
         },
         {
@@ -65,7 +70,11 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
           // },
           click: (record: any, modal: any) => {
 
-            window.open(record.opinionFileUrl)
+            if(record.opinionAttachmentUrl){
+              window.open(record.opinionAttachmentUrl)
+            }else{
+              this.message.error('暂无意见书');
+            }
           },
         },
       ]
@@ -107,7 +116,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     private router: Router,
     private http: _HttpClient,
     private _publicModel:PublicModel,
-    private xlsx: XlsxService) {
+    private xlsx: XlsxService, private message: NzMessageService) {
      super();
 
   }
