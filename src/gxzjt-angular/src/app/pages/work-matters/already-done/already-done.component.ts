@@ -42,6 +42,7 @@ export class AlreadyDoneComponent
         },
       ]
     },
+    { title: '工程名称', index: 'projectName' },
     { title: '工程编号', index: 'projectCode' },
     { title: '建设单位', index: 'companyName' },
     { title: '工程类型', index: 'flowTypeName' },
