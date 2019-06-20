@@ -38,13 +38,13 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
         {
           text: '查看',
           type: 'modal',
-          // modal: {
-          //   component: StatisticsTimeoutDealDetailComponent,
-          //   paramsName: 'record',
-          // },
-          // click: (record: any, modal: any) => {
+          modal: {
+            component: StatisticsTimeoutDealDetailComponent,
+            paramsName: 'record',
+          },
+          click: (record: any, modal: any) => {
 
-          // },
+          },
         },
         {
           text: '受理凭证',
