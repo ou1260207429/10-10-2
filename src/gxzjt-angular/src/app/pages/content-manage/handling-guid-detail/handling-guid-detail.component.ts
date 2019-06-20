@@ -6,6 +6,8 @@ import { timeTrans } from 'infrastructure/regular-expression';
 import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { PublicServices } from 'services/public.services';
+import { Buffer } from "buffer"
+
 @Component({
   selector: 'app-handling-guid-detail',
   templateUrl: './handling-guid-detail.component.html',
@@ -119,6 +121,8 @@ export class HandlingGuidDetailComponent implements OnInit {
     if (this.fileList.length > 0) {
       this.uploadFiles(this.data.guid);
     }
+    this.data.content = new Buffer(this.data.content).toString('base64');
+
     const src = this.operate == 0 ? this._noticeServiceProxy.addNoticeAsync(this.data) : this._noticeServiceProxy.editNoticeAsync(this.data)
     src.subscribe(data => {
       const name = this.operate == 0 ? '新增成功' : '修改成功';
