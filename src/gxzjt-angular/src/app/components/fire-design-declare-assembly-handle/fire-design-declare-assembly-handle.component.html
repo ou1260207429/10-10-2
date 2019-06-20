@@ -71,9 +71,11 @@
           <td rowspan='1' colspan='20'>
             <div class="table_detail">
               <h3>{{data.companyName}}：</h3>
-              <p>
-                你单位申请的{{data.projectName}}建设工程（受理凭证：{{data.acceptFileCode}}，{{data.applyDateTime|date:'yyyy年MM月dd日'}}收）消防设计图纸材料及有关资料收悉。该工程位于{{data.address}}内。新建B栋教学楼建筑高度为19.6m，建筑层数为5层，建筑面积为2902.76㎡，设计用途一层为生活用房、二至四层为教室、五层为教师办公室、会议室等，属多层民用建筑。该工程消防设施主要有室内、室外消火栓系统。设计单位为{{data.designOrg.companyName}}，设计资质为建设工程{{data.designOrg.qualifications}}级。按照图纸审查机构（{{data.drawingOrg.companyName}}）对该工程设计图纸的技术审查结论，我局提出以下意见：
-              </p>
+ 
+              
+             <p *ngIf="examineFormDto.designOrg">
+                你单位申请的{{data.projectName}}建设工程（受理凭证：{{data.acceptFileCode}}，{{data.applyDateTime|date:'yyyy年MM月dd日'}}收）消防设计图纸材料及有关资料收悉。该工程位于{{data.address}}内。新建B栋教学楼建筑高度为19.6m，建筑层数为5层，建筑面积为2902.76㎡，设计用途一层为生活用房、二至四层为教室、五层为教师办公室、会议室等，属多层民用建筑。该工程消防设施主要有室内、室外消火栓系统。设计单位为{{examineFormDto.designOrg.companyName}}，设计资质为建设工程{{examineFormDto.designOrg.qualifications}}级。按照图纸审查机构（{{examineFormDto.drawingOrg.companyName}}）对该工程设计图纸的技术审查结论，我局提出以下意见：
+              </p>  
             </div>
             <textarea nz-input placeholder="请输入意见" [(ngModel)]="data.opinion" name="professionalContractorsopinion"
               required>
