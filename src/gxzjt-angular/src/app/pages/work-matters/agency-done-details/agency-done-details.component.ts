@@ -113,7 +113,6 @@ export class AgencyDoneDetailsComponent implements OnInit {
         //获取当前节点 由这个判断提交的接口
         this.curNodeName = this.workFlowData.nodeViewInfo.curNodeName
         console.log(this.workFlowData)
-
         if(this.curNodeName!='大厅受理'){
           this.getPrimaryExamine(()=>{
             this.type = false
@@ -121,8 +120,6 @@ export class AgencyDoneDetailsComponent implements OnInit {
         }else{
           this.type = false
         }
-         
-        
       })
 
     })
@@ -238,7 +235,6 @@ export class AgencyDoneDetailsComponent implements OnInit {
       this.examineFormDto = data
       if(then) then()
     })
-    // return this._examineService.getPrimaryExamine(this.flowId).toPromise();
   }
 
   /**

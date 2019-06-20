@@ -9,6 +9,7 @@ import { FormGroup } from '@angular/forms';
 import { SSL_OP_ALL } from 'constants';
 
 import { PublicFormComponent } from '../public/public-form.component'
+import { PANGBO_SERVICES_URL } from 'infrastructure/expression';
 
 /**
  * 工程管理->消防设计审查管理->新增申报
@@ -471,7 +472,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
             value: "调压站"
           }]
         }],
-      
+
     },
 
     fileList: [
@@ -552,6 +553,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     this.data = '';
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
       this.data = JSON.parse(data.formJson);
+      console.log(this.data);
     })
   }
 

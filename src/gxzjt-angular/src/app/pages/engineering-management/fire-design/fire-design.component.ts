@@ -125,8 +125,6 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     });
   }
   getList() {
-
-
     this._projectFlowServcieServiceProxy.post_GetFireAuditCompleteList(this.param).subscribe((data: any) => {
       this.formResultData = data
       console.log(this.formResultData)

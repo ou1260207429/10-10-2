@@ -2,11 +2,10 @@ import { HomeServiceProxy } from './../../../shared/service-proxies/service-prox
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId } from 'infrastructure/expression';
-import { objDeleteType, genID, createguid, classTreeChildrenArray } from 'infrastructure/regular-expression';
+import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
-import { PublicServices } from 'services/public.services';
-
+import { PublicServices } from 'services/public.services'; 
 /**
  * 消防设计的表单模块
  */
@@ -42,13 +41,13 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   //判断上传的焦点
   uoloadIndex: number = -1;
 
-  constructor(public _homeServiceProxy:HomeServiceProxy,public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
+  constructor(public _homeServiceProxy: HomeServiceProxy, public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
 
-    this.getAreaDropdown(); 
+    this.getAreaDropdown();
   }
 
 
@@ -64,8 +63,8 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   /**
    * 获取市县区的接口
    */
-  getAreaDropdown(){
-    this._homeServiceProxy.getAreaDropdown().subscribe(data=>{  
+  getAreaDropdown() {
+    this._homeServiceProxy.getAreaDropdown().subscribe(data => {
       this.position = classTreeChildrenArray([JSON.parse(data)]);
     })
   }
@@ -83,41 +82,32 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
    */
   deleteArray(arr, index) {
     this.publicModel.engineeringDeleteArray(arr, index)
-  }
+  } 
 
+  beforeUpload = (file: any): boolean => {
+    const tid = file.uid
+    this.data.fileList[this.uoloadIndex].array.push({
+      name: file.name,
+      status: 'done',
+      tid: file.uid,
+    })
 
-
-  /**
-    * 上传文件
-    */
-  uploadFiles(guid, file, then?: Function) {
     let params = {
-      sourceId: guid,
+      sourceId: createguid(),
       AppId: AppId,
       module: "table",
     }
-
     const formData = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
-      console.log(data)
-      if (then) then()
-    })
-  }
-
-  beforeUpload = (file: UploadFile): boolean => {
-    this.uploadFiles(createguid(), file, () => {
-      this.data.fileList[this.uoloadIndex].array = this.data.fileList[this.uoloadIndex].array.concat(file); 
-    })
+      const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid) 
+      this.data.fileList[this.uoloadIndex].array[index].uid = data[0] 
+      this.data.fileList[this.uoloadIndex].array[index].url = 'https://www.baidu.com'
+    }) 
     return false;
   };
 
   removeFile = (file: UploadFile): boolean => {
-    this.data.fileList[this.uoloadIndex].array.forEach((item, index) => {
-      if (item.uid == file.uid) {
-        this.data.fileList[this.uoloadIndex].array.splice(index, 1);
-      }
-    });
     return true;
   }
 
