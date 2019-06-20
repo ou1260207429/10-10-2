@@ -2431,8 +2431,6 @@ export class InvestigateFileServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-<<<<<<< HEAD
-=======
         return _observableOf<PageModel>(<any>null);
     }
 
@@ -2940,35 +2938,21 @@ export class InvestigateFileServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
         return _observableOf<void>(<any>null);
     }
 
     /**
-<<<<<<< HEAD
-     * @param acceptApplyFormDto (optional) 
-     * @param acceptRecordId (optional) 
-     * @return Success
-     */
-    createRefuseFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateRefuseFile?";
-=======
      * @param examineFormDto (optional) 
      * @param acceptRecordId (optional) 
      * @return Success
      */
     createUnqualifiedFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateUnqualifiedFile?";
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
         if (acceptRecordId !== undefined)
             url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
-<<<<<<< HEAD
-        const content_ = JSON.stringify(acceptApplyFormDto);
-=======
         const content_ = JSON.stringify(examineFormDto);
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
 
         let options_ : any = {
             body: content_,
@@ -2980,19 +2964,11 @@ export class InvestigateFileServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-<<<<<<< HEAD
-            return this.processCreateRefuseFile(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateRefuseFile(<any>response_);
-=======
             return this.processCreateUnqualifiedFile(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
                     return this.processCreateUnqualifiedFile(<any>response_);
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
                 } catch (e) {
                     return <Observable<void>><any>_observableThrow(e);
                 }
@@ -3001,11 +2977,7 @@ export class InvestigateFileServiceProxy {
         }));
     }
 
-<<<<<<< HEAD
-    protected processCreateRefuseFile(response: HttpResponseBase): Observable<void> {
-=======
     protected processCreateUnqualifiedFile(response: HttpResponseBase): Observable<void> {
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -3087,13 +3059,8 @@ export class InvestigateFileServiceProxy {
      * @param acceptRecordId (optional) 
      * @return Success
      */
-<<<<<<< HEAD
-    createUnqualifiedFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateUnqualifiedFile?";
-=======
     createQualifiedFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateQualifiedFile?";
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
         if (acceptRecordId !== undefined)
             url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
@@ -3110,19 +3077,11 @@ export class InvestigateFileServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-<<<<<<< HEAD
-            return this.processCreateUnqualifiedFile(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateUnqualifiedFile(<any>response_);
-=======
             return this.processCreateQualifiedFile(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
                     return this.processCreateQualifiedFile(<any>response_);
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
                 } catch (e) {
                     return <Observable<void>><any>_observableThrow(e);
                 }
@@ -3131,11 +3090,7 @@ export class InvestigateFileServiceProxy {
         }));
     }
 
-<<<<<<< HEAD
-    protected processCreateUnqualifiedFile(response: HttpResponseBase): Observable<void> {
-=======
     protected processCreateQualifiedFile(response: HttpResponseBase): Observable<void> {
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -3161,13 +3116,8 @@ export class InvestigateFileServiceProxy {
      * @param attachmentType (optional) 
      * @return Success
      */
-<<<<<<< HEAD
-    createQualifiedFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateQualifiedFile?";
-=======
     opinionFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/InvestigateFile/OpinionFile?";
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
         if (acceptRecordId !== undefined)
             url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
         if (template !== undefined)
@@ -3188,19 +3138,11 @@ export class InvestigateFileServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-<<<<<<< HEAD
-            return this.processCreateQualifiedFile(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateQualifiedFile(<any>response_);
-=======
             return this.processOpinionFile(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
                     return this.processOpinionFile(<any>response_);
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
                 } catch (e) {
                     return <Observable<void>><any>_observableThrow(e);
                 }
@@ -3209,11 +3151,7 @@ export class InvestigateFileServiceProxy {
         }));
     }
 
-<<<<<<< HEAD
-    protected processCreateQualifiedFile(response: HttpResponseBase): Observable<void> {
-=======
     protected processOpinionFile(response: HttpResponseBase): Observable<void> {
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -7161,75 +7099,11 @@ export class StatisticalServiceServiceProxy {
      * @param handleLimitQueryDto (optional) 
      * @return Success
      */
-<<<<<<< HEAD
-    post_GetProjectApplyList(projectApplyQueryDto: ProjectApplyQueryDto | null | undefined): Observable<DataSourceResult> {
-        let url_ = this.baseUrl + "/api/services/app/StatisticalService/Post_GetProjectApplyList";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(projectApplyQueryDto);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPost_GetProjectApplyList(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processPost_GetProjectApplyList(<any>response_);
-                } catch (e) {
-                    return <Observable<DataSourceResult>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<DataSourceResult>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processPost_GetProjectApplyList(response: HttpResponseBase): Observable<DataSourceResult> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<DataSourceResult>(<any>null);
-    }
-
-    /**
-     * @param timeoutQuetyDto (optional) 
-     * @return Success
-     */
-    post_GetTimeoutList(timeoutQuetyDto: TimeoutQuetyDto | null | undefined): Observable<DataSourceResult> {
-        let url_ = this.baseUrl + "/api/services/app/StatisticalService/Post_GetTimeoutList";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(timeoutQuetyDto);
-=======
     post_GetHandleLimitList(handleLimitQueryDto: HandleLimitQueryDto | null | undefined): Observable<DataSourceResult> {
         let url_ = this.baseUrl + "/api/services/app/StatisticalService/Post_GetHandleLimitList";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(handleLimitQueryDto);
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
 
         let options_ : any = {
             body: content_,
@@ -7242,19 +7116,11 @@ export class StatisticalServiceServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-<<<<<<< HEAD
-            return this.processPost_GetTimeoutList(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processPost_GetTimeoutList(<any>response_);
-=======
             return this.processPost_GetHandleLimitList(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
                     return this.processPost_GetHandleLimitList(<any>response_);
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
                 } catch (e) {
                     return <Observable<DataSourceResult>><any>_observableThrow(e);
                 }
@@ -7263,11 +7129,7 @@ export class StatisticalServiceServiceProxy {
         }));
     }
 
-<<<<<<< HEAD
-    protected processPost_GetTimeoutList(response: HttpResponseBase): Observable<DataSourceResult> {
-=======
     protected processPost_GetHandleLimitList(response: HttpResponseBase): Observable<DataSourceResult> {
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -7290,16 +7152,6 @@ export class StatisticalServiceServiceProxy {
     }
 
     /**
-<<<<<<< HEAD
-     * @param handleLimitQueryDto (optional) 
-     * @return Success
-     */
-    post_GetHandleLimitList(handleLimitQueryDto: HandleLimitQueryDto | null | undefined): Observable<DataSourceResult> {
-        let url_ = this.baseUrl + "/api/services/app/StatisticalService/Post_GetHandleLimitList";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(handleLimitQueryDto);
-=======
      * @param statisticsQueryDto (optional) 
      * @return Success
      */
@@ -7308,7 +7160,6 @@ export class StatisticalServiceServiceProxy {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(statisticsQueryDto);
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
 
         let options_ : any = {
             body: content_,
@@ -7321,19 +7172,11 @@ export class StatisticalServiceServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-<<<<<<< HEAD
-            return this.processPost_GetHandleLimitList(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processPost_GetHandleLimitList(<any>response_);
-=======
             return this.processPost_GetStatisticsList(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
                     return this.processPost_GetStatisticsList(<any>response_);
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
                 } catch (e) {
                     return <Observable<DataSourceResult>><any>_observableThrow(e);
                 }
@@ -7342,11 +7185,7 @@ export class StatisticalServiceServiceProxy {
         }));
     }
 
-<<<<<<< HEAD
-    protected processPost_GetHandleLimitList(response: HttpResponseBase): Observable<DataSourceResult> {
-=======
     protected processPost_GetStatisticsList(response: HttpResponseBase): Observable<DataSourceResult> {
->>>>>>> 493c25c93d5b13ca386d8f03501fd0c87c716421
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
