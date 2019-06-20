@@ -11,9 +11,15 @@ import { SFSchema } from '@delon/form';
 export class UserCenterModifyPswComponent implements OnInit {
 
   constructor(private http: _HttpClient, private modal: ModalHelper) { }
-
+  modifying = false;
   ngOnInit() { }
 
+  model: {
+    OldPassword: "",
+    Password: "",
+    ConfirmPassword: "",
+  };
+  modify() {
 
-
+  }
 }
