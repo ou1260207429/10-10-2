@@ -600,6 +600,8 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
       data.result.auditorRecords.forEach(element => {
         const flowNodeUser = new FlowNodeUser()
         flowNodeUser.userFlowId = element.id
+        flowNodeUser.userName = element.applyEName
+        flowNodeUser.userCode = element.applyEID
         flowDataDto.handleUserList.push(flowNodeUser)
       });
 
