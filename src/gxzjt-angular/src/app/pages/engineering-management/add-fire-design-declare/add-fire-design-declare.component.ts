@@ -470,19 +470,53 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
             checked: false,
             value: "调压站"
           }]
-        }]
+        }],
+      
     },
 
-    uploadAttachments: [
-      // {
-      //   ty0e:1,
-      //   xfgcImg: [
-      //     { name: '360exe.exe', gid: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' },
-      //     { name: '360exe.exe', gid: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' },
-      //   ],
-      // },
-      ,
+    fileList: [
+      {
+        //建设工程消防设计审查申报表（纸质申报表的图片）
+        type: 0,
+        array: [
 
+        ]
+      },
+      {
+        //消防设计文件
+        type: 1,
+        array: [
+
+        ]
+      },
+      {
+        //专家评审申报材料
+        type: 2,
+        array: [
+
+        ]
+      },
+      {
+        //建设工程规划许可证明文件
+        type: 3,
+        array: [
+
+        ]
+      },
+      {
+        //城乡规划主管部门批准的临时性建筑证明文件
+        type: 4,
+        array: [
+
+        ]
+      },
+      {
+        //生产工艺和物品有特殊灭火要求的消防设计说明材料
+        type: 5,
+        array: [
+
+        ]
+      },
     ]
 
   }

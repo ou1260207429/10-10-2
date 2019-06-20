@@ -375,9 +375,11 @@ export function removeSt(arrar: Array<any>, subordinateattribute: string, record
  */
 export function classTreeChildrenArray(arr: Array<any>): Array<any> {
   arr.forEach(element => {
-    element.title = element.text;
-    element.key = element.id.toString();
-    if (element.children && element.children.length > 0) {
+    element.label = element.Name;
+    element.value = element.DomainId.toString();
+    if (element.Children && element.Children.length > 0) {
+      element.children = []
+      element.children = element.Children
       classTreeChildrenArray(element.children)
     } else {
       element['isLeaf'] = true
@@ -552,6 +554,30 @@ export function removeComma(str: string): string {
   return str.replace(/,$/gi, "");
 }
 
+/**
+ * 创建uid
+ */
+export function createguid() {
+  var CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('')
+  var chars = CHARS,
+    uuid = [],
+    i
+  // rfc4122, version 4 form
+  var r
+  // rfc4122 requires these characters
+  uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-'
+  uuid[14] = '4'
+  for (i = 0; i < 36; i++) {
+    if (!uuid[i]) {
+      r = 0 | (Math.random() * 16)
+      uuid[i] = chars[i == 19 ? (r & 0x3) | 0x8 : r]
+    }
+  }
+
+  var ret = uuid.join('')
+  return ret
+}
+
 export function genID(length) {
   return Number(Math.random().toString().substr(0, length) + Date.now()).toString(50);
 }
@@ -591,3 +617,5 @@ export function radioCheckChooseArrar(v: boolean, item: any, itemName: string, i
     }
   }
 }
+
+

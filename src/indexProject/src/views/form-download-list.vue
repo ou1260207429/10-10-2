@@ -13,7 +13,7 @@
                 :key="index"
                 v-for="(item,index) in downLoadList"
                 class="list"
-                @click="downList(item.id)"
+                @click="downList(item.id,item.guid)"
               >
                 {{ item.attachmentName }}
                 <span style="float: right">{{ item.creationTime }}</span>
@@ -76,17 +76,12 @@ export default {
     /**
      * 下载表格
      */
-    downList(id) {
+    downList(id,guid) {
       let data = {
         appId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
         id: id
       };
-      app.downList(table.downLoadList, "POST", data).then(req => {
-        if (req == "success") {
-          //计算下载次数
-          _this.countDownLoadTimes(id);
-        }
-      });
+      app.downList(data,guid);
     }
   }
 };

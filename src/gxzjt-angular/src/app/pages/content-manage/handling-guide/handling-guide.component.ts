@@ -6,6 +6,7 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 import { RegulationServiceProxy, NoticeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { PublicModel } from 'infrastructure/public-model';
 import { PublicFormComponent } from '../public/public-form.component';
+import { timeTrans } from 'infrastructure/regular-expression';
 
 @Component({
   selector: 'app-handling-guide',
@@ -131,6 +132,12 @@ export class HandlingGuideComponent extends PublicFormComponent implements OnIni
     this.params.search = this.searchKey;
     this.isSearchForm = true;
     this.formResultData = []
+    if (params.startTime) {
+      params.startTime = timeTrans(Date.parse(params.startTime) / 1000, 'yyyy-MM-dd', '-') + " 00:00:00"
+    }
+    if (params.endTime) {
+      params.endTime = timeTrans(Date.parse(params.endTime) / 1000, 'yyyy-MM-dd', '-') + " 23:59:59"
+    }
     this._noticeServiceProxy.noticeListAsync(params).subscribe(data => {
       this.isSearchForm = false;
       this.formResultData = data.data;

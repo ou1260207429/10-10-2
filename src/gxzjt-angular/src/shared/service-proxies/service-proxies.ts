@@ -29,10 +29,13 @@ export class AcceptanceFileServiceProxy {
 
     /**
      * @param projectFlow (optional) 
+     * @param fileCodePrefix (optional) 
      * @return Success
      */
-    createApplyFile(projectFlow: ProjectFlow | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/CreateApplyFile";
+    createApplyFile(projectFlow: ProjectFlow | null | undefined, fileCodePrefix: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/CreateApplyFile?";
+        if (fileCodePrefix !== undefined)
+            url_ += "fileCodePrefix=" + encodeURIComponent("" + fileCodePrefix) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(projectFlow);
@@ -171,6 +174,64 @@ export class AcceptanceFileServiceProxy {
     }
 
     protected processCreateRefuseFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param acceptApplyFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @param template (optional) 
+     * @return Success
+     */
+    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/AcceptFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        if (template !== undefined)
+            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(acceptApplyFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAcceptFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAcceptFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAcceptFile(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -333,6 +394,67 @@ export class AcceptanceFileServiceProxy {
     }
 
     protected processCreateQualifiedFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param examineFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @param template (optional) 
+     * @param attachmentType (optional) 
+     * @return Success
+     */
+    opinionFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/OpinionFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        if (template !== undefined)
+            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
+        if (attachmentType !== undefined)
+            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(examineFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processOpinionFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processOpinionFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processOpinionFile(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1979,6 +2101,216 @@ export class HomeServiceProxy {
         }
         return _observableOf<PageModel>(<any>null);
     }
+
+    /**
+     * @param attachmentId (optional) 
+     * @return Success
+     */
+    homeTableDownloadAddVisitCount(attachmentId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Home/HomeTableDownloadAddVisitCount?";
+        if (attachmentId !== undefined)
+            url_ += "attachmentId=" + encodeURIComponent("" + attachmentId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHomeTableDownloadAddVisitCount(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHomeTableDownloadAddVisitCount(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processHomeTableDownloadAddVisitCount(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    testExp(): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/Home/TestExp";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processTestExp(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processTestExp(<any>response_);
+                } catch (e) {
+                    return <Observable<string>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processTestExp(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getAreaDropdown(): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/Home/GetAreaDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAreaDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAreaDropdown(<any>response_);
+                } catch (e) {
+                    return <Observable<string>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAreaDropdown(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(<any>null);
+    }
+
+    /**
+     * @param search (optional) 
+     * @return Success
+     */
+    getOrganizationsByName(search: string | null | undefined): Observable<KeyValueDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Home/GetOrganizationsByName?";
+        if (search !== undefined)
+            url_ += "search=" + encodeURIComponent("" + search) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetOrganizationsByName(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetOrganizationsByName(<any>response_);
+                } catch (e) {
+                    return <Observable<KeyValueDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<KeyValueDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetOrganizationsByName(response: HttpResponseBase): Observable<KeyValueDto[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(KeyValueDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<KeyValueDto[]>(<any>null);
+    }
 }
 
 @Injectable()
@@ -1994,10 +2326,13 @@ export class InvestigateFileServiceProxy {
 
     /**
      * @param projectFlow (optional) 
+     * @param fileCodePrefix (optional) 
      * @return Success
      */
-    createApplyFile(projectFlow: ProjectFlow | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateApplyFile";
+    createApplyFile(projectFlow: ProjectFlow | null | undefined, fileCodePrefix: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateApplyFile?";
+        if (fileCodePrefix !== undefined)
+            url_ += "fileCodePrefix=" + encodeURIComponent("" + fileCodePrefix) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(projectFlow);
@@ -2096,18 +2431,80 @@ export class InvestigateFileServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<void>(<any>null);
+        return _observableOf<PageModel>(<any>null);
     }
 
     /**
-     * @param acceptApplyFormDto (optional) 
-     * @param acceptRecordId (optional) 
+     * @param attachmentId (optional) 
      * @return Success
      */
-    createRefuseFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateRefuseFile?";
-        if (acceptRecordId !== undefined)
-            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+    homeTableDownloadAddVisitCount(attachmentId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Home/HomeTableDownloadAddVisitCount?";
+        if (attachmentId !== undefined)
+            url_ += "attachmentId=" + encodeURIComponent("" + attachmentId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHomeTableDownloadAddVisitCount(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHomeTableDownloadAddVisitCount(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processHomeTableDownloadAddVisitCount(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
+export class InvestigateFileServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param projectFlow (optional) 
+     * @param fileCodePrefix (optional) 
+     * @return Success
+     */
+    createApplyFile(projectFlow: ProjectFlow | null | undefined, fileCodePrefix: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/CreateApplyFile?";
+        if (fileCodePrefix !== undefined)
+            url_ += "fileCodePrefix=" + encodeURIComponent("" + fileCodePrefix) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(acceptApplyFormDto);
@@ -2136,6 +2533,64 @@ export class InvestigateFileServiceProxy {
     }
 
     protected processCreateRefuseFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param acceptApplyFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @param template (optional) 
+     * @return Success
+     */
+    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/AcceptFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        if (template !== undefined)
+            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(acceptApplyFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAcceptFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAcceptFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAcceptFile(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -2210,6 +2665,64 @@ export class InvestigateFileServiceProxy {
     }
 
     /**
+     * @param acceptApplyFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @param template (optional) 
+     * @return Success
+     */
+    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/AcceptFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        if (template !== undefined)
+            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(acceptApplyFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAcceptFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAcceptFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAcceptFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
      * @param examineFormDto (optional) 
      * @param acceptRecordId (optional) 
      * @return Success
@@ -2246,6 +2759,128 @@ export class InvestigateFileServiceProxy {
     }
 
     protected processCreateQualifiedFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param examineFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @param template (optional) 
+     * @param attachmentType (optional) 
+     * @return Success
+     */
+    opinionFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/OpinionFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        if (template !== undefined)
+            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
+        if (attachmentType !== undefined)
+            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(examineFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processOpinionFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processOpinionFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processOpinionFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param examineFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @param template (optional) 
+     * @param attachmentType (optional) 
+     * @return Success
+     */
+    opinionFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/OpinionFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        if (template !== undefined)
+            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
+        if (attachmentType !== undefined)
+            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(examineFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processOpinionFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processOpinionFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processOpinionFile(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -3730,10 +4365,13 @@ export class PutOnRecordFileServiceProxy {
 
     /**
      * @param projectFlow (optional) 
+     * @param fileCodePrefix (optional) 
      * @return Success
      */
-    createApplyFile(projectFlow: ProjectFlow | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/CreateApplyFile";
+    createApplyFile(projectFlow: ProjectFlow | null | undefined, fileCodePrefix: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/CreateApplyFile?";
+        if (fileCodePrefix !== undefined)
+            url_ += "fileCodePrefix=" + encodeURIComponent("" + fileCodePrefix) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(projectFlow);
@@ -3946,6 +4584,67 @@ export class PutOnRecordFileServiceProxy {
     }
 
     /**
+     * @param acceptApplyFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @param template (optional) 
+     * @param attachmentType (optional) 
+     * @return Success
+     */
+    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/AcceptFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        if (template !== undefined)
+            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
+        if (attachmentType !== undefined)
+            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(acceptApplyFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAcceptFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAcceptFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAcceptFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
      * @param reviewFormDto (optional) 
      * @return Success
      */
@@ -4089,6 +4788,67 @@ export class PutOnRecordFileServiceProxy {
     }
 
     protected processCreateQualifiedFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param examineFormDto (optional) 
+     * @param acceptRecordId (optional) 
+     * @param template (optional) 
+     * @param attachmentType (optional) 
+     * @return Success
+     */
+    opinionFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/OpinionFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        if (template !== undefined)
+            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
+        if (attachmentType !== undefined)
+            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(examineFormDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processOpinionFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processOpinionFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processOpinionFile(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -6058,6 +6818,118 @@ export class StatisticalServiceServiceProxy {
         }
         return _observableOf<DataSourceResult>(<any>null);
     }
+
+    /**
+     * @param statisticsQueryDto (optional) 
+     * @return Success
+     */
+    post_GetStatisticsList(statisticsQueryDto: StatisticsQueryDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/StatisticalService/Post_GetStatisticsList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(statisticsQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetStatisticsList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetStatisticsList(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetStatisticsList(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
+
+    /**
+     * @param statisticsQueryDto (optional) 
+     * @return Success
+     */
+    post_GetStatisticsList(statisticsQueryDto: StatisticsQueryDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/StatisticalService/Post_GetStatisticsList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(statisticsQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetStatisticsList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetStatisticsList(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetStatisticsList(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
 }
 
 @Injectable()
@@ -7523,6 +8395,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
     flowNodeUserInfo: FlowNodeUser | undefined;
+    flowNodeItems: FlowNodeItem[] | undefined;
 
     constructor(data?: IAcceptApplyFormDto) {
         if (data) {
@@ -7573,6 +8446,11 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
             this.workFlow_Instance_Id = data["workFlow_Instance_Id"];
             this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
             this.flowNodeUserInfo = data["flowNodeUserInfo"] ? FlowNodeUser.fromJS(data["flowNodeUserInfo"]) : <any>undefined;
+            if (data["flowNodeItems"] && data["flowNodeItems"].constructor === Array) {
+                this.flowNodeItems = [];
+                for (let item of data["flowNodeItems"])
+                    this.flowNodeItems.push(FlowNodeItem.fromJS(item));
+            }
         }
     }
 
@@ -7623,6 +8501,11 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
         data["workFlow_Instance_Id"] = this.workFlow_Instance_Id;
         data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
         data["flowNodeUserInfo"] = this.flowNodeUserInfo ? this.flowNodeUserInfo.toJSON() : <any>undefined;
+        if (this.flowNodeItems && this.flowNodeItems.constructor === Array) {
+            data["flowNodeItems"] = [];
+            for (let item of this.flowNodeItems)
+                data["flowNodeItems"].push(item.toJSON());
+        }
         return data; 
     }
 
@@ -7661,6 +8544,7 @@ export interface IAcceptApplyFormDto {
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
     flowNodeUserInfo: FlowNodeUser | undefined;
+    flowNodeItems: FlowNodeItem[] | undefined;
 }
 
 export class FlowNodeUser implements IFlowNodeUser {
@@ -7884,7 +8768,79 @@ export interface IAttachmentItem {
     flowId: number | undefined;
 }
 
+export class FlowNodeItem implements IFlowNodeItem {
+    isDisplayFile: boolean | undefined;
+    isPass: boolean | undefined;
+    opinion: string | undefined;
+    describe: string | undefined;
+    fileUrl: string | undefined;
+    fileFlag: string | undefined;
+    fileName: string | undefined;
+    currentNodeName: string | undefined;
+
+    constructor(data?: IFlowNodeItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.isDisplayFile = data["isDisplayFile"];
+            this.isPass = data["isPass"];
+            this.opinion = data["opinion"];
+            this.describe = data["describe"];
+            this.fileUrl = data["fileUrl"];
+            this.fileFlag = data["fileFlag"];
+            this.fileName = data["fileName"];
+            this.currentNodeName = data["currentNodeName"];
+        }
+    }
+
+    static fromJS(data: any): FlowNodeItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new FlowNodeItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isDisplayFile"] = this.isDisplayFile;
+        data["isPass"] = this.isPass;
+        data["opinion"] = this.opinion;
+        data["describe"] = this.describe;
+        data["fileUrl"] = this.fileUrl;
+        data["fileFlag"] = this.fileFlag;
+        data["fileName"] = this.fileName;
+        data["currentNodeName"] = this.currentNodeName;
+        return data; 
+    }
+
+    clone(): FlowNodeItem {
+        const json = this.toJSON();
+        let result = new FlowNodeItem();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFlowNodeItem {
+    isDisplayFile: boolean | undefined;
+    isPass: boolean | undefined;
+    opinion: string | undefined;
+    describe: string | undefined;
+    fileUrl: string | undefined;
+    fileFlag: string | undefined;
+    fileName: string | undefined;
+    currentNodeName: string | undefined;
+}
+
 export class ReviewFormDto implements IReviewFormDto {
+    fileCodePrefix: string | undefined;
     projectId: number | undefined;
     flowId: number | undefined;
     constructOrg: ProjectCompany | undefined;
@@ -7895,6 +8851,7 @@ export class ReviewFormDto implements IReviewFormDto {
     unqualifiedFileCode: string | undefined;
     situation: string | undefined;
     note: string | undefined;
+    applyName: string | undefined;
     handleUserList: FlowNodeUser[] | undefined;
     timeLimit: number | undefined;
     currentHandleUserName: string | undefined;
@@ -7920,6 +8877,7 @@ export class ReviewFormDto implements IReviewFormDto {
 
     init(data?: any) {
         if (data) {
+            this.fileCodePrefix = data["fileCodePrefix"];
             this.projectId = data["projectId"];
             this.flowId = data["flowId"];
             this.constructOrg = data["constructOrg"] ? ProjectCompany.fromJS(data["constructOrg"]) : <any>undefined;
@@ -7930,6 +8888,7 @@ export class ReviewFormDto implements IReviewFormDto {
             this.unqualifiedFileCode = data["unqualifiedFileCode"];
             this.situation = data["situation"];
             this.note = data["note"];
+            this.applyName = data["applyName"];
             if (data["handleUserList"] && data["handleUserList"].constructor === Array) {
                 this.handleUserList = [];
                 for (let item of data["handleUserList"])
@@ -7959,6 +8918,7 @@ export class ReviewFormDto implements IReviewFormDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["fileCodePrefix"] = this.fileCodePrefix;
         data["projectId"] = this.projectId;
         data["flowId"] = this.flowId;
         data["constructOrg"] = this.constructOrg ? this.constructOrg.toJSON() : <any>undefined;
@@ -7969,6 +8929,7 @@ export class ReviewFormDto implements IReviewFormDto {
         data["unqualifiedFileCode"] = this.unqualifiedFileCode;
         data["situation"] = this.situation;
         data["note"] = this.note;
+        data["applyName"] = this.applyName;
         if (this.handleUserList && this.handleUserList.constructor === Array) {
             data["handleUserList"] = [];
             for (let item of this.handleUserList)
@@ -7998,6 +8959,7 @@ export class ReviewFormDto implements IReviewFormDto {
 }
 
 export interface IReviewFormDto {
+    fileCodePrefix: string | undefined;
     projectId: number | undefined;
     flowId: number | undefined;
     constructOrg: ProjectCompany | undefined;
@@ -8008,6 +8970,7 @@ export interface IReviewFormDto {
     unqualifiedFileCode: string | undefined;
     situation: string | undefined;
     note: string | undefined;
+    applyName: string | undefined;
     handleUserList: FlowNodeUser[] | undefined;
     timeLimit: number | undefined;
     currentHandleUserName: string | undefined;
@@ -8152,11 +9115,13 @@ export class ExamineFormDto implements IExamineFormDto {
     acceptFileCode: string | undefined;
     drawingOrg: ProjectCompany | undefined;
     testingOrg: ProjectCompany | undefined;
+    designOrg: ProjectCompany | undefined;
     nodeAuditorRecordId: number | undefined;
     workFlow_NodeRecord_Id: number | undefined;
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
     flowNodeUserInfo: FlowNodeUser | undefined;
+    flowNodeItems: FlowNodeItem[] | undefined;
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -8202,11 +9167,17 @@ export class ExamineFormDto implements IExamineFormDto {
             this.acceptFileCode = data["acceptFileCode"];
             this.drawingOrg = data["drawingOrg"] ? ProjectCompany.fromJS(data["drawingOrg"]) : <any>undefined;
             this.testingOrg = data["testingOrg"] ? ProjectCompany.fromJS(data["testingOrg"]) : <any>undefined;
+            this.designOrg = data["designOrg"] ? ProjectCompany.fromJS(data["designOrg"]) : <any>undefined;
             this.nodeAuditorRecordId = data["nodeAuditorRecordId"];
             this.workFlow_NodeRecord_Id = data["workFlow_NodeRecord_Id"];
             this.workFlow_Instance_Id = data["workFlow_Instance_Id"];
             this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
             this.flowNodeUserInfo = data["flowNodeUserInfo"] ? FlowNodeUser.fromJS(data["flowNodeUserInfo"]) : <any>undefined;
+            if (data["flowNodeItems"] && data["flowNodeItems"].constructor === Array) {
+                this.flowNodeItems = [];
+                for (let item of data["flowNodeItems"])
+                    this.flowNodeItems.push(FlowNodeItem.fromJS(item));
+            }
         }
     }
 
@@ -8252,11 +9223,17 @@ export class ExamineFormDto implements IExamineFormDto {
         data["acceptFileCode"] = this.acceptFileCode;
         data["drawingOrg"] = this.drawingOrg ? this.drawingOrg.toJSON() : <any>undefined;
         data["testingOrg"] = this.testingOrg ? this.testingOrg.toJSON() : <any>undefined;
+        data["designOrg"] = this.designOrg ? this.designOrg.toJSON() : <any>undefined;
         data["nodeAuditorRecordId"] = this.nodeAuditorRecordId;
         data["workFlow_NodeRecord_Id"] = this.workFlow_NodeRecord_Id;
         data["workFlow_Instance_Id"] = this.workFlow_Instance_Id;
         data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
         data["flowNodeUserInfo"] = this.flowNodeUserInfo ? this.flowNodeUserInfo.toJSON() : <any>undefined;
+        if (this.flowNodeItems && this.flowNodeItems.constructor === Array) {
+            data["flowNodeItems"] = [];
+            for (let item of this.flowNodeItems)
+                data["flowNodeItems"].push(item.toJSON());
+        }
         return data; 
     }
 
@@ -8294,11 +9271,13 @@ export interface IExamineFormDto {
     acceptFileCode: string | undefined;
     drawingOrg: ProjectCompany | undefined;
     testingOrg: ProjectCompany | undefined;
+    designOrg: ProjectCompany | undefined;
     nodeAuditorRecordId: number | undefined;
     workFlow_NodeRecord_Id: number | undefined;
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
     flowNodeUserInfo: FlowNodeUser | undefined;
+    flowNodeItems: FlowNodeItem[] | undefined;
 }
 
 export class ProjectAttachment implements IProjectAttachment {
@@ -9028,6 +10007,7 @@ export class FlowDataDto implements IFlowDataDto {
     projectFlowInfo: ProjectFlowDto | undefined;
     luckNo: number | undefined;
     handleUserList: FlowNodeUser[] | undefined;
+    fileCodePrefix: string | undefined;
 
     constructor(data?: IFlowDataDto) {
         if (data) {
@@ -9049,6 +10029,7 @@ export class FlowDataDto implements IFlowDataDto {
                 for (let item of data["handleUserList"])
                     this.handleUserList.push(FlowNodeUser.fromJS(item));
             }
+            this.fileCodePrefix = data["fileCodePrefix"];
         }
     }
 
@@ -9070,6 +10051,7 @@ export class FlowDataDto implements IFlowDataDto {
             for (let item of this.handleUserList)
                 data["handleUserList"].push(item.toJSON());
         }
+        data["fileCodePrefix"] = this.fileCodePrefix;
         return data; 
     }
 
@@ -9087,6 +10069,7 @@ export interface IFlowDataDto {
     projectFlowInfo: ProjectFlowDto | undefined;
     luckNo: number | undefined;
     handleUserList: FlowNodeUser[] | undefined;
+    fileCodePrefix: string | undefined;
 }
 
 export class ProjectFlowDto implements IProjectFlowDto {
@@ -9914,6 +10897,53 @@ export interface ICondition {
     size: number | undefined;
     page: number | undefined;
     isAsc: boolean | undefined;
+}
+
+export class KeyValueDto implements IKeyValueDto {
+    key: string | undefined;
+    value: string | undefined;
+
+    constructor(data?: IKeyValueDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.key = data["key"];
+            this.value = data["value"];
+        }
+    }
+
+    static fromJS(data: any): KeyValueDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new KeyValueDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["key"] = this.key;
+        data["value"] = this.value;
+        return data; 
+    }
+
+    clone(): KeyValueDto {
+        const json = this.toJSON();
+        let result = new KeyValueDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IKeyValueDto {
+    key: string | undefined;
+    value: string | undefined;
 }
 
 export class AuthenticateModel implements IAuthenticateModel {
@@ -11569,6 +12599,9 @@ export class FireAuditCompleteQueryDto implements IFireAuditCompleteQueryDto {
     flowPathType: number | undefined;
     startApplyTime: moment.Moment | undefined;
     endApplyTime: moment.Moment | undefined;
+    investigateStatus: number | undefined;
+    acceptanceStatus: number | undefined;
+    putOnRecordStatus: number | undefined;
     dateTimeNow: moment.Moment | undefined;
     page: number | undefined;
     sorting: string | undefined;
@@ -11592,6 +12625,9 @@ export class FireAuditCompleteQueryDto implements IFireAuditCompleteQueryDto {
             this.flowPathType = data["flowPathType"];
             this.startApplyTime = data["startApplyTime"] ? moment(data["startApplyTime"].toString()) : <any>undefined;
             this.endApplyTime = data["endApplyTime"] ? moment(data["endApplyTime"].toString()) : <any>undefined;
+            this.investigateStatus = data["investigateStatus"];
+            this.acceptanceStatus = data["acceptanceStatus"];
+            this.putOnRecordStatus = data["putOnRecordStatus"];
             this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
             this.page = data["page"];
             this.sorting = data["sorting"];
@@ -11615,6 +12651,9 @@ export class FireAuditCompleteQueryDto implements IFireAuditCompleteQueryDto {
         data["flowPathType"] = this.flowPathType;
         data["startApplyTime"] = this.startApplyTime ? this.startApplyTime.toISOString() : <any>undefined;
         data["endApplyTime"] = this.endApplyTime ? this.endApplyTime.toISOString() : <any>undefined;
+        data["investigateStatus"] = this.investigateStatus;
+        data["acceptanceStatus"] = this.acceptanceStatus;
+        data["putOnRecordStatus"] = this.putOnRecordStatus;
         data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
         data["page"] = this.page;
         data["sorting"] = this.sorting;
@@ -11638,6 +12677,9 @@ export interface IFireAuditCompleteQueryDto {
     flowPathType: number | undefined;
     startApplyTime: moment.Moment | undefined;
     endApplyTime: moment.Moment | undefined;
+    investigateStatus: number | undefined;
+    acceptanceStatus: number | undefined;
+    putOnRecordStatus: number | undefined;
     dateTimeNow: moment.Moment | undefined;
     page: number | undefined;
     sorting: string | undefined;
@@ -11898,53 +12940,6 @@ export interface IRegulationEditDto {
     lastUpdateTime: moment.Moment | undefined;
     lastUpdateUserCode: string | undefined;
     lastUpdateUserName: string | undefined;
-}
-
-export class KeyValueDto implements IKeyValueDto {
-    key: string | undefined;
-    value: string | undefined;
-
-    constructor(data?: IKeyValueDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.key = data["key"];
-            this.value = data["value"];
-        }
-    }
-
-    static fromJS(data: any): KeyValueDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new KeyValueDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["key"] = this.key;
-        data["value"] = this.value;
-        return data; 
-    }
-
-    clone(): KeyValueDto {
-        const json = this.toJSON();
-        let result = new KeyValueDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IKeyValueDto {
-    key: string | undefined;
-    value: string | undefined;
 }
 
 export class CreateRoleDto implements ICreateRoleDto {
@@ -13802,6 +14797,73 @@ export interface IHandleLimitQueryDto {
     startApplyTime: moment.Moment | undefined;
     endApplyTime: moment.Moment | undefined;
     dateTimeNow: moment.Moment | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+}
+
+export class StatisticsQueryDto implements IStatisticsQueryDto {
+    projectCode: string | undefined;
+    projectName: string | undefined;
+    companyName: string | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+
+    constructor(data?: IStatisticsQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.projectCode = data["projectCode"];
+            this.projectName = data["projectName"];
+            this.companyName = data["companyName"];
+            this.page = data["page"];
+            this.sorting = data["sorting"];
+            this.skipCount = data["skipCount"];
+            this.maxResultCount = data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): StatisticsQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new StatisticsQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["projectCode"] = this.projectCode;
+        data["projectName"] = this.projectName;
+        data["companyName"] = this.companyName;
+        data["page"] = this.page;
+        data["sorting"] = this.sorting;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+
+    clone(): StatisticsQueryDto {
+        const json = this.toJSON();
+        let result = new StatisticsQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IStatisticsQueryDto {
+    projectCode: string | undefined;
+    projectName: string | undefined;
+    companyName: string | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;

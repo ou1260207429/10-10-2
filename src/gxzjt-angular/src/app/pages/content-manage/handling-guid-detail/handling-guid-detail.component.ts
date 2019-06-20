@@ -6,6 +6,8 @@ import { timeTrans } from 'infrastructure/regular-expression';
 import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { PublicServices } from 'services/public.services';
+import { Buffer } from "buffer"
+
 @Component({
   selector: 'app-handling-guid-detail',
   templateUrl: './handling-guid-detail.component.html',
@@ -78,12 +80,6 @@ export class HandlingGuidDetailComponent implements OnInit {
    */
   getRegulationDetailsByIdAsync() {
     this._noticeServiceProxy.noticeDetailsByIdAsync(this.id).subscribe((data: any) => {
-      // this.RegulationType.forEach(element => {
-      //   if (element.value == data.noticeType) {
-      //     data.noticeType = element.key
-      //   }
-      // });
-      //  / this.data = data;
       this.data = {
         id: data.id,
         content: data.content,
@@ -91,7 +87,6 @@ export class HandlingGuidDetailComponent implements OnInit {
         noticeTypeId: data.noticeTypeId,
         title: data.title,
       }
-      console.log(this.data)
     })
   }
 
@@ -119,6 +114,8 @@ export class HandlingGuidDetailComponent implements OnInit {
     if (this.fileList.length > 0) {
       this.uploadFiles(this.data.guid);
     }
+    this.data.content = new Buffer(this.data.content).toString('base64');
+
     const src = this.operate == 0 ? this._noticeServiceProxy.addNoticeAsync(this.data) : this._noticeServiceProxy.editNoticeAsync(this.data)
     src.subscribe(data => {
       const name = this.operate == 0 ? '新增成功' : '修改成功';

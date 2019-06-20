@@ -55,14 +55,16 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
       true: { text: '是', color: '' },
       false: { text: '否', color: '' },
     }},
-    // { title: '审核结果', index: 'status',type: 'tag', tag: {
-    //   0: { text: '未处理', color: '' },
-    //   1: { text: '受理', color: 'green' },
-    //   2:{ text: '不受理', color: '' },
-    //   3:{ text: '不合格', color: '' },
-    //   4:{ text: '合格', color: '' },
-    //   5:{ text: '未抽中', color: '' },
-    // }},
+    { title: '审核结果', index: 'status',format: (item: any) => `${item.status?item.status:4001}`,
+    type: 'tag', tag: {
+      4001:{text: '数据非法', color: 'red' },
+      0: { text: '未处理', color: '' },
+      1: { text: '受理', color: 'green' },
+      2:{ text: '不受理', color: '' },
+      3:{ text: '不合格', color: '' },
+      4:{ text: '合格', color: '' },
+      5:{ text: '未抽中', color: '' },
+    }},
     { title: '操作人', index: 'currentHandleUserName' },
     { title: '操作时间', index: 'applyTime' },
   ];
@@ -94,7 +96,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
   }
 
   addDeclare(){
-    
+    this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/null`]);
   }
   /**
    * 点击查询
@@ -132,6 +134,6 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
   }
 
   watchItem(item) {
-    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`]);
+    this.router.navigate([`/app/work-matters/alreadyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}`]);
   }
 }
