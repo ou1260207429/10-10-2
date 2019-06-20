@@ -19,6 +19,15 @@
                 <span style="float: right">{{ item.creationTime }}</span>
               </div>
             </div>
+            <el-row style="margin-bottom:25px;">
+              <el-pagination
+                style="float:right;"
+                :page-size="pageSize.size"
+                layout="prev, pager, next"
+                :total="total"
+                @current-change="changeCurrent"
+              ></el-pagination>
+            </el-row>
           </div>
         </el-card>
       </el-row>
@@ -34,7 +43,9 @@ export default {
   data() {
     return {
       downLoadList: null,
-      tableHight: "100px"
+      tableHight: "100px",
+      pageSize: app.pageSize,
+      total: 0
     };
   },
 
@@ -58,30 +69,36 @@ export default {
     getTableList() {
       let _this = this;
       this.downLoadList = null;
-      app.post(table.search_tableList, app.pageSize).then(req => {
+      app.post(table.search_tableList, _this.pageSize).then(req => {
         req.result.data.forEach(element => {
           element.creationTime = moment(element.creationTime).format(
-            "YYYY-MM-DD hh:mm:ss"
+            "YYYY-MM-DD HH:mm:ss"
           );
         });
         _this.downLoadList = req.result.data;
+        _this.total = req.result.totalCount;
       });
     },
     countDownLoadTimes(id) {
-      app.post(table.compute_downLoad, { attachmentId: id }).then(result => {
-        console.log(result);
-      });
+      app.post(table.compute_downLoad, { attachmentId: id }).then(result => {});
     },
 
     /**
      * 下载表格
      */
-    downList(id,guid) {
+    downList(id, guid) {
       let data = {
         appId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
         id: id
       };
-      app.downList(data,guid);
+      app.downList(data, guid);
+    },
+    /**
+     * 分页
+     */
+    changeCurrent(page) {
+      this.pageSize.page = page;
+      this.getTableList();
     }
   }
 };

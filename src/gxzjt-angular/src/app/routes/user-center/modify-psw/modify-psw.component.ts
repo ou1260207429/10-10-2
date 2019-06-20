@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
-import { STColumn, STComponent } from '@delon/abc';
-import { SFSchema } from '@delon/form';
+
+
+import { FormBuilder, FormGroup, Validators ,FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-user-center-modify-psw',
@@ -9,16 +10,39 @@ import { SFSchema } from '@delon/form';
   styleUrls: ['./modify-psw.component.less']
 })
 export class UserCenterModifyPswComponent implements OnInit {
+  
+  validateForm: any;
 
-  constructor(private http: _HttpClient, private modal: ModalHelper) { }
+
+
+  oldPassword = "";
+  newPassword = "";
+  confirmPassword = "";
   modifying = false;
-  ngOnInit() { }
+  constructor(private http: _HttpClient,
+    private modal: ModalHelper,
+    private fb: FormBuilder) {
 
-  model: {
-    OldPassword: "",
-    Password: "",
-    ConfirmPassword: "",
+  }
+
+  ngOnInit() {
+    this.validateForm = this.fb.group({
+      oldPassword: [null, [Validators.required]],
+      newPassword: [null, [Validators.required]],
+      confirmPassword: [null, [Validators.required, this.confirmationValidator]]
+    });
+
+  }
+
+  confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
+    if (!control.value) {
+      return { required: true };
+    } else if (control.value !== this.validateForm.controls.newPassword.value) {
+      return { confirm: true, error: true };
+    }
+    return {};
   };
+
   modify() {
 
   }

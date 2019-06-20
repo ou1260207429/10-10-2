@@ -135,7 +135,7 @@ export default {
       handleList: [
         {
           type: "Audit",
-          name: "建设工程消防设计审核指南",
+          name: "建设工程消防设计审查指南",
           src: require("../assets/images/img_zn_sjsc.png")
         },
         {

@@ -25,9 +25,7 @@ const routes: Routes = [
 
       {
         path: '', loadChildren: './pages/home/home.module#HomeModule',
-        // data: {
-        //   guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
-        // }
+
       },
     ],
   },
@@ -39,46 +37,36 @@ const routes: Routes = [
     children: [
       {
         path: 'statistics', loadChildren: './routes/statistics/statistics.module#StatisticsModule',
-        // data: {
-        //   guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
-        // }
+     
       },
       {
         path: 'sys-setting', loadChildren: './routes/sys-setting/sys-setting.module#SysSettingModule',
-        // data: {
-        //   guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
-        // }
+     
       },
       {
         path: 'permission', loadChildren: './routes/permission/permission.module#PermissionModule',
-        // data: {
-        //   guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
-        // }
+       
       },
       {
         path: 'home', loadChildren: './pages/home/home.module#HomeModule',
-        // data: {
-        //   guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
-        // }
+   
       },
       {
         path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule',
-        //  data: {
-        //   guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
-        // }
+      
       },
       {
         path: 'engineering-management',
         loadChildren: './pages/engineering-management/engineering-management.module#EngineeringManagementModule',
-        // data: {
-        //   guard: <ACLType>{ role: ['sys', 'reg'], mode: 'oneOf' }
-        // }
+  
       },
       {
         path: 'content-manage', loadChildren: './pages/content-manage/content-manage.module#ContentManageModule', 
-        // data: {
-        //   guard: <ACLType>{ role: ['sys'], mode: 'allOf' }
-        // }
+        
+      },
+      {
+        path: 'user-center', loadChildren: './routes/user-center/user-center.module#UserCenterModule', 
+        
       },
 
     ],
