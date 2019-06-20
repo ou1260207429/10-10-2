@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, FormControl, ValidationErrors } from '@angular/forms';
+import {  FormBuilder } from '@angular/forms';
 
 // import {
 //   AccountServiceProxy,
@@ -22,7 +22,9 @@ import { AppComponentBase } from '@shared/component-base/app-component-base';
 
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 
-import { environment } from 'environments/environment'
+// import { environment } from 'environments/environment'
+
+import { REGISTER_URL } from 'infrastructure/expression';
 
 import { NzModalService } from 'ng-zorro-antd';
 
@@ -113,7 +115,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
   };
   register() {
     this.saving = true;
-    let url = environment.REGISTER_URL + "/api/User/Register";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
+    let url = REGISTER_URL + "api/User/Register";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
 
 
     this.http.post(url, this.model, this.httpOptions).subscribe((res: any) => {

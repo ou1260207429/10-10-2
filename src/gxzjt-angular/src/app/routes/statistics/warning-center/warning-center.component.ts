@@ -48,14 +48,17 @@ export class StatisticsWarningCenterComponent implements OnInit {
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
     },
-    { title: '工程类型', index: 'flowPathType',type: 'tag', tag: {
+    { title: '工程类型', index: 'flowPathType',
+    format: (item: any) => `${item.flowPathType?item.flowPathType:0}`,
+    type: 'tag', tag: {
+      0:{text: '数据不存在', color: 'red'},
       1: { text: '消防设计审查', color: '' },
       2: { text: '消防验收', color: '' },
       3:{ text: '激竣工验收消防备案活', color: '' },
     }},
-    { title: '工程名称', index: 'projectName' },
-    { title: '工程编号', index: 'projectCode' },
-    { title: '建设单位', index: 'companyName' },
+    { title: '工程名称',default:'', index: 'projectName' },
+    { title: '工程编号',default:'',  index: 'projectCode' },
+    { title: '建设单位',default:'',  index: 'companyName' },
     // {
     //   title: '节点名称', index: 'flowPathType',
     //   sort: {
