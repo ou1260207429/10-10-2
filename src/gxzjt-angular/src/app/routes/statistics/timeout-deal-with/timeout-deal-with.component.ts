@@ -87,7 +87,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
       }
     },
     { title: '操作人', index: 'acceptUserCode' },
-    { title: '操作时间', index: 'acceptTime' },
+    { title: '操作时间', index: 'acceptTime',type:'date' },
   ];
 
   constructor(private http: _HttpClient,
@@ -187,7 +187,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
         "page": 1,
         "sorting": "ProjectName",
         "skipCount": 0,
-        "maxResultCount": 10
+        "maxResultCount": 1000
       });
       this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
       this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];

@@ -4,7 +4,7 @@
     <el-row class="top" id="top">
       <el-row class="content">
         <el-col :span="19">
-          <img class="logo" src="../assets/images/logo-index.png" alt>
+          <img class="logo" src="../assets/images/logo.png" alt>
           <span class="title">广西建设工程消防设计审查与验收管理平台</span>
         </el-col>
         <el-col :span="5" class="tip">

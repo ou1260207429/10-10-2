@@ -5,7 +5,7 @@ import { STColumn, STComponent, XlsxService, STPage } from '@delon/abc';
 import { _HttpClient } from '@delon/theme';
 
 
-import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, DataSourceResult, PagedAndFilteredInputDto, ProjectFlowServcieServiceProxy, FireAuditCompleteQueryDto } from '@shared/service-proxies/service-proxies'
+import { ProjectFlowServcieServiceProxy,StatisticsQueryDto } from '@shared/service-proxies/service-proxies'
 import { PublicModel } from 'infrastructure/public-model';
 
 import { Router } from '@angular/router';
@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
-import { timeTrans } from 'infrastructure/regular-expression';
 import { PublicFormComponent } from '../public/public-form.component';
 import * as moment from 'moment';
 /**
@@ -34,35 +33,69 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
     {
       title: '操作',
       buttons: [
+        // {
+        //   text: '执行', click: (item: any) => {
+        //     this.watchItem(item);
+        //   }
+        // },
         {
-          text: '执行', click: (item: any) => {
-            this.watchItem(item);
-          }
+          text: '查看',
+          type: 'modal',
+          // modal: {
+          //   component: StatisticsProAppStaticDetailComponent,
+          //   paramsName: 'record',
+          // },
+          // click: (record: any, modal: any) => {
+
+          // },
         },
+        // {
+        //   text: '受理凭证',
+        //   type: 'link',
+        //   // modal: {
+        //   //   component: StatisticsAcceptCredentialsComponent,
+        //   //   paramsName: 'record',
+        //   // },
+        //   click: (record: any, modal: any) => {
+        //     window.open(record.acceptAttachmentFileUrl)
+        //   },
+        // },
+        // {
+        //   text: '意见书',
+        //   type: 'link',
+        //   // modal: {
+        //   //   component: StatisticsPositionPaperComponent,
+        //   //   paramsName: 'record',
+        //   // },
+        //   click: (record: any, modal: any) => {
+
+        //     window.open(record.opinionFileUrl)
+        //   },
+        // },
       ]
     },
     { title: '工程名称', index: 'projectName' },
-    { title: '工程编号', index: 'investigateNumber', },
+    { title: '工程编号', index: 'projectCode', },
     { title: '建设单位', index: 'companyName' },
     { title: '消防设计', index: 'investigateStatus',format: (item: any) => `${item.investigateStatus?item.investigateStatus:4001}`,type: 'tag', tag: {
-      4001:{text:'未申请',color: 'red' },
+      4001:{text:'未申请',color: '' },
       0: { text: '不合格', color: 'red' },
       1: { text: '合格', color: 'green' },
     }},
     { title: '消防验收管理', index: 'acceptanceStatus',format: (item: any) => `${item.acceptanceStatus?item.acceptanceStatus:4001}`,type: 'tag', tag: {
-      4001:{text:'未申请',color: 'red' },
+      4001:{text:'未申请',color: '' },
       0: { text: '不合格', color: 'red' },
       1: { text: '合格', color: 'green' },
     }},
     { title: '竣工验收备案', index: 'putOnRecordStatus',format: (item: any) => `${item.putOnRecordStatus?item.putOnRecordStatus:4001}`,type: 'tag', tag: {
-      4001:{text:'未申请',color: 'red' },
+      4001:{text:'未申请',color: '' },
       0: { text: '不合格', color: 'red' },
       1: { text: '合格', color: 'green' },
       2: { text: '未抽中', color: '' },
     }},
   ];
 
-  searchParam = new FireAuditCompleteQueryDto();
+  searchParam = new StatisticsQueryDto();
 
   pageConfig: STPage = publicPageConfig;
 
@@ -88,10 +121,9 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
   init() {
     this.searchParam.page = 1;
     this.searchParam.maxResultCount = 10;
-    this.searchParam.flowPathType = 1
+    this.searchParam.projectName='';
+    this.searchParam.companyName='';
     this.searchParam.sorting = 'ProjectName';
-    this.searchParam.startApplyTime = moment(this.rangeTime[0])
-    this.searchParam.endApplyTime =moment(this.rangeTime[1])
     this.getList();
   }
 
@@ -101,7 +133,7 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
    * @param TemplateInfoListByClassIdEntity 参数
    */
   getList() {
-    this._projectFlowServcieServiceProxy.post_GetFireAuditCompleteList(this.searchParam).subscribe((data: any) => {
+    this._projectFlowServcieServiceProxy.post_GetStatisticsList(this.searchParam).subscribe((data: any) => {
       this.formResultData = data
       console.log(this.formResultData)
     })
@@ -112,8 +144,6 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
    */
   query() {
     this.searchParam.page = 1;
-    this.searchParam.startApplyTime = moment(this.rangeTime[0])
-    this.searchParam.endApplyTime =moment(this.rangeTime[1])
     this.getList();
   }
 

@@ -17,7 +17,8 @@ export default new Router({
       component: resolve => require(['../views/index.vue'], resolve),
       meta: {
         name: ["首页"],
-        show: true
+        show: true,
+        title: "首页"
       }
     }, {
       path: '/handling-guid-list',
@@ -25,7 +26,8 @@ export default new Router({
       component: resolve => require(['../views/Handling-guid.vue'], resolve),
       meta: {
         name: ["办事指南"],
-        show: true
+        show: true,
+        title: "办事指南"
       }
     }, {
       path: '/laws-and-regulations',
@@ -33,15 +35,17 @@ export default new Router({
       component: resolve => require(['../views/laws-and-regulations.vue'], resolve),
       meta: {
         name: ["法律法规"],
-        show: true
+        show: true,
+        title: "法律法规"
       }
     }, {
       path: '/form-download',
       name: 'form-download',
       component: resolve => require(['../views/form-download-list.vue'], resolve),
       meta: {
-        name: ["法律法规"],
-        show: true
+        name: ["表格下载"],
+        show: true,
+        title: "表格下载"
       }
     }, {
       path: '/announcement-information/:id',
@@ -49,7 +53,8 @@ export default new Router({
       component: resolve => require(['../views/announcement-information.vue'], resolve),
       meta: {
         name: ["公告信息"],
-        show: true
+        show: true,
+        title: "公告信息"
       }
     }, {
       path: '/handling-guid-list/detail/:id',
@@ -58,14 +63,16 @@ export default new Router({
       meta: {
         name: ["办事指南", "办事指南详情"],
         show: false,
+        title: "办事指南详情"
       }
     }, {
       path: '/laws-and-regulations/detail/:id',
       name: 'laws-and-regulations-detail',
       component: resolve => require(['../views/laws-and-regulations-detail.vue'], resolve),
       meta: {
-        name: ["办事指南", "办事指南详情"],
+        name: ["办事指南", "法律法规详情"],
         show: false,
+        title: "法律法规详情"
       }
     }]
   }]

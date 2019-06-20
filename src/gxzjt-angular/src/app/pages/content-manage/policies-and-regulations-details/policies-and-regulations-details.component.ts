@@ -9,13 +9,16 @@ import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { UploadFileModel, PublicServices } from 'services/public.services';
 import { Buffer } from "buffer"
+import { PANGBO_SERVICES_URL } from 'infrastructure/expression';
+
 @Component({
   selector: 'app-policies-and-regulations-details',
   templateUrl: './policies-and-regulations-details.component.html',
   styleUrls: ['./policies-and-regulations-details.component.less']
 })
 export class PoliciesAndRegulationsDetailsComponent implements OnInit {
-
+  fileUrl: string
+  fileUrlList = []
   operate
   //0是新增  1是查看 2是编辑
   type
@@ -73,6 +76,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     this.id = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
     this.operate = parseInt(this._activatedRoute.snapshot.paramMap.get('operate'));
     this.initType();
+    this.fileUrl = PANGBO_SERVICES_URL
 
   }
   ngOnInit() {
@@ -104,13 +108,6 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
    */
   getRegulationDetailsByIdAsync() {
     this._regulationServiceProxy.getRegulationDetailsByIdAsync(this.id).subscribe((data: any) => {
-
-      // this.data.issueDate = timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-');
-      // this.RegulationType.forEach(element => {
-      //   if (element.value == data.regulationType) {
-      //     data.regulationType = element.key
-      //   }
-      // });
       this.data = data
       this.data.regulationId = this.id;
       this.data = {
@@ -123,8 +120,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
         regulationTypeId: data.regulationTypeId,
         title: data.title,
       }
-      // this.deleteSum(this.data, ['contentUrl', 'creationTime', 'id', 'lastUpdateUserName', 'visitCount','lastUpdateTime','lastUpdateUserCode']);
-      console.log(this.data)
+      this.queryFiles(data.guid)
     })
   }
 
@@ -182,8 +178,8 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     return ret
   }
   /**
- * 上传文件
- */
+   * 上传文件
+   */
   uploadFiles(guid) {
     let params = {
       sourceId: guid,
@@ -195,14 +191,30 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
       const formData = new FormData();
       formData.append('files', file);
       this._publicServices.newUpload(formData, params).subscribe(data => {
-        console.log(data)
       })
     });
   }
+  queryFiles(guid) {
+    let params = {
+      sourceId: guid,
+      AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
+      module: "table",
+    }
+    this.fileUrlList=[];
+    this._publicServices.getFilesDetail(params).subscribe(data => {
+      console.log(data)
+      data.forEach(element => {
+        this.fileUrlList.push({
+          name:element.fileName,
+          url:"api/Attachment/Download?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&id="+element.id
+        })
+      });
+     
+    })
+
+  }
   beforeUpload = (file: UploadFile): boolean => {
     this.fileList = this.fileList.concat(file);
-    console.log(file)
-    console.log(this.fileList)
 
     return false;
   };

@@ -31,6 +31,7 @@ export class HandlingGuideComponent extends PublicFormComponent implements OnIni
     endTime: null,
   };
 
+  isShowAdd = false;
 
 
   // Id = q.Id,
@@ -48,19 +49,21 @@ export class HandlingGuideComponent extends PublicFormComponent implements OnIni
     // { title: '内部编号', index: 'regulationCode' },
     { title: '类型', index: 'noticeType' },
     { title: '标题名称', index: 'title' },
-    { title: '浏览量', index: 'visitCount' },
     {
       title: '发布时间', index: 'creationTime', type: 'date'
     },
     {
       title: '操作人', index: 'lastUpdateUserName'
     },
-    {
-      title: '最近操作时间', index: 'lastModificationTime', type: 'date'
-    },
+  
     {
       title: '操作人账号', index: 'lastUpdateUserCode'
     },
+    {
+      title: '最近操作时间', index: 'lastModificationTime', type: 'date'
+    },
+    { title: '浏览量', index: 'visitCount' },
+
     {
       title: '操作', className: 'text-center', buttons: [
         {
