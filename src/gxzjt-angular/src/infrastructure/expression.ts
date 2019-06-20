@@ -13,6 +13,9 @@ export const PANGBO_SERVICES_URL = ' http://222.84.250.158:8000/';
 
 export const REGISTER_URL = ' http://222.84.250.158:8000/';
 
+//庞博的上传图片的ID验证
+export const AppId = '9F947774-8CB4-4504-B441-2B9AAEEAF450'
+
 ///通用变量
 export let publicPageConfig: STPage = {
   front: false,

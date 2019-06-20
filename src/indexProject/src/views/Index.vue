@@ -41,7 +41,6 @@
               </p>
             </div>
 
-            <div v-if="!lawsList" class="noData">暂无数据</div>
             <div v-if="lawsList">
               <div class="listParent">
                 <div :key="index" v-for="(item,index) in lawsList" class="list">

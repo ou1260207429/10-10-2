@@ -16,6 +16,7 @@ import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import { timeTrans } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
+import { EventEmiter } from 'infrastructure/eventEmiter';
 /**
  * 待办流程
  */
@@ -24,7 +25,7 @@ import { PublicModel } from 'infrastructure/public-model';
   templateUrl: 'agency-done.component.html',
   styles: [],
 })
-export class AgencyDoneComponent  extends PublicFormComponent implements OnInit {
+export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   index;
 
 
@@ -64,18 +65,25 @@ export class AgencyDoneComponent  extends PublicFormComponent implements OnInit 
   //时间
   rangeTime
   constructor(private workFlowedServiceProxy: WorkFlowedServiceProxy,
+    private eventEmiter: EventEmiter,
     private _flowServices: FlowServices,
     private router: Router,
-    private _publicModel:PublicModel,
+    private _publicModel: PublicModel,
     private http: _HttpClient,
     private xlsx: XlsxService) {
 
-      super();
+    super();
 
   }
 
   ngOnInit() {
     this.init()
+
+    let _self = this;
+    this.init();
+    this.eventEmiter.on('agencyDoneInit', () => {
+      _self.init();
+    });
   }
 
   init() {
@@ -119,14 +127,14 @@ export class AgencyDoneComponent  extends PublicFormComponent implements OnInit 
   /**
    * 导出
    */
-  exportXlsx(){
-    this._publicModel.exportXlsx(this.columns,this.formResultData.data);
+  exportXlsx() {
+    this._publicModel.exportXlsx(this.columns, this.formResultData.data);
   }
 
-  okRangeTime(v){
+  okRangeTime(v) {
     console.log(v);
-    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')
-    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')
+    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')  
+    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')   
     // this.searchParam.applyTimeStart = applyTimeStart;
     // this.searchParam.applyTimeEnd = applyTimeEnd;
     // console.log(applyTimeEnd);
