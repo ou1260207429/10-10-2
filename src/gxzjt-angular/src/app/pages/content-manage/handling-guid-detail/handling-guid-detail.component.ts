@@ -80,12 +80,6 @@ export class HandlingGuidDetailComponent implements OnInit {
    */
   getRegulationDetailsByIdAsync() {
     this._noticeServiceProxy.noticeDetailsByIdAsync(this.id).subscribe((data: any) => {
-      // this.RegulationType.forEach(element => {
-      //   if (element.value == data.noticeType) {
-      //     data.noticeType = element.key
-      //   }
-      // });
-      //  / this.data = data;
       this.data = {
         id: data.id,
         content: data.content,
@@ -93,7 +87,6 @@ export class HandlingGuidDetailComponent implements OnInit {
         noticeTypeId: data.noticeTypeId,
         title: data.title,
       }
-      console.log(this.data)
     })
   }
 

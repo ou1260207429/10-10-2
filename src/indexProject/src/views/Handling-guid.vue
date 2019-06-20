@@ -16,23 +16,24 @@
                 <el-row :gutter="16">
                   <el-col :span="10">
                     <div ref="imgHeight">
-                      <img style="width:100%;" :src="allowImg[index]" alt>
+                      <img style="width:100%;" :src="allowImg[index]?allowImg[index]:allowImg[0]" alt>
                     </div>
                   </el-col>
                   <el-col :span="14">
+                    <div ref="routHeight">
+                      <p class="title">{{item.title}}</p>
+                      <div class="tip" v-html="item.brief"></div>
+                    </div>
+                  </el-col>
+
+                  <p class="detail">
                     <router-link
                       :to="{
          path: '/handling-guid-list/detail/'+item.id, 
       
    }"
-                    >
-                      <div ref="routHeight">
-                        <p class="title">{{item.title}}</p>
-                        <div class="tip" v-html="item.brief"></div>
-                      </div>
-                    </router-link>
-                  </el-col>
-                  <p class="detail">了解详情</p>
+                    >了解详情</router-link>
+                  </p>
                 </el-row>
               </li>
             </ul>
@@ -51,23 +52,23 @@
                 <el-row :gutter="16">
                   <el-col :span="10">
                     <div ref="imgHeight">
-                      <img style="width:100%;" :src="recordImg[index]" alt>
+                      <img style="width:100%;" :src="recordImg[index]?recordImg[index]:recordImg[0]" alt>
                     </div>
                   </el-col>
                   <el-col :span="14">
                     <div ref="routHeight" style="position:relative">
-                      <router-link
-                        :to="{
+                      <p class="title">{{item.title}}</p>
+                      <div class="tip" v-html="item.brief"></div>
+                    </div>
+                  </el-col>
+                  <p class="detail">
+                    <router-link
+                      :to="{
          path: '/handling-guid-list/detail/'+item.id, 
       
    }"
-                      >
-                        <p class="title">{{item.title}}</p>
-                        <div class="tip" v-html="item.brief"></div>
-                      </router-link>
-                    </div>
-                  </el-col>
-                  <p class="detail">了解详情</p>
+                    >了解详情</router-link>
+                  </p>
                 </el-row>
               </li>
             </ul>
@@ -126,11 +127,7 @@ export default {
       that.tableHight = app.clentHeight() + "px";
       that.$refs.imgHeight.forEach((item, index) => {
         that.$refs.routHeight[index].clentHeight = item.offsetHeight + 30;
-        console.log(that.$refs.routHeight[index].clentHeight);
-        console.log(item.offsetHeight);
       });
-      // console.log(that.$refs.imgHeight);
-      // console.log(that.$refs.routHeight);
     }, 100);
     window.onresize = function() {
       that.tableHight = app.clentHeight() + "px";
@@ -196,9 +193,11 @@ li {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
+  padding-right: 8px;
+  box-sizing: border-box;
 }
 .detail {
-  width: 120px;
+  width: 125px;
   text-indent: 8%;
   line-height: 25px;
   position: absolute;
@@ -209,5 +208,11 @@ li {
   background-size: 100%;
   font-size: 8px !important;
   color: #fff;
+  cursor: pointer;
+  a {
+    width: 100%;
+    height: auto;
+    color: #fff;
+  }
 }
 </style>
