@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { objDeleteType } from 'infrastructure/regular-expression';
+import { objDeleteType, timeTrans } from 'infrastructure/regular-expression';
 import { NzMessageService } from 'ng-zorro-antd';
 import { OptionsEnum, ArchitectureTypeEnum } from 'infrastructure/expression';
 import { PublicModel } from 'infrastructure/public-model';
@@ -206,6 +206,9 @@ export class AddFireAcceptanceComponent implements OnInit {
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 2;
     this.flowFormDto.projectTypeStatu = 1;
+
+    this.data.dateOfReview = this.data.dateOfReview == '' ? '' : timeTrans(Date.parse(this.data.dateOfReview) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
+    
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')
@@ -215,7 +218,7 @@ export class AddFireAcceptanceComponent implements OnInit {
   save() {
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
-        Area: "450000"
+        Area: '450000',
       },
       identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {

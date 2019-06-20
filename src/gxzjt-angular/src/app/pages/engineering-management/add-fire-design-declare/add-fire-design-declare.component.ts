@@ -563,7 +563,8 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
   save() {
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
-        Area: "450000"
+        // Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length-1]
+        Area:'450000',
       },
       identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {
@@ -622,11 +623,11 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
    * 存草稿
    */
   depositDraft() {
-    this.data.planStartTime = this.data.planStartTime == '' ? '' : timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy-MM-dd', '-')
-    this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd', '-')
+    this.data.planStartTime = this.data.planStartTime == '' ? '' : timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
+    this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 1;
-    this.flowFormDto.projectTypeStatu = 0;
+    this.flowFormDto.projectTypeStatu = 0; 
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')

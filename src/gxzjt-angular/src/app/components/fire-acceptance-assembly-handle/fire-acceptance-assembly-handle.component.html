@@ -81,11 +81,10 @@
               required>
                   </textarea>
 
-            <div class="textLeft">
-              <nz-upload [nzFileList]="data.attachment" nzMultiple nzLimit="1" [nzAction]="uploadUrl"
-                [nzBeforeUpload]="beforeUpload" [nzRemove]="removeFile">
-                <button nz-button><i nz-icon type="upload" nzTheme="outline"></i><span>上传</span></button>
-              </nz-upload>
+            <div class="textLeft" *ngIf="examineFormDto">
+                <nz-upload  [(nzFileList)]="examineFormDto.attachment" [nzBeforeUpload]="beforeUpload">
+                    <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
+                  </nz-upload>
             </div>
             <div class="table_seal">
               由后台提供的当前时间 年月日

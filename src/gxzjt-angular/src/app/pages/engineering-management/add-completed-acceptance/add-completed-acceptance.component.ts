@@ -387,7 +387,9 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   * 存草稿
   */
   depositDraft() {
-    this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd', '-')
+    this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
+    
+    this.data.acceptanceOpinions.filingTime= this.data.acceptanceOpinions.filingTime == '' ? '' : timeTrans(Date.parse(this.data.acceptanceOpinions.filingTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 3;
     this.flowFormDto.projectTypeStatu = 2;
@@ -402,7 +404,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   save() {
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
-        Area: "450000"
+        Area:  '450000',
       },
       identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {

@@ -1,7 +1,7 @@
 import { HomeServiceProxy } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId } from 'infrastructure/expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVICES_URL } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
@@ -98,8 +98,8 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid) 
-      this.data.fileList[this.uoloadIndex].array[index].uid = data[0] 
-      this.data.fileList[this.uoloadIndex].array[index].url = 'https://www.baidu.com'
+      this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id 
+      this.data.fileList[this.uoloadIndex].array[index].url =PANGBO_SERVICES_URL+ data.data[0].localUrl 
     }) 
     return false;
   };

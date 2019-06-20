@@ -12,6 +12,8 @@ export class FlowRouteComponent implements OnInit {
 
   //路径的对象
   @Input() data: any;
+
+  @Input() flowPathType:any
   constructor() { }
 
   ngOnInit() {

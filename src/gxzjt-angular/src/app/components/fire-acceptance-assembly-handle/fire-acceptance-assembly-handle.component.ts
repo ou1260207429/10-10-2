@@ -5,6 +5,7 @@ import { objDeleteType, genID, createguid } from 'infrastructure/regular-express
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile, NzMessageService } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
+import { ExamineFormDto } from '@shared/service-proxies/service-proxies';
 
 /**
  * 消防验收的表单模块的办理或者结果
@@ -40,7 +41,7 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
   //判断上传的焦点
   uoloadIndex: number = -1;
 
-
+  @Input() examineFormDto:ExamineFormDto
 
   constructor(private message: NzMessageService, public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 

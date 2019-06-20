@@ -38,7 +38,7 @@
                 <!-- 消防设计的受理凭证 -->
 
                 <!-- 消防设计的意见书 -->
-                <app-fire-design-declare-assembly-handle [data]="formDto" type="1" *ngIf="this.curNodeName=='业务承办人审核'"
+                <app-fire-design-declare-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto" type="1" *ngIf="this.curNodeName=='业务承办人审核'"
                   [ngClass]="{pointerf5f5f5: curNodeName!='业务承办人审核'}">
                 </app-fire-design-declare-assembly-handle>
                 <!-- 消防设计的意见书 -->
@@ -58,9 +58,14 @@
                 <!-- 消防验收的受理凭证 -->
 
                 <!-- 消防验收的意见书 -->
-                <app-fire-acceptance-assembly-handle [data]="formDto" *ngIf="this.curNodeName=='业务承办人审核'" type="1"
+                <app-fire-acceptance-assembly-handle  [examineFormDto]="examineFormDto" [data]="formDto" *ngIf="this.curNodeName=='业务承办人审核'" type="1"
                   [ngClass]="{pointerf5f5f5: curNodeName!='业务承办人审核'}"></app-fire-acceptance-assembly-handle>
                 <!-- 消防验收的意见书 -->
+
+                 <!-- 消防验收的意见书 -->
+                 <app-fire-acceptance-assembly-handle  [examineFormDto]="examineFormDto" [data]="formDto" *ngIf="this.curNodeName=='业务审批负责人审批'" type="2"
+                 [ngClass]="{pointerf5f5f5: curNodeName!='业务审批负责人审批'}"></app-fire-acceptance-assembly-handle>
+               <!-- 消防验收的意见书 -->
 
               </div>
               <div *ngSwitchCase="3">
@@ -89,6 +94,6 @@
     </div>
   </div>
   <div [ngClass]="{hide: selectedIndex != 1}">
-    <app-flow-route *ngIf="data" [data]="data"></app-flow-route>
+    <app-flow-route *ngIf="data" [data]="data" flowPathType="flowPathType"></app-flow-route>
   </div>
 </nz-spin>
