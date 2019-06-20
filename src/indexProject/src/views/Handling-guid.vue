@@ -95,9 +95,9 @@ export default {
       //行政许可列表
       allowList: [
         {
-          title: "建设工程消防设计审核指南",
+          title: "建设工程消防设计审查指南",
           brief:
-            "审核依据：《中华人民共和国消防法》；《建设工程消防监督管理规定》等消防法规；国家工程建设消防技术标准强制性要求。",
+            "审查依据：《中华人民共和国消防法》；《建设工程消防监督管理规定》等消防法规；国家工程建设消防技术标准强制性要求。",
           src: ""
         },
         {
@@ -148,7 +148,6 @@ export default {
       this.recordList = [];
       app.post(handle.search_handleList, app.pageSize).then(req => {
         req.result.data.forEach(item => {
-          item.brief = item.brief.replace(/<[^>]+>|&[^>]+;/g, "").trim();
           if (item.noticeTypeId == 1) {
             _this.allowList.push(item);
           } else if (item.noticeTypeId == 2) {

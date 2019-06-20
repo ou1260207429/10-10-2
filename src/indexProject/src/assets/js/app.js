@@ -19,6 +19,7 @@ var app = {
     "size": 10,
     "page": 1,
     "isAsc": true,
+    "totalCount":0
   },
   /**
    * 存储数据（可以是字符串或者对象的格式）

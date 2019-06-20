@@ -2,7 +2,6 @@
 <template>
   <div style="width:100%;overflow:hidden;margin-bottom: 20px;">
     <div class="content">
-     
       <div ref="banner">
         <img style="width:100%;" src="../assets/images/法律法规_03.jpg" alt>
       </div>
@@ -28,6 +27,15 @@
                 </router-link>
               </li>
             </ul>
+            <el-row style="margin-top:40px;margin-bottom:25px;">
+              <el-pagination
+                style="float:right;"
+                :page-size="lawPageSize.size"
+                layout="prev, pager, next"
+                :total="lawtotalCount"
+                @current-change="changeCurrent($event,'Regulation')"
+              ></el-pagination>
+            </el-row>
           </el-card>
         </el-col>
         <el-col :span="12">
@@ -51,6 +59,15 @@
                 </router-link>
               </li>
             </ul>
+            <el-row style="margin-top:40px;margin-bottom:25px;">
+              <el-pagination
+                style="float:right;"
+                :page-size="filePageSize.size"
+                layout="prev, pager, next"
+                :total="filetotalCount"
+                @current-change="changeCurrent($event,'Normative')"
+              ></el-pagination>
+            </el-row>
           </el-card>
         </el-col>
       </el-row>
@@ -67,7 +84,11 @@ export default {
     return {
       lawsList: null,
       lawsFiles: null,
-      tableHight: "200px"
+      tableHight: "200px",
+      lawPageSize: app.pageSize,
+      filePageSize: app.pageSize,
+      lawtotalCount: 0,
+      filetotalCount: 0
     };
   },
 
@@ -76,8 +97,8 @@ export default {
   computed: {},
 
   mounted() {
-    let params1 = Object.assign(app.pageSize);
-    this.getlawsList(app.pageSize);
+    this.getlawsList();
+    this.getFileList();
     const that = this;
     setTimeout(function() {
       that.tableHight =
@@ -89,24 +110,54 @@ export default {
   },
 
   methods: {
-    getlawsList(params) {
+    //获取法律法规文件
+    getlawsList() {
       let _this = this;
       _this.lawsList = [];
-      _this.lawsFiles = [];
-      app.post(laws.serach_lawsList, params).then(req => {
+      let lawParams = Object.assign({ group: "Regulation" }, this.lawPageSize);
+      app.post(laws.serach_lawsList, lawParams).then(req => {
         if (req.success) {
           req.result.data.forEach(element => {
             element.creationTime = moment(element.creationTime).format(
               "YYYY-MM-DD hh:mm:ss"
             );
-            if (element.regulationTypeId == "1") {
-              _this.lawsList.push(element);
-            } else if (element.regulationTypeId == "2") {
-              _this.lawsFiles.push(element);
-            }
           });
+          _this.lawsList = req.result.data;
+
+          _this.lawtotalCount = req.result.totalCount;
         }
       });
+    },
+    /**
+     *
+     * 获取规范性文件
+     */
+    getFileList() {
+      let _this = this;
+      _this.lawsFiles = [];
+      let fileParams = Object.assign({ group: "Normative" }, this.filePageSize);
+      app.post(laws.serach_lawsList, fileParams).then(req => {
+        if (req.success) {
+          req.result.data.forEach(element => {
+            element.creationTime = moment(element.creationTime).format(
+              "YYYY-MM-DD hh:mm:ss"
+            );
+          });
+          _this.lawsFiles = req.result.data;
+          _this.filetotalCount = req.result.totalCount;
+        }
+      });
+    },
+    changeCurrent(page, type) {
+      if (type == "Regulation") {
+        this.lawPageSize.page = page;
+        this.getlawsList();
+      } else if (type == "Normative") {
+        this.filePageSize.page = page;
+        this.getFileList();
+      }
+      console.log(type);
+      console.log(page);
     }
   }
 };

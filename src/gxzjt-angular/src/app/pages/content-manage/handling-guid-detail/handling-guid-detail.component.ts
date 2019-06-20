@@ -36,6 +36,7 @@ export class HandlingGuidDetailComponent implements OnInit {
       }
     },
   ];
+  
   operate
   //0是新增  1是查看 2是编辑
   type

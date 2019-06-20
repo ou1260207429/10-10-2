@@ -12,6 +12,13 @@ Vue.config.productionTip = false
 Vue.use(element)
 /* eslint-disable no-new */
 //在main.js中定义一个全局函数
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+  next()
+
+})
 Vue.prototype.getConfigJson = function () {
   axios.get('static/serverconfig.json').then((result) => {
     Vue.prototype.baseUrl = result.data.ApiUrl; //设置成Vue的全局属性
