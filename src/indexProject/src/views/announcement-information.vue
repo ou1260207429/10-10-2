@@ -209,7 +209,7 @@ export default {
         },
         {
           key: "checkResultText",
-          label: "抽查结果"
+          label: "结果"
         }
       ]
     };

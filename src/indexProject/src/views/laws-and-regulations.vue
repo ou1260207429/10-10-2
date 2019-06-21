@@ -85,8 +85,8 @@ export default {
       lawsList: null,
       lawsFiles: null,
       tableHight: "200px",
-      lawPageSize: app.pageSize,
-      filePageSize: app.pageSize,
+      lawPageSize: { size: 10, page: 1, isAsc: true },
+      filePageSize: { size: 10, page: 1, isAsc: true },
       lawtotalCount: 0,
       filetotalCount: 0
     };
