@@ -1,8 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { _HttpClient, ModalHelper } from '@delon/theme';
+import { Component, OnInit } from '@angular/core';
 
 
-import { FormBuilder, FormGroup, Validators ,FormControl} from '@angular/forms';
+import { FormBuilder, Validators, FormControl,FormGroup } from '@angular/forms';
+import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
+import { NzModalService } from 'ng-zorro-antd';
+import { REGISTER_URL } from 'infrastructure/expression';
+import { TokenService } from 'abp-ng2-module/dist/src/auth/token.service';
 
 @Component({
   selector: 'app-user-center-modify-psw',
@@ -10,8 +13,8 @@ import { FormBuilder, FormGroup, Validators ,FormControl} from '@angular/forms';
   styleUrls: ['./modify-psw.component.less']
 })
 export class UserCenterModifyPswComponent implements OnInit {
-  
-  validateForm: any;
+
+  validateForm: FormGroup;
 
 
 
@@ -19,8 +22,10 @@ export class UserCenterModifyPswComponent implements OnInit {
   newPassword = "";
   confirmPassword = "";
   modifying = false;
-  constructor(private http: _HttpClient,
-    private modal: ModalHelper,
+  constructor(
+    private _tokenService: TokenService,
+    private modalService: NzModalService,
+    public http: HttpClient,
     private fb: FormBuilder) {
 
   }
@@ -29,7 +34,8 @@ export class UserCenterModifyPswComponent implements OnInit {
     this.validateForm = this.fb.group({
       oldPassword: [null, [Validators.required]],
       newPassword: [null, [Validators.required]],
-      confirmPassword: [null, [Validators.required, this.confirmationValidator]]
+      confirmPassword: [null, [Validators.required, this.confirmationValidator]],
+
     });
 
   }
@@ -44,6 +50,49 @@ export class UserCenterModifyPswComponent implements OnInit {
   };
 
   modify() {
+    this.modifying = true;
+    let url = REGISTER_URL + "api/User/LoginUserChangePassword";
 
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this._tokenService.getToken()
+      })
+    };
+
+
+    var param = {
+      oldPassword: this.oldPassword,
+      newPassword: this.newPassword,
+      confirmPassword: this.confirmPassword
+    }
+
+    this.http.post(url, param, httpOptions).subscribe((res: any) => {
+
+      // console.log(res);
+      if (res) {
+        if (res.result == 0) {
+          this.modalService.info({
+            nzTitle: '提示',
+            nzContent: "修改成功",
+          });
+          this.validateForm.reset();
+
+        } else {
+          this.showErr(res.message);
+        }
+      }
+      this.modifying = false;
+    }, err => {
+      this.showErr(err);
+      this.modifying = false;
+    });
+  }
+
+  showErr(msg) {
+    this.modalService.error({
+      nzTitle: '出错啦',
+      nzContent: msg,
+    });
   }
 }
