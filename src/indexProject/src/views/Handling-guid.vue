@@ -205,7 +205,7 @@ li {
   margin-left: 41.66667%;
   background: url("/../../assets/images/办事指南_08.png") no-repeat;
   background-size: 100%;
-  font-size: 8px !important;
+  font-size: 12px !important;
   color: #fff;
   cursor: pointer;
   a {

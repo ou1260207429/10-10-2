@@ -18,7 +18,7 @@
         <el-card v-loading="!data" :style="{minHeight:tableHight}">
           <div v-if="data">
             <h1
-              style="color:#BD1127FF;text-align:center;padding:20px 0;letter-spacing:3px; box-sizing: border-box;"
+              style="color:#bd1127;text-align:center;padding:20px 0;letter-spacing:3px; box-sizing: border-box;"
             >{{data.title}}</h1>
             <div class="lawContent" v-html="data.content"></div>
           </div>
