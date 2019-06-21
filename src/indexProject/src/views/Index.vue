@@ -95,7 +95,12 @@
             <!-- <div v-if="!lawsList" class="noData">暂无数据</div> -->
             <div v-if="lawsList">
               <div class="listParent">
-                <div :key="index" v-for="(item,index) in tableList" class="list">
+                <div
+                  :key="index"
+                  v-for="(item,index) in tableList"
+                  class="list"
+                  @click="downList(item.guid,item.id)"
+                >
                   {{ item.attachmentName }}
                   <span style="float: right">{{ item.creationTime }}</span>
                 </div>
@@ -256,6 +261,13 @@ export default {
         });
         _this.tabHeight = app.clentHeight();
       });
+    },
+
+    /**
+     * 下载表格
+     */
+    downList(guid, id) {
+      app.getFileDetail(guid, id);
     }
   }
 };

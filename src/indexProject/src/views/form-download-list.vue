@@ -25,7 +25,7 @@
                 :page-size="pageSize.size"
                 layout="prev, pager, next"
                 :total="total"
-                @current-change="changeCurrent()"
+                @current-change="changeCurrent"
               ></el-pagination>
             </el-row>
           </div>
@@ -44,7 +44,11 @@ export default {
     return {
       downLoadList: null,
       tableHight: "100px",
-      pageSize: app.pageSize,
+      pageSize: {
+        size: 10,
+        page: 1,
+        isAsc: true
+      },
       total: 0
     };
   },
@@ -68,7 +72,7 @@ export default {
   methods: {
     getTableList() {
       let _this = this;
-      this.downLoadList = null;
+      this.downLoadList = [];
       app.post(table.search_tableList, _this.pageSize).then(req => {
         req.result.data.forEach(element => {
           element.creationTime = moment(element.creationTime).format(
@@ -83,8 +87,8 @@ export default {
     /**
      * 下载表格
      */
-    downList(guid,id) {
-      app.getFileDetail(guid,id);
+    downList(guid, id) {
+      app.getFileDetail(guid, id);
     },
     /**
      * 分页

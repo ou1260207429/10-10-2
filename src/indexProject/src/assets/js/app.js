@@ -4,6 +4,9 @@ import Vue from "vue"
 import qs from 'qs';
 import 'url-search-params-polyfill'
 import {
+  Message
+} from 'element-ui'
+import {
   table
 } from './apiValue'
 var app = {
@@ -107,7 +110,26 @@ var app = {
       })
     })
   },
-
+  /**
+   * 显示提示信息
+   * message(提示的内容),type（success,error,info等）
+   * */
+  alert(message, type, duration) {
+    let defaultType = 'info';
+    let defaultDuration = 2;
+    if (type) {
+      defaultType = type;
+    }
+    if (duration) {
+      defaultDuration = duration;
+    }
+    Message({
+      showClose: true,
+      message: message,
+      type: defaultType,
+      duration: defaultDuration * 1000
+    })
+  },
   // 数组对象排序
   sortByKey(array, key) {
     return array.sort(function (a, b) {
@@ -126,7 +148,6 @@ var app = {
   },
   //获取附件详情
   getFileDetail(guid, id) {
-    console.log(id)
     let finalUrl =
       table.search_downLoadDetail +
       "?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&module=table&sourceId=" +
@@ -153,6 +174,8 @@ var app = {
             link.click();
             app.countDownLoadTimes(id)
             resolve(req);
+          } else {
+            app.alert('无附件可下载');
           }
 
         }
