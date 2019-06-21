@@ -15,6 +15,7 @@ import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import * as moment from 'moment';
 import { PublicFormComponent } from '../public/public-form.component';
+import { NzMessageService } from 'ng-zorro-antd';
 
 /**
  * 竣工验收
@@ -52,7 +53,12 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
           //   paramsName: 'record',
           // },
           click: (record: any, modal: any) => {
-            window.open(record.acceptAttachmentFileUrl)
+            if(record.acceptAttachmentUrl){
+              window.open(record.acceptAttachmentUrl)
+            }else{
+              this.message.error('暂无受理凭证');
+            }
+
           },
         },
         {
@@ -63,8 +69,12 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
           //   paramsName: 'record',
           // },
           click: (record: any, modal: any) => {
+            if(record.opinionAttachmentUrl){
+              window.open(record.opinionAttachmentUrl)
+            }else{
+              this.message.error('暂无意见书');
+            }
 
-            window.open(record.opinionFileUrl)
           },
         },
       ]
@@ -106,17 +116,19 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   flowPathTypeEnum = FlowPathTypeEnum
 
   //时间
-  rangeTime = ['2019-02-19T05:46:09.135Z','2019-06-19T05:46:09.135Z'];
+  rangeTime = [];
   constructor(private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
     private _flowServices: FlowServices,
+
     private router: Router,
     private http: _HttpClient,
-    private xlsx: XlsxService) {
+    private xlsx: XlsxService, private message: NzMessageService) {
    super();
 
   }
 
   ngOnInit() {
+    this.resetTime();
     this.init()
   }
 
@@ -127,6 +139,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.searchParam.sorting = 'ProjectName';
     this.searchParam.startApplyTime = moment(this.rangeTime[0]);
     this.searchParam.endApplyTime =moment(this.rangeTime[1]);
+    this.resetTime();
     this.getList();
   }
 
@@ -184,6 +197,11 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
    */
   exportXlsx(){
     // this._publicModel.exportXlsx(this.columns,this.formResultData.data);
+  }
+  resetTime() {
+    var startTime = new Date();
+    startTime.setDate(startTime.getDate() - 1)
+    this.rangeTime = [startTime, new Date()];
   }
 
 }

@@ -10,6 +10,7 @@ import { SSL_OP_ALL } from 'constants';
 
 import { PublicFormComponent } from '../public/public-form.component'
 import { PANGBO_SERVICES_URL } from 'infrastructure/expression';
+import { AppSessionService } from '@shared/session/app-session.service';
 
 /**
  * 工程管理->消防设计审查管理->新增申报
@@ -309,7 +310,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
           }, {
             name: "图书馆",
             checked: false,
-            value: "图书馆"
+            value: "图书馆1"
           }, {
             name: "食堂",
             checked: false,
@@ -524,7 +525,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
 
   //子组件的表单对象
   form: FormGroup
-  constructor(private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
+  constructor(private _appSessionService:AppSessionService,private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     super();
     this.flowFormQueryDto.flowType = 1;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
@@ -561,16 +562,19 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
    * 申请提交
    */
   save() {
+
+    console.log(this._appSessionService.user)
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
-        Area: "450000"
+        // Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length-1]
+        Area:'450000',
       },
       identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {
-        applyEID: '10001',
-        applyEName: '测试人员',
-        deptId: 1,
-        deptFullPath: '测试部门',
+        applyEID: this._appSessionService.user.id,
+        applyEName: this._appSessionService.user.eName,
+        deptId: this._appSessionService.user.organizationsId,
+        deptFullPath: this._appSessionService.user.organizationsName,
       }
     };
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
@@ -596,6 +600,8 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
       data.result.auditorRecords.forEach(element => {
         const flowNodeUser = new FlowNodeUser()
         flowNodeUser.userFlowId = element.id
+        flowNodeUser.userName = element.applyEName
+        flowNodeUser.userCode = element.applyEID
         flowDataDto.handleUserList.push(flowNodeUser)
       });
 
@@ -622,11 +628,11 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
    * 存草稿
    */
   depositDraft() {
-    this.data.planStartTime = this.data.planStartTime == '' ? '' : timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy-MM-dd', '-')
-    this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd', '-')
+    this.data.planStartTime = this.data.planStartTime == '' ? '' : timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
+    this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 1;
-    this.flowFormDto.projectTypeStatu = 0;
+    this.flowFormDto.projectTypeStatu = 0; 
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')

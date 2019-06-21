@@ -1,12 +1,12 @@
-import { finalize } from 'rxjs/operators';
+// import { finalize } from 'rxjs/operators';
 import {
   Component,
   Injector,
-  AfterViewInit,
+  
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import {  FormBuilder } from '@angular/forms';
+// import {  FormBuilder } from '@angular/forms';
 
 // import {
 //   AccountServiceProxy,
@@ -17,10 +17,10 @@ import {  FormBuilder } from '@angular/forms';
 
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 
-import { LoginService } from '../login/login.service';
+// import { LoginService } from '../login/login.service';
 import { AppComponentBase } from '@shared/component-base/app-component-base';
 
-import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // import { environment } from 'environments/environment'
 
@@ -44,9 +44,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
     injector: Injector,
     // private _accountService: AccountServiceProxy,
     private _router: Router,
-    private readonly _loginService: LoginService,
     public http: HttpClient,
-    private fb: FormBuilder,
     private modalService: NzModalService,
   ) {
     super(injector);
@@ -120,7 +118,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
 
     this.http.post(url, this.model, this.httpOptions).subscribe((res: any) => {
 
-      console.log(res);
+      // console.log(res);
       if (res) {
         if (res.result == 0) {
           this.modalService.info({

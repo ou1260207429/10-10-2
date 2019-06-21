@@ -1,11 +1,11 @@
 import { HomeServiceProxy } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId } from 'infrastructure/expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVICES_URL } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
-import { PublicServices } from 'services/public.services'; 
+import { PublicServices } from 'services/public.services';
 
 /**
  * 竣工验收的表单模块
@@ -19,7 +19,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
   //判断是新增或者办理  0是新增 1是办理
   @Input() type: number = 0
-  
+
   @Input() data: any
 
   //市县区
@@ -40,26 +40,31 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   //抽取号
   decimationnumber
 
-   //判断上传的焦点
-   uoloadIndex: number = -1;
-  constructor(public _publicServices: PublicServices,public _homeServiceProxy:HomeServiceProxy,public publicModel: PublicModel, ) {
+  //判断上传的焦点
+  uoloadIndex: number = -1;
+  constructor(public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) {
     this.decimationnumber = [];
-    for (let index = 1; index < 101; index++) { 
-      this.decimationnumber.push({ label: index, value: index },)
+    for (let index = 1; index < 101; index++) {
+      this.decimationnumber.push({ label: index, value: index })
     }
   }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
-    this.getAreaDropdown();
+    this.getAreaDropdown(); 
+
+    setTimeout(()=>{
+      console.log(this.data);
+    },2000)
+    
   }
 
-   /**
-   * 获取市县区的接口
-   */
-  getAreaDropdown(){
-    this._homeServiceProxy.getAreaDropdown().subscribe(data=>{  
+  /**
+  * 获取市县区的接口
+  */
+  getAreaDropdown() {
+    this._homeServiceProxy.getAreaDropdown().subscribe(data => {
       this.position = classTreeChildrenArray([JSON.parse(data)]);
     })
   }
@@ -105,10 +110,10 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     const formData = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
-      const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid) 
-      this.data.fileList[this.uoloadIndex].array[index].uid = data[0] 
-      this.data.fileList[this.uoloadIndex].array[index].url = 'https://www.baidu.com'
-    }) 
+      const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
+      this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
+      this.data.fileList[this.uoloadIndex].array[index].url =PANGBO_SERVICES_URL+ data.data[0].localUrl
+    })
     return false;
   };
 

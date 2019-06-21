@@ -1,10 +1,12 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum } from 'infrastructure/expression';
-import { objDeleteType, genID } from 'infrastructure/regular-expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVICES_URL } from 'infrastructure/expression';
+import { objDeleteType, genID, createguid, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
+import { ExamineFormDto, ProjectAttachment } from '@shared/service-proxies/service-proxies';
+
 
 /**
  * 消竣工验收的表单模块的办理或者结果
@@ -21,10 +23,92 @@ export class CompletedAcceptanceAssemblyHandleComponent implements OnInit {
 
   //从父页面传来的数据
   @Input() data: any
-  
-  constructor() { }
+
+  //市县区
+  position = OptionsEnum
+
+  //结构类型
+  typeSelect = ArchitectureTypeEnum
+
+  //耐火结构
+  refractoryEnum = RefractoryEnum
+
+  //获取表单对象
+  @ViewChild('f') f: FormGroup;
+
+  //向父组件发送数据
+  @Output() private childOuter = new EventEmitter();
+ 
+
+  @Input() examineFormDto:ExamineFormDto
+ 
+
+  constructor(public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
+
+    console.log(this.data);
+
+    //向父组件发送数据   把表单对象传过去
+    this.childOuter.emit(this.f);
+
+    if(this.examineFormDto){
+      this.examineFormDto.attachment = this.examineFormDto.attachment?this.examineFormDto.attachment:[]
+    }
+     
   }
+
+
+
+  /**
+   * 选择市县区
+   * @param v 
+   */
+  changeCitycountyAndDistrict(v) {
+    this.data.engineeringCitycountyAndDistrict = v;
+  }
+
+  /**
+   * 添加数组
+   * @param arr 数组
+   */
+  addArray(arr) {
+    arr.push(objDeleteType(arr[0]))
+  }
+
+  /**
+   * 删除数组
+   */
+  deleteArray(arr, index) {
+    this.publicModel.engineeringDeleteArray(arr, index)
+  } 
+
+  
+
+  beforeUpload = (file: any): boolean => {
+    const name = file.name;
+    const projectAttachment = new ProjectAttachment();
+    projectAttachment.attachmentName = file.name; 
+    this.examineFormDto.attachment.push(projectAttachment)
+
+    let params = {
+      sourceId: createguid(),
+      AppId: AppId,
+      module: "table",
+    }
+    const formData = new FormData();
+    formData.append('files', file);
+    this._publicServices.newUpload(formData, params).subscribe(data => {
+      const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)  
+      // this.examineFormDto.attachment[index].fileNo = data.data[0].id 
+      this.examineFormDto.attachment[index].fileUrl =PANGBO_SERVICES_URL+data.data[0].localUrl 
+    }) 
+    return false;
+  };
+
+  removeFile = (file: UploadFile): boolean => {
+    return true;
+  }
+
 
 }

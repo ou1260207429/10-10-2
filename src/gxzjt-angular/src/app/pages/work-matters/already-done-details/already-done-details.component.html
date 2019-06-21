@@ -33,33 +33,23 @@
             <div [ngSwitch]="flowPathType">
               <div *ngSwitchCase="1">
 
-                <!-- 消防设计的受理凭证 -->
-                <app-fire-design-declare-assembly-handle [data]="formDto"
-                  *ngIf="flowPathType ==1 && this.curNodeName=='大厅受理'" [ngClass]="{pointerf5f5f5: curNodeName!='大厅受理'}">
-                </app-fire-design-declare-assembly-handle>
-                <!-- 消防设计的受理凭证 -->
-
-                <!-- 消防设计的意见书 -->
-                <app-fire-design-declare-assembly-handle [data]="formDto" type="1" *ngIf="flowPathType ==1">
+                <!-- 消防设计的意见书2 -->
+                <app-fire-design-declare-assembly-handle [data]="formDto" type="2">
                 </app-fire-design-declare-assembly-handle>
                 <!-- 消防设计的意见书 -->
               </div>
               <div *ngSwitchCase="2">
-                <!-- 消防验收的受理凭证 -->
-                <app-fire-acceptance-assembly-handle [data]="formDto" *ngIf="flowPathType ==2"
-                  [ngClass]="{pointerf5f5f5: curNodeName!='大厅受理'}"></app-fire-acceptance-assembly-handle>
-                <!-- 消防验收的受理凭证 -->
-
                 <!-- 消防验收的意见书 -->
-                <app-fire-acceptance-assembly-handle [data]="formDto" *ngIf="flowPathType ==2" type="1"
-                  [ngClass]="{pointerf5f5f5: curNodeName!='业务承办人审核'}"></app-fire-acceptance-assembly-handle>
+                <app-fire-acceptance-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto" type="2">
+                </app-fire-acceptance-assembly-handle>
                 <!-- 消防验收的意见书 -->
               </div>
               <div *ngSwitchCase="3">
-                <!-- 竣工备案的补正材料 -->
-                <app-completed-acceptance-assembly-handle [data]="formDto">
+                <!-- 竣工备案的抽中或者未抽中 -->
+                <app-completed-acceptance-assembly-handle [data]="formDto" type="7"
+                  *ngIf="this.curNodeName=='业务审批负责人审批'">
                 </app-completed-acceptance-assembly-handle>
-                <!-- 竣工备案的补正材料 -->
+                <!-- 竣工备案的抽中或者未抽中 -->
               </div>
             </div>
 

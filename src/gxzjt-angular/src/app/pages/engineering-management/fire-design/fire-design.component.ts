@@ -19,6 +19,7 @@ import { timeTrans } from 'infrastructure/regular-expression';
 import { PublicFormComponent } from '../public/public-form.component';
 import { FormBuilder } from '@angular/forms';
 import * as moment from 'moment';
+import { NzMessageService } from 'ng-zorro-antd';
 
 
 /**
@@ -32,7 +33,7 @@ import * as moment from 'moment';
 export class FireDesignComponent extends PublicFormComponent implements  OnInit {
   param = new FireAuditCompleteQueryDto();
   formResultData = [];
-  rangeTime = ['2019-02-19T05:46:09.135Z','2019-06-19T05:46:09.135Z'];
+  rangeTime = [];
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     {
@@ -57,7 +58,11 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
           //   paramsName: 'record',
           // },
           click: (record: any, modal: any) => {
-            window.open(record.acceptAttachmentFileUrl)
+            if(record.acceptAttachmentUrl){
+              window.open(record.acceptAttachmentUrl)
+            }else{
+              this.message.error('暂无受理凭证');
+            }
           },
         },
         {
@@ -68,8 +73,11 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
           //   paramsName: 'record',
           // },
           click: (record: any, modal: any) => {
-
-            window.open(record.opinionFileUrl)
+            if(record.opinionAttachmentUrl){
+              window.open(record.opinionAttachmentUrl)
+            }else{
+              this.message.error('暂无意见书');
+            }
           },
         },
       ]
@@ -105,12 +113,14 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     private router: Router,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
     private formBuilder: FormBuilder,
-    private xlsx: XlsxService) {
+    private xlsx: XlsxService, private message: NzMessageService) {
       super();
      }
 
   ngOnInit() {
+    this.resetTime();
     this.init();
+
   }
 
 
@@ -121,6 +131,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     this.param.sorting = 'ProjectName';
     this.param.startApplyTime = moment(this.rangeTime[0])
     this.param.endApplyTime =moment(this.rangeTime[1])
+    this.resetTime();
     this.getList();
   }
 
@@ -162,5 +173,10 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
 
   watchItem(item) {
     this.router.navigate([`/app/work-matters/alreadyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}`]);
+  }
+  resetTime() {
+    var startTime = new Date();
+    startTime.setDate(startTime.getDate() - 1)
+    this.rangeTime = [startTime, new Date()];
   }
 }

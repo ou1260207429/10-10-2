@@ -16,6 +16,7 @@ import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import { timeTrans } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
+import { NzMessageService } from 'ng-zorro-antd';
 /**
  * 已办流程
  */
@@ -36,8 +37,26 @@ export class AlreadyDoneComponent
       title: '操作',
       buttons: [
         {
-          text: '执行', click: (item: any) => {
+          text: '详情', click: (item: any) => {
             this.watchItem(item);
+          }
+        },
+        {
+          text: '受理凭证', click: (record: any) => {
+            if(record.acceptAttachmentUrl){
+              window.open(record.acceptAttachmentUrl)
+            }else{
+              this.message.error('暂无受理凭证');
+            }
+          }
+        },
+        {
+          text: '意见书', click: (record: any) => {
+            if(record.opinionAttachmentUrl){
+              window.open(record.opinionAttachmentUrl)
+            }else{
+              this.message.error('暂无意见书');
+            }
           }
         },
       ]
@@ -71,7 +90,7 @@ export class AlreadyDoneComponent
     private _flowServices: FlowServices,
     private router: Router,
     private http: _HttpClient,
-    private xlsx: XlsxService) {
+    private xlsx: XlsxService, private message: NzMessageService) {
     super();
   }
 

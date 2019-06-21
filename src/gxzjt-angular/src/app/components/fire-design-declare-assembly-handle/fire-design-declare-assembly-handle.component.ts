@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId } from 'infrastructure/expression';
-import { objDeleteType, genID, createguid } from 'infrastructure/regular-expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVICES_URL } from 'infrastructure/expression';
+import { objDeleteType, genID, createguid, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
+import { ExamineFormDto, ProjectAttachment } from '@shared/service-proxies/service-proxies';
 
 /**
  * 消防设计的表单模块的办理或者结果
@@ -36,22 +37,24 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
 
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
+ 
 
-  //判断上传的焦点
-  uoloadIndex: number = -1;
-
-
-
-  fileList: UploadFile[] = [];
+  @Input() examineFormDto:ExamineFormDto
+ 
 
   constructor(public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
 
-    console.log(this.data);
+    setTimeout(()=>{
+      console.log(this.data);
+    },3000) 
 
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
+
+    
+     
   }
 
 
@@ -77,48 +80,41 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
    */
   deleteArray(arr, index) {
     this.publicModel.engineeringDeleteArray(arr, index)
-  }
-  
-
-  handleChange(index) {
-    this.uoloadIndex = index
-  }
+  } 
 
   
 
-   /**
-    * 上传文件
-    */
-   uploadFiles(guid) {
+  beforeUpload = (file: any): boolean => {
+    if(this.examineFormDto){
+      this.examineFormDto.attachment = this.examineFormDto.attachment?this.examineFormDto.attachment:[]
+      console.log(this.examineFormDto.attachment);
+    }
+ 
+    const name = file.name;
+    const projectAttachment = new ProjectAttachment();
+    projectAttachment['name'] = file.name;
+    projectAttachment.attachmentName = file.name;
+    // projectAttachment.flieCode = tid; 
+    this.examineFormDto.attachment.push(projectAttachment)
+
     let params = {
-      sourceId: guid,
+      sourceId: createguid(),
       AppId: AppId,
       module: "table",
     }
-
-    this.data.attachment.forEach((file: any) => {
-      const formData = new FormData();
-      formData.append('files', file);
-      this._publicServices.newUpload(formData, params).subscribe(data => {
-        console.log(data)
-      })
-    });
-  }
-
-  beforeUpload = (file: UploadFile): boolean => {
-    this.data.attachment = this.data.attachment?this.data.attachment:[]
-    this.uploadFiles(createguid())
-    this.data.attachment =this.data.attachment.concat(file);
+    const formData = new FormData();
+    formData.append('files', file);
+    this._publicServices.newUpload(formData, params).subscribe(data => {
+      const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)  
+      // this.examineFormDto.attachment[index].fileNo = data.data[0].id 
+      this.examineFormDto.attachment[index].fileUrl =PANGBO_SERVICES_URL+data.data[0].localUrl 
+    }) 
     return false;
   };
 
   removeFile = (file: UploadFile): boolean => {
-    this.data.attachment.forEach((item, index) => {
-      if (item.uid == file.uid) {
-        this.data.attachment.splice(index, 1);
-      }
-    });
     return true;
   }
+
 
 }
