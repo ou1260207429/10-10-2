@@ -85,7 +85,7 @@ export class AlreadyDoneDetailsComponent implements OnInit {
   }
 
   init() {
-    Promise.all([this.getWorkFlow_NodeRecordAndAuditorRecords(), this.getAcceptApplyForm()]).then((data: any) => {
+    Promise.all([this.getWorkFlow_NodeRecordAndAuditorRecords(), this.getAcceptApplyForm(), this.getPrimaryExamine()]).then((data: any) => {
       this.data = data[0].result
       this.formDto = data[1]
       if (data[2]) this.examineFormDto = data[2]
@@ -108,14 +108,8 @@ export class AlreadyDoneDetailsComponent implements OnInit {
 
         //获取当前节点 由这个判断提交的接口
         this.curNodeName = this.workFlowData.nodeViewInfo.curNodeName
-        console.log(this.workFlowData)
-        if (this.curNodeName != '大厅受理') {
-          this.getPrimaryExamine(() => {
-            this.type = false
-          })
-        } else {
-          this.type = false
-        }
+
+        this.type = false
       })
 
     })
