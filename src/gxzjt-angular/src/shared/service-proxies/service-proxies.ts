@@ -10192,6 +10192,7 @@ export interface IProjectFlowDto {
 }
 
 export class UserBaseDto implements IUserBaseDto {
+    id: string | undefined;
     userName: string | undefined;
     userCode: string | undefined;
     orgCode: string | undefined;
@@ -10208,6 +10209,7 @@ export class UserBaseDto implements IUserBaseDto {
 
     init(data?: any) {
         if (data) {
+            this.id = data["id"];
             this.userName = data["userName"];
             this.userCode = data["userCode"];
             this.orgCode = data["orgCode"];
@@ -10224,6 +10226,7 @@ export class UserBaseDto implements IUserBaseDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["userName"] = this.userName;
         data["userCode"] = this.userCode;
         data["orgCode"] = this.orgCode;
@@ -10240,6 +10243,7 @@ export class UserBaseDto implements IUserBaseDto {
 }
 
 export interface IUserBaseDto {
+    id: string | undefined;
     userName: string | undefined;
     userCode: string | undefined;
     orgCode: string | undefined;
