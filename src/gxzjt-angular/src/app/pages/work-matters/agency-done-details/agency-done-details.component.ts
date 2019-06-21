@@ -79,7 +79,6 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.flowId = this._activatedRoute.snapshot.paramMap.get('flowId')
     this.flowPathType = this._activatedRoute.snapshot.paramMap.get('flowPathType')
     this.operationType = this._activatedRoute.snapshot.paramMap.get('operationType')
-    console.log(this.flowPathType);
 
   }
 
@@ -92,32 +91,31 @@ export class AgencyDoneDetailsComponent implements OnInit {
     Promise.all([this.getWorkFlow_NodeRecordAndAuditorRecords(), this.getAcceptApplyForm()]).then((data: any) => {
       this.data = data[0].result
       this.formDto = data[1]
-      // if (data[2]) this.examineFormDto = data[2]
       const flowFormQueryDto = new FlowFormQueryDto();
       flowFormQueryDto.flowType = this.flowPathType
       flowFormQueryDto.projectId = this.formDto.projectId;
       flowFormQueryDto.flowId = this.flowId
 
+      console.log(this.formDto);
       const workFlow: WorkFlow = {
         workFlow_InstanceId: this.formDto.workFlow_Instance_Id,
         workFlow_TemplateInfoId: 10171,
         workFlow_NodeAuditorRecordId: this.formDto.flowNodeUserInfo.userFlowId,
       }
-      console.log(this.formDto.workFlow_Instance_Id)
       //获取JSON和节点信息
       Promise.all([this.post_GetFlowFormData(flowFormQueryDto), this.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow)]).then((value: any) => {
         this.formJson = JSON.parse(value[0].formJson);
         this.tenantWorkFlowInstanceDto = this.workFlowData = value[1].result;
         this.tenantWorkFlowInstanceDto.workFlow_InstanceId = this.formDto.workFlow_Instance_Id
 
+
         //获取当前节点 由这个判断提交的接口
         this.curNodeName = this.workFlowData.nodeViewInfo.curNodeName
-        console.log(this.workFlowData)
-        if(this.curNodeName!='大厅受理'){
-          this.getPrimaryExamine(()=>{
+        if (this.curNodeName != '大厅受理') {
+          this.getPrimaryExamine(() => {
             this.type = false
           })
-        }else{
+        } else {
           this.type = false
         }
       })
@@ -169,71 +167,104 @@ export class AgencyDoneDetailsComponent implements OnInit {
    * 点击提交
    */
   save(bo?: boolean) {
+    const num = bo ? 1 : 0;
     this.tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
-      Area: "450000"
+      Area: '450000',
+      IsChoose: num
     }
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptFullPath = this.appSession.user.organizationsName
 
-    if (!bo && this.curNodeName == '大厅受理') {
-      this.noResult((data) => {
-        this.acceptApply(data);
+
+    if (!bo && this.curNodeName == '业务审批负责人审批') { 
+      this.noResult((data) => { 
+        this._flowServices.tenant_NodeToNextNodeByNoPass(data.data).subscribe((data: any) => {
+          this.examineFormDto.handleUserList = [];
+          this.examineFormDto.currentNodeId = data.result.cur_Node_Id
+          this.examineFormDto.currentNodeName = data.result.cur_NodeName
+          this.examineFormDto.workFlow_Instance_Id = data.result.workFlow_Instance_Id
+          this.examineFormDto.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
+          data.result.auditorRecords.forEach(element => {
+            const flowNodeUser = new FlowNodeUser()
+            flowNodeUser.userFlowId = element.id
+            flowNodeUser.userCode = element.applyEID
+            flowNodeUser.userName = element.applyEName
+            this.examineFormDto.handleUserList.push(flowNodeUser)
+          });
+
+          this.finalExamine(this.examineFormDto);
+        })
       })
-      return false;
+
+    } else { 
+      this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
+
+        this.formDto.isAccept = bo;
+        this.examineFormDto.isPass = bo;
+        let form: any = this.curNodeName == '大厅受理' ? this.formDto : this.examineFormDto;
+
+        this.formDto.handleUserList = [];
+        this.formDto.currentNodeId = data.result.cur_Node_Id
+        this.formDto.currentNodeName = data.result.cur_NodeName
+        this.formDto.workFlow_Instance_Id = data.result.workFlow_Instance_Id
+        this.formDto.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
+        data.result.auditorRecords.forEach(element => {
+          const flowNodeUser = new FlowNodeUser()
+          flowNodeUser.userFlowId = element.id
+          flowNodeUser.userCode = element.applyEID
+          flowNodeUser.userName = element.applyEName
+          this.formDto.handleUserList.push(flowNodeUser)
+        });
+
+        this.examineFormDto.handleUserList = [];
+        this.examineFormDto.currentNodeId = data.result.cur_Node_Id
+        this.examineFormDto.currentNodeName = data.result.cur_NodeName
+        this.examineFormDto.workFlow_Instance_Id = data.result.workFlow_Instance_Id
+        this.examineFormDto.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
+        data.result.auditorRecords.forEach(element => {
+          const flowNodeUser = new FlowNodeUser()
+          flowNodeUser.userFlowId = element.id
+          flowNodeUser.userCode = element.applyEID
+          flowNodeUser.userName = element.applyEName
+          this.examineFormDto.handleUserList.push(flowNodeUser)
+        });
+
+        console.log(this.curNodeName)
+
+
+        switch (this.curNodeName) {
+          case '大厅受理':
+            this.acceptApply(form);
+            break;
+
+          case '业务承办人审核':
+            this.primaryExamine(form);
+            break;
+
+
+          //按钮名字是通过 或者不通过
+          case '业务审批负责人审批':
+            this.finalExamine(this.examineFormDto);
+            break;
+
+          default:
+            break;
+        }
+
+      })
     }
 
 
-    this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
-
-      let form: any = this.curNodeName == '大厅受理' ? this.formDto : this.examineFormDto;
-
-      form.handleUserList = [];
-      form.currentNodeId = data.result.cur_Node_Id
-      form.currentNodeName = data.result.cur_NodeName
-      form.workFlow_Instance_Id = data.result.workFlow_Instance_Id
-      form.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
-
-      data.result.auditorRecords.forEach(element => {
-        const flowNodeUser = new FlowNodeUser()
-        flowNodeUser.userFlowId = element.id
-        flowNodeUser.userCode = element.applyEID
-        flowNodeUser.userName = element.applyEName
-        form.handleUserList.push(flowNodeUser)
-      });
-
-      switch (this.curNodeName) {
-        case '大厅受理':
-          form.isAccept = bo;
-          this.acceptApply(form);
-          break;
-
-        case '业务承办人审核':
-          form.isPass = bo
-          this.primaryExamine(form);
-          break;
-
-
-        //按钮名字是通过 或者不通过
-        case '业务审批负责人审批':
-          form.isPass = bo;
-          this.finalExamine(form);
-          break;
-
-        default:
-          break;
-      }
-
-    })
   };
 
 
   /**
    * 获取业务审批负责人审批详情的接口 
    */
-  getPrimaryExamine(then?:Function) {
-    this._examineService.getPrimaryExamine(this.flowId).subscribe(data=>{
+  getPrimaryExamine(then?: Function) {
+    this._examineService.getPrimaryExamine(this.flowId).subscribe(data => {
       this.examineFormDto = data
-      if(then) then()
+      if (then) then()
     })
   }
 
@@ -241,6 +272,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
    * 业务审批负责人审批提交的接口 -->执行人
    */
   primaryExamine(examineFormDto: ExamineFormDto) {
+    console.log(examineFormDto);
     this._examineService.primaryExamine(examineFormDto).subscribe(data => {
       this.serveResult();
     })
@@ -280,9 +312,9 @@ export class AgencyDoneDetailsComponent implements OnInit {
       {
         tenantWorkFlowInstanceDto: this.tenantWorkFlowInstanceDto,
       }
-    ).subscribe(data => {
+    ).subscribe(data => { 
       //已经驳回成功了
-      if (!data) {
+      if (!data.type) {
         if (then) then(data)
       }
     })

@@ -26,7 +26,16 @@ export class PublicServices {
         }
         );
     }
+    /**
+     * 获取附件信息
+     */
+    getFilesDetail(page: any): Observable<any> {
+        let url = "api/Attachment/AttachmentListBySourceId?" + "appId=" + page.AppId + "&module=" + page.module + "&sourceId=" + page.sourceId
 
+        return this.http.post(PANGBO_SERVICES_URL + url, page
+        );
+
+    }
     delete(page: any): Observable<any> {
         return this.http.post(PANGBO_SERVICES_URL + "/api/Attachment/Delete", page
         );

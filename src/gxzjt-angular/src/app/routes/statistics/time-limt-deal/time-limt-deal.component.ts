@@ -816,8 +816,8 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
       }
     },
     { title: '当前处理人', index: 'applyName' },
-    { title: '流程到达时间', index: 'applyTime' },
-    { title: '流程处理时间', index: 'acceptTime' },
+    { title: '流程到达时间', index: 'applyTime',type:'date' },
+    { title: '流程处理时间', index: 'acceptTime',type:'date' },
     { title: '超时时长', index: 'approvalRemainingTime' },
   ];
 
@@ -918,7 +918,7 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
         "page": 1,
         "sorting": "CityName",
         "skipCount": 0,
-        "maxResultCount": 10
+        "maxResultCount": 1000
       });
       this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
       this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];

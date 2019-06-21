@@ -13,9 +13,10 @@ import { Router } from '@angular/router';
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
-import { timeTrans } from 'infrastructure/regular-expression';
 import * as moment from 'moment';
 import { PublicFormComponent } from '../public/public-form.component';
+import { NzMessageService } from 'ng-zorro-antd';
+
 /**
  * 竣工验收
  */
@@ -34,17 +35,55 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
       title: '操作',
       buttons: [
         {
-          text: '执行', click: (item: any) => {
-            this.watchItem(item);
-          }
+          text: '查看',
+          type: 'modal',
+          // modal: {
+          //   component: StatisticsProAppStaticDetailComponent,
+          //   paramsName: 'record',
+          // },
+          // click: (record: any, modal: any) => {
+
+          // },
+        },
+        {
+          text: '受理凭证',
+          type: 'link',
+          // modal: {
+          //   component: StatisticsAcceptCredentialsComponent,
+          //   paramsName: 'record',
+          // },
+          click: (record: any, modal: any) => {
+            if(record.acceptAttachmentUrl){
+              window.open(record.acceptAttachmentUrl)
+            }else{
+              this.message.error('暂无受理凭证');
+            }
+            
+          },
+        },
+        {
+          text: '意见书',
+          type: 'link',
+          // modal: {
+          //   component: StatisticsPositionPaperComponent,
+          //   paramsName: 'record',
+          // },
+          click: (record: any, modal: any) => {
+            if(record.opinionAttachmentUrl){
+              window.open(record.opinionAttachmentUrl)
+            }else{
+              this.message.error('暂无意见书');
+            }
+            
+          },
         },
       ]
     },
-    { title: '竣工验收备案申报编号', index: 'acceptanceNumber' },
+    { title: '竣工验收备案申报编号', index: 'recordNumber' },
     { title: '工程名称', index: 'projectName' },
     { title: '建设单位', index: 'companyName' },
     { title: '是否被抽中', index: 'isSelected',format: (item: any) => `${item.isSelected?item.isSelected:4001}`,type: 'tag', tag: {
-      4001:{text:'数据非法',color: 'red' },
+      4001:{text:'是',color: 'red' },
       true: { text: '是', color: '' },
       false: { text: '否',color: 'red' },
     }},
@@ -52,12 +91,12 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     { title: '当前处理环节', index: 'currentNodeName' },
     { title: '当前处理人', index: 'currentHandleUserName' },
     { title: '流程是否超时', index: 'isExpireTime',format: (item: any) => `${item.isExpireTime?item.isExpireTime:4001}`,type: 'tag', tag: {
-      4001:{text:'数据非法',color: 'red' },
+      4001:{text:'是',color: 'red' },
       true: { text: '是', color: '' },
       false: { text: '否',color: 'red' },
     }},
     { title: '审核结果', index: 'status',format: (item: any) => `${item.status?item.status:4001}`,type: 'tag', tag: {
-      4001:{text:'数据非法',color: 'red' },
+      4001:{text:'待处理',color: '' },
       0: { text: '未处理', color: '' },
       1: { text: '受理', color: 'green' },
       2:{ text: '不受理',color: 'red' },
@@ -66,7 +105,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
       5:{ text: '未抽中', color: '' },
     }},
     { title: '操作人', index: 'companyName' },
-    { title: '操作时间', index: 'applyTime' },
+    { title: '操作时间', index: 'applyTime',type:'date' },
   ];
 
   searchParam = new FireAuditCompleteQueryDto();
@@ -80,9 +119,10 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   rangeTime = ['2019-02-19T05:46:09.135Z','2019-06-19T05:46:09.135Z'];
   constructor(private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
     private _flowServices: FlowServices,
+    
     private router: Router,
     private http: _HttpClient,
-    private xlsx: XlsxService) {
+    private xlsx: XlsxService, private message: NzMessageService) {
    super();
 
   }

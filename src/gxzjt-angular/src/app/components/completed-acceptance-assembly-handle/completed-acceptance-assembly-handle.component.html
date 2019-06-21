@@ -5,7 +5,7 @@
       <thead>
         <tr>
           <td colspan='20' rowspan='1' class="table_title">
-            <h3>××市住房和城乡建设局<br />建设工程竣工验收消防备案材料补正通知书</h3>
+            <h3>{{data.cityName}}住房和城乡建设局<br />建设工程竣工验收消防备案材料补正通知书</h3>
           </td>
         </tr>
       </thead>
@@ -19,8 +19,8 @@
           <td rowspan='1' colspan='20'>
             <div class="table_detail">
               <h3>{{data.companyName}}：</h3>
-              <p>根据《中华人民共和国消防法》第十三条和《建设工程消防监督管理规定》第二十四条的规定，你单位于 {{data.applyDateTime|date:'yyyy年MM月dd日'}}向 ××市住房和城乡建设局
-                申请了 ××××××××工程（地址：{{data.address}}）的竣工验收消防备案，备案号：45000XXXYSBA00001，并提交了下列备案材料：</p>
+              <p>根据《中华人民共和国消防法》第十三条和《建设工程消防监督管理规定》第二十四条的规定，你单位于 {{data.applyDateTime|date:'yyyy年MM月dd日'}}向 {{data.cityName}}住房和城乡建设局
+                申请了 {{data.projectName}}工程（地址：{{data.address}}）的竣工验收消防备案，备案号：45000XXXYSBA00001，并提交了下列备案材料：</p>
             </div>
             <ul class="table_list">
               <li *ngFor="let item of data.attachmentItems;let index=index">
@@ -55,7 +55,7 @@
       <thead>
         <tr>
           <td colspan='20' rowspan='1' class="table_title">
-            <h3>××市住房和城乡建设局<br />建设工程消防设计审查意见书（合格）</h3>
+            <h3>{{data.cityName}}住房和城乡建设局<br />建设工程消防设计审查意见书（合格）</h3>
           </td>
         </tr>
       </thead>
@@ -70,7 +70,7 @@
             <div class="table_detail">
               <h3>×市××区××××：</h3>
               <p>
-                你单位申请的“新建B栋教学楼”建设工程（受理凭证：×住建消审凭字〔201×〕第××××号，201×年×月××日收）消防设计图纸材料及有关资料收悉。该工程位于××市××路××号，××小学校园内。新建B栋教学楼建筑高度为19.6m，建筑层数为5层，建筑面积为2902.76㎡，设计用途一层为生活用房、二至四层为教室、五层为教师办公室、会议室等，属多层民用建筑。该工程消防设施主要有室内、室外消火栓系统。设计单位为×××设计有限公司，设计资质为建设工程×级。按照图纸审查机构（××××公司）对该工程设计图纸的技术审查结论，我局提出以下意见：
+                你单位申请的“新建B栋教学楼”建设工程（受理凭证：{{data.acceptFileCode}}，{{data.applyDateTime|date:'yyyy年MM月dd日'}}收）消防设计图纸材料及有关资料收悉。该工程位于××市××路××号，××小学校园内。新建B栋教学楼建筑高度为19.6m，建筑层数为5层，建筑面积为2902.76㎡，设计用途一层为生活用房、二至四层为教室、五层为教师办公室、会议室等，属多层民用建筑。该工程消防设施主要有室内、室外消火栓系统。设计单位为{{data.designOrg.companyName}}，设计资质为建设工程{{data.designOrg.qualifications}}级。按照图纸审查机构（{{data.drawingOrg.companyName}}）对该工程设计图纸的技术审查结论，我局提出以下意见：
               </p>
             </div>
             <ul class="table_list">
@@ -78,12 +78,7 @@
                 <label nz-checkbox name="item{{item}}"
                   [(ngModel)]="item.isSubmit">{{index+1}}、{{item.attachmentTypeName}}</label>
               </li>
-            </ul>
-
-            <div class="table_seal">
-              由后台提供的当前时间 年月日
-            </div>
-
+            </ul> 
           </td>
         </tr>
         <tr>
@@ -170,7 +165,7 @@
         <tr>
           <td rowspan='1' colspan='20'>
             <div class="table_detail">
-              <h3>××市××区：</h3>
+              <h3>{{data.companyName}}：</h3>
               <p>根据《中华人民共和国消防法》第十三条和《建设工程消防监督管理规定》第二十四条的规定，你单位于 ×× 年 ××月 ××日向 ××市住房和城乡建设局 申请了 ××××××××工程（地址： ××市××路11
                 号）的竣工验收消防备案，备案号：45000XXXYSBA00001，并提交了下列备案材料：</p>
             </div>
@@ -217,7 +212,7 @@
       <thead>
         <tr>
           <td colspan='20' rowspan='1' class="table_title">
-            <h3>××市住房和城乡建设局<br />建设工程竣工验收消防备案凭证（未抽中）</h3>
+            <h3>{{data.cityName}}住房和城乡建设局<br />建设工程竣工验收消防备案凭证（未抽中）</h3>
           </td>
         </tr>
       </thead>
@@ -230,9 +225,8 @@
         <tr>
           <td rowspan='1' colspan='20'>
             <div class="table_detail">
-              <h3>××市××区：</h3>
-              <p>根据《中华人民共和国消防法》第十三条和《建设工程消防监督管理规定》第二十四条的规定，你单位于 ×× 年 ××月 ××日向 ××市住房和城乡建设局 申请了 ××××××××工程（地址： ××市××路11
-                号）的竣工验收消防备案，备案号：45000XXXYSBA00001，并提交了下列备案材料：</p>
+              <h3>{{data.companyName}}：</h3>
+              <p>根据《中华人民共和国消防法》第十三条和《建设工程消防监督管理规定》第二十四条的规定，你单位于 {{data.applyDateTime|date:'yyyy年MM月dd日'}}向 {{data.cityName}}住房和城乡建设局 申请了 {{data.projectName}}工程（地址： {{data.address}}）的竣工验收消防备案，备案号：{{data.acceptFileCode}}，并提交了下列备案材料：</p>
             </div>
             <ul class="table_list">
               <li *ngFor="let item of data.attachmentItems;let index=index">
@@ -247,15 +241,10 @@
                   <label nz-radio nzValue="未">未</label>
                 </nz-radio-group>）被确定为抽查对象。</p>
               <p>已经依法进行竣工验收消防备案的建设工程，如需扩建、改建（含室内外装修、建筑保温、用途变更）的，应当工程竣工验收合格之日起七个工作日内，依法申报消防验收备案。</p>
-            </div>
-
-            <div class="table_seal">
-              由后台提供的当前时间 年月日
-            </div>
-
+            </div>  
           </td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">承 办 人<input class="table_input_2" />
 
           </td>
@@ -264,7 +253,7 @@
           <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">备案人<input class="table_input_2" />
 
           </td>
-        </tr>
+        </tr> -->
         <tr>
           <td class="fontweight fontLeft leftTitle">一式两份，一份交建设单位，一份存档。 </td>
         </tr>
@@ -278,7 +267,7 @@
       <thead>
         <tr>
           <td colspan='20' rowspan='1' class="table_title">
-            <h3>××市住房和城乡建设局<br />建设工程竣工验收消防备案复查意见书</h3>
+            <h3>{{data.cityName}}住房和城乡建设局<br />建设工程竣工验收消防备案复查意见书</h3>
           </td>
         </tr>
       </thead>
@@ -291,19 +280,13 @@
         <tr>
           <td rowspan='1' colspan='20'>
             <div class="table_detail">
-              <h3>xxxxx</h3>
+              <h3>{{data.companyName}}：</h3>
               <p>
-                你单位备案的XXXXXXXXX工程(备案凭证文号：X住建消验备字〔2019〕第XX号，工程备案号：45000XXXYSBA00001，该工程地上XX层，建筑高度XX米，建筑面积XXX平方米，为二类高层住宅楼)，经我单位竣工验收消防备案抽查不合格。你单位于XX年XX月XX日申请复验，我单位根据X住建消验备查字〔2019〕第XX号《建设工程竣工验收消防备案抽查不合格通知书》进行复查，存在问题均予以整改。该工程竣工验收消防备案复查合格，同意该工程恢复使用。
+                你单位备案的{{data.projectName}}工程(备案凭证文号：{{data.acceptFileCode}}，工程备案号：{{data.recordNumber}}，该工程地上XX层，建筑高度XX米，建筑面积XXX平方米，为二类高层住宅楼)，经我单位竣工验收消防备案抽查不合格。你单位于{{data.applyDateTime|date:'yyyy年MM月dd日'}}申请复验，我单位根据{{data.acceptFileCode}}《建设工程竣工验收消防备案抽查不合格通知书》进行复查，存在问题均予以整改。该工程竣工验收消防备案复查合格，同意该工程恢复使用。
               </p>
               <p>该工程竣工验收消防备案合格投入使用后，管理单位应当对建筑消防设施进行定期维护保养，确保完好有效。</p>
               <p>工程如有扩建、改建（含室内外装修、建筑保温、用途变更），应当依法向我单位申报建设工程竣工验收消防备案。属于公众聚集场所的在投入使用、营业前，应依法申请消防安全检查。</p>
-            </div>
-
-
-            <div class="table_seal">
-              由后台提供的当前时间 年月日
-            </div>
-
+            </div> 
           </td>
         </tr>
         <tr>
@@ -312,6 +295,8 @@
       </tbody>
     </table>
   </div>
+
+
 
   <!-- 消防竣工的复查申请表-->
   <div *ngSwitchCase="6">
@@ -407,5 +392,19 @@
     </table>
 
 
+  </div>
+
+  <div *ngSwitchCase="7">
+    <table class="tables d_table" style="box-sizing: border-box;">
+      <tbody>
+        <tr>
+          <td rowspan='1' colspan='20'>
+            <textarea nz-input placeholder="请输入意见" [(ngModel)]="data.opinion" name="professionalContractorsopinion"
+              required>
+                    </textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

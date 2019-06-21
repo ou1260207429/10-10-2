@@ -27,7 +27,7 @@ export class FlowProcessRejectComponent implements OnInit {
   }
 
   close() {
-    this.subject.destroy(true)
+    this.subject.destroy({ type: true })
   }
 
 
@@ -43,8 +43,9 @@ export class FlowProcessRejectComponent implements OnInit {
       workFlow_InstanceId: this.tenantWorkFlowInstanceDto.workFlow_InstanceId,
       workFlow_TemplateInfoId: this.tenantWorkFlowInstanceDto.workFlow_TemplateInfoId
     }
-    this._flowServices.tenant_NodeToNextNodeByNoPass(turnBack).subscribe(data => {
-      this.subject.destroy(false)
-    })
+    this.subject.destroy({ type: false, data: turnBack })
+    // this._flowServices.tenant_NodeToNextNodeByNoPass(turnBack).subscribe(data => {
+    //   this.subject.destroy({type:false,data:data})
+    // })
   }
 }

@@ -13,19 +13,19 @@
                 :key="index"
                 v-for="(item,index) in downLoadList"
                 class="list"
-                @click="downList(item.id,item.guid)"
+                @click="downList(item.guid,item.id)"
               >
                 {{ item.attachmentName }}
                 <span style="float: right">{{ item.creationTime }}</span>
               </div>
             </div>
-            <el-row style="margin-bottom:25px;">
+            <el-row style="margin-top:40px;margin-bottom:25px;">
               <el-pagination
                 style="float:right;"
                 :page-size="pageSize.size"
                 layout="prev, pager, next"
                 :total="total"
-                @current-change="changeCurrent"
+                @current-change="changeCurrent()"
               ></el-pagination>
             </el-row>
           </div>
@@ -79,19 +79,12 @@ export default {
         _this.total = req.result.totalCount;
       });
     },
-    countDownLoadTimes(id) {
-      app.post(table.compute_downLoad, { attachmentId: id }).then(result => {});
-    },
 
     /**
      * 下载表格
      */
-    downList(id, guid) {
-      let data = {
-        appId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
-        id: id
-      };
-      app.downList(data, guid);
+    downList(guid,id) {
+      app.getFileDetail(guid,id);
     },
     /**
      * 分页

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { objDeleteType } from 'infrastructure/regular-expression';
+import { objDeleteType, timeTrans } from 'infrastructure/regular-expression';
 import { NzMessageService } from 'ng-zorro-antd';
 import { OptionsEnum, ArchitectureTypeEnum } from 'infrastructure/expression';
 import { PublicModel } from 'infrastructure/public-model';
@@ -7,6 +7,7 @@ import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto, FlowDataDto, P
 import { ActivatedRoute } from '@angular/router';
 import { GXZJT_From, FlowServices } from 'services/flow.services';
 import { FormGroup } from '@angular/forms';
+import { AppSessionService } from '@shared/session/app-session.service';
 
 /**
  * 工程管理->消防验收->新增申报
@@ -177,7 +178,7 @@ export class AddFireAcceptanceComponent implements OnInit {
 
   //子组件的表单对象
   form: FormGroup
-  constructor(private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
+  constructor(private _appSessionService:AppSessionService,private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     this.flowFormQueryDto.flowType = 2;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
@@ -206,6 +207,9 @@ export class AddFireAcceptanceComponent implements OnInit {
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 2;
     this.flowFormDto.projectTypeStatu = 1;
+
+    this.data.dateOfReview = this.data.dateOfReview == '' ? '' : timeTrans(Date.parse(this.data.dateOfReview) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
+    console.log(this.data);
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')
@@ -215,14 +219,14 @@ export class AddFireAcceptanceComponent implements OnInit {
   save() {
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
-        Area: "450000"
+        Area: '450000',
       },
       identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {
-        applyEID: '10001',
-        applyEName: '测试人员',
-        deptId: 1,
-        deptFullPath: '测试部门',
+        applyEID: this._appSessionService.user.id,
+        applyEName: this._appSessionService.user.eName,
+        deptId: this._appSessionService.user.organizationsId,
+        deptFullPath: this._appSessionService.user.organizationsName,
       }
     };
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
@@ -248,6 +252,8 @@ export class AddFireAcceptanceComponent implements OnInit {
        data.result.auditorRecords.forEach(element => {
          const flowNodeUser = new FlowNodeUser()
          flowNodeUser.userFlowId = element.id
+         flowNodeUser.userName = element.applyEName
+        flowNodeUser.userCode = element.applyEID
          flowDataDto.handleUserList.push(flowNodeUser)
        });
 

@@ -22,6 +22,8 @@
 
   <div class="flex1 bgFFF" style="position: relative">
     <nz-card [nzBordered]="false" nzTitle="流程示意图" [nzExtra]="extraTemplate">
+      <img src="assets/images/banImg01.png" style="width: 100%;display: block;" *ngIf="flowPathType!=3"/>
+      <img src="assets/images/banImg02.png" style="width: 100%;display: block;" *ngIf="flowPathType==3"/>
     </nz-card>
   </div>
 </div>

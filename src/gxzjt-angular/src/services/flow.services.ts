@@ -104,7 +104,7 @@ export interface GXZJT_EditWorkFlow_NodeAuditorRecordDto {
   applyEName: string,
 
   //部门id
-  deptId: number,
+  deptId: string,
 
   //部门路径
   deptFullPath: string,

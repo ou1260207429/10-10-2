@@ -19,6 +19,7 @@ import { timeTrans } from 'infrastructure/regular-expression';
 import { PublicFormComponent } from '../public/public-form.component';
 import { FormBuilder } from '@angular/forms';
 import * as moment from 'moment';
+import { NzMessageService } from 'ng-zorro-antd';
 
 
 /**
@@ -39,9 +40,45 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
       title: '操作',
       buttons: [
         {
-          text: '执行', click: (item: any) => {
-            this.watchItem(item);
-          }
+          text: '查看',
+          type: 'modal',
+          // modal: {
+          //   component: StatisticsProAppStaticDetailComponent,
+          //   paramsName: 'record',
+          // },
+          // click: (record: any, modal: any) => {
+
+          // },
+        },
+        {
+          text: '受理凭证',
+          type: 'link',
+          // modal: {
+          //   component: StatisticsAcceptCredentialsComponent,
+          //   paramsName: 'record',
+          // },
+          click: (record: any, modal: any) => {
+            if(record.acceptAttachmentUrl){
+              window.open(record.acceptAttachmentUrl)
+            }else{
+              this.message.error('暂无受理凭证');
+            }
+          },
+        },
+        {
+          text: '意见书',
+          type: 'link',
+          // modal: {
+          //   component: StatisticsPositionPaperComponent,
+          //   paramsName: 'record',
+          // },
+          click: (record: any, modal: any) => {
+            if(record.opinionAttachmentUrl){
+              window.open(record.opinionAttachmentUrl)
+            }else{
+              this.message.error('暂无意见书');
+            }
+          },
         },
       ]
     },
@@ -57,7 +94,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     }},
     { title: '审核结果', index: 'status',format: (item: any) => `${item.status?item.status:4001}`,
     type: 'tag', tag: {
-      4001:{text: '数据非法', color: 'red' },
+      4001:{text: '待处理', color: '' },
       0: { text: '未处理', color: '' },
       1: { text: '受理', color: 'green' },
       2:{ text: '不受理', color: '' },
@@ -66,7 +103,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
       5:{ text: '未抽中', color: '' },
     }},
     { title: '操作人', index: 'currentHandleUserName' },
-    { title: '操作时间', index: 'applyTime' },
+    { title: '操作时间', index: 'applyTime',type:'date' },
   ];
 
   pageConfig: STPage = publicPageConfig;
@@ -76,7 +113,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     private router: Router,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
     private formBuilder: FormBuilder,
-    private xlsx: XlsxService) {
+    private xlsx: XlsxService, private message: NzMessageService) {
       super();
      }
 
