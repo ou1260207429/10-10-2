@@ -67,7 +67,7 @@ export class HandlingGuidDetailComponent implements OnInit {
 
   }
   goBack() {
-    history.go(-1);
+      history.go(-1);
   }
   /**
    * 获取类型
@@ -125,8 +125,9 @@ export class HandlingGuidDetailComponent implements OnInit {
     src.subscribe(data => {
       const name = this.operate == 0 ? '新增成功' : '修改成功';
       this.message.success(name);
-      this._eventEmiter.emit('init', []);
       this.goBack();
+      this._eventEmiter.emit('init', []);
+
     })
   }
 

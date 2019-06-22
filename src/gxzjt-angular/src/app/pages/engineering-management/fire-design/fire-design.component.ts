@@ -48,7 +48,6 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
           //   paramsName: 'record',
           // },
           // click: (record: any, modal: any) => {
-
           // },
         },
         {

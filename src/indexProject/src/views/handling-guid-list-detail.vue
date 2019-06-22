@@ -196,7 +196,7 @@ export default {
 h1 {
   text-align: center;
   padding: 20px;
-  color: #bd1127ff;
+  color: #bd1127;
 }
 .tip {
   width: 41%;

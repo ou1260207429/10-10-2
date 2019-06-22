@@ -129,7 +129,7 @@ export default {
     padding-top: 20px;
     font-size: 18px;
     color: #ffefa1ff;
-    text-shadow: 0px 2px 4px #bd1127ff;
+    text-shadow: 0px 2px 4px #bd1127;
     font-weight: 600;
 
     span {
@@ -174,8 +174,8 @@ ul {
 
 .nowIndex {
   background-image: url("../assets/images/表格下载_132.png") !important;
-  border-bottom: 2px solid #bd1127ff;
-  color: #bd1127ff !important;
+  border-bottom: 2px solid #bd1127;
+  color: #bd1127 !important;
 }
 
 .antivehandling {
@@ -184,8 +184,8 @@ ul {
 
 .nowhandling {
   background-image: url("../assets/images/表格下载_152.png") !important;
-  border-bottom: 2px solid #bd1127ff;
-  color: #bd1127ff !important;
+  border-bottom: 2px solid #bd1127;
+  color: #bd1127 !important;
 }
 
 .antiveinformation {
@@ -194,8 +194,8 @@ ul {
 
 .nowinformation {
   background-image: url("../assets/images/表格下载_032.png") !important;
-  border-bottom: 2px solid #bd1127ff;
-  color: #bd1127ff !important;
+  border-bottom: 2px solid #bd1127;
+  color: #bd1127 !important;
 }
 
 .antiveform {
@@ -204,8 +204,8 @@ ul {
 
 .nowform {
   background-image: url("../assets/images/表格下载_05.png") !important;
-  border-bottom: 2px solid #bd1127ff;
-  color: #bd1127ff !important;
+  border-bottom: 2px solid #bd1127;
+  color: #bd1127 !important;
 }
 
 .antivelaws {
@@ -214,8 +214,8 @@ ul {
 
 .nowlaws {
   background-image: url("../assets/images/表格下载_072.png") !important;
-  border-bottom: 2px solid #bd1127ff;
-  color: #bd1127ff !important;
+  border-bottom: 2px solid #bd1127;
+  color: #bd1127 !important;
 }
 
 .antivelogin {
@@ -224,7 +224,7 @@ ul {
 
 .nowlogin {
   background-image: url("../assets/images/表格下载_102.png") !important;
-  border-bottom: 2px solid #bd1127ff;
-  color: #bd1127ff !important;
+  border-bottom: 2px solid #bd1127;
+  color: #bd1127 !important;
 }
 </style>

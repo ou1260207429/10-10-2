@@ -8,6 +8,7 @@ import "./assets/css/common.css"
 import "./assets/css/elementUi.css";
 import element from "./assets/js/elementUI"
 import 'element-ui/lib/theme-chalk/index.css';
+import "babel-polyfill"
 Vue.config.productionTip = false
 Vue.use(element)
 /* eslint-disable no-new */

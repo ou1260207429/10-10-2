@@ -1,5 +1,5 @@
 <div nz-row>
-  <div nz-col nzSpan="4" style="letter-spacing: 2px;font-size: 15px;">
+  <div nz-col nzSpan="3" style="letter-spacing: 2px;font-size: 15px;">
     <!-- <div class="leftTitle">基本信息</div> -->
     <!-- <div class="leftTitle" style="margin-top: 189px;">专题正文</div> -->
   </div>
@@ -8,14 +8,14 @@
   "content": "string",
   "noticeType": "string",
   "guid": "string" -->
-  <div nz-col nzSpan="12" style="padding-top: 40px;height: 100%;">
+  <div nz-col nzSpan="16" style="padding-top: 40px;height: 100%;margin-bottom: 30px;">
     <form nz-form #f="ngForm" se-container="1">
-      <se label="标题名称" required>
-        <input style="width: 250px;" type="text" [disabled]="operate=='1'" nz-input [(ngModel)]="data.title"
+      <se label="标题名称" required col="2">
+        <input type="text" [disabled]="operate=='1'" nz-input [(ngModel)]="data.title"
           name="title" required>
       </se>
-      <se label="类型" required>
-        <nz-select [disabled]="operate=='1'" style="width: 250px;" [(ngModel)]="data.noticeTypeId" name="noticeTypeId"
+      <se label="类型" required col="2">
+        <nz-select [disabled]="operate=='1'" [(ngModel)]="data.noticeTypeId" name="noticeTypeId"
           nzAllowClear required>
           <nz-option *ngFor="let item of RegulationType" [nzValue]="item.key" [nzLabel]="item.value"></nz-option>
 
@@ -23,21 +23,21 @@
       </se>
 
       <se label="附件上传" required>
-        <nz-upload [nzFileList]="fileList" nzMultiple [nzAction]="uploadUrl" [nzBeforeUpload]="beforeUpload"
+        <nz-upload style="width: 100%;display: block"  [nzFileList]="fileList" nzMultiple [nzAction]="uploadUrl" [nzBeforeUpload]="beforeUpload"
           [nzRemove]="removeFile">
-          <button style="width: 250px;" nz-button><i nz-icon type="upload"
+          <button style="width: 100%;"  nz-button><i nz-icon type="upload"
               nzTheme="outline"></i><span>上传</span></button>
         </nz-upload>
       </se>
       <se *ngIf="operate!=0">
         <div *ngFor="let item of fileUrlList let i=index">
-          <a style="color: #000;text-decoration: none;" [href]="fileUrl+item.url">{{i+1}}、{{item.name}}</a>
+          <a style="text-decoration: none;" [href]="fileUrl+item.url" class="ant-upload-list"><i nz-icon type="link" style="margin-right: 5px;" nzTheme="outline"></i>{{item.name}}</a>
         </div>
       </se>
       <se label="简要信息管理" required>
 
-        <textarea style="width: 250px;" nz-input [disabled]="operate=='1'" placeholder="" [(ngModel)]="data.brief"
-          [nzAutosize]="{ minRows: 2, maxRows: 6 }" name="brief"></textarea>
+        <textarea  nz-input [disabled]="operate=='1'" placeholder="" [(ngModel)]="data.brief"
+          [nzAutosize]="{ minRows: 4, maxRows: 12 }" name="brief"></textarea>
         <!-- <input style="width: 250px;" type="text" [disabled]="operate=='1'" nz-input [(ngModel)]="data.Brief"
           name="title" required> -->
       </se>
@@ -56,7 +56,7 @@
       </se> -->
       <se label="富文本" required>
         <div *ngIf="operate=='1'"
-          style="width: 944px!important;min-height: 50px;border: 1px solid #d9d9d9;padding: 10px 15px;box-sizing: border-box;"
+          style="min-height: 50px;border: 1px solid #d9d9d9;padding: 10px 15px;box-sizing: border-box;"
           [innerHTML]="data.content"></div>
         <ueditor *ngIf="operate!='1'" name="content" [(ngModel)]="data.content"></ueditor>
       </se>

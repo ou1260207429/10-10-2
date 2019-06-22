@@ -13,6 +13,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "install": "^0.12.2",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",

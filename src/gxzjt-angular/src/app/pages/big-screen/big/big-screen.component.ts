@@ -21,6 +21,27 @@ export class BigScreenComponent {
     FireHeight = '';
     MiddleWidth = '';
     RightWidth = '';
+    SignInData = [0, 0, 0, 1, 0, 0, 8, 6];
+    GetThrough = [0, 0, 2, 3, 4, 8, 9, 0];
+    rankingTopData = [
+        { name: '南宁', ranking: 1 },
+        { name: '崇左', ranking: 2 },
+        { name: '北海', ranking: 3 },
+    ]
+    rankingData = [
+
+        { name: '柳州', ranking: '04' },
+        { name: '河池', ranking: '05' },
+        { name: '桂林', ranking: '06' },
+        { name: '贺州', ranking: '07' },
+        { name: '梧州', ranking: '08' },
+        { name: '玉林', ranking: '09' },
+        { name: '钦州', ranking: '10' },
+        { name: '百色', ranking: '11' },
+        { name: '来宾', ranking: '12' },
+        { name: '贵港', ranking: '13' },
+        { name: '防城港', ranking: '14' }
+    ]
     constructor(
         private http: _HttpClient,
         private service: ProjectFlowServcieServiceProxy,
@@ -63,12 +84,12 @@ export class BigScreenComponent {
     pageindex = 1;
     ngOnInit() {
         this.Line();
-        this.OverTimeBar1();
-        this.OverTimeBar2();
-        this.OverTimeBar3();
-        this.Bar2();
-        this.Bar3();
-        this.Bar4();
+        // this.OverTimeBar1();
+        // this.OverTimeBar2();
+        // this.OverTimeBar3();
+        // this.Bar2();
+        // this.Bar3();
+        // this.Bar4();
         this.Pie1();
         this.Pie2();
         this.Pie3();
@@ -107,12 +128,13 @@ export class BigScreenComponent {
             }
         }, 3000);
         this.Post_GetDeclareRate();
-        this.GetATimeByStatistics();
         this.GetScreenCityTimeoutStatistics();
         this.GetApplyStatistics();
-        this.GetFireDataList();
         this.GetScreenYearApplyNumber();
         this.GetScreenTimeoutList();
+        this.GetFireDataList();
+        this.GetFireDataList2();
+        this.GetFireDataList3();
     }
     model = new DeclareRateQueryDto();
     //申报统计
@@ -123,55 +145,69 @@ export class BigScreenComponent {
         const fireAudit = [];
         const fireComplete = [];
         this.screenService.post_GetDeclareRate(this.model).subscribe((res) => {
-            console.log(res);
-            if (res != null) {
-                // res.forEach(e => {
-                //     CityList.push(e.cityName);
-                //     completeList.push(e.completeNumber);
-                //     fireAudit.push(e.fireAuditNumber);
-                //     fireComplete.push(e.fireCompleteNumber);
-                // });
-                // this.OverTimeBar1(CityList, completeList);
-                // this.OverTimeBar2(CityList, fireAudit);
-                // this.OverTimeBar3(CityList, fireComplete);
+            if (res.items != null) {
+                res.items.forEach(e => {
+                    CityList.push(e.cityName);
+                    completeList.push(e.completeNumber);
+                    fireAudit.push(e.fireAuditNumber);
+                    fireComplete.push(e.fireCompleteNumber);
+                });
+                this.OverTimeBar1(CityList, fireAudit);
+                this.OverTimeBar2(CityList, fireComplete);
+                this.OverTimeBar3(CityList, completeList);
             }
         });
     }
     // 一次性通过率
-    GetATimeByStatistics() {
-        const CityList = [];
-        const flowPathTypeList = [];
-        const throughRateList = [];
-        this.screenService.post_GetATimeByStatistics().subscribe((res) => {
-            console.log(res);
-            if (res != null) {
-                // res.forEach(e => {
-                //     CityList.push(e.cityName);
-                //     flowPathTypeList.push(e.flowPathType);
-                //     throughRateList.push(e.throughRate);
-                // });
-            }
+    // GetATimeByStatistics() {
+    //     const CityList = [];
+    //     const flowPathTypeList = [];
+    //     const throughRateList = [];
+    //     this.screenService.post_GetATimeByStatistics().subscribe((res) => {
+    //         console.log(res);
+    //         if (res != null) {
+    //             // res.forEach(e => {
+    //             //     CityList.push(e.cityName);
+    //             //     flowPathTypeList.push(e.flowPathType);
+    //             //     throughRateList.push(e.throughRate);
+    //             // });
+    //         }
 
-            // this.Line(CityList, flowPathTypeList, throughRateList);
-            // this.Bar3(CityList, flowPathTypeList);
-            // this.Bar4(CityList, fireComplete);
-        });
-    }
-    // 超时统计
+    //         // this.Line(CityList, flowPathTypeList, throughRateList);
+    //         // this.Bar3(CityList, flowPathTypeList);
+    //         // this.Bar4(CityList, fireComplete);
+    //     });
+    // }
+    // 超时统计 1.消防设计审查申报 2.消防竣工验收 3.竣工验收备案
     GetScreenCityTimeoutStatistics() {
         let model: any = {
             dateTimeNow: new Date()
         };
         model.dateTimeNow = new Date();
+        const CityList = [];
+        const completeList = [];
+        const fireAuditList = [];
+        const fireCompleteList = [];
         this.screenService.post_GetScreenCityTimeoutStatistics(model).subscribe((res) => {
-            console.log(res);
+            if (res.items.length !== 0) {
+                res.items.forEach(e => {
+                    CityList.push(e.cityName);
+                    fireAuditList.push(e.fireAuditNumber);
+                    fireCompleteList.push(e.fireCompleteNumber);
+                    completeList.push(e.completeNumber);
+                });
+            }
+            this.Bar2(CityList, fireAuditList);
+            this.Bar3(CityList, fireCompleteList);
+            this.Bar4(CityList, completeList);
         })
     }
     // 累计办理情况
+    ScreenYearApplyData: any = [];
     GetScreenYearApplyNumber() {
         let model: any = {
             dateTimeNow: new Date(),
-            startDateTime: "2019-02-17T03:50:49.853Z",
+            startDateTime: null,
             endDateTime: new Date(),
             completeStatus: 2,
             page: 1,
@@ -179,21 +215,42 @@ export class BigScreenComponent {
             skipCount: 0,
             maxResultCount: 10
         };
+        model.startDateTime = (new Date().getFullYear() + '-01-01');
         this.screenService.post_GetScreenYearApplyNumber(model).subscribe(res => {
-            console.log(res);
+            this.ScreenYearApplyData = res.data;
         });
     }
     // 申请 办结
+    ApplyStatistics1: any = 0; // 设计审查
+    ApplyStatistics2: any = 0; // 消防竣工验收
+    ApplyStatistics3: any = 0; // 竣工验收备查
+    statisticsNumberCount: any = 0;
+    fireCompleteNumberCount: any = 0;
+    completeNumberCount: any = 0;
     GetApplyStatistics() {
         let model: any = {
             startTime: new Date(),
-            endTime: new Date(),
-        }
+            endTime: null,
+        };
+        model.endTime = new Date(new Date().getFullYear() - 1 + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate());
         this.screenService.post_GetApplyStatistics(model).subscribe(res => {
-            console.log(res);
+            // this.ApplyStatistics = res;
+            this.statisticsNumberCount = res.statisticsNumberCount;
+            this.fireCompleteNumberCount = res.fireCompleteNumberCount;
+            this.completeNumberCount = res.completeNumberCount;
+            if (res.statisticsNumberCount !== 0) {
+                this.ApplyStatistics1 = Math.floor((res.hasStatisticsNumber / res.statisticsNumberCount) * 100 / 100);
+            }
+            if (res.fireCompleteNumberCount !== 0) {
+                this.ApplyStatistics2 = Math.floor((res.hasFireCompleteNumber / res.fireCompleteNumberCount) * 100 / 100);
+            }
+            if (res.completeNumberCount !== 0) {
+                this.ApplyStatistics3 = Math.floor((res.hasCompleteNumber / res.completeNumberCount) * 100 / 100);
+            }
         });
     }
-    // 超时办理
+    // 超时办理列表
+    ScreenTimeoutList: any = [];
     GetScreenTimeoutList() {
         let model: any = {
             dateTimeNow: new Date(),
@@ -204,19 +261,65 @@ export class BigScreenComponent {
             maxResultCount: 10,
         }
         this.screenService.post_GetScreenTimeoutList(model).subscribe(res => {
-            console.log(res);
+            this.ScreenTimeoutList = res.data;
         });
     }
-    // 消防统计数据
+    FireData1: any;
+    FireData2: any;
+    FireData3: any;
+    // 地图右边框数据(消防设计审查申报数量统计)
+    MapList: any = [];
     GetFireDataList() {
         let model: any = {
-            statisticsType: 0,
+            statisticsType: 1,
+            dateTimeNow: new Date(),
+            processedStatus: 0
+        };
+        this.screenService.post_GetFireDataList(model).subscribe(res => {
+            console.log(res);
+            for (let i = 0; i < res.items.length - 1; i++) {
+                for (let j = 0; j < res.items.length - 1 - i; j++) {
+                    if (res.items[j] > res.items[j + 1]) {
+                        var temp = res.items[j];
+                        res.items[j] = res.items[j + 1];
+                        res.items[j + 1] = temp;
+                    }
+                }
+            }
+            let num = 1;
+            res.items.forEach(e => {
+                // this.MapList.push({
+                //     name: e.cityName,
+                //     value: e.completeCountNumber === 0 ? 0 : Math.floor((e.aTimeByCountNumber / e.completeCountNumber) * 100 / 100),
+                //     ranking: num,
+                //     acceptTotal:e.completeCountNumber,
+                //     passrateTotal:e.aTimeByCountNumber
+                // });
+                // num = num + 1;
+            });
+            this.FireData1 = res;
+        });
+    }
+    //  地图右边框数据(消防竣工验收数量统计)
+    GetFireDataList2() {
+        let model: any = {
+            statisticsType: 2,
             dateTimeNow: new Date(),
             processedStatus: 0
         }
         this.screenService.post_GetFireDataList(model).subscribe(res => {
-            console.log(res);
-
+            this.FireData2 = res;
+        });
+    }
+    //  地图右边框数据(竣工验收备案数量统计)
+    GetFireDataList3() {
+        let model: any = {
+            statisticsType: 3,
+            dateTimeNow: new Date(),
+            processedStatus: 0
+        }
+        this.screenService.post_GetFireDataList(model).subscribe(res => {
+            this.FireData3 = res;
         });
     }
     GetData() {
@@ -270,7 +373,7 @@ export class BigScreenComponent {
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+                data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '百色', '来宾', '贵港'],
                 axisLabel: {
                     textStyle: {
                         color: '#fff'
@@ -285,11 +388,13 @@ export class BigScreenComponent {
             yAxis: {
                 type: 'value',
                 axisLabel: {
+                    formatter: '{value}%',
                     textStyle: {
                         color: '#fff'
                     },
                 },
-                max: 'dataMax',
+                max: '5',
+                min: '1',
                 splitLine: {
                     show: false
                 },
@@ -307,40 +412,65 @@ export class BigScreenComponent {
             },
             series: [
                 {
-                    data: [820, 932, 901, 934, 1290, 1330, 1320, 820, 932, 901, 934, 1290, 1330],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     type: 'line',
-                    // areaStyle: {
-                    //     color: '#201756',
-                    // },
+                    lineStyle: {
+                        normal: {
+                            width: 3
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            barBorderRadius: 5, // 圆角
+                            //  添加渐变颜色
+                            color: {
+                                type: 'linear',
+                                x: 0,
+                                y: 0,
+                                x2: 0,
+                                y2: 1,
+                                colorStops: [{
+                                    offset: 0, color: 'rgba(16,97,204, 0.3)'  //  0% 处的颜色
+                                }, {
+                                    offset: 1, color: 'rgba(17,235,210, 0)' //  100% 处的颜色
+                                }],
+                                globalCoord: false,  //  缺省为 false
+                                shadowColor: 'rgba(0, 0, 0, 0.1)',
+                                shadowBlur: 10
+                            }
+                        }
+                    },
                     itemStyle: {
-                        color: '#9013fe',
-                    }
-                },
-                {
-                    data: [820, 932, 901, 901, 934, 1290, 1330, 934, 1290, 1330, 1320, 820, 932,],
-                    type: 'line',
-                    // areaStyle: {
-                    //     color: '#201756',
-                    // },
-                    itemStyle: {
-                        color: 'red',
-                    }
-                },
-                {
-                    data: [1320, 820, 932, 901, 934, 1290, 820, 932, 901, 934, 1290, 1330, , 1330],
-                    type: 'line',
-                    // areaStyle: {
-                    //     color: '#201756',
-                    // },
-                    itemStyle: {
-                        color: '#008000',
-                    }
-                },
+                        normal: {
+                            barBorderRadius: 5, // 圆角
+                            //  添加渐变颜色
+                            color: {
+                                type: 'linear',
+                                x: 0,
+                                y: 0,
+                                x2: 0,
+                                y2: 1,
+                                colorStops: [{
+                                    offset: 0, color: 'rgba(16,97,204,1)'  //  0% 处的颜色
+                                }, {
+                                    offset: 1, color: 'rgba(17,235,210,1)'//  100% 处的颜色
+                                }],
+                                globalCoord: false,  //  缺省为 false
+                            }
+                        },
+                        emphasis: {
+                            color: 'rgb(0,196,132)',
+                            borderColor: 'rgba(0,196,132,0.2)',
+                            extraCssText: 'box-shadow: 8px 8px 8px rgba(0, 0, 0, 1);',
+                            borderWidth: 10
+                        }
+                    },
+                }
             ]
         };
     }
     OverTimebar1: any;
-    OverTimeBar1() { //city, data
+    OverTimeBar1(city, data) {
         this.OverTimebar1 = {
             legend: {
                 x: 'center',
@@ -365,7 +495,7 @@ export class BigScreenComponent {
             xAxis: [
                 {
                     type: 'category',
-                    data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+                    data: city,// ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '百色', '来宾', '贵港'],
                     axisLabel: {
                         textStyle: {
                             color: '#fff'
@@ -398,7 +528,7 @@ export class BigScreenComponent {
                 {
                     name: '消防设计审查',
                     type: 'bar',
-                    data: [5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
+                    data: data,//[5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
                     barWidth: 20, // 柱形宽度
                     itemStyle: {
                         normal: {
@@ -431,7 +561,7 @@ export class BigScreenComponent {
         };
     }
     OverTimebar2: any;
-    OverTimeBar2() { //city, data
+    OverTimeBar2(city, data) {
         this.OverTimebar2 = {
             legend: {
                 x: 'center',
@@ -456,7 +586,7 @@ export class BigScreenComponent {
             xAxis: [
                 {
                     type: 'category',
-                    data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+                    data: city,//['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '百色', '来宾', '贵港'],
                     axisLabel: {
                         textStyle: {
                             color: '#fff'
@@ -489,7 +619,7 @@ export class BigScreenComponent {
                 {
                     name: '消防验收',
                     type: 'bar',
-                    data: [5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
+                    data: data,//[5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
                     barWidth: 20, // 柱形宽度
                     itemStyle: {
                         normal: {
@@ -522,7 +652,7 @@ export class BigScreenComponent {
         };
     }
     OverTimebar3: any;
-    OverTimeBar3() { //city, data
+    OverTimeBar3(city, data) {
         this.OverTimebar3 = {
             legend: {
                 x: 'center',
@@ -547,7 +677,7 @@ export class BigScreenComponent {
             xAxis: [
                 {
                     type: 'category',
-                    data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+                    data: city,//['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '百色', '来宾', '贵港'],
                     axisLabel: {
                         textStyle: {
                             color: '#fff'
@@ -580,7 +710,7 @@ export class BigScreenComponent {
                 {
                     name: '竣工验收备案',
                     type: 'bar',
-                    data: [5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
+                    data: data,// [5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
                     barWidth: 20, // 柱形宽度
                     itemStyle: {
                         normal: {
@@ -613,7 +743,7 @@ export class BigScreenComponent {
         };
     }
     bar2: any;
-    Bar2() { //city, data
+    Bar2(city, data) {
         this.bar2 = {
             tooltip: {
                 trigger: 'axis',
@@ -638,7 +768,7 @@ export class BigScreenComponent {
             xAxis: [
                 {
                     type: 'category',
-                    data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+                    data: city,// ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '百色', '来宾', '贵港'],
                     axisLabel: {
                         textStyle: {
                             color: '#fff'
@@ -671,7 +801,7 @@ export class BigScreenComponent {
                 {
                     name: '消防设计审查',
                     type: 'bar',
-                    data: [5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
+                    data: data,//[5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
                     barWidth: 20, // 柱形宽度
                     itemStyle: {
                         normal: {
@@ -704,7 +834,7 @@ export class BigScreenComponent {
         };
     }
     bar3: any;
-    Bar3() { //city, data
+    Bar3(city, data) {
         this.bar3 = {
             tooltip: {
                 trigger: 'axis',
@@ -729,7 +859,7 @@ export class BigScreenComponent {
             xAxis: [
                 {
                     type: 'category',
-                    data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+                    data: city,// ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '百色', '来宾', '贵港'],
                     axisLabel: {
                         textStyle: {
                             color: '#fff'
@@ -763,7 +893,7 @@ export class BigScreenComponent {
                 {
                     name: '消防验收',
                     type: 'bar',
-                    data: [5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
+                    data: data,//[5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
                     barWidth: 20, // 柱形宽度
                     itemStyle: {
                         normal: {
@@ -796,7 +926,7 @@ export class BigScreenComponent {
         };
     }
     bar4: any;
-    Bar4() { //city, data
+    Bar4(city, data) {
         this.bar4 = {
             tooltip: {
                 trigger: 'axis',
@@ -821,7 +951,7 @@ export class BigScreenComponent {
             xAxis: [
                 {
                     type: 'category',
-                    data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+                    data: city,// ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '百色', '来宾', '贵港'],
                     axisLabel: {
                         textStyle: {
                             color: '#fff'
@@ -854,7 +984,7 @@ export class BigScreenComponent {
                 {
                     name: '竣工验收备案',
                     type: 'bar',
-                    data: [5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
+                    data: data,//[5, 8, 5, 7, 10, 18, 6, 7, 9, 10, 13, 8, 3],
                     barWidth: 20, // 柱形宽度
                     itemStyle: {
                         normal: {
@@ -889,39 +1019,64 @@ export class BigScreenComponent {
     pie1: any;
     Pie1() {
         this.pie1 = {
-            // title: {
-            //     left: 'left',
-            //     text: '消防设计审查数量',
-            //     textStyle: {
-            //         color: '#fff',
-            //         fontSize: 14,
-            //         fontWeight: '400',
-            //     },
-            //     padding: [50, 0, 0, 50]
-            // },
+            title: {
+                text: '本年',
+                textStyle: {
+                    color: '#f2f2f2',
+                    fontSize: 20,
+                    // align: 'center'
+                },
+                subtextStyle: {
+                    fontSize: 30,
+                    color: ['#ff9d19']
+                },
+                x: 'center',
+                y: 'center',
+            },
             tooltip: {
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
-            // legend: {
-            //     x: 'right',
-            //     orient: 'vertical',
-            //     data: ['日数量', '月数量', '季度数量'],
-            //     padding: [20, 50, 0, 0],
-            //     textStyle: {
-            //         color: '#fff'
-            //     },
-            // },
             series: [
 
                 {
-                    name: '数量',
+                    // name: '数量',
                     type: 'pie',
                     radius: [30, 50],
                     data: [
-                        { value: 1, name: '日数量', itemStyle: { color: '#24e236' } },
-                        { value: 5, name: '月数量', itemStyle: { color: '#e5ee28' } },
-                        { value: 20, name: '季度数量', itemStyle: { color: '#16c9cf' } },
+                        {
+                            value: 20, name: '消防设计审查', itemStyle: {
+                                normal: {
+                                    color: '#F6FF00',
+                                    shadowColor: '#F6FF00',
+                                    borderWidth: 2,
+                                    borderColor: '#F6FF00',
+                                    shadowBlur: 10
+                                }
+                            }
+                        },
+                        {
+                            value: 30, name: '竣工验收备案', itemStyle: {
+                                normal: {
+                                    color: '#0EF9B3',
+                                    shadowColor: '#0EF9B3',
+                                    borderWidth: 2,
+                                    borderColor: '#0EF9B3',
+                                    shadowBlur: 10
+                                }
+                            }
+                        },
+                        {
+                            value: 50, name: '消防验收', itemStyle: {
+                                normal: {
+                                    color: '#01B4FF',
+                                    shadowColor: '#01B4FF',
+                                    borderWidth: 2,
+                                    borderColor: '#01B4FF',
+                                    shadowBlur: 10
+                                }
+                            }
+                        },
 
                     ]
                 }
@@ -931,40 +1086,64 @@ export class BigScreenComponent {
     pie2: any;
     Pie2() {
         this.pie2 = {
-            // title: {
-            //     left: 'left',
-            //     text: '消防竣工验收数量',
-            //     textStyle: {
-            //         color: '#fff',
-            //         fontSize: 14,
-            //         fontWeight: '400',
-            //     },
-            //     padding: [50, 0, 0, 50]
-            // },
+            title: {
+                text: '本月',
+                textStyle: {
+                    color: '#f2f2f2',
+                    fontSize: 20,
+                    // align: 'center'
+                },
+                subtextStyle: {
+                    fontSize: 30,
+                    color: ['#ff9d19']
+                },
+                x: 'center',
+                y: 'center',
+            },
             tooltip: {
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
-            // legend: {
-            //     x: 'right',
-            //     orient: 'vertical',
-            //     data: ['日数量', '月数量', '季度数量'],
-            //     padding: [20, 50, 0, 0],
-            //     textStyle: {
-            //         color: '#fff'
-            //     },
-            // },
-
             series: [
 
                 {
-                    name: '数量',
+                    // name: '数量',
                     type: 'pie',
                     radius: [30, 50],
                     data: [
-                        { value: 3, name: '日数量', itemStyle: { color: '#24d5e2' } },
-                        { value: 15, name: '月数量', itemStyle: { color: '#2886ee' } },
-                        { value: 8, name: '季度数量', itemStyle: { color: '#f8d830' } },
+                        {
+                            value: 60, name: '消防设计审查', itemStyle: {
+                                normal: {
+                                    color: '#F6FF00',
+                                    shadowColor: '#F6FF00',
+                                    borderWidth: 2,
+                                    borderColor: '#F6FF00',
+                                    shadowBlur: 10
+                                }
+                            }
+                        },
+                        {
+                            value: 120, name: '竣工验收备案', itemStyle: {
+                                normal: {
+                                    color: '#0EF9B3',
+                                    shadowColor: '#0EF9B3',
+                                    borderWidth: 2,
+                                    borderColor: '#0EF9B3',
+                                    shadowBlur: 10
+                                }
+                            }
+                        },
+                        {
+                            value: 80, name: '消防验收', itemStyle: {
+                                normal: {
+                                    color: '#01B4FF',
+                                    shadowColor: '#01B4FF',
+                                    borderWidth: 2,
+                                    borderColor: '#01B4FF',
+                                    shadowBlur: 10
+                                }
+                            }
+                        },
 
                     ]
                 }
@@ -1036,7 +1215,7 @@ export class BigScreenComponent {
             // legend: {
             //     orient: 'vertical',
             //     left: 'left',
-            //     data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+            //     data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '百色', '来宾', '贵港'],
             // },
             series: [
                 {
@@ -1055,7 +1234,7 @@ export class BigScreenComponent {
                         { value: 234, name: '梧州' },
                         { value: 135, name: '玉林' },
                         { value: 1548, name: '钦州' },
-                        { value: 335, name: '白色' },
+                        { value: 335, name: '百色' },
                         { value: 310, name: '来宾' },
                         { value: 234, name: '贵港' }
                     ],
@@ -1091,7 +1270,7 @@ export class BigScreenComponent {
             // legend: {
             //     orient: 'vertical',
             //     left: 'left',
-            //     data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+            //     data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '百色', '来宾', '贵港'],
             // },
             series: [
                 {
@@ -1110,7 +1289,7 @@ export class BigScreenComponent {
                         { value: 234, name: '梧州' },
                         { value: 135, name: '玉林' },
                         { value: 1548, name: '钦州' },
-                        { value: 335, name: '白色' },
+                        { value: 335, name: '百色' },
                         { value: 310, name: '来宾' },
                         { value: 234, name: '贵港' }
                     ],
@@ -1146,7 +1325,7 @@ export class BigScreenComponent {
             // legend: {
             //     orient: 'vertical',
             //     left: 'left',
-            //     data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '白色', '来宾', '贵港'],
+            //     data: ['南宁', '崇左', '北海', '柳州', '河池', '桂林', '贺州', '梧州', '玉林', '钦州', '百色', '来宾', '贵港'],
             // },
             series: [
                 {
@@ -1165,7 +1344,7 @@ export class BigScreenComponent {
                         { value: 234, name: '梧州' },
                         { value: 135, name: '玉林' },
                         { value: 1548, name: '钦州' },
-                        { value: 335, name: '白色' },
+                        { value: 335, name: '百色' },
                         { value: 310, name: '来宾' },
                         { value: 234, name: '贵港' }
                     ],
@@ -1183,7 +1362,40 @@ export class BigScreenComponent {
     }
     map: any;
     myChart: any;
+    Icon: any = {
+        passrate1: 'assets/images/passrate/passrate1.png',
+        passrate2: 'assets/images/passrate/passrate2.png',
+        passrate3: 'assets/images/passrate/passrate3.png',
+        passrate4: 'assets/images/passrate/passrate4.png',
+        passrate5: 'assets/images/passrate/passrate5.png',
+        passrate6: 'assets/images/passrate/passrate6.png',
+        passrate7: 'assets/images/passrate/passrate7.png',
+        passrate8: 'assets/images/passrate/passrate8.png',
+        passrate9: 'assets/images/passrate/passrate9.png',
+        passrate10: 'assets/images/passrate/passrate10.png',
+        passrate11: 'assets/images/passrate/passrate11.png',
+        passrate12: 'assets/images/passrate/passrate12.png',
+        passrate13: 'assets/images/passrate/passrate13.png',
+        passrate14: 'assets/images/passrate/passrate14.png',
+    }
+    
     EchartsMap() {
+        this.MapList = [
+            { name: '南宁市', value: 154717.48, ranking: 1, passrate: '10%', acceptTotal: '200', passrateTotal: '20' },
+            { name: '崇左市', value: 531686.1, ranking: 2, passrate: '10%', acceptTotal: '200', passrateTotal: '20' },
+            { name: '北海市', value: 535477.48, ranking: 3, passrate: '10%', acceptTotal: '200', passrateTotal: '20' },
+            { name: '柳州市', value: 511686.1, ranking: 4, passrate: '10%', acceptTotal: '200', passrateTotal: '20' },
+            { name: '河池市', value: 325477.48, ranking: 5, passrate: '10%', acceptTotal: '200', passrateTotal: '20' },
+            { name: '桂林市', value: 69686.1, ranking: 6, passrate: '10%', acceptTotal: '200', passrateTotal: '20' },
+            { name: '贺州市', value: 155477.48, ranking: 7, passrate: '10%', acceptTotal: '200', passrateTotal: '20' },
+            { name: '梧州市', value: 321686.1, ranking: 8, passrate: '10%', acceptTotal: '200', passrateTotal: '20' },
+            { name: '玉林市', value: 259477.48, ranking: 9, passrate: '10%', acceptTotal: '200', passrateTotal: '20' },
+            { name: '钦州市', value: 61686.1, ranking: 10, passrate: '10%', acceptTotal: '200', passrateTotal: '20' },
+            { name: '百色市', value: 41686.1, ranking: 11, passrate: '10%', acceptTotal: '200', passrateTotal: '20' },
+            { name: '来宾市', value: 11686.1, ranking: 12, passrate: '10%', acceptTotal: '200', passrateTotal: '20' },
+            { name: '贵港市', value: 361686.1, ranking: 13, passrate: '10%', acceptTotal: '200', passrateTotal: '20' },
+            { name: '防城港市', value: 761686.1, ranking: 14, passrate: '10%', acceptTotal: '200', passrateTotal: '20' },
+        ];
         this.http.get('assets/guangxi.json').subscribe((e) => {
             this.echarts.registerMap('广西壮族自治区', e);
             this.map = {
@@ -1204,52 +1416,201 @@ export class BigScreenComponent {
                     left: "10%",
                 },
 
-                // tooltip: {
-                //     trigger: 'item',
-                //     formatter: function (params, ticket, callback) {
-                //         let retStr = '区县:';
-                //         retStr += params.data.name + '<br />数量:';
-                //         retStr += params.data.ele.value;
-                //         return retStr;
-                //     }
-                // },
+                tooltip: {
+                    trigger: 'item',
+                    backgroundColor: 'rgba(255,255,255,0)',
+                    formatter: function (params, ticket, callback) {
+                        let retStr = `<div style="background-image:url('./assets/images/big2/img_bg_tk.png');background-size: 100% 100%;height:180px;width:250px;position:absolute;top:-100px">
+                        <span style='font-size: 18px;margin-left:50px;margin-top: 40px; display: block;'> 一次性通过率：`+ params.data.passrate + ` </span>
+                        <span style='color:#F6FF00;display: block;margin-left:50px;'>`+ params.data.name + `</span>
+                        <span style='color:#F6FF00;display: block;margin-left:50px;'>排名：第`+ params.data.ranking + `</span>
+                        <span style='color:#F6FF00;display: block;margin-left:50px;'>验收总数：`+ params.data.acceptTotal + `项</span>
+                        <span style='color:#F6FF00;display: block;margin-left:50px;'> 一次性通过总数：` + params.data.passrateTotal + `项</span>
+                    </div>`;
+                        //  let retStr = '区县:';
+                        // retStr += params.data.name + '<br />排名:'; //position:absolute
+                        // retStr += params.data.ranking  +  '<br />通过率:';
+                        // retStr += params.data.passrate  +  '<br />验收总数:';
+                        // retStr += params.data.acceptTotal  +  '<br />一次性通过总数:';
+                        // retStr += params.data.passrateTotal ;
+                        return retStr;
+                    }
+                },
                 series: [
                     {
                         type: 'map',
                         mapType: '广西壮族自治区',
                         zoom: 1.2,
+                        label: {
+                            normal: {
+                                show: true,
+                                formatter: function (params) {
+                                    if (params.data.ranking == 1) {
+                                        return params.name + '\n' + '{passrate1|}';
+                                    } else if (params.data.ranking == 2) {
+                                        return params.name + '\n' + '{passrate2|}';
+                                    } else if (params.data.ranking == 3) {
+                                        return params.name + '\n' + '{passrate3|}';
+                                    } else if (params.data.ranking == 4) {
+                                        return params.name + '\n' + '{passrate4|}';
+                                    } else if (params.data.ranking == 5) {
+                                        return params.name + '\n' + '{passrate5|}';
+                                    } else if (params.data.ranking == 6) {
+                                        return params.name + '\n' + '{passrate6|}';
+                                    } else if (params.data.ranking == 7) {
+                                        return params.name + '\n' + '{passrate7|}';
+                                    } else if (params.data.ranking == 8) {
+                                        return params.name + '\n' + '{passrate8|}';
+                                    } else if (params.data.ranking == 9) {
+                                        return params.name + '\n' + '{passrate9|}';
+                                    } else if (params.data.ranking == 10) {
+                                        return params.name + '\n' + '{passrate10|}';
+                                    } else if (params.data.ranking == 11) {
+                                        return params.name + '\n' + '{passrate11|}';
+                                    } else if (params.data.ranking == 12) {
+                                        return params.name + '\n' + '{passrate12|}';
+                                    } else if (params.data.ranking == 13) {
+                                        return params.name + '\n' + '{passrate13|}';
+                                    } else if (params.data.ranking == 14) {
+                                        return params.name + '\n' + '{passrate14|}';
+                                    }
+                                    else {
+                                        return params.name;
+                                    }
+                                },
+                                rich: {
+                                    passrate1: {
+                                        backgroundColor: {
+                                            image: this.Icon.passrate1,
+                                        },
+                                        height: 42,
+                                        width: 75
+                                    },
+                                    passrate2: {
+                                        backgroundColor: {
+                                            image: this.Icon.passrate2,
+                                        },
+                                        height: 42,
+                                        width: 75
+                                    },
+                                    passrate3: {
+                                        backgroundColor: {
+                                            image: this.Icon.passrate3,
+                                        },
+                                        height: 42,
+                                        width: 75
+                                    },
+                                    passrate4: {
+                                        backgroundColor: {
+                                            image: this.Icon.passrate4,
+                                        },
+                                        height: 42,
+                                        width: 75
+                                    },
+                                    passrate5: {
+                                        backgroundColor: {
+                                            image: this.Icon.passrate5,
+                                        },
+                                        height: 42,
+                                        width: 75
+                                    },
+                                    passrate6: {
+                                        backgroundColor: {
+                                            image: this.Icon.passrate6,
+                                        },
+                                        height: 42,
+                                        width: 75
+                                    },
+                                    passrate7: {
+                                        backgroundColor: {
+                                            image: this.Icon.passrate7,
+                                        },
+                                        height: 42,
+                                        width: 75
+                                    },
+                                    passrate8: {
+                                        backgroundColor: {
+                                            image: this.Icon.passrate8,
+                                        },
+                                        height: 42,
+                                        width: 75
+                                    },
+                                    passrate9: {
+                                        backgroundColor: {
+                                            image: this.Icon.passrate9,
+                                        },
+                                        height: 42,
+                                        width: 75
+                                    },
+                                    passrate10: {
+                                        backgroundColor: {
+                                            image: this.Icon.passrate10,
+                                        },
+                                        height: 42,
+                                        width: 75
+                                    },
+                                    passrate11: {
+                                        backgroundColor: {
+                                            image: this.Icon.passrate11,
+                                        },
+                                        height: 42,
+                                        width: 75
+                                    },
+                                    passrate12: {
+                                        backgroundColor: {
+                                            image: this.Icon.passrate12,
+                                        },
+                                        height: 42,
+                                        width: 75
+                                    },
+                                    passrate13: {
+                                        backgroundColor: {
+                                            image: this.Icon.passrate13,
+                                        },
+                                        height: 42,
+                                        width: 75
+                                    },
+                                    passrate14: {
+                                        backgroundColor: {
+                                            image: this.Icon.passrate14,
+                                        },
+                                        height: 42,
+                                        width: 75
+                                    },
+                                }
+                            }
+                        },
                         itemStyle: {
                             normal: { label: { show: true } },
                             emphasis: { label: { show: true } }
                         },
-                        label: {
-                            normal: {
-                                textStyle: {
-                                    color: '#fff'
-                                }
-                            }
-                        },
-                        data: [
-                            { name: '南宁市', value: 154717.48 },
-                            { name: '崇左市', value: 531686.1 },
-                            { name: '北海市', value: 535477.48 },
-                            { name: '柳州市', value: 511686.1 },
-                            { name: '河池市', value: 325477.48 },
-                            { name: '桂林市', value: 69686.1 },
-                            { name: '贺州市', value: 155477.48 },
-                            { name: '梧州市', value: 321686.1 },
-                            { name: '玉林市', value: 259477.48 },
-                            { name: '钦州市', value: 61686.1 },
-                            { name: '百色市', value: 41686.1 },
-                            { name: '来宾市', value: 11686.1 },
-                            { name: '贵港市', value: 361686.1 },
-                            { name: '防城港市', value: 761686.1 },
-                        ]
+                        // label: {
+                        //     normal: {
+                        //         textStyle: {
+                        //             color: '#fff'
+                        //         }
+                        //     }
+                        // },
+                        data: this.MapList
                     }
                 ]
             };
             this.myChart = this.echarts.init(document.getElementById('echarts'));
             this.myChart.setOption(this.map);
+            var faultByHourIndex = 0; //播放所在下标
+            var faultByHourTime = setInterval(() => {
+                //使得tootip每隔三秒自动显示
+                this.myChart.dispatchAction({
+                    type: "showTip", // 根据 tooltip 的配置项显示提示框。
+                    seriesIndex: 0,
+                    dataIndex: faultByHourIndex
+                });
+                faultByHourIndex++;
+                // faultRateOption.series[0].data.length 是已报名纵坐标数据的长度
+                if (faultByHourIndex > this.MapList.length) {
+                    faultByHourIndex = 0;
+                }
+            }, 3000);
         });
 
     }

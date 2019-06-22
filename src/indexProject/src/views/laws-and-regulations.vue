@@ -22,7 +22,7 @@
                     <span class="time">{{item.creationTime}}</span>
                   </div>
                   <div style="overflow: hidden;margin-top: 6px;">
-                    <span style="float: right;font-size: 8px">————&nbsp;{{item.issueOrg}}</span>
+                    <span style="float: right;font-size: 12px">————&nbsp;{{item.issueOrg}}</span>
                   </div>
                 </router-link>
               </li>
@@ -54,7 +54,7 @@
                     <span class="time">{{item.creationTime}}</span>
                   </div>
                   <div style="overflow: hidden;margin-top: 6px;">
-                    <span style="float: right;font-size: 8px">————&nbsp;{{item.issueOrg}}</span>
+                    <span style="float: right;font-size: 12px">————&nbsp;{{item.issueOrg}}</span>
                   </div>
                 </router-link>
               </li>
@@ -85,8 +85,8 @@ export default {
       lawsList: null,
       lawsFiles: null,
       tableHight: "200px",
-      lawPageSize: app.pageSize,
-      filePageSize: app.pageSize,
+      lawPageSize: { size: 10, page: 1, isAsc: true },
+      filePageSize: { size: 10, page: 1, isAsc: true },
       lawtotalCount: 0,
       filetotalCount: 0
     };
