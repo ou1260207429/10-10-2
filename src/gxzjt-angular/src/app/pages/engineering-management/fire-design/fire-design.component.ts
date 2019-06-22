@@ -128,8 +128,10 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     this.param.flowPathType = 1
     this.param.sorting = 'ProjectName';
     this.resetTime();
-    this.param.startApplyTime = moment(this.rangeTime[0])
-    this.param.endApplyTime =moment(this.rangeTime[1])
+    this.param.startApplyTime = moment(this.rangeTime[0]);
+    this.param.endApplyTime =moment(this.rangeTime[1]);
+    this.param.projectName='';
+    this.param.status=0;
 
     this.getList();
   }

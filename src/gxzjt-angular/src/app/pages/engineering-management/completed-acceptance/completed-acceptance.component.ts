@@ -138,6 +138,8 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.searchParam.sorting = 'ProjectName';
     this.searchParam.startApplyTime = moment(this.rangeTime[0]);
     this.searchParam.endApplyTime =moment(this.rangeTime[1]);
+    this.searchParam.projectName='';
+    this.searchParam.status=0;
     this.resetTime();
     this.getList();
   }

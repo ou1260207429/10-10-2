@@ -133,6 +133,9 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     this.searchParam.startApplyTime = moment(this.rangeTime[0])
     this.searchParam.endApplyTime =moment(this.rangeTime[1])
     this.resetTime();
+    this.searchParam.projectName='';
+    this.searchParam.status=0;
+
     this.getList();
   }
 
