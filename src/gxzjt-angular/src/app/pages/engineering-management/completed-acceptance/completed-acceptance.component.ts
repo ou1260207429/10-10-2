@@ -23,7 +23,8 @@ import { NzMessageService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-completed-acceptance',
   templateUrl: './completed-acceptance.component.html',
-  styles: []
+  styles: [],
+  styleUrls:['./completed-acceptance.component.less']
 })
 export class CompletedAcceptanceComponent extends PublicFormComponent implements OnInit {
 
@@ -89,13 +90,12 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     }},
     { title: '验证码', index: '无此字段返回' },
     { title: '当前处理环节', index: 'currentNodeName' },
-    { title: '当前处理人', index: 'currentHandleUserName' },
     { title: '流程是否超时', index: 'isExpireTime',format: (item: any) => `${item.isExpireTime?item.isExpireTime:4001}`,type: 'tag', tag: {
       4001:{text:'是',color: 'red' },
       true: { text: '是', color: '' },
       false: { text: '否',color: 'red' },
     }},
-    { title: '审核结果', index: 'status',format: (item: any) => `${item.status?item.status:4001}`,type: 'tag', tag: {
+    { title: '结果', index: 'status',format: (item: any) => `${item.status?item.status:4001}`,type: 'tag', tag: {
       4001:{text:'待处理',color: '' },
       0: { text: '未处理', color: '' },
       1: { text: '受理', color: 'green' },
@@ -104,7 +104,6 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
       4:{ text: '合格', color: '' },
       5:{ text: '未抽中', color: '' },
     }},
-    { title: '操作人', index: 'companyName' },
     { title: '操作时间', index: 'applyTime',type:'date' },
   ];
 
@@ -139,6 +138,8 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.searchParam.sorting = 'ProjectName';
     this.searchParam.startApplyTime = moment(this.rangeTime[0]);
     this.searchParam.endApplyTime =moment(this.rangeTime[1]);
+    this.searchParam.projectName='';
+    this.searchParam.status=0;
     this.resetTime();
     this.getList();
   }
