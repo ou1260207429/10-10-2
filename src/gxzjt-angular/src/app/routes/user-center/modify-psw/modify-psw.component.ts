@@ -55,24 +55,26 @@ export class UserCenterModifyPswComponent implements OnInit {
 
     var httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this._tokenService.getToken()
       })
     };
 
 
     var param = {
-      // oldPassword: this.oldPassword,
-      // newPassword: this.newPassword,
-      // confirmPassword: this.confirmPassword
+      OldPassword: this.oldPassword,
+      NewPassword: this.newPassword,
+      ConfirmPassword: this.confirmPassword
     }
 
-    this.http.post(url + "?oldPassword=" + this.oldPassword + "&newPassword=" + this.newPassword + "&confirmPassword=" + this.confirmPassword, param, httpOptions).subscribe((res: any) => {
+    this.http.post(url 
+      // + "?oldPassword=" + this.oldPassword + "&newPassword=" + this.newPassword + "&confirmPassword=" + this.confirmPassword 
+      ,param, httpOptions).subscribe((res: any) => {
 
       // console.log(res);
       if (res) {
         if (res.result == 0) {
-          this.modalService.info({
+          this.modalService.success({
             nzTitle: '提示',
             nzContent: "修改成功",
           });
@@ -90,7 +92,7 @@ export class UserCenterModifyPswComponent implements OnInit {
   }
 
   showErr(msg) {
-    this.modalService.error({
+    this.modalService.info({
       nzTitle: '出错啦',
       nzContent: msg,
     });

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SystemHomeComponent } from './system-home/system-home.component';
-import { WelcomeComponent } from './welcome/welcome.component'; 
+import { WelcomeComponent } from './welcome/welcome.component';
 const routes: Routes = [
   {
     path: '',
@@ -9,9 +9,19 @@ const routes: Routes = [
     data: { title: '欢迎' }
   },
   {
+    path: 'welcome',
+    component: WelcomeComponent,
+    data: { title: '欢迎' }
+  },
+
+  {
     path: 'systemHomeComponent',
     component: SystemHomeComponent,
-    data: { title: '首页' }
+    data: {
+      title: '首页',
+      role: "sys"
+    }
+
   },
 
 ];

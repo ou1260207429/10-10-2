@@ -21,9 +21,6 @@ const routes: Routes = [
     path: '',
     component: LayoutDefaultComponent,
     canActivateChild: [AppRouteGuard],
-    data:{
-      role:"sys"
-    },
     children: [
 
       {

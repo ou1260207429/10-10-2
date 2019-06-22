@@ -38,20 +38,23 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
       }
       );
 
-      if (route.data) {
-
-        if (route.data['role'] && !this._ACLService.can(route.data['role'])) {
-          this._NzModalService.info({
-            nzTitle: '提示',
-            nzContent: '您没有权限访问该地址',
-          }
-          );
-          return false;
-        }
-
-      }
       return false;
     }
+
+
+
+
+    if (route.data['role'] && !this._ACLService.can(route.data['role'])) {
+      this._NzModalService.info({
+        nzTitle: '提示',
+        nzContent: '您没有权限访问该地址',
+      }
+      );
+      this._router.navigate([this.selectBestRoute()]);
+      return false;
+    }
+
+
 
 
 
@@ -75,7 +78,7 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
   }
 
   selectBestRoute(): string {
-    if (!this._sessionService.user) {
+    if (!this._sessionService.user|| !this._tokenService.getToken()) {
       return '/account/login';
     }
 
