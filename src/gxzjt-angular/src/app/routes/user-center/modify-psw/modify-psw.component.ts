@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 
-import { FormBuilder, Validators, FormControl,FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 import { NzModalService } from 'ng-zorro-antd';
 import { REGISTER_URL } from 'infrastructure/expression';
@@ -62,12 +62,12 @@ export class UserCenterModifyPswComponent implements OnInit {
 
 
     var param = {
-      oldPassword: this.oldPassword,
-      newPassword: this.newPassword,
-      confirmPassword: this.confirmPassword
+      // oldPassword: this.oldPassword,
+      // newPassword: this.newPassword,
+      // confirmPassword: this.confirmPassword
     }
 
-    this.http.post(url, param, httpOptions).subscribe((res: any) => {
+    this.http.post(url + "?oldPassword=" + this.oldPassword + "&newPassword=" + this.newPassword + "&confirmPassword=" + this.confirmPassword, param, httpOptions).subscribe((res: any) => {
 
       // console.log(res);
       if (res) {

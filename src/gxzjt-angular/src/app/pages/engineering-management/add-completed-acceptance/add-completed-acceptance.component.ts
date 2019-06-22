@@ -497,7 +497,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
           }
           );
         } else {
-          this._NzModalService.error({
+          this._NzModalService.info({
             nzTitle: '抽选结果',
             nzContent: this.data.projectName + '，没有被抽中'
 
