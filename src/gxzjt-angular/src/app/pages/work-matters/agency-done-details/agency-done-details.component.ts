@@ -176,8 +176,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptFullPath = this.appSession.user.organizationsName
 
 
-    if (!bo && this.curNodeName == '业务审批负责人审批') { 
-      this.noResult((data) => { 
+    if (!bo && this.curNodeName == '业务审批负责人审批') {
+      this.noResult((data) => {
         this._flowServices.tenant_NodeToNextNodeByNoPass(data.data).subscribe((data: any) => {
           this.examineFormDto.handleUserList = [];
           this.examineFormDto.currentNodeId = data.result.cur_Node_Id
@@ -196,7 +196,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
         })
       })
 
-    } else { 
+    } else {
       this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
 
         this.formDto.isAccept = bo;
@@ -263,8 +263,11 @@ export class AgencyDoneDetailsComponent implements OnInit {
    */
   getPrimaryExamine(then?: Function) {
     this._examineService.getPrimaryExamine(this.flowId).subscribe(data => {
-      this.examineFormDto = data
-      if (then) then()
+      this.examineFormDto = data;
+      
+      if (then) {
+        then();
+      }
     })
   }
 
@@ -312,7 +315,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       {
         tenantWorkFlowInstanceDto: this.tenantWorkFlowInstanceDto,
       }
-    ).subscribe(data => { 
+    ).subscribe(data => {
       //已经驳回成功了
       if (!data.type) {
         if (then) then(data)

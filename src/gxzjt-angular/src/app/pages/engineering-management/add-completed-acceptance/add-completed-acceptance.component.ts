@@ -526,7 +526,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   }
 
   handleSelectModalOk() {
-    console.log(this.selectModalValue);
+    this.save();
+    // console.log(this.selectModalValue);
   }
 
 
