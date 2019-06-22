@@ -10859,6 +10859,8 @@ export class Condition implements ICondition {
     flowType: number | undefined;
     cityId: number | undefined;
     cityName: string | undefined;
+    regionId: number | undefined;
+    regionName: string | undefined;
     startTime: moment.Moment | undefined;
     endTime: moment.Moment | undefined;
     size: number | undefined;
@@ -10879,6 +10881,8 @@ export class Condition implements ICondition {
             this.flowType = data["flowType"];
             this.cityId = data["cityId"];
             this.cityName = data["cityName"];
+            this.regionId = data["regionId"];
+            this.regionName = data["regionName"];
             this.startTime = data["startTime"] ? moment(data["startTime"].toString()) : <any>undefined;
             this.endTime = data["endTime"] ? moment(data["endTime"].toString()) : <any>undefined;
             this.size = data["size"];
@@ -10899,6 +10903,8 @@ export class Condition implements ICondition {
         data["flowType"] = this.flowType;
         data["cityId"] = this.cityId;
         data["cityName"] = this.cityName;
+        data["regionId"] = this.regionId;
+        data["regionName"] = this.regionName;
         data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
         data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
         data["size"] = this.size;
@@ -10919,6 +10925,8 @@ export interface ICondition {
     flowType: number | undefined;
     cityId: number | undefined;
     cityName: string | undefined;
+    regionId: number | undefined;
+    regionName: string | undefined;
     startTime: moment.Moment | undefined;
     endTime: moment.Moment | undefined;
     size: number | undefined;
