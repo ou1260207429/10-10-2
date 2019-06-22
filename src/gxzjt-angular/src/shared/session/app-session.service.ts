@@ -97,7 +97,7 @@ export class AppSessionService {
 
                 break;
             }
-
+            this._ACLService.setFull(true);
 
             this._MenuService.resume();
 

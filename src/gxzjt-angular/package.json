@@ -43,6 +43,7 @@
     "abp-web-resources": "^3.8.4",
     "ajv": "^6.4.0",
     "buffer": "^5.2.1",
+    "classlist.js": "^1.1.20150312",
     "core-js": "^2.5.4",
     "echarts": "^4.2.1",
     "famfamfam-flags": "^1.0.0",
@@ -61,6 +62,7 @@
     "rxjs": "^6.2.1",
     "rxjs-compat": "^6.2.1",
     "screenfull": "^3.3.1",
+    "web-animations-js": "^2.3.1",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
