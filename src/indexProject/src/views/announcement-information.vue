@@ -39,6 +39,7 @@
                   <el-select
                     clearable
                     size="small"
+                    @change="handleshi"
                     v-model="searchForm.cityId"
                     placeholder="请选择（区/县）"
                   >
@@ -139,7 +140,7 @@ export default {
           name: "竣工验收消防备案"
         }
       ],
-      city:"",
+      city: "",
       //查询条件
       searchForm: {
         cityId: "",
@@ -242,6 +243,17 @@ export default {
   },
 
   methods: {
+    handleshi(value) {
+      this.pageSize.cityName = "";
+      if (!value) {
+        this.city = "";
+      }
+      this.xianList.forEach(item => {
+        if (item.AreaId == value) {
+          this.pageSize.cityName = item.Name;
+        }
+      });
+    },
     /**
      * 查询表格数据
      */

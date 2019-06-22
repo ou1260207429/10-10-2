@@ -2,6 +2,8 @@
   margin: 0;
   padding: 0;
 }
+html { font-size: 62.5%; }
+body { font-size: 2rem; /* =20px */ }
 body{
   background-color: #f0f2f5;
 }
@@ -83,12 +85,12 @@ ul {
 }
 
 .breadcrumb span {
-  color: #BD1127FF !important;
+  color: #bd1127 !important;
 }
 
 .active {
-  border: 1px solid #BD1127FF;
-  color: #BD1127FF !important;
+  border: 1px solid #bd1127;
+  color: #bd1127 !important;
   border-radius: 3px;
   min-width: 30.5px;
   height: 25px;

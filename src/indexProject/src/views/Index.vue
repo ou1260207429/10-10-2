@@ -310,7 +310,7 @@ export default {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position: center;
-  color: #bd1127ff;
+  color: #bd1127;
   padding: 5px 0;
   font-size: 12px;
   background-image: url("../assets/images/img_bg_more.png");
