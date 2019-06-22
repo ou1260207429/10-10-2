@@ -38,13 +38,14 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
         {
           text: '查看',
           type: 'modal',
-          // modal: {
-          //   component: StatisticsProAppStaticDetailComponent,
-          //   paramsName: 'record',
-          // },
-          // click: (record: any, modal: any) => {
-
-          // },
+          click: (record: any, modal: any) => {
+            this.watchItem(record);
+          },
+        },
+        {
+          text: '复查申请',
+          type: 'modal',
+          iif: record => record.status  === 3,
         },
         {
           text: '受理凭证',
@@ -138,8 +139,6 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.searchParam.sorting = 'ProjectName';
     this.searchParam.startApplyTime = moment(this.rangeTime[0]);
     this.searchParam.endApplyTime =moment(this.rangeTime[1]);
-    this.searchParam.projectName='';
-    this.searchParam.status=0;
     this.resetTime();
     this.getList();
   }

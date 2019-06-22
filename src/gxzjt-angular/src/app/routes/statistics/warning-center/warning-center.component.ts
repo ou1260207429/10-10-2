@@ -31,23 +31,23 @@ export class StatisticsWarningCenterComponent implements OnInit {
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
 
-    {
-      title: '操作',
-      buttons: [
-        {
-          text: '查看',
-          type: 'modal',
-          modal: {
-            component: StatisticsWarningCenterDetailComponent,
-            paramsName: 'record',
-          },
-          click: (record: any, modal: any) => {
+    // {
+    //   title: '操作',
+    //   buttons: [
+    //     {
+    //       text: '查看',
+    //       type: 'modal',
+    //       modal: {
+    //         component: StatisticsWarningCenterDetailComponent,
+    //         paramsName: 'record',
+    //       },
+    //       click: (record: any, modal: any) => {
 
-          },
-        },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
-      ]
-    },
+    //       },
+    //     },
+    //     // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
+    //   ]
+    // },
     { title: '工程类型', index: 'flowPathType',
     format: (item: any) => `${item.flowPathType?item.flowPathType:0}`,
     type: 'tag', tag: {

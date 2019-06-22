@@ -43,12 +43,19 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
         {
           text: '查看',
           type: 'modal',
-          // modal: {
-          //   component: StatisticsProAppStaticDetailComponent,
-          //   paramsName: 'record',
-          // },
-          // click: (record: any, modal: any) => {
-          // },
+          click: (record: any, modal: any) => {
+            this.watchItem(record)
+          },
+        },
+        {
+          text: '重新申请',
+          type: 'modal',
+          iif: record => record.status  === 3,
+        },
+        {
+          text: '验收',
+          type: 'modal',
+          iif: record => record.status  === 4,
         },
         {
           text: '受理凭证',
@@ -130,9 +137,6 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     this.resetTime();
     this.param.startApplyTime = moment(this.rangeTime[0]);
     this.param.endApplyTime =moment(this.rangeTime[1]);
-    this.param.projectName='';
-    this.param.status=0;
-
     this.getList();
   }
 
