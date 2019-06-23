@@ -596,12 +596,16 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
       this.showError.specialEngineering = false;
     }
     if (!this.showError.fireFightingFacilities && !this.showError.projectCategoryId && !this.showError.specialEngineering && this.form.valid) {
+      console.log(this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length-1])
       const from: GXZJT_From = {
         frow_TemplateInfo_Data: {
-          // Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length-1]
-          Area: '450000',
+          //市县区  
+          Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length-1]
         },
+        //'xfsj,''xfys,'jgys  流程分类  英文简写(消防设计,消防验收,竣工验收)
         identify: 'xfsj',
+
+        //登录的用户的id  名字  部门id  部门路径
         editWorkFlow_NodeAuditorRecordDto: {
           applyEID: this._appSessionService.user.id,
           applyEName: this._appSessionService.user.eName,
@@ -628,9 +632,9 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
 
         flowDataDto.projectFlowInfo.workFlow_Instance_Id = data.result.workFlow_Instance_Id
         flowDataDto.projectFlowInfo.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
-
+ 
         flowDataDto.handleUserList = [];
-        data.result.auditorRecords.forEach(element => {
+        data.result.auditorRecords.forEach(element => { 
           const flowNodeUser = new FlowNodeUser()
           flowNodeUser.userFlowId = element.id
           flowNodeUser.userName = element.applyEName
@@ -669,6 +673,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 1;
     this.flowFormDto.projectTypeStatu = 0;
+    console.log(this.data) 
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')

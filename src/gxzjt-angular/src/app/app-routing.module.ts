@@ -66,7 +66,7 @@ const routes: Routes = [
       {
         path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule',
         data:{
-          role:"sys"
+          role:["sys","reg"]
         },
 
       },
@@ -74,12 +74,15 @@ const routes: Routes = [
         path: 'engineering-management',
         loadChildren: './pages/engineering-management/engineering-management.module#EngineeringManagementModule',
         data:{
-          role:"sys"
+          role:["sys","reg"]
         },
 
       },
       {
         path: 'content-manage', loadChildren: './pages/content-manage/content-manage.module#ContentManageModule',
+        data:{
+          role:"sys"
+        },
 
       },
       {

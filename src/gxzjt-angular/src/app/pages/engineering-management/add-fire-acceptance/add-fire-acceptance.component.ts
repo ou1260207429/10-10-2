@@ -180,25 +180,31 @@ export class AddFireAcceptanceComponent implements OnInit {
 
   //子组件的表单对象
   form: FormGroup
+
+  //使用性质
+  useNatureSelect
   constructor(private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     this.flowFormQueryDto.flowType = 2;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
   }
   ngOnInit() {
-    if (this.type != 0) {
-      this.post_GetFlowFormData();
-    }
+    //
+    this.post_GetFlowFormData();
+    // }
   }
+
 
   /**
    * 获取特殊工程列表
    */
   post_GetFlowFormData() {
-    this.data = '';
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
-      this.data = JSON.parse(data.formJson);
-      console.log(data)
+      if (this.type != 0) {
+        this.data = JSON.parse(data.formJson);
+      }
+      this.useNatureSelect = data.natures
+      console.log(this.useNatureSelect)
     })
   }
 
@@ -209,9 +215,7 @@ export class AddFireAcceptanceComponent implements OnInit {
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 2;
     this.flowFormDto.projectTypeStatu = 1;
-
     this.data.dateOfReview = this.data.dateOfReview == '' ? '' : timeTrans(Date.parse(this.data.dateOfReview) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
-    console.log(this.data);
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')
@@ -219,25 +223,36 @@ export class AddFireAcceptanceComponent implements OnInit {
     })
   }
   save() {
-    console.log(this.form)
-    for (const i in this.form.controls) {
-      this.form.controls[i].markAsDirty();
-      this.form.controls[i].updateValueAndValidity();
-    }
+    const from: GXZJT_From = {
+      frow_TemplateInfo_Data: {
+        Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length - 1],
+      },
+      identify: 'xfsj',
+      editWorkFlow_NodeAuditorRecordDto: {
+        applyEID: this._appSessionService.user.id,
+        applyEName: this._appSessionService.user.eName,
+        deptId: this._appSessionService.user.organizationsId,
+        deptFullPath: this._appSessionService.user.organizationsName,
+      }
+    };
+    this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
+      console.log(this.form)
+      // for (const i in this.form.controls) {
+      //   this.form.controls[i].markAsDirty();
+      //   this.form.controls[i].updateValueAndValidity();
+      // }
 
-    if (!this.data.projectCategoryId || this.data.projectCategoryId == '') {
-      this.showError.projectCategoryId = true;
-    } else {
-      this.showError.projectCategoryId = false;
-    }
+      // if (!this.data.projectCategoryId || this.data.projectCategoryId == '') {
+      //   this.showError.projectCategoryId = true;
+      // } else {
+      //   this.showError.projectCategoryId = false;
+      // }
 
-    if (!this.showError.projectCategoryId && this.form.valid) {
-
-
+      // if (!this.showError.projectCategoryId && this.form.valid) {
 
       const from: GXZJT_From = {
         frow_TemplateInfo_Data: {
-          Area: '450000',
+          Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length - 1]
         },
         identify: 'xfsj',
         editWorkFlow_NodeAuditorRecordDto: {
@@ -286,13 +301,9 @@ export class AddFireAcceptanceComponent implements OnInit {
           history.go(-1)
         })
       })
-    }
+      // }
+    })
   }
 
-  /**
-     * 获取子组件发送的数据
-     */
-  outer(e) {
-    this.form = e;
-  }
 }
+

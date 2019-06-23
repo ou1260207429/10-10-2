@@ -9,9 +9,11 @@ import { PipesModule } from 'pipes/pipes.module';
 import { AlreadyDoneDetailsComponent } from './already-done-details/already-done-details.component';
 import { ComponentsModule } from '@app/components/components.module';
 import { DraftsComponent } from './drafts/drafts.component';
-// import { SearchHadDoneComponent } from './search-had-done/search-had-done';
+import { SearchHadDoneComponent } from './search-had-done/search-had-done';
+import { WorkMattersReviewApplyComponent } from './review-apply/review-apply.component';
 
-const COMPONENTS = [];
+const COMPONENTS = [
+  WorkMattersReviewApplyComponent];
 const COMPONENTS_NOROUNT = [
   FormModuleComponent,
   AgencyDoneComponent,
@@ -19,7 +21,7 @@ const COMPONENTS_NOROUNT = [
   AlreadyDoneComponent,
   AlreadyDoneDetailsComponent,
   DraftsComponent,
-  // SearchHadDoneComponent
+  SearchHadDoneComponent
 ];
 
 @NgModule({

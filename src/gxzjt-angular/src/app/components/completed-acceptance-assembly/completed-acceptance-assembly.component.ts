@@ -42,6 +42,8 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
   //判断上传的焦点
   uoloadIndex: number = -1;
+
+  @Input() errorData: any
   constructor(public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) {
     this.decimationnumber = [];
     for (let index = 1; index < 101; index++) {
