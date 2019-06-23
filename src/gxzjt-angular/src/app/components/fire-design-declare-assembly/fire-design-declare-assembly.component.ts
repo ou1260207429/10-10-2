@@ -20,7 +20,11 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   @Input() type: number = 0
 
   @Input() data: any
-  @Input() errorData: any
+  @Input() errorData = {
+    projectCategoryId: false,
+    specialEngineering: false,
+    fireFightingFacilities: false
+  }
   //市县区
   // position = OptionsEnum
 

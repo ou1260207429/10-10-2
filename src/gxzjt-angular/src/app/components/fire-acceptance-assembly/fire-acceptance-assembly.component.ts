@@ -23,7 +23,11 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
   @Input() data: any
 
-  @Input() errorData: any
+  @Input() errorData = {
+    projectCategoryId: false,
+    specialEngineering: false,
+    fireFightingFacilities: false
+  }
   //市县区
   position// = OptionsEnum
 

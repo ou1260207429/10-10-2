@@ -37,8 +37,8 @@ export class PublicServices {
 
     }
     delete(page: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "/api/Attachment/Delete", page
-        );
+        let url = "api/Attachment/Delete?" + "appId=" + page.AppId + "&id=" + page.id
+        return this.http.post(PANGBO_SERVICES_URL + url, page);
     }
 
 }

@@ -31,11 +31,15 @@
         </nz-upload>
       </se>
       <se *ngIf="operate!=0">
-        <div *ngFor="let item of fileUrlList let i=index">
-          <a style="text-decoration: none;" [href]="fileUrl+item.url" class="ant-upload-list"><i nz-icon type="link"
-              style="margin-right: 5px;" nzTheme="outline"></i>{{item.name}}</a>
-        </div>
-      </se>
+          <div *ngFor="let item of fileUrlList let i=index">
+            <div style="position: relative;cursor: pointer;" id="file">
+              <a style="text-decoration: none;" [href]="fileUrl+item.url" class="ant-upload-list"><i nz-icon type="link"
+                  style="margin-right: 5px;" nzTheme="outline"></i>{{item.name}}
+                </a>
+                <span (click)="deleteFile(item.id)" class="deleteFile" style="color: red;position: absolute;top: 0;right: 0;display: none;">删除文件</span>
+            </div>
+          </div>
+        </se>
       <!-- <se label="附件上传" required>
           <div style="min-height:120px;padding:5px 10px;border:1px solid #d9d9d9;width: 944px!important;overflow: hidden;">
           <nz-upload style="float: left;margin:0 10px;" nzAction="https://jsonplaceholder.typicode.com/posts/">

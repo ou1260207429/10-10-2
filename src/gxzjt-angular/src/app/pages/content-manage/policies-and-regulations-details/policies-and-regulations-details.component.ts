@@ -205,11 +205,30 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
       console.log(data)
       data.forEach(element => {
         this.fileUrlList.push({
+          id:element.id,
           name:element.fileName,
           url:"api/Attachment/Download?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&id="+element.id
         })
       });
      
+    })
+
+  }
+
+  deleteFile(id) {
+    let params = {
+      id: id,
+      AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450"
+    }
+    this._publicServices.delete(params).subscribe(data => {
+      if (data.result == 2) {
+        this.message.error(data.message);
+      } else {
+        this.fileUrlList.forEach((item, index) => {
+          this.fileUrlList.splice(index, 1);
+        })
+        this.message.success(data.message);
+      }
     })
 
   }

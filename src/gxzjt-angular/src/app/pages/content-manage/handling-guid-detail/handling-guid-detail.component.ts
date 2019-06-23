@@ -67,7 +67,7 @@ export class HandlingGuidDetailComponent implements OnInit {
 
   }
   goBack() {
-      history.go(-1);
+    history.go(-1);
   }
   /**
    * 获取类型
@@ -179,11 +179,11 @@ export class HandlingGuidDetailComponent implements OnInit {
     this._publicServices.getFilesDetail(params).subscribe(data => {
       data.forEach(element => {
         this.fileUrlList.push({
+          id: element.id,
           name: element.fileName,
           url: "api/Attachment/Download?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&id=" + element.id
         })
       });
-
     })
 
   }
@@ -192,6 +192,23 @@ export class HandlingGuidDetailComponent implements OnInit {
 
     return false;
   };
+  deleteFile(id) {
+    let params = {
+      id: id,
+      AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450"
+    }
+    this._publicServices.delete(params).subscribe(data => {
+      if (data.result == 2) {
+        this.message.error(data.message);
+      } else {
+        this.fileUrlList.forEach((item, index) => {
+          this.fileUrlList.splice(index, 1);
+        })
+        this.message.success(data.message);
+      }
+    })
+
+  }
   removeFile = (file: UploadFile): boolean => {
     this.fileList.forEach((item, index) => {
       if (item.uid == file.uid) {

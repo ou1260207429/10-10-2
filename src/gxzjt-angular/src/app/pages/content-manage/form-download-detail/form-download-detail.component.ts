@@ -19,22 +19,6 @@ export class FormDownloadDetailComponent implements OnInit {
   uploadUrl = "http://demo.rjtx.net:5001/api/Upload/Upload"
   files = []
   sourceId: string
-  /**
-   * 过滤
-   */
-  filters: UploadFilter[] = [
-    {
-      name: 'type',
-      fn: (fileList: UploadFile[]) => {
-        const filterFiles = fileList.filter(w => ~['application/vnd.openxmlformats-officedocument.wordprocessingml.document'].indexOf(w.type));
-        if (filterFiles.length !== fileList.length) {
-          this.message.error("上传文件格式不正确，请选择.doc文件");
-          return filterFiles;
-        }
-        return fileList;
-      }
-    },
-  ];
   constructor(private _publicServices: PublicServices, private _eventEmiter: EventEmiter, private message: NzMessageService, private _attachmentServiceProxy: AttachmentServiceProxy, private _activatedRoute: ActivatedRoute) {
   }
   ngOnInit() {
@@ -107,6 +91,7 @@ export class FormDownloadDetailComponent implements OnInit {
     this.fileList = [file];
     return false;
   };
+  //删除上传文件
   //删除上传文件
   removeFile = (file: UploadFile): boolean => {
     this.fileList = [];
