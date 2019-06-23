@@ -13,7 +13,7 @@ import { SearchHadDoneComponent } from './search-had-done/search-had-done';
 import { WorkMattersReviewApplyComponent } from './review-apply/review-apply.component';
 
 const COMPONENTS = [
-  WorkMattersReviewApplyComponent];
+  ];
 const COMPONENTS_NOROUNT = [
   FormModuleComponent,
   AgencyDoneComponent,
@@ -21,7 +21,8 @@ const COMPONENTS_NOROUNT = [
   AlreadyDoneComponent,
   AlreadyDoneDetailsComponent,
   DraftsComponent,
-  SearchHadDoneComponent
+  SearchHadDoneComponent,
+  WorkMattersReviewApplyComponent,
 ];
 
 @NgModule({

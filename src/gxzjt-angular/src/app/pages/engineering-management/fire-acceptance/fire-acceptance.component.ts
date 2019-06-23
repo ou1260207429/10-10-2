@@ -44,11 +44,15 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
             this.watchItem(record);
           },
         },
-        {
-          text: '复查申请',
-          type: 'modal',
-          iif: record => record.status  === 3,
-        },
+        // {
+        //   text: '复查申请',
+        //   type: 'modal',
+        //   iif: record => record.status  === 3,//当状态是3即为不合格的时候显示此按钮，若需要方便调试可自己更改status的值改变按钮显示
+        //   click: (record: any, modal: any) => {
+
+        //     this.toreapply(record);
+        //   },
+        // },
         {
           text: '受理凭证',
           type: 'link',
@@ -175,6 +179,9 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
 
   watchItem(item) {
     this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`]);
+  }
+  toreapply(item) {
+    this.router.navigate([`/app/work-matters/review-apply/1/1`]);
   }
 
   change(v) {
