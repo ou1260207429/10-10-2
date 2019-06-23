@@ -52,6 +52,11 @@ export class AppMenus {
           i18n: "已办",
           link: "/app/work-matters/alreadyDoneComponent",
         },
+         {
+          text: "办结查询",
+         
+          link: "/app/work-matters/searchHadDone",
+        },
         // {
         //   text: "",
         //   i18n: "草稿",
