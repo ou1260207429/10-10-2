@@ -10,20 +10,19 @@ import { FireAcceptanceAssemblyComponent } from './fire-acceptance-assembly/fire
 import { FireAcceptanceAssemblyHandleComponent } from './fire-acceptance-assembly-handle/fire-acceptance-assembly-handle.component';
 import { CompletedAcceptanceAssemblyHandleComponent } from './completed-acceptance-assembly-handle/completed-acceptance-assembly-handle.component';
 import { FlowProcessRejectComponent } from './flow-process-reject/flow-process-reject.component';
-
 @NgModule({
 	declarations: [
 		FlowRouteComponent,
 		CompletedAcceptanceAssemblyComponent,
 		FireAcceptanceAssemblyComponent,
 		FireDesignDeclareAssemblyComponent,
-		FireDesignDeclareAssemblyHandleComponent, 
-		FireAcceptanceAssemblyHandleComponent, 
+		FireDesignDeclareAssemblyHandleComponent,
+		FireAcceptanceAssemblyHandleComponent,
 		CompletedAcceptanceAssemblyHandleComponent, FlowProcessRejectComponent,
 	],
 	imports: [
 		PipesModule,
-		SharedModule
+		SharedModule,
 	],
 	exports: [
 		FlowRouteComponent,
@@ -31,7 +30,7 @@ import { FlowProcessRejectComponent } from './flow-process-reject/flow-process-r
 		FireAcceptanceAssemblyComponent,
 		FireDesignDeclareAssemblyComponent,
 		FireDesignDeclareAssemblyHandleComponent,
-		FireAcceptanceAssemblyHandleComponent, 
+		FireAcceptanceAssemblyHandleComponent,
 		CompletedAcceptanceAssemblyHandleComponent,
 		FlowProcessRejectComponent,
 	],
@@ -41,7 +40,7 @@ import { FlowProcessRejectComponent } from './flow-process-reject/flow-process-r
 		FireAcceptanceAssemblyComponent,
 		FireDesignDeclareAssemblyComponent,
 		FireDesignDeclareAssemblyHandleComponent,
-		FireAcceptanceAssemblyHandleComponent, 
+		FireAcceptanceAssemblyHandleComponent,
 		CompletedAcceptanceAssemblyHandleComponent,
 		FlowProcessRejectComponent,
 	]
