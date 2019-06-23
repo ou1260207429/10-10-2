@@ -66,7 +66,7 @@ const routes: Routes = [
       {
         path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule',
         data:{
-          role:"sys"
+          role:["sys","reg"]
         },
 
       },

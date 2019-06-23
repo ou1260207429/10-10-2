@@ -304,7 +304,7 @@ export class AddFireAcceptanceComponent implements OnInit {
   /**
      * 获取子组件发送的数据
      */
-  // outer(e) {
-  //   this.form = e;
-  // }
+  outer(e) {
+    this.form = e;
+  }
 }
