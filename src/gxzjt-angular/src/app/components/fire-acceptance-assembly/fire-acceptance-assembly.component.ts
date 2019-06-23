@@ -6,6 +6,7 @@ import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayStr
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
+import { DepFlags } from '@angular/compiler/src/core';
 
 /**
  * 消防验收的表单模块
@@ -115,5 +116,15 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
   handleChange(index) {
     this.uoloadIndex = index
   }
+
+  designUnitList=[];
+  isdesignUnitLoading=false;
+
+  onSearchDesignUnit(item){
+     
+
+  }
+
+
 
 }

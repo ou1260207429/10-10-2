@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AbpMultiTenancyService } from '@abp/multi-tenancy/abp-multi-tenancy.service';
 import { ACLService, DelonACLConfig } from '@delon/acl';
 import { MenuService } from '@delon/theme';
-
+import { AppConsts } from '@shared/AppConsts';
 
 import {
   LoginServiceProxy,
@@ -106,6 +106,7 @@ export class AppSessionService {
           },
           err => {
             resolve(true);
+            location.href = AppConsts.appBaseUrl+'/#/account/login';
             reject(err);
           },
         );

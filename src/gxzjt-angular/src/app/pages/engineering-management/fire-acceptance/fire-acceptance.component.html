@@ -14,7 +14,7 @@
 
       <input nz-input [(ngModel)]="searchParam.projectName" name="projectName"  placeholder="工程名称"
         style="margin-right: 10px;margin-top: 10px;width: 200px;">
-        <nz-select class="search_menu_input" [(ngModel)]="searchParam.status"  nzPlaceHolder="审查结果" name="status1"> 
+        <nz-select class="search_menu_input" [(ngModel)]="searchParam.status" name="status"   nzPlaceHolder="审查结果">
           <nz-option nzLabel="未处理" nzValue="0"></nz-option>
           <nz-option nzLabel="受理" nzValue="1"></nz-option>
           <nz-option nzLabel="不受理" nzValue="2"></nz-option>
@@ -26,7 +26,7 @@
       <nz-range-picker class="search_menu_input" [(ngModel)]="rangeTime" name="rangeTime" nzFormat="yyyy/MM/dd"
         style="margin-right: 10px;margin-top: 10px;"></nz-range-picker>
 
-      <button nz-button (click)="init()" style="margin-right: 10px;margin-top: 10px;">重置</button>
+      <button nz-button (click)="reststart()" style="margin-right: 10px;margin-top: 10px;">重置</button>
 
       <button nz-button (click)="query()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>
     </form>

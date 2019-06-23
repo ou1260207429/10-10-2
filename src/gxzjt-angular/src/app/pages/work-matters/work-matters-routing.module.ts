@@ -6,7 +6,8 @@ import { AlreadyDoneComponent } from './already-done/already-done.component';
 import { AlreadyDoneDetailsComponent } from './already-done-details/already-done-details.component';
 import { AgencyDoneDetailsComponent } from './agency-done-details/agency-done-details.component';
 import { DraftsComponent } from './drafts/drafts.component';
-// import { SearchHadDoneComponent } from './search-had-done/search-had-done';
+import { SearchHadDoneComponent } from './search-had-done/search-had-done';
+import { WorkMattersReviewApplyComponent } from './review-apply/review-apply.component';
 
 const routes: Routes = [
   {
@@ -39,13 +40,14 @@ const routes: Routes = [
     component: DraftsComponent,
     data: { title: '草稿箱' },
   },
-  // {
-  //   path: 'searchHadDone',
-  //   component: SearchHadDoneComponent,
-  //   data: { title: '办结查询' },
-  // },
+  {
+    path: 'searchHadDone',
+    component: SearchHadDoneComponent,
+    data: { title: '办结查询' },
+  },
   
-];
+,
+  { path: 'review-apply/:projectId/:flowId/', component: WorkMattersReviewApplyComponent ,data: { title: '复查申请' } }];
 
 
 @NgModule({

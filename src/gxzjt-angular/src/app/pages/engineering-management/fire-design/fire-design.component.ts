@@ -123,6 +123,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
      }
 
   ngOnInit() {
+    this.param.orgType=1;
     this.resetTime();
     this.init();
 
@@ -130,6 +131,18 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
 
 
   init() {
+    this.param.page = 1;
+    this.param.maxResultCount = 10;
+    this.param.flowPathType = 1
+    this.param.sorting = 'ProjectName';
+    this.resetTime();
+    this.param.startApplyTime = moment(this.rangeTime[0]);
+    this.param.endApplyTime =moment(this.rangeTime[1]);
+    this.getList();
+  }
+  reststart(){
+    this.param.projectName='';
+    this.param.status=0;
     this.param.page = 1;
     this.param.maxResultCount = 10;
     this.param.flowPathType = 1
@@ -177,7 +190,10 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
   }
 
   watchItem(item) {
-    this.router.navigate([`/app/work-matters/alreadyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}`]);
+    // console.log(item)
+    // console.log("这"+item.flowNo)
+    // debugger
+    this.router.navigate([`/app/work-matters/alreadyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}`,{record:item}]);
   }
   resetTime() {
     var startTime = new Date();

@@ -54,7 +54,7 @@ export class AppMenus {
         },
          {
           text: "办结查询",
-         
+          acl: AppMenus.aclSys,
           link: "/app/work-matters/searchHadDone",
         },
         // {

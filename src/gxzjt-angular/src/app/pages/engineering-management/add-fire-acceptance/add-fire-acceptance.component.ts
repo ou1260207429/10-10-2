@@ -198,12 +198,12 @@ export class AddFireAcceptanceComponent implements OnInit {
   /**
    * 获取特殊工程列表
    */
-  post_GetFlowFormData() { 
+  post_GetFlowFormData() {
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
       if (this.type != 0) {
         this.data = JSON.parse(data.formJson);
-      } 
-      this.useNatureSelect = data.natures 
+      }
+      this.useNatureSelect = data.natures
       console.log(this.useNatureSelect)
     })
   }
@@ -250,62 +250,60 @@ export class AddFireAcceptanceComponent implements OnInit {
 
       // if (!this.showError.projectCategoryId && this.form.valid) {
 
+      const from: GXZJT_From = {
+        frow_TemplateInfo_Data: {
+          Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length - 1]
+        },
+        identify: 'xfsj',
+        editWorkFlow_NodeAuditorRecordDto: {
+          applyEID: this._appSessionService.user.id,
+          applyEName: this._appSessionService.user.eName,
+          deptId: this._appSessionService.user.organizationsId,
+          deptFullPath: this._appSessionService.user.organizationsName,
+        }
+      };
+      this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
+
+        const flowDataDto = new FlowDataDto();
+        flowDataDto.formJson = JSON.stringify(this.data);
+        flowDataDto.projectFlowInfo = new ProjectFlowDto();
 
 
-        const from: GXZJT_From = {
-          frow_TemplateInfo_Data: {
-            Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length-1]
-          },
-          identify: 'xfsj',
-          editWorkFlow_NodeAuditorRecordDto: {
-            applyEID: this._appSessionService.user.id,
-            applyEName: this._appSessionService.user.eName,
-            deptId: this._appSessionService.user.organizationsId,
-            deptFullPath: this._appSessionService.user.organizationsName,
-          }
-        };
-        this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
+        flowDataDto.projectFlowInfo.timeLimit = data.result.timeLimit
+        //类型  消防设计1   消防验收2   消防竣工3 
+        flowDataDto.projectFlowInfo.flowPathType = 2
 
-          const flowDataDto = new FlowDataDto();
-          flowDataDto.formJson = JSON.stringify(this.data);
-          flowDataDto.projectFlowInfo = new ProjectFlowDto();
+        flowDataDto.projectFlowInfo.flowNo = data.result.workFlow_Instance_Id
 
+        flowDataDto.projectFlowInfo.currentNodeId = data.result.cur_Node_Id
+        flowDataDto.projectFlowInfo.currentNodeName = data.result.cur_NodeName
 
-          flowDataDto.projectFlowInfo.timeLimit = data.result.timeLimit
-          //类型  消防设计1   消防验收2   消防竣工3 
-          flowDataDto.projectFlowInfo.flowPathType = 2
+        flowDataDto.projectFlowInfo.workFlow_Instance_Id = data.result.workFlow_Instance_Id
+        flowDataDto.projectFlowInfo.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
 
-          flowDataDto.projectFlowInfo.flowNo = data.result.workFlow_Instance_Id
+        flowDataDto.handleUserList = [];
+        data.result.auditorRecords.forEach(element => {
+          const flowNodeUser = new FlowNodeUser()
+          flowNodeUser.userFlowId = element.id
+          flowNodeUser.userName = element.applyEName
+          flowNodeUser.userCode = element.applyEID
+          flowDataDto.handleUserList.push(flowNodeUser)
+        });
 
-          flowDataDto.projectFlowInfo.currentNodeId = data.result.cur_Node_Id
-          flowDataDto.projectFlowInfo.currentNodeName = data.result.cur_NodeName
+        //待审人数组 等后台改模型
+        // currentHandleUserName: string | undefined;
 
-          flowDataDto.projectFlowInfo.workFlow_Instance_Id = data.result.workFlow_Instance_Id
-          flowDataDto.projectFlowInfo.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
+        //待审人数组 等后台改模型
+        // currentHandleUserCode: string | undefined; 
 
-          flowDataDto.handleUserList = [];
-          data.result.auditorRecords.forEach(element => {
-            const flowNodeUser = new FlowNodeUser()
-            flowNodeUser.userFlowId = element.id
-            flowNodeUser.userName = element.applyEName
-            flowNodeUser.userCode = element.applyEID
-            flowDataDto.handleUserList.push(flowNodeUser)
-          });
-
-          //待审人数组 等后台改模型
-          // currentHandleUserName: string | undefined;
-
-          //待审人数组 等后台改模型
-          // currentHandleUserCode: string | undefined; 
-
-          this._applyService.acceptance(flowDataDto).subscribe(data => {
-            this.message.success('提交成功')
-            history.go(-1)
-          })
+        this._applyService.acceptance(flowDataDto).subscribe(data => {
+          this.message.success('提交成功')
+          history.go(-1)
         })
+      })
       // }
     })
   }
 
-   
 }
+
