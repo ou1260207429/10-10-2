@@ -34,7 +34,7 @@ export class PoliciesAndRegulationsComponent extends PublicFormComponent impleme
   };
 
   columns: STColumn[] = [
-    { title: '法规编号', index: 'regulationCode' },
+    // { title: '法规编号', index: 'regulationCode' },
     { title: '法规类型', index: 'regulationType' },
     { title: '标题名称', index: 'title' },
     { title: '颁布机关', index: 'issueOrg' },

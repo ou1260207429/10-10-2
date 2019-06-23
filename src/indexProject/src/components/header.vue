@@ -5,7 +5,7 @@
       <el-row class="content">
         <el-col :span="19">
           <img class="logo" src="../assets/images/logo.png" alt>
-          <span class="title">广西建设工程消防设计审查与验收管理平台</span>
+          <span class="title">广西建设工程消防设计审查验收备案管理平台</span>
         </el-col>
         <el-col :span="5" class="tip">
           <span>公正</span>

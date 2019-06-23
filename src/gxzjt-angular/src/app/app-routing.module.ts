@@ -37,31 +37,52 @@ const routes: Routes = [
     children: [
       {
         path: 'statistics', loadChildren: './routes/statistics/statistics.module#StatisticsModule',
+        data:{
+          role:"sys"
+        },
 
       },
       {
         path: 'sys-setting', loadChildren: './routes/sys-setting/sys-setting.module#SysSettingModule',
+        data:{
+          role:"sys"
+        },
 
       },
       {
         path: 'permission', loadChildren: './routes/permission/permission.module#PermissionModule',
+        data:{
+          role:"sys"
+        },
 
       },
       {
         path: 'home', loadChildren: './pages/home/home.module#HomeModule',
+        data:{
+          role:"sys"
+        },
 
       },
       {
         path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule',
+        data:{
+          role:["sys","reg"]
+        },
 
       },
       {
         path: 'engineering-management',
         loadChildren: './pages/engineering-management/engineering-management.module#EngineeringManagementModule',
+        data:{
+          role:["sys","reg"]
+        },
 
       },
       {
         path: 'content-manage', loadChildren: './pages/content-manage/content-manage.module#ContentManageModule',
+        data:{
+          role:"sys"
+        },
 
       },
       {

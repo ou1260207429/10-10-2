@@ -30,7 +30,11 @@ export class AgencyDoneDetailsComponent implements OnInit {
       name: '查看路径',
     }
   ];
-
+  showError = {
+    projectCategoryId: false,
+    specialEngineering: false,
+    fireFightingFacilities: false
+  }
   selectedIndex = 0
 
   //路径的对象
@@ -64,7 +68,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   workFlowData
 
-  tenantWorkFlowInstanceDto
+  tenantWorkFlowInstanceDto:any = {}
 
   //当前节点的名称
   curNodeName
@@ -105,8 +109,14 @@ export class AgencyDoneDetailsComponent implements OnInit {
       //获取JSON和节点信息
       Promise.all([this.post_GetFlowFormData(flowFormQueryDto), this.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow)]).then((value: any) => {
         this.formJson = JSON.parse(value[0].formJson);
+
+        console.log(this.formJson);
+        
         this.tenantWorkFlowInstanceDto = this.workFlowData = value[1].result;
+
+        console.log(this.tenantWorkFlowInstanceDto);
         this.tenantWorkFlowInstanceDto.workFlow_InstanceId = this.formDto.workFlow_Instance_Id
+        console.log(this.formJson)
 
 
         //获取当前节点 由这个判断提交的接口
@@ -169,15 +179,20 @@ export class AgencyDoneDetailsComponent implements OnInit {
   save(bo?: boolean) {
     const num = bo ? 1 : 0;
     this.tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
-      Area: '450000',
-      IsChoose: num
+      Area: '450001',
+      IsChoose: num,
+      editWorkFlow_NodeAuditorRecordDto:{
+        deptId:'',
+        deptFullPath:''
+      }
     }
+    console.log(this.appSession.user.organizationsId);
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptFullPath = this.appSession.user.organizationsName
 
 
-    if (!bo && this.curNodeName == '业务审批负责人审批') { 
-      this.noResult((data) => { 
+    if (!bo && this.curNodeName == '业务审批负责人审批') {
+      this.noResult((data) => {
         this._flowServices.tenant_NodeToNextNodeByNoPass(data.data).subscribe((data: any) => {
           this.examineFormDto.handleUserList = [];
           this.examineFormDto.currentNodeId = data.result.cur_Node_Id
@@ -196,7 +211,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
         })
       })
 
-    } else { 
+    } else {
       this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
 
         this.formDto.isAccept = bo;
@@ -263,8 +278,11 @@ export class AgencyDoneDetailsComponent implements OnInit {
    */
   getPrimaryExamine(then?: Function) {
     this._examineService.getPrimaryExamine(this.flowId).subscribe(data => {
-      this.examineFormDto = data
-      if (then) then()
+      this.examineFormDto = data;
+      
+      if (then) {
+        then();
+      }
     })
   }
 
@@ -312,7 +330,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       {
         tenantWorkFlowInstanceDto: this.tenantWorkFlowInstanceDto,
       }
-    ).subscribe(data => { 
+    ).subscribe(data => {
       //已经驳回成功了
       if (!data.type) {
         if (then) then(data)

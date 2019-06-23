@@ -186,4 +186,10 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     startTime.setDate(startTime.getDate() - 1)
     this.rangeTime = [startTime, new Date()];
   }
+
+  change(v) {
+    pageOnChange(v, this.param, () => {
+      this.getList();
+    })
+  }
 }

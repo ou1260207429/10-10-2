@@ -6,7 +6,8 @@ export class AppAuthService {
   logout(reload?: boolean): void {
     abp.auth.clearToken();
     if (reload !== false) {
-      location.href = AppConsts.appBaseUrl;
+      // location.href = AppConsts.appBaseUrl;
+      location.href = AppConsts.appBaseUrl+'/#/account/login';
     }
   }
 }

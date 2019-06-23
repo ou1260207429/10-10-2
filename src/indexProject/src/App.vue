@@ -20,8 +20,7 @@ export default {
   width: 100%;
   height: 100vh;
   min-width: 1420px;
-   -webkit-font-smoothing: antialiased;
- -moz-osx-font-smoothing: grayscale; 
-
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 </style>

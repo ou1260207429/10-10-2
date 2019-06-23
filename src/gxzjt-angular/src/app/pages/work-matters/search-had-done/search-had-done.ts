@@ -21,11 +21,11 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
  * 待办流程
  */
 @Component({
-  selector: 'app-agency-done',
-  templateUrl: 'agency-done.component.html',
+  selector: 'search-had-done',
+  templateUrl: 'search-had-done.html',
   styles: [],
 })
-export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
+export class SearchHadDoneComponent extends PublicFormComponent implements OnInit {
   index;
 
 
@@ -95,10 +95,6 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.searchParam.projectName='';
     this.searchParam.companyName='';
     this.searchParam.projectTypeStatu=null;
-    if(this.rangeTime!=null){
-      this.searchParam.applyTimeStart = this.rangeTime[0];
-      this.searchParam.applyTimeEnd = this.rangeTime[1];
-    }
     this.getList();
   }
 
@@ -142,11 +138,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
   okRangeTime(v) {
     console.log(v);
-    //const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')
-    //const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')
-    this.searchParam.applyTimeStart = v[0];
-    this.searchParam.applyTimeEnd = v[1];
-    // console.log(applyTimeEnd);
+
   }
 
 

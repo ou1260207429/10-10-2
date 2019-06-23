@@ -1,12 +1,15 @@
 import { PublicModel } from './../../../../infrastructure/public-model';
 import { Component, OnInit } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd';
+// import { NzMessageService } from 'ng-zorro-antd';
 import { timeTrans } from 'infrastructure/regular-expression';
 import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto, FlowDataDto, ProjectFlowDto, FlowNodeUser } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute } from '@angular/router';
 import { FlowServices, GXZJT_From } from 'services/flow.services';
 import { FormGroup } from '@angular/forms';
 import { AppSessionService } from '@shared/session/app-session.service';
+
+import { NzModalService } from 'ng-zorro-antd';
+
 /**
  * 工程管理->竣工验收->新增申报
  */
@@ -378,7 +381,13 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   flowFormQueryDto = new FlowFormQueryDto();
   //子组件的表单对象
   form: FormGroup
-  constructor(private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _ActivatedRoute: ActivatedRoute, private _applyService: ApplyServiceServiceProxy, private message: NzMessageService, public publicModel: PublicModel, ) {
+  constructor(private _appSessionService: AppSessionService,
+    private _flowServices: FlowServices,
+    private _ActivatedRoute: ActivatedRoute,
+    private _applyService: ApplyServiceServiceProxy,
+    // private message: NzMessageService,
+    public publicModel: PublicModel,
+    private _NzModalService: NzModalService) {
     this.flowFormQueryDto.flowType = 3;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
@@ -413,18 +422,22 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 3;
     this.flowFormDto.projectTypeStatu = 2;
-
-    console.log(this.data);
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
-      this.message.success('保存成功')
+      this._NzModalService.success({
+        nzTitle: '操作提示',
+        nzContent: '保存成功'
+      }
+      );
       history.go(-1)
     })
   }
   save() {
+
+    console.log(this.form.valid)
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
-        Area: '450000',
+        Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length-1],
       },
       identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {
@@ -477,16 +490,31 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       this._applyService.post_PutOnRecord(flowDataDto).subscribe(data => {
 
         if (data == true) {
-          this.message.success(this.data.projectName + '您被抽中拉');
+          this._NzModalService.success({
+            nzTitle: '抽选结果',
+            nzContent: this.data.projectName + '，已经被抽中'
+
+          }
+          );
         } else {
-          this.message.info(this.data.projectName + '您没有被抽中');
+          this._NzModalService.info({
+            nzTitle: '抽选结果',
+            nzContent: this.data.projectName + '，没有被抽中'
+
+          }
+          );
         }
 
         this.isSelectModalOkLoading = false;
 
         history.go(-1)
       }, err => {
-        this.message.info('提交失败');
+        this._NzModalService.error({
+          nzTitle: '操作失败',
+          nzContent: this.data.projectName + '，提交出错'
+
+        }
+        );
       })
     })
   }
@@ -499,6 +527,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   }
 
 
+  //抽选按钮弹框
+
   isVisibleSelectModal = false;
   isSelectModalOkLoading = false;
 
@@ -507,7 +537,13 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   }
 
   showSelectModal() {
-    this.isVisibleSelectModal = true;
+    for (const i in this.form.controls) {
+      this.form.controls[i].markAsDirty();
+      this.form.controls[i].updateValueAndValidity();
+    }
+    if (this.form.valid) {
+      this.isVisibleSelectModal = true;
+    }
   }
 
 
@@ -526,7 +562,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   }
 
   handleSelectModalOk() {
-    console.log(this.selectModalValue);
+    this.save();
+    // console.log(this.selectModalValue);
   }
 
 

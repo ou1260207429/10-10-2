@@ -6,6 +6,8 @@ import { AlreadyDoneComponent } from './already-done/already-done.component';
 import { AlreadyDoneDetailsComponent } from './already-done-details/already-done-details.component';
 import { AgencyDoneDetailsComponent } from './agency-done-details/agency-done-details.component';
 import { DraftsComponent } from './drafts/drafts.component';
+import { SearchHadDoneComponent } from './search-had-done/search-had-done';
+
 const routes: Routes = [
   {
     path: 'formModuleComponent',
@@ -37,6 +39,12 @@ const routes: Routes = [
     component: DraftsComponent,
     data: { title: '草稿箱' },
   },
+  {
+    path: 'searchHadDone',
+    component: SearchHadDoneComponent,
+    data: { title: '办结查询' },
+  },
+  
 ];
 
 

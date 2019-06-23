@@ -9,6 +9,7 @@ import { PipesModule } from 'pipes/pipes.module';
 import { AlreadyDoneDetailsComponent } from './already-done-details/already-done-details.component';
 import { ComponentsModule } from '@app/components/components.module';
 import { DraftsComponent } from './drafts/drafts.component';
+import { SearchHadDoneComponent } from './search-had-done/search-had-done';
 
 const COMPONENTS = [];
 const COMPONENTS_NOROUNT = [
@@ -17,7 +18,8 @@ const COMPONENTS_NOROUNT = [
   AgencyDoneDetailsComponent,
   AlreadyDoneComponent,
   AlreadyDoneDetailsComponent,
-  DraftsComponent
+  DraftsComponent,
+  SearchHadDoneComponent
 ];
 
 @NgModule({
