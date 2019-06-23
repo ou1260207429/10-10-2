@@ -85,14 +85,14 @@
           <td colspan="15" style="text-align: left;">
             <nz-radio-group (ngModelChange)="changeValue($event,'projectCategoryId')"
               [(ngModel)]="data.projectCategoryId" name="projectCategoryIdA">
-              <label style="padding-right: 20px;" nz-radio nzValue="新建">新建</label>
-              <label style="padding-right: 20px;" nz-radio nzValue="扩建">扩建</label>
+              <label style="padding-right: 20px;" nz-radio nzValue="1">新建</label>
+              <label style="padding-right: 20px;" nz-radio nzValue="2">扩建</label>
             </nz-radio-group>
             改建
             ( &nbsp; &nbsp; <nz-radio-group (ngModelChange)="changeValue($event,'projectCategoryId')" [(ngModel)]="data.projectCategoryId" name="projectCategoryIdB">
-              <label nz-radio nzValue="装修">装修</label>
-              <label nz-radio nzValue="建筑保温">建筑保温</label>
-              <label nz-radio nzValue="改变用途">改变用途</label>
+              <label nz-radio nzValue="3">装修</label>
+              <label nz-radio nzValue="4">建筑保温</label>
+              <label nz-radio nzValue="5">改变用途</label>
             </nz-radio-group>)
             <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="errorData.projectCategoryId">
               这是必填项
