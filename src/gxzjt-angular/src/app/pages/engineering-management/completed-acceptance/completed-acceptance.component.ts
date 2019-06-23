@@ -128,6 +128,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   }
 
   ngOnInit() {
+    this.searchParam.orgType=1;
     this.resetTime();
     this.init()
   }
@@ -142,7 +143,18 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.resetTime();
     this.getList();
   }
-
+  reststart(){
+    this.searchParam.projectName='';
+    this.searchParam.status=0;
+    this.searchParam.page = 1;
+    this.searchParam.maxResultCount = 10;
+    this.searchParam.flowPathType = 3
+    this.searchParam.sorting = 'ProjectName';
+    this.searchParam.startApplyTime = moment(this.rangeTime[0]);
+    this.searchParam.endApplyTime =moment(this.rangeTime[1]);
+    this.resetTime();
+    this.getList();
+  }
 
   /**
    * 获取所有列表
@@ -167,7 +179,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
 
 
   watchItem(item) {
-    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`]);
+    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`,{record:item}]);
   }
 
   change(v) {

@@ -3001,6 +3001,62 @@ export class LoginServiceProxy {
         }
         return _observableOf<UserCacheDto>(<any>null);
     }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    curMerchantUsers(input: PagedAndFilteredInputDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/Login/CurMerchantUsers";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCurMerchantUsers(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCurMerchantUsers(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCurMerchantUsers(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
 }
 
 @Injectable()
@@ -12115,6 +12171,140 @@ export interface IUserCacheDto {
     lastModificationTime: moment.Moment | undefined;
 }
 
+export class PagedAndFilteredInputDto implements IPagedAndFilteredInputDto {
+    filterText: string | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+
+    constructor(data?: IPagedAndFilteredInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.filterText = data["filterText"];
+            this.page = data["page"];
+            this.sorting = data["sorting"];
+            this.skipCount = data["skipCount"];
+            this.maxResultCount = data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedAndFilteredInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedAndFilteredInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["filterText"] = this.filterText;
+        data["page"] = this.page;
+        data["sorting"] = this.sorting;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+
+    clone(): PagedAndFilteredInputDto {
+        const json = this.toJSON();
+        let result = new PagedAndFilteredInputDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPagedAndFilteredInputDto {
+    filterText: string | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+}
+
+export class DataSourceResult implements IDataSourceResult {
+    data: any[] | undefined;
+    group: any[] | undefined;
+    total: number | undefined;
+    aggregates: any | undefined;
+    errors: any | undefined;
+
+    constructor(data?: IDataSourceResult) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["data"] && data["data"].constructor === Array) {
+                this.data = [];
+                for (let item of data["data"])
+                    this.data.push(item);
+            }
+            if (data["group"] && data["group"].constructor === Array) {
+                this.group = [];
+                for (let item of data["group"])
+                    this.group.push(item);
+            }
+            this.total = data["total"];
+            this.aggregates = data["aggregates"];
+            this.errors = data["errors"];
+        }
+    }
+
+    static fromJS(data: any): DataSourceResult {
+        data = typeof data === 'object' ? data : {};
+        let result = new DataSourceResult();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.data && this.data.constructor === Array) {
+            data["data"] = [];
+            for (let item of this.data)
+                data["data"].push(item);
+        }
+        if (this.group && this.group.constructor === Array) {
+            data["group"] = [];
+            for (let item of this.group)
+                data["group"].push(item);
+        }
+        data["total"] = this.total;
+        data["aggregates"] = this.aggregates;
+        data["errors"] = this.errors;
+        return data; 
+    }
+
+    clone(): DataSourceResult {
+        const json = this.toJSON();
+        let result = new DataSourceResult();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IDataSourceResult {
+    data: any[] | undefined;
+    group: any[] | undefined;
+    total: number | undefined;
+    aggregates: any | undefined;
+    errors: any | undefined;
+}
+
 export class SpotCheckSetupDto implements ISpotCheckSetupDto {
     natureId: number | undefined;
     natureCode: string | undefined;
@@ -12621,140 +12811,6 @@ export class Aggregator implements IAggregator {
 export interface IAggregator {
     field: string | undefined;
     aggregate: string | undefined;
-}
-
-export class DataSourceResult implements IDataSourceResult {
-    data: any[] | undefined;
-    group: any[] | undefined;
-    total: number | undefined;
-    aggregates: any | undefined;
-    errors: any | undefined;
-
-    constructor(data?: IDataSourceResult) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            if (data["data"] && data["data"].constructor === Array) {
-                this.data = [];
-                for (let item of data["data"])
-                    this.data.push(item);
-            }
-            if (data["group"] && data["group"].constructor === Array) {
-                this.group = [];
-                for (let item of data["group"])
-                    this.group.push(item);
-            }
-            this.total = data["total"];
-            this.aggregates = data["aggregates"];
-            this.errors = data["errors"];
-        }
-    }
-
-    static fromJS(data: any): DataSourceResult {
-        data = typeof data === 'object' ? data : {};
-        let result = new DataSourceResult();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (this.data && this.data.constructor === Array) {
-            data["data"] = [];
-            for (let item of this.data)
-                data["data"].push(item);
-        }
-        if (this.group && this.group.constructor === Array) {
-            data["group"] = [];
-            for (let item of this.group)
-                data["group"].push(item);
-        }
-        data["total"] = this.total;
-        data["aggregates"] = this.aggregates;
-        data["errors"] = this.errors;
-        return data; 
-    }
-
-    clone(): DataSourceResult {
-        const json = this.toJSON();
-        let result = new DataSourceResult();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IDataSourceResult {
-    data: any[] | undefined;
-    group: any[] | undefined;
-    total: number | undefined;
-    aggregates: any | undefined;
-    errors: any | undefined;
-}
-
-export class PagedAndFilteredInputDto implements IPagedAndFilteredInputDto {
-    filterText: string | undefined;
-    page: number | undefined;
-    sorting: string | undefined;
-    skipCount: number | undefined;
-    maxResultCount: number | undefined;
-
-    constructor(data?: IPagedAndFilteredInputDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.filterText = data["filterText"];
-            this.page = data["page"];
-            this.sorting = data["sorting"];
-            this.skipCount = data["skipCount"];
-            this.maxResultCount = data["maxResultCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedAndFilteredInputDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedAndFilteredInputDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["filterText"] = this.filterText;
-        data["page"] = this.page;
-        data["sorting"] = this.sorting;
-        data["skipCount"] = this.skipCount;
-        data["maxResultCount"] = this.maxResultCount;
-        return data; 
-    }
-
-    clone(): PagedAndFilteredInputDto {
-        const json = this.toJSON();
-        let result = new PagedAndFilteredInputDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedAndFilteredInputDto {
-    filterText: string | undefined;
-    page: number | undefined;
-    sorting: string | undefined;
-    skipCount: number | undefined;
-    maxResultCount: number | undefined;
 }
 
 export class ListResultDtoOfProjectCompanyListDto implements IListResultDtoOfProjectCompanyListDto {
@@ -13502,6 +13558,7 @@ export class FireAuditCompleteQueryDto implements IFireAuditCompleteQueryDto {
     companyName: string | undefined;
     status: number | undefined;
     flowPathType: number | undefined;
+    orgType: number | undefined;
     startApplyTime: moment.Moment | undefined;
     endApplyTime: moment.Moment | undefined;
     dateTimeNow: moment.Moment | undefined;
@@ -13526,6 +13583,7 @@ export class FireAuditCompleteQueryDto implements IFireAuditCompleteQueryDto {
             this.companyName = data["companyName"];
             this.status = data["status"];
             this.flowPathType = data["flowPathType"];
+            this.orgType = data["orgType"];
             this.startApplyTime = data["startApplyTime"] ? moment(data["startApplyTime"].toString()) : <any>undefined;
             this.endApplyTime = data["endApplyTime"] ? moment(data["endApplyTime"].toString()) : <any>undefined;
             this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
@@ -13550,6 +13608,7 @@ export class FireAuditCompleteQueryDto implements IFireAuditCompleteQueryDto {
         data["companyName"] = this.companyName;
         data["status"] = this.status;
         data["flowPathType"] = this.flowPathType;
+        data["orgType"] = this.orgType;
         data["startApplyTime"] = this.startApplyTime ? this.startApplyTime.toISOString() : <any>undefined;
         data["endApplyTime"] = this.endApplyTime ? this.endApplyTime.toISOString() : <any>undefined;
         data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
@@ -13574,6 +13633,7 @@ export interface IFireAuditCompleteQueryDto {
     companyName: string | undefined;
     status: number | undefined;
     flowPathType: number | undefined;
+    orgType: number | undefined;
     startApplyTime: moment.Moment | undefined;
     endApplyTime: moment.Moment | undefined;
     dateTimeNow: moment.Moment | undefined;
@@ -14922,6 +14982,7 @@ export interface IATimeByStatisticsDto {
 export class ScreenTimeoutListQueryDto implements IScreenTimeoutListQueryDto {
     dateTimeNow: moment.Moment | undefined;
     orderStatus: number | undefined;
+    orgType: number | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
@@ -14940,6 +15001,7 @@ export class ScreenTimeoutListQueryDto implements IScreenTimeoutListQueryDto {
         if (data) {
             this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
             this.orderStatus = data["orderStatus"];
+            this.orgType = data["orgType"];
             this.page = data["page"];
             this.sorting = data["sorting"];
             this.skipCount = data["skipCount"];
@@ -14958,6 +15020,7 @@ export class ScreenTimeoutListQueryDto implements IScreenTimeoutListQueryDto {
         data = typeof data === 'object' ? data : {};
         data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
         data["orderStatus"] = this.orderStatus;
+        data["orgType"] = this.orgType;
         data["page"] = this.page;
         data["sorting"] = this.sorting;
         data["skipCount"] = this.skipCount;
@@ -14976,6 +15039,7 @@ export class ScreenTimeoutListQueryDto implements IScreenTimeoutListQueryDto {
 export interface IScreenTimeoutListQueryDto {
     dateTimeNow: moment.Moment | undefined;
     orderStatus: number | undefined;
+    orgType: number | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
