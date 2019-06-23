@@ -54,7 +54,6 @@ export class AppSessionService {
     if (!this._abpMultiTenancyService.isEnabled) {
       return userName;
     }
-
     return (this._tenant ? this._tenant.tenancyName : '.') + '\\' + userName;
   }
 

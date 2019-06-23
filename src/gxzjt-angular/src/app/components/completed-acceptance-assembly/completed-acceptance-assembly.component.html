@@ -9,8 +9,19 @@
       <tbody>
         <!--  由后台生成的接口。展示在提交流程页面-->
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
-          <td colspan='20' rowspan='1' style="text-align: right">备案号:<input nz-input style="width: 150px"
-              placeholder="请输入备案号" [(ngModel)]="data.recordNo" name="recordNo" /></td>
+          <td nz-form-item colspan='20' rowspan='1' style="text-align: center;">
+            
+              <nz-form-control nzHasFeedback >
+                备案号:<input nz-input style="width:300px;" placeholder="请输入备案号" [(ngModel)]="data.recordNo"
+                  name="recordNo" #recordNo="ngModel" required />
+                <nz-form-explain *ngIf="recordNo.control.dirty&&recordNo.control.errors">
+                  <ng-container *ngIf="recordNo.control.hasError('required')">
+                    请输入备案号!</ng-container>
+
+                </nz-form-explain>
+              </nz-form-control>
+
+          </td>
         </tr>
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程名称:</td>
@@ -600,4 +611,3 @@
     </table>
   </div>
 </form>
-

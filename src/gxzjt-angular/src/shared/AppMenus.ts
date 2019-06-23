@@ -52,6 +52,11 @@ export class AppMenus {
           i18n: "已办",
           link: "/app/work-matters/alreadyDoneComponent",
         },
+         {
+          text: "办结查询",
+         
+          link: "/app/work-matters/searchHadDone",
+        },
         // {
         //   text: "",
         //   i18n: "草稿",
@@ -62,11 +67,11 @@ export class AppMenus {
         //   i18n: "流程",
         //   link: "/app/work-matters/flowModuleComponent",
         // },
-        {
-          text: "",
-          i18n: "草稿箱",
-          link: "/app/work-matters/draftsComponent",
-        },
+        // {
+        //   text: "",
+        //   i18n: "草稿箱",
+        //   link: "/app/work-matters/draftsComponent",
+        // },
         // {
         //   text: "",
         //   i18n: "表单",
@@ -148,6 +153,11 @@ export class AppMenus {
           i18n: "竣工验收备案",
           link: "/app/engineering-management/completedAcceptanceComponent",
         },
+        {
+          text: "",
+          i18n: "草稿箱",
+          link: "/app/work-matters/draftsComponent",
+        },
       ]
     },
     {
@@ -191,20 +201,20 @@ export class AppMenus {
     //     },
     //   ]
     // },
-    // {
-    //   text: "",
-    //   i18n: "用户中心",
-    //   icon: { type: "icon", value: "user" },// 图标
-    //   acl: AppMenus.aclCompany,
-    //   children: [
-    //     {
-    //       text: "修改密码",
+    {
+      text: "",
+      i18n: "用户中心",
+      icon: { type: "icon", value: "user" },// 图标
+      acl: AppMenus.aclCompany,
+      children: [
+        {
+          text: "修改密码",
 
-    //       link: "/app/user-center/modify-psw",
-    //     },
+          link: "/app/user-center/modify-psw",
+        },
 
-    //   ]
-    // },
+      ]
+    },
   ];
 }
 
