@@ -31,7 +31,11 @@ export class AlreadyDoneDetailsComponent implements OnInit {
 
   //路径的对象
   data
-
+  showError = {
+    projectCategoryId: false,
+    specialEngineering: false,
+    fireFightingFacilities: false
+  }
   type: boolean = true;
 
   //通过和不通过

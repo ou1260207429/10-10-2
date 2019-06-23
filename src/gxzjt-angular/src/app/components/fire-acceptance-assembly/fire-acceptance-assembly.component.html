@@ -53,24 +53,26 @@
         </tr>
         <!-- 3 -->
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
-          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程地址:</td>
-          <td rowspan='1' colspan='6'>
-            <nz-cascader [nzPlaceHolder]="'请设置位置'" [nzSize]="'large'" [nzChangeOnSelect]="true" [nzShowSearch]="true"
-              [nzOptions]="position" (nzChange)="changeCitycountyAndDistrict($event)"
-              [(ngModel)]="data.engineeringCitycountyAndDistrict" name="engineeringCitycountyAndDistrict" required>
-            </nz-cascader>
-            <se error="这是必填项">
-              <input nz-input placeholder="请输入详细地址" [(ngModel)]="data.engineeringAddress" name="engineeringAddress"
-                required />
-            </se>
-          </td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>使用性质:</td>
-          <td rowspan='1' colspan='6'>
+          <td rowspan='1' colspan='17'>
             <se error="这是必填项">
               <input nz-input placeholder="请输入使用性质" [(ngModel)]="data.useNature" name="useNature" required />
             </se>
           </td>
         </tr>
+        <tr [ngClass]="{pointerf5f5f5: type == 1}">
+            <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程地址:</td>
+            <td rowspan='1' colspan='17'>
+              <nz-cascader [nzPlaceHolder]="'请设置位置'" [nzSize]="'large'" [nzChangeOnSelect]="true"
+                [nzOptions]="position" (nzChange)="changeCitycountyAndDistrict($event)"
+                [(ngModel)]="data.engineeringCitycountyAndDistrict" name="engineeringCitycountyAndDistrict" required>
+              </nz-cascader>
+              <se error="这是必填项">
+                <input nz-input placeholder="请输入详细地址" [(ngModel)]="data.engineeringAddress" name="engineeringAddress"
+                  required />
+              </se>
+            </td>
+          </tr>
         <!-- 4 -->
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td colspan='3' class="fontweight fontLeft leftTitle" required=true>类别： </td>
@@ -85,6 +87,9 @@
               <label nz-radio nzValue="建筑保温">建筑保温</label>
               <label nz-radio nzValue="改变用途">改变用途</label>
             </nz-radio-group>)
+            <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="errorData.projectCategoryId">
+                这是必填项
+              </p>
         </tr>
         <!-- 5 -->
         <tr [ngClass]="{pointerf5f5f5: type == 1}">

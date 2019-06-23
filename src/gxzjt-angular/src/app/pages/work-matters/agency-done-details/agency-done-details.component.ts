@@ -116,6 +116,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
         console.log(this.tenantWorkFlowInstanceDto);
         this.tenantWorkFlowInstanceDto.workFlow_InstanceId = this.formDto.workFlow_Instance_Id
+        console.log(this.formJson)
 
 
         //获取当前节点 由这个判断提交的接口

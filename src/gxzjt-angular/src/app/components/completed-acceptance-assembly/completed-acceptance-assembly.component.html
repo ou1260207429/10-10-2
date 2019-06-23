@@ -1,4 +1,5 @@
-<form nz-form #f="ngForm" class="formTables" se-container="1" labelWidth="0">
+<form nz-form #f="ngForm" class="formTables" se-container="1" labelWidth="0"
+  style="padding: 0 20px;box-sizing: border-box">
   <div nz-row *ngIf="data">
     <table class="tables" style="box-sizing: border-box;">
       <thead>
@@ -10,16 +11,16 @@
         <!--  由后台生成的接口。展示在提交流程页面-->
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td nz-form-item colspan='20' rowspan='1' style="text-align: center;">
-            
-              <nz-form-control nzHasFeedback >
-                备案号:<input nz-input style="width:300px;" placeholder="请输入备案号" [(ngModel)]="data.recordNo"
-                  name="recordNo" #recordNo="ngModel" required />
-                <nz-form-explain *ngIf="recordNo.control.dirty&&recordNo.control.errors">
-                  <ng-container *ngIf="recordNo.control.hasError('required')">
-                    请输入备案号!</ng-container>
 
-                </nz-form-explain>
-              </nz-form-control>
+            <nz-form-control nzHasFeedback>
+              备案号:<input nz-input style="width:300px;" placeholder="请输入备案号" [(ngModel)]="data.recordNo" name="recordNo"
+                #recordNo="ngModel" required />
+              <nz-form-explain *ngIf="recordNo.control.dirty&&recordNo.control.errors">
+                <ng-container *ngIf="recordNo.control.hasError('required')">
+                  请输入备案号!</ng-container>
+
+              </nz-form-explain>
+            </nz-form-control>
 
           </td>
         </tr>
@@ -38,25 +39,12 @@
           </td>
         </tr>
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
-          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程地址:</td>
-          <td rowspan='1' colspan='7'>
-            <nz-cascader [nzPlaceHolder]="'请设置位置'" [nzSize]="'large'" [nzChangeOnSelect]="true" [nzShowSearch]="true"
-              [nzOptions]="position" (nzChange)="changeCitycountyAndDistrict($event)"
-              [(ngModel)]="data.engineeringCitycountyAndDistrict" name="engineeringCitycountyAndDistrict" required>
-            </nz-cascader>
-            <se error="这是必填项">
-              <input nz-input placeholder="请输入工程地址" [(ngModel)]="data.engineeringAddress" name="engineeringAddress"
-                required />
-            </se>
-          </td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>使用性质:</td>
           <td rowspan='1' colspan='7'>
             <se error="这是必填项">
               <input nz-input placeholder="请输入使用性质" [(ngModel)]="data.useNature" name="useNature" required />
             </se>
           </td>
-        </tr>
-        <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>施工许可证号:</td>
           <td rowspan='1' colspan='7'>
             <se error="这是必填项">
@@ -64,16 +52,31 @@
                 name="constructionPermitNumber" required />
             </se>
           </td>
+        </tr>
+        <tr [ngClass]="{pointerf5f5f5: type == 1}">
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>检测报告编号：</td>
+          <td rowspan='1' colspan='7'>
+            <se error="这是必填项">
+              <input nz-input placeholder="请输入检测报告编号" [(ngModel)]="data.testReportNumber" name="testReportNumber"
+                required />
+            </se>
+          </td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>验收合格日期:</td>
           <td rowspan='1' colspan='7'>
-            <nz-date-picker name="t2" [(ngModel)]="data.planEndTime" name="planEndTime"></nz-date-picker>
+            <se error="这是必填项">
+              <nz-date-picker name="t2" required [(ngModel)]="data.planEndTime" name="planEndTime"></nz-date-picker>
+            </se>
           </td>
         </tr>
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
-          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>检测报告编号</td>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程地址:</td>
           <td rowspan='1' colspan='17'>
+            <nz-cascader [nzPlaceHolder]="'请设置位置'" [nzSize]="'large'" [nzChangeOnSelect]="true" [nzShowSearch]="true"
+              [nzOptions]="position" (nzChange)="changeCitycountyAndDistrict($event)"
+              [(ngModel)]="data.engineeringCitycountyAndDistrict" name="engineeringCitycountyAndDistrict" required>
+            </nz-cascader>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入检测报告编号" [(ngModel)]="data.testReportNumber" name="testReportNumber"
+              <input nz-input placeholder="请输入工程地址" [(ngModel)]="data.engineeringAddress" name="engineeringAddress"
                 required />
             </se>
           </td>
@@ -190,7 +193,7 @@
               [(ngModel)]="data.supervisoryUnit.contactsNumber" name="supervisoryUnitcontactsNumber" /></td>
         </tr>
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
-          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>检测单位:</td>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>检测单位：</td>
           <td rowspan='1' colspan='7'>
             <se error="这是必填项">
               <input nz-input placeholder="请输入检测单位" [(ngModel)]="data.detectionUnit.name" name="detectionUnitname"
@@ -493,9 +496,9 @@
               name="professionalContractorsopinion" required>
                   </textarea>
           </se>
-          <div class="textRight">（
+          <div class="textRight">
             <se>
-              专业承包单位公章）<input style="width: 160px;margin-right: 20" nz-input placeholder="专业承包单位公章"
+                （专业承包单位公章）<input style="width: 160px;margin-right: 20" nz-input placeholder="专业承包单位公章"
                 [(ngModel)]="data.acceptanceOpinions.professionalContractors.officialSeal"
                 name="professionalContractorsfficialSeal" />
             </se>
@@ -544,7 +547,7 @@
           </se>
           <div class="textRight">
             <se error="这是必填项">
-              检测单位<input style="width: 160px;margin-right: 20px" nz-input placeholder="检测单位"
+              检测单位：<input style="width: 160px;margin-right: 20px" nz-input placeholder="检测单位"
                 [(ngModel)]="data.acceptanceOpinions.fireInspectionUnit.officialSeal"
                 name="fireInspectionUnitofficialSeal" required />
             </se>

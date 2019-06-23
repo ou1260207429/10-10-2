@@ -533,6 +533,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     this.flowFormQueryDto.flowType = 1;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
+    console.log(this.data)
 
   }
 
