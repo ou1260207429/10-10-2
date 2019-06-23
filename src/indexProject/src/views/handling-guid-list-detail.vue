@@ -45,11 +45,11 @@
    }"
                   >
                     <el-col :span="10" class="cardList">
-                      <img :src="allowImg[index]?allowImg[index]:allowImg[0]" alt>
+                      <img style="width:100%;" :src="allowImg[index]?allowImg[index]:allowImg[0]" alt>
                     </el-col>
                     <el-col :span="14" style=" position: relative;height:80px;">
                       <h4>{{item.title}}</h4>
-                      <p class="itemTip">{{item.Brief}}</p>
+                      <p class="itemTip">{{item.brief}}</p>
                     </el-col>
                   </router-link>
                 </el-row>
@@ -74,11 +74,11 @@
    }"
                   >
                     <el-col :span="10" class="cardList">
-                      <img :src="recordImg[index]?recordImg[index]:recordImg[0]" alt>
+                      <img style="width:100%;" :src="recordImg[index]?recordImg[index]:recordImg[0]" alt>
                     </el-col>
                     <el-col :span="14" style=" position: relative;height:80px;">
                       <h4>{{item.title}}</h4>
-                      <p class="itemTip">{{item.Brief}}</p>
+                      <p class="itemTip">{{item.brief}}</p>
                     </el-col>
                   </router-link>
                 </el-row>
@@ -212,7 +212,8 @@ h1 {
   margin-top: 20px;
   overflow: hidden;
   .itemTip {
-    position: absolute;
+    -position: absolute;
+    margin-top: 10px;
     bottom: 0;
     right: 0;
     display: -webkit-box;
@@ -220,6 +221,7 @@ h1 {
     -webkit-line-clamp: 2;
     overflow: hidden;
     font-size: 12px;
+    color: #c9c9c9 !important;
   }
 
   .cardList {

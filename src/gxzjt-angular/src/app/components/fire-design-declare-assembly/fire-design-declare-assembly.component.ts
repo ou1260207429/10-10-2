@@ -5,7 +5,7 @@ import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVIC
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
-import { PublicServices } from 'services/public.services'; 
+import { PublicServices } from 'services/public.services';
 /**
  * 消防设计的表单模块
  */
@@ -20,7 +20,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   @Input() type: number = 0
 
   @Input() data: any
-
+  @Input() errorData: any
   //市县区
   // position = OptionsEnum
 
@@ -34,7 +34,6 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
   //获取表单对象
   @ViewChild('f') f: FormGroup;
-
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
 
@@ -49,6 +48,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
     this.getAreaDropdown();
 
+    console.log(this.errorData);
     console.log(this.data);
   }
 
@@ -70,7 +70,20 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
       this.position = classTreeChildrenArray([JSON.parse(data)]);
     })
   }
-
+  /**
+   * 
+   * @param value 值
+   * @param type 字段类型
+   */
+  changeValue(value, type) {
+    console.log(value)
+    console.log(type)
+    if (!value && value == "") {
+      this.errorData[type] = true
+    } else {
+      this.errorData[type] = false;
+    }
+  }
   /**
    * 添加数组
    * @param arr 数组
@@ -84,7 +97,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
    */
   deleteArray(arr, index) {
     this.publicModel.engineeringDeleteArray(arr, index)
-  } 
+  }
 
   beforeUpload = (file: any): boolean => {
     const tid = file.uid
@@ -102,10 +115,10 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     const formData = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
-      const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)  
-      this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id 
-      this.data.fileList[this.uoloadIndex].array[index].url =PANGBO_SERVICES_URL+ data.data[0].localUrl 
-    }) 
+      const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
+      this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
+      this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL + data.data[0].localUrl
+    })
     return false;
   };
 

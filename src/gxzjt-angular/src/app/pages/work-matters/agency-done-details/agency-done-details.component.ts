@@ -30,7 +30,11 @@ export class AgencyDoneDetailsComponent implements OnInit {
       name: '查看路径',
     }
   ];
-
+  showError = {
+    projectCategoryId: false,
+    specialEngineering: false,
+    fireFightingFacilities: false
+  }
   selectedIndex = 0
 
   //路径的对象
