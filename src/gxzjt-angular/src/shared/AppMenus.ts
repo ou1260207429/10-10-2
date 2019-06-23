@@ -57,16 +57,16 @@ export class AppMenus {
         //   i18n: "草稿",
         //   link: "/app/work-matters/draf",
         // },
-        {
-          text: "",
-          i18n: "流程",
-          link: "/app/work-matters/flowModuleComponent",
-        },
-        {
-          text: "",
-          i18n: "草稿箱",
-          link: "/app/work-matters/draftsComponent",
-        },
+        // {
+        //   text: "",
+        //   i18n: "流程",
+        //   link: "/app/work-matters/flowModuleComponent",
+        // },
+        // {
+        //   text: "",
+        //   i18n: "草稿箱",
+        //   link: "/app/work-matters/draftsComponent",
+        // },
         // {
         //   text: "",
         //   i18n: "表单",
@@ -147,6 +147,11 @@ export class AppMenus {
           text: "",
           i18n: "竣工验收备案",
           link: "/app/engineering-management/completedAcceptanceComponent",
+        },
+        {
+          text: "",
+          i18n: "草稿箱",
+          link: "/app/work-matters/draftsComponent",
         },
       ]
     },

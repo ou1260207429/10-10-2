@@ -32,47 +32,47 @@ export class StatisticsProAppStaticComponent implements OnInit {
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
 
-    {
-      title: '操作',
-      buttons: [
-        {
-          text: '查看',
-          type: 'modal',
-          modal: {
-            component: StatisticsProAppStaticDetailComponent,
-            paramsName: 'record',
-          },
-          click: (record: any, modal: any) => {
+    // {
+    //   title: '操作',
+    //   buttons: [
+    //     {
+    //       text: '查看',
+    //       type: 'modal',
+    //       modal: {
+    //         component: StatisticsProAppStaticDetailComponent,
+    //         paramsName: 'record',
+    //       },
+    //       click: (record: any, modal: any) => {
 
-          },
-        },
-        {
-          text: '受理凭证',
-          type: 'link',
-          // modal: {
-          //   component: StatisticsAcceptCredentialsComponent,
-          //   paramsName: 'record',
-          // },
-          click: (record: any, modal: any) => {
-            window.open(record.acceptAttachmentFileUrl)
-          },
-        },
-        {
-          text: '意见书',
-          type: 'link',
-          // modal: {
-          //   component: StatisticsPositionPaperComponent,
-          //   paramsName: 'record',
-          // },
-          click: (record: any, modal: any) => {
+    //       },
+    //     },
+    //     {
+    //       text: '受理凭证',
+    //       type: 'link',
+    //       // modal: {
+    //       //   component: StatisticsAcceptCredentialsComponent,
+    //       //   paramsName: 'record',
+    //       // },
+    //       click: (record: any, modal: any) => {
+    //         window.open(record.acceptAttachmentFileUrl)
+    //       },
+    //     },
+    //     {
+    //       text: '意见书',
+    //       type: 'link',
+    //       // modal: {
+    //       //   component: StatisticsPositionPaperComponent,
+    //       //   paramsName: 'record',
+    //       // },
+    //       click: (record: any, modal: any) => {
 
-            window.open(record.opinionFileUrl)
-          },
-        },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
-      ]
-    },
-    { title: '竣工验收申报编号', index: 'recordNumber', format: (item: any) => `${item.flowPathType?item.flowPathType:0}` },
+    //         window.open(record.opinionFileUrl)
+    //       },
+    //     },
+    //     // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
+    //   ]
+    // },
+    { title: '竣工验收申报编号', index: 'recordNumber', format: (item: any) => `${item.flowPathType?0:item.flowPathType}` },
     { title: '工程名称', index: 'projectName' },
     { title: '建设单位', index: 'companyName' },
     { title: '联系人', index: 'contactPerson' },

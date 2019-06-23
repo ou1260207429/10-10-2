@@ -1,5 +1,30 @@
 <app-completed-acceptance-assembly [data]="data" (childOuter)="outer($event)"></app-completed-acceptance-assembly>
 <div class="textCenter" style="margin-bottom: 40px;">
   <button nz-button nzType="primary" (click)="depositDraft()">保存草稿</button>
-  <button nz-button nzType="primary" [disabled]="form.invalid" (click)="save()">申请提交</button>
+  <button nz-button nzType="primary" [disabled]="form.invalid" (click)="showSelectModal()">申请提交</button>
 </div>
+
+
+
+
+
+
+
+
+<nz-modal [(nzVisible)]="isVisibleSelectModal" nzTitle="请选择抽选号码" (nzOnCancel)="handleSelectModalCancel()"
+  (nzOnOk)="handleSelectModalOk()" [nzOkLoading]="isSelectModalOkLoading" nzWidth="700">
+
+  <nz-radio-group [(ngModel)]="selectModalValue" nzButtonStyle="solid" nzJustify="center" nzType="flex"
+    nzName="selectGroup" style="width:100%">
+    <div class="select_row" *ngFor="let row of selectModalData" style="width:100%;margin-top:4px;">
+      <div class="select_item" *ngFor="let item of row">
+
+        <label class="select_item_label" nz-radio-button [nzValue]="item" nzButtonStyle="solid">{{item}}</label>
+      </div>
+
+    </div>
+
+  </nz-radio-group>
+
+
+</nz-modal>

@@ -1,19 +1,40 @@
 import { PublicModel } from './../../../../infrastructure/public-model';
 import { Component, OnInit } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd';
+// import { NzMessageService } from 'ng-zorro-antd';
 import { timeTrans } from 'infrastructure/regular-expression';
 import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto, FlowDataDto, ProjectFlowDto, FlowNodeUser } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute } from '@angular/router';
 import { FlowServices, GXZJT_From } from 'services/flow.services';
 import { FormGroup } from '@angular/forms';
 import { AppSessionService } from '@shared/session/app-session.service';
+
+import { NzModalService } from 'ng-zorro-antd';
+
 /**
  * 工程管理->竣工验收->新增申报
  */
 @Component({
   selector: 'app-add-completed-acceptance',
   templateUrl: './add-completed-acceptance.component.html',
-  styles: []
+  styles: [
+    `.select_row {
+    display:flex;
+    width:100%;
+    justify-content: space-between;
+    }
+    .select_item {
+      
+      width:9%;
+      
+      }
+      .select_item_label{
+      
+        width:100%;
+        text-align:center;
+        
+        }
+  `
+  ]
 })
 export class AddCompletedAcceptanceComponent implements OnInit {
 
@@ -323,7 +344,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
       },
       filingTime: '',
-      luckNo: '', 
+      luckNo: '',
     },
     fileList: [
       {
@@ -346,7 +367,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         array: [
 
         ]
-      }, 
+      },
     ]
 
   }
@@ -360,7 +381,13 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   flowFormQueryDto = new FlowFormQueryDto();
   //子组件的表单对象
   form: FormGroup
-  constructor(private _appSessionService:AppSessionService,private _flowServices: FlowServices, private _ActivatedRoute: ActivatedRoute, private _applyService: ApplyServiceServiceProxy, private message: NzMessageService, public publicModel: PublicModel, ) {
+  constructor(private _appSessionService: AppSessionService,
+    private _flowServices: FlowServices,
+    private _ActivatedRoute: ActivatedRoute,
+    private _applyService: ApplyServiceServiceProxy,
+    // private message: NzMessageService,
+    public publicModel: PublicModel,
+    private _NzModalService: NzModalService) {
     this.flowFormQueryDto.flowType = 3;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
@@ -370,6 +397,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     if (this.type != 0) {
       this.post_GetFlowFormData();
     }
+    this.initSelectModalData();
   }
 
 
@@ -389,8 +417,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   */
   depositDraft() {
     this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
-    
-    this.data.acceptanceOpinions.filingTime= this.data.acceptanceOpinions.filingTime == '' ? '' : timeTrans(Date.parse(this.data.acceptanceOpinions.filingTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
+
+    this.data.acceptanceOpinions.filingTime = this.data.acceptanceOpinions.filingTime == '' ? '' : timeTrans(Date.parse(this.data.acceptanceOpinions.filingTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 3;
     this.flowFormDto.projectTypeStatu = 2;
@@ -398,14 +426,18 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     console.log(this.data);
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
-      this.message.success('保存成功')
+      this._NzModalService.success({
+        nzTitle: '操作提示',
+        nzContent: '保存成功'
+      }
+      );
       history.go(-1)
     })
   }
   save() {
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
-        Area:  '450000',
+        Area: '450000',
       },
       identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {
@@ -435,7 +467,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       flowDataDto.projectFlowInfo.workFlow_Instance_Id = data.result.workFlow_Instance_Id
       flowDataDto.projectFlowInfo.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
 
-      flowDataDto.luckNo = this.data.luckNo;
+      // flowDataDto.luckNo = this.data.luckNo;
+      flowDataDto.luckNo = this.selectModalValue;
       flowDataDto.handleUserList = [];
       data.result.auditorRecords.forEach(element => {
         const flowNodeUser = new FlowNodeUser()
@@ -453,10 +486,35 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
       console.log(flowDataDto)
 
-
+      this.isSelectModalOkLoading = true;
       this._applyService.post_PutOnRecord(flowDataDto).subscribe(data => {
-        this.message.success('提交成功')
+
+        if (data == true) {
+          this._NzModalService.success({
+            nzTitle: '抽选结果',
+            nzContent: this.data.projectName + '，已经被抽中'
+
+          }
+          );
+        } else {
+          this._NzModalService.info({
+            nzTitle: '抽选结果',
+            nzContent: this.data.projectName + '，没有被抽中'
+
+          }
+          );
+        }
+
+        this.isSelectModalOkLoading = false;
+
         history.go(-1)
+      }, err => {
+        this._NzModalService.error({
+          nzTitle: '操作失败',
+          nzContent: this.data.projectName + '，提交出错'
+
+        }
+        );
       })
     })
   }
@@ -467,4 +525,41 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   outer(e) {
     this.form = e;
   }
+
+
+  //抽选按钮弹框
+
+  isVisibleSelectModal = false;
+  isSelectModalOkLoading = false;
+
+  handleSelectModalCancel() {
+    this.isVisibleSelectModal = false;
+  }
+
+  showSelectModal() {
+    this.isVisibleSelectModal = true;
+  }
+
+
+  selectModalData = [];
+  selectModalValue = 1;
+  initSelectModalData() {
+    this.selectModalData = [];
+    for (var i = 0; i < 10; ++i) {
+      var row = [];
+      for (var j = 1; j <= 10; ++j) {
+        row.push(i * 10 + j);
+      }
+      this.selectModalData.push(row);
+    }
+
+  }
+
+  handleSelectModalOk() {
+    this.save();
+    // console.log(this.selectModalValue);
+  }
+
+
+
 }

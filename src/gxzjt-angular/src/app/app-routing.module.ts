@@ -20,7 +20,7 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutDefaultComponent,
-    canActivate: [AppRouteGuard],
+    canActivateChild: [AppRouteGuard],
     children: [
 
       {
@@ -33,31 +33,49 @@ const routes: Routes = [
     path: '',
     component: LayoutDefaultComponent,
     data: { title: '统计', preload: true },
-    canActivate: [AppRouteGuard],
+    canActivateChild: [AppRouteGuard],
     children: [
       {
         path: 'statistics', loadChildren: './routes/statistics/statistics.module#StatisticsModule',
+        data:{
+          role:"sys"
+        },
 
       },
       {
         path: 'sys-setting', loadChildren: './routes/sys-setting/sys-setting.module#SysSettingModule',
+        data:{
+          role:"sys"
+        },
 
       },
       {
         path: 'permission', loadChildren: './routes/permission/permission.module#PermissionModule',
+        data:{
+          role:"sys"
+        },
 
       },
       {
         path: 'home', loadChildren: './pages/home/home.module#HomeModule',
+        data:{
+          role:"sys"
+        },
 
       },
       {
         path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule',
+        data:{
+          role:"sys"
+        },
 
       },
       {
         path: 'engineering-management',
         loadChildren: './pages/engineering-management/engineering-management.module#EngineeringManagementModule',
+        data:{
+          role:"sys"
+        },
 
       },
       {
@@ -73,6 +91,7 @@ const routes: Routes = [
   },
   {
     path: 'big-screen/big',
+    canActivateChild: [AppRouteGuard],
     component: BigScreenComponent
   },
 ];

@@ -29,6 +29,8 @@ export class HeaderComponent {
 
     this._tokenService.clearToken();
     this._utilsService.deleteCookie(AppConsts.authorization.encrptedAuthTokenName);
+
+   
     this.authService.logout(true);
     // location.href = AppConsts.appBaseUrl;
   }

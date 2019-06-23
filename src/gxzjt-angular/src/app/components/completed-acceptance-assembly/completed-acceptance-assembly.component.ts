@@ -52,12 +52,12 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
-    this.getAreaDropdown(); 
+    this.getAreaDropdown();
 
-    setTimeout(()=>{
+    setTimeout(() => {
       console.log(this.data);
-    },2000)
-    
+    }, 2000)
+
   }
 
   /**
@@ -112,7 +112,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     this._publicServices.newUpload(formData, params).subscribe(data => {
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].url =PANGBO_SERVICES_URL+ data.data[0].localUrl
+      this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL + data.data[0].localUrl
     })
     return false;
   };
@@ -124,5 +124,8 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   handleChange(index) {
     this.uoloadIndex = index
   }
+
+
+
 
 }

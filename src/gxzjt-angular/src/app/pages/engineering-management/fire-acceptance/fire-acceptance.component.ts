@@ -23,7 +23,8 @@ import { NzMessageService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-fire-acceptance',
   templateUrl: './fire-acceptance.component.html',
-  styles: []
+  styles: [],
+  styleUrls:['./fire-acceptance.component.less']
 })
 export class FireAcceptanceComponent  extends PublicFormComponent implements OnInit {
 
@@ -38,13 +39,15 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
         {
           text: '查看',
           type: 'modal',
-          // modal: {
-          //   component: StatisticsProAppStaticDetailComponent,
-          //   paramsName: 'record',
-          // },
-          // click: (record: any, modal: any) => {
+          click: (record: any, modal: any) => {
 
-          // },
+            this.watchItem(record);
+          },
+        },
+        {
+          text: '复查申请',
+          type: 'modal',
+          iif: record => record.status  === 3,
         },
         {
           text: '受理凭证',
@@ -84,12 +87,11 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     { title: '建设单位', index: 'companyName' },
     { title: '联系人', index: 'contactPerson' },
     { title: '当前处理环节', index: 'currentNodeName' },
-    { title: '当前处理人', index: 'currentHandleUserName' },
     { title: '流程是否超时', index: 'isExpireTime',type: 'tag', tag: {
       true: { text: '是', color: 'red' },
       false: { text: '否', color: '' },
     }},
-    { title: '审核结果', index: 'status',format: (item: any) => `${item.status?item.status:'4001'}`,type: 'tag', tag: {
+    { title: '结果', index: 'status',format: (item: any) => `${item.status?item.status:'4001'}`,type: 'tag', tag: {
       4001:{text:'未处理',color: ''},
       0: { text: '未处理', color: '' },
       1: { text: '受理', color: 'green' },
@@ -98,7 +100,6 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
       4:{ text: '合格', color: '' },
       5:{ text: '未抽中', color: '' },
     }},
-    { title: '操作人', index: 'companyName' },
     { title: '操作时间', index: 'applyTime',type:'date' },
   ];
 

@@ -778,30 +778,30 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
 
-    {
-      title: '操作',
-      buttons: [
-        {
-          text: '查看',
-          type: 'modal',
-          modal: {
-            component: StatisticsTimeLimtDealDetailComponent,
-            paramsName: 'record',
-          },
-          click: (record: any, modal: any) => {
+    // {
+    //   title: '操作',
+    //   buttons: [
+    //     {
+    //       text: '查看',
+    //       type: 'modal',
+    //       modal: {
+    //         component: StatisticsTimeLimtDealDetailComponent,
+    //         paramsName: 'record',
+    //       },
+    //       click: (record: any, modal: any) => {
 
-          },
-        },
-        // {
-        //   text: '测试',
-        //   type: 'link',
-        //   click: (record: any, modal: any) => {
+    //       },
+    //     },
+    //     // {
+    //     //   text: '测试',
+    //     //   type: 'link',
+    //     //   click: (record: any, modal: any) => {
 
-        //   }
-        // },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
-      ]
-    },
+    //     //   }
+    //     // },
+    //     // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
+    //   ]
+    // },
     { title: '地市', index: 'cityName' },
     { title: '区域', index: 'area' },
     { title: '工程名称', index: 'projectName' },

@@ -28,7 +28,8 @@ import { NzMessageService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-fire-design',
   templateUrl: './fire-design.component.html',
-  styles: []
+  styles: [],
+  styleUrls: ['./fire-design.component.less'],
 })
 export class FireDesignComponent extends PublicFormComponent implements  OnInit {
   param = new FireAuditCompleteQueryDto();
@@ -42,13 +43,19 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
         {
           text: '查看',
           type: 'modal',
-          // modal: {
-          //   component: StatisticsProAppStaticDetailComponent,
-          //   paramsName: 'record',
-          // },
-          // click: (record: any, modal: any) => {
-
-          // },
+          click: (record: any, modal: any) => {
+            this.watchItem(record)
+          },
+        },
+        {
+          text: '重新申请',
+          type: 'modal',
+          iif: record => record.status  === 3,
+        },
+        {
+          text: '验收',
+          type: 'modal',
+          iif: record => record.status  === 4,
         },
         {
           text: '受理凭证',
@@ -87,12 +94,11 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     { title: '建设单位', index: 'companyName' },
     { title: '联系人', index: 'contactPerson' },
     { title: '当前处理环节', index: 'currentNodeName' },
-    { title: '当前处理人', index: 'currentHandleUserName' },
     { title: '流程是否超时', index: 'isExpireTime',type: 'tag', tag: {
       true: { text: '是', color: '' },
       false: { text: '否', color: '' },
     }},
-    { title: '审核结果', index: 'status',format: (item: any) => `${item.status?item.status:4001}`,
+    { title: '结果', index: 'status',format: (item: any) => `${item.status!=null?item.status:4001}`,
     type: 'tag', tag: {
       4001:{text: '待处理', color: '' },
       0: { text: '未处理', color: '' },
@@ -102,7 +108,6 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
       4:{ text: '合格', color: '' },
       5:{ text: '未抽中', color: '' },
     }},
-    { title: '操作人', index: 'currentHandleUserName' },
     { title: '操作时间', index: 'applyTime',type:'date' },
   ];
 
@@ -129,9 +134,9 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     this.param.maxResultCount = 10;
     this.param.flowPathType = 1
     this.param.sorting = 'ProjectName';
-    this.param.startApplyTime = moment(this.rangeTime[0])
-    this.param.endApplyTime =moment(this.rangeTime[1])
     this.resetTime();
+    this.param.startApplyTime = moment(this.rangeTime[0]);
+    this.param.endApplyTime =moment(this.rangeTime[1]);
     this.getList();
   }
 
