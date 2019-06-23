@@ -47,7 +47,7 @@ const routes: Routes = [
   },
   
 ,
-  { path: 'review-apply', component: WorkMattersReviewApplyComponent }];
+  { path: 'review-apply/:projectId/:flowId/', component: WorkMattersReviewApplyComponent ,data: { title: '复查申请' } }];
 
 
 @NgModule({
