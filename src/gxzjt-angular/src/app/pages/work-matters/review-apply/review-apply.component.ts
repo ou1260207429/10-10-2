@@ -9,7 +9,7 @@ import { SFSchema } from '@delon/form';
 })
 export class WorkMattersReviewApplyComponent implements OnInit {
   url = `/user`;
-  
+
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     { title: '编号', index: 'no' },
