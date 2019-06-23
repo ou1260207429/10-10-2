@@ -37,24 +37,27 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
 
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
- 
 
-  @Input() examineFormDto:ExamineFormDto
- 
 
-  constructor(public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
+  @Input() examineFormDto: ExamineFormDto
+
+
+  constructor(public _publicServices: PublicServices, public publicModel: PublicModel, ) {
+  
+  }
 
   ngOnInit() {
 
-    setTimeout(()=>{
-      console.log(this.data);
-    },3000) 
+    setTimeout(() => {
+      console.log(this.examineFormDto)
+      console.log(this.data)
+    }, 3000)
 
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
 
-    
-     
+
+
   }
 
 
@@ -80,16 +83,16 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
    */
   deleteArray(arr, index) {
     this.publicModel.engineeringDeleteArray(arr, index)
-  } 
+  }
 
-  
+
 
   beforeUpload = (file: any): boolean => {
-    if(this.examineFormDto){
-      this.examineFormDto.attachment = this.examineFormDto.attachment?this.examineFormDto.attachment:[]
+    if (this.examineFormDto) {
+      this.examineFormDto.attachment = this.examineFormDto.attachment ? this.examineFormDto.attachment : []
       console.log(this.examineFormDto.attachment);
     }
- 
+
     const name = file.name;
     const projectAttachment = new ProjectAttachment();
     projectAttachment['name'] = file.name;
@@ -105,10 +108,10 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
     const formData = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
-      const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)  
+      const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)
       // this.examineFormDto.attachment[index].fileNo = data.data[0].id 
-      this.examineFormDto.attachment[index].fileUrl =PANGBO_SERVICES_URL+data.data[0].localUrl 
-    }) 
+      this.examineFormDto.attachment[index].fileUrl = PANGBO_SERVICES_URL + data.data[0].localUrl
+    })
     return false;
   };
 

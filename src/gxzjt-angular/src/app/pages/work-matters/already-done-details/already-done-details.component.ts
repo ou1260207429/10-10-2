@@ -79,7 +79,7 @@ export class AlreadyDoneDetailsComponent implements OnInit {
     this.flowId = this._activatedRoute.snapshot.paramMap.get('flowId')
     this.flowPathType = this._activatedRoute.snapshot.paramMap.get('flowPathType')
     this.operationType = this._activatedRoute.snapshot.paramMap.get('operationType')
-    console.log(this.flowPathType);
+
 
   }
 
@@ -103,7 +103,6 @@ export class AlreadyDoneDetailsComponent implements OnInit {
         workFlow_TemplateInfoId: 10171,
         workFlow_NodeAuditorRecordId: this.formDto.flowNodeUserInfo.userFlowId,
       }
-      console.log(this.formDto.workFlow_Instance_Id)
       //获取JSON和节点信息
       Promise.all([this.post_GetFlowFormData(flowFormQueryDto), this.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow)]).then((value: any) => {
         this.formJson = JSON.parse(value[0].formJson);
@@ -117,6 +116,7 @@ export class AlreadyDoneDetailsComponent implements OnInit {
       })
 
     })
+    console.log(this.examineFormDto)
   }
 
   /**

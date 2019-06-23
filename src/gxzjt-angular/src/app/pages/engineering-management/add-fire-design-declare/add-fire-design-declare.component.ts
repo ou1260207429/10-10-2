@@ -46,13 +46,15 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     planStartTime: '',
     planEndTime: '',
     projectCategoryId: '',
-    design: {
-      designUnit: '',
-      qualificationLevel: '',
-      legalRepresentative: '',
-      contacts: '',
-      contactsNumber: ''
-    },
+    design: [
+      {
+        designUnit: '',
+        qualificationLevel: '',
+        legalRepresentative: '',
+        contacts: '',
+        contactsNumber: ''
+      }
+    ],
     constructionUnit: [
       {
         designUnit: '',

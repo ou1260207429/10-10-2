@@ -36,13 +36,13 @@ export class AddFireAcceptanceComponent implements OnInit {
     dateOfReview: '',
     constructionPermitNumber: '',
     testReportNumber: '',
-    design: {
+    design: [{
       designUnit: '',
       qualificationLevel: '',
       legalRepresentative: '',
       contacts: '',
       contactsNumber: ''
-    },
+    }],
     constructionUnit: [
       {
         designUnit: '',

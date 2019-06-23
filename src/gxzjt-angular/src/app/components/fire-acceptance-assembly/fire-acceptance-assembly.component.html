@@ -18,8 +18,8 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>法定代表人/主要负责人:</td>
           <td rowspan='1' colspan='3'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入法定代表人/主要负责人" [(ngModel)]="data.legalRepresentative" name="legalRepresentative"
-                required />
+              <input nz-input placeholder="请输入法定代表人/主要负责人" [(ngModel)]="data.legalRepresentative"
+                name="legalRepresentative" required />
             </se>
           </td>
           <td rowspan='1' colspan='2' class="fontweight fontLeft" required=true>联系电话:</td>
@@ -61,18 +61,18 @@
           </td>
         </tr>
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
-            <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程地址:</td>
-            <td rowspan='1' colspan='17'>
-              <nz-cascader [nzPlaceHolder]="'请设置位置'" [nzSize]="'large'" [nzChangeOnSelect]="true"
-                [nzOptions]="position" (nzChange)="changeCitycountyAndDistrict($event)"
-                [(ngModel)]="data.engineeringCitycountyAndDistrict" name="engineeringCitycountyAndDistrict" required>
-              </nz-cascader>
-              <se error="这是必填项">
-                <input nz-input placeholder="请输入详细地址" [(ngModel)]="data.engineeringAddress" name="engineeringAddress"
-                  required />
-              </se>
-            </td>
-          </tr>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程地址:</td>
+          <td rowspan='1' colspan='17'>
+            <nz-cascader [nzPlaceHolder]="'请设置位置'" [nzSize]="'large'" [nzChangeOnSelect]="true" [nzOptions]="position"
+              (nzChange)="changeCitycountyAndDistrict($event)" [(ngModel)]="data.engineeringCitycountyAndDistrict"
+              name="engineeringCitycountyAndDistrict" required>
+            </nz-cascader>
+            <se error="这是必填项">
+              <input nz-input placeholder="请输入详细地址" [(ngModel)]="data.engineeringAddress" name="engineeringAddress"
+                required />
+            </se>
+          </td>
+        </tr>
         <!-- 4 -->
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td colspan='3' class="fontweight fontLeft leftTitle" required=true>类别： </td>
@@ -88,8 +88,8 @@
               <label nz-radio nzValue="改变用途">改变用途</label>
             </nz-radio-group>)
             <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="errorData.projectCategoryId">
-                这是必填项
-              </p>
+              这是必填项
+            </p>
         </tr>
         <!-- 5 -->
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
@@ -132,38 +132,38 @@
           <td rowspan='1' required=true>联系电话</td>
           <td rowspan='1'>操作</td>
         </tr>
-        <tr [ngClass]="{pointerf5f5f5: type == 1}">
+        <tr [ngClass]="{pointerf5f5f5: type == 1}" *ngFor="let item of data.design;let a = index">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>设计单位:</td>
           <td rowspan='1' colspan='5'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入设计单位" [(ngModel)]="data.design.designUnit" name="designDesignUnit"
-                required />
+              <input nz-input placeholder="请输入设计单位" [(ngModel)]="item.designUnit" name="designDesignUnit{{a}}" required />
             </se>
 
           </td>
           <td rowspan='1' colspan='4'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入资质等级" [(ngModel)]="data.design.qualificationLevel"
-                name="designQualificationLevel" required />
+              <input nz-input placeholder="请输入资质等级" [(ngModel)]="item.qualificationLevel"
+                name="designQualificationLevel{{a}}" required />
             </se>
           </td>
           <td rowspan='1' colspan='2'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入法定代表人" [(ngModel)]="data.design.legalRepresentative"
-                name="designLegalRepresentative" required />
+              <input nz-input placeholder="请输入法定代表人" [(ngModel)]="item.legalRepresentative"
+                name="designLegalRepresentative{{a}}" required />
             </se>
           </td>
           <td rowspan='1'>
-            <se error="这是必填项"><input nz-input placeholder="请输入联系人" [(ngModel)]="data.design.contacts"
-                name="designContacts" required />
+            <se error="这是必填项"><input nz-input placeholder="请输入联系人" [(ngModel)]="item.contacts" name="designContacts{{a}}"
+                required />
             </se>
           </td>
           <td rowspan='1'>
-            <se error="这是必填项"><input nz-input placeholder="请输入联系电话" [(ngModel)]="data.design.contactsNumber"
-                name="designContactsNumber" required />
+            <se error="这是必填项"><input nz-input placeholder="请输入联系电话" [(ngModel)]="item.contactsNumber"
+                name="designContactsNumber{{a}}" required />
             </se>
           </td>
-          <td rowspan='1'>无</td>
+          <td rowspan='1'> <a (click)="addArray(data.design)">新增</a>
+            <a (click)="deleteArray(data.design,a)">删除</a></td>
         </tr>
         <tr [ngClass]="{pointerf5f5f5: type == 1}" *ngFor="let item of data.constructionUnit;let a = index">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>施工单位:</td>
@@ -635,27 +635,30 @@
           style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>上传附件</td>
         <td rowspan='1' colspan='14' class="textLeft">
           <div>
-            1、建设工程消防验收申报表（纸质申报表的图片） 
+            1、建设工程消防验收申报表（纸质申报表的图片）
             <nz-upload [(nzFileList)]="data.fileList[0].array" [nzBeforeUpload]="beforeUpload"
-            (click)="handleChange(0)">
-            <button nz-button [ngClass]="{pointerf5f5f5: type == 1}"><i nz-icon nzType="upload"></i><span>上传</span></button>
-          </nz-upload>
+              (click)="handleChange(0)">
+              <button nz-button [ngClass]="{pointerf5f5f5: type == 1}"><i nz-icon
+                  nzType="upload"></i><span>上传</span></button>
+            </nz-upload>
           </div>
 
           <div>
             2、与消防验收有关的竣工图纸及隐蔽工程记录
             <nz-upload [(nzFileList)]="data.fileList[1].array" [nzBeforeUpload]="beforeUpload"
-            (click)="handleChange(1)">
-            <button nz-button [ngClass]="{pointerf5f5f5: type == 1}"><i nz-icon nzType="upload"></i><span>上传</span></button>
-          </nz-upload>
+              (click)="handleChange(1)">
+              <button nz-button [ngClass]="{pointerf5f5f5: type == 1}"><i nz-icon
+                  nzType="upload"></i><span>上传</span></button>
+            </nz-upload>
           </div>
 
           <div>
             3、符合要求的检测机构出具出具的消防设施及系统检测合格证明文件
             <nz-upload [(nzFileList)]="data.fileList[2].array" [nzBeforeUpload]="beforeUpload"
-            (click)="handleChange(2)">
-            <button nz-button [ngClass]="{pointerf5f5f5: type == 1}"><i nz-icon nzType="upload"></i><span>上传</span></button>
-          </nz-upload>
+              (click)="handleChange(2)">
+              <button nz-button [ngClass]="{pointerf5f5f5: type == 1}"><i nz-icon
+                  nzType="upload"></i><span>上传</span></button>
+            </nz-upload>
           </div>
         </td>
       </tr>

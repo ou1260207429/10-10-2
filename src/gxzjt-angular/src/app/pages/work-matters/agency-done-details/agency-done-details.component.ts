@@ -234,8 +234,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
           this.examineFormDto.handleUserList.push(flowNodeUser)
         });
 
-        console.log(this.curNodeName)
-
+        console.log(this.examineFormDto)
+        
 
         switch (this.curNodeName) {
           case '大厅受理':
