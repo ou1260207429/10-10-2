@@ -73,12 +73,7 @@ export class AlreadyDoneDetailsComponent implements OnInit {
 
   //走流程或者查看  0是走流程  1是查看
   operationType
-
-  showError = {
-    projectCategoryId: false,
-    specialEngineering: false,
-    fireFightingFacilities: false
-  }
+ 
 
   constructor(private _examineService: ExamineServiceServiceProxy, private reuseTabService: ReuseTabService, private ModelHelp: ModalHelper, public appSession: AppSessionService, private message: NzMessageService, private _applyService: ApplyServiceServiceProxy, private _acceptServiceServiceProxy: AcceptServiceServiceProxy, private _flowServices: FlowServices, private _activatedRoute: ActivatedRoute, private _ActivatedRoute: ActivatedRoute, ) {
     this.flowNo = this._activatedRoute.snapshot.paramMap.get('flowNo')
