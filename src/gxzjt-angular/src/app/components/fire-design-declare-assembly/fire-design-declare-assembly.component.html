@@ -108,35 +108,41 @@
           <td rowspan='1'>联系电话</td>
           <td rowspan='1'>操作</td>
         </tr>
-        <tr [ngClass]="{pointerf5f5f5: type == 1}">
+
+
+
+        <tr [ngClass]="{pointerf5f5f5: type == 1}" *ngFor="let item of data.design;let a = index">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>设计单位:</td>
           <td rowspan='1' colspan='5'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入设计单位" [(ngModel)]="data.design.designUnit" name="designDesignUnit"
+              <input nz-input placeholder="请输入设计单位" [(ngModel)]="item.designUnit" name="designDesignUnit{{a}}"
                 required />
             </se>
           </td>
           <td rowspan='1' colspan='4'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入资质等级" [(ngModel)]="data.design.qualificationLevel"
-                name="designQualificationLevel" required />
+              <input nz-input placeholder="请输入资质等级" [(ngModel)]="item.qualificationLevel"
+                name="designQualificationLevel{{a}}" required />
             </se>
           </td>
           <td rowspan='1' colspan='2'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入法定代表人" [(ngModel)]="data.design.legalRepresentative"
-                name="designLegalRepresentative" required />
+              <input nz-input placeholder="请输入法定代表人" [(ngModel)]="item.legalRepresentative"
+                name="designLegalRepresentative{{a}}" required />
             </se>
           </td>
           <td rowspan='1'>
-            <se error="这是必填项"><input nz-input placeholder="请输入联系人" [(ngModel)]="data.design.contacts"
-                name="designContacts" required /></se>
+            <se error="这是必填项"><input nz-input placeholder="请输入联系人" [(ngModel)]="item.contacts"
+                name="designContacts{{a}}" required /></se>
           </td>
           <td rowspan='1'>
-            <se error="这是必填项"><input nz-input placeholder="请输入联系电话" [(ngModel)]="data.design.contactsNumber"
-                name="designContactsNumber" required /></se>
+            <se error="这是必填项"><input nz-input placeholder="请输入联系电话" [(ngModel)]="item.contactsNumber"
+                name="designContactsNumber{{a}}" required /></se>
           </td>
-          <td rowspan='1'>无</td>
+          <td rowspan='1'>
+            <a (click)="addArray(data.design)">新增</a>
+            <a (click)="deleteArray(data.design,a)">删除</a>
+          </td>
         </tr>
         <tr *ngFor="let item of data.constructionUnit;let a = index" [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">施工单位:</td>
@@ -543,6 +549,18 @@
                   nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
+        </td>
+      </tr>
+      <tr [ngClass]="{pointerf5f5f5: type == 1}">
+        <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
+          style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>工程简要说明</td>
+        <td rowspan='1' colspan='14' class="textLeft">
+          <se error="这是必填项">
+            <textarea nz-input placeholder="请输入工程简要说明" [(ngModel)]="data.engineerinDescription"
+              name="engineerinDescription" required>
+                  </textarea>
+          </se>
+
         </td>
       </tr>
       <tr [ngClass]="{pointerf5f5f5: type == 1}">

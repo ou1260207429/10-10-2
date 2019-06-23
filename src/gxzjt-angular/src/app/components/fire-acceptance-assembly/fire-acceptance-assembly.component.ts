@@ -41,12 +41,16 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
+
+  //从父组件获取使用行性质的select
+  @Input() useNatureSelect:any
   constructor(public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
-    this.childOuter.emit(this.f);
+    this.childOuter.emit(this.f); 
     this.getAreaDropdown();
+    console.log(this.data)
   }
 
   /**
