@@ -1,4 +1,4 @@
-<app-fire-acceptance-assembly [errorData]="showError" [data]="data" (childOuter)="outer($event)">
+<app-fire-acceptance-assembly [errorData]="showError" [data]="data" *ngIf="useNatureSelect"  [useNatureSelect]="useNatureSelect">
 </app-fire-acceptance-assembly>
 <div class="textCenter" style="margin-bottom: 40px;">
   <button nz-button nzType="primary" (click)="depositDraft()">保存草稿</button>

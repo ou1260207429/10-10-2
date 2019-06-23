@@ -1,4 +1,4 @@
-import { ExamineServiceServiceProxy, ExamineFormDto } from './../../../../shared/service-proxies/service-proxies';
+import { ExamineServiceServiceProxy, ExamineFormDto, SignForDto } from './../../../../shared/service-proxies/service-proxies';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 //import * as BpmnModeler from "bpmn-js/dist/bpmn-modeler.production.min.js";
@@ -78,6 +78,12 @@ export class AgencyDoneDetailsComponent implements OnInit {
   //走流程或者查看  0是走流程  1是查看
   operationType
 
+  //签收的对象
+  signForDto:SignForDto = new SignForDto()
+
+  //签收的列表
+  signForDtoData
+
   constructor(private _eventEmiter: EventEmiter, private _examineService: ExamineServiceServiceProxy, private reuseTabService: ReuseTabService, private ModelHelp: ModalHelper, public appSession: AppSessionService, private message: NzMessageService, private _applyService: ApplyServiceServiceProxy, private _acceptServiceServiceProxy: AcceptServiceServiceProxy, private _flowServices: FlowServices, private _activatedRoute: ActivatedRoute, private _ActivatedRoute: ActivatedRoute, ) {
     this.flowNo = this._activatedRoute.snapshot.paramMap.get('flowNo')
     this.flowId = this._activatedRoute.snapshot.paramMap.get('flowId')
@@ -98,9 +104,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       const flowFormQueryDto = new FlowFormQueryDto();
       flowFormQueryDto.flowType = this.flowPathType
       flowFormQueryDto.projectId = this.formDto.projectId;
-      flowFormQueryDto.flowId = this.flowId
-
-      console.log(this.formDto);
+      flowFormQueryDto.flowId = this.flowId 
       const workFlow: WorkFlow = {
         workFlow_InstanceId: this.formDto.workFlow_Instance_Id,
         workFlow_TemplateInfoId: 10171,
@@ -109,25 +113,21 @@ export class AgencyDoneDetailsComponent implements OnInit {
       //获取JSON和节点信息
       Promise.all([this.post_GetFlowFormData(flowFormQueryDto), this.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow)]).then((value: any) => {
         this.formJson = JSON.parse(value[0].formJson);
-
-        console.log(this.formJson);
-        
-        this.tenantWorkFlowInstanceDto = this.workFlowData = value[1].result;
-
-        console.log(this.tenantWorkFlowInstanceDto);
+        this.tenantWorkFlowInstanceDto = this.workFlowData = value[1].result; 
         this.tenantWorkFlowInstanceDto.workFlow_InstanceId = this.formDto.workFlow_Instance_Id
-        console.log(this.formJson)
-
 
         //获取当前节点 由这个判断提交的接口
         this.curNodeName = this.workFlowData.nodeViewInfo.curNodeName
+        console.log(this.curNodeName);
         if (this.curNodeName != '大厅受理') {
-          this.getPrimaryExamine(() => {
-            this.type = false
+          this.getPrimaryExamine(() => {  
+            this.type = false  
           })
         } else {
           this.type = false
         }
+
+       
       })
 
     })
@@ -179,7 +179,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
   save(bo?: boolean) {
     const num = bo ? 1 : 0;
     this.tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
-      Area: '450001',
+      Area: this.formDto.area,
       IsChoose: num,
       editWorkFlow_NodeAuditorRecordDto:{
         deptId:'',
@@ -278,8 +278,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
    */
   getPrimaryExamine(then?: Function) {
     this._examineService.getPrimaryExamine(this.flowId).subscribe(data => {
-      this.examineFormDto = data;
-      
+      this.examineFormDto = data; 
       if (then) {
         then();
       }
@@ -289,10 +288,27 @@ export class AgencyDoneDetailsComponent implements OnInit {
   /**
    * 业务审批负责人审批提交的接口 -->执行人
    */
-  primaryExamine(examineFormDto: ExamineFormDto) {
-    console.log(examineFormDto);
+  primaryExamine(examineFormDto: ExamineFormDto) { 
     this._examineService.primaryExamine(examineFormDto).subscribe(data => {
       this.serveResult();
+    })
+  }
+
+  //获取签收的列表详情
+  getReview(flowId,then?:Function){
+    this._applyService.getReview(flowId).subscribe(data=>{
+      this.signForDtoData = data
+      if(then)then()
+    })
+  }
+
+  /**
+   * 签收
+   * @param examineFormDto 
+   */
+  signForOpinionFile(){
+    this._examineService.signForOpinionFile(this.signForDto).subscribe(data=>{
+      this.serveResult('签收成功')
     })
   }
 
@@ -316,8 +332,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
     })
   }
 
-  serveResult() {
-    this.message.success('提交成功')
+  serveResult(name:string="提交成") {
+    this.message.success(name)
     history.go(-1)
     this._eventEmiter.emit('agencyDoneInit', []);
   }

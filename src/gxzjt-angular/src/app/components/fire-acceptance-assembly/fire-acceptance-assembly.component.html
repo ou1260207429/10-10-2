@@ -56,7 +56,15 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>使用性质:</td>
           <td rowspan='1' colspan='17'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入使用性质" [(ngModel)]="data.useNature" name="useNature" required />
+
+                <nz-select *ngIf="useNatureSelect" [(ngModel)]="data.useNature" 
+                required
+                name="useNature11">
+                  <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.natureName" [nzValue]="option.natureCode">
+                  </nz-option>
+                </nz-select>
+
+              <!-- <input nz-input placeholder="请输入使用性质" [(ngModel)]="data.useNature" name="useNature" required /> -->
             </se>
           </td>
         </tr>
