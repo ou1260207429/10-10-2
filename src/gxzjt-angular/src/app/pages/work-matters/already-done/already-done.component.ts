@@ -65,9 +65,9 @@ export class AlreadyDoneComponent
     { title: '工程编号', index: 'projectCode' },
     { title: '建设单位', index: 'companyName' },
     { title: '工程类型', index: 'flowTypeName' },
-    { title: '当前处理人', index: 'cur_NodeAuditorName' },
+    { title: '节点处理人', index: 'cur_NodeAuditorName' },
+    { title: '处理时间', index: 'acceptTime',type:'date'},
     { title: '申报时间', index: 'applyTime',type:'date' },
-    { title: '受理时间', index: 'acceptTime',type:'date'},
     { title: '流程是否超时', index: 'isExpire',type: 'tag', tag: {
       true: { text: '超时', color: 'red' },
       false: { text: '未超时', color: 'green' },
@@ -115,6 +115,13 @@ export class AlreadyDoneComponent
    * @param TemplateInfoListByClassIdEntity 参数
    */
   getList() {
+    if(this.rangeTime!=null){
+      this.searchParam.applyTimeStart = this.rangeTime[0];
+      this.searchParam.applyTimeEnd = this.rangeTime[1];
+    }else{
+      this.searchParam.applyTimeStart = null;
+      this.searchParam.applyTimeEnd = null;
+    }
     this.workFlowedServiceProxy.processedWorkFlow_NodeAuditorRecord(this.searchParam).subscribe((data: any) => {
       this.formResultData = data
     })

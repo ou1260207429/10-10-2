@@ -95,6 +95,10 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.searchParam.projectName='';
     this.searchParam.companyName='';
     this.searchParam.projectTypeStatu=null;
+    if(this.rangeTime!=null){
+      this.searchParam.applyTimeStart = this.rangeTime[0];
+      this.searchParam.applyTimeEnd = this.rangeTime[1];
+    }
     this.getList();
   }
 
@@ -138,10 +142,10 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
   okRangeTime(v) {
     console.log(v);
-    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')
-    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')
-    // this.searchParam.applyTimeStart = applyTimeStart;
-    // this.searchParam.applyTimeEnd = applyTimeEnd;
+    //const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')
+    //const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')
+    this.searchParam.applyTimeStart = v[0];
+    this.searchParam.applyTimeEnd = v[1];
     // console.log(applyTimeEnd);
   }
 
