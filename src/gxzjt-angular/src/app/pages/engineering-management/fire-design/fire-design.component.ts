@@ -32,7 +32,8 @@ import { NzMessageService } from 'ng-zorro-antd';
   styleUrls: ['./fire-design.component.less'],
 })
 export class FireDesignComponent extends PublicFormComponent implements  OnInit {
-  param = new FireAuditCompleteQueryDto();
+  // param = new FireAuditCompleteQueryDto();
+  param:FireAuditCompleteQueryDto;
   formResultData = [];
   rangeTime = [];
   @ViewChild('st') st: STComponent;
@@ -130,6 +131,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
 
 
   init() {
+    this.param=new FireAuditCompleteQueryDto();
     this.param.page = 1;
     this.param.maxResultCount = 10;
     this.param.flowPathType = 1
