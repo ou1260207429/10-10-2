@@ -10,8 +10,10 @@ import { AlreadyDoneDetailsComponent } from './already-done-details/already-done
 import { ComponentsModule } from '@app/components/components.module';
 import { DraftsComponent } from './drafts/drafts.component';
 import { SearchHadDoneComponent } from './search-had-done/search-had-done';
+import { WorkMattersReviewApplyComponent } from './review-apply/review-apply.component';
 
-const COMPONENTS = [];
+const COMPONENTS = [
+  WorkMattersReviewApplyComponent];
 const COMPONENTS_NOROUNT = [
   FormModuleComponent,
   AgencyDoneComponent,

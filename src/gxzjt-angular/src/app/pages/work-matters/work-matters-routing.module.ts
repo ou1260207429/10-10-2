@@ -7,6 +7,7 @@ import { AlreadyDoneDetailsComponent } from './already-done-details/already-done
 import { AgencyDoneDetailsComponent } from './agency-done-details/agency-done-details.component';
 import { DraftsComponent } from './drafts/drafts.component';
 import { SearchHadDoneComponent } from './search-had-done/search-had-done';
+import { WorkMattersReviewApplyComponent } from './review-apply/review-apply.component';
 
 const routes: Routes = [
   {
@@ -45,7 +46,8 @@ const routes: Routes = [
     data: { title: '办结查询' },
   },
   
-];
+,
+  { path: 'review-apply', component: WorkMattersReviewApplyComponent }];
 
 
 @NgModule({
