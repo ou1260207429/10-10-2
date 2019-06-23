@@ -5,7 +5,7 @@ import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVIC
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
-import { PublicServices } from 'services/public.services'; 
+import { PublicServices } from 'services/public.services';
 
 /**
  * 消防验收的表单模块
@@ -19,17 +19,18 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
   //判断是新增或者办理  0是新增 1是办理
   @Input() type: number = 0
-  
+
   @Input() data: any
 
+  @Input() errorData: any
   //市县区
   position// = OptionsEnum
 
   //结构类型
   typeSelect = ArchitectureTypeEnum
 
-   //耐火结构
-   refractoryEnum = RefractoryEnum
+  //耐火结构
+  refractoryEnum = RefractoryEnum
 
   //获取表单对象
   @ViewChild('f') f: FormGroup;
@@ -39,7 +40,7 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
-  constructor(public _publicServices: PublicServices,public _homeServiceProxy:HomeServiceProxy,public publicModel: PublicModel, ) { }
+  constructor(public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
@@ -47,11 +48,11 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     this.getAreaDropdown();
   }
 
-   /**
-   * 获取市县区的接口
-   */
-  getAreaDropdown(){
-    this._homeServiceProxy.getAreaDropdown().subscribe(data=>{  
+  /**
+  * 获取市县区的接口
+  */
+  getAreaDropdown() {
+    this._homeServiceProxy.getAreaDropdown().subscribe(data => {
       this.position = classTreeChildrenArray([JSON.parse(data)]);
     })
   }
@@ -97,10 +98,10 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     const formData = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
-      const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid) 
-      this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id 
-      this.data.fileList[this.uoloadIndex].array[index].url =PANGBO_SERVICES_URL+ data.data[0].localUrl 
-    }) 
+      const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
+      this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
+      this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL + data.data[0].localUrl
+    })
     return false;
   };
 

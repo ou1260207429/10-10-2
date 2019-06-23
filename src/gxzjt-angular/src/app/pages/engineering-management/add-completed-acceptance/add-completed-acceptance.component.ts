@@ -435,6 +435,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     })
   }
   save() {
+
+    console.log(this.form.valid)
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
         Area: '450000',
@@ -537,7 +539,13 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   }
 
   showSelectModal() {
-    this.isVisibleSelectModal = true;
+    for (const i in this.form.controls) {
+      this.form.controls[i].markAsDirty();
+      this.form.controls[i].updateValueAndValidity();
+    }
+    if (this.form.valid) {
+      this.isVisibleSelectModal = true;
+    }
   }
 
 

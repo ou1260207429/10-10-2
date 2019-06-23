@@ -48,7 +48,6 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
     this.getAreaDropdown();
 
-    console.log(this.errorData);
     console.log(this.data);
   }
 
@@ -76,8 +75,6 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
    * @param type 字段类型
    */
   changeValue(value, type) {
-    console.log(value)
-    console.log(type)
     if (!value && value == "") {
       this.errorData[type] = true
     } else {
