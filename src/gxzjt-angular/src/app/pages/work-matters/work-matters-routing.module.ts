@@ -45,8 +45,7 @@ const routes: Routes = [
     component: SearchHadDoneComponent,
     data: { title: '办结查询' },
   },
-  
-,
+
   { path: 'review-apply/:projectId/:flowId/', component: WorkMattersReviewApplyComponent ,data: { title: '复查申请' } }];
 
 

@@ -79,7 +79,7 @@ export class AlreadyDoneDetailsComponent implements OnInit {
     this.flowNo = this._activatedRoute.snapshot.paramMap.get('flowNo')
     this.flowId = this._activatedRoute.snapshot.paramMap.get('flowId')
     this.flowPathType = this._activatedRoute.snapshot.paramMap.get('flowPathType')
-    this.operationType = this._activatedRoute.snapshot.paramMap.get('operationType')
+    // this.operationType = this._activatedRoute.snapshot.paramMap.get('operationType')
 
 
   }
