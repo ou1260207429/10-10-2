@@ -1808,6 +1808,58 @@ export class ExamineServiceServiceProxy {
         }
         return _observableOf<void>(<any>null);
     }
+
+    /**
+     * @param signForDto (optional) 
+     * @return Success
+     */
+    signForOpinionFile(signForDto: SignForDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ExamineService/SignForOpinionFile";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(signForDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processSignForOpinionFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processSignForOpinionFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processSignForOpinionFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
 }
 
 @Injectable()
@@ -8162,6 +8214,7 @@ export class ProjectFlow implements IProjectFlow {
     workFlow_NodeRecord_Id: number | undefined;
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
+    parentFlowId: number | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -8202,6 +8255,7 @@ export class ProjectFlow implements IProjectFlow {
             this.workFlow_NodeRecord_Id = data["workFlow_NodeRecord_Id"];
             this.workFlow_Instance_Id = data["workFlow_Instance_Id"];
             this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
+            this.parentFlowId = data["parentFlowId"];
             this.isDeleted = data["isDeleted"];
             this.deleterUserId = data["deleterUserId"];
             this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
@@ -8242,6 +8296,7 @@ export class ProjectFlow implements IProjectFlow {
         data["workFlow_NodeRecord_Id"] = this.workFlow_NodeRecord_Id;
         data["workFlow_Instance_Id"] = this.workFlow_Instance_Id;
         data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
+        data["parentFlowId"] = this.parentFlowId;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -8282,6 +8337,7 @@ export interface IProjectFlow {
     workFlow_NodeRecord_Id: number | undefined;
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
+    parentFlowId: number | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -9971,6 +10027,7 @@ export interface IFlowFormDto {
 
 export class FlowDataDto implements IFlowDataDto {
     projectId: number | undefined;
+    flowId: number | undefined;
     formJson: string | undefined;
     projectFlowInfo: ProjectFlowDto | undefined;
     luckNo: number | undefined;
@@ -9989,6 +10046,7 @@ export class FlowDataDto implements IFlowDataDto {
     init(data?: any) {
         if (data) {
             this.projectId = data["projectId"];
+            this.flowId = data["flowId"];
             this.formJson = data["formJson"];
             this.projectFlowInfo = data["projectFlowInfo"] ? ProjectFlowDto.fromJS(data["projectFlowInfo"]) : <any>undefined;
             this.luckNo = data["luckNo"];
@@ -10011,6 +10069,7 @@ export class FlowDataDto implements IFlowDataDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["projectId"] = this.projectId;
+        data["flowId"] = this.flowId;
         data["formJson"] = this.formJson;
         data["projectFlowInfo"] = this.projectFlowInfo ? this.projectFlowInfo.toJSON() : <any>undefined;
         data["luckNo"] = this.luckNo;
@@ -10033,6 +10092,7 @@ export class FlowDataDto implements IFlowDataDto {
 
 export interface IFlowDataDto {
     projectId: number | undefined;
+    flowId: number | undefined;
     formJson: string | undefined;
     projectFlowInfo: ProjectFlowDto | undefined;
     luckNo: number | undefined;
@@ -10061,6 +10121,7 @@ export class ProjectFlowDto implements IProjectFlowDto {
     workFlow_NodeRecord_Id: number | undefined;
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
+    parentFlowId: number | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -10101,6 +10162,7 @@ export class ProjectFlowDto implements IProjectFlowDto {
             this.workFlow_NodeRecord_Id = data["workFlow_NodeRecord_Id"];
             this.workFlow_Instance_Id = data["workFlow_Instance_Id"];
             this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
+            this.parentFlowId = data["parentFlowId"];
             this.isDeleted = data["isDeleted"];
             this.deleterUserId = data["deleterUserId"];
             this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
@@ -10141,6 +10203,7 @@ export class ProjectFlowDto implements IProjectFlowDto {
         data["workFlow_NodeRecord_Id"] = this.workFlow_NodeRecord_Id;
         data["workFlow_Instance_Id"] = this.workFlow_Instance_Id;
         data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
+        data["parentFlowId"] = this.parentFlowId;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -10181,6 +10244,7 @@ export interface IProjectFlowDto {
     workFlow_NodeRecord_Id: number | undefined;
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
+    parentFlowId: number | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -10639,6 +10703,57 @@ export interface IEnumConfig {
     creationTime: moment.Moment | undefined;
     creatorUserId: number | undefined;
     id: number | undefined;
+}
+
+export class SignForDto implements ISignForDto {
+    name: string | undefined;
+    phoneNumber: string | undefined;
+    flowId: number | undefined;
+
+    constructor(data?: ISignForDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+            this.phoneNumber = data["phoneNumber"];
+            this.flowId = data["flowId"];
+        }
+    }
+
+    static fromJS(data: any): SignForDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SignForDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["phoneNumber"] = this.phoneNumber;
+        data["flowId"] = this.flowId;
+        return data; 
+    }
+
+    clone(): SignForDto {
+        const json = this.toJSON();
+        let result = new SignForDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISignForDto {
+    name: string | undefined;
+    phoneNumber: string | undefined;
+    flowId: number | undefined;
 }
 
 export class RegulationDetailsViewModel implements IRegulationDetailsViewModel {

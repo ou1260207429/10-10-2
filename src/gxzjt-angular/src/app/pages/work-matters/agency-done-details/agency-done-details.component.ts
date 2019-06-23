@@ -68,7 +68,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   workFlowData
 
-  tenantWorkFlowInstanceDto
+  tenantWorkFlowInstanceDto:any = {}
 
   //当前节点的名称
   curNodeName
@@ -109,7 +109,12 @@ export class AgencyDoneDetailsComponent implements OnInit {
       //获取JSON和节点信息
       Promise.all([this.post_GetFlowFormData(flowFormQueryDto), this.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow)]).then((value: any) => {
         this.formJson = JSON.parse(value[0].formJson);
+
+        console.log(this.formJson);
+        
         this.tenantWorkFlowInstanceDto = this.workFlowData = value[1].result;
+
+        console.log(this.tenantWorkFlowInstanceDto);
         this.tenantWorkFlowInstanceDto.workFlow_InstanceId = this.formDto.workFlow_Instance_Id
 
 
@@ -173,9 +178,14 @@ export class AgencyDoneDetailsComponent implements OnInit {
   save(bo?: boolean) {
     const num = bo ? 1 : 0;
     this.tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
-      Area: '450000',
-      IsChoose: num
+      Area: '450001',
+      IsChoose: num,
+      editWorkFlow_NodeAuditorRecordDto:{
+        deptId:'',
+        deptFullPath:''
+      }
     }
+    console.log(this.appSession.user.organizationsId);
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptFullPath = this.appSession.user.organizationsName
 

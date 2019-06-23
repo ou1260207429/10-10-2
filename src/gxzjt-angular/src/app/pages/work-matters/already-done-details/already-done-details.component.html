@@ -9,14 +9,16 @@
   <div [ngClass]="{hide: selectedIndex != 0}">
 
     <!-- 表单JSON -->
-    <app-fire-design-declare-assembly *ngIf="formJson && flowPathType ==1" [data]="formJson" type=1>
-    </app-fire-design-declare-assembly>
+    <app-fire-design-declare-assembly [errorData]="showError" *ngIf="flowPathType ==1" [data]="formJson" type=1>
+    </app-fire-design-declare-assembly> 
 
     <app-fire-acceptance-assembly [data]="formJson" type=1 *ngIf="formJson && flowPathType ==2">
     </app-fire-acceptance-assembly>
 
     <app-completed-acceptance-assembly [data]="formJson" type=1 *ngIf="formJson && flowPathType ==3">
-    </app-completed-acceptance-assembly>
+    </app-completed-acceptance-assembly>  
+
+    
     <!-- 表单JSON -->
     <form nz-form #f="ngForm" se-container="1">
       <table class="tables" style="box-sizing: border-box;" *ngIf="formDto">

@@ -207,9 +207,7 @@ export class AddFireAcceptanceComponent implements OnInit {
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 2;
     this.flowFormDto.projectTypeStatu = 1;
-
     this.data.dateOfReview = this.data.dateOfReview == '' ? '' : timeTrans(Date.parse(this.data.dateOfReview) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
-    console.log(this.data);
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')
@@ -219,7 +217,7 @@ export class AddFireAcceptanceComponent implements OnInit {
   save() {
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
-        Area: '450000',
+        Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length-1],
       },
       identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {

@@ -13,7 +13,7 @@
     <button nz-button (click)="addDeclare()" nzType="primary"  style="margin-right: 10px;margin-top: 10px;">+新增申报</button>
     <input nz-input [(ngModel)]="searchParam.projectName" name="projectName" placeholder="工程名称"
       style="margin-right: 10px;margin-top: 10px;width: 200px;">
-      <nz-select class="search_menu_input" [(ngModel)]="searchParam.status"  nzPlaceHolder="审查结果">
+      <nz-select class="search_menu_input" [(ngModel)]="searchParam.status"  nzPlaceHolder="审查结果" name="status1">
         <nz-option nzLabel="未处理" nzValue="0"></nz-option>
         <nz-option nzLabel="受理" nzValue="1"></nz-option>
         <nz-option nzLabel="不受理" nzValue="2"></nz-option>

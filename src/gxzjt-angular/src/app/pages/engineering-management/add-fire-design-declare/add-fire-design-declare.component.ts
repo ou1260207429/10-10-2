@@ -595,8 +595,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     if (!this.showError.fireFightingFacilities && !this.showError.projectCategoryId && !this.showError.specialEngineering && this.form.valid) {
       const from: GXZJT_From = {
         frow_TemplateInfo_Data: {
-          // Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length-1]
-          Area: '450000',
+          Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length-1]
         },
         identify: 'xfsj',
         editWorkFlow_NodeAuditorRecordDto: {

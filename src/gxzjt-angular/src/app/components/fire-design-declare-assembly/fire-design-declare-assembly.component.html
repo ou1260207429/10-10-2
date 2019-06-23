@@ -1,6 +1,6 @@
 <form nz-form #f="ngForm" class="formTables" se-container="1" labelWidth="0"
   style="padding: 0 20px;box-sizing: border-box;">
-  <div nz-row *ngIf="data!=''">
+  <div nz-row *ngIf="data">
     <table class="tables" style="box-sizing: border-box;">
       <thead>
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
@@ -84,12 +84,12 @@
           <td colspan='3' class="fontweight fontLeft leftTitle" required=true>类别： </td>
           <td colspan="15" style="text-align: left;">
             <nz-radio-group (ngModelChange)="changeValue($event,'projectCategoryId')"
-              [(ngModel)]="data.projectCategoryId" name="projectCategoryId">
+              [(ngModel)]="data.projectCategoryId" name="projectCategoryIdA">
               <label style="padding-right: 20px;" nz-radio nzValue="新建">新建</label>
               <label style="padding-right: 20px;" nz-radio nzValue="扩建">扩建</label>
             </nz-radio-group>
             改建
-            ( &nbsp; &nbsp; <nz-radio-group (ngModelChange)="changeValue($event,'projectCategoryId')" [(ngModel)]="data.projectCategoryId" name="projectCategoryId">
+            ( &nbsp; &nbsp; <nz-radio-group (ngModelChange)="changeValue($event,'projectCategoryId')" [(ngModel)]="data.projectCategoryId" name="projectCategoryIdB">
               <label nz-radio nzValue="装修">装修</label>
               <label nz-radio nzValue="建筑保温">建筑保温</label>
               <label nz-radio nzValue="改变用途">改变用途</label>
@@ -494,7 +494,7 @@
             1、建设工程消防设计审查申报表（纸质申报表的图片）
             <nz-upload [(nzFileList)]="data.fileList[0].array" [nzBeforeUpload]="beforeUpload"
               (click)="handleChange(0)">
-              <button nz-button [ngClass]="{pointerf5f5f5: type == 1}"><i nz-icon
+              <button nz-button *ngIf="type!=1"><i nz-icon
                   nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
@@ -503,7 +503,7 @@
             2、消防设计文件
             <nz-upload [(nzFileList)]="data.fileList[1].array" [nzBeforeUpload]="beforeUpload"
               (click)="handleChange(1)">
-              <button nz-button [ngClass]="{pointerf5f5f5: type == 1}"><i nz-icon
+              <button nz-button *ngIf="type!=1"><i nz-icon
                   nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
@@ -512,7 +512,7 @@
             3、专家评审申报材料
             <nz-upload [(nzFileList)]="data.fileList[2].array" [nzBeforeUpload]="beforeUpload"
               (click)="handleChange(2)">
-              <button nz-button [ngClass]="{pointerf5f5f5: type == 1}"><i nz-icon
+              <button nz-button *ngIf="type!=1"><i nz-icon
                   nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
@@ -521,7 +521,7 @@
             4、建设工程规划许可证明文件
             <nz-upload [(nzFileList)]="data.fileList[3].array" [nzBeforeUpload]="beforeUpload"
               (click)="handleChange(3)">
-              <button nz-button [ngClass]="{pointerf5f5f5: type == 1}"><i nz-icon
+              <button nz-button *ngIf="type!=1"><i nz-icon
                   nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
@@ -530,7 +530,7 @@
             5、城乡规划主管部门批准的临时性建筑证明文件
             <nz-upload [(nzFileList)]="data.fileList[4].array" [nzBeforeUpload]="beforeUpload"
               (click)="handleChange(4)">
-              <button nz-button [ngClass]="{pointerf5f5f5: type == 1}"><i nz-icon
+              <button nz-button *ngIf="type!=1"><i nz-icon
                   nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
@@ -539,7 +539,7 @@
             6、生产工艺和物品有特殊灭火要求的消防设计说明材料
             <nz-upload [(nzFileList)]="data.fileList[5].array" [nzBeforeUpload]="beforeUpload"
               (click)="handleChange(5)">
-              <button nz-button [ngClass]="{pointerf5f5f5: type == 1}"><i nz-icon
+              <button nz-button *ngIf="type!=1"><i nz-icon
                   nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>

@@ -1,5 +1,5 @@
 <form nz-form #f="ngForm" class="formTables" se-container="1" labelWidth="0">
-  <div nz-row *ngIf="data!=''">
+  <div nz-row *ngIf="data">
     <table class="tables" style="box-sizing: border-box;">
       <thead>
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
@@ -633,7 +633,7 @@
             1、建设工程消防验收申报表（纸质申报表的图片） 
             <nz-upload [(nzFileList)]="data.fileList[0].array" [nzBeforeUpload]="beforeUpload"
             (click)="handleChange(0)">
-            <button nz-button [ngClass]="{pointerf5f5f5: type == 1}"><i nz-icon nzType="upload"></i><span>上传</span></button>
+            <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
           </nz-upload>
           </div>
 
@@ -641,7 +641,7 @@
             2、与消防验收有关的竣工图纸及隐蔽工程记录
             <nz-upload [(nzFileList)]="data.fileList[1].array" [nzBeforeUpload]="beforeUpload"
             (click)="handleChange(1)">
-            <button nz-button [ngClass]="{pointerf5f5f5: type == 1}"><i nz-icon nzType="upload"></i><span>上传</span></button>
+            <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
           </nz-upload>
           </div>
 
@@ -649,7 +649,7 @@
             3、符合要求的检测机构出具出具的消防设施及系统检测合格证明文件
             <nz-upload [(nzFileList)]="data.fileList[2].array" [nzBeforeUpload]="beforeUpload"
             (click)="handleChange(2)">
-            <button nz-button [ngClass]="{pointerf5f5f5: type == 1}"><i nz-icon nzType="upload"></i><span>上传</span></button>
+            <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
           </nz-upload>
           </div>
         </td>

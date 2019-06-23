@@ -422,8 +422,6 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 3;
     this.flowFormDto.projectTypeStatu = 2;
-
-    console.log(this.data);
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this._NzModalService.success({
@@ -437,7 +435,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   save() {
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
-        Area: '450000',
+        Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length-1],
       },
       identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {
