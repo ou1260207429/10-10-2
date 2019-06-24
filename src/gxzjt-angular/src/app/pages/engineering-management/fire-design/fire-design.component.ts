@@ -48,16 +48,16 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
             this.watchItem(record)
           },
         },
-        {
-          text: '重新申请',
-          type: 'modal',
-          iif: record => record.status  === 3,
-        },
-        {
-          text: '验收',
-          type: 'modal',
-          iif: record => record.status  === 4,
-        },
+        // {
+        //   text: '重新申请',
+        //   type: 'modal',
+        //   iif: record => record.status  === 3,
+        // },暂无跳转页面先注释
+        // {
+        //   text: '验收',
+        //   type: 'modal',
+        //   iif: record => record.status  === 4,
+        // },暂无跳转页面先注释
         {
           text: '受理凭证',
           type: 'link',

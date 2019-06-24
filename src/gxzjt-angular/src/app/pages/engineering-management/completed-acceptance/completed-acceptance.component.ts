@@ -43,11 +43,15 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
             this.watchItem(record);
           },
         },
-        {
-          text: '复查申请',
-          type: 'modal',
-          iif: record => record.status  === 3,
-        },
+        // {
+        //   text: '复查申请',
+        //   type: 'modal',
+        //   iif: record => (record.status  === 3 && (record.parentFlowId==null || record.parentFlowId==0)),//当状态是3即为不合格的时候显示此按钮，若需要方便调试可自己更改status的值改变按钮显示
+        //   click: (record: any, modal: any) => {
+
+        //     this.toreapply(record);
+        //   },
+        // },暂不知具体跳转先注释
         {
           text: '受理凭证',
           type: 'link',
@@ -181,7 +185,9 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.searchParam.endApplyTime =moment(this.rangeTime[1])
     this.getList();
   }
-
+  toreapply(item) {console.log(item);
+    this.router.navigate([`/app/work-matters/review-apply/${item.id}/2`]);
+  }
 
   watchItem(item) {
     this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`,{record:item}]);
