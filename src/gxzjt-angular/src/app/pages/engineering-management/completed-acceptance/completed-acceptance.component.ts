@@ -145,7 +145,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   }
   reststart(){
     this.searchParam.projectName='';
-    this.searchParam.status=0;
+    this.searchParam.status=-1;
     this.searchParam.page = 1;
     this.searchParam.maxResultCount = 10;
     this.searchParam.flowPathType = 3
@@ -212,7 +212,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   }
   resetTime() {
     var startTime = new Date();
-    startTime.setDate(startTime.getDate() - 1)
+    startTime.setDate(startTime.getDate() - 30)
     this.rangeTime = [startTime, new Date()];
   }
 

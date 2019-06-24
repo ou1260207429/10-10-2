@@ -142,7 +142,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
   }
   reststart(){
     this.param.projectName='';
-    this.param.status=0;
+    this.param.status=-1;
     this.param.page = 1;
     this.param.maxResultCount = 10;
     this.param.flowPathType = 1
@@ -197,7 +197,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
   }
   resetTime() {
     var startTime = new Date();
-    startTime.setDate(startTime.getDate() - 1)
+    startTime.setDate(startTime.getDate() - 30)
     this.rangeTime = [startTime, new Date()];
   }
 
