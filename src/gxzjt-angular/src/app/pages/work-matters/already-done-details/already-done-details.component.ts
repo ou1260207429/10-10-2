@@ -81,7 +81,6 @@ export class AlreadyDoneDetailsComponent implements OnInit {
     this.flowPathType = this._activatedRoute.snapshot.paramMap.get('flowPathType')
     // this.operationType = this._activatedRoute.snapshot.paramMap.get('operationType')
 
-
   }
 
   ngOnInit() {
@@ -117,7 +116,6 @@ export class AlreadyDoneDetailsComponent implements OnInit {
       })
 
     })
-    console.log(this.examineFormDto)
   }
 
   /**
