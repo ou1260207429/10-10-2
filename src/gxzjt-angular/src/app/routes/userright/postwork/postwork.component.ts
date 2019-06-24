@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserServices } from 'services/user.services';
 
 @Component({
   selector: 'app-userright-postwork',
@@ -24,14 +26,104 @@ export class UserrightPostworkComponent implements OnInit {
     }
   ];
 
-  constructor(private http: _HttpClient, private modal: ModalHelper) { }
+
+  addVisible = true;
+  addForm: FormGroup
+  title = "新增角色"
+  searchForm = {
+    name: ""
+  }
+  searchHolder = "";
+  searchKey = "";
+
+  rangeTime: any;
+
+  formResultData: any;
+
+  pageSize = 50;
+
+
+  isSearchForm = false;
+
+  useSelect = false;
+  isShowAdd = true;
+  nzPlaceHolder = []
+
+
+  //过滤菜单
+  resetSearchFliterForm(): void {
+    this.fliterForm.reset();
+  }
+
+  hiddenFliter = false;
+  fliterForm: FormGroup;
+  formBuilder;
+
+
+
+  constructor(private fb: FormBuilder, private http: _HttpClient, private modal: ModalHelper) {
+    this.formBuilder = new FormBuilder();
+    this.fliterForm = this.formBuilder.group({
+      pro_no: [null],
+      pro_name: [null],
+      org_name: [null],
+      date_range: [[]],
+
+    });
+    this.addForm = this.fb.group({
+      name: [null, [Validators.required]],
+    });
+    this.searchHolder = "标题名称";
+    this.resetTime();
+
+
+
+  }
 
   ngOnInit() { }
 
+  /**
+   * 获取表格数据
+   */
+  initTable() {
+    let params = {
+
+    }
+    // this._userServices.queryStation(params).subscribe(data => {
+    // })
+  }
+  switchFilter() {
+    this.hiddenFliter = !this.hiddenFliter;
+  }
+
+  resetTime() {
+    // var startTime = new Date();
+    // startTime.setDate(startTime.getDate() - 1)
+    // this.rangeTime = [startTime, new Date()];
+  }
   add() {
+    this.addVisible = true;
     // this.modal
     //   .createStatic(FormEditComponent, { i: { id: 0 } })
     //   .subscribe(() => this.st.reload());
+  }
+  save() {
+    for (const i in this.addForm.controls) {
+      this.addForm.controls[i].markAsDirty();
+      this.addForm.controls[i].updateValueAndValidity();
+    }
+    if (this.addForm.valid) {
+
+
+    }
+
+
+  }
+  handleCancel() {
+    this.addVisible = false;
+    this.addForm = this.fb.group({
+      name: [null, [Validators.required]],
+    });
   }
 
 }

@@ -10,6 +10,9 @@ import { UserRightService } from '../userright.service';
 })
 export class UserrightUserlistComponent implements OnInit {
   hiddenFliter = false;
+  resetForm(){
+
+  };
   fliterForm: FormGroup;
   getdomainuser;
   postmodel= {
@@ -80,4 +83,9 @@ export class UserrightUserlistComponent implements OnInit {
       },
     );
   }
+
+  search(){
+
+  }
+
 }

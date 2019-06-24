@@ -16,6 +16,7 @@ import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure
 import { AppConsts } from '@shared/AppConsts';
 import { PublicModel } from 'infrastructure/public-model';
 import { PublicFormComponent } from '../public/public-form.component';
+import { EventEmiter } from 'infrastructure/eventEmiter';
 /**
  *  草稿箱
  */
@@ -63,6 +64,7 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
     private _flowServices: FlowServices,
     private _publicModel: PublicModel,
     private router: Router,
+    private _eventEmiter: EventEmiter,
     private http: _HttpClient,
     private xlsx: XlsxService) {
     super();
@@ -71,6 +73,13 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
 
   ngOnInit() {
     this.init()
+
+    const _slef = this;
+    this._eventEmiter.on('draftsComponentInit',()=>{
+      _slef.init();
+    });
+ 
+
   }
 
   init() {

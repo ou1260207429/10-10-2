@@ -108,7 +108,7 @@ export default {
   data() {
     return {
       tableHight: "450px",
-
+      downLoadUrl: app.downLoadUrl,
       path: "",
       type: "",
       data: null,
