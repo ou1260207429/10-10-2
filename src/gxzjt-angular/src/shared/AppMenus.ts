@@ -215,6 +215,27 @@ export class AppMenus {
 
       ]
     },
+    {
+      text: "",
+      i18n: "用户权限",
+      icon: { type: "icon", value: "cluster" },// 图标
+      acl: AppMenus.aclCompany,
+      children: [
+        {
+          text: "用户列表",
+          link: "/app/userright/userlist",
+        },
+        {
+          text: "岗位列表",
+          link: "/app/userright/postwork",
+        },
+        {
+          text: "角色列表",
+          link: "/app/userright/rolelist",
+        },
+
+      ]
+    },
   ];
 }
 
