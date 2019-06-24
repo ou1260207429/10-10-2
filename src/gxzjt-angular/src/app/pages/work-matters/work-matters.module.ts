@@ -11,6 +11,7 @@ import { ComponentsModule } from '@app/components/components.module';
 import { DraftsComponent } from './drafts/drafts.component';
 import { SearchHadDoneComponent } from './search-had-done/search-had-done';
 import { WorkMattersReviewApplyComponent } from './review-apply/review-apply.component';
+import { SignForComponent } from './sign-for/sign-for.component';
 
 const COMPONENTS = [
   ];
@@ -23,6 +24,7 @@ const COMPONENTS_NOROUNT = [
   DraftsComponent,
   SearchHadDoneComponent,
   WorkMattersReviewApplyComponent,
+  SignForComponent,
 ];
 
 @NgModule({

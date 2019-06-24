@@ -43,3 +43,18 @@
   </st>
   <br>
 </nz-card>
+
+<nz-modal [(nzVisible)]="isVisibleSelectModal" nzTitle="意见书签收" (nzOnCancel)="closeSignFor()" (nzOnOk)="signForOrg()"
+  [nzOkLoading]="isSelectModalOkLoading" nzWidth="500">
+  <form nz-form #f="ngForm" se-container="1" labelWidth="100">
+    <se label="签收人姓名" error="请填写">
+      <input type="text" nz-input [(ngModel)]="signForDto.name" name="name" required>
+    </se>
+    <se label="联系电话" error="请填写，最多32位">
+      <input type="text" nz-input [(ngModel)]="signForDto.phoneNumber" name="phoneNumber" required maxlength="32">
+    </se>
+    <div style="text-align: center;">
+      <a [href]="examineFormDto.opinionFileUrl"> 下载意见书</a>
+    </div>
+  </form>
+</nz-modal>
