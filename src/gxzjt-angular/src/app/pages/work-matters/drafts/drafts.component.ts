@@ -78,7 +78,7 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
     this._eventEmiter.on('draftsComponentInit',()=>{
       _slef.init();
     });
- 
+
 
   }
 
@@ -119,6 +119,8 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
    */
   query() {
     this.searchParam.page = 1;
+    this.searchParam.applyTimeStart = moment(this.rangeTime[0])
+    this.searchParam.applyTimeEnd =moment(this.rangeTime[1])
     this.getList();
   }
 
