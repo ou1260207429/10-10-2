@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UserRightService } from '../userright.service';
 
 @Component({
   selector: 'app-userright-userlist',
@@ -13,11 +14,26 @@ export class UserrightUserlistComponent implements OnInit {
 
   };
   fliterForm: FormGroup;
-  formResultData;
-
-
-
-
+  getdomainuser;
+  postmodel= {
+    page:1,
+    pageSize:10,
+    EName:''
+  };
+  model={
+    "merchantId": "string",
+    "eId": "string",
+    "eName": "string",
+    "password": "string",
+    "confirmPassword": "string",
+    "enterpriseCode": "string",
+    "enterpriseName": "string",
+    "leader": "string",
+    "leaderPhone": "string",
+    "contact": "string",
+    "contactPhone": "string",
+    "verificationCode": "string"
+  }
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     { title: '编号列表', index: 'no' },
@@ -36,6 +52,7 @@ export class UserrightUserlistComponent implements OnInit {
   constructor(private http: _HttpClient,
     private modal: ModalHelper,
     private formBuilder: FormBuilder,
+    private UserRightService: UserRightService,
     ) { }
 
   ngOnInit() {
@@ -59,11 +76,16 @@ export class UserrightUserlistComponent implements OnInit {
 
   }
   getList(){
-
+    console.log(JSON.stringify(this.postmodel))
+    this.UserRightService.login(this.model).subscribe(
+      res => {
+        this.getdomainuser = (res as any).Payload.Data;
+      },
+    );
   }
 
   search(){
-    
+
   }
-  
+
 }

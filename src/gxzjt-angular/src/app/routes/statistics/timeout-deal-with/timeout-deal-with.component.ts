@@ -86,7 +86,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
         5: { text: '未抽中', color: '' },
       }
     },
-    { title: '操作人', index: 'acceptUserCode' },
+    // { title: '操作人', index: '' },
     { title: '操作时间', index: 'acceptTime',type:'date' },
   ];
 
