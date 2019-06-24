@@ -8,6 +8,7 @@ import { AgencyDoneDetailsComponent } from './agency-done-details/agency-done-de
 import { DraftsComponent } from './drafts/drafts.component';
 import { SearchHadDoneComponent } from './search-had-done/search-had-done';
 import { WorkMattersReviewApplyComponent } from './review-apply/review-apply.component';
+import { SignForComponent } from './sign-for/sign-for.component';
 
 const routes: Routes = [
   {
@@ -46,7 +47,10 @@ const routes: Routes = [
     data: { title: '办结查询' },
   },
 
-  { path: 'review-apply/:projectId/:flowId/', component: WorkMattersReviewApplyComponent ,data: { title: '复查申请' } }];
+  { path: 'review-apply/:flowId/:flowType', component: WorkMattersReviewApplyComponent ,data: { title: '复查申请' } },
+
+  { path: 'sign-for/:flowId', component: SignForComponent ,data: { title: '签收' } }
+];
 
 
 @NgModule({

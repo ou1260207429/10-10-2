@@ -2369,7 +2369,7 @@ export class HomeServiceProxy {
      * @param search (optional) 
      * @return Success
      */
-    getOrganizationsByName(search: string | null | undefined): Observable<KeyValueDto[]> {
+    getOrganizationsByName(search: string | null | undefined): Observable<EnterpriseDto[]> {
         let url_ = this.baseUrl + "/api/services/app/Home/GetOrganizationsByName?";
         if (search !== undefined)
             url_ += "search=" + encodeURIComponent("" + search) + "&"; 
@@ -2390,14 +2390,14 @@ export class HomeServiceProxy {
                 try {
                     return this.processGetOrganizationsByName(<any>response_);
                 } catch (e) {
-                    return <Observable<KeyValueDto[]>><any>_observableThrow(e);
+                    return <Observable<EnterpriseDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<KeyValueDto[]>><any>_observableThrow(response_);
+                return <Observable<EnterpriseDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetOrganizationsByName(response: HttpResponseBase): Observable<KeyValueDto[]> {
+    protected processGetOrganizationsByName(response: HttpResponseBase): Observable<EnterpriseDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -2411,7 +2411,7 @@ export class HomeServiceProxy {
             if (resultData200 && resultData200.constructor === Array) {
                 result200 = [];
                 for (let item of resultData200)
-                    result200.push(KeyValueDto.fromJS(item));
+                    result200.push(EnterpriseDto.fromJS(item));
             }
             return _observableOf(result200);
             }));
@@ -2420,7 +2420,7 @@ export class HomeServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<KeyValueDto[]>(<any>null);
+        return _observableOf<EnterpriseDto[]>(<any>null);
     }
 }
 
@@ -8420,6 +8420,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     companyName: string | undefined;
     applyDateTime: moment.Moment | undefined;
     address: string | undefined;
+    shortAddress: string | undefined;
     attachmentItems: AttachmentItem[] | undefined;
     timeLimit: number | undefined;
     timeLimitOfDay: number | undefined;
@@ -8474,6 +8475,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
             this.companyName = data["companyName"];
             this.applyDateTime = data["applyDateTime"] ? moment(data["applyDateTime"].toString()) : <any>undefined;
             this.address = data["address"];
+            this.shortAddress = data["shortAddress"];
             if (data["attachmentItems"] && data["attachmentItems"].constructor === Array) {
                 this.attachmentItems = [];
                 for (let item of data["attachmentItems"])
@@ -8536,6 +8538,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
         data["companyName"] = this.companyName;
         data["applyDateTime"] = this.applyDateTime ? this.applyDateTime.toISOString() : <any>undefined;
         data["address"] = this.address;
+        data["shortAddress"] = this.shortAddress;
         if (this.attachmentItems && this.attachmentItems.constructor === Array) {
             data["attachmentItems"] = [];
             for (let item of this.attachmentItems)
@@ -8590,6 +8593,7 @@ export interface IAcceptApplyFormDto {
     companyName: string | undefined;
     applyDateTime: moment.Moment | undefined;
     address: string | undefined;
+    shortAddress: string | undefined;
     attachmentItems: AttachmentItem[] | undefined;
     timeLimit: number | undefined;
     timeLimitOfDay: number | undefined;
@@ -8911,7 +8915,7 @@ export class ReviewFormDto implements IReviewFormDto {
     projectName: string | undefined;
     projectCode: string | undefined;
     address: string | undefined;
-    putOnRecordFileCode: string | undefined;
+    recordFileCode: string | undefined;
     unqualifiedFileCode: string | undefined;
     situation: string | undefined;
     note: string | undefined;
@@ -8929,6 +8933,7 @@ export class ReviewFormDto implements IReviewFormDto {
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
     flowNo: string | undefined;
+    area: string | undefined;
 
     constructor(data?: IReviewFormDto) {
         if (data) {
@@ -8948,7 +8953,7 @@ export class ReviewFormDto implements IReviewFormDto {
             this.projectName = data["projectName"];
             this.projectCode = data["projectCode"];
             this.address = data["address"];
-            this.putOnRecordFileCode = data["putOnRecordFileCode"];
+            this.recordFileCode = data["recordFileCode"];
             this.unqualifiedFileCode = data["unqualifiedFileCode"];
             this.situation = data["situation"];
             this.note = data["note"];
@@ -8970,6 +8975,7 @@ export class ReviewFormDto implements IReviewFormDto {
             this.workFlow_Instance_Id = data["workFlow_Instance_Id"];
             this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
             this.flowNo = data["flowNo"];
+            this.area = data["area"];
         }
     }
 
@@ -8989,7 +8995,7 @@ export class ReviewFormDto implements IReviewFormDto {
         data["projectName"] = this.projectName;
         data["projectCode"] = this.projectCode;
         data["address"] = this.address;
-        data["putOnRecordFileCode"] = this.putOnRecordFileCode;
+        data["recordFileCode"] = this.recordFileCode;
         data["unqualifiedFileCode"] = this.unqualifiedFileCode;
         data["situation"] = this.situation;
         data["note"] = this.note;
@@ -9011,6 +9017,7 @@ export class ReviewFormDto implements IReviewFormDto {
         data["workFlow_Instance_Id"] = this.workFlow_Instance_Id;
         data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
         data["flowNo"] = this.flowNo;
+        data["area"] = this.area;
         return data; 
     }
 
@@ -9030,7 +9037,7 @@ export interface IReviewFormDto {
     projectName: string | undefined;
     projectCode: string | undefined;
     address: string | undefined;
-    putOnRecordFileCode: string | undefined;
+    recordFileCode: string | undefined;
     unqualifiedFileCode: string | undefined;
     situation: string | undefined;
     note: string | undefined;
@@ -9048,6 +9055,7 @@ export interface IReviewFormDto {
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
     flowNo: string | undefined;
+    area: string | undefined;
 }
 
 export class ProjectCompany implements IProjectCompany {
@@ -9190,6 +9198,8 @@ export class ExamineFormDto implements IExamineFormDto {
     cityName: string | undefined;
     regionAndCountyName: string | undefined;
     area: string | undefined;
+    opinionFileId: string | undefined;
+    opinionFileUrl: string | undefined;
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -9250,6 +9260,8 @@ export class ExamineFormDto implements IExamineFormDto {
             this.cityName = data["cityName"];
             this.regionAndCountyName = data["regionAndCountyName"];
             this.area = data["area"];
+            this.opinionFileId = data["opinionFileId"];
+            this.opinionFileUrl = data["opinionFileUrl"];
         }
     }
 
@@ -9310,6 +9322,8 @@ export class ExamineFormDto implements IExamineFormDto {
         data["cityName"] = this.cityName;
         data["regionAndCountyName"] = this.regionAndCountyName;
         data["area"] = this.area;
+        data["opinionFileId"] = this.opinionFileId;
+        data["opinionFileUrl"] = this.opinionFileUrl;
         return data; 
     }
 
@@ -9358,6 +9372,8 @@ export interface IExamineFormDto {
     cityName: string | undefined;
     regionAndCountyName: string | undefined;
     area: string | undefined;
+    opinionFileId: string | undefined;
+    opinionFileUrl: string | undefined;
 }
 
 export class ProjectAttachment implements IProjectAttachment {
@@ -11859,11 +11875,14 @@ export interface IFileResultDto {
     fileUrl: string | undefined;
 }
 
-export class KeyValueDto implements IKeyValueDto {
-    key: string | undefined;
-    value: string | undefined;
+export class EnterpriseDto implements IEnterpriseDto {
+    name: string | undefined;
+    leader: string | undefined;
+    leaderPhone: string | undefined;
+    contact: string | undefined;
+    contactPhone: string | undefined;
 
-    constructor(data?: IKeyValueDto) {
+    constructor(data?: IEnterpriseDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -11874,36 +11893,45 @@ export class KeyValueDto implements IKeyValueDto {
 
     init(data?: any) {
         if (data) {
-            this.key = data["key"];
-            this.value = data["value"];
+            this.name = data["name"];
+            this.leader = data["leader"];
+            this.leaderPhone = data["leaderPhone"];
+            this.contact = data["contact"];
+            this.contactPhone = data["contactPhone"];
         }
     }
 
-    static fromJS(data: any): KeyValueDto {
+    static fromJS(data: any): EnterpriseDto {
         data = typeof data === 'object' ? data : {};
-        let result = new KeyValueDto();
+        let result = new EnterpriseDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["key"] = this.key;
-        data["value"] = this.value;
+        data["name"] = this.name;
+        data["leader"] = this.leader;
+        data["leaderPhone"] = this.leaderPhone;
+        data["contact"] = this.contact;
+        data["contactPhone"] = this.contactPhone;
         return data; 
     }
 
-    clone(): KeyValueDto {
+    clone(): EnterpriseDto {
         const json = this.toJSON();
-        let result = new KeyValueDto();
+        let result = new EnterpriseDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IKeyValueDto {
-    key: string | undefined;
-    value: string | undefined;
+export interface IEnterpriseDto {
+    name: string | undefined;
+    leader: string | undefined;
+    leaderPhone: string | undefined;
+    contact: string | undefined;
+    contactPhone: string | undefined;
 }
 
 export class AuthenticateModel implements IAuthenticateModel {
@@ -13963,6 +13991,53 @@ export interface IRegulationEditDto {
     lastUpdateTime: moment.Moment | undefined;
     lastUpdateUserCode: string | undefined;
     lastUpdateUserName: string | undefined;
+}
+
+export class KeyValueDto implements IKeyValueDto {
+    key: string | undefined;
+    value: string | undefined;
+
+    constructor(data?: IKeyValueDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.key = data["key"];
+            this.value = data["value"];
+        }
+    }
+
+    static fromJS(data: any): KeyValueDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new KeyValueDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["key"] = this.key;
+        data["value"] = this.value;
+        return data; 
+    }
+
+    clone(): KeyValueDto {
+        const json = this.toJSON();
+        let result = new KeyValueDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IKeyValueDto {
+    key: string | undefined;
+    value: string | undefined;
 }
 
 export class CreateRoleDto implements ICreateRoleDto {
