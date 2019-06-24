@@ -11,17 +11,6 @@
         <!--  由后台生成的接口。展示在提交流程页面-->
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td nz-form-item colspan='20' rowspan='1' style="text-align: center;">
-
-            <nz-form-control nzHasFeedback>
-              备案号:<input nz-input style="width:300px;" placeholder="请输入备案号" [(ngModel)]="data.recordNo" name="recordNo"
-                #recordNo="ngModel" required />
-              <nz-form-explain *ngIf="recordNo.control.dirty&&recordNo.control.errors">
-                <ng-container *ngIf="recordNo.control.hasError('required')">
-                  请输入备案号!</ng-container>
-
-              </nz-form-explain>
-            </nz-form-control>
-
           </td>
         </tr>
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
@@ -498,7 +487,7 @@
           </se>
           <div class="textRight">
             <se>
-                （专业承包单位公章）<input style="width: 160px;margin-right: 20" nz-input placeholder="专业承包单位公章"
+              （专业承包单位公章）<input style="width: 160px;margin-right: 20" nz-input placeholder="专业承包单位公章"
                 [(ngModel)]="data.acceptanceOpinions.professionalContractors.officialSeal"
                 name="professionalContractorsfficialSeal" />
             </se>
@@ -575,8 +564,7 @@
             1、建设工程消防验收申报表（纸质申报表的图片）
             <nz-upload [(nzFileList)]="data.fileList[0].array" [nzBeforeUpload]="beforeUpload"
               (click)="handleChange(0)">
-              <button nz-button *ngIf="type!=1"><i nz-icon
-                  nzType="upload"></i><span>上传</span></button>
+              <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
@@ -584,8 +572,7 @@
             2、与消防验收有关的竣工图纸及隐蔽工程记录
             <nz-upload [(nzFileList)]="data.fileList[1].array" [nzBeforeUpload]="beforeUpload"
               (click)="handleChange(1)">
-              <button nz-button *ngIf="type!=1"><i nz-icon
-                  nzType="upload"></i><span>上传</span></button>
+              <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
@@ -593,8 +580,7 @@
             3、符合要求的检测机构出具出具的消防设施及系统检测合格证明文件
             <nz-upload [(nzFileList)]="data.fileList[2].array" [nzBeforeUpload]="beforeUpload"
               (click)="handleChange(2)">
-              <button nz-button  *ngIf="type!=1"><i nz-icon
-                  nzType="upload"></i><span>上传</span></button>
+              <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
         </td>
