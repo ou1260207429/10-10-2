@@ -803,7 +803,7 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     //   ]
     // },
     { title: '地市', index: 'cityName' },
-    { title: '区域', index: 'area' },
+    // { title: '区域', index: 'area' },
     { title: '工程名称', index: 'projectName' },
     { title: '工程编号', index: 'projectCode' },
     { title: '建设单位', index: 'companyName' },
