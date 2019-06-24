@@ -9,6 +9,7 @@ import { FormGroup } from '@angular/forms';
 import { AppSessionService } from '@shared/session/app-session.service';
 
 import { NzModalService } from 'ng-zorro-antd';
+import { EventEmiter } from 'infrastructure/eventEmiter';
 
 /**
  * 工程管理->竣工验收->新增申报
@@ -382,8 +383,11 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   flowFormQueryDto = new FlowFormQueryDto();
   //子组件的表单对象
   form: FormGroup
+
+  butNzLoading: boolean = false;
   constructor(private _appSessionService: AppSessionService,
     private _flowServices: FlowServices,
+    private _eventEmiter: EventEmiter,
     private _ActivatedRoute: ActivatedRoute,
     private _applyService: ApplyServiceServiceProxy,
     // private message: NzMessageService,
@@ -417,6 +421,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   * 存草稿
   */
   depositDraft() {
+    this.butNzLoading = true;
     this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
 
     this.data.acceptanceOpinions.filingTime = this.data.acceptanceOpinions.filingTime == '' ? '' : timeTrans(Date.parse(this.data.acceptanceOpinions.filingTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
@@ -424,6 +429,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this.flowFormDto['flowPathType'] = 3;
     this.flowFormDto.projectTypeStatu = 2;
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
+      this.butNzLoading = false;
       this.flowFormDto.projectId = data;
       this._NzModalService.success({
         nzTitle: '操作提示',
@@ -449,6 +455,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       }
     };
 
+    this.butNzLoading = true;
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
       const flowDataDto = new FlowDataDto();
@@ -489,7 +496,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
       this.isSelectModalOkLoading = true;
       this._applyService.post_PutOnRecord(flowDataDto).subscribe(data => {
-
+        this.butNzLoading = false;
+        this._eventEmiter.emit('completedAcceptanceComponentInit', []);
         if (data == true) {
           this._NzModalService.success({
             nzTitle: '抽选结果',
