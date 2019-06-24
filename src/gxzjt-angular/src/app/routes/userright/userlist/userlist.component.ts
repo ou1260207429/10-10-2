@@ -61,6 +61,8 @@ export class UserrightUserlistComponent implements OnInit {
     });
     this.getList();
    }
+   
+   formResultData;
 
   add() {
     // this.modal
