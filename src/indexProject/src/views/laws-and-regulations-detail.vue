@@ -21,6 +21,13 @@
               style="color:#bd1127;text-align:center;padding:20px 0;letter-spacing:3px; box-sizing: border-box;"
             >{{data.title}}</h1>
             <div class="lawContent" v-html="data.content"></div>
+            <div>
+              <p>相关文件下载</p>
+              <div>
+                <i class="el-icon-link"></i>
+                <a :href="downLoadUrl"></a>
+              </div>
+            </div>
           </div>
         </el-card>
       </el-row>
@@ -34,6 +41,7 @@ import { laws } from "../assets/js/apiValue";
 export default {
   data() {
     return {
+      downLoadUrl: app.downLoadUrl,
       tableHight: "200px",
       isLoading: true,
       path: "",
@@ -61,13 +69,21 @@ export default {
   },
 
   methods: {
+    getFileDetail() {
+      let finalUrl =
+        table.search_downLoadDetail +
+        "?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&module=table&sourceId=" +
+        guid;
+    },
     initData(id) {
+      console.log(888);
       let _this = this;
       _this.isLoading = true;
-      app.post(laws.serach_lawsDetail+"?regulationId="+id).then(req => {
+      app.post(laws.serach_lawsDetail + "?regulationId=" + id).then(req => {
         _this.isLoading = false;
         if (req.success) {
           _this.data = req.result;
+          console.log(_this.data);
         }
       });
     }

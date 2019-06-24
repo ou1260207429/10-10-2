@@ -10,6 +10,7 @@ import {
   table
 } from './apiValue'
 var app = {
+  downLoadUrl: Vue.prototype.downLoadUrl,
   clentHeight() {
     let clientHeight = document.body.clientHeight;
     let topHeight = document.getElementById('top') ? document.getElementById('top').clientHeight : 0;
@@ -148,41 +149,36 @@ var app = {
   },
   //获取附件详情
   getFileDetail(guid, id) {
+    let downLoadUrl = Vue.prototype.downLoadUrl;
     let finalUrl =
       table.search_downLoadDetail +
       "?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&module=table&sourceId=" +
       guid;
-    app.downLoadFile(finalUrl, id).then(req => {})
-
-
-  },
-  downLoadFile(url, id) {
-    let downLoadUrl = Vue.prototype.downLoadUrl;
     return new Promise(function (resolve, reject) {
       axios({
         method: "POST",
-        url: downLoadUrl + url,
+        url: downLoadUrl + finalUrl,
       }).then(function (req) {
         resolve(req);
         if (req.status == 200) {
-          if (req.data.length > 0) {
-            let link = document.createElement("a");
-            link.style.display = "none";
-            link.href = downLoadUrl + table.download + "?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&id=" + req.data[0].id;
-            link.setAttribute("download", req.data[0].fileName);
-            document.body.appendChild(link);
-            link.click();
-            app.countDownLoadTimes(id)
-            resolve(req);
-          } else {
+          resolve(req);
+          if (req.data.length == 0) {
             app.alert('无附件可下载');
           }
-
         }
-
-
       })
     })
+  },
+
+  downLoadFile(data, id) {
+    let link = document.createElement("a");
+    link.style.display = "none";
+    link.href = downLoadUrl + table.download + "?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&id=" + data.data[0].id;
+    link.setAttribute("download", data.data[0].fileName);
+    document.body.appendChild(link);
+    link.click();
+    app.countDownLoadTimes(id)
+
   },
 
 
