@@ -8440,6 +8440,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     area: string | undefined;
     acceptFileCode: string | undefined;
     flowPathType: number | undefined;
+    descr: string | undefined;
 
     constructor(data?: IAcceptApplyFormDto) {
         if (data) {
@@ -8503,6 +8504,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
             this.area = data["area"];
             this.acceptFileCode = data["acceptFileCode"];
             this.flowPathType = data["flowPathType"];
+            this.descr = data["descr"];
         }
     }
 
@@ -8566,6 +8568,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
         data["area"] = this.area;
         data["acceptFileCode"] = this.acceptFileCode;
         data["flowPathType"] = this.flowPathType;
+        data["descr"] = this.descr;
         return data; 
     }
 
@@ -8613,6 +8616,7 @@ export interface IAcceptApplyFormDto {
     area: string | undefined;
     acceptFileCode: string | undefined;
     flowPathType: number | undefined;
+    descr: string | undefined;
 }
 
 export class FlowNodeUser implements IFlowNodeUser {
@@ -9200,6 +9204,7 @@ export class ExamineFormDto implements IExamineFormDto {
     area: string | undefined;
     opinionFileId: string | undefined;
     opinionFileUrl: string | undefined;
+    descr: string | undefined;
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -9262,6 +9267,7 @@ export class ExamineFormDto implements IExamineFormDto {
             this.area = data["area"];
             this.opinionFileId = data["opinionFileId"];
             this.opinionFileUrl = data["opinionFileUrl"];
+            this.descr = data["descr"];
         }
     }
 
@@ -9324,6 +9330,7 @@ export class ExamineFormDto implements IExamineFormDto {
         data["area"] = this.area;
         data["opinionFileId"] = this.opinionFileId;
         data["opinionFileUrl"] = this.opinionFileUrl;
+        data["descr"] = this.descr;
         return data; 
     }
 
@@ -9374,6 +9381,7 @@ export interface IExamineFormDto {
     area: string | undefined;
     opinionFileId: string | undefined;
     opinionFileUrl: string | undefined;
+    descr: string | undefined;
 }
 
 export class ProjectAttachment implements IProjectAttachment {
