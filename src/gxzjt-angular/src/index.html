@@ -109,7 +109,13 @@
 
     function note() {
 
-      alert("为了您的正常使用，请使用非IE内核的浏览器(IE10以下版本无法使用)。请您选择安装火狐或谷歌浏览器。");
+
+      var r = confirm("为了您的正常使用，请使用非IE内核的浏览器(IE10以下版本无法使用)。请您选择安装火狐或谷歌浏览器,确定前往下载谷歌浏览器。")
+      if (r == true) {
+        window.open("https://www.google.cn/chrome/");
+      }
+     
+    
     }
   </script>
 
