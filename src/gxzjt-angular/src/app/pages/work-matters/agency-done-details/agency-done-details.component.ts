@@ -92,8 +92,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-    this.type = false
+  ngOnInit() { 
     this.init()
   }
 
@@ -110,6 +109,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
         workFlow_TemplateInfoId: 10171,
         workFlow_NodeAuditorRecordId: this.formDto.flowNodeUserInfo.userFlowId,
       }
+ 
       //获取JSON和节点信息
       Promise.all([this.post_GetFlowFormData(flowFormQueryDto), this.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow)]).then((value: any) => {
         this.formJson = JSON.parse(value[0].formJson);
@@ -125,9 +125,9 @@ export class AgencyDoneDetailsComponent implements OnInit {
           })
         } else {
           this.type = false
-        }
 
-       
+          console.log(this.type)
+        } 
       })
 
     })
