@@ -519,9 +519,12 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
         this.isSelectModalOkLoading = false;
         this.isVisibleSelectModal = false;
+        this.butNzLoading = false;
         history.go(-1)
       }, err => {
         this.butNzLoading = false;
+        this.isSelectModalOkLoading = false;
+        this.isVisibleSelectModal = false;
         this._NzModalService.error({
           nzTitle: '操作失败',
           nzContent: this.data.projectName + '，提交出错'

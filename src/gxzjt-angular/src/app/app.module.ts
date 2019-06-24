@@ -19,7 +19,7 @@ import { PublicServices } from 'services/public.services';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 
 import { DelonACLModule } from '@delon/acl';
-import { UserServices } from 'services/user.services';
+// import { UserServices } from 'services/user.services';
 
 
 @NgModule({
@@ -55,7 +55,7 @@ import { UserServices } from 'services/user.services';
     PoliciesAndRegulationsServices,
     PublicModel,
     EventEmiter,
-    UserServices,
+    // UserServices,
     PublicServices,
     [
       {
