@@ -23,7 +23,6 @@ import { NzMessageService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-agency-done',
   templateUrl: 'already-done.component.html',
-  styles: [],
 })
 export class AlreadyDoneComponent
   extends PublicFormComponent implements OnInit {

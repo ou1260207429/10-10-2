@@ -22,7 +22,7 @@ import { PublicFormComponent } from '../public/public-form.component';
 @Component({
   selector: 'app-drafts',
   templateUrl: './drafts.component.html',
-  styles: []
+  
 })
 export class DraftsComponent extends PublicFormComponent implements OnInit {
 

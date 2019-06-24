@@ -18,7 +18,7 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 @Component({
   selector: 'app-agency-done-details',
   templateUrl: './agency-done-details.component.html',
-  styles: []
+  
 })
 export class AgencyDoneDetailsComponent implements OnInit {
 

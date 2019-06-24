@@ -16,7 +16,7 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 @Component({
   selector: 'app-add-fire-acceptance',
   templateUrl: './add-fire-acceptance.component.html',
-  styles: []
+  
 })
 export class AddFireAcceptanceComponent implements OnInit {
   showError = {
@@ -230,11 +230,11 @@ export class AddFireAcceptanceComponent implements OnInit {
   }
   save() {
 
-    console.log(this.form)
-    for (const i in this.form.controls) {
-      this.form.controls[i].markAsDirty();
-      this.form.controls[i].updateValueAndValidity();
-    }
+    // console.log(this.form)
+    // for (const i in this.form.controls) {
+    //   this.form.controls[i].markAsDirty();
+    //   this.form.controls[i].updateValueAndValidity();
+    // }
 
     if (!this.data.projectCategoryId || this.data.projectCategoryId == '') {
       this.showError.projectCategoryId = true;
@@ -242,8 +242,8 @@ export class AddFireAcceptanceComponent implements OnInit {
       this.showError.projectCategoryId = false;
     }
 
-    if (!this.showError.projectCategoryId && this.form.valid) {
-
+    // if (!this.showError.projectCategoryId && this.form.valid) {
+    if (!this.showError.projectCategoryId) {
       const from: GXZJT_From = {
         frow_TemplateInfo_Data: {
           Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length - 1]
