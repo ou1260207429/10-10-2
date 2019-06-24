@@ -225,24 +225,27 @@ export class AddFireAcceptanceComponent implements OnInit {
       this.butNzLoading = false;
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')
+      this._eventEmiter.emit('draftsComponentInit', []); 
       history.go(-1)
+    },error=>{
+      this.butNzLoading = false;
     })
   }
   save() {
 
     console.log(this.form)
-    for (const i in this.form.controls) {
-      this.form.controls[i].markAsDirty();
-      this.form.controls[i].updateValueAndValidity();
-    }
+    // for (const i in this.form.controls) {
+    //   this.form.controls[i].markAsDirty();
+    //   this.form.controls[i].updateValueAndValidity();
+    // }
 
-    if (!this.data.projectCategoryId || this.data.projectCategoryId == '') {
-      this.showError.projectCategoryId = true;
-    } else {
-      this.showError.projectCategoryId = false;
-    }
+    // if (!this.data.projectCategoryId || this.data.projectCategoryId == '') {
+    //   this.showError.projectCategoryId = true;
+    // } else {
+    //   this.showError.projectCategoryId = false;
+    // }
 
-    if (!this.showError.projectCategoryId && this.form.valid) {
+    // if (!this.showError.projectCategoryId && this.form.valid) {
 
       const from: GXZJT_From = {
         frow_TemplateInfo_Data: {
@@ -263,6 +266,7 @@ export class AddFireAcceptanceComponent implements OnInit {
         flowDataDto.formJson = JSON.stringify(this.data);
         flowDataDto.projectFlowInfo = new ProjectFlowDto();
 
+        flowDataDto.projectId = this.flowFormQueryDto.projectId
 
         flowDataDto.projectFlowInfo.timeLimit = data.result.timeLimit
         //类型  消防设计1   消防验收2   消防竣工3 
@@ -290,17 +294,20 @@ export class AddFireAcceptanceComponent implements OnInit {
 
         //待审人数组 等后台改模型
         // currentHandleUserCode: string | undefined; 
-
+ 
+        console.log(flowDataDto);
         this._applyService.acceptance(flowDataDto).subscribe(data => {
           this.butNzLoading = false;
-          this._eventEmiter.emit('fireAcceptanceComponentInit', []);
+          this._eventEmiter.emit('fireAcceptanceComponentInit', []); 
           this.message.success('提交成功')
           history.go(-1)
+        },error=>{
+          this.butNzLoading = false;
         })
       })
       // }
     }
-  }
+  // }
 
 }
 

@@ -107,7 +107,16 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
     let _self = this;
     this.init();
-    this.eventEmiter.on('agencyDoneInit', () => {
+    this.eventEmiter.on('fireAcceptanceComponentInit',()=>{
+      _self.init();
+    });
+
+    this.eventEmiter.on('fireDesignComponentInit',()=>{
+      console.log('111');
+      _self.init();
+    });
+
+    this.eventEmiter.on('completedAcceptanceComponentInit',()=>{
       _self.init();
     });
   }
@@ -118,9 +127,10 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.searchParam.pagedAndFilteredInputDto.maxResultCount = 10;
     this.searchParam.number = '';
     this.searchParam.projectName = '';
-    this.searchParam.companyName = '';
-    this.searchParam.pagedAndFilteredInputDto.sorting = 'projectId desc'
-    this.searchParam.projectTypeStatu = null;
+    this.searchParam.companyName = ''; 
+    this.searchParam.pagedAndFilteredInputDto.sorting = 'applyTime desc'
+    this.searchParam.projectTypeStatu = 1;
+    this.searchParam.isAlreadyDone = true
     if (this.rangeTime != null) {
       this.searchParam.applyTimeStart = this.rangeTime[0];
       this.searchParam.applyTimeEnd = this.rangeTime[1];

@@ -8440,6 +8440,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     area: string | undefined;
     acceptFileCode: string | undefined;
     flowPathType: number | undefined;
+    descr: string | undefined;
 
     constructor(data?: IAcceptApplyFormDto) {
         if (data) {
@@ -8503,6 +8504,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
             this.area = data["area"];
             this.acceptFileCode = data["acceptFileCode"];
             this.flowPathType = data["flowPathType"];
+            this.descr = data["descr"];
         }
     }
 
@@ -8566,6 +8568,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
         data["area"] = this.area;
         data["acceptFileCode"] = this.acceptFileCode;
         data["flowPathType"] = this.flowPathType;
+        data["descr"] = this.descr;
         return data; 
     }
 
@@ -8613,6 +8616,7 @@ export interface IAcceptApplyFormDto {
     area: string | undefined;
     acceptFileCode: string | undefined;
     flowPathType: number | undefined;
+    descr: string | undefined;
 }
 
 export class FlowNodeUser implements IFlowNodeUser {
@@ -9200,6 +9204,7 @@ export class ExamineFormDto implements IExamineFormDto {
     area: string | undefined;
     opinionFileId: string | undefined;
     opinionFileUrl: string | undefined;
+    descr: string | undefined;
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -9262,6 +9267,7 @@ export class ExamineFormDto implements IExamineFormDto {
             this.area = data["area"];
             this.opinionFileId = data["opinionFileId"];
             this.opinionFileUrl = data["opinionFileUrl"];
+            this.descr = data["descr"];
         }
     }
 
@@ -9324,6 +9330,7 @@ export class ExamineFormDto implements IExamineFormDto {
         data["area"] = this.area;
         data["opinionFileId"] = this.opinionFileId;
         data["opinionFileUrl"] = this.opinionFileUrl;
+        data["descr"] = this.descr;
         return data; 
     }
 
@@ -9374,6 +9381,7 @@ export interface IExamineFormDto {
     area: string | undefined;
     opinionFileId: string | undefined;
     opinionFileUrl: string | undefined;
+    descr: string | undefined;
 }
 
 export class ProjectAttachment implements IProjectAttachment {
@@ -11129,8 +11137,8 @@ export class AllOptions implements IAllOptions {
     contract: string | undefined;
     proPhone: string | undefined;
     proAddress: string | undefined;
-    startTime: moment.Moment | undefined;
-    finishTime: moment.Moment | undefined;
+    planStartTime: moment.Moment | undefined;
+    planFinishTime: moment.Moment | undefined;
     type: string | undefined;
     units: Unit[] | undefined;
     permitCode: string | undefined;
@@ -11154,6 +11162,9 @@ export class AllOptions implements IAllOptions {
     extra2: string | undefined;
     materialProvide: string | undefined;
     companyAdv: string | undefined;
+    designCheckCode: string | undefined;
+    checkDateStr: string | undefined;
+    checkReportCode: string | undefined;
 
     constructor(data?: IAllOptions) {
         if (data) {
@@ -11173,8 +11184,8 @@ export class AllOptions implements IAllOptions {
             this.contract = data["contract"];
             this.proPhone = data["proPhone"];
             this.proAddress = data["proAddress"];
-            this.startTime = data["startTime"] ? moment(data["startTime"].toString()) : <any>undefined;
-            this.finishTime = data["finishTime"] ? moment(data["finishTime"].toString()) : <any>undefined;
+            this.planStartTime = data["planStartTime"] ? moment(data["planStartTime"].toString()) : <any>undefined;
+            this.planFinishTime = data["planFinishTime"] ? moment(data["planFinishTime"].toString()) : <any>undefined;
             this.type = data["type"];
             if (data["units"] && data["units"].constructor === Array) {
                 this.units = [];
@@ -11222,6 +11233,9 @@ export class AllOptions implements IAllOptions {
             this.extra2 = data["extra2"];
             this.materialProvide = data["materialProvide"];
             this.companyAdv = data["companyAdv"];
+            this.designCheckCode = data["designCheckCode"];
+            this.checkDateStr = data["checkDateStr"];
+            this.checkReportCode = data["checkReportCode"];
         }
     }
 
@@ -11241,8 +11255,8 @@ export class AllOptions implements IAllOptions {
         data["contract"] = this.contract;
         data["proPhone"] = this.proPhone;
         data["proAddress"] = this.proAddress;
-        data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
-        data["finishTime"] = this.finishTime ? this.finishTime.toISOString() : <any>undefined;
+        data["planStartTime"] = this.planStartTime ? this.planStartTime.toISOString() : <any>undefined;
+        data["planFinishTime"] = this.planFinishTime ? this.planFinishTime.toISOString() : <any>undefined;
         data["type"] = this.type;
         if (this.units && this.units.constructor === Array) {
             data["units"] = [];
@@ -11290,6 +11304,9 @@ export class AllOptions implements IAllOptions {
         data["extra2"] = this.extra2;
         data["materialProvide"] = this.materialProvide;
         data["companyAdv"] = this.companyAdv;
+        data["designCheckCode"] = this.designCheckCode;
+        data["checkDateStr"] = this.checkDateStr;
+        data["checkReportCode"] = this.checkReportCode;
         return data; 
     }
 
@@ -11309,8 +11326,8 @@ export interface IAllOptions {
     contract: string | undefined;
     proPhone: string | undefined;
     proAddress: string | undefined;
-    startTime: moment.Moment | undefined;
-    finishTime: moment.Moment | undefined;
+    planStartTime: moment.Moment | undefined;
+    planFinishTime: moment.Moment | undefined;
     type: string | undefined;
     units: Unit[] | undefined;
     permitCode: string | undefined;
@@ -11334,6 +11351,9 @@ export interface IAllOptions {
     extra2: string | undefined;
     materialProvide: string | undefined;
     companyAdv: string | undefined;
+    designCheckCode: string | undefined;
+    checkDateStr: string | undefined;
+    checkReportCode: string | undefined;
 }
 
 export class Unit implements IUnit {
@@ -11881,6 +11901,7 @@ export class EnterpriseDto implements IEnterpriseDto {
     leaderPhone: string | undefined;
     contact: string | undefined;
     contactPhone: string | undefined;
+    qualificationLevel: string | undefined;
 
     constructor(data?: IEnterpriseDto) {
         if (data) {
@@ -11898,6 +11919,7 @@ export class EnterpriseDto implements IEnterpriseDto {
             this.leaderPhone = data["leaderPhone"];
             this.contact = data["contact"];
             this.contactPhone = data["contactPhone"];
+            this.qualificationLevel = data["qualificationLevel"];
         }
     }
 
@@ -11915,6 +11937,7 @@ export class EnterpriseDto implements IEnterpriseDto {
         data["leaderPhone"] = this.leaderPhone;
         data["contact"] = this.contact;
         data["contactPhone"] = this.contactPhone;
+        data["qualificationLevel"] = this.qualificationLevel;
         return data; 
     }
 
@@ -11932,6 +11955,7 @@ export interface IEnterpriseDto {
     leaderPhone: string | undefined;
     contact: string | undefined;
     contactPhone: string | undefined;
+    qualificationLevel: string | undefined;
 }
 
 export class AuthenticateModel implements IAuthenticateModel {

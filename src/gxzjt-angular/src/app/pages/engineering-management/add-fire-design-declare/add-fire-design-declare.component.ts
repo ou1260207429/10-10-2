@@ -651,13 +651,14 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
         // currentHandleUserName: string | undefined;
 
         //待审人数组 等后台改模型
-        // currentHandleUserCode: string | undefined; 
- 
+        // currentHandleUserCode: string | undefined;  
         this._applyService.investigate(flowDataDto).subscribe(data => {
           this.butNzLoading = false;
           this.message.success('提交成功')
           this._eventEmiter.emit('fireDesignComponentInit', []);
           history.go(-1)
+        },error=>{
+          this.butNzLoading = false;
         })
       })
 
@@ -681,6 +682,9 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')
       history.go(-1)
+      this._eventEmiter.emit('draftsComponentInit', []); 
+      this.butNzLoading = false;
+    },error=>{
       this.butNzLoading = false;
     })
   }

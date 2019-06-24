@@ -347,7 +347,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       filingTime: '',
       luckNo: '',
     },
-    engineerinDescription:'',
+    engineerinDescription: '',
     fileList: [
       {
         //设工程消防验收申报表（纸质申报表的图片）
@@ -430,6 +430,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this.flowFormDto.projectTypeStatu = 2;
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.butNzLoading = false;
+      this._eventEmiter.emit('draftsComponentInit', []); 
       this.flowFormDto.projectId = data;
       this._NzModalService.success({
         nzTitle: '操作提示',
@@ -437,6 +438,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       }
       );
       history.go(-1)
+    }, error => {
+      this.butNzLoading = false;
     })
   }
   save() {
@@ -444,7 +447,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     console.log(this.form.valid)
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
-        Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length-1],
+        Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length - 1],
       },
       identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {
@@ -518,6 +521,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
         history.go(-1)
       }, err => {
+        this.butNzLoading = false;
         this._NzModalService.error({
           nzTitle: '操作失败',
           nzContent: this.data.projectName + '，提交出错'
