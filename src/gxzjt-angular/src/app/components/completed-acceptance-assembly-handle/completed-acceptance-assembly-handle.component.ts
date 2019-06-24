@@ -14,7 +14,7 @@ import { ExamineFormDto, ProjectAttachment } from '@shared/service-proxies/servi
 @Component({
   selector: 'app-completed-acceptance-assembly-handle',
   templateUrl: './completed-acceptance-assembly-handle.component.html',
-  styles: []
+  
 })
 export class CompletedAcceptanceAssemblyHandleComponent implements OnInit {
 

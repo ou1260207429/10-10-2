@@ -12,7 +12,7 @@ import { timeTrans } from 'infrastructure/regular-expression';
   selector: 'app-handling-guide',
   // templateUrl: './handling-guide.component.html',
   templateUrl: '../public/public-form.html',
-  styles: []
+  
 })
 export class HandlingGuideComponent extends PublicFormComponent implements OnInit {
   @ViewChild('treeCom') treeCom;

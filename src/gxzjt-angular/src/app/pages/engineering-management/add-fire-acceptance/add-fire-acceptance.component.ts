@@ -16,7 +16,7 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 @Component({
   selector: 'app-add-fire-acceptance',
   templateUrl: './add-fire-acceptance.component.html',
-  styles: []
+  
 })
 export class AddFireAcceptanceComponent implements OnInit {
   showError = {

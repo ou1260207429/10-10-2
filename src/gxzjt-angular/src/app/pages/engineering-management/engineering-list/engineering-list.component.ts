@@ -21,7 +21,7 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-engineering-list',
   templateUrl: './engineering-list.component.html',
-  styles: []
+  
 })
 export class EngineeringListComponent extends PublicFormComponent implements OnInit {
 

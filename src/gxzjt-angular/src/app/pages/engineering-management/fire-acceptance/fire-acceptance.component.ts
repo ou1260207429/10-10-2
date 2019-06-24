@@ -24,7 +24,6 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 @Component({
   selector: 'app-fire-acceptance',
   templateUrl: './fire-acceptance.component.html',
-  styles: [],
   styleUrls:['./fire-acceptance.component.less']
 })
 export class FireAcceptanceComponent  extends PublicFormComponent implements OnInit {

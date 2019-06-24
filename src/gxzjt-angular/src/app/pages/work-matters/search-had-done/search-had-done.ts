@@ -23,7 +23,6 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 @Component({
   selector: 'search-had-done',
   templateUrl: 'search-had-done.html',
-  styles: [],
 })
 export class SearchHadDoneComponent extends PublicFormComponent implements OnInit {
   index;

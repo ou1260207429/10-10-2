@@ -25,7 +25,6 @@ import { NzMessageService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-agency-done',
   templateUrl: 'agency-done.component.html',
-  styles: [],
 })
 export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   index;

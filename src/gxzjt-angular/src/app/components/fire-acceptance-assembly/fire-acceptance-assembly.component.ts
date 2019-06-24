@@ -14,7 +14,7 @@ import { DepFlags } from '@angular/compiler/src/core';
 @Component({
   selector: 'app-fire-acceptance-assembly',
   templateUrl: './fire-acceptance-assembly.component.html',
-  styles: []
+  
 })
 export class FireAcceptanceAssemblyComponent implements OnInit {
 

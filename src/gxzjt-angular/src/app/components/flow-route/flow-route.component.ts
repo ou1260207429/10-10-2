@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-flow-route',
   templateUrl: './flow-route.component.html',
-  styles: []
+  
 })
 export class FlowRouteComponent implements OnInit {
 
