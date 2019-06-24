@@ -11,7 +11,7 @@
               <div class="flowCard">
                 <p>处理人：{{box.applyEName}}</p>
                 <p>动作：{{box.result|numType}}</p>
-                <p>意见：{{box.details}}</p>
+                <p *ngIf="box.details">意见：{{box.details}}</p>
               </div>
             </div>
           </div>

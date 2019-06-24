@@ -28,6 +28,7 @@ export class SignForComponent implements OnInit {
         private _flowServices: FlowServices,
         public appSession: AppSessionService,
         private message: NzMessageService,
+        public _appSessionService: AppSessionService,
         private sanitizer: DomSanitizer) {
         //this.signForDto = new SignForDto();
         this.srcUrl={};
@@ -66,8 +67,8 @@ export class SignForComponent implements OnInit {
                 Area: this.examineFormDto.area,
                 IsChoose: 0,
                 editWorkFlow_NodeAuditorRecordDto: {
-                    deptId: '',
-                    deptFullPath: ''
+                    deptId: this._appSessionService.user.organizationsId,
+        deptFullPath: this._appSessionService.user.organizationsName,
                 }
             }
             tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId

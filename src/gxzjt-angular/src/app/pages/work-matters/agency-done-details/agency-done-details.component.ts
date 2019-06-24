@@ -61,7 +61,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
 
   //提交表单的对象
-  formDto: AcceptApplyFormDto = new AcceptApplyFormDto();
+  formDto: any = new AcceptApplyFormDto();
 
   //表单json对象
   formJson
@@ -84,7 +84,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
   //签收的列表
   signForDtoData
   butNzLoading: boolean = false;
-  constructor(private _eventEmiter: EventEmiter, private _examineService: ExamineServiceServiceProxy, private reuseTabService: ReuseTabService, private ModelHelp: ModalHelper, public appSession: AppSessionService, private message: NzMessageService, private _applyService: ApplyServiceServiceProxy, private _acceptServiceServiceProxy: AcceptServiceServiceProxy, private _flowServices: FlowServices, private _activatedRoute: ActivatedRoute, private _ActivatedRoute: ActivatedRoute, ) {
+
+  //判断当前登录人是否是审核人
+  isLoginPerson: boolean = true;
+  constructor(private _eventEmiter: EventEmiter, public _appSessionService: AppSessionService, private _examineService: ExamineServiceServiceProxy, private reuseTabService: ReuseTabService, private ModelHelp: ModalHelper, public appSession: AppSessionService, private message: NzMessageService, private _applyService: ApplyServiceServiceProxy, private _acceptServiceServiceProxy: AcceptServiceServiceProxy, private _flowServices: FlowServices, private _activatedRoute: ActivatedRoute, private _ActivatedRoute: ActivatedRoute, ) {
     this.flowNo = this._activatedRoute.snapshot.paramMap.get('flowNo')
     this.flowId = this._activatedRoute.snapshot.paramMap.get('flowId')
     this.flowPathType = this._activatedRoute.snapshot.paramMap.get('flowPathType')
@@ -177,20 +180,21 @@ export class AgencyDoneDetailsComponent implements OnInit {
    * 点击提交
    */
   save(bo?: boolean) {
-    const num = bo ? 1 : 0;
+    let num = bo ? 1 : 0;
+    if(this.flowPathType == 3 && !this.formDto.IsSelect){
+      num = 0
+    } 
     this.tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
       Area: this.formDto.area,
       IsChoose: num,
       editWorkFlow_NodeAuditorRecordDto: {
-        deptId: '',
-        deptFullPath: ''
+        deptId: this._appSessionService.user.organizationsId,
+        deptFullPath: this._appSessionService.user.organizationsName,
       }
     }
-    console.log(this.appSession.user.organizationsId);
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptFullPath = this.appSession.user.organizationsName
-
-
+    this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.formDto.opinion
     if (!bo && this.curNodeName == '业务审批负责人审批') {
       this.noResult((data) => {
         this._flowServices.tenant_NodeToNextNodeByNoPass(data.data).subscribe((data: any) => {
@@ -212,6 +216,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       })
 
     } else {
+
       this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
 
         this.formDto.isAccept = bo;
@@ -244,9 +249,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
           this.examineFormDto.handleUserList.push(flowNodeUser)
         });
 
-        console.log(this.examineFormDto)
-
-
+     
         switch (this.curNodeName) {
           case '大厅受理':
             this.acceptApply(form);

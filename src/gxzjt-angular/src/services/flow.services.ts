@@ -108,6 +108,9 @@ export interface GXZJT_EditWorkFlow_NodeAuditorRecordDto {
 
   //部门路径
   deptFullPath: string,
+
+  //备注
+  details?:string
 }
 
 export interface GXZJT_Auditors {
