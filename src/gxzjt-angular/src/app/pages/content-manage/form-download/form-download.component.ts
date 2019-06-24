@@ -31,7 +31,7 @@ export class FormDownloadComponent extends PublicFormComponent implements OnInit
     endTime: null,
   };
 
-
+  nzPlaceHolder=['创建开始时间','创建结束时间']
   columns: STColumn[] = [
     { title: '表名', index: 'attachmentName' },
     { title: '创建时间', index: 'creationTime', type: 'date' },

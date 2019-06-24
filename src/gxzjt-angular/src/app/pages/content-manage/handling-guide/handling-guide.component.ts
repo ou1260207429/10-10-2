@@ -113,7 +113,7 @@ export class HandlingGuideComponent extends PublicFormComponent implements OnIni
     this.query_noticeRecords(this.params);
 
   }
-
+  nzPlaceHolder=['发布开始时间','发布结束时间']
   /**
    * 回车
    */
