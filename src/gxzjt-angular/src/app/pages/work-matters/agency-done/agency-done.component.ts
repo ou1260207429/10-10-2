@@ -83,7 +83,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   examineFormDto = new ExamineFormDto();
   workFlowData;
   isVisibleSelectModal=false;
-
+  isSelectModalOkLoading=false;
   //时间
   rangeTime
   constructor(private workFlowedServiceProxy: WorkFlowedServiceProxy,
