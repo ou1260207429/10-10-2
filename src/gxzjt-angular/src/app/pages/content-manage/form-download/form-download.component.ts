@@ -12,7 +12,7 @@ import { timeTrans } from 'infrastructure/regular-expression';
   selector: 'app-form-download',
   // templateUrl: './form-download.component.html',
   templateUrl: '../public/public-form.html',
-  styles: []
+  
 })
 export class FormDownloadComponent extends PublicFormComponent implements OnInit {
   @ViewChild('treeCom') treeCom;

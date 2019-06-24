@@ -13,7 +13,7 @@ import { ExamineFormDto, ProjectAttachment } from '@shared/service-proxies/servi
 @Component({
   selector: 'app-fire-acceptance-assembly-handle',
   templateUrl: './fire-acceptance-assembly-handle.component.html',
-  styles: []
+  
 })
 export class FireAcceptanceAssemblyHandleComponent implements OnInit {
 

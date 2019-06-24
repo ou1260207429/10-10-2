@@ -16,7 +16,6 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'org-manager',
   templateUrl: '../public/public-form.html',
-  styles: [],
 })
 export class OrgManagerComponent extends PublicFormComponent implements OnInit {
 

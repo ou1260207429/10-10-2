@@ -26,7 +26,6 @@ const FLOATINGCLS = 'nav-floating';
 @Component({
     selector: 'yoyo-sidebar-nav',
     templateUrl: './yoyo-sidebar-nav.component.html',
-    styles: [],
     changeDetection: ChangeDetectionStrategy.Default,
     preserveWhitespaces: false,
 })

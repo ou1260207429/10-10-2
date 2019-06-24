@@ -21,7 +21,7 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-engineering-list',
   templateUrl: './engineering-list.component.html',
-  styles: []
+  
 })
 export class EngineeringListComponent extends PublicFormComponent implements OnInit {
 
@@ -41,13 +41,10 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
         {
           text: '查看',
           type: 'modal',
-          // modal: {
-          //   component: StatisticsProAppStaticDetailComponent,
-          //   paramsName: 'record',
-          // },
-          // click: (record: any, modal: any) => {
+          click: (record: any, modal: any) => {
 
-          // },
+            this.watchItem(record);
+          },
         },
         // {
         //   text: '受理凭证',

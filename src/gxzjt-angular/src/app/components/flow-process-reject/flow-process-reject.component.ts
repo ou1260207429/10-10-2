@@ -8,7 +8,7 @@ import { FlowServices } from 'services/flow.services';
 @Component({
   selector: 'app-flow-process-reject',
   templateUrl: './flow-process-reject.component.html',
-  styles: []
+  
 })
 export class FlowProcessRejectComponent implements OnInit {
 

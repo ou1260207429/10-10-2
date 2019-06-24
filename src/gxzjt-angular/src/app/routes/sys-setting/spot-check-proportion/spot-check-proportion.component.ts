@@ -15,7 +15,6 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'spot-check-proportion',
   templateUrl: './spot-check-proportion.html',
-  styles: [],
 })
 export class SpotCheckProportionComponent implements OnInit {
 

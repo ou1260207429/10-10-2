@@ -24,7 +24,6 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 @Component({
   selector: 'app-completed-acceptance',
   templateUrl: './completed-acceptance.component.html',
-  styles: [],
   styleUrls:['./completed-acceptance.component.less']
 })
 export class CompletedAcceptanceComponent extends PublicFormComponent implements OnInit {

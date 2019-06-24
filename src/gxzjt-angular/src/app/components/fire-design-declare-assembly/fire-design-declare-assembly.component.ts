@@ -12,7 +12,7 @@ import { PublicServices } from 'services/public.services';
 @Component({
   selector: 'app-fire-design-declare-assembly',
   templateUrl: './fire-design-declare-assembly.component.html',
-  styles: []
+  
 })
 export class FireDesignDeclareAssemblyComponent implements OnInit {
 
