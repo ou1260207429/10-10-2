@@ -13,7 +13,7 @@ import { PublicServices } from 'services/public.services';
 @Component({
   selector: 'app-completed-acceptance-assembly',
   templateUrl: './completed-acceptance-assembly.component.html',
-  styles: []
+  
 })
 export class CompletedAcceptanceAssemblyComponent implements OnInit {
 

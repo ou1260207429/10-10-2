@@ -23,7 +23,6 @@ import { NzMessageService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-agency-done',
   templateUrl: 'already-done.component.html',
-  styles: [],
 })
 export class AlreadyDoneComponent
   extends PublicFormComponent implements OnInit {
@@ -109,7 +108,20 @@ export class AlreadyDoneComponent
     this.searchParam.projectTypeStatu=null;
     this.getList();
   }
-
+  reststart() {
+    this.resetTime();
+    this.searchParam.pagedAndFilteredInputDto = new PagedAndFilteredInputDto();
+    this.searchParam.pagedAndFilteredInputDto.page = 1;
+    this.searchParam.pagedAndFilteredInputDto.maxResultCount = 10;
+    this.searchParam.number = '';
+    this.searchParam.projectName = '';
+    this.searchParam.companyName = '';
+    this.searchParam.pagedAndFilteredInputDto.sorting = 'projectId desc'
+    this.searchParam.projectTypeStatu = null;
+    this.searchParam.applyTimeStart = this.rangeTime[0];
+    this.searchParam.applyTimeEnd = this.rangeTime[1];
+    this.getList();
+  }
 
   /**
    * 获取所有列表

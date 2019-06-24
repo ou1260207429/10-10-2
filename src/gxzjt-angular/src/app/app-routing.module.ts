@@ -89,6 +89,10 @@ const routes: Routes = [
         path: 'user-center', loadChildren: './routes/user-center/user-center.module#UserCenterModule',
 
       },
+      {
+        path: 'userright', loadChildren: './routes/userright/userright.module#UserrightModule',
+
+      },
 
     ],
   },

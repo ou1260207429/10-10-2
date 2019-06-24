@@ -518,7 +518,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         }
 
         this.isSelectModalOkLoading = false;
-
+        this.isVisibleSelectModal = false;
         history.go(-1)
       }, err => {
         this.butNzLoading = false;
@@ -558,6 +558,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       this.isVisibleSelectModal = true;
     }
   }
+
+
 
 
   selectModalData = [];

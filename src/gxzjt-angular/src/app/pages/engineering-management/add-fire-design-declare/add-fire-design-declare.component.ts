@@ -19,7 +19,7 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 @Component({
   selector: 'app-add-fire-design-declare',
   templateUrl: './add-fire-design-declare.component.html',
-  styles: []
+  
 })
 export class AddFireDesignDeclareComponent extends PublicFormComponent implements OnInit {
   flowFormQueryDto = new FlowFormQueryDto();

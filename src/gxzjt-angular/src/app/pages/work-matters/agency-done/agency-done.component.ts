@@ -25,11 +25,15 @@ import { NzMessageService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-agency-done',
   templateUrl: 'agency-done.component.html',
-  styles: [],
 })
 export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   index;
 
+  signForDto = new SignForDto();
+  examineFormDto = new ExamineFormDto();
+  workFlowData;
+  isVisibleSelectModal:boolean=false;
+  isSelectModalOkLoading=false;
 
   formResultData
 
@@ -79,11 +83,6 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   //类型
   flowPathTypeEnum = FlowPathTypeEnum
 
-  signForDto = new SignForDto();
-  examineFormDto = new ExamineFormDto();
-  workFlowData;
-  isVisibleSelectModal=false;
-
   //时间
   rangeTime
   constructor(private workFlowedServiceProxy: WorkFlowedServiceProxy,
@@ -104,7 +103,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
   ngOnInit() {
     this.init()
-
+    this.resetTime();
     let _self = this;
     this.init();
     this.eventEmiter.on('fireAcceptanceComponentInit',()=>{
@@ -138,6 +137,20 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.getList();
   }
 
+  reststart() {
+    this.resetTime();
+    this.searchParam.pagedAndFilteredInputDto = new PagedAndFilteredInputDto();
+    this.searchParam.pagedAndFilteredInputDto.page = 1;
+    this.searchParam.pagedAndFilteredInputDto.maxResultCount = 10;
+    this.searchParam.number = '';
+    this.searchParam.projectName = '';
+    this.searchParam.companyName = '';
+    this.searchParam.pagedAndFilteredInputDto.sorting = 'projectId desc'
+    this.searchParam.projectTypeStatu = null;
+    this.searchParam.applyTimeStart = this.rangeTime[0];
+    this.searchParam.applyTimeEnd = this.rangeTime[1];
+    this.getList();
+  }
 
   /**
    * 获取所有列表
@@ -234,7 +247,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this._flowServices.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow).subscribe((data:any) => {
 
       var tenantWorkFlowInstanceDto;
-      tenantWorkFlowInstanceDto = data.result; 
+      tenantWorkFlowInstanceDto = data.result;
       tenantWorkFlowInstanceDto.workFlow_InstanceId = this.examineFormDto.workFlow_Instance_Id;
 
       tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
@@ -261,6 +274,10 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
     });
   }
-
+  resetTime() {
+    var startTime = new Date();
+    startTime.setDate(startTime.getDate() - 30)
+    this.rangeTime = [startTime, new Date()];
+  }
 
 }

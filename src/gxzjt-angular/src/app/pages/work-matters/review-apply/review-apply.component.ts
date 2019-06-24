@@ -16,7 +16,7 @@ export class WorkMattersReviewApplyComponent implements OnInit {
 
   reviewFormDto = new ReviewFormDto();
   flowType;
-
+  applyName;
   constructor(private _activatedRoute: ActivatedRoute,
     private _applyService: ApplyServiceServiceProxy,
     private _flowServices: FlowServices,

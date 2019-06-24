@@ -1,14 +1,3 @@
-<div *ngIf="examineFormDto">
-  <div *ngFor="let item of examineFormDto.flowNodeItems">
-    <div *ngIf="item.isDisplayFile">
-      <i nz-icon type="link" nzTheme="outline"  style="margin-right: 10px;"></i><a [href]="item.fileUrl">{{item.fileName}}</a>
-    </div>
-    <div *ngIf="!item.isDisplayFile">
-      {{item.opinion}}
-    </div>
-  </div>
-</div>
-
 <div [ngSwitch]="type">
   <!-- 消防设计的办理凭证  -->
   <div *ngSwitchCase="0">

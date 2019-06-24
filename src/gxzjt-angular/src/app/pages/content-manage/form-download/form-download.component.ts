@@ -12,7 +12,7 @@ import { timeTrans } from 'infrastructure/regular-expression';
   selector: 'app-form-download',
   // templateUrl: './form-download.component.html',
   templateUrl: '../public/public-form.html',
-  styles: []
+  
 })
 export class FormDownloadComponent extends PublicFormComponent implements OnInit {
   @ViewChild('treeCom') treeCom;
@@ -31,7 +31,7 @@ export class FormDownloadComponent extends PublicFormComponent implements OnInit
     endTime: null,
   };
 
-
+  nzPlaceHolder=['创建开始时间','创建结束时间']
   columns: STColumn[] = [
     { title: '表名', index: 'attachmentName' },
     { title: '创建时间', index: 'creationTime', type: 'date' },

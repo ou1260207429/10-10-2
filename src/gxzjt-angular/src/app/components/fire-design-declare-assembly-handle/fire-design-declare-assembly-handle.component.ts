@@ -13,7 +13,7 @@ import { ExamineFormDto, ProjectAttachment } from '@shared/service-proxies/servi
 @Component({
   selector: 'app-fire-design-declare-assembly-handle',
   templateUrl: './fire-design-declare-assembly-handle.component.html',
-  styles: []
+  
 })
 export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
 

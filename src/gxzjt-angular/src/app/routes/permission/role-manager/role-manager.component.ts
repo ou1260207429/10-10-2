@@ -16,7 +16,6 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'role-manager',
   templateUrl: '../public/public-form.html',
-  styles: [],
 })
 export class RoleManagerComponent extends PublicFormComponent implements OnInit {
 

@@ -12,7 +12,7 @@ import { timeTrans } from 'infrastructure/regular-expression';
   selector: 'app-handling-guide',
   // templateUrl: './handling-guide.component.html',
   templateUrl: '../public/public-form.html',
-  styles: []
+  
 })
 export class HandlingGuideComponent extends PublicFormComponent implements OnInit {
   @ViewChild('treeCom') treeCom;
@@ -113,7 +113,7 @@ export class HandlingGuideComponent extends PublicFormComponent implements OnIni
     this.query_noticeRecords(this.params);
 
   }
-
+  nzPlaceHolder=['发布开始时间','发布结束时间']
   /**
    * 回车
    */

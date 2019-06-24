@@ -75,6 +75,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/moment-timezone": "^0.5.9",
     "@types/node": "~8.9.4",
+    "babel-polyfill": "^6.26.0",
     "codelyzer": "~4.3.0",
     "editorconfig-tools": "^0.1.1",
     "husky": "^0.14.3",

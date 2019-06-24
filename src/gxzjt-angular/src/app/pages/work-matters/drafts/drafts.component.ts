@@ -23,7 +23,7 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 @Component({
   selector: 'app-drafts',
   templateUrl: './drafts.component.html',
-  styles: []
+  
 })
 export class DraftsComponent extends PublicFormComponent implements OnInit {
 

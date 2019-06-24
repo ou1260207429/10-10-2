@@ -16,7 +16,7 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 @Component({
   selector: 'app-add-fire-acceptance',
   templateUrl: './add-fire-acceptance.component.html',
-  styles: []
+  
 })
 export class AddFireAcceptanceComponent implements OnInit {
   showError = {
@@ -233,7 +233,11 @@ export class AddFireAcceptanceComponent implements OnInit {
   }
   save() {
 
+<<<<<<< HEAD
     console.log(this.form)
+=======
+    // console.log(this.form)
+>>>>>>> 4192664e5026227998e878c5ea1b32d736b976f9
     // for (const i in this.form.controls) {
     //   this.form.controls[i].markAsDirty();
     //   this.form.controls[i].updateValueAndValidity();
@@ -246,7 +250,11 @@ export class AddFireAcceptanceComponent implements OnInit {
     // }
 
     // if (!this.showError.projectCategoryId && this.form.valid) {
+<<<<<<< HEAD
 
+=======
+    if (!this.showError.projectCategoryId) {
+>>>>>>> 4192664e5026227998e878c5ea1b32d736b976f9
       const from: GXZJT_From = {
         frow_TemplateInfo_Data: {
           Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length - 1]
@@ -308,6 +316,13 @@ export class AddFireAcceptanceComponent implements OnInit {
       // }
     }
   // }
+
+  /**
+  * 获取子组件发送的数据
+  */
+  outer(e) {
+    this.form = e;
+  }
 
 }
 

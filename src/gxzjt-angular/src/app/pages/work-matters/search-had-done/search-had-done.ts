@@ -23,7 +23,6 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 @Component({
   selector: 'search-had-done',
   templateUrl: 'search-had-done.html',
-  styles: [],
 })
 export class SearchHadDoneComponent extends PublicFormComponent implements OnInit {
   index;
@@ -117,7 +116,19 @@ export class SearchHadDoneComponent extends PublicFormComponent implements OnIni
     this.searchParam.pagedAndFilteredInputDto.page = 1;
     this.getList();
   }
-
+  reststart() {
+    this.resetTime();
+    this.searchParam.pagedAndFilteredInputDto = new PagedAndFilteredInputDto();
+    this.searchParam.pagedAndFilteredInputDto.page = 1;
+    this.searchParam.pagedAndFilteredInputDto.maxResultCount = 10;
+    this.searchParam.number = '';
+    this.searchParam.projectName = '';
+    this.searchParam.companyName = '';
+    this.searchParam.projectTypeStatu = null;
+    this.searchParam.applyTimeStart = this.rangeTime[0];
+    this.searchParam.applyTimeEnd = this.rangeTime[1];
+    this.getList();
+  }
 
   watchItem(item) {
     this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.flowId}/${item.flowPathType}/0`]);
@@ -141,6 +152,10 @@ export class SearchHadDoneComponent extends PublicFormComponent implements OnIni
 
   }
 
-
+  resetTime() {
+    var startTime = new Date();
+    startTime.setDate(startTime.getDate() - 30)
+    this.rangeTime = [startTime, new Date()];
+}
 
 }
