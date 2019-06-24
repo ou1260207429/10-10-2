@@ -19,7 +19,7 @@
                 <router-link :to="'/laws-and-regulations/detail/'+item.id">
                   <div style="overflow: hidden">
                     <span class="title">{{item.title}}</span>
-                    <span class="time">{{item.creationTime}}</span>
+                    <span class="time">{{item.issueDate}}</span>
                   </div>
                   <div style="overflow: hidden;margin-top: 6px;">
                     <span style="float: right;font-size: 12px">————&nbsp;{{item.issueOrg}}</span>
@@ -51,7 +51,7 @@
                 <router-link :to="'/laws-and-regulations/detail/'+item.id">
                   <div style="overflow: hidden">
                     <span class="title">{{item.title}}</span>
-                    <span class="time">{{item.creationTime}}</span>
+                    <span class="time">{{item.issueDate}}</span>
                   </div>
                   <div style="overflow: hidden;margin-top: 6px;">
                     <span style="float: right;font-size: 12px">————&nbsp;{{item.issueOrg}}</span>
@@ -118,9 +118,14 @@ export default {
       app.post(laws.serach_lawsList, lawParams).then(req => {
         if (req.success) {
           req.result.data.forEach(element => {
-            element.creationTime = moment(element.creationTime).format(
-              "YYYY-MM-DD hh:mm:ss"
-            );
+            console.log(element.issueDate);
+            if (element.issueDate) {
+              element.issueDate = moment(element.issueDate).format(
+                "YYYY-MM-DD hh:mm:ss"
+              );
+            }
+
+            console.log(element.issueDate);
           });
           _this.lawsList = req.result.data;
 
@@ -139,7 +144,7 @@ export default {
       app.post(laws.serach_lawsList, fileParams).then(req => {
         if (req.success) {
           req.result.data.forEach(element => {
-            element.creationTime = moment(element.creationTime).format(
+            element.issueDate = moment(element.issueDate).format(
               "YYYY-MM-DD hh:mm:ss"
             );
           });
