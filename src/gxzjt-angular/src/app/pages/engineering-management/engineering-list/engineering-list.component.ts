@@ -41,13 +41,10 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
         {
           text: '查看',
           type: 'modal',
-          // modal: {
-          //   component: StatisticsProAppStaticDetailComponent,
-          //   paramsName: 'record',
-          // },
-          // click: (record: any, modal: any) => {
+          click: (record: any, modal: any) => {
 
-          // },
+            this.watchItem(record);
+          },
         },
         // {
         //   text: '受理凭证',
