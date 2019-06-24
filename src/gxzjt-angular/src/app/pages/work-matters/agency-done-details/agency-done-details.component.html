@@ -125,12 +125,6 @@
       </div>
     </form>
 
-<<<<<<< HEAD
-    <div class="textCenter" style="margin-bottom: 40px;" *ngIf="operationType == 0&&isLoginPerson">
-      <button nz-button nzType="primary" (click)="save(true)" [nzLoading]="butNzLoading">{{curNodeName=='业务承办人审核'?'合格':'通过'}}</button>
-      <button nz-button nzType="primary" (click)="save(false)" [nzLoading]="butNzLoading">{{curNodeName=='业务承办人审核'?'不合格':'不通过'}}</button>
-      <button nz-button nzType="primary" (click)="revoke()" *ngIf="curNodeName!='业务承办人审核'" [nzLoading]="butNzLoading">撤销</button>
-=======
     <div class="textCenter" style="margin-bottom: 40px;" *ngIf="operationType == 0">
       <button nz-button nzType="primary" (click)="save(true)"
         [nzLoading]="butNzLoading">{{curNodeName=='业务承办人审核'?'合格':'通过'}}</button>
@@ -138,7 +132,6 @@
         [nzLoading]="butNzLoading">{{curNodeName=='业务承办人审核'?'不合格':'不通过'}}</button>
       <button nz-button nzType="primary" (click)="revoke()" *ngIf="curNodeName!='业务承办人审核'"
         [nzLoading]="butNzLoading">撤销</button>
->>>>>>> 4192664e5026227998e878c5ea1b32d736b976f9
     </div>
   </div>
   <div [ngClass]="{hide: selectedIndex != 1}">
