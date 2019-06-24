@@ -30,6 +30,11 @@ import { NzMessageService } from 'ng-zorro-antd';
 export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   index;
 
+  signForDto = new SignForDto();
+  examineFormDto = new ExamineFormDto();
+  workFlowData;
+  isVisibleSelectModal:boolean=false;
+  isSelectModalOkLoading=false;
 
   formResultData
 
@@ -78,11 +83,6 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
   //类型
   flowPathTypeEnum = FlowPathTypeEnum
-
-  signForDto = new SignForDto();
-  examineFormDto = new ExamineFormDto();
-  workFlowData;
-  isVisibleSelectModal=false;
 
   //时间
   rangeTime
