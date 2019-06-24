@@ -60,7 +60,7 @@
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程地址:</td>
           <td rowspan='1' colspan='17'>
-            <nz-cascader [nzPlaceHolder]="'请设置位置'" [nzSize]="'large'" [nzChangeOnSelect]="true" [nzShowSearch]="true"
+            <nz-cascader  [nzPlaceHolder]="'请设置位置'" [nzSize]="'large'" [nzChangeOnSelect]="true"
               [nzOptions]="position" (nzChange)="changeCitycountyAndDistrict($event)"
               [(ngModel)]="data.engineeringCitycountyAndDistrict" name="engineeringCitycountyAndDistrict" required>
             </nz-cascader>
@@ -555,6 +555,19 @@
           <nz-date-picker name="t2" [(ngModel)]="data.acceptanceOpinions.filingTime" name="filingTime"></nz-date-picker>
         </td>
       </tr>
+
+      <tr [ngClass]="{pointerf5f5f5: type == 1}">
+          <td colspan='1' rowspan="1" class="fontweight fontLeft leftTitle"
+            style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>工程简要说明</td>
+          <td rowspan='1' colspan='20' class="textLeft">
+            <se error="这是必填项">
+              <textarea nz-input placeholder="请输入工程简要说明" [(ngModel)]="data.engineerinDescription"
+                name="engineerinDescription" required>
+                    </textarea>
+            </se>
+  
+          </td>
+        </tr>
 
       <tr [ngClass]="{pointerf5f5f5: type == 1}">
         <td colspan='1' rowspan="1" class="fontweight fontLeft leftTitle"

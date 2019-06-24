@@ -57,7 +57,7 @@
           <td rowspan='1' colspan='14'>
             <se error="这是必填项" style="float: left;">
               <nz-cascader [nzLoadData]="position" [nzPlaceHolder]="'请设置工程地址'" [nzChangeOnSelect]="true"
-                [nzShowSearch]="true" [nzOptions]="position" (nzChange)="changeCitycountyAndDistrict($event)"
+               [nzOptions]="position" (nzChange)="changeCitycountyAndDistrict($event)"
                 [(ngModel)]="data.engineeringCitycountyAndDistrict" name="engineeringCitycountyAndDistrict" required>
               </nz-cascader>
             </se>

@@ -18,94 +18,101 @@
 
     <app-completed-acceptance-assembly [data]="formJson" type=1 *ngIf="formJson && flowPathType ==3">
     </app-completed-acceptance-assembly>
+
     <!-- 表单JSON -->
     <form nz-form #f="ngForm" se-container="1">
-      <table class="tables" style="box-sizing: border-box;" *ngIf="formDto">
 
-        <tr>
-          <td style="width: 37px;background-color: #ffedcc;color: #ff9c35;font-weight: 600;border-right: 0" rowspan='4'>
-            流程审批
-          </td>
-        </tr>
-        <tr style="text-align: left;">
-          <td colspan="20">
+      <div *ngIf="!type&& curNodeName!='大厅发放结果'&&curNodeName!='建设单位申报'">
+        <table class="tables" style="box-sizing: border-box;" *ngIf="formDto">
 
-            <div [ngSwitch]="flowPathType">
-              <div *ngSwitchCase="1">
-                <!-- 消防设计的受理凭证 -->
-                <app-fire-design-declare-assembly-handle [data]="formDto" *ngIf="this.curNodeName=='大厅受理'"
-                  [ngClass]="{pointerf5f5f5: curNodeName!='大厅受理'}">
-                </app-fire-design-declare-assembly-handle>
-                <!-- 消防设计的受理凭证 -->
+          <tr>
+            <td style="width: 37px;background-color: #ffedcc;color: #ff9c35;font-weight: 600;border-right: 0"
+              rowspan='4'>
+              流程审批
+            </td>
+          </tr>
+          <tr style="text-align: left;">
+            <td colspan="20">
 
-                <!-- 消防设计的意见书 -->
-                <app-fire-design-declare-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto" type="1"
-                  *ngIf="this.curNodeName=='业务承办人审核'" [ngClass]="{pointerf5f5f5: curNodeName!='业务承办人审核'}">
-                </app-fire-design-declare-assembly-handle>
-                <!-- 消防设计的意见书 -->
+              <div [ngSwitch]="flowPathType">
+                <div *ngSwitchCase="1">
+                  <!-- 消防设计的受理凭证 -->
+                  <app-fire-design-declare-assembly-handle [data]="formDto" *ngIf="this.curNodeName=='大厅受理'"
+                    [ngClass]="{pointerf5f5f5: curNodeName!='大厅受理'}">
+                  </app-fire-design-declare-assembly-handle>
+                  <!-- 消防设计的受理凭证 -->
 
-                <!-- 消防设计的意见书2 -->
-                <app-fire-design-declare-assembly-handle [examineFormDto]="examineFormDto"  [data]="formDto" type="2" *ngIf="this.curNodeName=='业务审批负责人审批'"
-                  [ngClass]="{pointerf5f5f5: curNodeName!='业务审批负责人审批'}">
-                </app-fire-design-declare-assembly-handle>
-                <!-- 消防设计的意见书 -->
+                  <!-- 消防设计的意见书 -->
+                  <app-fire-design-declare-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto" type="1"
+                    *ngIf="this.curNodeName=='业务承办人审核'" [ngClass]="{pointerf5f5f5: curNodeName!='业务承办人审核'}">
+                  </app-fire-design-declare-assembly-handle>
+                  <!-- 消防设计的意见书 -->
 
+                  <!-- 消防设计的意见书2 -->
+                  <app-fire-design-declare-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto" type="2"
+                    *ngIf="this.curNodeName=='业务审批负责人审批'" [ngClass]="{pointerf5f5f5: curNodeName!='业务审批负责人审批'}">
+                  </app-fire-design-declare-assembly-handle>
+                  <!-- 消防设计的意见书 -->
+
+                </div>
+                <div *ngSwitchCase="2">
+
+                  <!-- 消防验收的受理凭证 -->
+                  <app-fire-acceptance-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto"
+                    *ngIf="this.curNodeName=='大厅受理'" [ngClass]="{pointerf5f5f5: curNodeName!='大厅受理'}">
+                  </app-fire-acceptance-assembly-handle>
+                  <!-- 消防验收的受理凭证 -->
+
+                  <!-- 消防验收的意见书 -->
+                  <app-fire-acceptance-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto"
+                    *ngIf="this.curNodeName=='业务承办人审核'" type="1" [ngClass]="{pointerf5f5f5: curNodeName!='业务承办人审核'}">
+                  </app-fire-acceptance-assembly-handle>
+                  <!-- 消防验收的意见书 -->
+
+                  <!-- 消防验收的意见书 -->
+                  <app-fire-acceptance-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto"
+                    *ngIf="this.curNodeName=='业务审批负责人审批'" type="2"
+                    [ngClass]="{pointerf5f5f5: curNodeName!='业务审批负责人审批'}">
+                  </app-fire-acceptance-assembly-handle>
+                  <!-- 消防验收的意见书 -->
+
+                </div>
+                <div *ngSwitchCase="3">
+                  <!-- 竣工备案的抽中或者未抽中 -->
+                  <app-completed-acceptance-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto"
+                    type="{{formDto.isSelect==true?'3':'4'}}" *ngIf="this.curNodeName=='大厅受理'">
+                  </app-completed-acceptance-assembly-handle>
+                  <!-- 竣工备案的抽中或者未抽中 -->
+
+                  <!-- 竣工备案的抽中或者未抽中 -->
+                  <app-completed-acceptance-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto" type="5"
+                    *ngIf="this.curNodeName=='业务承办人审核'">
+                  </app-completed-acceptance-assembly-handle>
+                  <!-- 竣工备案的抽中或者未抽中 -->
+
+                  <!-- 竣工备案的抽中或者未抽中 -->
+                  <app-completed-acceptance-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto" type="7"
+                    *ngIf="this.curNodeName=='业务审批负责人审批'">
+                  </app-completed-acceptance-assembly-handle>
+                  <!-- 竣工备案的抽中或者未抽中 -->
+                </div>
               </div>
-              <div *ngSwitchCase="2">
-
-                <!-- 消防验收的受理凭证 -->
-                <app-fire-acceptance-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto"
-                  *ngIf="this.curNodeName=='大厅受理'" [ngClass]="{pointerf5f5f5: curNodeName!='大厅受理'}">
-                </app-fire-acceptance-assembly-handle>
-                <!-- 消防验收的受理凭证 -->
-
-                <!-- 消防验收的意见书 -->
-                <app-fire-acceptance-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto"
-                  *ngIf="this.curNodeName=='业务承办人审核'" type="1" [ngClass]="{pointerf5f5f5: curNodeName!='业务承办人审核'}">
-                </app-fire-acceptance-assembly-handle>
-                <!-- 消防验收的意见书 -->
-
-                <!-- 消防验收的意见书 -->
-                <app-fire-acceptance-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto"
-                  *ngIf="this.curNodeName=='业务审批负责人审批'" type="2" [ngClass]="{pointerf5f5f5: curNodeName!='业务审批负责人审批'}">
-                </app-fire-acceptance-assembly-handle>
-                <!-- 消防验收的意见书 -->
-
-              </div>
-              <div *ngSwitchCase="3">
-                <!-- 竣工备案的抽中或者未抽中 -->
-                <app-completed-acceptance-assembly-handle [examineFormDto]="examineFormDto"  [data]="formDto" type="{{formDto.isSelect==true?'3':'4'}}"
-                  *ngIf="this.curNodeName=='大厅受理'">
-                </app-completed-acceptance-assembly-handle>
-                <!-- 竣工备案的抽中或者未抽中 -->
-
-                <!-- 竣工备案的抽中或者未抽中 -->
-                <app-completed-acceptance-assembly-handle [examineFormDto]="examineFormDto"  [data]="formDto" type="5" *ngIf="this.curNodeName=='业务承办人审核'">
-                </app-completed-acceptance-assembly-handle>
-                <!-- 竣工备案的抽中或者未抽中 -->
-
-                <!-- 竣工备案的抽中或者未抽中 -->
-                <app-completed-acceptance-assembly-handle [examineFormDto]="examineFormDto"  [data]="formDto" type="7"
-                  *ngIf="this.curNodeName=='业务审批负责人审批'">
-                </app-completed-acceptance-assembly-handle>
-                <!-- 竣工备案的抽中或者未抽中 -->
-              </div>
-            </div>
 
 
 
 
 
-          </td>
-        </tr>
+            </td>
+          </tr>
 
-      </table>
+        </table>
+      </div>
     </form>
 
     <div class="textCenter" style="margin-bottom: 40px;" *ngIf="operationType == 0">
-      <button nz-button nzType="primary" (click)="save(true)">{{curNodeName=='业务承办人审核'?'合格':'通过'}}</button>
-      <button nz-button nzType="primary" (click)="save(false)">{{curNodeName=='业务承办人审核'?'不合格':'不通过'}}</button>
-      <button nz-button nzType="primary" (click)="revoke()" *ngIf="curNodeName!='业务承办人审核'">撤销</button>
+      <button nz-button nzType="primary" (click)="save(true)" [nzLoading]="butNzLoading">{{curNodeName=='业务承办人审核'?'合格':'通过'}}</button>
+      <button nz-button nzType="primary" (click)="save(false)" [nzLoading]="butNzLoading">{{curNodeName=='业务承办人审核'?'不合格':'不通过'}}</button>
+      <button nz-button nzType="primary" (click)="revoke()" *ngIf="curNodeName!='业务承办人审核'" [nzLoading]="butNzLoading">撤销</button>
     </div>
   </div>
   <div [ngClass]="{hide: selectedIndex != 1}">
