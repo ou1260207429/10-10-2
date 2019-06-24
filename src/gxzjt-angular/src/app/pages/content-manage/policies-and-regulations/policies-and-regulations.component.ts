@@ -32,6 +32,7 @@ export class PoliciesAndRegulationsComponent extends PublicFormComponent impleme
     startTime: "",
     endTime: "",
   };
+  nzPlaceHolder = ['发布开始时间', '发布结束时间']
 
   columns: STColumn[] = [
     // { title: '法规编号', index: 'regulationCode' },

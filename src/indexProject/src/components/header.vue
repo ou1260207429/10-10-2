@@ -36,7 +36,7 @@
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item>建设大厅</el-breadcrumb-item>
           <template v-for="(item,index) in currentPath">
-            <el-breadcrumb-item :key="index">{{item}}</el-breadcrumb-item>
+            <el-breadcrumb-item class="breadcrumb" :key="index">{{item}}</el-breadcrumb-item>
           </template>
         </el-breadcrumb>
       </div>

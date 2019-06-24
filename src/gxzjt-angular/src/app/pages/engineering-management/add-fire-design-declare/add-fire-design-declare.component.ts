@@ -11,6 +11,7 @@ import { SSL_OP_ALL } from 'constants';
 import { PublicFormComponent } from '../public/public-form.component'
 import { PANGBO_SERVICES_URL } from 'infrastructure/expression';
 import { AppSessionService } from '@shared/session/app-session.service';
+import { EventEmiter } from 'infrastructure/eventEmiter';
 
 /**
  * 工程管理->消防设计审查管理->新增申报
@@ -481,7 +482,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
 
     },
 
-    engineerinDescription:'',
+    engineerinDescription: '',
 
     fileList: [
       {
@@ -527,12 +528,12 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
         ]
       },
     ]
-
   }
 
+  butNzLoading: boolean = false;
   //子组件的表单对象
   form: FormGroup
-  constructor(private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
+  constructor(private _eventEmiter: EventEmiter,private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     super();
     this.flowFormQueryDto.flowType = 1;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
@@ -598,11 +599,11 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
       this.showError.specialEngineering = false;
     }
     if (!this.showError.fireFightingFacilities && !this.showError.projectCategoryId && !this.showError.specialEngineering && this.form.valid) {
-      console.log(this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length-1])
+      this.butNzLoading = true;
       const from: GXZJT_From = {
         frow_TemplateInfo_Data: {
           //市县区  
-          Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length-1]
+          Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length - 1]
         },
         //'xfsj,''xfys,'jgys  流程分类  英文简写(消防设计,消防验收,竣工验收)
         identify: 'xfsj',
@@ -634,9 +635,9 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
 
         flowDataDto.projectFlowInfo.workFlow_Instance_Id = data.result.workFlow_Instance_Id
         flowDataDto.projectFlowInfo.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
- 
+
         flowDataDto.handleUserList = [];
-        data.result.auditorRecords.forEach(element => { 
+        data.result.auditorRecords.forEach(element => {
           const flowNodeUser = new FlowNodeUser()
           flowNodeUser.userFlowId = element.id
           flowNodeUser.userName = element.applyEName
@@ -651,11 +652,11 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
 
         //待审人数组 等后台改模型
         // currentHandleUserCode: string | undefined; 
-
-        console.log(this.data);
-        console.log(flowDataDto);
+ 
         this._applyService.investigate(flowDataDto).subscribe(data => {
+          this.butNzLoading = false;
           this.message.success('提交成功')
+          this._eventEmiter.emit('fireDesignComponentInit', []);
           history.go(-1)
         })
       })
@@ -670,16 +671,17 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
    * 存草稿
    */
   depositDraft() {
+    this.butNzLoading = true;
     this.data.planStartTime = this.data.planStartTime == '' ? '' : timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
     this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 1;
-    this.flowFormDto.projectTypeStatu = 0;
-    console.log(this.data) 
+    this.flowFormDto.projectTypeStatu = 0;  
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')
       history.go(-1)
+      this.butNzLoading = false;
     })
   }
 

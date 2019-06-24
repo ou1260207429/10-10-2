@@ -16,6 +16,7 @@ import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure
 import * as moment from 'moment';
 import { PublicFormComponent } from '../public/public-form.component';
 import { NzMessageService } from 'ng-zorro-antd';
+import { EventEmiter } from 'infrastructure/eventEmiter';
 
 /**
  * 竣工验收
@@ -119,7 +120,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   rangeTime = [];
   constructor(private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
     private _flowServices: FlowServices,
-
+    private _eventEmiter: EventEmiter,
     private router: Router,
     private http: _HttpClient,
     private xlsx: XlsxService, private message: NzMessageService) {
@@ -131,13 +132,17 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.searchParam.orgType=1;
     this.resetTime();
     this.init()
+    const _slef = this;
+    this._eventEmiter.on('completedAcceptanceComponentInit',()=>{
+      _slef.init();
+    });
   }
 
   init() {
     this.searchParam.page = 1;
     this.searchParam.maxResultCount = 10;
     this.searchParam.flowPathType = 3
-    this.searchParam.sorting = 'ProjectName';
+    this.searchParam.sorting = 'projectId desc';
     this.searchParam.startApplyTime = moment(this.rangeTime[0]);
     this.searchParam.endApplyTime =moment(this.rangeTime[1]);
     this.resetTime();
@@ -149,7 +154,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.searchParam.page = 1;
     this.searchParam.maxResultCount = 10;
     this.searchParam.flowPathType = 3
-    this.searchParam.sorting = 'ProjectName';
+    this.searchParam.sorting = 'projectId desc';
     this.searchParam.startApplyTime = moment(this.rangeTime[0]);
     this.searchParam.endApplyTime =moment(this.rangeTime[1]);
     this.resetTime();

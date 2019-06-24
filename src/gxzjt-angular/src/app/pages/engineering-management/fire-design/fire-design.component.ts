@@ -20,6 +20,7 @@ import { PublicFormComponent } from '../public/public-form.component';
 import { FormBuilder } from '@angular/forms';
 import * as moment from 'moment';
 import { NzMessageService } from 'ng-zorro-antd';
+import { EventEmiter } from 'infrastructure/eventEmiter';
 
 
 /**
@@ -116,6 +117,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
     private modal: ModalHelper,
     private router: Router,
+    private _eventEmiter: EventEmiter,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
     private formBuilder: FormBuilder,
     private xlsx: XlsxService, private message: NzMessageService) {
@@ -126,7 +128,10 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     this.param.orgType=1;
     this.resetTime();
     this.init();
-
+    const _slef = this;
+    this._eventEmiter.on('fireDesignComponentInit',()=>{
+      _slef.init();
+    });
   }
 
 
@@ -134,7 +139,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     this.param.page = 1;
     this.param.maxResultCount = 10;
     this.param.flowPathType = 1
-    this.param.sorting = 'ProjectName';
+    this.param.sorting = 'projectId desc';
     this.resetTime();
     this.param.startApplyTime = moment(this.rangeTime[0]);
     this.param.endApplyTime =moment(this.rangeTime[1]);
@@ -146,7 +151,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     this.param.page = 1;
     this.param.maxResultCount = 10;
     this.param.flowPathType = 1
-    this.param.sorting = 'ProjectName';
+    this.param.sorting = 'projectId desc';
     this.resetTime();
     this.param.startApplyTime = moment(this.rangeTime[0]);
     this.param.endApplyTime =moment(this.rangeTime[1]);
