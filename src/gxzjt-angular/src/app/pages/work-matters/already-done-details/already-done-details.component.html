@@ -20,11 +20,28 @@
     </app-completed-acceptance-assembly>
 
 
-
+    <table class="tables" style="box-sizing: border-box;" *ngIf="formDto">
+        <tr>
+          <td rowspan='20'>
+  
+            <div *ngIf="examineFormDto">
+              <div *ngFor="let item of examineFormDto.flowNodeItems" style="text-align: left;font-size: 15px;line-height: 40px;">
+                <div *ngIf="item.isDisplayFile">
+                  <i nz-icon type="link" nzTheme="outline" style="margin-right: 10px;"></i><a
+                    [href]="item.fileUrl">{{item.fileName}}</a>
+                </div>
+                <div *ngIf="!item.isDisplayFile">
+                  {{item.opinion}}
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
     <!-- 表单JSON -->
     <form nz-form #f="ngForm" se-container="1">
       <table class="tables" style="box-sizing: border-box;" *ngIf="formDto">
-
+      
         <tr>
           <td style="width: 37px;background-color: #ffedcc;color: #ff9c35;font-weight: 600;border-right: 0" rowspan='4'>
             流程审批
@@ -35,10 +52,11 @@
 
 
             <div [ngSwitch]="flowPathType">
-              <div *ngSwitchCase="1">
 
+
+              <div *ngSwitchCase="1">
                 <!-- 消防设计的意见书2 -->
-                <app-fire-design-declare-assembly-handle [examineFormDto]="examineFormDto"  [data]="formDto" type="2">
+                <app-fire-design-declare-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto" type="2">
                 </app-fire-design-declare-assembly-handle>
                 <!-- 消防设计的意见书 -->
               </div>
@@ -50,7 +68,7 @@
               </div>
               <div *ngSwitchCase="3">
                 <!-- 竣工备案的抽中或者未抽中 -->
-                <app-completed-acceptance-assembly-handle [examineFormDto]="examineFormDto"  [data]="formDto" type="7"
+                <app-completed-acceptance-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto" type="7"
                   *ngIf="this.curNodeName=='业务审批负责人审批'">
                 </app-completed-acceptance-assembly-handle>
                 <!-- 竣工备案的抽中或者未抽中 -->
