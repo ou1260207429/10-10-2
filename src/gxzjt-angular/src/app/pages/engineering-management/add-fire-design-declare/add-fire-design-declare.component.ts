@@ -481,6 +481,8 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
 
     },
 
+    engineerinDescription:'',
+
     fileList: [
       {
         //建设工程消防设计审查申报表（纸质申报表的图片）

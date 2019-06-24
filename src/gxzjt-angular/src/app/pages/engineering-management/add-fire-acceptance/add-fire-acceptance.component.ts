@@ -144,6 +144,7 @@ export class AddFireAcceptanceComponent implements OnInit {
       opinion: '竣工验收情况我单位于XXXX年XX月XX日组织设计、施工、监理、检测等单位有关工程技术人员对该工程进行消防验收，对建筑消防设施功能进行检测，综合评定消防验收合格 。'
     },
     remarks: '',
+    engineerinDescription:'',
     fileList: [
       {
         //设工程消防验收申报表（纸质申报表的图片）

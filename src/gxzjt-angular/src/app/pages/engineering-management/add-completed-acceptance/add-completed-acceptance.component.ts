@@ -346,6 +346,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       filingTime: '',
       luckNo: '',
     },
+    engineerinDescription:'',
     fileList: [
       {
         //设工程消防验收申报表（纸质申报表的图片）
