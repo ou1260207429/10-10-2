@@ -261,7 +261,7 @@
           </td>
         </tr>
         <tr [ngClass]="{pointerf5f5f5: type == 1}" style="border-top: 1px solid #e2e2e2;">
-          <td colspan='5' rowspan="2" class="fontweight">单位建筑名称</td>
+          <td colspan='5' rowspan="2" class="fontweight">单体建筑名称</td>
           <td colspan='2' rowspan="2" class="fontweight">结构类型</td>
           <td colspan='1' rowspan="2" class="fontweight">耐火等级</td>
           <td colspan='2' rowspan="1" class="fontweight">层数</td>
@@ -279,7 +279,7 @@
         </tr>
 
         <tr [ngClass]="{pointerf5f5f5: type == 1}" *ngFor="let item of data.basicInformation;let index = index">
-          <!-- 请输入单位建筑名称 -->
+          <!-- 请输入单体建筑名称 -->
           <td colspan="5">
             <se error="这是必填项">
               <input nz-input [(ngModel)]="item.name" name="jbname{{index}}" required />
