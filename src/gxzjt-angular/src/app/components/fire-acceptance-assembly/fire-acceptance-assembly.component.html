@@ -24,8 +24,8 @@
           </td>
           <td rowspan='1' colspan='2' class="fontweight fontLeft" required=true>联系电话:</td>
           <td rowspan='1' colspan='3'>
-            <se error="这是必填项">
-              <input nz-input placeholder="请输入法定代表人/主要负责人联系电话" [(ngModel)]="data.legalRepresentativeNo"
+            <se error="请输入正确的电话号码">
+              <input nz-input placeholder="请输入法定代表人/主要负责人联系电话" [(ngModel)]="data.legalRepresentativeNo"  pattern="^\d{11}$"
                 name="legalRepresentativeNo" required />
             </se>
           </td>
@@ -46,8 +46,9 @@
           </td>
           <td rowspan='1' colspan='2' class="fontweight fontLeft" required=true>联系电话:</td>
           <td rowspan='1' colspan='3'>
-            <se error="这是必填项">
-              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.contactsNumber" name="contactsNumber" required />
+             
+            <se error="请输入正确的电话号码">
+              <input nz-input placeholder="请输入联系电话" pattern="^\d{11}$" [(ngModel)]="data.contactsNumber" name="contactsNumber" required />
             </se>
           </td>
         </tr>
@@ -158,7 +159,8 @@
             </se>
           </td>
           <td rowspan='1'>
-            <se error="这是必填项"><input nz-input placeholder="请输入联系电话" [(ngModel)]="item.contactsNumber"
+             
+            <se error="请输入正确的电话号码"><input nz-input placeholder="请输入联系电话" [(ngModel)]="item.contactsNumber" pattern="^\d{11}$"
                 name="designContactsNumber{{a}}" required />
             </se>
           </td>
@@ -192,8 +194,8 @@
             </se>
           </td>
           <td rowspan='1'>
-            <se error="这是必填项">
-              <input nz-input placeholder="请输入联系电话" [(ngModel)]="item.contactsNumber"
+            <se error="请输入正确的电话号码">
+              <input nz-input placeholder="请输入联系电话" [(ngModel)]="item.contactsNumber" pattern="^\d{11}$"
                 name="constructionContactsNumber{{a}}" required />
             </se>
           </td>
@@ -214,8 +216,14 @@
               name="constructionControlLegalRepresentative" /></td>
           <td rowspan='1'><input nz-input placeholder="请输入联系人" [(ngModel)]="data.constructionControlUnit.designContacts"
               name="constructionControlUnitDesignContacts" /></td>
-          <td rowspan='1'><input nz-input placeholder="请输入联系电话"
-              [(ngModel)]="data.constructionControlUnit.contactsNumber" name="constructionControlUnitContactsNumber" />
+          <td rowspan='1'>
+            
+              <se error="请输入正确的电话号码">
+                  <input nz-input placeholder="请输入联系电话"
+                  [(ngModel)]="data.constructionControlUnit.contactsNumber" name="constructionControlUnitContactsNumber" pattern="^\d{11}$" />
+                </se>
+            
+           
           </td>
           <td rowspan='1'>无</td>
         </tr>
@@ -247,8 +255,8 @@
             </se>
           </td>
           <td rowspan='1'>
-            <se error="这是必填项">
-              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.detectionUnit.contactsNumber"
+            <se error="请输入正确的电话号码">
+              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.detectionUnit.contactsNumber"  pattern="^\d{11}$"
                 name="detectionUnitContactsNumber" required />
             </se>
           </td>
