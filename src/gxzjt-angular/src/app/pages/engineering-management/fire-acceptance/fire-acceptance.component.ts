@@ -44,18 +44,19 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
             this.watchItem(record);
           },
         },
-        // {
-        //   text: '复查申请',
-        //   type: 'modal',
-        //   iif: record => record.status  === 3,//当状态是3即为不合格的时候显示此按钮，若需要方便调试可自己更改status的值改变按钮显示
-        //   click: (record: any, modal: any) => {
+        {
+          text: '复查申请',
+          type: 'modal',
+          iif: record => (record.status  === 3 && (record.parentFlowId==null || record.parentFlowId==0)),//当状态是3即为不合格的时候显示此按钮，若需要方便调试可自己更改status的值改变按钮显示
+          click: (record: any, modal: any) => {
 
-        //     this.toreapply(record);
-        //   },
-        // },
+            this.toreapply(record);
+          },
+        },
         {
           text: '受理凭证',
           type: 'link',
+          iif: record => record.acceptAttachmentUrl!=null,
           // modal: {
           //   component: StatisticsAcceptCredentialsComponent,
           //   paramsName: 'record',
@@ -64,23 +65,23 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
             if(record.acceptAttachmentUrl){
               window.open(record.acceptAttachmentUrl)
             }else{
-              this.message.error('暂无受理凭证');
+              this.message.info('暂无受理凭证');
             }
           },
         },
         {
           text: '意见书',
           type: 'link',
+          iif: record => record.opinionAttachmentUrl!=null,
           // modal: {
           //   component: StatisticsPositionPaperComponent,
           //   paramsName: 'record',
           // },
           click: (record: any, modal: any) => {
-
             if(record.opinionAttachmentUrl){
               window.open(record.opinionAttachmentUrl)
             }else{
-              this.message.error('暂无意见书');
+              this.message.info('暂无意见书');
             }
           },
         },
@@ -144,7 +145,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
   }
   reststart(){
     this.searchParam.projectName='';
-    this.searchParam.status=0;
+    this.searchParam.status=-1;
     this.searchParam.page = 1;
     this.searchParam.maxResultCount = 10;
     this.searchParam.flowPathType = 2
@@ -180,8 +181,8 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
   watchItem(item) {
     this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`]);
   }
-  toreapply(item) {
-    this.router.navigate([`/app/work-matters/review-apply/1/1`]);
+  toreapply(item) {console.log(item);
+    this.router.navigate([`/app/work-matters/review-apply/${item.id}/2`]);
   }
 
   change(v) {
@@ -206,7 +207,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
 
   resetTime() {
     var startTime = new Date();
-    startTime.setDate(startTime.getDate() - 1)
+    startTime.setDate(startTime.getDate() - 30)
     this.rangeTime = [startTime, new Date()];
   }
 }

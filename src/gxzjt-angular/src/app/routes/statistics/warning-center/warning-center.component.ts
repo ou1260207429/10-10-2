@@ -174,7 +174,7 @@ export class StatisticsWarningCenterComponent implements OnInit {
         "page": 1,
         "sorting": "ProjectId",
         "skipCount": 0,
-        "maxResultCount": 1000
+        "maxResultCount": 3000
       });
       this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
       this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
@@ -190,7 +190,7 @@ export class StatisticsWarningCenterComponent implements OnInit {
   // }
   resetTime() {
     var startTime = new Date();
-    startTime.setDate(startTime.getDate() - 1)
+    startTime.setDate(startTime.getDate() - 30)
     this.rangeTime = [startTime, new Date()];
   }
 }
