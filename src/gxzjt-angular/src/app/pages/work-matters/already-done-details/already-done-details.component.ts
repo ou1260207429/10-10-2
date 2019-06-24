@@ -99,6 +99,8 @@ export class AlreadyDoneDetailsComponent implements OnInit {
       flowFormQueryDto.projectId = this.formDto.projectId;
       flowFormQueryDto.flowId = this.flowId
 
+      console.log(this.formDto)
+      console.log(this.examineFormDto)
       const workFlow: WorkFlow = {
         workFlow_InstanceId: this.formDto.workFlow_Instance_Id,
         workFlow_TemplateInfoId: 10171,
