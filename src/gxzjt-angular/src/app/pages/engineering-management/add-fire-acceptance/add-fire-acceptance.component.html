@@ -1,4 +1,4 @@
-<app-fire-acceptance-assembly [errorData]="showError" [data]="data" *ngIf="useNatureSelect"
+<app-fire-acceptance-assembly [errorData]="showError" [data]="data" *ngIf="useNatureSelect" (childOuter)="outer($event)"
   [useNatureSelect]="useNatureSelect">
 </app-fire-acceptance-assembly>
 <div class="textCenter" style="margin-bottom: 40px;">

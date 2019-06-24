@@ -45,7 +45,11 @@
    }"
                   >
                     <el-col :span="10" class="cardList">
-                      <img style="width:100%;" :src="allowImg[index]?allowImg[index]:allowImg[0]" alt>
+                      <img
+                        style="width:100%;"
+                        :src="allowImg[index]?allowImg[index]:allowImg[0]"
+                        alt
+                      >
                     </el-col>
                     <el-col :span="14" style=" position: relative;height:80px;">
                       <h4>{{item.title}}</h4>
@@ -74,7 +78,11 @@
    }"
                   >
                     <el-col :span="10" class="cardList">
-                      <img style="width:100%;" :src="recordImg[index]?recordImg[index]:recordImg[0]" alt>
+                      <img
+                        style="width:100%;"
+                        :src="recordImg[index]?recordImg[index]:recordImg[0]"
+                        alt
+                      >
                     </el-col>
                     <el-col :span="14" style=" position: relative;height:80px;">
                       <h4>{{item.title}}</h4>
@@ -167,10 +175,11 @@ export default {
       let params = { noticeId: this.noticeId };
       // app.pageSize.noticeId = 6;
       app.post(handle.search_handleDetail, params, "", true).then(req => {
-        req.result.creationTime = moment(req.result.creationTime).format(
-          "YYYY-MM-DD"
-        );
-
+        if (req.result.creationTime) {
+          req.result.creationTime = moment(req.result.creationTime).format(
+            "YYYY-MM-DD"
+          );
+        }
         _this.data = req.result;
       });
     },
