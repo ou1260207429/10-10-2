@@ -9,7 +9,14 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 })
 export class UserrightUserlistComponent implements OnInit {
   hiddenFliter = false;
+  resetForm(){
+
+  };
   fliterForm: FormGroup;
+  formResultData;
+
+
+
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
@@ -54,4 +61,9 @@ export class UserrightUserlistComponent implements OnInit {
   getList(){
 
   }
+
+  search(){
+    
+  }
+  
 }
