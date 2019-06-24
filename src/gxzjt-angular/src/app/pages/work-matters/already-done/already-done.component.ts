@@ -105,6 +105,7 @@ export class AlreadyDoneComponent
     this.searchParam.number='';
     this.searchParam.projectName='';
     this.searchParam.companyName='';
+    this.searchParam.pagedAndFilteredInputDto.sorting = 'projectId desc'
     this.searchParam.projectTypeStatu=null;
     this.getList();
   }

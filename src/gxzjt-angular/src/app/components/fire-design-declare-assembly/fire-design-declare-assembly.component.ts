@@ -51,8 +51,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     this.childOuter.emit(this.f);
 
     this.getAreaDropdown();
-
-    console.log(this.errorData);
+    console.log(this.data)
   }
 
 

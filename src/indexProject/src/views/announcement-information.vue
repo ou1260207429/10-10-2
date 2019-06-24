@@ -258,7 +258,7 @@ export default {
      * 查询表格数据
      */
     initTable() {
-      if (this.dateTime) {
+      if (this.dateTime && this.dateTime.length > 0) {
         this.searchForm.startTime = moment(this.dateTime[0]).format(
           "YYYY-MM-DD 00:00:00"
         );
@@ -269,7 +269,6 @@ export default {
         this.searchForm.endTime = "";
         this.searchForm.startTime = "";
       }
-
       let _this = this;
       let params = Object.assign(this.searchForm, this.pageSize);
       _this.tableData = null;

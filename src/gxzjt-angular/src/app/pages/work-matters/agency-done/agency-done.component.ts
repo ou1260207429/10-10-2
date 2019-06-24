@@ -119,6 +119,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.searchParam.number = '';
     this.searchParam.projectName = '';
     this.searchParam.companyName = '';
+    this.searchParam.pagedAndFilteredInputDto.sorting = 'projectId desc'
     this.searchParam.projectTypeStatu = null;
     if (this.rangeTime != null) {
       this.searchParam.applyTimeStart = this.rangeTime[0];
