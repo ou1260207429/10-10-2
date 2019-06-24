@@ -141,9 +141,11 @@ export default {
       app.post(laws.serach_lawsList, fileParams).then(req => {
         if (req.success) {
           req.result.data.forEach(element => {
-            element.creationTime = moment(element.creationTime).format(
-              "YYYY-MM-DD hh:mm:ss"
-            );
+            if (element.creationTime) {
+              element.creationTime = moment(element.creationTime).format(
+                "YYYY-MM-DD hh:mm:ss"
+              );
+            }
           });
           _this.lawsFiles = req.result.data;
           _this.filetotalCount = req.result.totalCount;
