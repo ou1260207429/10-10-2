@@ -622,6 +622,18 @@
         </td>
       </tr>
       <tr [ngClass]="{pointerf5f5f5: type == 1}">
+          <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
+            style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>工程简要说明</td>
+          <td rowspan='1' colspan='17' class="textLeft">
+            <se error="这是必填项">
+              <textarea nz-input placeholder="请输入工程简要说明" [(ngModel)]="data.engineerinDescription"
+                name="engineerinDescription" required>
+                    </textarea>
+            </se>
+  
+          </td>
+        </tr>
+      <tr [ngClass]="{pointerf5f5f5: type == 1}">
         <td rowspan='1' colspan='20' class="textLeft">
           <div>其他需要说明的情况：</div>
           <div class="textRight" style="margin-top: 20px;">

@@ -18,7 +18,7 @@ export class PublicFormComponent {
 
     useSelect = false;
     isShowAdd = true;
-
+    nzPlaceHolder=[]
 
 
     //过滤菜单

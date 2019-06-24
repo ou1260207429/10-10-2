@@ -19,7 +19,7 @@
       style="margin-right: 10px;margin-top: 10px;width: 200px;">
 
 
-    <nz-range-picker [nzPlaceHolder]="['发布开始时间','发布结束时间']" [(ngModel)]="rangeTime" nzFormat="yyyy/MM/dd"
+    <nz-range-picker [nzPlaceHolder]="nzPlaceHolder" [(ngModel)]="rangeTime" nzFormat="yyyy/MM/dd"
       formControlName="date_range" l style="margin-right: 10px;margin-top: 10px;"></nz-range-picker>
 
     <button nz-button (click)="resetSearchFliterForm()" style="margin-right: 10px;margin-top: 10px;">重置</button>

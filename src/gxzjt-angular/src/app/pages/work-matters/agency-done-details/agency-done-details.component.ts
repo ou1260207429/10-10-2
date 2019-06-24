@@ -68,7 +68,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   workFlowData
 
-  tenantWorkFlowInstanceDto:any = {}
+  tenantWorkFlowInstanceDto: any = {}
 
   //当前节点的名称
   curNodeName
@@ -79,11 +79,11 @@ export class AgencyDoneDetailsComponent implements OnInit {
   operationType
 
   //签收的对象
-  signForDto:SignForDto = new SignForDto()
+  signForDto: SignForDto = new SignForDto()
 
   //签收的列表
   signForDtoData
-
+  butNzLoading: boolean = false;
   constructor(private _eventEmiter: EventEmiter, private _examineService: ExamineServiceServiceProxy, private reuseTabService: ReuseTabService, private ModelHelp: ModalHelper, public appSession: AppSessionService, private message: NzMessageService, private _applyService: ApplyServiceServiceProxy, private _acceptServiceServiceProxy: AcceptServiceServiceProxy, private _flowServices: FlowServices, private _activatedRoute: ActivatedRoute, private _ActivatedRoute: ActivatedRoute, ) {
     this.flowNo = this._activatedRoute.snapshot.paramMap.get('flowNo')
     this.flowId = this._activatedRoute.snapshot.paramMap.get('flowId')
@@ -93,7 +93,6 @@ export class AgencyDoneDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.type = false
     this.init()
   }
 
@@ -104,30 +103,31 @@ export class AgencyDoneDetailsComponent implements OnInit {
       const flowFormQueryDto = new FlowFormQueryDto();
       flowFormQueryDto.flowType = this.flowPathType
       flowFormQueryDto.projectId = this.formDto.projectId;
-      flowFormQueryDto.flowId = this.flowId 
+      flowFormQueryDto.flowId = this.flowId
       const workFlow: WorkFlow = {
         workFlow_InstanceId: this.formDto.workFlow_Instance_Id,
         workFlow_TemplateInfoId: 10171,
         workFlow_NodeAuditorRecordId: this.formDto.flowNodeUserInfo.userFlowId,
       }
+
       //获取JSON和节点信息
       Promise.all([this.post_GetFlowFormData(flowFormQueryDto), this.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow)]).then((value: any) => {
         this.formJson = JSON.parse(value[0].formJson);
-        this.tenantWorkFlowInstanceDto = this.workFlowData = value[1].result; 
+        this.tenantWorkFlowInstanceDto = this.workFlowData = value[1].result;
         this.tenantWorkFlowInstanceDto.workFlow_InstanceId = this.formDto.workFlow_Instance_Id
 
         //获取当前节点 由这个判断提交的接口
         this.curNodeName = this.workFlowData.nodeViewInfo.curNodeName
         console.log(this.curNodeName);
         if (this.curNodeName != '大厅受理') {
-          this.getPrimaryExamine(() => {  
-            this.type = false  
+          this.getPrimaryExamine(() => {
+            this.type = false
           })
         } else {
           this.type = false
-        }
 
-       
+          console.log(this.type)
+        }
       })
 
     })
@@ -181,9 +181,9 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
       Area: this.formDto.area,
       IsChoose: num,
-      editWorkFlow_NodeAuditorRecordDto:{
-        deptId:'',
-        deptFullPath:''
+      editWorkFlow_NodeAuditorRecordDto: {
+        deptId: '',
+        deptFullPath: ''
       }
     }
     console.log(this.appSession.user.organizationsId);
@@ -245,7 +245,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
         });
 
         console.log(this.examineFormDto)
-        
+
 
         switch (this.curNodeName) {
           case '大厅受理':
@@ -278,7 +278,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
    */
   getPrimaryExamine(then?: Function) {
     this._examineService.getPrimaryExamine(this.flowId).subscribe(data => {
-      this.examineFormDto = data; 
+      this.examineFormDto = data;
       if (then) {
         then();
       }
@@ -288,17 +288,17 @@ export class AgencyDoneDetailsComponent implements OnInit {
   /**
    * 业务审批负责人审批提交的接口 -->执行人
    */
-  primaryExamine(examineFormDto: ExamineFormDto) { 
+  primaryExamine(examineFormDto: ExamineFormDto) {
     this._examineService.primaryExamine(examineFormDto).subscribe(data => {
       this.serveResult();
     })
   }
 
   //获取签收的列表详情
-  getReview(flowId,then?:Function){
-    this._applyService.getReview(flowId).subscribe(data=>{
+  getReview(flowId, then?: Function) {
+    this._applyService.getReview(flowId).subscribe(data => {
       this.signForDtoData = data
-      if(then)then()
+      if (then) then()
     })
   }
 
@@ -306,8 +306,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
    * 签收
    * @param examineFormDto 
    */
-  signForOpinionFile(){
-    this._examineService.signForOpinionFile(this.signForDto).subscribe(data=>{
+  signForOpinionFile() {
+    this._examineService.signForOpinionFile(this.signForDto).subscribe(data => {
       this.serveResult('签收成功')
     })
   }
@@ -332,7 +332,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
     })
   }
 
-  serveResult(name:string="提交成") {
+  serveResult(name: string = "提交成") {
+    this.butNzLoading = false
     this.message.success(name)
     history.go(-1)
     this._eventEmiter.emit('agencyDoneInit', []);
@@ -359,7 +360,9 @@ export class AgencyDoneDetailsComponent implements OnInit {
    * 撤销
    */
   revoke() {
+    this.butNzLoading = true
     this._flowServices.tenant_NodeToNextNodeByCancel(this.tenantWorkFlowInstanceDto).subscribe(data => {
+      this.butNzLoading = false
       this.message.success('撤销成功')
     })
   }

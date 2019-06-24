@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { GXZJT_From, FlowServices } from 'services/flow.services';
 import { FormGroup } from '@angular/forms';
 import { AppSessionService } from '@shared/session/app-session.service';
+import { EventEmiter } from 'infrastructure/eventEmiter';
 
 /**
  * 工程管理->消防验收->新增申报
@@ -144,6 +145,7 @@ export class AddFireAcceptanceComponent implements OnInit {
       opinion: '竣工验收情况我单位于XXXX年XX月XX日组织设计、施工、监理、检测等单位有关工程技术人员对该工程进行消防验收，对建筑消防设施功能进行检测，综合评定消防验收合格 。'
     },
     remarks: '',
+    engineerinDescription: '',
     fileList: [
       {
         //设工程消防验收申报表（纸质申报表的图片）
@@ -183,7 +185,9 @@ export class AddFireAcceptanceComponent implements OnInit {
 
   //使用性质
   useNatureSelect
-  constructor(private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
+
+  butNzLoading: boolean = false;
+  constructor(private _eventEmiter: EventEmiter, private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     this.flowFormQueryDto.flowType = 2;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
@@ -212,43 +216,33 @@ export class AddFireAcceptanceComponent implements OnInit {
    * 存草稿
    */
   depositDraft() {
+    this.butNzLoading = true;
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 2;
     this.flowFormDto.projectTypeStatu = 1;
     this.data.dateOfReview = this.data.dateOfReview == '' ? '' : timeTrans(Date.parse(this.data.dateOfReview) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
+      this.butNzLoading = false;
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')
       history.go(-1)
     })
   }
   save() {
-    const from: GXZJT_From = {
-      frow_TemplateInfo_Data: {
-        Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length - 1],
-      },
-      identify: 'xfsj',
-      editWorkFlow_NodeAuditorRecordDto: {
-        applyEID: this._appSessionService.user.id,
-        applyEName: this._appSessionService.user.eName,
-        deptId: this._appSessionService.user.organizationsId,
-        deptFullPath: this._appSessionService.user.organizationsName,
-      }
-    };
-    this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
-      console.log(this.form)
-      // for (const i in this.form.controls) {
-      //   this.form.controls[i].markAsDirty();
-      //   this.form.controls[i].updateValueAndValidity();
-      // }
 
-      // if (!this.data.projectCategoryId || this.data.projectCategoryId == '') {
-      //   this.showError.projectCategoryId = true;
-      // } else {
-      //   this.showError.projectCategoryId = false;
-      // }
+    console.log(this.form)
+    for (const i in this.form.controls) {
+      this.form.controls[i].markAsDirty();
+      this.form.controls[i].updateValueAndValidity();
+    }
 
-      // if (!this.showError.projectCategoryId && this.form.valid) {
+    if (!this.data.projectCategoryId || this.data.projectCategoryId == '') {
+      this.showError.projectCategoryId = true;
+    } else {
+      this.showError.projectCategoryId = false;
+    }
+
+    if (!this.showError.projectCategoryId && this.form.valid) {
 
       const from: GXZJT_From = {
         frow_TemplateInfo_Data: {
@@ -262,6 +256,7 @@ export class AddFireAcceptanceComponent implements OnInit {
           deptFullPath: this._appSessionService.user.organizationsName,
         }
       };
+      this.butNzLoading = true;
       this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
         const flowDataDto = new FlowDataDto();
@@ -297,12 +292,14 @@ export class AddFireAcceptanceComponent implements OnInit {
         // currentHandleUserCode: string | undefined; 
 
         this._applyService.acceptance(flowDataDto).subscribe(data => {
+          this.butNzLoading = false;
+          this._eventEmiter.emit('fireAcceptanceComponentInit', []);
           this.message.success('提交成功')
           history.go(-1)
         })
       })
       // }
-    })
+    }
   }
 
 }
