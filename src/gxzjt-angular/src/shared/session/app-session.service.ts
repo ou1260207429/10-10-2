@@ -3,7 +3,7 @@ import { AbpMultiTenancyService } from '@abp/multi-tenancy/abp-multi-tenancy.ser
 import { ACLService, DelonACLConfig } from '@delon/acl';
 import { MenuService } from '@delon/theme';
 import { AppConsts } from '@shared/AppConsts';
-
+import { TokenService } from '@abp/auth/token.service';
 import {
   LoginServiceProxy,
   // UserLoginInfoDto,
@@ -26,6 +26,7 @@ export class AppSessionService {
     private _abpMultiTenancyService: AbpMultiTenancyService,
     private _ACLService: ACLService,
     private _MenuService: MenuService,
+    private _TokenService: TokenService,
     private _DelonACLConfig: DelonACLConfig
   ) { }
 
@@ -59,58 +60,69 @@ export class AppSessionService {
 
   init(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      this._loginServiceProxy
-        .getCurrentLoginUserInfoByUserId()
-        .toPromise()
-        .then(
-          (result: UserCacheDto) => {
-            // this._application = new ApplicationInfoDto();
-            // this._application.version = "1.0.0";
-            // this._application.releaseDate = new Date();
-            this._user = result;
 
-            // result.roleName = '公众注册用户';
-
-            switch (result.roleName) {
-              case '系统管理员':
-                this._ACLService.setFull(true);
-                break
-              case '大厅':
-                this._ACLService.setRole(['sys']);
-                break
-              case '承办人':
-                this._ACLService.setRole(['sys']);
-                break
-              case '负责人':
-                this._ACLService.setRole(['sys']);
-                break
-              case '企业用户':
-                this._ACLService.setRole(['reg']);
-                // this._DelonACLConfig.guard_url = '#/app/engineering-management/engineeringListComponent';
-
-                break
-              default:
-                this._ACLService.setRole(['reg']);
-                // this._DelonACLConfig.guard_url = '#/app/engineering-management/engineeringListComponent';
-
-
-                break;
-            }
-            // this._ACLService.setFull(true);
-
-            this._MenuService.resume();
-
-            this._tenant = new TenantLoginInfoDto();
-
-            resolve(true);
-          },
+      if (this._TokenService.getToken()) {
+        this.initUserInfo().then(() => {
+          resolve(true);
+        }).catch(
           err => {
-            resolve(true);
-            location.href = AppConsts.appBaseUrl+'/#/account/login';
-            reject(err);
-          },
-        );
+            resolve(err);
+            location.href = AppConsts.appBaseUrl + '/#/account/login';
+            // reject(err);
+          });
+      } else {
+        resolve(true);
+        location.href = AppConsts.appBaseUrl + '/#/account/login';
+      }
+
     });
+  }
+
+  public initUserInfo() {
+    return this._loginServiceProxy
+      .getCurrentLoginUserInfoByUserId()
+      .toPromise()
+      .then(
+        (result: UserCacheDto) => {
+          // this._application = new ApplicationInfoDto();
+          // this._application.version = "1.0.0";
+          // this._application.releaseDate = new Date();
+          this._user = result;
+
+          switch (result.roleName) {
+            case '系统管理员':
+              this._ACLService.setFull(true);
+              break
+            case '大厅':
+              this._ACLService.setRole(['sys']);
+              break
+            case '承办人':
+              this._ACLService.setRole(['sys']);
+              break
+            case '负责人':
+              this._ACLService.setRole(['sys']);
+              break
+            case '企业用户':
+              this._ACLService.setRole(['reg']);
+              // this._DelonACLConfig.guard_url = '#/app/engineering-management/engineeringListComponent';
+
+              break
+            default:
+              this._ACLService.setRole(['reg']);
+              // this._DelonACLConfig.guard_url = '#/app/engineering-management/engineeringListComponent';
+
+
+              break;
+          }
+          // this._ACLService.setFull(true);
+
+          this._MenuService.resume();
+
+          this._tenant = new TenantLoginInfoDto();
+
+          // resolve(true);
+        }
+      );
   }
 
   changeTenantIfNeeded(tenantId?: number): boolean {
