@@ -42,7 +42,8 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
               url = record.projectTypeStatu == 1 ? `addFireAcceptanceComponent` : `addCompletedAcceptanceComponent`
             }
             const headerUrl = `/app/engineering-management/`
-            this.router.navigate([headerUrl + url + `/2/${record.projectId}`]);
+            console.log(headerUrl + url + `/2/${record.projectId}`);
+            this.router.navigate([headerUrl + url + `/2/${record.projectId}/null`]);
           }
         },
       ]

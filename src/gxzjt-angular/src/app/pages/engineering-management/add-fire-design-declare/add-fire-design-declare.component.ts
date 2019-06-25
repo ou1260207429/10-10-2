@@ -542,7 +542,6 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     this.flowFormQueryDto.flowType = 1;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
-    this.flowFormQueryDto.flowId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('flowId'));
     console.log(this.data)
 
   }
@@ -555,10 +554,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
    * 初始化数据
    */
   init() {
-    //if (this.type != 0) {
-      this.post_GetFlowFormData();
-    //}
-    // this.post_GetFlowFormData();
+    this.post_GetFlowFormData();
   }
 
   /**
@@ -566,7 +562,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
    */
   post_GetFlowFormData() {
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
-      if (data.formJson!=null && data.formJson!="") {
+      if (this.type != 0) {
         this.data = JSON.parse(data.formJson);
       }
       this.useNatureSelect = data.natures
@@ -629,8 +625,6 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
         const flowDataDto = new FlowDataDto();
         flowDataDto.formJson = JSON.stringify(this.data);
         flowDataDto.projectFlowInfo = new ProjectFlowDto();
-        flowDataDto.flowId=this.flowFormQueryDto.flowId;
-        flowDataDto.projectId=this.flowFormQueryDto.projectId;
 
 
         flowDataDto.projectFlowInfo.timeLimit = data.result.timeLimit

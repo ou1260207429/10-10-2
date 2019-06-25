@@ -451,6 +451,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   }
   save() {
 
+    debugger
     console.log(this.form.valid)
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
@@ -561,7 +562,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this.isVisibleSelectModal = false;
   }
 
-  showSelectModal() {
+  showSelectModal() { 
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();
       this.form.controls[i].updateValueAndValidity();
