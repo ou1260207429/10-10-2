@@ -165,5 +165,9 @@ export class PoliciesAndRegulationsComponent extends PublicFormComponent impleme
   add() {
     this.router.navigate([`/app/content-manage/policiesAndRegulationsDetailsComponent/1`, { operate: 0 }]);
   }
+  resetSearchFliterForm() {
+    this.fliterForm.reset();
+    this.query();
 
+  }
 }

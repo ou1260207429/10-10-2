@@ -19,7 +19,7 @@ export class UserServices {
      */
 
     queryStation(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/getpositionsByPageAsync", params
+        return this.http.post(PANGBO_SERVICES_URL + "api/Position/GetPositionsByPage", params
         );
     }
     /**
@@ -27,7 +27,7 @@ export class UserServices {
  */
 
     addStation(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/createPosition", params
+        return this.http.post(PANGBO_SERVICES_URL + "api/Position/CreatePosition", params
         );
     }
     /**
@@ -35,18 +35,24 @@ export class UserServices {
    */
 
     editStation(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/updatePosition", params
+        return this.http.post(PANGBO_SERVICES_URL + "api/Position/UpdatePosition", params
         );
     }
     /**
-      * 编辑岗位列表
+      * 删除岗位列表
       */
 
     deleteStation(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/deletePositionByIdsAsync", params
+        return this.http.post(PANGBO_SERVICES_URL + "api/Position/DeletePositionByIds", params
         );
     }
+    /**
+        * 获取岗位名称岗位列表
+        */
 
+    getStationName(): Observable<any> {
+        return this.http.get(PANGBO_SERVICES_URL + "api/Position/DropDownData", {});
+    }
 
 
     /** *  * 角色列表操作 * *  */
@@ -58,7 +64,7 @@ export class UserServices {
         */
 
     queryRoles(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/getRolesByPageAsync", params
+        return this.http.post(PANGBO_SERVICES_URL + "api/Role/GetRolesByPage", params
         );
     }
     /**
@@ -66,7 +72,7 @@ export class UserServices {
  */
 
     addRoles(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/createRoleAsync", params
+        return this.http.post(PANGBO_SERVICES_URL + "api/Role/CreateRole", params
         );
     }
     /**
@@ -74,7 +80,7 @@ export class UserServices {
    */
 
     editRoles(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/updateRoleAsync", params
+        return this.http.post(PANGBO_SERVICES_URL + "api/Role/UpdateRole", params
         );
     }
     /**
@@ -82,11 +88,17 @@ export class UserServices {
       */
 
     deleteRoles(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/deleteRoleByIdsAsync", params
+        return this.http.post(PANGBO_SERVICES_URL + "api/Role/DeleteRoleByIds", params
         );
     }
 
+    /**
+          * 获取角色名称岗位列表
+          */
 
+    getRolesName(): Observable<any> {
+        return this.http.get(PANGBO_SERVICES_URL + "api/Role/DropDownData", {});
+    }
 
 }
 

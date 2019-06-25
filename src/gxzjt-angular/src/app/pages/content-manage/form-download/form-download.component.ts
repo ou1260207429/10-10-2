@@ -135,8 +135,9 @@ export class FormDownloadComponent extends PublicFormComponent implements OnInit
   add() {
     this.router.navigate([`/app/content-manage/formDownloadDetailComponent`]);
   }
-
-  refresh() {
+  resetSearchFliterForm(){
+    this.fliterForm.reset();
     this.query();
+
   }
 }

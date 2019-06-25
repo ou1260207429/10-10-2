@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { STColumn, STComponent } from '@delon/abc';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { STColumn, STComponent, STChange } from '@delon/abc';
 import { UserServices } from 'services/user.services';
 import { PublicModel } from 'infrastructure/public-model';
+import { timeTrans } from 'infrastructure/regular-expression';
+import { AppSessionService } from '@shared/session/app-session.service';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-userright-postwork',
@@ -15,13 +17,15 @@ export class UserrightPostworkComponent implements OnInit {
   url = `/user`;
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
-    { title: '类型编号', index: 'postId' },
-    { title: '商户编号', index: 'merchantId' },
-    { title: '应用程序编号', index: 'appId' },
+    { title: '编号', index: 'id.value', type: 'checkbox' },
+    // { title: '类型编号', index: 'postId' },
+    // { title: '商户编号', index: 'merchantId' },
+    // { title: '应用程序编号', index: 'appId' },
     { title: '岗位名称', index: 'name' },
     { title: '启用', index: 'isEnabled' },
     { title: '排序号', index: 'sortId' },
-    { title: '创建人', index: 'creatorId' },
+    // { title: '创建人', index: 'creatorId' },
+    // { title: '创建人', index: 'creatorId' },
     // { title: '调用次数', type: 'number', index: 'callNo' },
     // { title: '头像', type: 'img', width: '50px', index: 'avatar' },
     // { title: '时间', type: 'date', index: 'updatedAt' },
@@ -30,28 +34,27 @@ export class UserrightPostworkComponent implements OnInit {
       buttons: [
         {
           text: '查看', click: (item: any) => {
+            this.title = "查看岗位信息"
             this.addVisible = true;
             this.operate = 2
-            this.addForm = item;
+            this.filterData(item)
           }
         },
         {
           text: '编辑', click: (item: any) => {
-            this.title = "编辑用户角色"
             this.operate = 1
+            this.getWorkName();
+            this.title = "编辑岗位信息"
             this.addVisible = true;
-            this.addForm = item;
             this.editId = item.id
+            this.filterData(item)
+
           }
         },
         {
           text: '删除', click: (item: any) => {
-            this._publicModel.isDeleteModal(() => {
-              this._userServices.deleteStation(item.id).subscribe(data => {
-                this.initTable();
-
-              })
-            });
+            this.deleteList = [item.id]
+            this.deleteData()
           }
         },
       ]
@@ -71,20 +74,12 @@ export class UserrightPostworkComponent implements OnInit {
   isSearchForm = false;//加载条显示
   hiddenFliter = false;//查询条件显示
   searchForm: any = {
-
+    page: 1,
+    size: 10
   }
-  constructor(private _publicModel: PublicModel, private _userServices: UserServices) {
-
-    this.data = [
-      {
-        id: 1,
-        name: "岗位名称",
-        postId: 0,
-        isEnabled: 0,
-        sortId: 0,
-        creatorId: 0,
-      }
-    ]
+  workList: any[]
+  deleteList: any[];
+  constructor(private message: NzMessageService, public _appSessionService: AppSessionService, private _publicModel: PublicModel, private _userServices: UserServices) {
   }
 
   ngOnInit() {
@@ -95,50 +90,83 @@ export class UserrightPostworkComponent implements OnInit {
    * 获取表格数据
    */
   initTable() {
-    let params = {
-
-    }
-    this._userServices.queryStation(params).subscribe(data => {
+    this.data = [];
+    this._userServices.queryStation(this.searchForm).subscribe(data => {
+      if (data.data) {
+        data.data.forEach(element => {
+          if (element.creationTime) {
+            element.creationTime = timeTrans(Date.parse(element.creationTime) / 1000, 'yyyy-MM-dd', '-')
+          }
+        });
+      }
       this.data = data.data;
     })
   }
   switchFilter() {
     this.hiddenFliter = !this.hiddenFliter;
   }
-
+  getWorkName() {
+    this._userServices.getStationName().subscribe(data => {
+      if (data.result == 0) {
+        this.workList = data.data;
+      }
+    })
+  }
   add() {
     this.operate = 0
     this.addVisible = true;
   }
   save() {
-    for (const i in this.addForm.controls) {
-      this.addForm.controls[i].markAsDirty();
-      this.addForm.controls[i].updateValueAndValidity();
+    if (this.operate == 0) {
+      let params = Object.assign({ merchantId: this._appSessionService.user.merchantId, appId: "9F947774-8CB4-4504-B441-2B9AAEEAF450" }, this.addForm)
+      this._userServices.addStation(params).subscribe(data => {
+        if (data.result == 0) {
+          this.message.success("新增成功");
+          this.initTable();
+          this.handleCancel();
+        }
+      })
+    } else if (this.operate == 1) {
+      let params = Object.assign({}, this.addForm)
+      params.id = this.editId;
+      this._userServices.editStation(params).subscribe(data => {
+        if (data.result == 0) {
+          this.message.success("修改成功");
+          this.initTable();
+          this.handleCancel();
+        }
+      })
     }
-    let params = this.addForm.value
-
-    if (this.addForm.valid) {
-      if (this.operate == 0) {
-
-        this._userServices.addStation(params).subscribe(data => {
-          this.data = data.data;
-        })
-      } else if (this.operate == 1) {
-        params.id = this.editId;
-        console.log(params)
-
-        this._userServices.editStation(params).subscribe(data => {
-          this.data = data.data;
-        })
-      }
-
+  }
+  filterData(obj) {
+    console.log(obj)
+    this.addForm = {
+      id: obj.id,
+     // postId: obj.postId,
+      merchantId: obj.merchantId,
+      name: obj.name,
+      appId: obj.appId,
+      isEnabled: obj.isEnabled,
+    //  sortId: obj.sortId,
     }
-
-
   }
   handleCancel() {
     this.addVisible = false;
-    // this.addForm.reset();
+    this.addForm = {};
   }
-
+  deleteData() {
+    this._publicModel.isDeleteModal(() => {
+      this._userServices.deleteStation({ ids: this.deleteList }).subscribe(data => {
+        this.initTable();
+      })
+    });
+  }
+  changeDelete(e: STChange) {
+    if (e.checkbox) {
+      this.deleteList = []
+      e.checkbox.forEach(element => {
+        this.deleteList.push(element.id)
+      });
+    }
+  }
 }
