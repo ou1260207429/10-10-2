@@ -54,6 +54,11 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
     this.getAreaDropdown();
     console.log(this.useNatureSelect)
+    
+    setTimeout(()=>{
+      console.log(this.data)
+    },3400)
+    
   }
 
 
@@ -79,7 +84,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
    * @param value 值
    * @param type 字段类型
    */
-  changeValue(value, type) {
+  changeValue(value, type) { 
     if (!value && value == "") {
       this.errorData[type] = true
     } else {

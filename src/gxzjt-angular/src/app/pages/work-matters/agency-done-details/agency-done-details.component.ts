@@ -202,11 +202,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     }
     this.tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
       Area: this.formDto.area,
-      IsChoose: num,
-      editWorkFlow_NodeAuditorRecordDto: {
-        deptId: this._appSessionService.user.organizationsId,
-        deptFullPath: this._appSessionService.user.organizationsName,
-      }
+      IsChoose: num, 
     }
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptFullPath = this.appSession.user.organizationsName
@@ -236,7 +232,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       })
 
     } else {
-
+ 
       this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
 
         this.formDto.isAccept = bo;
@@ -268,7 +264,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
           flowNodeUser.userName = element.applyEName
           this.examineFormDto.handleUserList.push(flowNodeUser)
         });
-
+ 
 
         switch (this.curNodeName) {
           case '大厅受理':
@@ -428,7 +424,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
         this.tenantWorkFlowInstanceDto.auditors = [];
         const auditors = {
           eName: res.auditors.eName,
-          eid: res.auditors.id
+          eid: res.auditors.id,
+          auditType:this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType
         }
         this.tenantWorkFlowInstanceDto.auditors.push(auditors) 
 
