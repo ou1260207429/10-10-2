@@ -396,12 +396,13 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this.flowFormQueryDto.flowType = 3;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
+    this.flowFormQueryDto.flowId=parseInt(this._ActivatedRoute.snapshot.paramMap.get('flowId'));
   }
 
   ngOnInit() {
-    if (this.type != 0) {
+    //if (this.type != 0) {
       this.post_GetFlowFormData();
-    }
+   // }
     this.initSelectModalData();
   }
 
@@ -410,9 +411,11 @@ export class AddCompletedAcceptanceComponent implements OnInit {
    * 获取详情
    */
   post_GetFlowFormData() {
-    this.data = '';
+    //this.data = '';
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
-      this.data = JSON.parse(data.formJson);
+      if (data.formJson!=null && data.formJson!="") {
+        this.data = JSON.parse(data.formJson);
+      }
       console.log(this.data)
     })
   }
@@ -462,6 +465,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
       const flowDataDto = new FlowDataDto();
+      flowDataDto.flowId=this.flowFormQueryDto.flowId;
+      flowDataDto.projectId=this.flowFormQueryDto.projectId;
       flowDataDto.formJson = JSON.stringify(this.data);
       flowDataDto.projectFlowInfo = new ProjectFlowDto();
 
