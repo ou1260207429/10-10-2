@@ -117,6 +117,8 @@ export class UserrightRolelistComponent implements OnInit {
           this.message.success("新增成功");
           this.initTable();
           this.handleCancel();
+        }else {
+          this.message.error(data.message);
         }
       })
     } else if (this.operate == 1) {
@@ -126,18 +128,19 @@ export class UserrightRolelistComponent implements OnInit {
           this.message.success("修改成功");
           this.initTable();
           this.handleCancel();
+        }else {
+          this.message.error(data.message);
         }
       })
     }
   }
   filterData(obj) {
-    console.log(obj)
     this.addForm = {
       id: obj.id,
       menuId: obj.menuIdd,
       //icon: obj.icon,
       name: obj.name,
-      //   isEnabled: obj.isEnabled,
+        isEnabled: obj.isEnabled,
       //  sortId: obj.sortId,
       //version: obj.version,
     }
