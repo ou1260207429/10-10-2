@@ -19,6 +19,7 @@ import { PublicServices } from 'services/public.services';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 
 import { DelonACLModule } from '@delon/acl';
+import { UserServices } from 'services/user.services';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { DelonACLModule } from '@delon/acl';
     PublicModel,
     EventEmiter,
     PublicServices,
+    UserServices,
     [
       {
         provide: HTTP_INTERCEPTORS,

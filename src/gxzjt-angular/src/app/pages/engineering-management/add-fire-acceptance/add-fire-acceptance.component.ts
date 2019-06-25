@@ -190,6 +190,7 @@ export class AddFireAcceptanceComponent implements OnInit {
   constructor(private _eventEmiter: EventEmiter, private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     this.flowFormQueryDto.flowType = 2;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
+    this.flowFormQueryDto.flowId=parseInt(this._ActivatedRoute.snapshot.paramMap.get('flowId'));
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
   }
   ngOnInit() {
@@ -204,11 +205,10 @@ export class AddFireAcceptanceComponent implements OnInit {
    */
   post_GetFlowFormData() {
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
-      if (this.type != 0) {
+      if (data.formJson!=null && data.formJson!="") {
         this.data = JSON.parse(data.formJson);
       }
-      this.useNatureSelect = data.natures
-      console.log(this.useNatureSelect)
+      this.useNatureSelect = data.natures 
     })
   }
 
@@ -268,7 +268,7 @@ export class AddFireAcceptanceComponent implements OnInit {
           flowDataDto.projectFlowInfo = new ProjectFlowDto();
 
           flowDataDto.projectId = this.flowFormQueryDto.projectId
-
+          flowDataDto.flowId=this.flowFormQueryDto.flowId;
           flowDataDto.projectFlowInfo.timeLimit = data.result.timeLimit
           //类型  消防设计1   消防验收2   消防竣工3 
           flowDataDto.projectFlowInfo.flowPathType = 2

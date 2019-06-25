@@ -27,7 +27,7 @@
                 </router-link>
               </li>
             </ul>
-            <el-row style="margin-top:40px;margin-bottom:25px;">
+            <el-row v-if="lawtotalCount!=0" style="margin-top:40px;margin-bottom:25px;">
               <el-pagination
                 style="float:right;"
                 :page-size="lawPageSize.size"
@@ -59,7 +59,7 @@
                 </router-link>
               </li>
             </ul>
-            <el-row style="margin-top:40px;margin-bottom:25px;">
+            <el-row v-if="filetotalCount!=0" style="margin-top:40px;margin-bottom:25px;">
               <el-pagination
                 style="float:right;"
                 :page-size="filePageSize.size"

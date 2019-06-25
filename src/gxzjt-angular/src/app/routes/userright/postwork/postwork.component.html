@@ -1,45 +1,38 @@
 <page-header [action]="phActionTpl">
-    <ng-template #phActionTpl>
-  
-      <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
-          type="{{ hiddenFliter?'down':'up'}}"></i>{{ hiddenFliter?'展开条件':'收起条件'}}</button>
-      <button (click)="initTable()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
-    </ng-template>
-  </page-header>
-  <nz-card>
-  
-    <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
-  
-  
-      <button *ngIf="isShowAdd" nz-button (click)="add()" nzType="primary" style="margin-right: 10px;margin-top: 10px;"><i
-          nz-icon type="plus"></i>增加</button>
-  
-      <input nz-input [(ngModel)]="searchKey" formControlName="pro_no" [placeholder]="searchHolder"
-        style="margin-right: 10px;margin-top: 10px;width: 200px;">
-  
-      <!-- 
-      <nz-range-picker [nzPlaceHolder]="nzPlaceHolder" [(ngModel)]="rangeTime" nzFormat="yyyy/MM/dd"
-        formControlName="date_range" l style="margin-right: 10px;margin-top: 10px;"></nz-range-picker> -->
-  
-      <button nz-button (click)="resetSearchFliterForm()" style="margin-right: 10px;margin-top: 10px;">重置</button>
-  
-      <button nz-button (click)="initTable()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>
-    </form>
-    <st #st [data]="formResultData" [columns]="columns" [loading]="isSearchForm"></st>
-    <br>
-  
-  </nz-card>
-  <nz-modal [(nzVisible)]="addVisible" [(nzTitle)]="title" (nzOnCancel)="handleCancel()" (nzOnOk)="save()">
-    <form nz-form [formGroup]="addForm" class="login-form" (ngSubmit)="save()">
-      <nz-form-item>
-        <nz-form-control>
-          <nz-input-group>
-            <input type="text" nz-input formControlName="name" placeholder="Username" />
-          </nz-input-group>
-          <nz-form-explain *ngIf="addForm.get('name')?.dirty && addForm.get('name')?.errors">Please input your username!
-          </nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-    </form>
-  
-  </nz-modal>
+  <ng-template #phActionTpl>
+
+    <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
+        type="{{ hiddenFliter?'down':'up'}}"></i>{{ hiddenFliter?'展开条件':'收起条件'}}</button>
+    <button (click)="initTable()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
+  </ng-template>
+</page-header>
+<nz-card>
+
+  <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="searchForm">
+    <button nz-button (click)="add()" nzType="primary" style="margin-right: 10px;margin-top: 10px;"><i nz-icon
+        type="plus"></i>增加</button>
+    <input placeholder="请输入岗位名称" style="width: 200px;margin-right: 10px;margin-top: 10px;" nzSize="default"
+      formControlName="name" nz-input type="text" [(ngModel)]="name">
+
+    <button nz-button style="margin-right: 10px;margin-top: 10px;">重置</button>
+    <button nz-button (click)="initTable()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>
+  </form>
+  <st #st [data]="data" [columns]="columns" [loading]="isSearchForm"></st>
+  <br>
+
+</nz-card>
+<nz-modal nzOkDisabled="true" nzWidth="600" [(nzVisible)]="addVisible" [(nzTitle)]="title" (nzOnCancel)="handleCancel()"
+  (nzOnOk)="save()">
+  <form [formGroup]="addForm" nz-form #f="ngForm" se-container="1" style="margin: 50px 30px;
+  margin-left: 0;">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">岗位名称</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input [disabled]="true" type="text" nz-input formControlName="name" placeholder="请输入岗位名称" />
+        <nz-form-explain *ngIf="addForm.get('name')?.dirty && addForm.get('name')?.errors">请输入岗位名称
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+</nz-modal>
