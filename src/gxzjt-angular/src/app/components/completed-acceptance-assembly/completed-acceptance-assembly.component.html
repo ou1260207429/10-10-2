@@ -32,7 +32,12 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>使用性质:</td>
           <td rowspan='1' colspan='7'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入使用性质" [(ngModel)]="data.useNature" name="useNature" required />
+              <nz-spin [nzSpinning]="!useNatureSelect"></nz-spin>
+              <nz-select nzPlaceHolder='请选择使用性质' [(ngModel)]="data.useNature" name="useNature" required *ngIf="useNatureSelect">
+                <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.natureName"
+                  [nzValue]="option.natureCode">
+                </nz-option>
+              </nz-select>
             </se>
           </td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>施工许可证号:</td>
@@ -579,7 +584,7 @@
         </td>
       </tr>
 
-      <tr [ngClass]="{pointerf5f5f5: type == 1}">
+      <tr>
         <td colspan='1' rowspan="1" class="fontweight fontLeft leftTitle"
           style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>上传附件</td>
         <td rowspan='1' colspan='20' class="textLeft">

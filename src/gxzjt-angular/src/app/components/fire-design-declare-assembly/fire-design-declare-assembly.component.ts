@@ -44,6 +44,8 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   //判断上传的焦点
   uoloadIndex: number = -1;
 
+  //从父组件获取使用行性质的select
+  @Input() useNatureSelect:any
   constructor(public _homeServiceProxy: HomeServiceProxy, public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
@@ -51,7 +53,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     this.childOuter.emit(this.f);
 
     this.getAreaDropdown();
-    console.log(this.data)
+    console.log(this.useNatureSelect)
   }
 
 

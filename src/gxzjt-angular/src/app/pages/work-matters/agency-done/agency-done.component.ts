@@ -110,14 +110,18 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
       _self.init();
     });
 
-    this.eventEmiter.on('fireDesignComponentInit',()=>{
-      console.log('111');
+    this.eventEmiter.on('fireDesignComponentInit',()=>{ 
       _self.init();
     });
 
     this.eventEmiter.on('completedAcceptanceComponentInit',()=>{
       _self.init();
     });
+
+    this.eventEmiter.on('agencyDoneInit',()=>{
+      _self.init();
+    });
+
   }
 
   init() {

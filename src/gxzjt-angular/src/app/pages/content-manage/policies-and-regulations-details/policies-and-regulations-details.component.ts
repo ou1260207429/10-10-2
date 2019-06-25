@@ -200,17 +200,17 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
       AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
       module: "table",
     }
-    this.fileUrlList=[];
+    this.fileUrlList = [];
     this._publicServices.getFilesDetail(params).subscribe(data => {
       console.log(data)
       data.forEach(element => {
         this.fileUrlList.push({
-          id:element.id,
-          name:element.fileName,
-          url:"api/Attachment/Download?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&id="+element.id
+          id: element.id,
+          name: element.fileName,
+          url: "api/Attachment/Download?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&id=" + element.id
         })
       });
-     
+
     })
 
   }

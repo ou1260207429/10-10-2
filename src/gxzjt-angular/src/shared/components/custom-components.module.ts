@@ -4,11 +4,14 @@ import { NoDataComponent } from '@shared/components/no-data/no-data.component';
 import { ValidationMessagesComponent } from './validation-messages/validation-messages.component';
 import { UploadFileComponent } from './tranfile/uploadfile';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { SelectorOrgComponent } from './selector/selector-org';
+import { FormsModule } from '@angular/forms';
 
 const COMPONENTS = [
   NoDataComponent,
   UploadFileComponent,
   ValidationMessagesComponent,
+  SelectorOrgComponent,
 
 ];
 
@@ -18,6 +21,7 @@ const COMPONENTS = [
   imports: [
     CommonModule,
     NgZorroAntdModule,
+    FormsModule,
   ],
   declarations: [
     ...COMPONENTS
