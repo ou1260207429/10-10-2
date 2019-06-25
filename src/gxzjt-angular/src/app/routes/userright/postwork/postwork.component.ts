@@ -60,7 +60,9 @@ export class UserrightPostworkComponent implements OnInit {
   addVisible = false;//弹框显示
   // addForm: any = {//新增数据
   // }
-  addForm: FormGroup;
+  addForm: any={
+
+  };
   editId: any;
   title = "新增用户角色"//弹框标题
   data: any;//表格数据
@@ -69,15 +71,15 @@ export class UserrightPostworkComponent implements OnInit {
   hiddenFliter = false;//查询条件显示
 
   constructor(private _userServices: UserServices, private fb: FormBuilder) {
-    this.addForm = this.fb.group({
-      postId: [null, [Validators.required]],
-      merchantId: [null, [Validators.required]],
-      appId: [null, [Validators.required]],
-      name: [null, [Validators.required]],
-      isEnabled: [null, [Validators.required]],
-      sortId: [null, [Validators.required]],
-      creatorId: [null, [Validators.required]],
-    });
+    // this.addForm = this.fb.group({
+    //   postId: [null, [Validators.required]],
+    //   merchantId: [null, [Validators.required]],
+    //   appId: [null, [Validators.required]],
+    //   name: [null, [Validators.required]],
+    //   isEnabled: [null, [Validators.required]],
+    //   sortId: [null, [Validators.required]],
+    //   creatorId: [null, [Validators.required]],
+    // });
     this.searchForm = this.fb.group({
       name: [null],
     });
@@ -145,7 +147,7 @@ export class UserrightPostworkComponent implements OnInit {
   }
   handleCancel() {
     this.addVisible = false;
-    this.addForm.reset();
+    // this.addForm.reset();
   }
 
 }

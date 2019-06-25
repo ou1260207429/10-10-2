@@ -21,18 +21,27 @@
   <br>
 
 </nz-card>
-<nz-modal nzOkDisabled="true" nzWidth="600" [(nzVisible)]="addVisible" [(nzTitle)]="title" (nzOnCancel)="handleCancel()"
-  (nzOnOk)="save()">
+<nz-modal nzWidth="600" [(nzVisible)]="addVisible" [(nzTitle)]="title" (nzOnCancel)="handleCancel()" (nzOnOk)="save()">
+  <form nz-form #f="ngForm" se-container gutter="32">
+    <se label="岗位名称" error="请填写">
+      <input type="text" nz-input [(ngModel)]="addForm.name" name="ak" required>
+    </se>
+    <se>
+      <button nz-button nzType="primary" [disabled]="f.invalid">Save</button>
+    </se>
+  </form>
+
+<!-- 
   <form [formGroup]="addForm" nz-form #f="ngForm" se-container="1" style="margin: 50px 30px;
   margin-left: 0;">
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">岗位名称</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input [disabled]="true" type="text" nz-input formControlName="name" placeholder="请输入岗位名称" />
+        <input [disabled]="operate==2" type="text" nz-input formControlName="name" placeholder="请输入岗位名称" />
         <nz-form-explain *ngIf="addForm.get('name')?.dirty && addForm.get('name')?.errors">请输入岗位名称
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
-  </form>
+  </form> -->
 
 </nz-modal>

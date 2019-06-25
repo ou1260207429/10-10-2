@@ -105,34 +105,37 @@ export class UserrightRolelistComponent implements OnInit {
     this.addVisible = true;
   }
   save() {
-    for (const i in this.addForm.controls) {
-      this.addForm.controls[i].markAsDirty();
-      this.addForm.controls[i].updateValueAndValidity();
-    }
-    let params = this.addForm.value
-
-    if (this.addForm.valid) {
-      if (this.operate == 0) {
-
-        this._userServices.addStation(params).subscribe(data => {
-          this.data = data.data;
-        })
-      } else if (this.operate == 1) {
-        params.id = this.editId;
-        console.log(params)
-
-        this._userServices.editStation(params).subscribe(data => {
-          this.data = data.data;
-        })
+    if (this.operate != 2) {
+      for (const i in this.addForm.controls) {
+        this.addForm.controls[i].markAsDirty();
+        this.addForm.controls[i].updateValueAndValidity();
       }
+      let params = this.addForm.value
 
+      if (this.addForm.valid) {
+        if (this.operate == 0) {
+
+          this._userServices.addStation(params).subscribe(data => {
+            this.data = data.data;
+          })
+        } else if (this.operate == 1) {
+          params.id = this.editId;
+          console.log(params)
+
+          this._userServices.editStation(params).subscribe(data => {
+            this.data = data.data;
+          })
+        }
+
+      }
+    } else {
+      this.addVisible = false;
     }
-
 
   }
   handleCancel() {
     this.addVisible = false;
-    this.addForm.reset()
+ //   this.addForm.reset()
   }
 
 
