@@ -48,6 +48,9 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     specialEngineering: false,
     fireFightingFacilities: false
   }
+
+  //从父组件获取使用行性质的select
+  @Input() useNatureSelect:any
   constructor(public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) {
     this.decimationnumber = [];
     for (let index = 1; index < 101; index++) {
