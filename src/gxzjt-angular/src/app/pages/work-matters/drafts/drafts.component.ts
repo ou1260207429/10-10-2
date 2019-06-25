@@ -9,7 +9,7 @@ import { ProjectFlowServcieServiceProxy, FireAuditCompleteQueryDto, DraftQueryDt
 
 
 import { Router } from '@angular/router';
-
+import * as moment from 'moment';
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
@@ -23,7 +23,7 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 @Component({
   selector: 'app-drafts',
   templateUrl: './drafts.component.html',
-  
+
 })
 export class DraftsComponent extends PublicFormComponent implements OnInit {
 
@@ -78,7 +78,7 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
     this._eventEmiter.on('draftsComponentInit',()=>{
       _slef.init();
     });
- 
+
 
   }
 
@@ -88,7 +88,18 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
     this.searchParam.sorting = 'ProjectId';
     this.getList();
   }
+  reststart(){
+    this.resetTime();
+    this.searchParam.page = 1;
+    this.searchParam.maxResultCount = AppConsts.grid.defaultPageSize;
+    this.searchParam.sorting = 'ProjectId';
+    this.searchParam.number='';
+    this.searchParam.companyName='';
+    this.searchParam.applyTimeStart = moment(this.rangeTime[0]);
+    this.searchParam.applyTimeEnd =moment(this.rangeTime[1]);
+    this.getList();
 
+  }
 
   /**
    * 获取所有列表
@@ -108,6 +119,8 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
    */
   query() {
     this.searchParam.page = 1;
+    this.searchParam.applyTimeStart = moment(this.rangeTime[0])
+    this.searchParam.applyTimeEnd =moment(this.rangeTime[1])
     this.getList();
   }
 
@@ -127,12 +140,16 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
 
   okRangeTime(v) {
     console.log(v);
-    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')  
-    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')   
+    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')
+    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')
     // this.searchParam.applyTimeStart = applyTimeStart;
     // this.searchParam.applyTimeEnd = applyTimeEnd;
     // console.log(applyTimeEnd);
   }
 
-
+  resetTime() {
+    var startTime = new Date();
+    startTime.setDate(startTime.getDate() - 30)
+    this.rangeTime = [startTime, new Date()];
+  }
 }
