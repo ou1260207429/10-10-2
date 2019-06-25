@@ -19,16 +19,15 @@ export class UserrightRolelistComponent implements OnInit {
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     { title: '编号', index: 'id.value', type: 'checkbox' },
-    { title: '商户编号', index: 'merchantId' },
-    { title: '菜单编号', index: 'menuId' },
+    // { title: '商户编号', index: 'merchantId' },
+    // { title: '菜单编号', index: 'menuId' },
     { title: '角色名称', index: 'name' },
-    { title: '图标', index: 'icon' },
+    // { title: '图标', index: 'icon' },
     { title: '启用', index: 'isEnabled' },
     { title: '排序号', index: 'sortId' },
-    { title: '版本号', index: 'version' },
-    { title: '创建时间', index: 'creationTime' },
-    { title: '创建人', index: 'creatorId' },
-    { title: '版本号', index: 'version' },
+    // { title: '创建时间', index: 'creationTime' },
+    // { title: '创建人', index: 'creatorId' },
+    // { title: '版本号', index: 'version' },
     {
       title: '操作',
       buttons: [
@@ -42,6 +41,7 @@ export class UserrightRolelistComponent implements OnInit {
         },
         {
           text: '编辑', click: (item: any) => {
+            this.getRoleName();
             this.title = "编辑用户角色"
             this.operate = 1
             this.addVisible = true;
@@ -76,7 +76,7 @@ export class UserrightRolelistComponent implements OnInit {
   isSearchForm = false;//加载条显示
   hiddenFliter = false;//查询条件显示
   deleteList: any[];
-
+  roleList: any[]
   constructor(private message: NzMessageService, public _appSessionService: AppSessionService, private _publicModel: PublicModel, private _userServices: UserServices) {
   }
 
@@ -120,7 +120,7 @@ export class UserrightRolelistComponent implements OnInit {
         }
       })
     } else if (this.operate == 1) {
-      let params = Object.assign({}, this.addForm)
+      let params = Object.assign({id:this.editId}, this.addForm)
       this._userServices.editRoles(params).subscribe(data => {
         if (data.result == 0) {
           this.message.success("修改成功");
@@ -135,12 +135,20 @@ export class UserrightRolelistComponent implements OnInit {
     this.addForm = {
       id: obj.id,
       menuId: obj.menuIdd,
-      icon: obj.icon,
+      //icon: obj.icon,
       name: obj.name,
-      isEnabled: obj.isEnabled,
-      sortId: obj.sortId,
-      version: obj.version,
+      //   isEnabled: obj.isEnabled,
+      //  sortId: obj.sortId,
+      //version: obj.version,
     }
+  }
+  getRoleName() {
+    this._userServices.getRolesName().subscribe(data => {
+      if (data.result == 0) {
+        this.roleList = data.data;
+        console.log(data)
+      }
+    })
   }
   handleCancel() {
     this.addVisible = false;
@@ -148,7 +156,7 @@ export class UserrightRolelistComponent implements OnInit {
   }
   deleteData() {
     this._publicModel.isDeleteModal(() => {
-      this._userServices.deleteStation({ ids: this.deleteList }).subscribe(data => {
+      this._userServices.deleteRoles({ ids: this.deleteList }).subscribe(data => {
         this.initTable();
       })
     });

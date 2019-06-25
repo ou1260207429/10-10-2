@@ -39,14 +39,20 @@ export class UserServices {
         );
     }
     /**
-      * 编辑岗位列表
+      * 删除岗位列表
       */
 
     deleteStation(params: any): Observable<any> {
         return this.http.post(PANGBO_SERVICES_URL + "api/Position/DeletePositionByIds", params
         );
     }
+    /**
+        * 获取岗位名称岗位列表
+        */
 
+    getStationName(): Observable<any> {
+        return this.http.get(PANGBO_SERVICES_URL + "api/Position/DropDownData", {});
+    }
 
 
     /** *  * 角色列表操作 * *  */
@@ -82,11 +88,17 @@ export class UserServices {
       */
 
     deleteRoles(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/Role/DeleteRoleById", params
+        return this.http.post(PANGBO_SERVICES_URL + "api/Role/DeleteRoleByIds", params
         );
     }
 
+    /**
+          * 获取角色名称岗位列表
+          */
 
+    getRolesName(): Observable<any> {
+        return this.http.get(PANGBO_SERVICES_URL + "api/Role/DropDownData", {});
+    }
 
 }
 
