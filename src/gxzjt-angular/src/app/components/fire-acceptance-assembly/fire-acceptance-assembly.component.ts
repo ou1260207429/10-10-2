@@ -127,8 +127,8 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
 
   onSelectOrgItem(res, item) {
-    console.log(res);
-    console.log(item);
+    // console.log(res);
+    // console.log(item);
     item.qualificationLevel=res.qualificationLevel;
     item.contacts=res.contact;
     item.contactsNumber=res.contactPhone;

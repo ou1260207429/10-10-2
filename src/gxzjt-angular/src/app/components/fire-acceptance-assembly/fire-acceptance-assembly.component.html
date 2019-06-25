@@ -229,7 +229,7 @@
               [(ngModel)]="data.constructionControlUnit.designUnit" name="constructionControlUnitDesignUnit" /> -->
               <nz-rj-selector-org  [(ngModel)]="data.constructionControlUnit.designUnit" 
               (onSelectorEvent)="onSelectOrgItem($event,data.constructionControlUnit)" placeHolder="请输入监理单位"
-              name="constructionControlUnitDesignUnit" required="true" ngDefaultControl 
+              name="constructionControlUnitDesignUnit" required="false" ngDefaultControl 
                ></nz-rj-selector-org>
 
 
@@ -567,7 +567,9 @@
           </se>
           <div class="textRight">
             <se error="这是必填项">
-              施工总承包单位<input style="width: 80px;" nz-input placeholder="请输入施工总承包单位"
+              施工总承包单位
+              
+              <input style="width: 80px;" nz-input placeholder="请输入施工总承包单位"
                 [(ngModel)]="data.constructionSituation.contractingUnit" name="constructionSituationcontractingUnit"
                 required />
             </se>
