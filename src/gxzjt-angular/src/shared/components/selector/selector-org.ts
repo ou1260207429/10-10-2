@@ -24,7 +24,7 @@ import { ControlContainer, NgForm } from '@angular/forms';
       (input)="onInput($event.target?.value)"
       [nzAutocomplete]="auto"
       (ngModelChange)="onChange($event)"
-      [required]="inRequired"
+      [required]="inputRequired"
     
     />
     <nz-autocomplete nzBackfill #auto>
@@ -81,7 +81,6 @@ export class SelectorOrgComponent {
   @Output() onSelectorEvent = new EventEmitter<EnterpriseDto>();
 
   onChange(value) {
-
 
 
     if (this.orgList && this.orgList.length > 0) {

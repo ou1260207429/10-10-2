@@ -7,7 +7,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { SelectorOrgComponent } from './selector/selector-org';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 
-import { SEModule } from '@delon/abc';
+
 
 const COMPONENTS = [
   NoDataComponent,
@@ -24,7 +24,7 @@ const COMPONENTS = [
     CommonModule,
     NgZorroAntdModule,
     FormsModule,
-    SEModule,
+
     ReactiveFormsModule,
   ],
   declarations: [
