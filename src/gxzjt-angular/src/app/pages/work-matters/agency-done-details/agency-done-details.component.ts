@@ -107,6 +107,9 @@ export class AgencyDoneDetailsComponent implements OnInit {
       flowFormQueryDto.flowType = this.flowPathType
       flowFormQueryDto.projectId = this.formDto.projectId;
       flowFormQueryDto.flowId = this.flowId
+
+      //判断当前登录人是否是审核人  
+      this.isLoginPerson = this.formDto.flowNodeUserInfo.userCode == this._appSessionService.user.id?true:false
       const workFlow: WorkFlow = {
         workFlow_InstanceId: this.formDto.workFlow_Instance_Id,
         workFlow_TemplateInfoId: 10171,
