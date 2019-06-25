@@ -8,13 +8,15 @@ import { UploadFile } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import { DepFlags } from '@angular/compiler/src/core';
 
+import { SelectorOrgComponent } from '@shared/components/selector/selector-org';
+
 /**
  * 消防验收的表单模块
  */
 @Component({
   selector: 'app-fire-acceptance-assembly',
   templateUrl: './fire-acceptance-assembly.component.html',
-  
+
 })
 export class FireAcceptanceAssemblyComponent implements OnInit {
 
@@ -47,12 +49,12 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
   @Output() private childOuter = new EventEmitter();
 
   //从父组件获取使用行性质的select
-  @Input() useNatureSelect:any
+  @Input() useNatureSelect: any
   constructor(public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
-    this.childOuter.emit(this.f); 
+    this.childOuter.emit(this.f);
     this.getAreaDropdown();
     console.log(this.data)
   }
@@ -122,14 +124,21 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     this.uoloadIndex = index
   }
 
-  designUnitList=[];
-  isdesignUnitLoading=false;
+  designUnitList = [];
+  isdesignUnitLoading = false;
 
-  onSearchDesignUnit(item){
-     
+  onSearchDesignUnit(item) {
+
 
   }
 
 
+  @ViewChild('design_org')
+  design_org: SelectorOrgComponent;
+
+  onSelectOrgItem(res){
+    console.log(res);
+
+  }
 
 }

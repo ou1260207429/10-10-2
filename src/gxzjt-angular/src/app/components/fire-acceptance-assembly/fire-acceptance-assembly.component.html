@@ -137,7 +137,8 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>设计单位:</td>
           <td rowspan='1' colspan='5'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入设计单位" [(ngModel)]="item.designUnit" name="designDesignUnit{{a}}" required />
+              <!-- <input nz-input placeholder="请输入设计单位" [(ngModel)]="item.designUnit" name="designDesignUnit{{a}}" required /> -->
+              <nz-rj-selector-org #design_org [(inputOrg)]="item.designUnit" (onSelectorEvent)="onSelectOrgItem($event)" placeHolder="请输入设计单位" required></nz-rj-selector-org>
             </se>
 
           </td>
