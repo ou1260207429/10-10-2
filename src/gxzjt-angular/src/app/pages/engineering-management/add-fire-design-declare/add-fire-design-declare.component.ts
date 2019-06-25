@@ -542,6 +542,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     this.flowFormQueryDto.flowType = 1;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
+    this.flowFormQueryDto.flowId=parseInt(this._ActivatedRoute.snapshot.paramMap.get('flowId'));
     console.log(this.data)
 
   }
@@ -562,7 +563,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
    */
   post_GetFlowFormData() {
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
-      if (this.type != 0) {
+      if (data!=null && data.formJson!=null && data.formJson!="") {
         this.data = JSON.parse(data.formJson);
       }
       this.useNatureSelect = data.natures
@@ -591,12 +592,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     } else {
       this.showError.projectCategoryId = false;
     }
-    if (!this.data.specialEngineering.value || this.data.specialEngineering.value == '') {
-      this.showError.specialEngineering = true;
-    } else {
-      this.showError.specialEngineering = false;
-    }
-    if (!this.data.specialEngineering.value || this.data.specialEngineering.value == '') {
+    if (!this.data.specialEngineering || this.data.specialEngineering == '') {
       this.showError.specialEngineering = true;
     } else {
       this.showError.specialEngineering = false;
@@ -630,6 +626,8 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
         flowDataDto.projectFlowInfo.timeLimit = data.result.timeLimit
         //类型  消防设计1   消防验收2   消防竣工3 
         flowDataDto.projectFlowInfo.flowPathType = 1
+        flowDataDto.flowId=this.flowFormQueryDto.flowId;
+        flowDataDto.projectId=this.flowFormQueryDto.projectId;
 
         flowDataDto.projectFlowInfo.flowNo = data.result.workFlow_Instance_Id
 
@@ -665,6 +663,9 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
         })
       })
 
+    }else{
+      console.log(this.form);
+      this.message.success('数据验证失败！')
     }
 
 

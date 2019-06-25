@@ -207,6 +207,25 @@ export class AddFireAcceptanceComponent implements OnInit {
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
       if (data.formJson!=null && data.formJson!="") {
         this.data = JSON.parse(data.formJson);
+        if(this.data.detectionUnit==null){
+          this.data.detectionUnit={};
+        }
+        if(this.data.implementation==null){
+          this.data.implementation={};
+        }
+        if(this.data.constructionSituation==null){
+          this.data.constructionSituation={};
+        }
+        if(this.data.supervision==null){
+          this.data.supervision={};
+        }
+        if(this.data.detection==null){
+          this.data.detection={};
+        }
+        if(this.data.acceptance==null){
+          this.data.acceptance={};
+        }
+
       }
       this.useNatureSelect = data.natures 
     })
@@ -309,6 +328,9 @@ export class AddFireAcceptanceComponent implements OnInit {
           })
         })
       }
+    }else{
+      console.log(this.form.errors);
+      this.message.success('数据验证失败！')
     }
   }
 
