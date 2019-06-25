@@ -21,11 +21,17 @@
               style="color:#bd1127;text-align:center;padding:20px 0;letter-spacing:3px; box-sizing: border-box;"
             >{{data.title}}</h1>
             <div class="lawContent" v-html="data.content"></div>
-            <div>
-              <p>相关文件下载</p>
+            <div v-if="fileList.length>0" style="margin-top:20px;padding-left:30px;margin-bottom:20px;">
+              <p style="margin-bottom:10px;font-weight: bold;">相关文件下载</p>
               <div>
-                <i class="el-icon-link"></i>
-                <a :href="downLoadUrl"></a>
+                <div
+                  v-for="(item,index) in fileList"
+                  :key="index"
+                  style="cursor: pointer;margin-bottom:10px;font-size: 14px;"
+                >
+                  <i class="el-icon-link"></i>
+                  <a @click="downLoadFile(item)">{{item.fileName}}</a>
+                </div>
               </div>
             </div>
           </div>
@@ -37,10 +43,11 @@
 
 <script>
 import { app } from "../assets/js/app";
-import { laws } from "../assets/js/apiValue";
+import { laws, table } from "../assets/js/apiValue";
 export default {
   data() {
     return {
+      id: "",
       downLoadUrl: app.downLoadUrl,
       tableHight: "200px",
       isLoading: true,
@@ -48,7 +55,8 @@ export default {
       searchData: {
         regulationId: null
       },
-      data: null
+      data: null,
+      fileList: []
     };
   },
 
@@ -69,21 +77,25 @@ export default {
   },
 
   methods: {
-    getFileDetail() {
-      let finalUrl =
-        table.search_downLoadDetail +
-        "?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&module=table&sourceId=" +
-        guid;
+    getFileDetail(guid, id) {
+      let _this = this;
+      _this.fileList = [];
+      app.getFileDetail(guid, id).then(req => {
+        _this.fileList = req.data;
+      });
+    },
+    downLoadFile(req) {
+      app.downLoadFile(req, this.id);
     },
     initData(id) {
-      console.log(888);
       let _this = this;
       _this.isLoading = true;
       app.post(laws.serach_lawsDetail + "?regulationId=" + id).then(req => {
         _this.isLoading = false;
         if (req.success) {
           _this.data = req.result;
-          console.log(_this.data);
+          _this.id = req.result.id;
+          _this.getFileDetail(req.result.guid, req.result.id);
         }
       });
     }

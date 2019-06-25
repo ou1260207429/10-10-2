@@ -19,7 +19,7 @@
                 <span style="float: right">{{ item.creationTime }}</span>
               </div>
             </div>
-            <el-row style="margin-top:40px;margin-bottom:25px;">
+            <el-row  v-if="total!=0" style="margin-top:40px;margin-bottom:25px;">
               <el-pagination
                 style="float:right;"
                 :page-size="pageSize.size"
@@ -88,7 +88,13 @@ export default {
      * 下载表格
      */
     downList(guid, id) {
-      app.getFileDetail(guid, id);
+      app.getFileDetail(guid, id).then(req => {
+        if (req.data.length == 0) {
+          app.alert("无附件可下载");
+        } else {
+          app.downLoadFile(req.data[0], id);
+        }
+      });
     },
     /**
      * 分页

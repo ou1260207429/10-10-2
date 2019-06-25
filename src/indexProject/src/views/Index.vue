@@ -267,9 +267,12 @@ export default {
      * 下载表格
      */
     downList(guid, id) {
-      app.getFileDetail(guid, id).then(req=>{
-        app.downLoadFile(req,id)
-        console.log(req)
+      app.getFileDetail(guid, id).then(req => {
+        if (req.data.length == 0) {
+          app.alert("无附件可下载");
+        }else{
+        app.downLoadFile(req.data[0], id);
+        }
       });
     }
   }
