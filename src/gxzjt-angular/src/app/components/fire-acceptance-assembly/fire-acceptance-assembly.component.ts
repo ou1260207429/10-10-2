@@ -54,14 +54,8 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
-<<<<<<< HEAD
-    this.childOuter.emit(this.f);
-    this.getAreaDropdown();
-    console.log(this.data)
-=======
     this.childOuter.emit(this.f); 
     this.getAreaDropdown(); 
->>>>>>> e285d9a8030a18159acfebfe17c5e68b34870216
   }
 
   /**

@@ -1,5 +1,5 @@
 // import { HttpClient} from '@angular/common/http';
-import { Component, Input, Output, EventEmitter ,ViewEncapsulation} from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 
 import { Observable, Observer } from 'rxjs';
@@ -40,7 +40,7 @@ import { HomeServiceProxy, EnterpriseDto } from '@shared/service-proxies/service
       (ngModelChange)="onChange($event)"
     />
     <nz-autocomplete nzBackfill #auto>
-      <nz-auto-option *ngFor="let option of orgList" [nzValue]="option">
+      <nz-auto-option *ngFor="let option of orgList" [nzValue]="option.name">
         {{ option.name }}
       </nz-auto-option>
     </nz-autocomplete>
@@ -68,7 +68,7 @@ export class SelectorOrgComponent {
 
     @Input()
     @Output()
-    inputOrg :string ;
+    inputOrg: string;
 
 
     @Output()
