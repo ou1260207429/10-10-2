@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
-import { STColumn, STComponent } from '@delon/abc';
+import { STColumn, STComponent, STChange } from '@delon/abc';
 import { UserServices } from 'services/user.services';
 import { PublicModel } from 'infrastructure/public-model';
+import { timeTrans } from 'infrastructure/regular-expression';
+import { AppSessionService } from '@shared/session/app-session.service';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-userright-rolelist',
@@ -15,6 +18,7 @@ export class UserrightRolelistComponent implements OnInit {
   url = `/user`;
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
+    { title: '编号', index: 'id.value', type: 'checkbox' },
     { title: '商户编号', index: 'merchantId' },
     { title: '菜单编号', index: 'menuId' },
     { title: '角色名称', index: 'name' },
@@ -30,9 +34,10 @@ export class UserrightRolelistComponent implements OnInit {
       buttons: [
         {
           text: '查看', click: (item: any) => {
+            this.title = "查看用户角色信息"
             this.addVisible = true;
             this.operate = 2
-            this.addForm = item;
+            this.filterData(item)
           }
         },
         {
@@ -40,19 +45,15 @@ export class UserrightRolelistComponent implements OnInit {
             this.title = "编辑用户角色"
             this.operate = 1
             this.addVisible = true;
-            this.addForm = item;
+            this.filterData(item)
             this.editId = item.id
 
           }
         },
         {
           text: '删除', click: (item: any) => {
-            this._publicModel.isDeleteModal(() => {
-              this._userServices.deleteRoles(item.id).subscribe(data => {
-                this.initTable();
-
-              })
-            });
+            this.deleteList = [item.id]
+            this.deleteData()
           }
         },
       ]
@@ -63,8 +64,10 @@ export class UserrightRolelistComponent implements OnInit {
   // }
   addForm: any = {
 
-  }; searchForm: any = {
-
+  };
+  searchForm: any = {
+    page: 1,
+    size: 10
   }
   editId: any;
   title = "新增用户角色"//弹框标题
@@ -72,36 +75,28 @@ export class UserrightRolelistComponent implements OnInit {
   pageSize = 50;
   isSearchForm = false;//加载条显示
   hiddenFliter = false;//查询条件显示
+  deleteList: any[];
 
-  constructor(private _publicModel: PublicModel, private _userServices: UserServices) {
-    this.data = [
-      {
-        id: 1,
-        name: "角色名称",
-        isEnabled: true,
-        version: 1,
-        merchantId: 1,
-        menuId: 1,
-        icon: 1,
-        sortId: 1,
-      }
-    ]
-
-
+  constructor(private message: NzMessageService, public _appSessionService: AppSessionService, private _publicModel: PublicModel, private _userServices: UserServices) {
   }
 
   ngOnInit() {
-    //  this.initTable()
-     }
+    this.initTable()
+  }
 
   /**
    * 获取表格数据
    */
   initTable() {
-    let params = {
-
-    }
-    this._userServices.queryRoles(params).subscribe(data => {
+    this.data = []
+    this._userServices.queryRoles(this.searchForm).subscribe(data => {
+      if (data.data) {
+        data.data.forEach(element => {
+          if (element.creationTime) {
+            element.creationTime = timeTrans(Date.parse(element.creationTime) / 1000, 'yyyy-MM-dd', '-')
+          }
+        });
+      }
       this.data = data.data;
     })
   }
@@ -114,27 +109,56 @@ export class UserrightRolelistComponent implements OnInit {
     this.addVisible = true;
   }
   save() {
-    if (this.operate != 2) {
-      let params = this.addForm.value
-      if (this.operate == 0) {
-        this._userServices.addRoles(params).subscribe(data => {
-          this.data = data.data;
-        })
-      } else if (this.operate == 1) {
-        params.id = this.editId;
-        this._userServices.editRoles(params).subscribe(data => {
-          this.data = data.data;
-        })
-      }
-    } else {
-      this.addVisible = false;
-    }
+    if (this.operate == 0) {
+      let params = Object.assign({ merchantId: this._appSessionService.user.merchantId }, this.addForm)
 
+      this._userServices.addRoles(params).subscribe(data => {
+        if (data.result == 0) {
+          this.message.success("新增成功");
+          this.initTable();
+          this.handleCancel();
+        }
+      })
+    } else if (this.operate == 1) {
+      let params = Object.assign({}, this.addForm)
+      this._userServices.editRoles(params).subscribe(data => {
+        if (data.result == 0) {
+          this.message.success("修改成功");
+          this.initTable();
+          this.handleCancel();
+        }
+      })
+    }
+  }
+  filterData(obj) {
+    console.log(obj)
+    this.addForm = {
+      id: obj.id,
+      menuId: obj.menuIdd,
+      icon: obj.icon,
+      name: obj.name,
+      isEnabled: obj.isEnabled,
+      sortId: obj.sortId,
+      version: obj.version,
+    }
   }
   handleCancel() {
     this.addVisible = false;
-    //   this.addForm.reset()
+    this.addForm = {};
   }
-
-
+  deleteData() {
+    this._publicModel.isDeleteModal(() => {
+      this._userServices.deleteStation({ ids: this.deleteList }).subscribe(data => {
+        this.initTable();
+      })
+    });
+  }
+  changeDelete(e: STChange) {
+    if (e.checkbox) {
+      this.deleteList = [];
+      e.checkbox.forEach(element => {
+        this.deleteList.push(element.id)
+      });
+    }
+  }
 }
