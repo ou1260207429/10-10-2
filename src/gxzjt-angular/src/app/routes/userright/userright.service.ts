@@ -8,14 +8,31 @@ type EntityResponseType = HttpResponse<any>;
   providedIn: 'root',
 })
 export class UserRightService {
-  constructor(private http: _HttpClient, private _http: HttpClient) {}
+  constructor(private http: _HttpClient, private _http: HttpClient) { }
 
-  //获取用户信息
+  //获取用户列表信息
   GetUserDtoList(model?: any): Observable<any> {
     return this.http.post(PANGBO_SERVICES_URL + 'api/User/GetUserDtoList', model);
   }
-  login(model){
-    return this.http.post(PANGBO_SERVICES_URL +'api/User/Register',model);
+  //获取用户详细
+  Details(model?: any): Observable<any> {
+    return this.http.get(PANGBO_SERVICES_URL + 'api/User/Details', model);
+  }
+  //获取岗位下拉数据
+  Position(): Observable<any> {
+    return this.http.get(PANGBO_SERVICES_URL + 'api/Position/DropDownData', );
+  }
+   //获取岗位下拉数据
+  Role(): Observable<any> {
+    return this.http.get(PANGBO_SERVICES_URL + 'api/Role/DropDownData', );
+  }
+  //添加用户
+  Add(model?: any): Observable<any> {
+    return this.http.post(PANGBO_SERVICES_URL + 'api/User/Add',model );
+  }
+  //编辑用户
+  Edit(model?: any): Observable<any> {
+    return this.http.post(PANGBO_SERVICES_URL + 'api/User/Edit',model );
   }
 }
 

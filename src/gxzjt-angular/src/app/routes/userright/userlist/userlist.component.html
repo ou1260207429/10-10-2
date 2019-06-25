@@ -3,18 +3,21 @@
     <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
         type="{{ hiddenFliter?'down':'up'}}"></i>{{ hiddenFliter?'展开条件':'收起条件'}}</button>
     <button (click)="refresh()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
+    <button (click)="toadd()" nz-button nzType="default">添加用户</button>
   </ng-template>
 </page-header>
 <nz-card>
 
   <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
-    <input nz-input  formControlName="userName" name='userName' placeholder="请输入用户名称" class="search_menu_input">
+    <input nz-input  formControlName="eName" name='eName' placeholder="请输入用户名称" class="search_menu_input">
     <button nz-button (click)="resetForm()" class="search_menu">重置</button>
     <button nz-button (click)="search()" nzType="primary">搜索</button>
   </form>
 
-  <!-- <st #st [data]="formResultData" [columns]="columns"></st> -->
-
+  <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns"></st>
+  <!-- <st #st *ngIf="formResultData" [data]="formResultData.data" [req]="{params: params}" [columns]="columns" [pi]="params.page"
+  [ps]="params.size" [page]="pageConfig" [total]="data.totalCount"></st> -->
   <!-- <br>
   <nz-pagination [nzPageIndex]="2" [nzTotal]="500" nzShowQuickJumper></nz-pagination> -->
 </nz-card>
+

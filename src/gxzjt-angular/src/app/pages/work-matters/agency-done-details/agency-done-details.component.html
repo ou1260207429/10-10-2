@@ -9,21 +9,22 @@
   <div [ngClass]="{hide: selectedIndex != 0}">
 
     <!-- 表单JSON -->
-    <app-fire-design-declare-assembly [errorData]="showError" *ngIf="formJson && flowPathType ==1" [data]="formJson"
+    <app-fire-design-declare-assembly  [useNatureSelect]="useNatureSelect" [errorData]="showError" *ngIf="formJson && flowPathType ==1" [data]="formJson"
       type=1>
     </app-fire-design-declare-assembly>
 
-    <app-fire-acceptance-assembly [errorData]="showError" [data]="formJson" type=1 *ngIf="formJson && flowPathType ==2">
+    <app-fire-acceptance-assembly  [useNatureSelect]="useNatureSelect" [errorData]="showError" [data]="formJson" type=1 *ngIf="formJson && flowPathType ==2">
     </app-fire-acceptance-assembly>
 
-    <app-completed-acceptance-assembly [data]="formJson" type=1 *ngIf="formJson && flowPathType ==3">
+    <app-completed-acceptance-assembly  [useNatureSelect]="useNatureSelect" [data]="formJson" type=1 *ngIf="formJson && flowPathType ==3">
     </app-completed-acceptance-assembly>
     <table class="tables" style="box-sizing: border-box;" *ngIf="formDto">
       <tr>
         <td rowspan='20'>
 
           <div *ngIf="examineFormDto">
-            <div *ngFor="let item of examineFormDto.flowNodeItems" style="text-align: left;font-size: 15px;line-height: 40px;">
+            <div *ngFor="let item of examineFormDto.flowNodeItems"
+              style="text-align: left;font-size: 15px;line-height: 40px;">
               <div *ngIf="item.isDisplayFile">
                 <i nz-icon type="link" nzTheme="outline" style="margin-right: 10px;"></i><a
                   [href]="item.fileUrl">{{item.fileName}}</a>
@@ -124,6 +125,27 @@
         </table>
       </div>
     </form>
+
+    <div *ngIf="curNodeName!='大厅受理'">
+      <form nz-form se-container="4" class="customForm">
+
+        <se label="类型" col="1">
+          <nz-radio-group [(ngModel)]="tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType" name="applyType">
+            <label nz-radio nzValue="8">指定下个节点审批人</label>
+            <label nz-radio nzValue="3">转派</label>
+          </nz-radio-group>
+        </se>
+
+        <se label="添加审批人" col="1" *ngIf="tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType">
+          <nz-spin [nzSpinning]="!selectMultiple"></nz-spin>
+          <nz-select *ngIf="selectMultiple" class="choiceSelect" [nzDisabled]="true" nzMode="multiple"
+            (click)="goChoicePerson()" style="width: 100%" name="choicePerson" nzPlaceHolder="请选择人"
+            [nzServerSearch]="true" [(ngModel)]="selectMultiple">
+            <nz-option [nzLabel]="box" [nzValue]="box" *ngFor="let box of selectMultiple"></nz-option>
+          </nz-select>
+        </se>
+      </form>
+    </div>
 
     <div class="textCenter" style="margin-bottom: 40px;" *ngIf="isLoginPerson">
       <button nz-button nzType="primary" (click)="save(true)"
