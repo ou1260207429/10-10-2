@@ -23,10 +23,10 @@ export class UserrightRolelistComponent implements OnInit {
     // { title: '菜单编号', index: 'menuId' },
     { title: '角色名称', index: 'name' },
     // { title: '图标', index: 'icon' },
-    { title: '启用', index: 'isEnabled' , type: 'tag', tag: {
+    { title: '启用', index: 'isEnabled' ,type: 'tag', tag: {
       true: { text: '是', color: 'red' },
       false: { text: '否', color: 'green' },
-    }},
+    } },
     { title: '排序号', index: 'sortId' },
     // { title: '创建时间', index: 'creationTime' },
     // { title: '创建人', index: 'creatorId' },
