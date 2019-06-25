@@ -22,7 +22,12 @@ export class UserrightPostworkComponent implements OnInit {
     // { title: '商户编号', index: 'merchantId' },
     // { title: '应用程序编号', index: 'appId' },
     { title: '岗位名称', index: 'name' },
-    { title: '启用', index: 'isEnabled' },
+    {
+      title: '启用', index: 'isEnabled', type: 'tag', tag: {
+        true: { text: '是', color: 'red' },
+        false: { text: '否', color: 'green' },
+      }
+    },
     { title: '排序号', index: 'sortId' },
     // { title: '创建人', index: 'creatorId' },
     // { title: '创建人', index: 'creatorId' },
