@@ -54,8 +54,8 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
-    this.childOuter.emit(this.f); 
-    this.getAreaDropdown(); 
+    this.childOuter.emit(this.f);
+    this.getAreaDropdown();
   }
 
   /**
@@ -123,20 +123,16 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     this.uoloadIndex = index
   }
 
-  designUnitList = [];
-  isdesignUnitLoading = false;
-
-  onSearchDesignUnit(item) {
 
 
-  }
 
-
-  @ViewChild('design_org')
-  design_org: SelectorOrgComponent;
-
-  onSelectOrgItem(res){
+  onSelectOrgItem(res, item) {
     console.log(res);
+    console.log(item);
+    item.qualificationLevel=res.qualificationLevel;
+    item.contacts=res.contact;
+    item.contactsNumber=res.contactPhone;
+    item.legalRepresentative=res.leader;
 
   }
 
