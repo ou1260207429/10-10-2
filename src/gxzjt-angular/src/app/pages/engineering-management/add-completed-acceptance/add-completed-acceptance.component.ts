@@ -385,6 +385,10 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   form: FormGroup
 
   butNzLoading: boolean = false;
+
+  //使用性质
+  useNatureSelect
+
   constructor(private _appSessionService: AppSessionService,
     private _flowServices: FlowServices,
     private _eventEmiter: EventEmiter,
@@ -416,7 +420,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       if (data.formJson!=null && data.formJson!="") {
         this.data = JSON.parse(data.formJson);
       }
-      console.log(this.data)
+      this.useNatureSelect = data.natures
     })
   }
 
@@ -433,7 +437,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this.flowFormDto.projectTypeStatu = 2;
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.butNzLoading = false;
-      this._eventEmiter.emit('draftsComponentInit', []); 
+      this._eventEmiter.emit('draftsComponentInit', []);
       this.flowFormDto.projectId = data;
       this._NzModalService.success({
         nzTitle: '操作提示',

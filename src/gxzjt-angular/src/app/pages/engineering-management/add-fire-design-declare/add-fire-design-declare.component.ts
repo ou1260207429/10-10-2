@@ -19,7 +19,7 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 @Component({
   selector: 'app-add-fire-design-declare',
   templateUrl: './add-fire-design-declare.component.html',
-  
+
 })
 export class AddFireDesignDeclareComponent extends PublicFormComponent implements OnInit {
   flowFormQueryDto = new FlowFormQueryDto();
@@ -533,7 +533,11 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
   butNzLoading: boolean = false;
   //子组件的表单对象
   form: FormGroup
-  constructor(private _eventEmiter: EventEmiter,private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
+
+  //使用性质
+  useNatureSelect
+
+  constructor(private _eventEmiter: EventEmiter, private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     super();
     this.flowFormQueryDto.flowType = 1;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
@@ -561,12 +565,12 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
    * 获取特殊工程列表
    */
   post_GetFlowFormData() {
-    //this.data = '';
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
       if (data.formJson!=null && data.formJson!="") {
         this.data = JSON.parse(data.formJson);
       }
-      console.log(this.data);
+      this.useNatureSelect = data.natures
+      console.log(data)
     })
   }
 
@@ -662,7 +666,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
           this.message.success('提交成功')
           this._eventEmiter.emit('fireDesignComponentInit', []);
           history.go(-1)
-        },error=>{
+        }, error => {
           this.butNzLoading = false;
         })
       })
@@ -682,14 +686,14 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 1;
-    this.flowFormDto.projectTypeStatu = 0;  
+    this.flowFormDto.projectTypeStatu = 0;
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
       this.message.success('保存成功')
       history.go(-1)
-      this._eventEmiter.emit('draftsComponentInit', []); 
+      this._eventEmiter.emit('draftsComponentInit', []);
       this.butNzLoading = false;
-    },error=>{
+    }, error => {
       this.butNzLoading = false;
     })
   }

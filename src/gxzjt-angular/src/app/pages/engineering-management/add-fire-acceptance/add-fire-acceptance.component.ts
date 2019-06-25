@@ -208,8 +208,7 @@ export class AddFireAcceptanceComponent implements OnInit {
       if (data.formJson!=null && data.formJson!="") {
         this.data = JSON.parse(data.formJson);
       }
-      this.useNatureSelect = data.natures
-      console.log(this.useNatureSelect)
+      this.useNatureSelect = data.natures 
     })
   }
 
