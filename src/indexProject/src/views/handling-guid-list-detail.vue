@@ -20,7 +20,6 @@
                 <p style="text-align: center;color:#A3A3A3">发布日期：{{data.creationTime}}</p>
                 <div v-html="data.content" style="padding:20px;margin-bottom:50px;"></div>
               </div>
-              <div v-else style="width:100%;height:300px;position:relative;"></div>
             </el-col>
             <el-col :span="7">
               <img style="width:100%;" src="../assets/images/办事指南详情_03.jpg" alt>
@@ -92,7 +91,23 @@
                 </el-row>
               </div>
             </el-col>
+          
           </el-row>
+          <rl-row>
+             <div v-if="fileList.length>0" style="margin-top:20px;padding-left:30px;margin-bottom:20px;">
+              <p style="margin-bottom:10px;font-weight: bold;">相关文件下载</p>
+              <div>
+                <div
+                  v-for="(item,index) in fileList"
+                  :key="index"
+                  style="cursor: pointer;margin-bottom:10px;font-size: 14px;"
+                >
+                  <i class="el-icon-link"></i>
+                  <a @click="downLoadFile(item)">{{item.fileName}}</a>
+                </div>
+              </div>
+            </div>
+          </rl-row>
         </el-card>
       </el-row>
     </div>
@@ -107,6 +122,9 @@ import Vue from "vue";
 export default {
   data() {
     return {
+      id: "",
+      downLoadUrl: app.downLoadUrl,
+      fileList: [],
       tableHight: "450px",
       downLoadUrl: app.downLoadUrl,
       path: "",
@@ -180,6 +198,8 @@ export default {
             "YYYY-MM-DD"
           );
         }
+        _this.id = req.result.id;
+        _this.getFileDetail(req.result.guid, req.result.id);
         _this.data = req.result;
       });
     },
@@ -197,6 +217,17 @@ export default {
           }
         });
       });
+    },
+    getFileDetail(guid, id) {
+      let _this = this;
+      _this.fileList = [];
+
+      app.getFileDetail(guid, id).then(req => {
+        _this.fileList = req.data;
+      });
+    },
+    downLoadFile(req) {
+      app.downLoadFile(req, this.id);
     }
   }
 };

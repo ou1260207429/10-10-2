@@ -160,25 +160,19 @@ var app = {
         url: downLoadUrl + finalUrl,
       }).then(function (req) {
         resolve(req);
-        if (req.status == 200) {
-          resolve(req);
-          if (req.data.length == 0) {
-            app.alert('无附件可下载');
-          }
-        }
       })
     })
   },
 
   downLoadFile(data, id) {
+    let downLoadUrl = Vue.prototype.downLoadUrl;
     let link = document.createElement("a");
     link.style.display = "none";
-    link.href = downLoadUrl + table.download + "?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&id=" + data.data[0].id;
-    link.setAttribute("download", data.data[0].fileName);
+    link.href = downLoadUrl + table.download + "?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&id=" + data.id;
+    link.setAttribute("download", data.fileName);
     document.body.appendChild(link);
     link.click();
     app.countDownLoadTimes(id)
-
   },
 
 
