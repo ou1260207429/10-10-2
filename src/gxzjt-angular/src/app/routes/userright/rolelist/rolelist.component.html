@@ -7,37 +7,45 @@
   </ng-template>
 </page-header>
 <nz-card>
-
-  <form nz-form class="mb-md" [hidden]="hiddenFliter">
-
-
-    <button nz-button (click)="add()" nzType="primary" style="margin-right: 10px;margin-top: 10px;"><i nz-icon
-        type="plus"></i>增加</button>
-    <button nz-button style="margin-right: 10px;margin-top: 10px;">重置</button>
-
-    <button nz-button (click)="initTable()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>
+  <form [hidden]="hiddenFliter" nz-form nzLayout="inline" #f="ngForm" se-container="1">
+    <se>
+      <button nz-button (click)="add()" nzType="primary" style="margin-right: 10px;float: left;margin-top: 3px;"><i
+          nz-icon type="plus"></i>增加</button>
+      <input style="float: left;width:200px;margin-top: 3px;" placeholder="请输入角色名称" type="text" nz-input
+        [(ngModel)]="searchForm.name" name="name">
+      <button nz-button (click)="initTable()" nzType="primary" style="margin-left: 10px;">搜索</button>
+    </se>
   </form>
   <st #st [data]="data" [columns]="columns" [loading]="isSearchForm"></st>
   <br>
 
 </nz-card>
-<nz-modal nzOkDisabled="true" nzWidth="600" [(nzVisible)]="addVisible" [(nzTitle)]="title" (nzOnCancel)="handleCancel()"
-  (nzOnOk)="save()">
-  <form [formGroup]="addForm" nz-form #f="ngForm" se-container="1" style="margin: 50px 30px;
-    margin-left: 0;">
-    <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="no">岗位名称</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input [disabled]="operate==2" type="text" nz-input formControlName="no" placeholder="请输入岗位名称" />
-        <nz-form-explain *ngIf="addForm.get('no')?.dirty && addForm.get('no')?.errors">请输入岗位名称
-        </nz-form-explain>
-      </nz-form-control>
-    </nz-form-item>
-    <!-- 
-  
-      <se label="岗位名称" error="请填写" optionalHelp="" required>
-        <input [disabled]="operate==2" type="text" nz-input  formControlName="no"  name="no" [required]="operate==2"/>
-      </se> -->
+<nz-modal nzFooter=" " nzWidth="800" [(nzVisible)]="addVisible" [(nzTitle)]="title" (nzOnCancel)="handleCancel()">
+  <form nz-form #f="ngForm" se-container="1" gutter="32" style="padding-right: 50px;">
+    <se label="商户编号" error="请填写" required>
+      <input type="text" nz-input [(ngModel)]="addForm.merchantId" name="merchantId" required>
+    </se>
+    <se label="菜单编号" error="请填写" required>
+      <input type="text" nz-input [(ngModel)]="addForm.menuId" name="menuId" required>
+    </se>
+    <se label="角色名称" error="请填写" required>
+      <input type="text" nz-input [(ngModel)]="addForm.name" name="name" required>
+    </se>
+    <se label="图标" error="请填写" required>
+      <input type="text" nz-input [(ngModel)]="addForm.icon" name="icon" required>
+    </se>
+    <se label="启用" error="请填写" required>
+      <input type="text" nz-input [(ngModel)]="addForm.isEnabled" name="isEnabled" required>
+    </se>
+    <se label="排序号" error="请填写" required>
+      <input type="text" nz-input [(ngModel)]="addForm.sortId" name="sortId" required>
+    </se>
+    <se label="版本号" error="请填写" required>
+      <input type="text" nz-input [(ngModel)]="addForm.version" name="version" required>
+    </se>
+    <se>
+      <button nz-button nzType="primary" style="float: right" [disabled]="f.invalid" (click)="save()">确定</button>
+      <button nz-button nzType="primary" style="float: right;margin-right: 10px;" (click)="handleCancel()">取消</button>
+    </se>
   </form>
-
 </nz-modal>

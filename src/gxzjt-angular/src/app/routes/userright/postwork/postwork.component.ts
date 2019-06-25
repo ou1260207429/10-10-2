@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserServices } from 'services/user.services';
+import { PublicModel } from 'infrastructure/public-model';
 
 @Component({
   selector: 'app-userright-postwork',
   templateUrl: './postwork.component.html',
 })
 export class UserrightPostworkComponent implements OnInit {
-  disabled=1;
+  disabled = 1;
   //0新增，1编辑，2查看
   operate = 0;
   url = `/user`;
@@ -32,8 +32,7 @@ export class UserrightPostworkComponent implements OnInit {
           text: '查看', click: (item: any) => {
             this.addVisible = true;
             this.operate = 2
-            this.addForm.reset(item);
-            console.log( this.operate = 2)
+            this.addForm = item;
           }
         },
         {
@@ -41,26 +40,28 @@ export class UserrightPostworkComponent implements OnInit {
             this.title = "编辑用户角色"
             this.operate = 1
             this.addVisible = true;
-            this.addForm.reset(item);
+            this.addForm = item;
             this.editId = item.id
           }
         },
         {
           text: '删除', click: (item: any) => {
-            this._userServices.deleteStation(item.id).subscribe(data => {
-              this.data = data.data;
-            })
+            this._publicModel.isDeleteModal(() => {
+              this._userServices.deleteStation(item.id).subscribe(data => {
+                this.initTable();
+
+              })
+            });
           }
         },
       ]
     }
   ];
-  searchForm: FormGroup
   name: ""//查询条件
   addVisible = false;//弹框显示
   // addForm: any = {//新增数据
   // }
-  addForm: any={
+  addForm: any = {
 
   };
   editId: any;
@@ -69,20 +70,10 @@ export class UserrightPostworkComponent implements OnInit {
   pageSize = 50;
   isSearchForm = false;//加载条显示
   hiddenFliter = false;//查询条件显示
+  searchForm: any = {
 
-  constructor(private _userServices: UserServices, private fb: FormBuilder) {
-    // this.addForm = this.fb.group({
-    //   postId: [null, [Validators.required]],
-    //   merchantId: [null, [Validators.required]],
-    //   appId: [null, [Validators.required]],
-    //   name: [null, [Validators.required]],
-    //   isEnabled: [null, [Validators.required]],
-    //   sortId: [null, [Validators.required]],
-    //   creatorId: [null, [Validators.required]],
-    // });
-    this.searchForm = this.fb.group({
-      name: [null],
-    });
+  }
+  constructor(private _publicModel: PublicModel, private _userServices: UserServices) {
 
     this.data = [
       {

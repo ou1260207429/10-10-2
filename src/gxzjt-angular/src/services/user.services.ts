@@ -19,7 +19,7 @@ export class UserServices {
      */
 
     queryStation(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/Upload/Upload", params
+        return this.http.post(PANGBO_SERVICES_URL + "api/getpositionsByPageAsync", params
         );
     }
     /**
@@ -27,7 +27,7 @@ export class UserServices {
  */
 
     addStation(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/createRoleAsync", params
+        return this.http.post(PANGBO_SERVICES_URL + "api/createPosition", params
         );
     }
     /**
@@ -35,7 +35,7 @@ export class UserServices {
    */
 
     editStation(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/updateRoleAsync", params
+        return this.http.post(PANGBO_SERVICES_URL + "api/updatePosition", params
         );
     }
     /**
@@ -43,7 +43,7 @@ export class UserServices {
       */
 
     deleteStation(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/deleteRoleByIdsAsync", params
+        return this.http.post(PANGBO_SERVICES_URL + "api/deletePositionByIdsAsync", params
         );
     }
 
@@ -58,7 +58,7 @@ export class UserServices {
         */
 
     queryRoles(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/Upload/Upload", params
+        return this.http.post(PANGBO_SERVICES_URL + "api/getRolesByPageAsync", params
         );
     }
     /**
