@@ -42,18 +42,27 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
             this.watchItem(record);
           },
         },
-        // {
-        //   text: '复查申请',
-        //   type: 'modal',
-        //   iif: record => (record.status  === 3 && (record.parentFlowId==null || record.parentFlowId==0)),//当状态是3即为不合格的时候显示此按钮，若需要方便调试可自己更改status的值改变按钮显示
-        //   click: (record: any, modal: any) => {
+        {
+          text: '重新申请',
+          type: 'modal',
+          iif: record => record.status  === 2 && record.parentFlowId!=null,
+          click: (record: any, modal: any) => {
+            this.router.navigate([`/app/engineering-management/addFireAcceptanceComponent/0/${record.projectId}/${record.id}`]);
+          },
+        },
+        {
+          text: '复查申请',
+          type: 'modal',
+          iif: record => (record.status  === 3 && (record.parentFlowId==null || record.parentFlowId==0)),//当状态是3即为不合格的时候显示此按钮，若需要方便调试可自己更改status的值改变按钮显示
+          click: (record: any, modal: any) => {
 
-        //     this.toreapply(record);
-        //   },
-        // },暂不知具体跳转先注释
+            this.toreapply(record);
+          },
+        },
         {
           text: '受理凭证',
           type: 'link',
+          iif: record => record.acceptAttachmentUrl!=null,
           // modal: {
           //   component: StatisticsAcceptCredentialsComponent,
           //   paramsName: 'record',
@@ -62,7 +71,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
             if(record.acceptAttachmentUrl){
               window.open(record.acceptAttachmentUrl)
             }else{
-              this.message.error('暂无受理凭证');
+              this.message.info('暂无受理凭证');
             }
 
           },
@@ -70,6 +79,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
         {
           text: '意见书',
           type: 'link',
+          iif: record => record.opinionAttachmentUrl!=null,
           // modal: {
           //   component: StatisticsPositionPaperComponent,
           //   paramsName: 'record',
@@ -78,7 +88,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
             if(record.opinionAttachmentUrl){
               window.open(record.opinionAttachmentUrl)
             }else{
-              this.message.error('暂无意见书');
+              this.message.info('暂无意见书');
             }
 
           },
@@ -185,7 +195,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.getList();
   }
   toreapply(item) {console.log(item);
-    this.router.navigate([`/app/work-matters/review-apply/${item.id}/2`]);
+    this.router.navigate([`/app/work-matters/review-apply/${item.id}/3`]);
   }
 
   watchItem(item) {
@@ -211,7 +221,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
    * 新增申报
    */
   addDeclare() {
-    this.router.navigate([`/app/engineering-management/addCompletedAcceptanceComponent/0/null`]);
+    this.router.navigate([`/app/engineering-management/addCompletedAcceptanceComponent/0/null/null`]);
   }
 
   /**

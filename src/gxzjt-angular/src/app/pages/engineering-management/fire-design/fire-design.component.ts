@@ -47,19 +47,26 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
             this.watchItem(record)
           },
         },
-        // {
-        //   text: '重新申请',
-        //   type: 'modal',
-        //   iif: record => record.status  === 3,
-        // },暂无跳转页面先注释
-        // {
-        //   text: '验收',
-        //   type: 'modal',
-        //   iif: record => record.status  === 4,
-        // },暂无跳转页面先注释
+        {
+          text: '重新申请',
+          type: 'modal',
+          iif: record => record.status  === 2 && record.parentFlowId!=null,
+          click: (record: any, modal: any) => {
+            this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/${record.projectId}/${record.id}`]);
+          },
+        },
+        {
+          text: '验收',
+          type: 'modal',
+          iif: record => record.status  === 4,
+          click: (record: any, modal: any) => {
+            this.router.navigate([`/app/engineering-management/addFireAcceptanceComponent/0/${record.projectId}/${record.id}`]);
+          },
+        },
         {
           text: '受理凭证',
           type: 'link',
+          iif: record => record.acceptAttachmentUrl!=null,
           // modal: {
           //   component: StatisticsAcceptCredentialsComponent,
           //   paramsName: 'record',
@@ -68,13 +75,14 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
             if(record.acceptAttachmentUrl){
               window.open(record.acceptAttachmentUrl)
             }else{
-              this.message.error('暂无受理凭证');
+              this.message.info('暂无受理凭证');
             }
           },
         },
         {
           text: '意见书',
           type: 'link',
+          iif: record => record.opinionAttachmentUrl!=null,
           // modal: {
           //   component: StatisticsPositionPaperComponent,
           //   paramsName: 'record',
@@ -83,7 +91,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
             if(record.opinionAttachmentUrl){
               window.open(record.opinionAttachmentUrl)
             }else{
-              this.message.error('暂无意见书');
+              this.message.info('暂无意见书');
             }
           },
         },
@@ -158,7 +166,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
   }
 
   addDeclare(){
-    this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/null`]);
+    this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/null/null`]);
   }
   /**
    * 点击查询
