@@ -6435,7 +6435,7 @@ export class ScreenServiceServiceProxy {
      * @param fireDataListQueryDto (optional) 
      * @return Success
      */
-    post_GetFireDataList(fireDataListQueryDto: FireDataListQueryDto | null | undefined): Observable<FireDataListDto> {
+    post_GetFireDataList(fireDataListQueryDto: FireDataListQueryDto | null | undefined): Observable<FireDataListDto[]> {
         let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetFireDataList";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -6458,14 +6458,14 @@ export class ScreenServiceServiceProxy {
                 try {
                     return this.processPost_GetFireDataList(<any>response_);
                 } catch (e) {
-                    return <Observable<FireDataListDto>><any>_observableThrow(e);
+                    return <Observable<FireDataListDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<FireDataListDto>><any>_observableThrow(response_);
+                return <Observable<FireDataListDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPost_GetFireDataList(response: HttpResponseBase): Observable<FireDataListDto> {
+    protected processPost_GetFireDataList(response: HttpResponseBase): Observable<FireDataListDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -6476,7 +6476,11 @@ export class ScreenServiceServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? FireDataListDto.fromJS(resultData200) : new FireDataListDto();
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(FireDataListDto.fromJS(item));
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -6484,7 +6488,7 @@ export class ScreenServiceServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FireDataListDto>(<any>null);
+        return _observableOf<FireDataListDto[]>(<any>null);
     }
 }
 
@@ -8750,6 +8754,7 @@ export class ReviewFormDto implements IReviewFormDto {
     projectName: string | undefined;
     projectCode: string | undefined;
     address: string | undefined;
+    shortAddress: string | undefined;
     recordFileCode: string | undefined;
     unqualifiedFileCode: string | undefined;
     situation: string | undefined;
@@ -8769,6 +8774,9 @@ export class ReviewFormDto implements IReviewFormDto {
     workFlow_TemplateInfo_Id: number | undefined;
     flowNo: string | undefined;
     area: string | undefined;
+    provinceName: string | undefined;
+    cityName: string | undefined;
+    regionAndCountyName: string | undefined;
 
     constructor(data?: IReviewFormDto) {
         if (data) {
@@ -8788,6 +8796,7 @@ export class ReviewFormDto implements IReviewFormDto {
             this.projectName = data["projectName"];
             this.projectCode = data["projectCode"];
             this.address = data["address"];
+            this.shortAddress = data["shortAddress"];
             this.recordFileCode = data["recordFileCode"];
             this.unqualifiedFileCode = data["unqualifiedFileCode"];
             this.situation = data["situation"];
@@ -8811,6 +8820,9 @@ export class ReviewFormDto implements IReviewFormDto {
             this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
             this.flowNo = data["flowNo"];
             this.area = data["area"];
+            this.provinceName = data["provinceName"];
+            this.cityName = data["cityName"];
+            this.regionAndCountyName = data["regionAndCountyName"];
         }
     }
 
@@ -8830,6 +8842,7 @@ export class ReviewFormDto implements IReviewFormDto {
         data["projectName"] = this.projectName;
         data["projectCode"] = this.projectCode;
         data["address"] = this.address;
+        data["shortAddress"] = this.shortAddress;
         data["recordFileCode"] = this.recordFileCode;
         data["unqualifiedFileCode"] = this.unqualifiedFileCode;
         data["situation"] = this.situation;
@@ -8853,6 +8866,9 @@ export class ReviewFormDto implements IReviewFormDto {
         data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
         data["flowNo"] = this.flowNo;
         data["area"] = this.area;
+        data["provinceName"] = this.provinceName;
+        data["cityName"] = this.cityName;
+        data["regionAndCountyName"] = this.regionAndCountyName;
         return data; 
     }
 
@@ -8872,6 +8888,7 @@ export interface IReviewFormDto {
     projectName: string | undefined;
     projectCode: string | undefined;
     address: string | undefined;
+    shortAddress: string | undefined;
     recordFileCode: string | undefined;
     unqualifiedFileCode: string | undefined;
     situation: string | undefined;
@@ -8891,6 +8908,9 @@ export interface IReviewFormDto {
     workFlow_TemplateInfo_Id: number | undefined;
     flowNo: string | undefined;
     area: string | undefined;
+    provinceName: string | undefined;
+    cityName: string | undefined;
+    regionAndCountyName: string | undefined;
 }
 
 export class ProjectCompany implements IProjectCompany {
@@ -15052,7 +15072,7 @@ export interface IYearApplyNumberQueryDto {
 }
 
 export class FireDataListQueryDto implements IFireDataListQueryDto {
-    statisticsType: number | undefined;
+    startDateTime: moment.Moment | undefined;
     dateTimeNow: moment.Moment | undefined;
     processedStatus: number | undefined;
 
@@ -15067,7 +15087,7 @@ export class FireDataListQueryDto implements IFireDataListQueryDto {
 
     init(data?: any) {
         if (data) {
-            this.statisticsType = data["statisticsType"];
+            this.startDateTime = data["startDateTime"] ? moment(data["startDateTime"].toString()) : <any>undefined;
             this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
             this.processedStatus = data["processedStatus"];
         }
@@ -15082,7 +15102,7 @@ export class FireDataListQueryDto implements IFireDataListQueryDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["statisticsType"] = this.statisticsType;
+        data["startDateTime"] = this.startDateTime ? this.startDateTime.toISOString() : <any>undefined;
         data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
         data["processedStatus"] = this.processedStatus;
         return data; 
@@ -15097,7 +15117,7 @@ export class FireDataListQueryDto implements IFireDataListQueryDto {
 }
 
 export interface IFireDataListQueryDto {
-    statisticsType: number | undefined;
+    startDateTime: moment.Moment | undefined;
     dateTimeNow: moment.Moment | undefined;
     processedStatus: number | undefined;
 }
@@ -15107,6 +15127,7 @@ export class FireDataListDto implements IFireDataListDto {
     timeoutCountNumber: number | undefined;
     aTimeByCountNumber: number | undefined;
     avgCompleteTimeCountNumber: number | undefined;
+    flowPathType: number | undefined;
     items: CityFireDataList[] | undefined;
 
     constructor(data?: IFireDataListDto) {
@@ -15124,6 +15145,7 @@ export class FireDataListDto implements IFireDataListDto {
             this.timeoutCountNumber = data["timeoutCountNumber"];
             this.aTimeByCountNumber = data["aTimeByCountNumber"];
             this.avgCompleteTimeCountNumber = data["avgCompleteTimeCountNumber"];
+            this.flowPathType = data["flowPathType"];
             if (data["items"] && data["items"].constructor === Array) {
                 this.items = [];
                 for (let item of data["items"])
@@ -15145,6 +15167,7 @@ export class FireDataListDto implements IFireDataListDto {
         data["timeoutCountNumber"] = this.timeoutCountNumber;
         data["aTimeByCountNumber"] = this.aTimeByCountNumber;
         data["avgCompleteTimeCountNumber"] = this.avgCompleteTimeCountNumber;
+        data["flowPathType"] = this.flowPathType;
         if (this.items && this.items.constructor === Array) {
             data["items"] = [];
             for (let item of this.items)
@@ -15166,11 +15189,13 @@ export interface IFireDataListDto {
     timeoutCountNumber: number | undefined;
     aTimeByCountNumber: number | undefined;
     avgCompleteTimeCountNumber: number | undefined;
+    flowPathType: number | undefined;
     items: CityFireDataList[] | undefined;
 }
 
 export class CityFireDataList implements ICityFireDataList {
     cityName: string | undefined;
+    flowPathType: number | undefined;
     completeCountNumber: number | undefined;
     timeoutCountNumber: number | undefined;
     aTimeByCountNumber: number | undefined;
@@ -15188,6 +15213,7 @@ export class CityFireDataList implements ICityFireDataList {
     init(data?: any) {
         if (data) {
             this.cityName = data["cityName"];
+            this.flowPathType = data["flowPathType"];
             this.completeCountNumber = data["completeCountNumber"];
             this.timeoutCountNumber = data["timeoutCountNumber"];
             this.aTimeByCountNumber = data["aTimeByCountNumber"];
@@ -15205,6 +15231,7 @@ export class CityFireDataList implements ICityFireDataList {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["cityName"] = this.cityName;
+        data["flowPathType"] = this.flowPathType;
         data["completeCountNumber"] = this.completeCountNumber;
         data["timeoutCountNumber"] = this.timeoutCountNumber;
         data["aTimeByCountNumber"] = this.aTimeByCountNumber;
@@ -15222,6 +15249,7 @@ export class CityFireDataList implements ICityFireDataList {
 
 export interface ICityFireDataList {
     cityName: string | undefined;
+    flowPathType: number | undefined;
     completeCountNumber: number | undefined;
     timeoutCountNumber: number | undefined;
     aTimeByCountNumber: number | undefined;
