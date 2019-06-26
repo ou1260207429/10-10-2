@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
-import { STColumn, STComponent } from '@delon/abc';
+import { STColumn, STComponent ,STPage} from '@delon/abc';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { UserRightService } from '../userright.service';
 import { Router } from '@angular/router';
+import { timeTrans } from 'infrastructure/regular-expression';
+import { NzMessageService } from 'ng-zorro-antd';
+import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 
 @Component({
   selector: 'app-userright-userlist',
@@ -12,6 +15,9 @@ import { Router } from '@angular/router';
 })
 export class UserrightUserlistComponent implements OnInit {
   hiddenFliter = false;
+  params={
+
+  }
   submodel = {
 
   }//添加用户模型
@@ -24,9 +30,29 @@ export class UserrightUserlistComponent implements OnInit {
   postmodel = {
     eName:'',
     page: 1,
-    pageSize: 1000,
+    pageSize: 10,
   };
   formResultData;
+//锁定用户相关
+ isAddProducttyepe=false
+ isAddProducttyepe1=false
+ isAddProducttyepe2=false
+ rangeTime=[];
+ lockmodel={
+  ID:'',
+  LockBeginTime:null,
+  LockEndTime:null
+ }
+//锁定用户相关
+//重置密码
+Password;
+Password2;
+restpasswordmoedl={
+  id:'',
+  newPassword:'',
+  confirmPassword:'',
+}
+pageConfig: STPage = publicPageConfig;
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     {
@@ -47,6 +73,35 @@ export class UserrightUserlistComponent implements OnInit {
             this.toedit(record);
 
           },
+
+        },
+        {
+          text: '重置密码',
+          type: 'modal',
+          click: (record: any, modal: any) => {
+            this.restpasswordmoedl.id=record.id;
+            this.isAddProducttyepe2=true;
+          },
+
+        },
+        {
+          text: '锁定',
+          type: 'modal',
+          click: (record: any, modal: any) => {
+            this.isAddProducttyepe=true
+            this.lockmodel.ID=record.id
+          },
+          iif: record => record.isLocked  === false,
+        },
+        {
+          text: '解锁',
+          type: 'modal',
+          click: (record: any, modal: any) => {
+            this.isAddProducttyepe1=true
+            this.lockmodel.ID=record.id
+            this.refresh();
+          },
+          iif: record => record.isLocked  === true,
         },
         {
           // icon: 'delete',
@@ -88,6 +143,7 @@ export class UserrightUserlistComponent implements OnInit {
       }
     },
     { title: '组织机构', index: 'organizationsName' },
+    { title: '岗位', index: 'positionNames' },
     { title: '角色名称', index: 'roleName' },
     {
       title: '性别', index: 'sex', type: 'tag', tag: {
@@ -95,6 +151,7 @@ export class UserrightUserlistComponent implements OnInit {
         1: { text: '女', },
       }
     },
+    { title: '注册时间',type:'date', index: 'registerTime' },
     {
       title: '',
       buttons: [
@@ -109,6 +166,7 @@ export class UserrightUserlistComponent implements OnInit {
     private formBuilder: FormBuilder,
     private UserRightService: UserRightService,
     private router: Router,
+    private message: NzMessageService,
   ) { }
 
   ngOnInit() {
@@ -183,6 +241,67 @@ export class UserrightUserlistComponent implements OnInit {
   tolook(record){
     this.router.navigate([`/app/userright/userlook` ,{record:record.id}]);
   }
+  lockuser(){
+
+  }
+
+  handleCancel(): void {
+
+    this.isAddProducttyepe = false;
+  }
+  subProducttype(): void {
+    this.lockmodel.LockBeginTime= timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
+    this.lockmodel.LockEndTime=timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";;
+    console.log(this.lockmodel)
+    this.UserRightService.Lock(this.lockmodel).subscribe(
+      res => {
+        this.message.success(res.message);
+        this.refresh();
+
+      },
+    );
+
+    this.isAddProducttyepe = false;
+  }
+  handleCancel1(): void {
+
+    this.isAddProducttyepe1 = false;
+  }
+  subProducttype1(): void {
+    this.lockmodel.LockBeginTime='';
+    this.lockmodel.LockEndTime='';
+    console.log(this.lockmodel)
+    this.UserRightService.Lock(this.lockmodel).subscribe(
+      res => {
+        this.message.success(res.message);
+        this.refresh();
+      },
+    );
+
+    this.isAddProducttyepe1 = false;
+  }
+  handleCancel2(): void {
+
+    this.isAddProducttyepe2 = false;
+  }
+  subProducttype2(): void {
+    if(this.Password==this.Password2){
+      this.restpasswordmoedl.newPassword=this.Password;
+      this.restpasswordmoedl.confirmPassword=this.Password2;
+
+      this.UserRightService.ResetPassword(this.restpasswordmoedl).subscribe(
+        res => {
+          this.message.success(res.message);
+          this.refresh();
+        },
+      );
+
+      this.isAddProducttyepe2 = false;
+    }else{
+      this.message.error("两次输入密码不一致");
+      return
+    }
 
 
+  }
 }

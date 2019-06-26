@@ -121,7 +121,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     this._publicServices.newUpload(formData, params).subscribe(data => {
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL + data.data[0].localUrl
+      this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
     })
     return false;
   };

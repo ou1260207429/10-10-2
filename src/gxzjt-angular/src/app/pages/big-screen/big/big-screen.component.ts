@@ -275,7 +275,7 @@ export class BigScreenComponent {
             dateTimeNow: new Date(),
             processedStatus: 0
         };
-        this.screenService.post_GetFireDataList(model).subscribe(res => {
+        this.screenService.post_GetFireDataList(model).subscribe((res:any) => {
             console.log(res);
             for (let i = 0; i < res.length - 1; i++) {
                 for (let j = 0; j < res.length - 1 - i; j++) {

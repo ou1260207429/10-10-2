@@ -144,6 +144,7 @@ export class StatisticsWarningCenterComponent implements OnInit {
 
     });
     // this.fliterForm.reset();
+    this.search();
   }
 
 

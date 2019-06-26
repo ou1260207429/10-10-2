@@ -22,8 +22,8 @@
           </td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>联系电话:</td>
           <td rowspan='1' colspan='7'>
-            <se error="请输入正确的电话号码">
-              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.projectNumber" pattern="^\d{11}$"
+            <se error="请输入数字">
+              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.projectNumber" pattern="^[0-9]*$"
                 name="projectNumber" required />
             </se>
           </td>
@@ -109,9 +109,9 @@
             </se>
           </td>
           <td rowspan='1' colspan='3'>
-            <se error="请输入正确的电话号码">
+            <se error="请输入数字">
               <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.constructionUnit.contactsNumber"
-                pattern="^\d{11}$" name="constructionUnitcontactsNumber" required />
+                pattern="^[0-9]*$" name="constructionUnitcontactsNumber" required />
             </se>
           </td>
         </tr>
@@ -122,9 +122,9 @@
             <se error="这是必填项">
               <!-- <input nz-input placeholder="请输入设计单位" [(ngModel)]="data.designUnit.name" name="designUnitname" required /> -->
               <nz-rj-selector-org [(ngModel)]="data.designUnit.name"
-              (onSelectorEvent)="onSelectOrgItem($event,data.designUnit)" placeHolder="请输入设计单位"
-              name="designUnitname" required="true" ngDefaultControl></nz-rj-selector-org>
-            
+                (onSelectorEvent)="onSelectOrgItem($event,data.designUnit)" placeHolder="请输入设计单位" name="designUnitname"
+                required="true" ngDefaultControl></nz-rj-selector-org>
+
             </se>
           </td>
           <td rowspan='1' colspan='4'>
@@ -140,8 +140,8 @@
             </se>
           </td>
           <td rowspan='1' colspan='3'>
-            <se error="请输入正确的电话号码">
-              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.designUnit.contactsNumber" pattern="^\d{11}$"
+            <se error="请输入数字">
+              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.designUnit.contactsNumber" pattern="^[0-9]*$"
                 name="designUnitcontactsNumber" required />
             </se>
           </td>
@@ -172,8 +172,8 @@
           </td>
           <td rowspan='1' colspan='3'>
 
-            <se error="请输入正确的电话号码">
-              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.contractingUnit.contactsNumber" pattern="^\d{11}$"
+            <se error="请输入数字">
+              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.contractingUnit.contactsNumber" pattern="^[0-9]*$"
                 name="contractingUnitcontactsNumber" required />
             </se>
           </td>
@@ -195,9 +195,9 @@
           <td rowspan='1' colspan='3'><input nz-input placeholder="请输入联系人" [(ngModel)]="data.subcontractors.contacts"
               name="contractingUnitcontacts" /></td>
           <td rowspan='1' colspan='3'>
-            <se error="请输入正确的电话号码">
+            <se error="请输入数字">
               <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.subcontractors.contactsNumber"
-                name="subcontractorscontactsNumber" pattern="^\d{11}$" />
+                name="subcontractorscontactsNumber" pattern="^[0-9]*$" />
             </se>
           </td>
         </tr>
@@ -216,9 +216,9 @@
           <td rowspan='1' colspan='3'><input nz-input placeholder="请输入联系人" [(ngModel)]="data.supervisoryUnit.contacts"
               name="supervisoryUnitcontacts" /></td>
           <td rowspan='1' colspan='3'>
-            <se error="请输入正确的电话号码">
+            <se error="请输入数字">
               <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.supervisoryUnit.contactsNumber"
-                name="supervisoryUnitcontactsNumber" pattern="^\d{11}$" />
+                name="supervisoryUnitcontactsNumber" pattern="^[0-9]*$" />
             </se>
           </td>
         </tr>
@@ -247,8 +247,8 @@
             </se>
           </td>
           <td rowspan='1' colspan='3'>
-            <se error="请输入正确的电话号码">
-              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.detectionUnit.contactsNumber" pattern="^\d{11}$"
+            <se error="请输入数字">
+              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.detectionUnit.contactsNumber" pattern="^[0-9]*$"
                 name="detectionUnitcontactsNumber" required />
             </se>
           </td>
