@@ -208,7 +208,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
   interval$: any;
   getCaptcha() {
-    let url = REGISTER_URL + "api/User/Register";
+    let url = REGISTER_URL + "api/User/Register?phoneNum" + this.loginService.authenticateModel.userNameOrEmailAddress;
     this.http.get(url).subscribe(res => {
       this.startCount();
     }
