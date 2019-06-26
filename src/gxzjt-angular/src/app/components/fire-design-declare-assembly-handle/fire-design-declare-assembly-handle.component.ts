@@ -6,7 +6,7 @@ import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import { ExamineFormDto, ProjectAttachment } from '@shared/service-proxies/service-proxies';
-
+import lodash from 'lodash'
 /**
  * 消防设计的表单模块的办理或者结果
  */
@@ -97,6 +97,7 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
     const projectAttachment = new ProjectAttachment();
     projectAttachment['name'] = file.name;
     projectAttachment.attachmentName = file.name;
+    projectAttachment['status'] = 'uploading'
     // projectAttachment.flieCode = tid; 
     this.examineFormDto.attachment.push(projectAttachment)
 
@@ -110,7 +111,15 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
     this._publicServices.newUpload(formData, params).subscribe(data => {
       const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)
       // this.examineFormDto.attachment[index].fileNo = data.data[0].id 
+
+      this.examineFormDto.attachment[index]['url'] = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
+      this.examineFormDto.attachment[index]['status'] = 'done'
+
       this.examineFormDto.attachment[index].fileUrl = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
+      const fileList = lodash.cloneDeep(this.examineFormDto.attachment);  
+
+      this.examineFormDto.attachment = []
+      this.examineFormDto.attachment = fileList 
     })
     return false;
   };

@@ -96,7 +96,7 @@ export class UserrightRolelistComponent implements OnInit {
       {
         operate: operate,
         title: title,
-        editName: "岗位名称",
+        editName: "角色名称",
         addForm: item,
       }
     ).subscribe((res: any) => {
