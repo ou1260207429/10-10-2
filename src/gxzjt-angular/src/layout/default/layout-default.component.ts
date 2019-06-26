@@ -106,10 +106,9 @@ export class LayoutDefaultComponent extends AppComponentBase
       if (evt instanceof NavigationError || evt instanceof NavigationCancel) {
         this.isFetching = false;
         if (evt instanceof NavigationError) {
-
           // this.message.error(`无法加载${evt.url}路由`);
           if (!this._TokenService.getToken()) {
-            this.message.info(`未登录，请先前往登录`);
+            this.message.info(`您未登录，请先前往登录`);
             router.navigate(['/account/login']);
 
           } else {
