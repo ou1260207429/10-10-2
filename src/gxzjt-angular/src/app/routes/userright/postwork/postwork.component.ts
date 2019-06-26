@@ -120,6 +120,7 @@ export class UserrightPostworkComponent implements OnInit {
   add() {
     this.operate = 0
     this.addVisible = true;
+    this.addForm.isEnabled=false;
   }
   save() {
     if (this.operate == 0) {

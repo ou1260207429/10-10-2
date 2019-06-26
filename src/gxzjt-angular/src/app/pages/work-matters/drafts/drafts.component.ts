@@ -34,7 +34,7 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
       title: '操作',
       buttons: [
         {
-          text: '执行', click: (record) => {
+          text: '编辑', click: (record) => {
 
 
             let url = `addFireDesignDeclareComponent`;
@@ -48,8 +48,15 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
         },
       ]
     },
-    { title: '表单编号', index: 'projectId' },
-    { title: '表单名称', index: 'projectName' },
+    { title: '项目编号', index: 'projectId' },
+    { title: '工程名称', index: 'projectName' },
+    { title: '建设单位', index: 'constructOrgName' },
+    { title: '流程类型', index: 'projectTypeStatu',format: (item: any) => `${item.projectTypeStatu?item.projectTypeStatu:404}`,type: 'tag', tag: {
+      404:{text:'设计审查',color: '' },
+      0: { text: '设计审查', color: '' },
+      1:{ text: '消防验收',color: '' },
+      2:{ text: '竣工备案',color: '' },
+    }},
   ];
 
   searchParam = new DraftQueryDto();

@@ -32,7 +32,7 @@
     <!-- <se label="菜单编号" error="请填写" required>
       <input type="text" nz-input [(ngModel)]="addForm.menuId" name="menuId" required>
     </se> -->
-    <se label="角色名称" error="请填写" required>
+    <se label="角色名称" required>
         <nz-select [disabled]="operate==2" *ngIf="operate==1" [(ngModel)]="addForm.name" name="name" nzAllowClear nzPlaceHolder="请选择">
             <nz-option *ngFor="let item of roleList" [nzValue]="item.text" [nzLabel]="item.text"></nz-option>
           </nz-select>
@@ -41,7 +41,7 @@
     <!-- <se label="图标" error="请填写" required>
       <input type="text" nz-input [(ngModel)]="addForm.icon" name="icon" required>
     </se> -->
-    <se label="启用" error="请填写" required>
+    <se label="启用" required>
       <nz-select [disabled]="operate==2" [(ngModel)]="addForm.isEnabled" name="isEnabled" nzAllowClear nzPlaceHolder="请选择">
         <nz-option [nzValue]="true" nzLabel="启用"></nz-option>
         <nz-option [nzValue]="false" nzLabel="不启用"></nz-option>
