@@ -6,7 +6,7 @@ import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayStr
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
-
+import lodash from 'lodash'
 /**
  * 竣工验收的表单模块
  */
@@ -107,7 +107,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     const tid = file.uid
     this.data.fileList[this.uoloadIndex].array.push({
       name: file.name,
-      status: 'done',
+      status: 'uploading',
       tid: file.uid,
     })
 
@@ -122,6 +122,11 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
       this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
+      this.data.fileList[this.uoloadIndex].array[index].status = 'done'
+      const fileList = lodash.cloneDeep(this.data.fileList);  
+
+      this.data.fileList = []
+      this.data.fileList = fileList 
     })
     return false;
   };

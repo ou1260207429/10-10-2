@@ -1,4 +1,4 @@
-import { ReuseTabService } from '@delon/abc/reuse-tab';
+
 import {
   Component,
   Injector,
@@ -15,6 +15,8 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { AbpSessionService } from '@abp/session/abp-session.service';
 import { _HttpClient } from '@delon/theme';
+
+import { ReuseTabService } from '@delon/abc';
 
 // import { NzModalService } from 'ng-zorro-antd';
 
@@ -61,13 +63,14 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     injector: Injector,
     private fb: FormBuilder,
     public loginService: LoginService,
-    private _sessionService: AbpSessionService,
-    private _sessionAppService: SessionServiceProxy,
+    // private _sessionService: AbpSessionService,
+    // private _sessionAppService: SessionServiceProxy,
     private _router: Router,
     public http: _HttpClient,
     // private modalService: NzModalService,
     private _TokenService: TokenService,
-    private _AppSessionService: AppSessionService
+    private _AppSessionService: AppSessionService,
+    private reuseTabService: ReuseTabService,
   ) {
     super(injector);
 
@@ -84,7 +87,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
       // location.href = location.href.replace('#/account/login', '#/app/');
       this._router.navigate(['/app/home/welcome']);
     }
-
+    this.reuseTabService.clear();
   }
 
 

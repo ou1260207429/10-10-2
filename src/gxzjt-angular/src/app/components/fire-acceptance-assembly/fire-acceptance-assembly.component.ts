@@ -7,7 +7,7 @@ import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import { DepFlags } from '@angular/compiler/src/core';
-
+import lodash from 'lodash'
 import { SelectorOrgComponent } from '@shared/components/selector/selector-org';
 
 /**
@@ -96,7 +96,7 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     const tid = file.uid
     this.data.fileList[this.uoloadIndex].array.push({
       name: file.name,
-      status: 'done',
+      status: 'uploading',
       tid: file.uid,
     })
 
@@ -111,6 +111,10 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
       this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
+      this.data.fileList[this.uoloadIndex].array[index].status = 'done'
+      const fileList = lodash.cloneDeep(this.data.fileList);  
+      this.data.fileList = []
+      this.data.fileList = fileList 
     })
     return false;
   };
