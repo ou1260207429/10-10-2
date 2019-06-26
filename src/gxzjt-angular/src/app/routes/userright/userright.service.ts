@@ -44,7 +44,7 @@ export class UserRightService {
   }
   //重置密码
   ResetPassword(model?: any): Observable<any> {
-    return this.http.get(PANGBO_SERVICES_URL + 'api/User/ResetPassword', model);
+    return this.http.post(PANGBO_SERVICES_URL + 'api/User/ResetPassword', model);
   }
 }
 

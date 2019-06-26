@@ -16,10 +16,11 @@ import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { AbpSessionService } from '@abp/session/abp-session.service';
 import { _HttpClient } from '@delon/theme';
 
-import { NzModalService } from 'ng-zorro-antd';
+// import { NzModalService } from 'ng-zorro-antd';
 
 import * as $ from 'jquery';
 
+import { AppSessionService } from '@shared/session/app-session.service';
 
 import { isPhone } from '@shared/utils/regex';
 
@@ -29,6 +30,7 @@ import {
 import { UrlHelper } from '@shared/helpers/UrlHelper';
 
 import { TokenService } from '@abp/auth/token.service';
+
 
 var checkCode: any;
 @Component({
@@ -63,8 +65,9 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     private _sessionAppService: SessionServiceProxy,
     private _router: Router,
     public http: _HttpClient,
-    private modalService: NzModalService,
-    private _TokenService: TokenService
+    // private modalService: NzModalService,
+    private _TokenService: TokenService,
+    private _AppSessionService: AppSessionService
   ) {
     super(injector);
 
@@ -169,7 +172,21 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
       this.submitting = true;
       this.loginService.authenticate(() => {
-        this.submitting = false;
+
+        this._AppSessionService.initUserInfo().then(() => {
+          /** 强制刷新导航栏url 跳转到首页 */
+          // location.href = location.href.replace('#/account/login', '#/app/');
+          this.submitting = false;
+          this._router.navigate(['#/app/home/welcome']);
+
+        }, err => {
+          this.modalService.warning({
+            nzTitle: '提示',
+            nzContent: '请完成拖动验证！'
+          });
+          this.submitting = false;
+        });
+
         this.resetSliter();
       });
     } else {

@@ -32,13 +32,14 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
 
     if (!this._sessionService.user || !this._tokenService.getToken()) {
 
-      this._router.navigate(['/account/login']);
+
       this._NzModalService.info({
         nzTitle: '提示',
         nzContent: '您未登录，请先前往登录',
       }
       );
-
+      if ("login".lastIndexOf(location.href) < 0)
+        this._router.navigate(['/account/login']);
       return false;
     }
 
