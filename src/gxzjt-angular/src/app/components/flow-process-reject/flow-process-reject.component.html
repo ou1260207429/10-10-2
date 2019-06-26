@@ -7,8 +7,12 @@
 
 <nz-radio-group [(ngModel)]="radioValue" *ngIf="data">
   <nz-timeline>
-    <nz-timeline-item *ngFor="let item of data;let index = index">{{item.nodeName}} <label nz-radio
-        nzValue="{{index}}"></label></nz-timeline-item>
+    <div *ngFor="let item of data;let index = index">
+      <nz-timeline-item *ngIf="index!=0&&index!=1">
+        {{item.nodeName}} <label nz-radio nzValue="{{index}}"></label>
+      </nz-timeline-item>
+    </div>
+
   </nz-timeline>
 </nz-radio-group>
 

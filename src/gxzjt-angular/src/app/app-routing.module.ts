@@ -69,7 +69,7 @@ const routes: Routes = [
       {
         path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule',
         data: {
-          role: [AppMenus.aclOrg,AppMenus.aclSys]
+          role: [AppMenus.aclOrg,AppMenus.aclCompany,AppMenus.aclSys] 
         },
 
       },

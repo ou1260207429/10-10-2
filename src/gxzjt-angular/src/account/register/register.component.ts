@@ -2,7 +2,7 @@
 import {
   Component,
   Injector,
-  
+
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -146,11 +146,16 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
 
   interval$: any;
   getCaptcha() {
-    // if (this.mobile.invalid) {
-    //   this.mobile.markAsDirty({ onlySelf: true });
-    //   this.mobile.updateValueAndValidity({ onlySelf: true });
-    //   return;
-    // }
+    let url = REGISTER_URL + "api/User/Register?phoneNum" + this.model.EId;
+    this.http.get(url).subscribe(res => {
+      this.startCount();
+    }
+
+    );
+
+  }
+
+  startCount() {
     this.count = 59;
     this.interval$ = setInterval(() => {
       this.count -= 1;
@@ -159,7 +164,6 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
       }
     }, 1000);
   }
-
 
 
 

@@ -2,7 +2,7 @@
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const IS_DEBUG=false;
+export const IS_DEBUG=true;
 
 export const environment = {
   // SERVER_URL: `http://222.84.250.158:8111/`,
