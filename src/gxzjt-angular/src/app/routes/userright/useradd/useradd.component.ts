@@ -32,6 +32,7 @@ export class UserrightUseraddComponent implements OnInit {
   defaultCheckedKeys = [];//控制树默认选择节点
   defaultSelectedKeys = [];
   defaultExpandedKeys = ['0-0', '0-0-0', '0-0-1'];
+  array;
 
   //控制所属组织机构树默认节点
   defaultCheckedKeys1=[];
@@ -79,7 +80,8 @@ export class UserrightUseraddComponent implements OnInit {
   getTreeData(){
     this.UserRightService.GetTreeData().subscribe(
       res => {
-        // this.nodes = res.data;
+        this.nodes = res.data;
+        console.log(this,this.nodes)
       },
     );
   }
@@ -140,10 +142,10 @@ export class UserrightUseraddComponent implements OnInit {
 
   }
   ret(){
+
     this.router.navigate([`/app/userright/userlist`]);
   }
   nzEvent(event: NzFormatEmitEvent): void {
-    console.log("可见数据域"+event.keys);
     this.submodel.userDataVisibilityIds=event.keys;
   }
   nzEventorg(event: NzFormatEmitEvent): void {

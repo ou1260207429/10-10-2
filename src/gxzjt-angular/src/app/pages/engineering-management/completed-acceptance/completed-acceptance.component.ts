@@ -98,11 +98,10 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     { title: '竣工验收备案申报编号', index: 'recordNumber' },
     { title: '工程名称', index: 'projectName' },
     { title: '建设单位', index: 'companyName' },
-    // { title: '是否被抽中', index: 'isSelected',format: (item: any) => `${item.isSelected==null?4001:item.isSelected}`,type: 'tag', tag: {
-    //   4001:{text:'是',color: 'green' },
-    //   true: { text: '是', color: '' },
-    //   false: { text: '否',color: 'red' },
-    // }},
+    { title: '是否被抽中', index: 'isSelected',format: (item: any) => `${item.isSelected==true?"是":(item.isSelected==false?"否":"是")}`,type: 'tag', tag: {
+      "是":{text:'是',color: 'green' },
+      "否": { text: '否',color: 'red' },
+    }},
     // { title: '验证码', index: '无此字段返回' },
     { title: '当前处理环节', index: 'currentNodeName' },
     { title: '流程是否超时', index: 'isExpireTime',format: (item: any) => `${item.isExpireTime==true?"是":(item.isExpireTime==false?"否":"是")}`,type: 'tag', tag: {

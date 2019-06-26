@@ -108,19 +108,16 @@ pageConfig: STPage = publicPageConfig;
           text:'删除',
           type: 'del',
           click: (record, modal, comp) => {
-            console.log("record--------" + record);
-            console.log("modal--------" + modal);
-            console.log("comp--------" + comp);
-            if (record.Id) {
+            if (record.id) {
               console.log("有ID");
               comp.removeRow(record);
               record.OpeateType = 'delete';
-              // this.removeValue(record.Id);
+              this.removeValue(record.id);
               this.st.reload();
             } else {
               console.log("没有ID");
               // comp.reload();
-              comp.removeRow(record);
+              // comp.removeRow(record);
               // record.OpeateType = 'delete';
               // this.getcontractinform()
             }
@@ -305,6 +302,17 @@ pageConfig: STPage = publicPageConfig;
       this.message.error("两次输入密码不一致");
       return
     }
+  }
+  removeValue(id){
+    let model={
+      id:id
+    }
+    this.UserRightService.Delete(model).subscribe(
+      res => {
+        this.message.success(res.message);
+        this.refresh();
+      },
+    );
   }
 
   // change(v) {

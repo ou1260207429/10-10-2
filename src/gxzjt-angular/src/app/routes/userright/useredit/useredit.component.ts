@@ -27,169 +27,172 @@ export class UserrightUsereditComponent implements OnInit {
     positionIds:[],//岗位编号集合
     userDataVisibilityIds:[]//用户可见数据集合
   };
+  id;
   //可见数据域树相关
-  defaultCheckedKeys = [];//控制树默认选择节点
+  defaultCheckedKeys1 = [];//控制树默认选择节点
   defaultSelectedKeys = [];
-  defaultExpandedKeys = ['0-0', '0-0-0', '0-0-1'];
 
   //控制所属组织机构树默认节点
-  defaultCheckedKeys1=[];
+  defaultCheckedKeys2=[];
   orgtreefiter=[];
+  nodes=[];
 
-  nodes=[
-    {
-      "key": 2,
-      "title": "大口九有限责任公司",
-      "isLeaf": false,
-      "children": [
-        {
-          "key": 3,
-          "title": "财务部",
-          "isLeaf": false,
-          "children": [
-            {
-              "key": 25,
-              "title": "财务一组",
-              "isLeaf": true,
-              "children": []
-            },
-            {
-              "key": 151,
-              "title": "财务二组",
-              "isLeaf": true,
-              "children": []
-            }
-          ]
-        },
-        {
-          "key": 4,
-          "title": "工程部",
-          "isLeaf": false,
-          "children": [
-            {
-              "key": 23,
-              "title": "工程一部",
-              "isLeaf": false,
-              "children": [
-                {
-                  "key": 24,
-                  "title": "工程一部子一部",
-                  "isLeaf": true,
-                  "children": []
-                }
-              ]
-            },
-            {
-              "key": 223,
-              "title": "12",
-              "isLeaf": true,
-              "children": []
-            }
-          ]
-        },
-        {
-          "key": 130,
-          "title": "巡查部",
-          "isLeaf": false,
-          "children": [
-            {
-              "key": 154,
-              "title": "测试1",
-              "isLeaf": false,
-              "children": [
-                {
-                  "key": 239,
-                  "title": "34",
-                  "isLeaf": false,
-                  "children": [
-                    {
-                      "key": 240,
-                      "title": "fg",
-                      "isLeaf": true,
-                      "children": []
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "key": 132,
-          "title": "纪检部",
-          "isLeaf": false,
-          "children": [
-            {
-              "key": 212,
-              "title": "22",
-              "isLeaf": true,
-              "children": []
-            },
-            {
-              "key": 238,
-              "title": "eee",
-              "isLeaf": true,
-              "children": []
-            }
-          ]
-        },
-        {
-          "key": 138,
-          "title": "督查2",
-          "isLeaf": false,
-          "children": [
-            {
-              "key": 243,
-              "title": "er",
-              "isLeaf": true,
-              "children": []
-            }
-          ]
-        },
-        {
-          "key": 214,
-          "title": "测试部门",
-          "isLeaf": false,
-          "children": [
-            {
-              "key": 215,
-              "title": "测试1",
-              "isLeaf": true,
-              "children": []
-            },
-            {
-              "key": 219,
-              "title": "12322",
-              "isLeaf": true,
-              "children": []
-            },
-            {
-              "key": 220,
-              "title": "42534543",
-              "isLeaf": true,
-              "children": []
-            },
-            {
-              "key": 221,
-              "title": "123123",
-              "isLeaf": true,
-              "children": []
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  // nodes=[ {
+  //   "key": 2,
+  //   "title": "大口九有限责任公司",
+  //   "isLeaf": false,
+  //   "children": [
+  //     {
+  //       "key": 3,
+  //       "title": "财务部",
+  //       "isLeaf": false,
+  //       "children": [
+  //         {
+  //           "key": 25,
+  //           "title": "财务一组",
+  //           "isLeaf": true,
+  //           "children": []
+  //         },
+  //         {
+  //           "key": 151,
+  //           "title": "财务二组",
+  //           "isLeaf": true,
+  //           "children": []
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       "key": 4,
+  //       "title": "工程部",
+  //       "isLeaf": false,
+  //       "children": [
+  //         {
+  //           "key": 23,
+  //           "title": "工程一部",
+  //           "isLeaf": false,
+  //           "children": [
+  //             {
+  //               "key": 24,
+  //               "title": "工程一部子一部",
+  //               "isLeaf": true,
+  //               "children": []
+  //             }
+  //           ]
+  //         },
+  //         {
+  //           "key": 223,
+  //           "title": "12",
+  //           "isLeaf": true,
+  //           "children": []
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       "key": 130,
+  //       "title": "巡查部",
+  //       "isLeaf": false,
+  //       "children": [
+  //         {
+  //           "key": 154,
+  //           "title": "测试1",
+  //           "isLeaf": false,
+  //           "children": [
+  //             {
+  //               "key": 239,
+  //               "title": "34",
+  //               "isLeaf": false,
+  //               "children": [
+  //                 {
+  //                   "key": 240,
+  //                   "title": "fg",
+  //                   "isLeaf": true,
+  //                   "children": []
+  //                 }
+  //               ]
+  //             }
+  //           ]
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       "key": 132,
+  //       "title": "纪检部",
+  //       "isLeaf": false,
+  //       "children": [
+  //         {
+  //           "key": 212,
+  //           "title": "22",
+  //           "isLeaf": true,
+  //           "children": []
+  //         },
+  //         {
+  //           "key": 238,
+  //           "title": "eee",
+  //           "isLeaf": true,
+  //           "children": []
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       "key": 138,
+  //       "title": "督查2",
+  //       "isLeaf": false,
+  //       "children": [
+  //         {
+  //           "key": 243,
+  //           "title": "er",
+  //           "isLeaf": true,
+  //           "children": []
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       "key": 214,
+  //       "title": "测试部门",
+  //       "isLeaf": false,
+  //       "children": [
+  //         {
+  //           "key": 215,
+  //           "title": "测试1",
+  //           "isLeaf": true,
+  //           "children": []
+  //         },
+  //         {
+  //           "key": 219,
+  //           "title": "12322",
+  //           "isLeaf": true,
+  //           "children": []
+  //         },
+  //         {
+  //           "key": 220,
+  //           "title": "42534543",
+  //           "isLeaf": true,
+  //           "children": []
+  //         },
+  //         {
+  //           "key": 221,
+  //           "title": "123123",
+  //           "isLeaf": true,
+  //           "children": []
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // }
+// ]
+
   Password2;//确认密码
   constructor(private http: _HttpClient,
      private modal: ModalHelper,
      private router: Router,
+     private _activatedRoute: ActivatedRoute,
      private message: NzMessageService,
      private UserRightService: UserRightService,) {
-
+      this.id=this._activatedRoute.snapshot.paramMap.get('record');
       this.getPosition();
       this.getRolelist();
       this.getTreeData();
+      this.getuserdetail(this.id);
      }
 
   ngOnInit() {
@@ -221,7 +224,7 @@ export class UserrightUsereditComponent implements OnInit {
   getTreeData(){
     this.UserRightService.GetTreeData().subscribe(
       res => {
-        // this.nodes = res.data;
+        this.nodes = res.data;
       },
     );
   }
@@ -265,7 +268,7 @@ export class UserrightUsereditComponent implements OnInit {
     //   return
     // }
 
-    this.UserRightService.Add(this.submodel).subscribe(
+    this.UserRightService.Edit(this.submodel).subscribe(
       res => {
         this.message.success(res.message);
       },
@@ -285,5 +288,18 @@ export class UserrightUsereditComponent implements OnInit {
     console.log("所属组织机构"+event.keys);
     this.orgtreefiter=event.keys;
     this.submodel.organizationsId=event.keys[0];
+    debugger
+  }
+  getuserdetail(id){
+    let model={
+      id:id
+    }
+
+    this.UserRightService.Details(model).subscribe(
+      res => {
+        this.submodel = res.data;
+        this.submodel.sex=res.data.sex+'';
+      },
+    );
   }
 }
