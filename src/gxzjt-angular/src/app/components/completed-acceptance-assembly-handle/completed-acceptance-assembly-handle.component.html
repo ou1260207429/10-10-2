@@ -351,8 +351,8 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft">联系电话:</td>
           <td rowspan='1' colspan='7'>
             
-              <se error="请输入正确的电话号码">
-                  <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.projectName" name="projectName" pattern="^\d{11}$"/>
+              <se error="请输入数字">
+                  <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.projectName" name="projectName" pattern="^[0-9]*$"/>
                 </se>
            
           </td>
