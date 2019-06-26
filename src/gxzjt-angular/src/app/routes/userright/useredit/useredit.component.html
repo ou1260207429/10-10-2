@@ -3,7 +3,7 @@
       <button nz-button (click)="ret()" nzType="primary"
         style="margin-right: 10px;margin-top: 10px;width: 120px;">返回列表</button>
       <button nz-button (click)="sub()" nzType="primary"
-        style="margin-right: 10px;margin-top: 10px;width: 120px;">确定添加</button>
+        style="margin-right: 10px;margin-top: 10px;width: 120px;">确定编辑</button>
 
     </div>
   </page-header>
@@ -86,8 +86,8 @@
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">所属组织机构(点击单选)</div>
             <div nz-col nzSpan="19">
-                <nz-tree #treeCom [nzData]="nodes"  nzCheckable="true" nzMultiple="false"
-                [(nzCheckedKeys)]="defaultCheckedKeys" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzEventorg($event)">
+                <nz-tree #treeCom [nzData]="nodes"  nzCheckable="true" nzMultiple="false" ref="tree"
+                [(nzCheckedKeys)]="defaultCheckedKeys1" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzEventorg($event)">
               </nz-tree>
             </div>
           </div>
@@ -102,8 +102,8 @@
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">可见数据(勾选需要的数据)：</div>
             <div nz-col nzSpan="19">
-                <nz-tree #treeCom [nzData]="nodes" nzCheckable="true" nzMultiple="true"
-                [(nzCheckedKeys)]="defaultCheckedKeys" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzEvent($event)">
+                <nz-tree #treeCom [nzData]="nodes" nzCheckable="true" nzMultiple="true" ref="tree"
+                [(nzCheckedKeys)]="defaultCheckedKeys2" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzEvent($event)">
               </nz-tree>
             </div>
           </div>

@@ -13,40 +13,41 @@
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">登录账号</div>
             <div nz-col nzSpan="19">
-              <input nz-input placeholder="账号" [(ngModel)]="submodel.EId"  [disabled]="true">
+              <input nz-input  [(ngModel)]="submodel.eId"  [disabled]="true">
             </div>
           </div>
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">名称</div>
             <div nz-col nzSpan="19">
-              <input nz-input placeholder="请输入名称" [(ngModel)]="submodel.EName"  [disabled]="true" >
+              <input nz-input  [(ngModel)]="submodel.eName"  [disabled]="true" >
             </div>
           </div>
-          <div style="margin-top: 8px" nz-row>
+          <!-- <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">密码</div>
             <div nz-col nzSpan="19">
-              <input nz-input placeholder="请输入密码" [(ngModel)]="submodel.Password" maxlength=11  [disabled]="true">
+              <input nz-input placeholder="请输入密码" [(ngModel)]="submodel.password" maxlength=11  [disabled]="true">
             </div>
-          </div>
+          </div> -->
 
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">性别</div>
             <div nz-col nzSpan="19">
-                <input nz-input placeholder="性别" [(ngModel)]="submodel.Sex" maxlength=11  [disabled]="true">
+                <input *ngIf="submodel.sex==0" nz-input placeholder="性别" value="男" maxlength=11  [disabled]="true">
+                <input *ngIf="submodel.sex==1"nz-input placeholder="性别" value="女" maxlength=11  [disabled]="true">
             </div>
           </div>
 
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">手机号</div>
             <div nz-col nzSpan="19">
-              <input nz-input placeholder="请输入手机号码" [(ngModel)]="submodel.Mobile" [disabled]="true">
+              <input nz-input  [(ngModel)]="submodel.mobile" [disabled]="true">
             </div>
           </div>
 
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">身份证</div>
             <div nz-col nzSpan="19">
-              <input nz-input placeholder="请输入手机号码" [(ngModel)]="submodel.IdCardNo" [disabled]="true">
+              <input nz-input  [(ngModel)]="submodel.idCardNo" [disabled]="true">
             </div>
           </div>
 
@@ -61,14 +62,14 @@
           <div *ngIf="rolelist.data" style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">角色</div>
             <div nz-col nzSpan="19">
-              <input nz-input placeholder="角色" [(ngModel)]="submodel.RoleId" [disabled]="true">
+              <input nz-input  [(ngModel)]="submodel.roleName" [disabled]="true">
             </div>
           </div>
 
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">岗位</div>
             <div nz-col nzSpan="19">
-              <input nz-input placeholder="岗位" [(ngModel)]="submodel.PositionIds" [disabled]="true">
+              <input nz-input  [(ngModel)]="submodel.positionNames" [disabled]="true">
             </div>
           </div>
 
@@ -77,7 +78,7 @@
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">所属组织机构</div>
             <div nz-col nzSpan="19">
-              <input nz-input placeholder="所属机构" [(ngModel)]="submodel.PositionIds" [disabled]="true">
+              <input nz-input  [(ngModel)]="submodel.organizationsName" [disabled]="true">
             </div>
           </div>
 
@@ -91,7 +92,7 @@
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">可见数据：</div>
             <div nz-col nzSpan="19">
-                <input nz-input placeholder="可见数据" [(ngModel)]="submodel.UserDataVisibilityIds" [disabled]="true">
+                <input nz-input  [(ngModel)]="submodel.userDataVisibilityNames" [disabled]="true">
             </div>
           </div>
         </div>
