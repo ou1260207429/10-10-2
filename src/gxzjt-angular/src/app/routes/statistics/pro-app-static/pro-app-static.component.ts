@@ -153,6 +153,7 @@ export class StatisticsProAppStaticComponent implements OnInit {
       dateRange: [this.rangeTime],
 
     });
+    this.search();
   }
 
 

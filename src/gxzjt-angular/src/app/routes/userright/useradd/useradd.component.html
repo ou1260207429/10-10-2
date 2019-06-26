@@ -31,6 +31,12 @@
             <input nz-input placeholder="请输入密码" [(ngModel)]="submodel.Password" maxlength=11>
           </div>
         </div>
+        <div style="margin-top: 8px" nz-row>
+          <div nz-col nzSpan="5">确认密码</div>
+          <div nz-col nzSpan="19">
+            <input nz-input placeholder="请输入密码" [(ngModel)]="Password2" maxlength=11>
+          </div>
+        </div>
 
         <div style="margin-top: 8px" nz-row>
           <div nz-col nzSpan="5">性别</div>
@@ -90,7 +96,7 @@
 
 
         <div style="margin-top: 8px" nz-row>
-          <div nz-col nzSpan="5">所属组织机构</div>
+          <div nz-col nzSpan="5">所属组织机构(点击单选)</div>
           <div nz-col nzSpan="19">
             <nz-tree nzMultiple='false' (nzClick)="nzEventorg($event)" [nzData]="nodes" nzDraggable=false>
             </nz-tree>
@@ -105,9 +111,9 @@
       <div class="righttop"><span class="title">用户可见数据设置</span></div>
       <div class="boday">
         <div style="margin-top: 8px" nz-row>
-          <div nz-col nzSpan="5">可见数据：</div>
+          <div nz-col nzSpan="5">可见数据(勾选需要的数据)：</div>
           <div nz-col nzSpan="19">
-            <nz-tree nzCheckable nzMultiple (nzCheckBoxChange)="nzEvent($event)" [nzData]="nodes" nzCheckable=true
+            <nz-tree nzCheckable nzMultiple='false' (nzCheckBoxChange)="nzEvent($event)" [nzData]="nodes" nzCheckable=true
               nzDraggable=false>
             </nz-tree>
           </div>
