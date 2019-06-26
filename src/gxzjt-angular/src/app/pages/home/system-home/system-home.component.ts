@@ -15,13 +15,14 @@ export class SystemHomeComponent implements OnInit {
   pagesize = 4;
   pageindex = 1;
   data: any = [{}];
+  BACKSTAGE_URL = 'http://192.168.10.10:8088/'; // 'http://222.84.250.158:8111/';
   constructor(
     private http: _HttpClient,
     private service: ProjectFlowServcieServiceProxy
   ) { }
 
   ngOnInit() {
-    this.EchartsMap();
+    this.GetFireDataList();
     this.GetData();
     this.GetProjectFlowIndexTopCount();
     this.GetProjectsTimeout();
@@ -29,8 +30,39 @@ export class SystemHomeComponent implements OnInit {
     this.GetProjectFlowDataStatisticsType2();
     this.GetProjectFlowDataStatisticsType3();
   }
+  GetFireDataList() {
+    let model: any = {
+      startDateTime: null,
+      dateTimeNow: new Date(),
+      processedStatus: 2
+    };
+    model.startDateTime = (new Date().getFullYear() + '-01-01');
+    this.http.post(this.BACKSTAGE_URL + 'api/services/app/ScreenService/Post_GetFireDataList', model).subscribe((res: any) => {
+      let MapBackList = [];
+      if (res.success) {
+        res.result.forEach(e => {
+          if(e.flowPathType === 3){
+            MapBackList = e.items;
+          }
+        });
+        MapBackList.forEach(e => {
+          this.MapList.push({
+            name: e.cityName,
+            value: e.completeCountNumber,
+            aTimeByCountNumber: e.aTimeByCountNumber,
+            avgCompleteTimeCountNumber: e.avgCompleteTimeCountNumber,
+            timeoutCountNumber: e.timeoutCountNumber
+          });
+        });
+
+      }
+
+      this.EchartsMap();
+    });
+  }
   map: any;
   myChart: any;
+  MapList:any;
   EchartsMap() {
     this.http.get('assets/guangxi.json').subscribe((e) => {
       this.echarts.registerMap('广西壮族自治区', e);
@@ -52,15 +84,26 @@ export class SystemHomeComponent implements OnInit {
           left: "10%",
         },
 
-        // tooltip: {
-        //     trigger: 'item',
-        //     formatter: function (params, ticket, callback) {
-        //         let retStr = '区县:';
-        //         retStr += params.data.name + '<br />数量:';
-        //         retStr += params.data.ele.value;
-        //         return retStr;
-        //     }
-        // },
+        tooltip: {
+          trigger: 'item',
+          backgroundColor: 'rgba(255,255,255,0)',
+          formatter: function (params, ticket, callback) {
+              let retStr = `
+              <div style="background-image:url('./assets/images/big2/img_bg_tk.png');background-size: 100% 100%;height: 210px;
+              width: 265px;position:absolute;top:-120px;left:-20px">
+              <span style='font-size: 18px;margin:50px 0 5px 60px; display: block;color:#fff'>
+                  `+ params.data.name + `</span>
+              <span style='color:#F6FF00;margin-left:60px;margin-bottom:5px;display: block;'>申报数：`+ params.data.value + `</span>
+              <span style='color:#F6FF00;margin-left:60px;margin-bottom:5px;display: block;'>一次性通过数：`+ params.data.aTimeByCountNumber + `</span> 
+              <span style='color:#F6FF00;margin-left:60px;margin-bottom:5px;display: block;'> 超时数：`+ params.data.timeoutCountNumber + `</span>
+              <span style='color:#F6FF00;margin-left:60px;display: block;'> 平均办理时长：`+ params.data.avgCompleteTimeCountNumber + `th</span>
+          </div>
+              `
+              return retStr;
+          },
+          show: true,
+          // position:[-50,0,0,0]
+      },
         series: [
           {
             type: 'map',
@@ -77,22 +120,7 @@ export class SystemHomeComponent implements OnInit {
                 }
               }
             },
-            data: [
-              { name: '南宁市', value: 154717.48 },
-              { name: '崇左市', value: 531686.1 },
-              { name: '北海市', value: 535477.48 },
-              { name: '柳州市', value: 511686.1 },
-              { name: '河池市', value: 325477.48 },
-              { name: '桂林市', value: 69686.1 },
-              { name: '贺州市', value: 155477.48 },
-              { name: '梧州市', value: 321686.1 },
-              { name: '玉林市', value: 259477.48 },
-              { name: '钦州市', value: 61686.1 },
-              { name: '百色市', value: 41686.1 },
-              { name: '来宾市', value: 11686.1 },
-              { name: '贵港市', value: 361686.1 },
-              { name: '防城港市', value: 761686.1 },
-            ]
+            data: this.MapList
           }
         ]
       };
@@ -157,8 +185,8 @@ export class SystemHomeComponent implements OnInit {
       this.TimeOutData = res.data;
     });
   }
-  PageIndexChange(e){
-    this.pageIndex  = e;
+  PageIndexChange(e) {
+    this.pageIndex = e;
     this.GetProjectsTimeout();
   }
   fireAuditData;
@@ -167,7 +195,7 @@ export class SystemHomeComponent implements OnInit {
   // currentWeekCount1:any;
   // comparedMonthRate1:any;
   // comparedWeekRate1:any;
-  FlowData1:any;
+  FlowData1: any;
   GetProjectFlowDataStatisticsType1() {
     let model: any = {
       stateDate: new Date(),
@@ -185,7 +213,7 @@ export class SystemHomeComponent implements OnInit {
     });
   }
   // 消防竣工验收数量统计
-  FlowData2:any;
+  FlowData2: any;
   GetProjectFlowDataStatisticsType2() {
     let model: any = {
       stateDate: new Date(),
@@ -203,7 +231,7 @@ export class SystemHomeComponent implements OnInit {
     });
   }
   // 竣工验收备案数量统计
-  FlowData3:any;
+  FlowData3: any;
   GetProjectFlowDataStatisticsType3() {
     let model: any = {
       stateDate: new Date(),
@@ -231,7 +259,7 @@ export class SystemHomeComponent implements OnInit {
           fontSize: 14,
         },
         padding: [10, 0, 0, 0]
-    },
+      },
       xAxis: {
         type: 'category',
         boundaryGap: false,
@@ -262,7 +290,7 @@ export class SystemHomeComponent implements OnInit {
           fontSize: 14,
         },
         padding: [10, 0, 0, 0]
-    },
+      },
       xAxis: {
         type: 'category',
         boundaryGap: false,
@@ -286,7 +314,7 @@ export class SystemHomeComponent implements OnInit {
     };
   }
   Line3(Xdata, YData) {
-    
+
     this.option3 = {
       title: {
         text: '近一周竣工验收备案申报统计',
@@ -294,7 +322,7 @@ export class SystemHomeComponent implements OnInit {
           fontSize: 14,
         },
         padding: [10, 0, 0, 0]
-    },
+      },
       xAxis: {
         type: 'category',
         boundaryGap: false,
