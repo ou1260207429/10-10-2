@@ -6,8 +6,10 @@
         <el-col :span="12">
           <div ref="leftTop">
             <el-card class="comeIn">
-              <img style="width:100%;" src="../assets/images/img_bg_bsrk.png" alt>
-              <p>消防设计审查和验收办事入口</p>
+              <a href="http://222.84.250.158:8880/#/app">
+                <img style="width:100%;" src="../assets/images/img_bg_bsrk.png" alt>
+                <p style="color:#fff;">消防设计审查和验收办事入口</p>
+              </a>
             </el-card>
             <el-card style="margin-top:8px;">
               <div style="overflow:hidden;">
@@ -270,8 +272,8 @@ export default {
       app.getFileDetail(guid, id).then(req => {
         if (req.data.length == 0) {
           app.alert("无附件可下载");
-        }else{
-        app.downLoadFile(req.data[0], id);
+        } else {
+          app.downLoadFile(req.data[0], id);
         }
       });
     }

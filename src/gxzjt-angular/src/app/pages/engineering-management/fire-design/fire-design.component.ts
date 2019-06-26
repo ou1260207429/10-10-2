@@ -200,10 +200,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
   }
 
   watchItem(item) {
-    console.log(item)
-    // console.log("这"+item.flowNo)
-    // debugger
-    this.router.navigate([`/app/work-matters/alreadyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}`]);
+    this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`]);
   }
   resetTime() {
     var startTime = new Date();
