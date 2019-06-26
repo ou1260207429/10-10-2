@@ -9068,6 +9068,8 @@ export class ExamineFormDto implements IExamineFormDto {
     area: string | undefined;
     opinionFileId: string | undefined;
     opinionFileUrl: string | undefined;
+    acceptFileId: string | undefined;
+    acceptFileUrl: string | undefined;
     descr: string | undefined;
     isTransfer: boolean | undefined;
 
@@ -9133,6 +9135,8 @@ export class ExamineFormDto implements IExamineFormDto {
             this.area = data["area"];
             this.opinionFileId = data["opinionFileId"];
             this.opinionFileUrl = data["opinionFileUrl"];
+            this.acceptFileId = data["acceptFileId"];
+            this.acceptFileUrl = data["acceptFileUrl"];
             this.descr = data["descr"];
             this.isTransfer = data["isTransfer"];
         }
@@ -9198,6 +9202,8 @@ export class ExamineFormDto implements IExamineFormDto {
         data["area"] = this.area;
         data["opinionFileId"] = this.opinionFileId;
         data["opinionFileUrl"] = this.opinionFileUrl;
+        data["acceptFileId"] = this.acceptFileId;
+        data["acceptFileUrl"] = this.acceptFileUrl;
         data["descr"] = this.descr;
         data["isTransfer"] = this.isTransfer;
         return data; 
@@ -9251,6 +9257,8 @@ export interface IExamineFormDto {
     area: string | undefined;
     opinionFileId: string | undefined;
     opinionFileUrl: string | undefined;
+    acceptFileId: string | undefined;
+    acceptFileUrl: string | undefined;
     descr: string | undefined;
     isTransfer: boolean | undefined;
 }
