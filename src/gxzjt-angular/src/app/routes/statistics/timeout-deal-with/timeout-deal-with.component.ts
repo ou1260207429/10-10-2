@@ -147,6 +147,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
 
     });
     // this.fliterForm.reset();
+    this.search();
   }
 
 

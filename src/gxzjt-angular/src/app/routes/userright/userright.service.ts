@@ -20,19 +20,31 @@ export class UserRightService {
   }
   //获取岗位下拉数据
   Position(): Observable<any> {
-    return this.http.get(PANGBO_SERVICES_URL + 'api/Position/DropDownData', );
+    return this.http.get(PANGBO_SERVICES_URL + 'api/Position/DropDownData');
   }
-   //获取岗位下拉数据
+  //获取岗位下拉数据
   Role(): Observable<any> {
-    return this.http.get(PANGBO_SERVICES_URL + 'api/Role/DropDownData', );
+    return this.http.get(PANGBO_SERVICES_URL + 'api/Role/DropDownData');
   }
   //添加用户
   Add(model?: any): Observable<any> {
-    return this.http.post(PANGBO_SERVICES_URL + 'api/User/Add',model );
+    return this.http.post(PANGBO_SERVICES_URL + 'api/User/Add', model);
   }
   //编辑用户
   Edit(model?: any): Observable<any> {
-    return this.http.post(PANGBO_SERVICES_URL + 'api/User/Edit',model );
+    return this.http.post(PANGBO_SERVICES_URL + 'api/User/Edit', model);
+  }
+  //锁定用户
+  Lock(model?: any): Observable<any> {
+    return this.http.post(PANGBO_SERVICES_URL + 'api/User/Lock', model);
+  }
+  //获取组织框架树
+  GetTreeData(model?: any): Observable<any> {
+    return this.http.get(PANGBO_SERVICES_URL + 'api/Organizations/GetTreeData', model);
+  }
+  //重置密码
+  ResetPassword(model?: any): Observable<any> {
+    return this.http.get(PANGBO_SERVICES_URL + 'api/User/ResetPassword', model);
   }
 }
 

@@ -171,7 +171,7 @@ export class UserrightUseraddComponent implements OnInit {
       ]
     }
   ]
-
+  Password2;//确认密码
   constructor(private http: _HttpClient,
      private modal: ModalHelper,
      private router: Router,
@@ -180,6 +180,7 @@ export class UserrightUseraddComponent implements OnInit {
 
       this.getPosition();
       this.getRolelist();
+      this.getTreeData();
      }
 
   ngOnInit() {
@@ -209,13 +210,24 @@ export class UserrightUseraddComponent implements OnInit {
       },
     );
   }
+  getTreeData(){
+    this.UserRightService.GetTreeData().subscribe(
+      res => {
+        this.nodes = res.data;
+      },
+    );
+  }
   sub(){
-    this.UserRightService.Add(this.submodel).subscribe(
+    if(this.submodel.Password==this.Password2){ this.UserRightService.Add(this.submodel).subscribe(
       res => {
         this.message.success(res.message);
       },
     );
-    this.router.navigate([`/app/userright/userlist`]);
+    this.router.navigate([`/app/userright/userlist`]);}else{
+      this.message.success("两次输入密码不一致！");
+      return
+    }
+
   }
   ret(){
     this.router.navigate([`/app/userright/userlist`]);

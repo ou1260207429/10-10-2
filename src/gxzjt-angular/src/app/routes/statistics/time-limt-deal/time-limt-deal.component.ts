@@ -883,6 +883,7 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
       dateRange: [this.rangeTime],
 
     });
+    this.search();
   }
 
   addview() {
