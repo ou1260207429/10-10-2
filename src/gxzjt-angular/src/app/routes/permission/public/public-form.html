@@ -21,9 +21,11 @@
       [formControlName]="item.formControlName" [placeholder]="item.placeholder"
       style="margin-right: 10px;margin-top: 10px;width: 200px;">
 
+    <button nz-button (click)="search()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>
+
     <button nz-button (click)="resetSearchFliterForm()" style="margin-right: 10px;margin-top: 10px;">重置</button>
 
-    <button nz-button (click)="search()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>
+
   </form>
 
   <div *ngIf="needTreeForm" nz-row nzGutter="12" style="width: 100%">
