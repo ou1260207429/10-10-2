@@ -569,7 +569,6 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
         this.data = JSON.parse(data.formJson);
       }
       this.useNatureSelect = data.natures
-      console.log(data)
     })
   }
 
@@ -578,8 +577,6 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
    */
   save() {
     for (const i in this.form.controls) {
-      console.log(this.form.controls[i])
-      console.log(this.form.controls[i].valid)
       this.form.controls[i].markAsDirty();
       this.form.controls[i].updateValueAndValidity();
     }
