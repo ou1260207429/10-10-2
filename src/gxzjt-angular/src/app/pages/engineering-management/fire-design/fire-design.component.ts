@@ -122,6 +122,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
     private modal: ModalHelper,
     private router: Router,
+    private publicModel:PublicModel,
     private _eventEmiter: EventEmiter,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
     private formBuilder: FormBuilder,
@@ -179,18 +180,21 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
 
 
   exportXlsx() {
-    const expData = [this.columns.map(i => i.title)];
+    console.log(this.formResultData);
 
-    expData.push(['1', '1', '1', '1',]);
+    // this.publicModel.exportXlsx(this.columns,)
+    // const expData = [this.columns.map(i => i.title)];
 
-    this.xlsx.export({
-      sheets: [
-        {
-          data: expData,
-          name: 'sheet name',
-        },
-      ],
-    });
+    // expData.push(['1', '1', '1', '1',]);
+
+    // this.xlsx.export({
+    //   sheets: [
+    //     {
+    //       data: expData,
+    //       name: 'sheet name',
+    //     },
+    //   ],
+    // });
   }
   getList() {
     this._projectFlowServcieServiceProxy.post_GetFireAuditCompleteList(this.param).subscribe((data: any) => {

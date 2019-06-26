@@ -167,6 +167,17 @@ export class PoliciesAndRegulationsComponent extends PublicFormComponent impleme
   }
   resetSearchFliterForm() {
     this.fliterForm.reset();
+    this.params = {
+      page: 1,
+      size: 200,
+      sort: "",
+      isAsc: false,
+      orderby: "",
+      totalCount: 200,
+      search: "",
+      startTime: "",
+      endTime: "",
+    };
     this.query();
 
   }

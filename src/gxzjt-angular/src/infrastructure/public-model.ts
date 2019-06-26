@@ -34,7 +34,7 @@ export class PublicModel {
     arr.splice(index, 1)
   }
 
-  exportXlsx(columns:STColumn[],array:Array<any>) {
+  exportXlsx(columns:STColumn[],array:Array<any>,filename:string='表单') {
     const expData = [columns.map(i => i.title)];
     
     array.forEach((item,index)=>{
@@ -53,6 +53,7 @@ export class PublicModel {
           name: 'sheet name',
         },
       ],
+      filename:filename,
     });
   }
 
