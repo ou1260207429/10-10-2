@@ -12,7 +12,7 @@ import { timeTrans } from 'infrastructure/regular-expression';
   selector: 'app-handling-guide',
   // templateUrl: './handling-guide.component.html',
   templateUrl: '../public/public-form.html',
-  
+
 })
 export class HandlingGuideComponent extends PublicFormComponent implements OnInit {
   @ViewChild('treeCom') treeCom;
@@ -55,7 +55,7 @@ export class HandlingGuideComponent extends PublicFormComponent implements OnIni
     {
       title: '操作人', index: 'lastUpdateUserName'
     },
-  
+
     {
       title: '操作人账号', index: 'lastUpdateUserCode'
     },
@@ -113,7 +113,7 @@ export class HandlingGuideComponent extends PublicFormComponent implements OnIni
     this.query_noticeRecords(this.params);
 
   }
-  nzPlaceHolder=['发布开始时间','发布结束时间']
+  nzPlaceHolder = ['发布开始时间', '发布结束时间']
   /**
    * 回车
    */
@@ -168,8 +168,20 @@ export class HandlingGuideComponent extends PublicFormComponent implements OnIni
   refresh() {
     this.query();
   }
-  resetSearchFliterForm(){
+  resetSearchFliterForm() {
     this.fliterForm.reset();
+    this.params = {
+      page: 1,
+      size: 200,
+      sort: "",
+      isAsc: false,
+      orderby: "",
+      totalCount: 200,
+      group: "",
+      search: "",
+      startTime: null,
+      endTime: null,
+    };
     this.query();
 
   }

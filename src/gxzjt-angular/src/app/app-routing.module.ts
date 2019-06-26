@@ -41,50 +41,50 @@ const routes: Routes = [
       {
         path: 'statistics', loadChildren: './routes/statistics/statistics.module#StatisticsModule',
         data: {
-          role: AppMenus.aclSys
+          role: [AppMenus.aclSys]
         },
 
       },
       {
         path: 'sys-setting', loadChildren: './routes/sys-setting/sys-setting.module#SysSettingModule',
         data: {
-          role: AppMenus.aclSys
+          role: [AppMenus.aclSys]
         },
 
       },
       {
         path: 'permission', loadChildren: './routes/permission/permission.module#PermissionModule',
         data: {
-          role: AppMenus.aclSys
+          role: [AppMenus.aclSys]
         },
 
       },
       {
         path: 'home', loadChildren: './pages/home/home.module#HomeModule',
         data: {
-          role: AppMenus.aclSys
+          role: [AppMenus.aclSys]
         },
 
       },
       {
         path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule',
         data: {
-          role: AppMenus.aclCompany
+          role: [AppMenus.aclOrg,AppMenus.aclCompany,AppMenus.aclSys] 
         },
 
       },
       {
         path: 'engineering-management',
         loadChildren: './pages/engineering-management/engineering-management.module#EngineeringManagementModule',
-        data: {
-          role: AppMenus.aclCompany
-        },
+        // data: {
+        //   role: [AppMenus.aclCompany,AppMenus.aclOrg,AppMenus.aclSys]
+        // },
 
       },
       {
         path: 'content-manage', loadChildren: './pages/content-manage/content-manage.module#ContentManageModule',
         data: {
-          role: AppMenus.aclSys
+          role: [AppMenus.aclSys]
         },
 
       },

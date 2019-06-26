@@ -237,10 +237,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
  
       this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
 
-        this.formDto.isAccept = bo;
-        this.examineFormDto.isPass = bo;
+        const type = this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType == 3?true:false
+        this.examineFormDto.isTransfer = this.formDto.isTransfer = type
+        this.examineFormDto.isPass = this.formDto.isAccept = bo; 
         let form: any = this.curNodeName == '大厅受理' ? this.formDto : this.examineFormDto;
-
         this.formDto.handleUserList = [];
         this.formDto.currentNodeId = data.result.cur_Node_Id
         this.formDto.currentNodeName = data.result.cur_NodeName

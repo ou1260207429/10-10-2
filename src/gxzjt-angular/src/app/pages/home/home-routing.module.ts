@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SystemHomeComponent } from './system-home/system-home.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+
+import { AppMenus } from "@shared/AppMenus";
+
 const routes: Routes = [
   {
     path: '',
@@ -19,7 +22,7 @@ const routes: Routes = [
     component: SystemHomeComponent,
     data: {
       title: '首页',
-      role: "sys"
+      role: [AppMenus.aclSys]
     }
 
   },

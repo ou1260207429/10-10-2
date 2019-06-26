@@ -10,13 +10,14 @@
   <form [hidden]="hiddenFliter" nz-form nzLayout="inline" #f="ngForm" se-container="1">
     <se>
       <button nz-button (click)="add(0,{})" nzType="primary" style="margin-right: 10px;float: left;margin-top: 3px;"><i
-          nz-icon type="plus"></i>增加</button>
+          nz-icon type="plus"></i>新增</button>
       <button nz-button (click)="deleteData()" nzType="primary"
         style="margin-right: 10px;float: left;margin-top: 3px;"><i nz-icon type="delete"
           nzTheme="outline"></i>批量删除</button>
       <input style="float: left;width:200px;margin-top: 3px;" placeholder="请输入角色名称" type="text" nz-input
         [(ngModel)]="searchForm.name" name="name">
       <button nz-button (click)="initTable()" nzType="primary" style="margin-left: 10px;">搜索</button>
+      <button nz-button (click)="autoRefres()" style="margin-left: 10px;">重置</button>
     </se>
   </form>
   <st #st [data]="data" [pi]="searchForm.page" [ps]="searchForm.size" [columns]="columns" [loading]="isSearchForm"

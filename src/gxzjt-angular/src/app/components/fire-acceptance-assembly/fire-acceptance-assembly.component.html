@@ -13,10 +13,8 @@
             <se error="必填">
               <!-- <input nz-input placeholder="请输入单位名称" [(ngModel)]="data.jsconstructionUnit" name="jsconstructionUnit"
                 required /> -->
-                <nz-rj-selector-org  [(ngModel)]="data.jsconstructionUnit" 
-                (onSelectorEvent)="onSelectOrgTitle($event)" placeHolder="请输入单位名称"
-                name="jsconstructionUnit" required="true" ngDefaultControl 
-                 ></nz-rj-selector-org>
+              <nz-rj-selector-org [(ngModel)]="data.jsconstructionUnit" (onSelectorEvent)="onSelectOrgTitle($event)"
+                placeHolder="请输入单位名称" name="jsconstructionUnit" required="true" ngDefaultControl></nz-rj-selector-org>
 
             </se>
           </td>
@@ -146,22 +144,26 @@
         </tr>
         <tr [ngClass]="{pointerf5f5f5: type == 1}" *ngFor="let item of data.design;let a = index">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>设计单位:</td>
-          <td rowspan='1' colspan='5' >
+          <td rowspan='1' colspan='5'>
             <se error="必填">
               <!-- <input nz-input placeholder="请输入设计单位" [(ngModel)]="item.designUnit" name="designDesignUnit{{a}}" required /> -->
-              <nz-rj-selector-org  [(ngModel)]="item.designUnit" 
-              (onSelectorEvent)="onSelectOrgItem($event,item)" placeHolder="请输入设计单位"
-              name="designDesignUnit{{a}}" required="true" ngDefaultControl 
-               ></nz-rj-selector-org>
+              <nz-rj-selector-org [(ngModel)]="item.designUnit" (onSelectorEvent)="onSelectOrgItem($event,item)"
+                placeHolder="请输入设计单位" name="designDesignUnit{{a}}" required="true" ngDefaultControl>
+              </nz-rj-selector-org>
 
-               
+
             </se>
 
           </td>
           <td rowspan='1' colspan='4'>
             <se error="必填">
-              <input nz-input placeholder="请输入资质等级" [(ngModel)]="item.qualificationLevel"
-                name="designQualificationLevel{{a}}" required />
+              <!-- <input nz-input placeholder="请输入资质等级" [(ngModel)]="item.qualificationLevel"
+                name="designQualificationLevel{{a}}" required /> -->
+
+              <nz-select [(ngModel)]="item.qualificationLevel" name="designQualificationLevel{{a}}" required>
+                <nz-option *ngFor="let option of zzdjEnum" [nzLabel]="option.label" [nzValue]="option.value">
+                </nz-option>
+              </nz-select>
             </se>
           </td>
           <td rowspan='1' colspan='2'>
@@ -171,14 +173,14 @@
             </se>
           </td>
           <td rowspan='1'>
-            <se error="必填"><input nz-input placeholder="请输入联系人" [(ngModel)]="item.contacts"
-                name="designContacts{{a}}" required />
+            <se error="必填"><input nz-input placeholder="请输入联系人" [(ngModel)]="item.contacts" name="designContacts{{a}}"
+                required />
             </se>
           </td>
           <td rowspan='1'>
 
-            <se error="请输入数字"><input nz-input placeholder="请输入联系电话" [(ngModel)]="item.contactsNumber"
-                pattern="^[0-9]*$" name="designContactsNumber{{a}}" required />
+            <se error="请输入数字"><input nz-input placeholder="请输入联系电话" [(ngModel)]="item.contactsNumber" pattern="^[0-9]*$"
+                name="designContactsNumber{{a}}" required />
             </se>
           </td>
           <td rowspan='1'> <a (click)="addArray(data.design)">新增</a>
@@ -190,16 +192,21 @@
             <se error="必填">
               <!-- <input nz-input placeholder="请输入施工单位" [(ngModel)]="item.designUnit" name="constructionUnitDesignUnit{{a}}"
                 required /> -->
-                <nz-rj-selector-org  [(ngModel)]="item.designUnit" 
-                (onSelectorEvent)="onSelectOrgItem($event,item)" placeHolder="请输入施工单位"
-                name="constructionUnitDesignUnit{{a}}" required="true" ngDefaultControl 
-                 ></nz-rj-selector-org>
+              <nz-rj-selector-org [(ngModel)]="item.designUnit" (onSelectorEvent)="onSelectOrgItem($event,item)"
+                placeHolder="请输入施工单位" name="constructionUnitDesignUnit{{a}}" required="true" ngDefaultControl>
+              </nz-rj-selector-org>
             </se>
           </td>
           <td rowspan='1' colspan='4'>
             <se error="必填">
-              <input nz-input placeholder="请输入资质等级" [(ngModel)]="item.qualificationLevel"
-                name="constructionQualificationLevel{{a}}" required />
+              <!-- <input nz-input placeholder="请输入资质等级" [(ngModel)]="item.qualificationLevel"
+                name="constructionQualificationLevel{{a}}" required /> -->
+
+                <nz-select  [(ngModel)]="item.qualificationLevel"
+                name="constructionQualificationLevel{{a}}" required>
+                <nz-option *ngFor="let option of zzdjEnum4" [nzLabel]="option.label" [nzValue]="option.value">
+                </nz-option>
+              </nz-select>
             </se>
           </td>
           <td rowspan='1' colspan='2'>
@@ -210,8 +217,8 @@
           </td>
           <td rowspan='1'>
             <se error="必填">
-              <input nz-input placeholder="请输入联系人" [(ngModel)]="item.contacts"
-                name="constructionDesignContacts{{a}}" required />
+              <input nz-input placeholder="请输入联系人" [(ngModel)]="item.contacts" name="constructionDesignContacts{{a}}"
+                required />
             </se>
           </td>
           <td rowspan='1'>
@@ -228,22 +235,32 @@
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">监理单位:</td>
           <td rowspan='1' colspan='5'>
-            
-            
+
+
             <!-- <input nz-input placeholder="请输入监理单位"
               [(ngModel)]="data.constructionControlUnit.designUnit" name="constructionControlUnitDesignUnit" /> -->
-              <nz-rj-selector-org  [(ngModel)]="data.constructionControlUnit.designUnit" 
+            <nz-rj-selector-org [(ngModel)]="data.constructionControlUnit.designUnit"
               (onSelectorEvent)="onSelectOrgItem($event,data.constructionControlUnit)" placeHolder="请输入监理单位"
-              name="constructionControlUnitDesignUnit" required="false" ngDefaultControl 
-               ></nz-rj-selector-org>
+              name="constructionControlUnitDesignUnit" required="false" ngDefaultControl></nz-rj-selector-org>
 
 
-            </td>
+          </td>
 
 
-          <td rowspan='1' colspan='4'><input nz-input placeholder="请输入资质等级"
+          <td rowspan='1' colspan='4'>
+            
+            <!-- <input nz-input placeholder="请输入资质等级"
               [(ngModel)]="data.constructionControlUnit.qualificationLevel"
-              name="constructionControlUnitQualificationLevel" /></td>
+              name="constructionControlUnitQualificationLevel" /> -->
+
+              <nz-select 
+              [(ngModel)]="data.constructionControlUnit.qualificationLevel"
+              name="constructionControlUnitQualificationLevel">
+              <nz-option *ngFor="let option of zzdjEnum3" [nzLabel]="option.label" [nzValue]="option.value">
+              </nz-option>
+            </nz-select>
+            
+            </td>
           <td rowspan='1' colspan='2'><input nz-input placeholder="请输入法定代表人"
               [(ngModel)]="data.constructionControlUnit.legalRepresentative"
               name="constructionControlLegalRepresentative" /></td>
@@ -268,17 +285,23 @@
               <!-- <input nz-input placeholder="请输入监理单位" [(ngModel)]="data.detectionUnit.designUnit"
                 name="detectionUnitDesignUnit" required /> -->
 
-                <nz-rj-selector-org  [(ngModel)]="data.detectionUnit.designUnit" 
+              <nz-rj-selector-org [(ngModel)]="data.detectionUnit.designUnit"
                 (onSelectorEvent)="onSelectOrgItem($event,data.detectionUnit)" placeHolder="请输入检测单位"
-                name="constructionControlUnitDesignUnit333" required="true" ngDefaultControl 
-                 ></nz-rj-selector-org>
+                name="constructionControlUnitDesignUnit333" required="true" ngDefaultControl></nz-rj-selector-org>
 
             </se>
           </td>
           <td rowspan='1' colspan='4'>
             <se error="必填">
-              <input nz-input placeholder="请输入资质等级" [(ngModel)]="data.detectionUnit.qualificationLevel"
-                name="detectionUnitQualificationLevel" required />
+              <!-- <input nz-input placeholder="请输入资质等级" [(ngModel)]="data.detectionUnit.qualificationLevel"
+                name="detectionUnitQualificationLevel" required /> -->
+
+                <nz-select 
+              [(ngModel)]="data.detectionUnit.qualificationLevel"
+              name="detectionUnitQualificationLevel" required>
+              <nz-option *ngFor="let option of zzdjEnum2" [nzLabel]="option.label" [nzValue]="option.value">
+              </nz-option>
+            </nz-select>
             </se>
           </td>
           <td rowspan='1' colspan='2'>
@@ -573,7 +596,7 @@
           <div class="textRight">
             <se error="必填">
               施工总承包单位
-              
+
               <input style="width: 320px;" nz-input placeholder="请输入施工总承包单位"
                 [(ngModel)]="data.constructionSituation.contractingUnit" name="constructionSituationcontractingUnit"
                 required />
@@ -700,8 +723,7 @@
             1、建设工程消防验收申报表（纸质申报表的图片）
             <nz-upload [(nzFileList)]="data.fileList[0].array" [nzBeforeUpload]="beforeUpload"
               (click)="handleChange(0)">
-              <button nz-button  *ngIf="type!=1"><i nz-icon
-                  nzType="upload"></i><span>上传</span></button>
+              <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
@@ -709,8 +731,7 @@
             2、与消防验收有关的竣工图纸及隐蔽工程记录
             <nz-upload [(nzFileList)]="data.fileList[1].array" [nzBeforeUpload]="beforeUpload"
               (click)="handleChange(1)">
-              <button nz-button  *ngIf="type!=1"><i nz-icon
-                  nzType="upload"></i><span>上传</span></button>
+              <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
@@ -718,8 +739,7 @@
             3、符合要求的检测机构出具出具的消防设施及系统检测合格证明文件
             <nz-upload [(nzFileList)]="data.fileList[2].array" [nzBeforeUpload]="beforeUpload"
               (click)="handleChange(2)">
-              <button nz-button  *ngIf="type!=1"><i nz-icon
-                  nzType="upload"></i><span>上传</span></button>
+              <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
         </td>

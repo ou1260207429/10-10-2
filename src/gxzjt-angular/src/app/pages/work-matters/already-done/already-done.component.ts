@@ -36,12 +36,14 @@ export class AlreadyDoneComponent
       title: '操作',
       buttons: [
         {
-          text: '详情', click: (item: any) => {
+          text: '详情',
+          
+          click: (item: any) => {
             this.watchItem(item);
           }
         },
         {
-          text: '受理凭证', click: (record: any) => {
+          text: '受理凭证', iif: record => record.acceptAttachmentUrl!=null,click: (record: any) => {
             if(record.acceptAttachmentUrl){
               window.open(record.acceptAttachmentUrl)
             }else{
@@ -50,7 +52,7 @@ export class AlreadyDoneComponent
           }
         },
         {
-          text: '意见书', click: (record: any) => {
+          text: '意见书', iif: record => record.opinionAttachmentUrl!=null,click: (record: any) => {
             if(record.opinionAttachmentUrl){
               window.open(record.opinionAttachmentUrl)
             }else{

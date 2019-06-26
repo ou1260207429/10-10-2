@@ -11,7 +11,8 @@
 
   <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
     <!-- <span>地市：</span> -->
-    <nz-select class="search_menu_input" formControlName="city" nzShowSearch nzAllowClear nzPlaceHolder="选择市区" (ngModelChange)="cityChange($event)">
+    <nz-select class="search_menu_input" formControlName="city" nzShowSearch nzAllowClear nzPlaceHolder="选择市区"
+      (ngModelChange)="cityChange($event)">
       <div *ngFor="let item of cityarray">
         <nz-option nzLabel="{{item.label}}" nzValue="{{item.label}}"></nz-option>
       </div>
@@ -33,9 +34,12 @@
     <!-- <span>申报时间：</span> -->
     <nz-range-picker nzFormat="yyyy/MM/dd" formControlName="dateRange" class="search_menu"></nz-range-picker>
 
-    <button nz-button (click)="resetForm()" class="search_menu">重置</button>
 
     <button nz-button (click)="search()" nzType="primary">搜索</button>
+
+    <button nz-button (click)="resetForm()" class="search_menu">重置</button>
+
+
   </form>
   <div style="margin-bottom: 10px">
     <!-- <button nz-button nzType="primary" (click)="addview()">新增申报</button> -->

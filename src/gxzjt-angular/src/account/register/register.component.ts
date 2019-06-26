@@ -2,7 +2,7 @@
 import {
   Component,
   Injector,
-  
+
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -127,7 +127,10 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
           });
           this.back();
         } else {
-          this.showErr(res.message);
+          this.modalService.info({
+            nzTitle: '提示',
+            nzContent: res.message,
+          });
         }
       }
       this.saving = false;
@@ -146,11 +149,21 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
 
   interval$: any;
   getCaptcha() {
-    // if (this.mobile.invalid) {
-    //   this.mobile.markAsDirty({ onlySelf: true });
-    //   this.mobile.updateValueAndValidity({ onlySelf: true });
-    //   return;
-    // }
+    let url = REGISTER_URL + "api/User/SendValidationSMS?phoneNum=" + this.model.EId;
+
+    this.isSetCaptcha = true;
+    this.http.post(url, null, this.httpOptions).subscribe(res => {
+      this.startCount();
+      this.isSetCaptcha = false;
+    },
+      err => {
+        this.showErr(err);
+        this.isSetCaptcha = false;
+      });
+
+  }
+
+  startCount() {
     this.count = 59;
     this.interval$ = setInterval(() => {
       this.count -= 1;
@@ -159,7 +172,6 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
       }
     }, 1000);
   }
-
 
 
 

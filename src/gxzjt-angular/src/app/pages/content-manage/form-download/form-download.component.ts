@@ -12,7 +12,7 @@ import { timeTrans } from 'infrastructure/regular-expression';
   selector: 'app-form-download',
   // templateUrl: './form-download.component.html',
   templateUrl: '../public/public-form.html',
-  
+
 })
 export class FormDownloadComponent extends PublicFormComponent implements OnInit {
   @ViewChild('treeCom') treeCom;
@@ -31,7 +31,7 @@ export class FormDownloadComponent extends PublicFormComponent implements OnInit
     endTime: null,
   };
 
-  nzPlaceHolder=['创建开始时间','创建结束时间']
+  nzPlaceHolder = ['创建开始时间', '创建结束时间']
   columns: STColumn[] = [
     { title: '表名', index: 'attachmentName' },
     { title: '创建时间', index: 'creationTime', type: 'date' },
@@ -135,8 +135,20 @@ export class FormDownloadComponent extends PublicFormComponent implements OnInit
   add() {
     this.router.navigate([`/app/content-manage/formDownloadDetailComponent`]);
   }
-  resetSearchFliterForm(){
+  resetSearchFliterForm() {
     this.fliterForm.reset();
+    this.params = {
+      page: 1,
+      size: 200,
+      sort: "",
+      isAsc: false,
+      orderby: "",
+      totalCount: 200,
+      group: "",
+      search: "",
+      startTime: null,
+      endTime: null,
+    };
     this.query();
 
   }
