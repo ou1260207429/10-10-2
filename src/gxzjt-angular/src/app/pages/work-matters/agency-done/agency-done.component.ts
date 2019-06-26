@@ -261,8 +261,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
           deptId: this.appSession.user.organizationsId,
           deptFullPath: this.appSession.user.organizationsName
         }
-      }
-      debugger
+      } 
 
       this._flowServices.tenant_NodeToNextNodeByPass(tenantWorkFlowInstanceDto).subscribe((data: any) => {
         this._examineService.signForOpinionFile(this.signForDto).subscribe(data => {
