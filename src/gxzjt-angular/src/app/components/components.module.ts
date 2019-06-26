@@ -11,6 +11,7 @@ import { FireAcceptanceAssemblyHandleComponent } from './fire-acceptance-assembl
 import { CompletedAcceptanceAssemblyHandleComponent } from './completed-acceptance-assembly-handle/completed-acceptance-assembly-handle.component';
 import { FlowProcessRejectComponent } from './flow-process-reject/flow-process-reject.component';
 import { InitiationProcessAddAuditorComponent } from './initiation-process-add-auditor/initiation-process-add-auditor.component';
+import { AddPostworkComponent } from './add-postwork/add-postwork.component';
 @NgModule({
 	declarations: [
 		FlowRouteComponent,
@@ -19,7 +20,7 @@ import { InitiationProcessAddAuditorComponent } from './initiation-process-add-a
 		FireDesignDeclareAssemblyComponent,
 		FireDesignDeclareAssemblyHandleComponent,
 		FireAcceptanceAssemblyHandleComponent,
-		CompletedAcceptanceAssemblyHandleComponent, FlowProcessRejectComponent, InitiationProcessAddAuditorComponent,
+		CompletedAcceptanceAssemblyHandleComponent, FlowProcessRejectComponent, InitiationProcessAddAuditorComponent, AddPostworkComponent,
 	],
 	imports: [
 		PipesModule,
@@ -35,6 +36,7 @@ import { InitiationProcessAddAuditorComponent } from './initiation-process-add-a
 		CompletedAcceptanceAssemblyHandleComponent,
 		FlowProcessRejectComponent,
 		InitiationProcessAddAuditorComponent,
+		AddPostworkComponent
 	],
 	entryComponents: [
 		FlowRouteComponent,
@@ -46,6 +48,7 @@ import { InitiationProcessAddAuditorComponent } from './initiation-process-add-a
 		CompletedAcceptanceAssemblyHandleComponent,
 		FlowProcessRejectComponent,
 		InitiationProcessAddAuditorComponent,
+		AddPostworkComponent
 	]
 
 })

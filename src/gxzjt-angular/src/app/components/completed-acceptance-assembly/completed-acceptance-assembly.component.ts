@@ -139,6 +139,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   onSelectOrgItem(res, item) {
     // console.log(res);
     // console.log(item);
+    console.log(this.data);
     item.qualificationLevel=res.qualificationLevel;
     item.contacts=res.contact;
     item.contactsNumber=res.contactPhone;

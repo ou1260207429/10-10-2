@@ -277,17 +277,17 @@ export class BigScreenComponent {
         };
         this.screenService.post_GetFireDataList(model).subscribe((res:any) => {
             console.log(res);
-            for (let i = 0; i < res.items.length - 1; i++) {
-                for (let j = 0; j < res.items.length - 1 - i; j++) {
-                    if (res.items[j] > res.items[j + 1]) {
-                        var temp = res.items[j];
-                        res.items[j] = res.items[j + 1];
-                        res.items[j + 1] = temp;
+            for (let i = 0; i < res.length - 1; i++) {
+                for (let j = 0; j < res.length - 1 - i; j++) {
+                    if (res[j] > res[j + 1]) {
+                        var temp = res[j];
+                        res[j] = res[j + 1];
+                        res[j + 1] = temp;
                     }
                 }
             }
             let num = 1;
-            res.items.forEach(e => {
+            res.forEach(e => {
                 // this.MapList.push({
                 //     name: e.cityName,
                 //     value: e.completeCountNumber === 0 ? 0 : Math.floor((e.aTimeByCountNumber / e.completeCountNumber) * 100 / 100),
