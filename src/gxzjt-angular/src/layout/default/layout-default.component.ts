@@ -83,6 +83,7 @@ export class LayoutDefaultComponent extends AppComponentBase
   private notify$: Subscription;
   isFetching = false;
 
+  hadShowModel = false;
   constructor(
     injector: Injector,
     iconSrv: NzIconService,
@@ -108,11 +109,32 @@ export class LayoutDefaultComponent extends AppComponentBase
         if (evt instanceof NavigationError) {
           // this.message.error(`无法加载${evt.url}路由`);
           if (!this._TokenService.getToken()) {
-            this.message.info(`您未登录，请先前往登录`);
+
+            if (!this.hadShowModel) {
+              this.hadShowModel = true;
+              // this.message.info(`您未登录，请先前往登录`);
+              this.modalService.info({
+                nzTitle: '提示',
+                nzContent: '您未登录，请先前往登录',
+                nzOnOk: () => this.hadShowModel = false
+              });
+
+            }
+
+
             router.navigate(['/account/login']);
 
           } else {
-            this.message.error(`页面出错`);
+            // this.message.error(`页面出错`);
+            if (!this.hadShowModel) {
+              this.hadShowModel = true;
+              this.modalService.info({
+                nzTitle: '提示',
+                nzContent: '页面出错',
+                nzOnOk: () => this.hadShowModel = false
+              });
+
+            }
           }
 
         }

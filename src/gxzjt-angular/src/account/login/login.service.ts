@@ -80,7 +80,8 @@ export class LoginService {
     } else {
       // Unexpected result!
 
-      this._logService.warn('登录异常');
+      // this._logService.warn('登录异常');
+      this._messageService.info('登录异常');
       this._router.navigate(['account/login']);
     }
   }

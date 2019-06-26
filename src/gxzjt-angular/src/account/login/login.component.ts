@@ -16,7 +16,7 @@ import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { AbpSessionService } from '@abp/session/abp-session.service';
 import { _HttpClient } from '@delon/theme';
 
-import { NzModalService } from 'ng-zorro-antd';
+// import { NzModalService } from 'ng-zorro-antd';
 
 import * as $ from 'jquery';
 
@@ -65,7 +65,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     private _sessionAppService: SessionServiceProxy,
     private _router: Router,
     public http: _HttpClient,
-    private modalService: NzModalService,
+    // private modalService: NzModalService,
     private _TokenService: TokenService,
     private _AppSessionService: AppSessionService
   ) {
@@ -182,7 +182,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
         }, err => {
           this.modalService.warning({
             nzTitle: '提示',
-            nzContent: '登录异常！'
+            nzContent: '请完成拖动验证！'
           });
           this.submitting = false;
         });
