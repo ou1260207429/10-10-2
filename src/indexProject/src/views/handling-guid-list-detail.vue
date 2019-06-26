@@ -15,9 +15,10 @@
         <el-card :style="{minHeight:tableHight}">
           <el-row :gutter="10">
             <el-col :span="17" v-loading="!data">
+              <div style="width:100%;height:2px;"></div>
               <div v-if="data">
                 <h1>{{data.title}}</h1>
-                <p style="text-align: center;color:#A3A3A3">发布日期：{{data.creationTime}}</p>
+                <p v-if="data.creationTime" style="text-align: center;color:#A3A3A3">发布日期：{{data.creationTime}}</p>
                 <div v-html="data.content" style="padding:20px;margin-bottom:50px;"></div>
               </div>
             </el-col>
@@ -93,7 +94,7 @@
             </el-col>
           
           </el-row>
-          <rl-row>
+          <el-row>
              <div v-if="fileList.length>0" style="margin-top:20px;padding-left:30px;margin-bottom:20px;">
               <p style="margin-bottom:10px;font-weight: bold;">相关文件下载</p>
               <div>
@@ -107,7 +108,7 @@
                 </div>
               </div>
             </div>
-          </rl-row>
+          </el-row>
         </el-card>
       </el-row>
     </div>
