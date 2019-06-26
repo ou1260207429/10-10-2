@@ -807,11 +807,10 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     { title: '工程名称', index: 'projectName' },
     { title: '工程编号', index: 'projectCode' },
     { title: '建设单位', index: 'companyName' },
-    {
-      title: '工程类型', index: 'flowPathType', type: 'tag', tag: {
-        1: { text: '消防设计审查', color: '' },
-        2: { text: '消防验收', color: '' },
-        3: { text: '竣工验收消防备案', color: '' },
+    { title: '工程类型', index: 'flowPathType',format:(item:any)=>`${item.flowPathType==1?"消防设计审查":(item.flowPathType==2?"消防验收":"竣工验收消防备案")}`, type: 'tag', tag: {
+        "消防设计审查": { text: '消防设计审查', color: '' },
+        "消防验收": { text: '消防验收', color: '' },
+        "竣工验收消防备案": { text: '竣工验收消防备案', color: '' },
 
       }
     },

@@ -14,9 +14,14 @@
     <button nz-button (click)="search()" nzType="primary">搜索</button>
   </form>
 
-  <!-- <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns"></st> -->
-  <st #st *ngIf="formResultData" [data]="formResultData.data" [req]="{postmodel: postmodel}" [columns]="columns" [pi]="postmodel.page"
-  [ps]="postmodel.page" [page]="pageConfig" [total]="formResultData.totalCount"></st>
+  <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns"></st>
+  <!-- <st #st *ngIf="formResultData" [data]="formResultData.data" [req]="{postmodel: postmodel}" [columns]="columns" [pi]="postmodel.page"
+  [ps]="postmodel.page" [page]="pageConfig" [total]="formResultData.totalCount"></st> -->
+
+  <!-- <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns" [page]="pageConfig"
+  [total]="formResultData.totalCount" [pi]=""
+  [ps]="10" (change)="change($event)">
+  </st> -->
   <!-- <br>
   <nz-pagination [nzPageIndex]="2" [nzTotal]="500" nzShowQuickJumper></nz-pagination> -->
 </nz-card>
