@@ -6,6 +6,9 @@ import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayStr
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
+import { EventEmiter } from 'infrastructure/eventEmiter';
+import lodash from 'lodash'
+
 /**
  * 消防设计的表单模块
  */
@@ -46,7 +49,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
   //从父组件获取使用行性质的select
   @Input() useNatureSelect:any
-  constructor(public _homeServiceProxy: HomeServiceProxy, public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
+  constructor(private eventEmiter: EventEmiter,public _homeServiceProxy: HomeServiceProxy, public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
@@ -58,7 +61,6 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     setTimeout(()=>{
       console.log(this.data)
     },3400)
-    
   }
 
 
@@ -110,7 +112,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     const tid = file.uid
     this.data.fileList[this.uoloadIndex].array.push({
       name: file.name,
-      status: 'done',
+      status: 'uploading',
       tid: file.uid,
     })
 
@@ -121,11 +123,15 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     }
     const formData = new FormData();
     formData.append('files', file);
-    this._publicServices.newUpload(formData, params).subscribe(data => {
+    this._publicServices.newUpload(formData, params).subscribe(data => { 
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
-      console.log(data)
       this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
+      this.data.fileList[this.uoloadIndex].array[index].status = 'done'
+      const fileList = lodash.cloneDeep(this.data.fileList);  
+
+      this.data.fileList = []
+      this.data.fileList = fileList 
     })
     return false;
   };
