@@ -181,6 +181,7 @@ export class UserrightUserlookComponent implements OnInit {
      private _activatedRoute: ActivatedRoute,
      private UserRightService: UserRightService,) {
       this.id=this._activatedRoute.snapshot.paramMap.get('record');
+      debugger
       this.getuserdetail(this.id);
       this.getPosition();
       this.getRolelist();
@@ -213,7 +214,11 @@ export class UserrightUserlookComponent implements OnInit {
       },
     );
   }
-  getuserdetail(model){
+  getuserdetail(id){
+    let model={
+      id:id
+    }
+
     this.UserRightService.Details(model).subscribe(
       res => {
         this.user = res;

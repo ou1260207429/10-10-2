@@ -107,7 +107,7 @@
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">可见数据：</div>
             <div nz-col nzSpan="19">
-              <nz-tree nzCheckable nzMultiple (nzCheckBoxChange)="nzEvent($event)" [nzData]="nodes" nzCheckable=true
+              <nz-tree nzCheckable nzMultiple='false' (nzCheckBoxChange)="nzEvent($event)" [nzData]="nodes" nzCheckable=true
                 nzDraggable=false>
               </nz-tree>
             </div>
