@@ -586,13 +586,12 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
         this.showError.fireFightingFacilities = false;
       }
     });
-
     if (!this.data.projectCategoryId || this.data.projectCategoryId == '') {
       this.showError.projectCategoryId = true;
     } else {
       this.showError.projectCategoryId = false;
     }
-    if (!this.data.specialEngineering || this.data.specialEngineering == '') {
+    if (!this.data.specialEngineering||!this.data.specialEngineering.value || this.data.specialEngineering.value == '') {
       this.showError.specialEngineering = true;
     } else {
       this.showError.specialEngineering = false;
