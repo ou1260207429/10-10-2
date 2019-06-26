@@ -9,7 +9,7 @@
       <tbody>
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>建设单位:</td>
-          <td rowspan='1' colspan='3'>
+          <td rowspan='1' colspan='5'>
             <se error="这是必填项">
               <!-- <input nz-input placeholder="请输入单位名称" [(ngModel)]="data.jsconstructionUnit" name="jsconstructionUnit"
                 required /> -->
@@ -20,7 +20,7 @@
 
             </se>
           </td>
-          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>法定代表人/主要负责人:</td>
+          <td rowspan='1' colspan='2' class="fontweight fontLeft leftTitle" required=true>法定代表人/主要负责人:</td>
           <td rowspan='1' colspan='3'>
             <se error="这是必填项">
               <input nz-input placeholder="请输入法定代表人/主要负责人" [(ngModel)]="data.legalRepresentative"
@@ -38,12 +38,12 @@
         <!-- 2 -->
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程名称:</td>
-          <td rowspan='1' colspan='3'>
+          <td rowspan='1' colspan='5'>
             <se error="这是必填项">
               <input nz-input placeholder="请输入工程名称" [(ngModel)]="data.projectName" name="projectName" required />
             </se>
           </td>
-          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>联系人:</td>
+          <td rowspan='1' colspan='2' class="fontweight fontLeft leftTitle" required=true>联系人:</td>
           <td rowspan='1' colspan='3'>
             <se error="这是必填项">
               <input nz-input placeholder="请输入联系人" [(ngModel)]="data.contacts" name="contacts" required />
@@ -574,12 +574,12 @@
             <se error="这是必填项">
               施工总承包单位
               
-              <input style="width: 80px;" nz-input placeholder="请输入施工总承包单位"
+              <input style="width: 320px;" nz-input placeholder="请输入施工总承包单位"
                 [(ngModel)]="data.constructionSituation.contractingUnit" name="constructionSituationcontractingUnit"
                 required />
             </se>
             <se error="这是必填项">
-              项目经理签名：<input style="width: 80px;" nz-input placeholder="请签名"
+              项目经理签名：<input style="width: 320px;" nz-input placeholder="请签名"
                 [(ngModel)]="data.constructionSituation.projectManagerName" name="constructionprojectManagerName"
                 required />
             </se>
@@ -588,11 +588,11 @@
           <div class="textRight" style="margin-top: 20px;">
             <se error="这是必填项">
               专业分包单位（如有）
-              <input style="width: 80px;" nz-input placeholder="请输入施工总承包单位"
+              <input style="width: 320px;" nz-input placeholder="请输入施工总承包单位"
                 [(ngModel)]="data.constructionSituation.subcontractors" name="constructionsubcontractors" required />
             </se>
             <se error="这是必填项">
-              项目经理签名：<input style="width: 80px;" nz-input placeholder="请签名"
+              项目经理签名：<input style="width: 320px;" nz-input placeholder="请签名"
                 [(ngModel)]="data.constructionSituation.personInChargeName" name="constructionpersonInChargeName"
                 required />
             </se>
