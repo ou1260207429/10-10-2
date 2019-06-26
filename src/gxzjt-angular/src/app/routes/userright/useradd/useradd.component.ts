@@ -218,6 +218,10 @@ export class UserrightUseraddComponent implements OnInit {
     );
   }
   sub(){
+    if(this.submodel.Password.length<8||this.Password2.length<8){
+      this.message.error("密码长度错误！请输入8位以上密码！");
+      return
+    }
     if(this.submodel.Password==this.Password2){ this.UserRightService.Add(this.submodel).subscribe(
       res => {
         this.message.success(res.message);

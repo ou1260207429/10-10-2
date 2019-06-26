@@ -45,8 +45,8 @@ export class UserrightUserlistComponent implements OnInit {
  }
 //锁定用户相关
 //重置密码
-Password;
-Password2;
+Password='';
+Password2='';
 restpasswordmoedl={
   id:'',
   newPassword:'',
@@ -285,6 +285,10 @@ pageConfig: STPage = publicPageConfig;
     this.isAddProducttyepe2 = false;
   }
   subProducttype2(): void {
+    if(this.Password.length<8||this.Password2.length<8){
+      this.message.error("密码长度错误！请输入8位以上密码！");
+      return
+    }
     if(this.Password==this.Password2){
       this.restpasswordmoedl.newPassword=this.Password;
       this.restpasswordmoedl.confirmPassword=this.Password2;

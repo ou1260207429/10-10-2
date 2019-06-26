@@ -62,6 +62,7 @@ export class AppSessionService {
     return new Promise<boolean>((resolve, reject) => {
 
       if (this._TokenService.getToken()) {
+        resolve(true);
         this.initUserInfo().then(() => {
           resolve(true);
         }).catch(
