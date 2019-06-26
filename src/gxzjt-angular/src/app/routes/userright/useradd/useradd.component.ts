@@ -17,160 +17,27 @@ export class UserrightUseraddComponent implements OnInit {
     data:[]
   };//存放获取的角色列表
   submodel={
-    EId:'',//登录账号
-    EName:'',//名称
-    Password:'',//密码
-    OrganizationsId:'',//所属组织机构
-    Sex:null,//性别
-    Mobile:'',//手机号
-    IdCardNo:'',//身份证
-    PositionIds:[],//岗位编号集合
-    UserDataVisibilityIds:[]//用户可见数据集合
+    eId:'',//登录账号
+    eName:'',//名称
+    password:'',//密码
+    organizationsId:'',//所属组织机构
+    sex:null,//性别
+    mobile:'',//手机号
+    idCardNo:'',//身份证
+    roleId:'',//角色id
+    positionIds:[],//岗位编号集合
+    userDataVisibilityIds:[]//用户可见数据集合
   };
-  nodes=[
-    {
-      "key": 2,
-      "title": "大口九有限责任公司",
-      "isLeaf": false,
-      "children": [
-        {
-          "key": 3,
-          "title": "财务部",
-          "isLeaf": false,
-          "children": [
-            {
-              "key": 25,
-              "title": "财务一组",
-              "isLeaf": true,
-              "children": []
-            },
-            {
-              "key": 151,
-              "title": "财务二组",
-              "isLeaf": true,
-              "children": []
-            }
-          ]
-        },
-        {
-          "key": 4,
-          "title": "工程部",
-          "isLeaf": false,
-          "children": [
-            {
-              "key": 23,
-              "title": "工程一部",
-              "isLeaf": false,
-              "children": [
-                {
-                  "key": 24,
-                  "title": "工程一部子一部",
-                  "isLeaf": true,
-                  "children": []
-                }
-              ]
-            },
-            {
-              "key": 223,
-              "title": "12",
-              "isLeaf": true,
-              "children": []
-            }
-          ]
-        },
-        {
-          "key": 130,
-          "title": "巡查部",
-          "isLeaf": false,
-          "children": [
-            {
-              "key": 154,
-              "title": "测试1",
-              "isLeaf": false,
-              "children": [
-                {
-                  "key": 239,
-                  "title": "34",
-                  "isLeaf": false,
-                  "children": [
-                    {
-                      "key": 240,
-                      "title": "fg",
-                      "isLeaf": true,
-                      "children": []
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "key": 132,
-          "title": "纪检部",
-          "isLeaf": false,
-          "children": [
-            {
-              "key": 212,
-              "title": "22",
-              "isLeaf": true,
-              "children": []
-            },
-            {
-              "key": 238,
-              "title": "eee",
-              "isLeaf": true,
-              "children": []
-            }
-          ]
-        },
-        {
-          "key": 138,
-          "title": "督查2",
-          "isLeaf": false,
-          "children": [
-            {
-              "key": 243,
-              "title": "er",
-              "isLeaf": true,
-              "children": []
-            }
-          ]
-        },
-        {
-          "key": 214,
-          "title": "测试部门",
-          "isLeaf": false,
-          "children": [
-            {
-              "key": 215,
-              "title": "测试1",
-              "isLeaf": true,
-              "children": []
-            },
-            {
-              "key": 219,
-              "title": "12322",
-              "isLeaf": true,
-              "children": []
-            },
-            {
-              "key": 220,
-              "title": "42534543",
-              "isLeaf": true,
-              "children": []
-            },
-            {
-              "key": 221,
-              "title": "123123",
-              "isLeaf": true,
-              "children": []
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  //可见数据域树相关
+  defaultCheckedKeys = [];//控制树默认选择节点
+  defaultSelectedKeys = [];
+  defaultExpandedKeys = ['0-0', '0-0-0', '0-0-1'];
+
+  //控制所属组织机构树默认节点
+  defaultCheckedKeys1=[];
+  orgtreefiter=[];
+
+  nodes=[];
   Password2;//确认密码
   constructor(private http: _HttpClient,
      private modal: ModalHelper,
@@ -184,7 +51,6 @@ export class UserrightUseraddComponent implements OnInit {
      }
 
   ngOnInit() {
-
    }
 
   add() {
@@ -213,21 +79,61 @@ export class UserrightUseraddComponent implements OnInit {
   getTreeData(){
     this.UserRightService.GetTreeData().subscribe(
       res => {
-        this.nodes = res.data;
+        // this.nodes = res.data;
       },
     );
   }
   sub(){
-    if(this.submodel.Password.length<8||this.Password2.length<8){
+    let myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0]{1})|(15[0-3]{1})|(15[5-9]{1})|(18[0-9]{1}))+\d{8})$/;  //手机号码正则
+    let reg = /(^\d{15}$)|(^\d{17}(\d|X)$)/; //
+    if(this.submodel.eId==''||this.submodel.eId==null){
+      this.message.error("登录账号不能为空！");
+      return
+    }
+    if(this.submodel.eName==''||this.submodel.eName==null){
+      this.message.error("名称不能为空！");
+      return
+    }
+    if(this.submodel.password.length<8||this.Password2.length<8){
       this.message.error("密码长度错误！请输入8位以上密码！");
       return
     }
-    if(this.submodel.Password==this.Password2){ this.UserRightService.Add(this.submodel).subscribe(
+    if(this.submodel.sex==''||this.submodel.sex==null){
+      this.message.error("性别不能为空！");
+      return
+    }
+    if (!myreg.test(this.submodel.mobile)) {
+      this.message.error(`请输入有效的手机号码！`);
+      return;
+    }
+    if (!reg.test(this.submodel.idCardNo)) {
+      this.message.error(`请输入有效的身份证号码！`);
+      return;
+    }
+    if(this.submodel.roleId==''||this.submodel.roleId==null){
+      this.message.error("角色不能为空！");
+      return
+    }
+    if(this.orgtreefiter.length!=1){
+      this.message.error("所属组织为单选");
+      return
+    }
+    // if(this.submodel.userDataVisibilityIds.length==0){
+    //   this.message.error("可见数据域不能为空！");
+    //   return
+    // }
+    // if(this.submodel.organizationsId.length==0){
+    //   this.message.error("所属组织机构不能为空！");
+    //   return
+    // }
+    if(this.submodel.password==this.Password2){
+      this.UserRightService.Add(this.submodel).subscribe(
       res => {
         this.message.success(res.message);
       },
     );
-    this.router.navigate([`/app/userright/userlist`]);}else{
+    this.router.navigate([`/app/userright/userlist`]);}
+    else{
       this.message.success("两次输入密码不一致！");
       return
     }
@@ -238,10 +144,11 @@ export class UserrightUseraddComponent implements OnInit {
   }
   nzEvent(event: NzFormatEmitEvent): void {
     console.log("可见数据域"+event.keys);
-    this.submodel.UserDataVisibilityIds=event.keys;
+    this.submodel.userDataVisibilityIds=event.keys;
   }
   nzEventorg(event: NzFormatEmitEvent): void {
     console.log("所属组织机构"+event.keys);
-    this.submodel.OrganizationsId=event.keys[0];
+    this.orgtreefiter=event.keys;
+    this.submodel.organizationsId=event.keys[0];
   }
 }

@@ -67,10 +67,15 @@ export class AlreadyDoneComponent
     { title: '节点处理人', index: 'cur_NodeAuditorName' },
     { title: '处理时间', index: 'acceptTime',type:'date'},
     { title: '申报时间', index: 'applyTime',type:'date' },
-    { title: '流程是否超时', index: 'isExpire',type: 'tag', tag: {
-      true: { text: '超时', color: 'red' },
-      false: { text: '未超时', color: 'green' },
+    // { title: '流程是否超时', index: 'isExpire',type: 'tag', tag: {
+    //   true: { text: '超时', color: 'red' },
+    //   false: { text: '未超时', color: 'green' },
+    // }},
+    { title: '流程是否超时', index: 'isExpire',format:(item:any)=>`${item.isExpire==true?"是":"否"}`,type: 'tag', tag: {
+      "是": { text: '是', color: 'red' },
+      "否": { text: '否', color: '' },
     }},
+
   ];
 
   searchParam = new PendingWorkFlow_NodeAuditorRecordDto();

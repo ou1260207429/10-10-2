@@ -30,7 +30,7 @@ export class UserrightUserlistComponent implements OnInit {
   postmodel = {
     eName:'',
     page: 1,
-    pageSize: 10,
+    pageSize: 500,
   };
   formResultData;
 //锁定用户相关
@@ -305,7 +305,12 @@ pageConfig: STPage = publicPageConfig;
       this.message.error("两次输入密码不一致");
       return
     }
-
-
   }
+
+  // change(v) {
+  //   pageOnChange(v, this.pagedAndFilteredInputDto, () => {
+  //     this.getList();
+  //   })
+  // }
+
 }

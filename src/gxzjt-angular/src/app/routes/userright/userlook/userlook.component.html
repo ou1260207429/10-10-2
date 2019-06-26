@@ -8,50 +8,45 @@
   <nz-card>
     <div class="qj">
       <div class="rightcenter">
-        <div class="righttop"><span class="title">用户基本数据添加</span></div>
+        <div class="righttop"><span class="title">用户基本数据</span></div>
         <div class="boday">
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">登录账号</div>
             <div nz-col nzSpan="19">
-              <input nz-input placeholder="请输入登录账号" [(ngModel)]="submodel.EId" >
+              <input nz-input placeholder="账号" [(ngModel)]="submodel.EId"  [disabled]="true">
             </div>
           </div>
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">名称</div>
             <div nz-col nzSpan="19">
-              <input nz-input placeholder="请输入名称" [(ngModel)]="submodel.EName" >
+              <input nz-input placeholder="请输入名称" [(ngModel)]="submodel.EName"  [disabled]="true" >
             </div>
           </div>
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">密码</div>
             <div nz-col nzSpan="19">
-              <input nz-input placeholder="请输入密码" [(ngModel)]="submodel.Password" maxlength=11>
+              <input nz-input placeholder="请输入密码" [(ngModel)]="submodel.Password" maxlength=11  [disabled]="true">
             </div>
           </div>
 
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">性别</div>
             <div nz-col nzSpan="19">
-              <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="性别" [(ngModel)]="submodel.Sex">
-                <div>
-                  <nz-option nzLabel="男" nzValue="0"></nz-option>
-                  <nz-option nzLabel="女" nzValue="1"></nz-option>
-                </div>
-              </nz-select>
+                <input nz-input placeholder="性别" [(ngModel)]="submodel.Sex" maxlength=11  [disabled]="true">
             </div>
           </div>
 
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">手机号</div>
             <div nz-col nzSpan="19">
-              <input nz-input placeholder="请输入手机号码" [(ngModel)]="submodel.Mobile" maxlength=11>
+              <input nz-input placeholder="请输入手机号码" [(ngModel)]="submodel.Mobile" [disabled]="true">
             </div>
           </div>
 
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">身份证</div>
             <div nz-col nzSpan="19">
-              <input nz-input placeholder="请输入手机号码" [(ngModel)]="submodel.IdCardNo" maxlength=18>
+              <input nz-input placeholder="请输入手机号码" [(ngModel)]="submodel.IdCardNo" [disabled]="true">
             </div>
           </div>
 
@@ -60,27 +55,20 @@
 
 
       <div class="rightcenter">
-        <div class="righttop"><span class="title">用户岗位角色设置</span></div>
+        <div class="righttop"><span class="title">岗位角色所属机构</span></div>
         <div class="boday">
 
           <div *ngIf="rolelist.data" style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">角色</div>
             <div nz-col nzSpan="19">
-              <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="角色" [(ngModel)]="submodel.RoleId">
-                <div *ngFor="let item of rolelist.data">
-                  <nz-option nzLabel="{{item.text}}" nzValue="{{item.id}}"></nz-option>
-                </div>
-              </nz-select>
+              <input nz-input placeholder="角色" [(ngModel)]="submodel.RoleId" [disabled]="true">
             </div>
           </div>
 
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">岗位</div>
             <div nz-col nzSpan="19">
-              <nz-select style="width: 100%;" nzMode="multiple" nzPlaceHolder="请选择用户岗位"
-                [(ngModel)]="submodel.PositionIds">
-                <nz-option *ngFor="let item of positionlist.data" [nzLabel]="item.text" [nzValue]="item.id"></nz-option>
-              </nz-select>
+              <input nz-input placeholder="岗位" [(ngModel)]="submodel.PositionIds" [disabled]="true">
             </div>
           </div>
 
@@ -89,8 +77,7 @@
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">所属组织机构</div>
             <div nz-col nzSpan="19">
-              <nz-tree nzMultiple='false' (nzClick)="nzEventorg($event)" [nzData]="nodes" nzDraggable=false>
-              </nz-tree>
+              <input nz-input placeholder="所属机构" [(ngModel)]="submodel.PositionIds" [disabled]="true">
             </div>
           </div>
 
@@ -99,14 +86,12 @@
 
 
       <div class="rightcenter">
-        <div class="righttop"><span class="title">用户可见数据设置</span></div>
+        <div class="righttop"><span class="title">用户可见数据</span></div>
         <div class="boday">
           <div style="margin-top: 8px" nz-row>
             <div nz-col nzSpan="5">可见数据：</div>
             <div nz-col nzSpan="19">
-              <nz-tree nzCheckable nzMultiple='false' (nzCheckBoxChange)="nzEvent($event)" [nzData]="nodes" nzCheckable=true
-                nzDraggable=false>
-              </nz-tree>
+                <input nz-input placeholder="可见数据" [(ngModel)]="submodel.UserDataVisibilityIds" [disabled]="true">
             </div>
           </div>
         </div>

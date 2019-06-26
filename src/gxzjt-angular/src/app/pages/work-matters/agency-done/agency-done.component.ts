@@ -68,12 +68,16 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     { title: '上一处理人', index: 'cur_NodeAuditorName' },
     { title: '申报时间', index: 'applyTime', type: 'date' },
     { title: '受理时间', index: 'acceptTime', type: 'date' },
-    {
-      title: '流程是否超时', index: 'isExpire', type: 'tag', tag: {
-        true: { text: '超时', color: 'red' },
-        false: { text: '未超时', color: 'green' },
-      }
-    },
+    // {
+    //   title: '流程是否超时', index: 'isExpire', type: 'tag', tag: {
+    //     true: { text: '超时', color: 'red' },
+    //     false: { text: '未超时', color: 'green' },
+    //   }
+    // },
+    { title: '流程是否超时', index: 'isExpire',format:(item:any)=>`${item.isExpire==true?"是":"否"}`,type: 'tag', tag: {
+      "是": { text: '是', color: 'red' },
+      "否": { text: '否', color: '' },
+    }},
   ];
 
   searchParam = new PendingWorkFlow_NodeAuditorRecordDto();
@@ -110,7 +114,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
       _self.init();
     });
 
-    this.eventEmiter.on('fireDesignComponentInit',()=>{ 
+    this.eventEmiter.on('fireDesignComponentInit',()=>{
       _self.init();
     });
 
