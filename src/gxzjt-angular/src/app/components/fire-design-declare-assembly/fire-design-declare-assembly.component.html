@@ -15,11 +15,9 @@
 
               <!-- <input nz-input placeholder="请输入单位名称" [(ngModel)]="data.jsconstructionUnit" name="jsconstructionUnit"
                 required /> -->
-               
-                <nz-rj-selector-org  [(ngModel)]="data.jsconstructionUnit" 
-                (onSelectorEvent)="onSelectOrgTitle($event)" placeHolder="请输入单位名称"
-                name="jsconstructionUnit" required="true" ngDefaultControl 
-                 ></nz-rj-selector-org>
+
+              <nz-rj-selector-org [(ngModel)]="data.jsconstructionUnit" (onSelectorEvent)="onSelectOrgTitle($event)"
+                placeHolder="请输入单位名称" name="jsconstructionUnit" required="true" ngDefaultControl></nz-rj-selector-org>
 
             </se>
           </td>
@@ -126,17 +124,22 @@
             <se error="必填">
               <!-- <input nz-input placeholder="请输入设计单位" [(ngModel)]="item.designUnit" name="designDesignUnit{{a}}"
                 required /> -->
-                <nz-rj-selector-org  [(ngModel)]="item.designUnit" 
-                (onSelectorEvent)="onSelectOrgItem($event,item)" placeHolder="请输入设计单位"
-                name="designDesignUnit{{a}}" required="true" ngDefaultControl 
-                 ></nz-rj-selector-org>
-              
-              </se>
+              <nz-rj-selector-org [(ngModel)]="item.designUnit" (onSelectorEvent)="onSelectOrgItem($event,item)"
+                placeHolder="请输入设计单位" name="designDesignUnit{{a}}" required="true" ngDefaultControl>
+              </nz-rj-selector-org>
+
+            </se>
           </td>
           <td rowspan='1' colspan='4'>
             <se error="必填">
-              <input nz-input placeholder="请输入资质等级" [(ngModel)]="item.qualificationLevel"
-                name="designQualificationLevel{{a}}" required />
+              <!-- <input nz-input placeholder="请输入资质等级" [(ngModel)]="item.qualificationLevel"
+                name="designQualificationLevel{{a}}" required /> -->
+
+              <nz-select  [(ngModel)]="item.qualificationLevel"
+                name="designQualificationLevel{{a}}" required>
+                <nz-option *ngFor="let option of zzdjEnum" [nzLabel]="option.label" [nzValue]="option.value">
+                </nz-option>
+              </nz-select>
             </se>
           </td>
           <td rowspan='1' colspan='2'>
@@ -146,12 +149,12 @@
             </se>
           </td>
           <td rowspan='1'>
-            <se error="必填"><input nz-input placeholder="请输入联系人" [(ngModel)]="item.contacts"
-                name="designContacts{{a}}" required /></se>
+            <se error="必填"><input nz-input placeholder="请输入联系人" [(ngModel)]="item.contacts" name="designContacts{{a}}"
+                required /></se>
           </td>
           <td rowspan='1'>
-            <se error="请输入数字"><input nz-input placeholder="请输入联系电话" [(ngModel)]="item.contactsNumber"
-                pattern="^[0-9]*$" name="designContactsNumber{{a}}" required /></se>
+            <se error="请输入数字"><input nz-input placeholder="请输入联系电话" [(ngModel)]="item.contactsNumber" pattern="^[0-9]*$"
+                name="designContactsNumber{{a}}" required /></se>
           </td>
           <td rowspan='1'>
             <a (click)="addArray(data.design)">新增</a>
@@ -161,17 +164,24 @@
         <tr *ngFor="let item of data.constructionUnit;let a = index" [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">施工单位:</td>
           <td rowspan='1' colspan='5'>
-            
+
             <!-- <input nz-input placeholder="请输入施工单位" [(ngModel)]="item.designUnit"
               name="constructionUnitDesignUnit{{a}}" /> -->
-              <nz-rj-selector-org  [(ngModel)]="item.designUnit" 
-              (onSelectorEvent)="onSelectOrgItem($event,item)" placeHolder="请输入施工单位"
-              name="constructionUnitDesignUnit{{a}}" required="false" ngDefaultControl 
-               ></nz-rj-selector-org>
-            
-            </td>
-          <td rowspan='1' colspan='4'><input nz-input placeholder="请输入资质等级" [(ngModel)]="item.qualificationLevel"
-              name="constructionQualificationLevel{{a}}" /></td>
+            <nz-rj-selector-org [(ngModel)]="item.designUnit" (onSelectorEvent)="onSelectOrgItem($event,item)"
+              placeHolder="请输入施工单位" name="constructionUnitDesignUnit{{a}}" required="false" ngDefaultControl>
+            </nz-rj-selector-org>
+
+          </td>
+          <td rowspan='1' colspan='4' >
+            <!-- <input nz-input placeholder="请输入资质等级" [(ngModel)]="item.qualificationLevel"
+              name="constructionQualificationLevel{{a}}" /> -->
+
+            <nz-select  [(ngModel)]="item.qualificationLevel"
+              name="constructionQualificationLevel{{a}}">
+              <nz-option *ngFor="let option of zzdjEnum1" [nzLabel]="option.label" [nzValue]="option.value">
+              </nz-option>
+            </nz-select>
+          </td>
           <td rowspan='1' colspan='2'><input nz-input placeholder="请输入法定代表人" [(ngModel)]="item.legalRepresentative"
               name="constructionLegalRepresentative{{a}}" /></td>
           <td rowspan='1'><input nz-input placeholder="请输入联系人" [(ngModel)]="item.contacts"
@@ -194,19 +204,24 @@
 
             <!-- <input nz-input placeholder="请输入监理单位" [(ngModel)]="data.constructionControlUnit.designUnit"
               name="constructionControlUnitDesignUnit" /> -->
-              <nz-rj-selector-org  [(ngModel)]="data.constructionControlUnit.designUnit" 
+            <nz-rj-selector-org [(ngModel)]="data.constructionControlUnit.designUnit"
               (onSelectorEvent)="onSelectOrgItem($event,data.constructionControlUnit)" placeHolder="请输入监理单位"
-              name="constructionControlUnitDesignUnit" required="false" ngDefaultControl 
-               ></nz-rj-selector-org>
+              name="constructionControlUnitDesignUnit" required="false" ngDefaultControl></nz-rj-selector-org>
 
 
           </td>
 
 
-          <td rowspan='1' colspan='4'>
+          <td rowspan='1' colspan='4'  >
+  
+            <nz-select 
+              [(ngModel)]="data.constructionControlUnit.qualificationLevel"
+              name="constructionControlUnitQualificationLevel">
+              <nz-option *ngFor="let option of zzdjEnum3" [nzLabel]="option.label" [nzValue]="option.value">
+              </nz-option>
+            </nz-select>
 
-            <input nz-input placeholder="请输入资质等级" [(ngModel)]="data.constructionControlUnit.qualificationLevel"
-              name="constructionControlUnitQualificationLevel" /></td>
+          </td>
           <td rowspan='1' colspan='2'><input nz-input placeholder="请输入法定代表人"
               [(ngModel)]="data.constructionControlUnit.legalRepresentative"
               name="constructionControlLegalRepresentative" /></td>
@@ -238,8 +253,15 @@
           </td>
           <td rowspan='1' colspan='4'>
             <se error="必填">
-              <input nz-input placeholder="请输入资质等级" [(ngModel)]="data.mappingUnit.qualificationLevel"
-                name="mappingUnitUnitQualificationLevel" required /></se>
+              <!-- <input nz-input placeholder="请输入资质等级" [(ngModel)]="data.mappingUnit.qualificationLevel"
+                name="mappingUnitUnitQualificationLevel" required /> -->
+
+              <nz-select  [(ngModel)]="data.mappingUnit.qualificationLevel"
+                name="mappingUnitUnitQualificationLevel" required>
+                <nz-option *ngFor="let option of zzdjEnum4" [nzLabel]="option.label" [nzValue]="option.value">
+                </nz-option>
+              </nz-select>
+            </se>
           </td>
           <td rowspan='1' colspan='2'>
             <se error="必填">
@@ -326,7 +348,7 @@
           </td>
           <!-- 请输入结构类型 -->
           <td colspan="2">
-            <se error="必填" style="width: 130px;max-width: 130px;">
+            <se error="必填" >
               <nz-select [(ngModel)]="item.type" name="jbtype{{index}}" required>
                 <nz-option *ngFor="let option of typeSelect" [nzLabel]="option.label" [nzValue]="option.value">
                 </nz-option>

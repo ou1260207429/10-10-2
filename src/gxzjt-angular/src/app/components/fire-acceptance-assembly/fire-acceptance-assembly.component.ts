@@ -1,7 +1,7 @@
 import { HomeServiceProxy } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVICES_URL } from 'infrastructure/expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVICES_URL, zzdjEnum4, zzdjEnum3, zzdjEnum2, zzdjEnum1, zzdjEnum } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
@@ -50,6 +50,15 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
   //从父组件获取使用行性质的select
   @Input() useNatureSelect: any
+
+
+  //资质等级的列表
+  zzdjEnum = zzdjEnum
+  zzdjEnum1 = zzdjEnum1
+  zzdjEnum2 = zzdjEnum2
+  zzdjEnum3 = zzdjEnum3
+  zzdjEnum4 = zzdjEnum4
+
   constructor(public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) { }
 
   ngOnInit() {

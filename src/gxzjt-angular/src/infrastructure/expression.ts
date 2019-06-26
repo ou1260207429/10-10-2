@@ -90,6 +90,45 @@ export let SystenNameEnum = [
   { label: '项目管理V2' },
 ]
 
+export let zzdjEnum = [
+  { label: '甲级', value: '甲级' },
+  { label: '乙级', value: '乙级' },
+  { label: '丙级', value: '丙级' },
+  { label: '丁级', value: '丁级' },
+]
+
+export let zzdjEnum1 = [
+  { label: '特级', value: '特级' },
+  { label: '一级', value: '一级' },
+  { label: '二级', value: '二级' },
+  { label: '三级', value: '三级' },
+]
+
+export let zzdjEnum2 = [ 
+  { label: '一级', value: '一级' },
+  { label: '二级', value: '二级' }, 
+]
+
+export let zzdjEnum3 = [
+  { label: '甲级', value: '甲级' },
+  { label: '乙级', value: '乙级' },
+  { label: '丙级', value: '丙级' }, 
+]
+
+export let zzdjEnum4 = [ 
+  { label: '一类', value: '一类' },
+  { label: '二类', value: '二类' }, 
+]
+
+export let zzdjEnum5 = [
+  { label: '甲级', value: '甲级' },
+  { label: '乙级', value: '乙级' },
+  { label: '丙级', value: '丙级' }, 
+  { label: '丁级', value: '丁级' },
+  { label: '戊级', value: '戊级' },
+  { label: '民用', value: '民用' }, 
+]
+
 
 export let DataTypeEnum = [
   { label: 'string', value: 'string' },
@@ -173,10 +212,12 @@ export let RefractoryEnum = [
 ]
 
 export const ArchitectureTypeEnum = [
-  { label: '混凝土结构。包括素混凝土结构、钢筋混凝土结构和预应力混凝土结构', value: '混凝土结构。包括素混凝土结构、钢筋混凝土结构和预应力混凝土结构' },
-  { label: '砌体结构', value: '砌体结构' },
+  { label: '砖木结构', value: '砖木结构' },
+  { label: '混合结构', value: '混合结构' },
+  { label: '钢筋混凝土结构', value: '钢筋混凝土结构' }, 
   { label: '钢结构', value: '钢结构' },
-  { label: '木结构', value: '木结构' }
+  { label: '轻钢结构', value: '轻钢结构' },
+  { label: '其他结构', value: '其他结构' }
 ]
 
 export const AdoptEnum = [

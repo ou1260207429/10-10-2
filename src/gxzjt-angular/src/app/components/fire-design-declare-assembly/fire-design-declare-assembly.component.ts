@@ -1,7 +1,7 @@
 import { HomeServiceProxy, ExamineFormDto } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVICES_URL } from 'infrastructure/expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVICES_URL, zzdjEnum, zzdjEnum1, zzdjEnum2, zzdjEnum3, zzdjEnum4 } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
@@ -46,6 +46,13 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
   //判断上传的焦点
   uoloadIndex: number = -1;
+
+  //资质等级的列表
+  zzdjEnum = zzdjEnum
+  zzdjEnum1 = zzdjEnum1
+  zzdjEnum2 = zzdjEnum2
+  zzdjEnum3 = zzdjEnum3
+  zzdjEnum4 = zzdjEnum4
 
   //从父组件获取使用行性质的select
   @Input() useNatureSelect:any

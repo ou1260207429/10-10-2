@@ -8270,6 +8270,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     flowPathType: number | undefined;
     descr: string | undefined;
     applyName: string | undefined;
+    isTransfer: boolean | undefined;
 
     constructor(data?: IAcceptApplyFormDto) {
         if (data) {
@@ -8336,6 +8337,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
             this.flowPathType = data["flowPathType"];
             this.descr = data["descr"];
             this.applyName = data["applyName"];
+            this.isTransfer = data["isTransfer"];
         }
     }
 
@@ -8402,6 +8404,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
         data["flowPathType"] = this.flowPathType;
         data["descr"] = this.descr;
         data["applyName"] = this.applyName;
+        data["isTransfer"] = this.isTransfer;
         return data; 
     }
 
@@ -8452,6 +8455,7 @@ export interface IAcceptApplyFormDto {
     flowPathType: number | undefined;
     descr: string | undefined;
     applyName: string | undefined;
+    isTransfer: boolean | undefined;
 }
 
 export class FlowNodeUser implements IFlowNodeUser {
@@ -9057,6 +9061,7 @@ export class ExamineFormDto implements IExamineFormDto {
     opinionFileId: string | undefined;
     opinionFileUrl: string | undefined;
     descr: string | undefined;
+    isTransfer: boolean | undefined;
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -9121,6 +9126,7 @@ export class ExamineFormDto implements IExamineFormDto {
             this.opinionFileId = data["opinionFileId"];
             this.opinionFileUrl = data["opinionFileUrl"];
             this.descr = data["descr"];
+            this.isTransfer = data["isTransfer"];
         }
     }
 
@@ -9185,6 +9191,7 @@ export class ExamineFormDto implements IExamineFormDto {
         data["opinionFileId"] = this.opinionFileId;
         data["opinionFileUrl"] = this.opinionFileUrl;
         data["descr"] = this.descr;
+        data["isTransfer"] = this.isTransfer;
         return data; 
     }
 
@@ -9237,6 +9244,7 @@ export interface IExamineFormDto {
     opinionFileId: string | undefined;
     opinionFileUrl: string | undefined;
     descr: string | undefined;
+    isTransfer: boolean | undefined;
 }
 
 export class ProjectAttachment implements IProjectAttachment {
@@ -10908,9 +10916,9 @@ export interface INoticeViewModel {
 export class Condition implements ICondition {
     flowType: number | undefined;
     cityId: number | undefined;
-    cityName: string | undefined;
+    cityname: string | undefined;
     regionId: number | undefined;
-    regionName: string | undefined;
+    regionname: string | undefined;
     startTime: moment.Moment | undefined;
     endTime: moment.Moment | undefined;
     size: number | undefined;
@@ -10930,9 +10938,9 @@ export class Condition implements ICondition {
         if (data) {
             this.flowType = data["flowType"];
             this.cityId = data["cityId"];
-            this.cityName = data["cityName"];
+            this.cityname = data["cityname"];
             this.regionId = data["regionId"];
-            this.regionName = data["regionName"];
+            this.regionname = data["regionname"];
             this.startTime = data["startTime"] ? moment(data["startTime"].toString()) : <any>undefined;
             this.endTime = data["endTime"] ? moment(data["endTime"].toString()) : <any>undefined;
             this.size = data["size"];
@@ -10952,9 +10960,9 @@ export class Condition implements ICondition {
         data = typeof data === 'object' ? data : {};
         data["flowType"] = this.flowType;
         data["cityId"] = this.cityId;
-        data["cityName"] = this.cityName;
+        data["cityname"] = this.cityname;
         data["regionId"] = this.regionId;
-        data["regionName"] = this.regionName;
+        data["regionname"] = this.regionname;
         data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
         data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
         data["size"] = this.size;
@@ -10974,9 +10982,9 @@ export class Condition implements ICondition {
 export interface ICondition {
     flowType: number | undefined;
     cityId: number | undefined;
-    cityName: string | undefined;
+    cityname: string | undefined;
     regionId: number | undefined;
-    regionName: string | undefined;
+    regionname: string | undefined;
     startTime: moment.Moment | undefined;
     endTime: moment.Moment | undefined;
     size: number | undefined;
