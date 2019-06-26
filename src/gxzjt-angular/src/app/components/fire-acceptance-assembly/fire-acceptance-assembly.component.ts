@@ -54,8 +54,8 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
-    this.childOuter.emit(this.f); 
-    this.getAreaDropdown(); 
+    this.childOuter.emit(this.f);
+    this.getAreaDropdown();
   }
 
   /**
@@ -110,7 +110,7 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     this._publicServices.newUpload(formData, params).subscribe(data => {
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL + data.data[0].localUrl
+      this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
     })
     return false;
   };
@@ -123,20 +123,24 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     this.uoloadIndex = index
   }
 
-  designUnitList = [];
-  isdesignUnitLoading = false;
 
-  onSearchDesignUnit(item) {
 
+
+  onSelectOrgItem(res, item) {
+    // console.log(res);
+    // console.log(item);
+    item.qualificationLevel=res.qualificationLevel;
+    item.contacts=res.contact;
+    item.contactsNumber=res.contactPhone;
+    item.legalRepresentative=res.leader;
 
   }
 
+  onSelectOrgTitle(res){
+    this.data.legalRepresentative=res.leader;
+    this.data.legalRepresentativeNo=res.leaderPhone;
 
-  @ViewChild('design_org')
-  design_org: SelectorOrgComponent;
-
-  onSelectOrgItem(res){
-    console.log(res);
+    
 
   }
 

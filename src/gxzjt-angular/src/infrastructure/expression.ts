@@ -6,7 +6,7 @@ import { STPage, STComponent } from "@delon/abc";
 export const FLOW_SERVICES_URL = 'http://222.84.250.158:8111'
 
 //谢峰的服务地址
-export const XIEFENG_SERVICES_URL = 'http://localhost:3521/';
+export const XIEFENG_SERVICES_URL = 'http://222.84.250.158:8113';
 
 //庞博的服务器上传图片地址
 export const PANGBO_SERVICES_URL = 'http://222.84.250.158:8000/';

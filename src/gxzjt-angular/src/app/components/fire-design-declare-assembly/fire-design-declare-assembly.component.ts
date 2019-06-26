@@ -125,7 +125,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
       console.log(data)
-      this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL + data.data[0].localUrl
+      this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
     })
     return false;
   };
@@ -138,4 +138,22 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     this.uoloadIndex = index
   }
 
+
+  onSelectOrgItem(res, item) {
+    // console.log(res);
+    // console.log(item);
+    item.qualificationLevel=res.qualificationLevel;
+    item.contacts=res.contact;
+    item.contactsNumber=res.contactPhone;
+    item.legalRepresentative=res.leader;
+
+  }
+
+
+
+  onSelectOrgTitle(res){
+    this.data.legalRepresentative=res.leader;
+    this.data.legalRepresentativeNo=res.leaderPhone;
+
+  }
 }

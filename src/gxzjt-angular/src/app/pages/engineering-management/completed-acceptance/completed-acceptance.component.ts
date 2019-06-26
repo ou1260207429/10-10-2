@@ -47,7 +47,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
           type: 'modal',
           iif: record => record.status  === 2 && record.parentFlowId!=null,
           click: (record: any, modal: any) => {
-            this.router.navigate([`/app/engineering-management/addFireAcceptanceComponent/0/${record.projectId}/${record.id}`]);
+            this.router.navigate([`/app/engineering-management/addCompletedAcceptanceComponent/0/${record.projectId}/${record.id}`]);
           },
         },
         {
