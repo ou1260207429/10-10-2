@@ -26,7 +26,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { REGISTER_URL } from 'infrastructure/expression';
 
-import { NzModalService } from 'ng-zorro-antd';
+// import { NzModalService } from 'ng-zorro-antd';
 
 @Component({
   templateUrl: './register.component.html',
@@ -45,7 +45,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
     // private _accountService: AccountServiceProxy,
     private _router: Router,
     public http: HttpClient,
-    private modalService: NzModalService,
+    // private modalService: NzModalService,
   ) {
     super(injector);
   }

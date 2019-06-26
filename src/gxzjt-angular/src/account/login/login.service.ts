@@ -42,7 +42,7 @@ export class LoginService {
     private _utilsService: UtilsService,
     private _messageService: MessageService,
     private _tokenService: TokenService,
-    private _logService: LogService,
+    // private _logService: LogService,
     // private _AppSessionService: AppSessionService
   ) {
     this.clear();
@@ -80,8 +80,9 @@ export class LoginService {
     } else {
       // Unexpected result!
 
-      this._logService.warn('登录异常');
-      this._router.navigate(['account/login']);
+      // this._logService.warn('登录异常');
+      this._messageService.info('登录异常');
+      // this._router.navigate(['account/login']);
     }
   }
 

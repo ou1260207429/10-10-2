@@ -1,4 +1,4 @@
-import { ReuseTabService } from '@delon/abc/reuse-tab';
+
 import {
   Component,
   Injector,
@@ -16,7 +16,9 @@ import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { AbpSessionService } from '@abp/session/abp-session.service';
 import { _HttpClient } from '@delon/theme';
 
-import { NzModalService } from 'ng-zorro-antd';
+import { ReuseTabService } from '@delon/abc';
+
+// import { NzModalService } from 'ng-zorro-antd';
 
 import * as $ from 'jquery';
 
@@ -61,13 +63,14 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     injector: Injector,
     private fb: FormBuilder,
     public loginService: LoginService,
-    private _sessionService: AbpSessionService,
-    private _sessionAppService: SessionServiceProxy,
+    // private _sessionService: AbpSessionService,
+    // private _sessionAppService: SessionServiceProxy,
     private _router: Router,
     public http: _HttpClient,
-    private modalService: NzModalService,
+    // private modalService: NzModalService,
     private _TokenService: TokenService,
-    private _AppSessionService: AppSessionService
+    private _AppSessionService: AppSessionService,
+    private reuseTabService: ReuseTabService,
   ) {
     super(injector);
 
@@ -81,9 +84,10 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     this.titleSrvice.setTitle("登录");
 
     if (this._TokenService.getToken()) {
-      location.href = location.href.replace('#/account/login', '#/app/');
+      // location.href = location.href.replace('#/account/login', '#/app/');
+      this._router.navigate(['/app/home/welcome']);
     }
-
+    this.reuseTabService.clear();
   }
 
 
@@ -182,7 +186,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
         }, err => {
           this.modalService.warning({
             nzTitle: '提示',
-            nzContent: '登录异常！'
+            nzContent: '登录出错:'+err
           });
           this.submitting = false;
         });

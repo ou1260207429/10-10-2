@@ -330,7 +330,7 @@ export class AddFireAcceptanceComponent implements OnInit {
       }
     }else{
       console.log(this.form.errors);
-      this.message.success('数据验证失败！')
+      this.message.error('数据验证失败！')
     }
   }
 

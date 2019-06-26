@@ -24,14 +24,14 @@
                     clearable
                     size="small"
                     @change="handleChange"
-                    v-model="city"
+                    v-model="searchForm.cityname"
                     placeholder="请选择（市）"
                   >
                     <el-option
                       v-for="(item,index) in cityList"
                       :key="index"
                       :label="item.Name"
-                      :value="item.AreaId"
+                      :value="item.Name"
                     ></el-option>
                   </el-select>
                 </el-form-item>
@@ -39,15 +39,14 @@
                   <el-select
                     clearable
                     size="small"
-                    @change="handleshi"
-                    v-model="searchForm.cityId"
+                    v-model="searchForm.regionname"
                     placeholder="请选择（区/县）"
                   >
                     <el-option
                       v-for="item in xianList"
                       :key="item.value"
                       :label="item.Name"
-                      :value="item.AreaId"
+                      :value="item.Name"
                     ></el-option>
                   </el-select>
                 </el-form-item>
@@ -140,11 +139,10 @@ export default {
           name: "竣工验收消防备案"
         }
       ],
-      city: "",
       //查询条件
       searchForm: {
-        cityId: "",
-        cityName: "",
+        cityname: "",
+        regionname: "",
         startTime: "",
         endTime: "",
         flowType: ""
@@ -243,17 +241,6 @@ export default {
   },
 
   methods: {
-    handleshi(value) {
-      this.pageSize.cityName = "";
-      if (!value) {
-        this.city = "";
-      }
-      this.xianList.forEach(item => {
-        if (item.AreaId == value) {
-          this.pageSize.cityName = item.Name;
-        }
-      });
-    },
     /**
      * 查询表格数据
      */
@@ -302,10 +289,9 @@ export default {
     //切换省份查询区/县
     handleChange(value) {
       this.xianList = [];
-      this.searchForm.cityId = "";
-      this.searchForm.cityName = "";
+      this.searchForm.regionname = "";
       this.cityList.forEach(item => {
-        if (value == item.AreaId) {
+        if (value == item.Name) {
           this.xianList = item.Children;
         }
       });
@@ -313,6 +299,7 @@ export default {
     //查询省市级联
     initCityList(value) {
       let _this = this;
+
       app.get(infO.SEARCH_City).then(req => {
         let result = JSON.parse(req.result);
         _this.cityList = result.Children;

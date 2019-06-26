@@ -5,6 +5,7 @@ import { FeatureCheckerService } from '@abp/features/feature-checker.service';
 import { NotifyService } from '@abp/notify/notify.service';
 import { SettingService } from '@abp/settings/setting.service';
 import { MessageService } from '@abp/message/message.service';
+import { NzModalService } from 'ng-zorro-antd';
 import { AbpMultiTenancyService } from '@abp/multi-tenancy/abp-multi-tenancy.service';
 import { ModalHelper, ALAIN_I18N_TOKEN, TitleService } from '@delon/theme';
 import { LocalizationService } from '@shared/i18n/localization.service';
@@ -19,6 +20,7 @@ export abstract class AppComponentBase {
   notify: NotifyService;
   setting: SettingService;
   message: MessageService;
+  modalService: NzModalService;
   multiTenancy: AbpMultiTenancyService;
   appSession: AppSessionService;
   elementRef: ElementRef;
@@ -42,6 +44,7 @@ export abstract class AppComponentBase {
     this.elementRef = injector.get(ElementRef);
     this.modalHelper = injector.get(ModalHelper);
     this.titleSrvice = injector.get(TitleService);
+    this.modalService = injector.get(NzModalService);
   }
 
   l(key: string, ...args: any[]): string {

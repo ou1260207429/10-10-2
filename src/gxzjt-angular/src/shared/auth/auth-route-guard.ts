@@ -12,6 +12,7 @@ import {
   RouterStateSnapshot,
   CanActivateChild,
 } from '@angular/router';
+import { debug } from 'util';
 
 @Injectable()
 export class AppRouteGuard implements CanActivate, CanActivateChild {
@@ -33,13 +34,21 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
     if (!this._sessionService.user || !this._tokenService.getToken()) {
 
 
-      this._NzModalService.info({
-        nzTitle: '提示',
-        nzContent: '您未登录，请先前往登录',
-      }
-      );
-      if ("login".lastIndexOf(location.href) < 0)
+
+      var href = location.href;
+      var tag = href.substring(href.length - 5, href.length);
+  
+      if ("login" != tag) {
+
+
+        this._NzModalService.info({
+          nzTitle: '提示',
+          nzContent: '您未登录，请先前往登录',
+        }
+        );
         this._router.navigate(['/account/login']);
+      }
+
       return false;
     }
 

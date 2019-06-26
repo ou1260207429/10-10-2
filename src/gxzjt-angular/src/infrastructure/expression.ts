@@ -3,16 +3,20 @@
 import { STPage, STComponent } from "@delon/abc";
 
 
-export const FLOW_SERVICES_URL = 'http://222.84.250.158:8111'
+export const IS_DEBUG=true;
+
+export const FLOW_SERVICES_URL =IS_DEBUG?'http://222.84.250.158:8111':'http://http://dn5.gxcic.net:8303';
+
 
 //谢峰的服务地址
-export const XIEFENG_SERVICES_URL = 'http://222.84.250.158:8113';
+export const XIEFENG_SERVICES_URL = IS_DEBUG?'http://222.84.250.158:8113':'http://http://dn5.gxcic.net:8305'
 
 //庞博的服务器上传图片地址
-export const PANGBO_SERVICES_URL = 'http://222.84.250.158:8000/';
+export const PANGBO_SERVICES_URL = IS_DEBUG?'http://222.84.250.158:8000':'http://http://dn5.gxcic.net:8304';
 
 //注册地址，勿随意动
-export const REGISTER_URL = 'http://222.84.250.158:8000/';
+// export const REGISTER_URL = 'http://222.84.250.158:8000/';
+export const REGISTER_URL = PANGBO_SERVICES_URL;
 
 //庞博的上传图片的ID验证
 export const AppId = '9F947774-8CB4-4504-B441-2B9AAEEAF450'
