@@ -127,7 +127,10 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
           });
           this.back();
         } else {
-          this.showErr(res.message);
+          this.modalService.info({
+            nzTitle: '提示',
+            nzContent: res.message,
+          });
         }
       }
       this.saving = false;
@@ -146,12 +149,17 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
 
   interval$: any;
   getCaptcha() {
-    let url = REGISTER_URL + "api/User/Register?phoneNum" + this.model.EId;
-    this.http.get(url).subscribe(res => {
-      this.startCount();
-    }
+    let url = REGISTER_URL + "api/User/SendValidationSMS?phoneNum=" + this.model.EId;
 
-    );
+    this.isSetCaptcha = true;
+    this.http.post(url, null, this.httpOptions).subscribe(res => {
+      this.startCount();
+      this.isSetCaptcha = false;
+    },
+      err => {
+        this.showErr(err);
+        this.isSetCaptcha = false;
+      });
 
   }
 
