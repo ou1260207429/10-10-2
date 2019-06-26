@@ -3,8 +3,11 @@ import { Menu } from '@delon/theme';
 // 全局的左侧导航菜单
 export class AppMenus {
 
-  static aclCompany = ["reg", "sys"];
-  static aclSys = "sys";
+  static aclCompany = "reg";//注册公司
+  static aclSys = "sys";//管理员
+  static aclOrg = "org";//机构人员
+
+
   static Menus: Menu[] = [
     {
       text: "",
@@ -40,7 +43,7 @@ export class AppMenus {
       text: "",
       i18n: "工作事项",
       icon: { type: "icon", value: "bars" },// 图标
-      acl: AppMenus.aclCompany,
+      acl: [AppMenus.aclCompany, AppMenus.aclSys, AppMenus.aclOrg],
       children: [
         {
           text: "",
@@ -52,11 +55,11 @@ export class AppMenus {
           i18n: "已办",
           link: "/app/work-matters/alreadyDoneComponent",
         },
-         {
-          text: "办结查询",
-          acl: AppMenus.aclSys,
-          link: "/app/work-matters/searchHadDone",
-        },
+        // {
+        //   text: "办结查询",
+        //   alc: [AppMenus.aclCompany, AppMenus.aclSys],
+        //   link: "/app/work-matters/searchHadDone",
+        // },
         // {
         //   text: "",
         //   i18n: "草稿",
@@ -108,7 +111,7 @@ export class AppMenus {
       text: "",
       i18n: "内容管理",
       icon: { type: "icon", value: "form" },// 图标\
-      acl: AppMenus.aclSys,
+      acl: [ AppMenus.aclSys],
       children: [
         {
           text: "",
@@ -131,7 +134,7 @@ export class AppMenus {
       text: "",
       i18n: "工程管理",
       icon: { type: "icon", value: "project" },// 图标
-      acl: AppMenus.aclCompany,
+      acl: [AppMenus.aclCompany, AppMenus.aclSys,AppMenus.aclOrg],
       children: [
         {
           text: "",
@@ -164,7 +167,7 @@ export class AppMenus {
       text: "系统管理",
 
       icon: { type: "icon", value: "account-book" },// 图标
-      acl: AppMenus.aclSys,
+      acl: [ AppMenus.aclSys],
       children: [
         {
           text: "抽查比例中心",
@@ -185,7 +188,7 @@ export class AppMenus {
     // {
     //   text: "权限管理",
     //   icon: { type: "icon", value: "team" },// 图标
-    //   acl: AppMenus.aclSys,
+    //   alc:[AppMenus.aclCompany,AppMenus.aclSys],
     //   children: [
     //     {
     //       text: "组织架构管理",
@@ -205,7 +208,7 @@ export class AppMenus {
       text: "",
       i18n: "用户中心",
       icon: { type: "icon", value: "user" },// 图标
-      acl: AppMenus.aclCompany,
+      // acl: AppMenus.aclCompany,
       children: [
         {
           text: "修改密码",
@@ -219,7 +222,7 @@ export class AppMenus {
       text: "",
       i18n: "用户权限",
       icon: { type: "icon", value: "cluster" },// 图标
-      acl: AppMenus.aclCompany,
+      acl: AppMenus.aclSys,
       children: [
         {
           text: "用户列表",
