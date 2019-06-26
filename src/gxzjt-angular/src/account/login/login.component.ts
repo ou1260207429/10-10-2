@@ -81,7 +81,8 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     this.titleSrvice.setTitle("登录");
 
     if (this._TokenService.getToken()) {
-      location.href = location.href.replace('#/account/login', '#/app/');
+      // location.href = location.href.replace('#/account/login', '#/app/');
+      this._router.navigate(['/app/home/welcome']);
     }
 
   }
@@ -182,7 +183,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
         }, err => {
           this.modalService.warning({
             nzTitle: '提示',
-            nzContent: '请完成拖动验证！'
+            nzContent: '登录出错:'+err
           });
           this.submitting = false;
         });

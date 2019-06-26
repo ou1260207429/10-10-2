@@ -123,7 +123,6 @@ export class LayoutDefaultComponent extends AppComponentBase
 
             // }
 
-
             router.navigate(['/account/login']);
 
           } else {
