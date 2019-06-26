@@ -18,7 +18,8 @@ import { _HttpClient } from '@delon/theme';
 
 import { ReuseTabService } from '@delon/abc';
 
-// import { NzModalService } from 'ng-zorro-antd';
+
+import { REGISTER_URL } from 'infrastructure/expression';
 
 import * as $ from 'jquery';
 
@@ -186,7 +187,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
         }, err => {
           this.modalService.warning({
             nzTitle: '提示',
-            nzContent: '登录出错:'+err
+            nzContent: '登录出错:' + err
           });
           this.submitting = false;
         });
@@ -207,11 +208,16 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
   interval$: any;
   getCaptcha() {
-    // if (this.mobile.invalid) {
-    //   this.mobile.markAsDirty({ onlySelf: true });
-    //   this.mobile.updateValueAndValidity({ onlySelf: true });
-    //   return;
-    // }
+    let url = REGISTER_URL + "api/User/Register";
+    this.http.get(url).subscribe(res => {
+      this.startCount();
+    }
+
+    );
+
+  }
+
+  startCount() {
     this.count = 59;
     this.interval$ = setInterval(() => {
       this.count -= 1;
