@@ -12,8 +12,15 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>建设单位:</td>
           <td rowspan='1' colspan='5'>
             <se error="这是必填项">
-              <input nz-input placeholder="请输入单位名称" [(ngModel)]="data.jsconstructionUnit" name="jsconstructionUnit"
-                required />
+
+              <!-- <input nz-input placeholder="请输入单位名称" [(ngModel)]="data.jsconstructionUnit" name="jsconstructionUnit"
+                required /> -->
+               
+                <nz-rj-selector-org  [(ngModel)]="data.jsconstructionUnit" 
+                (onSelectorEvent)="onSelectOrgTitle($event)" placeHolder="请输入单位名称"
+                name="jsconstructionUnit" required="true" ngDefaultControl 
+                 ></nz-rj-selector-org>
+
             </se>
           </td>
           <td rowspan='1' colspan='2' class="fontweight fontLeft leftTitle" required=true>法定代表人/主要负责人:</td>

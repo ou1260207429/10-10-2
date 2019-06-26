@@ -136,4 +136,12 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
   }
 
+  onSelectOrgTitle(res){
+    this.data.legalRepresentative=res.leader;
+    this.data.legalRepresentativeNo=res.leaderPhone;
+
+    
+
+  }
+
 }
