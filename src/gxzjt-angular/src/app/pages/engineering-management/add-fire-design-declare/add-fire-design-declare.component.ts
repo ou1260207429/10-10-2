@@ -665,7 +665,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
 
     }else{
       console.log(this.form);
-      this.message.success('数据验证失败！')
+      this.message.error('数据验证失败！')
     }
 
 
