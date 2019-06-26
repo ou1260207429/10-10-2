@@ -8098,6 +8098,8 @@ export class ProjectFlow implements IProjectFlow {
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
     parentFlowId: number | undefined;
+    isResubmitted: boolean | undefined;
+    isAcceptanceSubmitted: boolean | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -8139,6 +8141,8 @@ export class ProjectFlow implements IProjectFlow {
             this.workFlow_Instance_Id = data["workFlow_Instance_Id"];
             this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
             this.parentFlowId = data["parentFlowId"];
+            this.isResubmitted = data["isResubmitted"];
+            this.isAcceptanceSubmitted = data["isAcceptanceSubmitted"];
             this.isDeleted = data["isDeleted"];
             this.deleterUserId = data["deleterUserId"];
             this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
@@ -8180,6 +8184,8 @@ export class ProjectFlow implements IProjectFlow {
         data["workFlow_Instance_Id"] = this.workFlow_Instance_Id;
         data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
         data["parentFlowId"] = this.parentFlowId;
+        data["isResubmitted"] = this.isResubmitted;
+        data["isAcceptanceSubmitted"] = this.isAcceptanceSubmitted;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -8221,6 +8227,8 @@ export interface IProjectFlow {
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
     parentFlowId: number | undefined;
+    isResubmitted: boolean | undefined;
+    isAcceptanceSubmitted: boolean | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -10065,6 +10073,8 @@ export class ProjectFlowDto implements IProjectFlowDto {
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
     parentFlowId: number | undefined;
+    isResubmitted: boolean | undefined;
+    isAcceptanceSubmitted: boolean | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -10106,6 +10116,8 @@ export class ProjectFlowDto implements IProjectFlowDto {
             this.workFlow_Instance_Id = data["workFlow_Instance_Id"];
             this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
             this.parentFlowId = data["parentFlowId"];
+            this.isResubmitted = data["isResubmitted"];
+            this.isAcceptanceSubmitted = data["isAcceptanceSubmitted"];
             this.isDeleted = data["isDeleted"];
             this.deleterUserId = data["deleterUserId"];
             this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
@@ -10147,6 +10159,8 @@ export class ProjectFlowDto implements IProjectFlowDto {
         data["workFlow_Instance_Id"] = this.workFlow_Instance_Id;
         data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
         data["parentFlowId"] = this.parentFlowId;
+        data["isResubmitted"] = this.isResubmitted;
+        data["isAcceptanceSubmitted"] = this.isAcceptanceSubmitted;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -10188,6 +10202,8 @@ export interface IProjectFlowDto {
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
     parentFlowId: number | undefined;
+    isResubmitted: boolean | undefined;
+    isAcceptanceSubmitted: boolean | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;

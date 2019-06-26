@@ -50,7 +50,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
         {
           text: '重新申请',
           type: 'modal',
-          iif: record => record.status  === 2 && record.parentFlowId!=null,
+          iif: record => record.status  === 2 && record.isResubmitted!=true,
           click: (record: any, modal: any) => {
             this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/${record.projectId}/${record.id}`]);
           },
@@ -58,7 +58,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
         {
           text: '验收',
           type: 'modal',
-          iif: record => record.status  === 4,
+          iif: record => record.status  === 4 && record.isAcceptanceSubmitted!=true,
           click: (record: any, modal: any) => {
             this.router.navigate([`/app/engineering-management/addFireAcceptanceComponent/0/${record.projectId}/${record.id}`]);
           },

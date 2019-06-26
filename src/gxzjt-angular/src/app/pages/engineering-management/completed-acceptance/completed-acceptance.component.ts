@@ -45,7 +45,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
         {
           text: '重新申请',
           type: 'modal',
-          iif: record => record.status  === 2 && record.parentFlowId!=null,
+          iif: record => record.status  === 2 && record.isResubmitted!=true,
           click: (record: any, modal: any) => {
             this.router.navigate([`/app/engineering-management/addCompletedAcceptanceComponent/0/${record.projectId}/${record.id}`]);
           },
@@ -53,7 +53,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
         {
           text: '复查申请',
           type: 'modal',
-          iif: record => (record.status  === 3 && (record.parentFlowId==null || record.parentFlowId==0)),//当状态是3即为不合格的时候显示此按钮，若需要方便调试可自己更改status的值改变按钮显示
+          iif: record => (record.status  === 3 && record.isResubmitted!=true),//当状态是3即为不合格的时候显示此按钮，若需要方便调试可自己更改status的值改变按钮显示
           click: (record: any, modal: any) => {
 
             this.toreapply(record);
