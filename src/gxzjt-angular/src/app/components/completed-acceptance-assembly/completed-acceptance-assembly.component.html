@@ -16,27 +16,34 @@
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程名称:</td>
           <td rowspan='1' colspan='7'>
-            <se error="这是必填项">
+            <se error="必填">
               <input nz-input placeholder="请输入工程名称" [(ngModel)]="data.projectName" name="projectName" required />
             </se>
           </td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>联系电话:</td>
           <td rowspan='1' colspan='7'>
-            <se error="这是必填项">
-              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.projectNumber" name="projectNumber" required />
+            <se error="请输入数字">
+              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.projectNumber" pattern="^[0-9]*$"
+                name="projectNumber" required />
             </se>
           </td>
         </tr>
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>使用性质:</td>
           <td rowspan='1' colspan='7'>
-            <se error="这是必填项">
-              <input nz-input placeholder="请输入使用性质" [(ngModel)]="data.useNature" name="useNature" required />
+            <se error="必填">
+              <nz-spin [nzSpinning]="!useNatureSelect"></nz-spin>
+              <nz-select nzPlaceHolder='请选择使用性质' [(ngModel)]="data.useNature" name="useNature" required
+                *ngIf="useNatureSelect">
+                <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.natureName"
+                  [nzValue]="option.natureCode">
+                </nz-option>
+              </nz-select>
             </se>
           </td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>施工许可证号:</td>
           <td rowspan='1' colspan='7'>
-            <se error="这是必填项">
+            <se error="必填">
               <input nz-input placeholder="请输入施工许可证号" [(ngModel)]="data.constructionPermitNumber"
                 name="constructionPermitNumber" required />
             </se>
@@ -45,14 +52,14 @@
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>检测报告编号：</td>
           <td rowspan='1' colspan='7'>
-            <se error="这是必填项">
+            <se error="必填">
               <input nz-input placeholder="请输入检测报告编号" [(ngModel)]="data.testReportNumber" name="testReportNumber"
                 required />
             </se>
           </td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>验收合格日期:</td>
           <td rowspan='1' colspan='7'>
-            <se error="这是必填项">
+            <se error="必填">
               <nz-date-picker name="t2" required [(ngModel)]="data.planEndTime" name="planEndTime"></nz-date-picker>
             </se>
           </td>
@@ -60,11 +67,11 @@
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程地址:</td>
           <td rowspan='1' colspan='17'>
-            <nz-cascader  [nzPlaceHolder]="'请设置位置'" [nzSize]="'large'" [nzChangeOnSelect]="true"
-              [nzOptions]="position" (nzChange)="changeCitycountyAndDistrict($event)"
-              [(ngModel)]="data.engineeringCitycountyAndDistrict" name="engineeringCitycountyAndDistrict" required>
+            <nz-cascader [nzPlaceHolder]="'请设置位置'" [nzSize]="'large'" [nzChangeOnSelect]="true" [nzOptions]="position"
+              (nzChange)="changeCitycountyAndDistrict($event)" [(ngModel)]="data.engineeringCitycountyAndDistrict"
+              name="engineeringCitycountyAndDistrict" required>
             </nz-cascader>
-            <se error="这是必填项">
+            <se error="必填">
               <input nz-input placeholder="请输入工程地址" [(ngModel)]="data.engineeringAddress" name="engineeringAddress"
                 required />
             </se>
@@ -80,27 +87,31 @@
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>建设单位:</td>
           <td rowspan='1' colspan='7'>
-            <se error="这是必填项">
-              <input nz-input placeholder="请输入建设单位" [(ngModel)]="data.constructionUnit.name" name="constructionUnitname"
-                required />
+            <se error="必填">
+              <!-- <input nz-input placeholder="请输入建设单位" [(ngModel)]="data.constructionUnit.name" name="constructionUnitname"
+                required /> -->
+
+              <nz-rj-selector-org [(ngModel)]="data.constructionUnit.name"
+                (onSelectorEvent)="onSelectOrgItem($event,data.constructionUnit)" placeHolder="请输入建设单位"
+                name="constructionUnitname" required="true" ngDefaultControl></nz-rj-selector-org>
             </se>
           </td>
           <td rowspan='1' colspan='4'>
-            <se error="这是必填项">
+            <se error="必填">
               <input nz-input placeholder="请输入资质等级" [(ngModel)]="data.constructionUnit.qualificationLevel"
-                name="constructionUnitqualificationLevel" required />
+                name="constructionUnitqualificationLevel" />
             </se>
           </td>
           <td rowspan='1' colspan='3'>
-            <se error="这是必填项">
+            <se error="必填">
               <input nz-input placeholder="请输入联系人" [(ngModel)]="data.constructionUnit.contacts"
                 name="constructionUnitcontacts" required />
             </se>
           </td>
           <td rowspan='1' colspan='3'>
-            <se error="这是必填项">
+            <se error="请输入数字">
               <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.constructionUnit.contactsNumber"
-                name="constructionUnitcontactsNumber" required />
+                pattern="^[0-9]*$" name="constructionUnitcontactsNumber" required />
             </se>
           </td>
         </tr>
@@ -108,25 +119,29 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>设计单位:</td>
 
           <td rowspan='1' colspan='7'>
-            <se error="这是必填项">
-              <input nz-input placeholder="请输入设计单位" [(ngModel)]="data.designUnit.name" name="designUnitname" required />
+            <se error="必填">
+              <!-- <input nz-input placeholder="请输入设计单位" [(ngModel)]="data.designUnit.name" name="designUnitname" required /> -->
+              <nz-rj-selector-org [(ngModel)]="data.designUnit.name"
+                (onSelectorEvent)="onSelectOrgItem($event,data.designUnit)" placeHolder="请输入设计单位" name="designUnitname"
+                required="true" ngDefaultControl></nz-rj-selector-org>
+
             </se>
           </td>
           <td rowspan='1' colspan='4'>
-            <se error="这是必填项">
+            <se error="必填">
               <input nz-input placeholder="请输入资质等级" [(ngModel)]="data.designUnit.qualificationLevel"
                 name="designUnitqualificationLevel" required />
             </se>
           </td>
           <td rowspan='1' colspan='3'>
-            <se error="这是必填项">
+            <se error="必填">
               <input nz-input placeholder="请输入联系人" [(ngModel)]="data.designUnit.contacts" name="designUnitcontacts"
                 required />
             </se>
           </td>
           <td rowspan='1' colspan='3'>
-            <se error="这是必填项">
-              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.designUnit.contactsNumber"
+            <se error="请输入数字">
+              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.designUnit.contactsNumber" pattern="^[0-9]*$"
                 name="designUnitcontactsNumber" required />
             </se>
           </td>
@@ -135,75 +150,105 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>施工总承包单位:</td>
 
           <td rowspan='1' colspan='7'>
-            <se error="这是必填项">
-              <input nz-input placeholder="请输入施工总承包单位" [(ngModel)]="data.contractingUnit.name"
-                name="contractingUnitname" required />
+            <se error="必填">
+              <!-- <input nz-input placeholder="请输入施工总承包单位" [(ngModel)]="data.contractingUnit.name"
+                name="contractingUnitname" required /> -->
+              <nz-rj-selector-org [(ngModel)]="data.contractingUnit.name"
+                (onSelectorEvent)="onSelectOrgItem($event,data.contractingUnit)" placeHolder="请输入施工总承包单位"
+                name="contractingUnitname" required="true" ngDefaultControl></nz-rj-selector-org>
             </se>
           </td>
           <td rowspan='1' colspan='4'>
-            <se error="这是必填项">
+            <se error="必填">
               <input nz-input placeholder="请输入资质等级" [(ngModel)]="data.contractingUnit.qualificationLevel"
                 name="contractingUnitqualificationLevel" required />
             </se>
           </td>
           <td rowspan='1' colspan='3'>
-            <se error="这是必填项">
+            <se error="必填">
               <input nz-input placeholder="请输入联系人" [(ngModel)]="data.contractingUnit.contacts"
                 name="contractingUnitcontactsNumbe111111r" required />
             </se>
           </td>
           <td rowspan='1' colspan='3'>
-            <se error="这是必填项">
-              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.contractingUnit.contactsNumber"
+
+            <se error="请输入数字">
+              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.contractingUnit.contactsNumber" pattern="^[0-9]*$"
                 name="contractingUnitcontactsNumber" required />
             </se>
           </td>
         </tr>
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">分包单位（如有）:</td>
-          <td rowspan='1' colspan='7'><input nz-input placeholder="请输入分包单位" [(ngModel)]="data.subcontractors.name"
-              name="subcontractorsname" /></td>
+          <td rowspan='1' colspan='7'>
+
+            <!-- <input nz-input placeholder="请输入分包单位" [(ngModel)]="data.subcontractors.name"
+              name="subcontractorsname" /> -->
+
+            <nz-rj-selector-org [(ngModel)]="data.subcontractors.name"
+              (onSelectorEvent)="onSelectOrgItem($event,data.subcontractors)" placeHolder="请输入分包单位"
+              name="subcontractorsname" required="false" ngDefaultControl></nz-rj-selector-org>
+
+          </td>
           <td rowspan='1' colspan='4'><input nz-input placeholder="请输入资质等级"
               [(ngModel)]="data.subcontractors.qualificationLevel" name="subcontractorsqualificationLevel" /></td>
           <td rowspan='1' colspan='3'><input nz-input placeholder="请输入联系人" [(ngModel)]="data.subcontractors.contacts"
               name="contractingUnitcontacts" /></td>
-          <td rowspan='1' colspan='3'><input nz-input placeholder="请输入联系电话"
-              [(ngModel)]="data.subcontractors.contactsNumber" name="subcontractorscontactsNumber" /></td>
+          <td rowspan='1' colspan='3'>
+            <se error="请输入数字">
+              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.subcontractors.contactsNumber"
+                name="subcontractorscontactsNumber" pattern="^[0-9]*$" />
+            </se>
+          </td>
         </tr>
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">监理单位:</td>
-          <td rowspan='1' colspan='7'><input nz-input placeholder="请输入分包单位" [(ngModel)]="data.supervisoryUnit.name"
-              name="supervisoryUnitname" /></td>
+          <td rowspan='1' colspan='7'>
+            <!-- <input nz-input placeholder="请输入分包单位" [(ngModel)]="data.supervisoryUnit.name"
+              name="supervisoryUnitname" /> -->
+            <nz-rj-selector-org [(ngModel)]="data.supervisoryUnit.name"
+              (onSelectorEvent)="onSelectOrgItem($event,data.supervisoryUnit)" placeHolder="请输入监理单位"
+              name="supervisoryUnitname" required="false" ngDefaultControl></nz-rj-selector-org>
+
+          </td>
           <td rowspan='1' colspan='4'><input nz-input placeholder="请输入监理单位单位"
               [(ngModel)]="data.supervisoryUnit.qualificationLevel" name="supervisoryUnitqualificationLevel" /></td>
           <td rowspan='1' colspan='3'><input nz-input placeholder="请输入联系人" [(ngModel)]="data.supervisoryUnit.contacts"
               name="supervisoryUnitcontacts" /></td>
-          <td rowspan='1' colspan='3'><input nz-input placeholder="请输入联系电话"
-              [(ngModel)]="data.supervisoryUnit.contactsNumber" name="supervisoryUnitcontactsNumber" /></td>
+          <td rowspan='1' colspan='3'>
+            <se error="请输入数字">
+              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.supervisoryUnit.contactsNumber"
+                name="supervisoryUnitcontactsNumber" pattern="^[0-9]*$" />
+            </se>
+          </td>
         </tr>
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>检测单位：</td>
           <td rowspan='1' colspan='7'>
-            <se error="这是必填项">
-              <input nz-input placeholder="请输入检测单位" [(ngModel)]="data.detectionUnit.name" name="detectionUnitname"
-                required />
+            <se error="必填">
+              <!-- <input nz-input placeholder="请输入检测单位" [(ngModel)]="data.detectionUnit.name" name="detectionUnitname"
+                required /> -->
+              <nz-rj-selector-org [(ngModel)]="data.detectionUnit.name"
+                (onSelectorEvent)="onSelectOrgItem($event,data.detectionUnit)" placeHolder="请输入检测单位"
+                name="detectionUnitname" required="true" ngDefaultControl></nz-rj-selector-org>
+
             </se>
           </td>
           <td rowspan='1' colspan='4'>
-            <se error="这是必填项">
+            <se error="必填">
               <input nz-input placeholder="请输入资质等级" [(ngModel)]="data.detectionUnit.qualificationLevel"
                 name="detectionUnitqualificationLevel" required />
             </se>
           </td>
           <td rowspan='1' colspan='3'>
-            <se error="这是必填项">
+            <se error="必填">
               <input nz-input placeholder="请输入联系人" [(ngModel)]="data.detectionUnit.contacts"
                 name="detectionUnitcontacts" required />
             </se>
           </td>
           <td rowspan='1' colspan='3'>
-            <se error="这是必填项">
-              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.detectionUnit.contactsNumber"
+            <se error="请输入数字">
+              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.detectionUnit.contactsNumber" pattern="^[0-9]*$"
                 name="detectionUnitcontactsNumber" required />
             </se>
           </td>
@@ -226,12 +271,12 @@
         </tr>
         <tr [ngClass]="{pointerf5f5f5: type == 1}" *ngFor="let item of data.basicInformation;let index = index">
           <td rowspan='1' colspan='5' class="fontweight fontLeft leftTitle">
-            <se error="这是必填项">
+            <se error="必填">
               <input nz-input placeholder="请输入建筑物名称" [(ngModel)]="item.name" name="jbname{{index}}" required />
             </se>
           </td>
           <td rowspan='1' colspan='2' class="fontweight fontLeft">
-            <se error="这是必填项" style="width: 130px;max-width: 130px;">
+            <se error="必填" style="width: 130px;max-width: 130px;">
               <nz-select [(ngModel)]="item.type" name="jbtype{{index}}" required>
                 <nz-option *ngFor="let option of typeSelect" [nzLabel]="option.label" [nzValue]="option.value">
                 </nz-option>
@@ -239,7 +284,7 @@
             </se>
           </td>
           <td rowspan='1' colspan='2' class="fontweight fontLeft">
-            <se error="这是必填项">
+            <se error="必填">
               <nz-select [(ngModel)]="item.grade" name="jbgrade{{index}}" required>
                 <nz-option *ngFor="let option of refractoryEnum" [nzLabel]="option.label" [nzValue]="option.value">
                 </nz-option>
@@ -248,18 +293,18 @@
             </se>
           </td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft">
-            <se error="这是必填项">
+            <se error="必填">
               <input nz-input placeholder="请输入高度" [(ngModel)]="item.height" name="jbheight{{index}}" required />
             </se>
           </td>
           <td rowspan='1' colspan='3'>
-            <se error="这是必填项">
+            <se error="必填">
               <input nz-input placeholder="请输入建筑面积" [(ngModel)]="item.builtUpArea" name="jbbuiltUpArea{{index}}"
                 required />
             </se>
           </td>
           <td rowspan='1' colspan='2'>
-            <se error="这是必填项">
+            <se error="必填">
               <input nz-input placeholder="请输入危险性类别" [(ngModel)]="item.fireHazard" name="jbfireHazard" required />
             </se>
           </td>
@@ -414,17 +459,17 @@
         </td>
         <td colspan='14' style="text-align: left">
 
-          <se error="这是必填项">
+          <se error="必填">
             <textarea nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.constructionUnit.opinion"
               name="constructionUnitopinion" required>
                   </textarea>
           </se>
 
           <div class="textRight">
-            <se error="这是必填项">（建设单位公章）<input style="width: 160px;margin-right: 20px" nz-input placeholder="建设单位"
+            <se error="必填">（建设单位公章）<input style="width: 160px;margin-right: 20px" nz-input placeholder="建设单位"
                 [(ngModel)]="data.acceptanceOpinions.constructionUnit.officialSeal" name="constructionUnitofficialSeal"
                 required /></se>
-            <se error="这是必填项">项目负责人签名：<input style="width: 160px;margin-right: 20px" nz-input placeholder="请签名"
+            <se error="必填">项目负责人签名：<input style="width: 160px;margin-right: 20px" nz-input placeholder="请签名"
                 [(ngModel)]="data.acceptanceOpinions.constructionUnit.autograph" name="constructionUnitautograph"
                 required /></se>
           </div>
@@ -435,16 +480,16 @@
           设计单位
         </td>
         <td colspan='14' style="text-align: left">
-          <se error="这是必填项">
+          <se error="必填">
             <textarea nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.designUnit.opinion"
               name="designUnitopinion" required>
                   </textarea>
           </se>
           <div class="textRight">
-            <se error="这是必填项">（设计单位公章）<input style="width: 160px;margin-right: 20px" nz-input placeholder="设计单位"
+            <se error="必填">（设计单位公章）<input style="width: 160px;margin-right: 20px" nz-input placeholder="设计单位"
                 [(ngModel)]="data.acceptanceOpinions.designUnit.officialSeal" name="designUnitofficialSeal" required />
             </se>
-            <se error="这是必填项">项目负责人签名：<input style="width: 160px;margin-right: 20px" nz-input placeholder="请签名"
+            <se error="必填">项目负责人签名：<input style="width: 160px;margin-right: 20px" nz-input placeholder="请签名"
                 [(ngModel)]="data.acceptanceOpinions.designUnit.autograph" name="designUnitautograph" required />
             </se>
           </div>
@@ -455,19 +500,19 @@
           施工总承包单位
         </td>
         <td colspan='14' style="text-align: left">
-          <se error="这是必填项">
+          <se error="必填">
             <textarea nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.contractingUnit.opinion"
               name="contractingUnitopinion" required>
                 </textarea>
           </se>
 
           <div class="textRight">
-            <se error="这是必填项">
+            <se error="必填">
               （施工总承包单位）<input style="width: 160px;margin-right: 20px" nz-input placeholder="施工总承包单位"
                 [(ngModel)]="data.acceptanceOpinions.contractingUnit.officialSeal" name="contractingUnitfficialSeal"
                 required />
             </se>
-            <se error="这是必填项">
+            <se error="必填">
               项目经理签名：<input style="width: 160px;margin-right: 20px" nz-input placeholder="请签名"
                 [(ngModel)]="data.acceptanceOpinions.contractingUnit.autograph" name="contractingUnitoautograph"
                 required /></se>
@@ -479,7 +524,7 @@
           专业承包单位（如有）
         </td>
         <td colspan='14' style="text-align: left">
-          <se error="这是必填项">
+          <se error="必填">
             <textarea nz-input placeholder="请输入具体情况"
               [(ngModel)]="data.acceptanceOpinions.professionalContractors.opinion"
               name="professionalContractorsopinion" required>
@@ -504,7 +549,7 @@
           工程监理单位
         </td>
         <td colspan='14' style="text-align: left">
-          <se error="这是必填项">
+          <se error="必填">
             <textarea nz-input placeholder="请输入具体情况"
               [(ngModel)]="data.acceptanceOpinions.engineeringSupervisionUnit.opinion"
               name="engineeringSupervisionUnitopinion" required>
@@ -529,18 +574,18 @@
           消防设施检测单位
         </td>
         <td colspan='14' style="text-align: left">
-          <se error="这是必填项">
+          <se error="必填">
             <textarea nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.fireInspectionUnit.opinion"
               name="fireInspectionUnitopinion" required>
                     </textarea>
           </se>
           <div class="textRight">
-            <se error="这是必填项">
+            <se error="必填">
               检测单位：<input style="width: 160px;margin-right: 20px" nz-input placeholder="检测单位"
                 [(ngModel)]="data.acceptanceOpinions.fireInspectionUnit.officialSeal"
                 name="fireInspectionUnitofficialSeal" required />
             </se>
-            <se error="这是必填项">
+            <se error="必填">
               项目负责人签名：<input style="width: 160px;margin-right: 20px" nz-input placeholder="请签名"
                 [(ngModel)]="data.acceptanceOpinions.fireInspectionUnit.autograph" name="fireInspectionUnitautograph"
                 required />
@@ -557,19 +602,19 @@
       </tr>
 
       <tr [ngClass]="{pointerf5f5f5: type == 1}">
-          <td colspan='1' rowspan="1" class="fontweight fontLeft leftTitle"
-            style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>工程简要说明</td>
-          <td rowspan='1' colspan='20' class="textLeft">
-            <se error="这是必填项">
-              <textarea nz-input placeholder="请输入工程简要说明" [(ngModel)]="data.engineerinDescription"
-                name="engineerinDescription" required>
+        <td colspan='1' rowspan="1" class="fontweight fontLeft leftTitle"
+          style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>工程简要说明</td>
+        <td rowspan='1' colspan='20' class="textLeft">
+          <se error="必填">
+            <textarea nz-input placeholder="请输入工程简要说明" [(ngModel)]="data.engineerinDescription"
+              name="engineerinDescription" required>
                     </textarea>
-            </se>
-  
-          </td>
-        </tr>
+          </se>
 
-      <tr [ngClass]="{pointerf5f5f5: type == 1}">
+        </td>
+      </tr>
+
+      <tr>
         <td colspan='1' rowspan="1" class="fontweight fontLeft leftTitle"
           style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>上传附件</td>
         <td rowspan='1' colspan='20' class="textLeft">

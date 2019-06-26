@@ -1,7 +1,7 @@
-<app-completed-acceptance-assembly [data]="data" (childOuter)="outer($event)"></app-completed-acceptance-assembly>
+<app-completed-acceptance-assembly [data]="data" (childOuter)="outer($event)" [useNatureSelect]="useNatureSelect" ></app-completed-acceptance-assembly>
 <div class="textCenter" style="margin-bottom: 40px;">
   <button nz-button nzType="primary" (click)="depositDraft()" [nzLoading]="butNzLoading">保存草稿</button>
-  <button nz-button nzType="primary"  (click)="showSelectModal()" [nzLoading]="butNzLoading">申请提交</button>
+  <button nz-button nzType="primary" (click)="showSelectModal()" [nzLoading]="butNzLoading">申请提交</button>
 </div>
 
 
@@ -11,8 +11,9 @@
 
 
 
-<nz-modal [(nzVisible)]="isVisibleSelectModal" nzTitle="请选择抽选号码" (nzOnCancel)="handleSelectModalCancel()"
-  (nzOnOk)="handleSelectModalOk()" [nzOkLoading]="isSelectModalOkLoading" nzWidth="700">
+<nz-modal [(nzVisible)]="isVisibleSelectModal" [ngClass]="{hide: isVisibleSelectModal==false}" nzTitle="请选择抽选号码"
+  (nzOnCancel)="handleSelectModalCancel()" (nzOnOk)="handleSelectModalOk()" [nzOkLoading]="isSelectModalOkLoading"
+  nzWidth="700">
 
   <nz-radio-group [(ngModel)]="selectModalValue" nzButtonStyle="solid" nzJustify="center" nzType="flex"
     nzName="selectGroup" style="width:100%">

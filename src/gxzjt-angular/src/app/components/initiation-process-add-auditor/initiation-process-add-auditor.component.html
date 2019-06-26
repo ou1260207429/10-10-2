@@ -1,0 +1,47 @@
+<div class="modal-header">
+  <div class="modal-title">{{title}}</div>
+</div>
+<nz-spin [nzSpinning]="data==undefined">
+  <div *ngIf="data">
+    <div nz-col class="noSpan" style="position: relative;z-index: 99;">
+      <nz-input-group nzSearch [nzAddOnAfter]="suffixButton">
+        <input type="text" (keyup)="onEnter($event)" nz-input placeholder="请输入编号/名称" [(ngModel)]="page.filterText">
+      </nz-input-group>
+      <ng-template #suffixButton>
+        <button nz-button nzType="primary" nzSearch (click)="query()">查询</button>
+      </ng-template>
+    </div>
+    <nz-radio-group [(ngModel)]="radioValue" style="width: 100%">
+      <nz-table class="fixedTable" #chooseSt nzShowPagination [nzData]="data.data" [nzTotal]="data.total"
+        [nzPageSize]="page.maxResultCount" [nzFrontPagination]='false' [(nzPageIndex)]="page.page"
+        [nzShowTotal]="totalTemplate" [nzShowQuickJumper]="true" (nzPageIndexChange)="change($event)">
+        <thead>
+          <tr>
+            <th></th>
+            <th>编号</th>
+            <th>姓名</th>
+            <th>组织结构</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data.data;let i = index">
+            <td>
+              <label nz-radio [nzValue]="item"></label>
+            </td>
+            <td>{{item.eid}}</td>
+            <td>{{item.eName}}</td>
+            <td>
+              <div class="limit1">{{item.organizationsName}}</div>
+            </td>
+          </tr>
+
+        </tbody>
+      </nz-table>
+    </nz-radio-group>
+  </div>
+</nz-spin>
+
+<div class="modal-footer">
+  <button nz-button type="button" (click)="close(false)">关闭</button>
+  <button nz-button type="button" *ngIf="radioValue" (click)="close(true)">保存</button>
+</div>

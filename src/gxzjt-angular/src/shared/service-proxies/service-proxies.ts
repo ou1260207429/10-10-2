@@ -196,14 +196,17 @@ export class AcceptanceFileServiceProxy {
      * @param acceptApplyFormDto (optional) 
      * @param acceptRecordId (optional) 
      * @param template (optional) 
+     * @param attachmentType (optional) 
      * @return Success
      */
-    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined): Observable<void> {
+    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/AcceptFile?";
         if (acceptRecordId !== undefined)
             url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
         if (template !== undefined)
             url_ += "template=" + encodeURIComponent("" + template) + "&"; 
+        if (attachmentType !== undefined)
+            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(acceptApplyFormDto);
@@ -394,67 +397,6 @@ export class AcceptanceFileServiceProxy {
     }
 
     protected processCreateQualifiedFile(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param examineFormDto (optional) 
-     * @param acceptRecordId (optional) 
-     * @param template (optional) 
-     * @param attachmentType (optional) 
-     * @return Success
-     */
-    opinionFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/OpinionFile?";
-        if (acceptRecordId !== undefined)
-            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
-        if (template !== undefined)
-            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
-        if (attachmentType !== undefined)
-            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(examineFormDto);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processOpinionFile(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processOpinionFile(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processOpinionFile(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -2604,14 +2546,17 @@ export class InvestigateFileServiceProxy {
      * @param acceptApplyFormDto (optional) 
      * @param acceptRecordId (optional) 
      * @param template (optional) 
+     * @param attachmentType (optional) 
      * @return Success
      */
-    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined): Observable<void> {
+    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/InvestigateFile/AcceptFile?";
         if (acceptRecordId !== undefined)
             url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
         if (template !== undefined)
             url_ += "template=" + encodeURIComponent("" + template) + "&"; 
+        if (attachmentType !== undefined)
+            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(acceptApplyFormDto);
@@ -2750,67 +2695,6 @@ export class InvestigateFileServiceProxy {
     }
 
     protected processCreateQualifiedFile(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param examineFormDto (optional) 
-     * @param acceptRecordId (optional) 
-     * @param template (optional) 
-     * @param attachmentType (optional) 
-     * @return Success
-     */
-    opinionFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/OpinionFile?";
-        if (acceptRecordId !== undefined)
-            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
-        if (template !== undefined)
-            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
-        if (attachmentType !== undefined)
-            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(examineFormDto);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processOpinionFile(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processOpinionFile(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processOpinionFile(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -4898,67 +4782,6 @@ export class PutOnRecordFileServiceProxy {
         }
         return _observableOf<void>(<any>null);
     }
-
-    /**
-     * @param examineFormDto (optional) 
-     * @param acceptRecordId (optional) 
-     * @param template (optional) 
-     * @param attachmentType (optional) 
-     * @return Success
-     */
-    opinionFile(examineFormDto: ExamineFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/OpinionFile?";
-        if (acceptRecordId !== undefined)
-            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
-        if (template !== undefined)
-            url_ += "template=" + encodeURIComponent("" + template) + "&"; 
-        if (attachmentType !== undefined)
-            url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(examineFormDto);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processOpinionFile(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processOpinionFile(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processOpinionFile(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
 }
 
 @Injectable()
@@ -6612,7 +6435,7 @@ export class ScreenServiceServiceProxy {
      * @param fireDataListQueryDto (optional) 
      * @return Success
      */
-    post_GetFireDataList(fireDataListQueryDto: FireDataListQueryDto | null | undefined): Observable<FireDataListDto> {
+    post_GetFireDataList(fireDataListQueryDto: FireDataListQueryDto | null | undefined): Observable<FireDataListDto[]> {
         let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetFireDataList";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -6635,14 +6458,14 @@ export class ScreenServiceServiceProxy {
                 try {
                     return this.processPost_GetFireDataList(<any>response_);
                 } catch (e) {
-                    return <Observable<FireDataListDto>><any>_observableThrow(e);
+                    return <Observable<FireDataListDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<FireDataListDto>><any>_observableThrow(response_);
+                return <Observable<FireDataListDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPost_GetFireDataList(response: HttpResponseBase): Observable<FireDataListDto> {
+    protected processPost_GetFireDataList(response: HttpResponseBase): Observable<FireDataListDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -6653,7 +6476,11 @@ export class ScreenServiceServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? FireDataListDto.fromJS(resultData200) : new FireDataListDto();
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(FireDataListDto.fromJS(item));
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -6661,7 +6488,7 @@ export class ScreenServiceServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FireDataListDto>(<any>null);
+        return _observableOf<FireDataListDto[]>(<any>null);
     }
 }
 
@@ -8434,12 +8261,15 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     flowNodeUserInfo: FlowNodeUser | undefined;
     flowNodeItems: FlowNodeItem[] | undefined;
     isSelect: boolean | undefined;
+    selected: boolean | undefined;
     provinceName: string | undefined;
     cityName: string | undefined;
     regionAndCountyName: string | undefined;
     area: string | undefined;
     acceptFileCode: string | undefined;
     flowPathType: number | undefined;
+    descr: string | undefined;
+    applyName: string | undefined;
 
     constructor(data?: IAcceptApplyFormDto) {
         if (data) {
@@ -8497,12 +8327,15 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
                     this.flowNodeItems.push(FlowNodeItem.fromJS(item));
             }
             this.isSelect = data["isSelect"];
+            this.selected = data["selected"];
             this.provinceName = data["provinceName"];
             this.cityName = data["cityName"];
             this.regionAndCountyName = data["regionAndCountyName"];
             this.area = data["area"];
             this.acceptFileCode = data["acceptFileCode"];
             this.flowPathType = data["flowPathType"];
+            this.descr = data["descr"];
+            this.applyName = data["applyName"];
         }
     }
 
@@ -8560,12 +8393,15 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
                 data["flowNodeItems"].push(item.toJSON());
         }
         data["isSelect"] = this.isSelect;
+        data["selected"] = this.selected;
         data["provinceName"] = this.provinceName;
         data["cityName"] = this.cityName;
         data["regionAndCountyName"] = this.regionAndCountyName;
         data["area"] = this.area;
         data["acceptFileCode"] = this.acceptFileCode;
         data["flowPathType"] = this.flowPathType;
+        data["descr"] = this.descr;
+        data["applyName"] = this.applyName;
         return data; 
     }
 
@@ -8607,12 +8443,15 @@ export interface IAcceptApplyFormDto {
     flowNodeUserInfo: FlowNodeUser | undefined;
     flowNodeItems: FlowNodeItem[] | undefined;
     isSelect: boolean | undefined;
+    selected: boolean | undefined;
     provinceName: string | undefined;
     cityName: string | undefined;
     regionAndCountyName: string | undefined;
     area: string | undefined;
     acceptFileCode: string | undefined;
     flowPathType: number | undefined;
+    descr: string | undefined;
+    applyName: string | undefined;
 }
 
 export class FlowNodeUser implements IFlowNodeUser {
@@ -8915,6 +8754,7 @@ export class ReviewFormDto implements IReviewFormDto {
     projectName: string | undefined;
     projectCode: string | undefined;
     address: string | undefined;
+    shortAddress: string | undefined;
     recordFileCode: string | undefined;
     unqualifiedFileCode: string | undefined;
     situation: string | undefined;
@@ -8934,6 +8774,9 @@ export class ReviewFormDto implements IReviewFormDto {
     workFlow_TemplateInfo_Id: number | undefined;
     flowNo: string | undefined;
     area: string | undefined;
+    provinceName: string | undefined;
+    cityName: string | undefined;
+    regionAndCountyName: string | undefined;
 
     constructor(data?: IReviewFormDto) {
         if (data) {
@@ -8953,6 +8796,7 @@ export class ReviewFormDto implements IReviewFormDto {
             this.projectName = data["projectName"];
             this.projectCode = data["projectCode"];
             this.address = data["address"];
+            this.shortAddress = data["shortAddress"];
             this.recordFileCode = data["recordFileCode"];
             this.unqualifiedFileCode = data["unqualifiedFileCode"];
             this.situation = data["situation"];
@@ -8976,6 +8820,9 @@ export class ReviewFormDto implements IReviewFormDto {
             this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
             this.flowNo = data["flowNo"];
             this.area = data["area"];
+            this.provinceName = data["provinceName"];
+            this.cityName = data["cityName"];
+            this.regionAndCountyName = data["regionAndCountyName"];
         }
     }
 
@@ -8995,6 +8842,7 @@ export class ReviewFormDto implements IReviewFormDto {
         data["projectName"] = this.projectName;
         data["projectCode"] = this.projectCode;
         data["address"] = this.address;
+        data["shortAddress"] = this.shortAddress;
         data["recordFileCode"] = this.recordFileCode;
         data["unqualifiedFileCode"] = this.unqualifiedFileCode;
         data["situation"] = this.situation;
@@ -9018,6 +8866,9 @@ export class ReviewFormDto implements IReviewFormDto {
         data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
         data["flowNo"] = this.flowNo;
         data["area"] = this.area;
+        data["provinceName"] = this.provinceName;
+        data["cityName"] = this.cityName;
+        data["regionAndCountyName"] = this.regionAndCountyName;
         return data; 
     }
 
@@ -9037,6 +8888,7 @@ export interface IReviewFormDto {
     projectName: string | undefined;
     projectCode: string | undefined;
     address: string | undefined;
+    shortAddress: string | undefined;
     recordFileCode: string | undefined;
     unqualifiedFileCode: string | undefined;
     situation: string | undefined;
@@ -9056,6 +8908,9 @@ export interface IReviewFormDto {
     workFlow_TemplateInfo_Id: number | undefined;
     flowNo: string | undefined;
     area: string | undefined;
+    provinceName: string | undefined;
+    cityName: string | undefined;
+    regionAndCountyName: string | undefined;
 }
 
 export class ProjectCompany implements IProjectCompany {
@@ -9180,6 +9035,7 @@ export class ExamineFormDto implements IExamineFormDto {
     companyName: string | undefined;
     applyDateTime: moment.Moment | undefined;
     address: string | undefined;
+    shortAddress: string | undefined;
     projectId: number | undefined;
     projectName: string | undefined;
     projectCode: string | undefined;
@@ -9200,6 +9056,7 @@ export class ExamineFormDto implements IExamineFormDto {
     area: string | undefined;
     opinionFileId: string | undefined;
     opinionFileUrl: string | undefined;
+    descr: string | undefined;
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -9238,6 +9095,7 @@ export class ExamineFormDto implements IExamineFormDto {
             this.companyName = data["companyName"];
             this.applyDateTime = data["applyDateTime"] ? moment(data["applyDateTime"].toString()) : <any>undefined;
             this.address = data["address"];
+            this.shortAddress = data["shortAddress"];
             this.projectId = data["projectId"];
             this.projectName = data["projectName"];
             this.projectCode = data["projectCode"];
@@ -9262,6 +9120,7 @@ export class ExamineFormDto implements IExamineFormDto {
             this.area = data["area"];
             this.opinionFileId = data["opinionFileId"];
             this.opinionFileUrl = data["opinionFileUrl"];
+            this.descr = data["descr"];
         }
     }
 
@@ -9300,6 +9159,7 @@ export class ExamineFormDto implements IExamineFormDto {
         data["companyName"] = this.companyName;
         data["applyDateTime"] = this.applyDateTime ? this.applyDateTime.toISOString() : <any>undefined;
         data["address"] = this.address;
+        data["shortAddress"] = this.shortAddress;
         data["projectId"] = this.projectId;
         data["projectName"] = this.projectName;
         data["projectCode"] = this.projectCode;
@@ -9324,6 +9184,7 @@ export class ExamineFormDto implements IExamineFormDto {
         data["area"] = this.area;
         data["opinionFileId"] = this.opinionFileId;
         data["opinionFileUrl"] = this.opinionFileUrl;
+        data["descr"] = this.descr;
         return data; 
     }
 
@@ -9354,6 +9215,7 @@ export interface IExamineFormDto {
     companyName: string | undefined;
     applyDateTime: moment.Moment | undefined;
     address: string | undefined;
+    shortAddress: string | undefined;
     projectId: number | undefined;
     projectName: string | undefined;
     projectCode: string | undefined;
@@ -9374,6 +9236,7 @@ export interface IExamineFormDto {
     area: string | undefined;
     opinionFileId: string | undefined;
     opinionFileUrl: string | undefined;
+    descr: string | undefined;
 }
 
 export class ProjectAttachment implements IProjectAttachment {
@@ -15209,7 +15072,7 @@ export interface IYearApplyNumberQueryDto {
 }
 
 export class FireDataListQueryDto implements IFireDataListQueryDto {
-    statisticsType: number | undefined;
+    startDateTime: moment.Moment | undefined;
     dateTimeNow: moment.Moment | undefined;
     processedStatus: number | undefined;
 
@@ -15224,7 +15087,7 @@ export class FireDataListQueryDto implements IFireDataListQueryDto {
 
     init(data?: any) {
         if (data) {
-            this.statisticsType = data["statisticsType"];
+            this.startDateTime = data["startDateTime"] ? moment(data["startDateTime"].toString()) : <any>undefined;
             this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
             this.processedStatus = data["processedStatus"];
         }
@@ -15239,7 +15102,7 @@ export class FireDataListQueryDto implements IFireDataListQueryDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["statisticsType"] = this.statisticsType;
+        data["startDateTime"] = this.startDateTime ? this.startDateTime.toISOString() : <any>undefined;
         data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
         data["processedStatus"] = this.processedStatus;
         return data; 
@@ -15254,7 +15117,7 @@ export class FireDataListQueryDto implements IFireDataListQueryDto {
 }
 
 export interface IFireDataListQueryDto {
-    statisticsType: number | undefined;
+    startDateTime: moment.Moment | undefined;
     dateTimeNow: moment.Moment | undefined;
     processedStatus: number | undefined;
 }
@@ -15264,6 +15127,7 @@ export class FireDataListDto implements IFireDataListDto {
     timeoutCountNumber: number | undefined;
     aTimeByCountNumber: number | undefined;
     avgCompleteTimeCountNumber: number | undefined;
+    flowPathType: number | undefined;
     items: CityFireDataList[] | undefined;
 
     constructor(data?: IFireDataListDto) {
@@ -15281,6 +15145,7 @@ export class FireDataListDto implements IFireDataListDto {
             this.timeoutCountNumber = data["timeoutCountNumber"];
             this.aTimeByCountNumber = data["aTimeByCountNumber"];
             this.avgCompleteTimeCountNumber = data["avgCompleteTimeCountNumber"];
+            this.flowPathType = data["flowPathType"];
             if (data["items"] && data["items"].constructor === Array) {
                 this.items = [];
                 for (let item of data["items"])
@@ -15302,6 +15167,7 @@ export class FireDataListDto implements IFireDataListDto {
         data["timeoutCountNumber"] = this.timeoutCountNumber;
         data["aTimeByCountNumber"] = this.aTimeByCountNumber;
         data["avgCompleteTimeCountNumber"] = this.avgCompleteTimeCountNumber;
+        data["flowPathType"] = this.flowPathType;
         if (this.items && this.items.constructor === Array) {
             data["items"] = [];
             for (let item of this.items)
@@ -15323,11 +15189,13 @@ export interface IFireDataListDto {
     timeoutCountNumber: number | undefined;
     aTimeByCountNumber: number | undefined;
     avgCompleteTimeCountNumber: number | undefined;
+    flowPathType: number | undefined;
     items: CityFireDataList[] | undefined;
 }
 
 export class CityFireDataList implements ICityFireDataList {
     cityName: string | undefined;
+    flowPathType: number | undefined;
     completeCountNumber: number | undefined;
     timeoutCountNumber: number | undefined;
     aTimeByCountNumber: number | undefined;
@@ -15345,6 +15213,7 @@ export class CityFireDataList implements ICityFireDataList {
     init(data?: any) {
         if (data) {
             this.cityName = data["cityName"];
+            this.flowPathType = data["flowPathType"];
             this.completeCountNumber = data["completeCountNumber"];
             this.timeoutCountNumber = data["timeoutCountNumber"];
             this.aTimeByCountNumber = data["aTimeByCountNumber"];
@@ -15362,6 +15231,7 @@ export class CityFireDataList implements ICityFireDataList {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["cityName"] = this.cityName;
+        data["flowPathType"] = this.flowPathType;
         data["completeCountNumber"] = this.completeCountNumber;
         data["timeoutCountNumber"] = this.timeoutCountNumber;
         data["aTimeByCountNumber"] = this.aTimeByCountNumber;
@@ -15379,6 +15249,7 @@ export class CityFireDataList implements ICityFireDataList {
 
 export interface ICityFireDataList {
     cityName: string | undefined;
+    flowPathType: number | undefined;
     completeCountNumber: number | undefined;
     timeoutCountNumber: number | undefined;
     aTimeByCountNumber: number | undefined;

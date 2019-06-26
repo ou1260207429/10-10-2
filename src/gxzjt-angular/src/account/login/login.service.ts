@@ -21,6 +21,9 @@ import { TokenService } from '@abp/auth/token.service';
 import { UtilsService } from '@abp/utils/utils.service';
 import { finalize } from 'rxjs/operators';
 
+
+// import { AppSessionService } from '@shared/session/app-session.service';
+
 @Injectable()
 export class LoginService {
   static readonly twoFactorRememberClientTokenName =
@@ -39,7 +42,8 @@ export class LoginService {
     private _utilsService: UtilsService,
     private _messageService: MessageService,
     private _tokenService: TokenService,
-    private _logService: LogService,
+    // private _logService: LogService,
+    // private _AppSessionService: AppSessionService
   ) {
     this.clear();
   }
@@ -76,8 +80,9 @@ export class LoginService {
     } else {
       // Unexpected result!
 
-      this._logService.warn('Unexpected authenticateResult!');
-      this._router.navigate(['account/login']);
+      // this._logService.warn('登录异常');
+      this._messageService.info('登录异常');
+      // this._router.navigate(['account/login']);
     }
   }
 
@@ -105,9 +110,16 @@ export class LoginService {
     if (initialUrl.indexOf('/login') > 0) {
       initialUrl = AppConsts.appBaseUrl;
     }
+    
 
-    /** 强制刷新导航栏url 跳转到首页 */
-    location.href = location.href.replace('#/account/login', '/#/app/');
+    // this._AppSessionService.initUserInfo().then(() => {
+    //   /** 强制刷新导航栏url 跳转到首页 */
+    //   // location.href = location.href.replace('#/account/login', '#/app/');
+
+    //   this._router.navigate(['#/app/home/welcome']);
+
+    // });
+
   }
 
   private clear(): void {

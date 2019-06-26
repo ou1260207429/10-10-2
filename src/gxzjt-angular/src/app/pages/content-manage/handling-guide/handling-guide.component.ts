@@ -168,5 +168,9 @@ export class HandlingGuideComponent extends PublicFormComponent implements OnIni
   refresh() {
     this.query();
   }
+  resetSearchFliterForm(){
+    this.fliterForm.reset();
+    this.query();
 
+  }
 }

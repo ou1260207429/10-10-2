@@ -1,4 +1,4 @@
-import { ReuseTabService } from '@delon/abc/reuse-tab';
+
 import {
   Component,
   Injector,
@@ -16,10 +16,13 @@ import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { AbpSessionService } from '@abp/session/abp-session.service';
 import { _HttpClient } from '@delon/theme';
 
-import { NzModalService } from 'ng-zorro-antd';
+import { ReuseTabService } from '@delon/abc';
+
+// import { NzModalService } from 'ng-zorro-antd';
 
 import * as $ from 'jquery';
 
+import { AppSessionService } from '@shared/session/app-session.service';
 
 import { isPhone } from '@shared/utils/regex';
 
@@ -28,6 +31,7 @@ import {
 } from '@shared/service-proxies/service-proxies';
 import { UrlHelper } from '@shared/helpers/UrlHelper';
 
+import { TokenService } from '@abp/auth/token.service';
 
 
 var checkCode: any;
@@ -54,53 +58,42 @@ export class LoginComponent extends AppComponentBase implements OnInit {
   switchUswPsw() {
     this.usePsw = !this.usePsw;
   }
-  // get userName() {
-  //   return this.form.controls.userName;
-  // }
-  // get password() {
-  //   return this.form.controls.password;
-  // }
-  // get mobile() {
-  //   return this.form.controls.mobile;
-  // }
-  // get captcha() {
-  //   return this.form.controls.captcha;
-  // }
+
   constructor(
     injector: Injector,
     private fb: FormBuilder,
     public loginService: LoginService,
-    private _sessionService: AbpSessionService,
-    private _sessionAppService: SessionServiceProxy,
+    // private _sessionService: AbpSessionService,
+    // private _sessionAppService: SessionServiceProxy,
     private _router: Router,
     public http: _HttpClient,
-    private modalService: NzModalService,
+    // private modalService: NzModalService,
+    private _TokenService: TokenService,
+    private _AppSessionService: AppSessionService,
+    private reuseTabService: ReuseTabService,
   ) {
     super(injector);
 
-    // this.validateForm = fb.group({
 
-    //   password: [null, Validators.required, Validators.maxLength(32), Validators.minLength(6)],
-    //   mobile: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
-    //   captcha: [null, [Validators.required]],
-
-    // });
 
   }
 
 
 
   ngOnInit(): void {
-    this.titleSrvice.setTitle(this.l('LogIn'));
+    this.titleSrvice.setTitle("登录");
 
-
-
+    if (this._TokenService.getToken()) {
+      // location.href = location.href.replace('#/account/login', '#/app/');
+      this._router.navigate(['/app/home/welcome']);
+    }
+    this.reuseTabService.clear();
   }
 
 
   initSliter() {
     checkCode = "" + Math.ceil(Math.random() * 10000);
-    
+
     $(".inner").mousedown(function (e) {
       console.log(e)
       var el = $(".inner");
@@ -183,7 +176,21 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
       this.submitting = true;
       this.loginService.authenticate(() => {
-        this.submitting = false;
+
+        this._AppSessionService.initUserInfo().then(() => {
+          /** 强制刷新导航栏url 跳转到首页 */
+          // location.href = location.href.replace('#/account/login', '#/app/');
+          this.submitting = false;
+          this._router.navigate(['#/app/home/welcome']);
+
+        }, err => {
+          this.modalService.warning({
+            nzTitle: '提示',
+            nzContent: '登录出错:'+err
+          });
+          this.submitting = false;
+        });
+
         this.resetSliter();
       });
     } else {

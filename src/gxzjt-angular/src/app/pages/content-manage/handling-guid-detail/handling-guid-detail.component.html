@@ -20,20 +20,20 @@
         </nz-select>
       </se>
 
-      <se label="附件上传" required>
+      <se label="附件上传" required *ngIf="operate!='1'">
         <nz-upload style="width: 100%;display: block" [nzFileList]="fileList" nzMultiple [nzAction]="uploadUrl"
           [nzBeforeUpload]="beforeUpload" [nzRemove]="removeFile">
           <button style="width: 100%;" nz-button><i nz-icon type="upload" nzTheme="outline"></i><span>上传</span></button>
         </nz-upload>
       </se>
-      <se *ngIf="operate!=0">
+      <se *ngIf="operate!=0&&fileUrlList.length>0" label="附件下载">
         <div *ngFor="let item of fileUrlList let i=index">
           <div style="position: relative;cursor: pointer;" id="file">
             <a style="text-decoration: none;" [href]="fileUrl+item.url" class="ant-upload-list"><i nz-icon type="link"
                 style="margin-right: 5px;" nzTheme="outline"></i>{{item.name}}
-              </a>
-              <span (click)="deleteFile(item.id)" class="deleteFile" style="color: red;position: absolute;top: 0;right: 0;display: none;">删除文件</span>
-
+            </a>
+            <span (click)="deleteFile(item.id)" class="deleteFile"
+              style="color: red;position: absolute;top: 0;right: 0;display: none;">删除文件</span>
           </div>
         </div>
       </se>

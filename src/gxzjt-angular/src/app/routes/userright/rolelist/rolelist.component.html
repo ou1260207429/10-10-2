@@ -1,0 +1,26 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+
+    <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
+        type="{{ hiddenFliter?'down':'up'}}"></i>{{ hiddenFliter?'展开条件':'收起条件'}}</button>
+    <button (click)="autoRefres()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <form [hidden]="hiddenFliter" nz-form nzLayout="inline" #f="ngForm" se-container="1">
+    <se>
+      <button nz-button (click)="add(0,{})" nzType="primary" style="margin-right: 10px;float: left;margin-top: 3px;"><i
+          nz-icon type="plus"></i>增加</button>
+      <button nz-button (click)="deleteData()" nzType="primary"
+        style="margin-right: 10px;float: left;margin-top: 3px;"><i nz-icon type="delete"
+          nzTheme="outline"></i>批量删除</button>
+      <input style="float: left;width:200px;margin-top: 3px;" placeholder="请输入角色名称" type="text" nz-input
+        [(ngModel)]="searchForm.name" name="name">
+      <button nz-button (click)="initTable()" nzType="primary" style="margin-left: 10px;">搜索</button>
+    </se>
+  </form>
+  <st #st [data]="data" [pi]="searchForm.page" [ps]="searchForm.size" [columns]="columns" [loading]="isSearchForm"
+    (change)="changeDelete($event)"></st>
+  <br>
+
+</nz-card>

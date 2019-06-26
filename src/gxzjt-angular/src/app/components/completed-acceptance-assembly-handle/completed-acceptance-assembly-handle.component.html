@@ -158,7 +158,7 @@
       <thead>
         <tr>
           <td colspan='20' rowspan='1' class="table_title">
-            <h3>××市住房和城乡建设局<br />建设工程竣工验收消防备案凭证抽中</h3>
+            <h3>{{data.cityName}}市住房和城乡建设局<br />建设工程竣工验收消防备案凭证抽中</h3>
           </td>
         </tr>
       </thead>
@@ -172,8 +172,7 @@
           <td rowspan='1' colspan='20'>
             <div class="table_detail">
               <h3>{{data.companyName}}：</h3>
-              <p>根据《中华人民共和国消防法》第十三条和《建设工程消防监督管理规定》第二十四条的规定，你单位于 ×× 年 ××月 ××日向 ××市住房和城乡建设局 申请了 ××××××××工程（地址： ××市××路11
-                号）的竣工验收消防备案，备案号：45000XXXYSBA00001，并提交了下列备案材料：</p>
+              <p>根据《中华人民共和国消防法》第十三条和《建设工程消防监督管理规定》第二十四条的规定，你单位于 {{data.applyDateTime|date:'yyyy年MM月dd日'}}向 {{data.cityName}}市住房和城乡建设局 申请了 {{data.projectName}}工程（地址：{{data.address}}）的竣工验收消防备案，备案号：{{data.acceptFileCode}}，并提交了下列备案材料：</p>
             </div>
             <ul class="table_list">
               <li *ngFor="let item of data.attachmentItems;let index=index">
@@ -195,16 +194,7 @@
 
           </td>
         </tr>
-        <tr>
-          <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">承 办 人<input class="table_input_2" />
-
-          </td>
-        </tr>
-        <tr>
-          <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">备案人<input class="table_input_2" />
-
-          </td>
-        </tr>
+        
         <tr>
           <td class="fontweight fontLeft leftTitle">一式两份，一份交建设单位，一份存档。 </td>
         </tr>
@@ -244,10 +234,7 @@
             </ul>
             <div class="table_add_info">
               <p>经核，备案材料项目齐全，依法核发备案凭证。</p>
-              <p>根据《中华人民共和国消防法》等法律法规的规定，按照预设程序随机确定抽查对象的方式，你单位<nz-radio-group [(ngModel)]="data.isComplete">
-                  <label style="padding-left: 20px;" nz-radio nzValue="已">已</label>
-                  <label nz-radio nzValue="未">未</label>
-                </nz-radio-group>）被确定为抽查对象。</p>
+              <p>根据《中华人民共和国消防法》等法律法规的规定，按照预设程序随机确定抽查对象的方式，你单位{{data.IsSelect?'已':'未'}}被确定为抽查对象。</p>
               <p>已经依法进行竣工验收消防备案的建设工程，如需扩建、改建（含室内外装修、建筑保温、用途变更）的，应当工程竣工验收合格之日起七个工作日内，依法申报消防验收备案。</p>
             </div>
           </td>
@@ -290,7 +277,7 @@
             <div class="table_detail">
               <h3>{{data.companyName}}：</h3>
               <p>
-                你单位备案的{{data.projectName}}工程(备案凭证文号：{{data.acceptFileCode}}，工程备案号：{{data.recordNumber}}，该工程地上XX层，建筑高度XX米，建筑面积XXX平方米，为二类高层住宅楼)，经我单位竣工验收消防备案抽查不合格。你单位于{{data.applyDateTime|date:'yyyy年MM月dd日'}}申请复验，我单位根据{{data.acceptFileCode}}《建设工程竣工验收消防备案抽查不合格通知书》进行复查，存在问题均予以整改。该工程竣工验收消防备案复查合格，同意该工程恢复使用。
+                你单位备案的{{data.projectName}}工程(备案凭证文号：{{data.acceptFileCode}}，工程备案号：{{data.recordNumber}}，{{data.descr}})，经我单位竣工验收消防备案抽查不合格。你单位于{{data.applyDateTime|date:'yyyy年MM月dd日'}}申请复验，我单位根据{{data.acceptFileCode}}《建设工程竣工验收消防备案抽查不合格通知书》进行复查，存在问题均予以整改。该工程竣工验收消防备案复查合格，同意该工程恢复使用。
               </p>
               <p>该工程竣工验收消防备案合格投入使用后，管理单位应当对建筑消防设施进行定期维护保养，确保完好有效。</p>
               <p>工程如有扩建、改建（含室内外装修、建筑保温、用途变更），应当依法向我单位申报建设工程竣工验收消防备案。属于公众聚集场所的在投入使用、营业前，应依法申请消防安全检查。</p>
@@ -363,14 +350,18 @@
           </td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft">联系电话:</td>
           <td rowspan='1' colspan='7'>
-            <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.projectName" name="projectName" />
+            
+              <se error="请输入数字">
+                  <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.projectName" name="projectName" pattern="^[0-9]*$"/>
+                </se>
+           
           </td>
         </tr>
 
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
-          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">备案文号:</td>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">凭证文号:</td>
           <td rowspan='1' colspan='7'>
-            <input nz-input placeholder="请输入备案文号" [(ngModel)]="data.projectName" name="projectName" />
+            <input nz-input placeholder="请输入凭证文号" [(ngModel)]="data.projectName" name="projectName" />
           </td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft">建设工程消防验收意见书/竣工验收备案检查不合格通知书文号:</td>
           <td rowspan='1' colspan='7'>

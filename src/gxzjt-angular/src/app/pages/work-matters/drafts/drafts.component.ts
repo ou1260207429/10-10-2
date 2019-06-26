@@ -9,20 +9,21 @@ import { ProjectFlowServcieServiceProxy, FireAuditCompleteQueryDto, DraftQueryDt
 
 
 import { Router } from '@angular/router';
-
+import * as moment from 'moment';
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import { AppConsts } from '@shared/AppConsts';
 import { PublicModel } from 'infrastructure/public-model';
 import { PublicFormComponent } from '../public/public-form.component';
+import { EventEmiter } from 'infrastructure/eventEmiter';
 /**
  *  草稿箱
  */
 @Component({
   selector: 'app-drafts',
   templateUrl: './drafts.component.html',
-  
+
 })
 export class DraftsComponent extends PublicFormComponent implements OnInit {
 
@@ -33,7 +34,7 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
       title: '操作',
       buttons: [
         {
-          text: '执行', click: (record) => {
+          text: '编辑', click: (record) => {
 
 
             let url = `addFireDesignDeclareComponent`;
@@ -41,13 +42,21 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
               url = record.projectTypeStatu == 1 ? `addFireAcceptanceComponent` : `addCompletedAcceptanceComponent`
             }
             const headerUrl = `/app/engineering-management/`
-            this.router.navigate([headerUrl + url + `/2/${record.projectId}`]);
+            console.log(headerUrl + url + `/2/${record.projectId}`);
+            this.router.navigate([headerUrl + url + `/2/${record.projectId}/null`]);
           }
         },
       ]
     },
-    { title: '表单编号', index: 'projectId' },
-    { title: '表单名称', index: 'projectName' },
+    { title: '项目编号', index: 'projectId' },
+    { title: '工程名称', index: 'projectName' },
+    { title: '建设单位', index: 'constructOrgName' },
+    { title: '流程类型', index: 'projectTypeStatu',format: (item: any) => `${item.projectTypeStatu?item.projectTypeStatu:404}`,type: 'tag', tag: {
+      404:{text:'设计审查',color: '' },
+      0: { text: '设计审查', color: '' },
+      1:{ text: '消防验收',color: '' },
+      2:{ text: '竣工备案',color: '' },
+    }},
   ];
 
   searchParam = new DraftQueryDto();
@@ -63,6 +72,7 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
     private _flowServices: FlowServices,
     private _publicModel: PublicModel,
     private router: Router,
+    private _eventEmiter: EventEmiter,
     private http: _HttpClient,
     private xlsx: XlsxService) {
     super();
@@ -71,6 +81,13 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
 
   ngOnInit() {
     this.init()
+
+    const _slef = this;
+    this._eventEmiter.on('draftsComponentInit',()=>{
+      _slef.init();
+    });
+
+
   }
 
   init() {
@@ -79,7 +96,18 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
     this.searchParam.sorting = 'ProjectId';
     this.getList();
   }
+  reststart(){
+    this.resetTime();
+    this.searchParam.page = 1;
+    this.searchParam.maxResultCount = AppConsts.grid.defaultPageSize;
+    this.searchParam.sorting = 'ProjectId';
+    this.searchParam.number='';
+    this.searchParam.companyName='';
+    this.searchParam.applyTimeStart = moment(this.rangeTime[0]);
+    this.searchParam.applyTimeEnd =moment(this.rangeTime[1]);
+    this.getList();
 
+  }
 
   /**
    * 获取所有列表
@@ -99,6 +127,8 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
    */
   query() {
     this.searchParam.page = 1;
+    this.searchParam.applyTimeStart = moment(this.rangeTime[0])
+    this.searchParam.applyTimeEnd =moment(this.rangeTime[1])
     this.getList();
   }
 
@@ -118,12 +148,16 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
 
   okRangeTime(v) {
     console.log(v);
-    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')  
-    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')   
+    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')
+    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')
     // this.searchParam.applyTimeStart = applyTimeStart;
     // this.searchParam.applyTimeEnd = applyTimeEnd;
     // console.log(applyTimeEnd);
   }
 
-
+  resetTime() {
+    var startTime = new Date();
+    startTime.setDate(startTime.getDate() - 30)
+    this.rangeTime = [startTime, new Date()];
+  }
 }

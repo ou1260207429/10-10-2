@@ -68,12 +68,16 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     { title: '上一处理人', index: 'cur_NodeAuditorName' },
     { title: '申报时间', index: 'applyTime', type: 'date' },
     { title: '受理时间', index: 'acceptTime', type: 'date' },
-    {
-      title: '流程是否超时', index: 'isExpire', type: 'tag', tag: {
-        true: { text: '超时', color: 'red' },
-        false: { text: '未超时', color: 'green' },
-      }
-    },
+    // {
+    //   title: '流程是否超时', index: 'isExpire', type: 'tag', tag: {
+    //     true: { text: '超时', color: 'red' },
+    //     false: { text: '未超时', color: 'green' },
+    //   }
+    // },
+    { title: '流程是否超时', index: 'isExpire',format:(item:any)=>`${item.isExpire==true?"是":"否"}`,type: 'tag', tag: {
+      "是": { text: '是', color: 'red' },
+      "否": { text: '否', color: '' },
+    }},
   ];
 
   searchParam = new PendingWorkFlow_NodeAuditorRecordDto();
@@ -106,9 +110,22 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.resetTime();
     let _self = this;
     this.init();
-    this.eventEmiter.on('agencyDoneInit', () => {
+    this.eventEmiter.on('fireAcceptanceComponentInit',()=>{
       _self.init();
     });
+
+    this.eventEmiter.on('fireDesignComponentInit',()=>{
+      _self.init();
+    });
+
+    this.eventEmiter.on('completedAcceptanceComponentInit',()=>{
+      _self.init();
+    });
+
+    this.eventEmiter.on('agencyDoneInit',()=>{
+      _self.init();
+    });
+
   }
 
   init() {
@@ -118,8 +135,9 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.searchParam.number = '';
     this.searchParam.projectName = '';
     this.searchParam.companyName = '';
-    this.searchParam.pagedAndFilteredInputDto.sorting = 'projectId desc'
+    this.searchParam.pagedAndFilteredInputDto.sorting = 'applyTime desc'
     this.searchParam.projectTypeStatu = null;
+    this.searchParam.isAlreadyDone = true
     if (this.rangeTime != null) {
       this.searchParam.applyTimeStart = this.rangeTime[0];
       this.searchParam.applyTimeEnd = this.rangeTime[1];
@@ -247,8 +265,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
           deptId: this.appSession.user.organizationsId,
           deptFullPath: this.appSession.user.organizationsName
         }
-      }
-      debugger
+      } 
 
       this._flowServices.tenant_NodeToNextNodeByPass(tenantWorkFlowInstanceDto).subscribe((data: any) => {
         this._examineService.signForOpinionFile(this.signForDto).subscribe(data => {

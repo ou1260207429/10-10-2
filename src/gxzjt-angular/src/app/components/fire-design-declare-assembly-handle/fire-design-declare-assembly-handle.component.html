@@ -12,7 +12,7 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-            <input class="table_input" [(ngModel)]="data.fileCodePrefix" name="fileCodePrefix" />住建消审凭字〔2019〕第0059号
+            <input class="table_input" [(ngModel)]="data.fileCodePrefix" name="fileCodePrefix" />住建消审凭字〔后台提供〕第（后台提供）号
           </td>
         </tr>
         <tr>
@@ -66,7 +66,7 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-            <input class="table_input" [(ngModel)]="data.fileCodePrefix" name="fileCodePrefix" />住建消审凭字〔2019〕第0059号
+            <input class="table_input" [(ngModel)]="data.fileCodePrefix" name="fileCodePrefix" />住建消审凭字〔后台提供〕第（后台提供）号
           </td>
         </tr>
         <tr>
@@ -75,9 +75,13 @@
               <h3>{{data.companyName}}：</h3>
 
 
+              <div *ngIf="examineFormDto">
+
+            
               <p *ngIf="examineFormDto.designOrg">
-                你单位申请的{{data.projectName}}建设工程（受理凭证：{{data.acceptFileCode}}，{{data.applyDateTime|date:'yyyy年MM月dd日'}}收）消防设计图纸材料及有关资料收悉。该工程位于{{data.address}}内。新建B栋教学楼建筑高度为19.6m，建筑层数为5层，建筑面积为2902.76㎡，设计用途一层为生活用房、二至四层为教室、五层为教师办公室、会议室等，属多层民用建筑。该工程消防设施主要有室内、室外消火栓系统。设计单位为{{examineFormDto.designOrg.companyName}}，设计资质为建设工程{{examineFormDto.designOrg.qualifications}}级。按照图纸审查机构（{{examineFormDto.drawingOrg.companyName}}）对该工程设计图纸的技术审查结论，我局提出以下意见：
+                你单位申请的{{data.projectName}}建设工程（受理凭证：{{data.acceptFileCode}}，{{data.applyDateTime|date:'yyyy年MM月dd日'}}收）消防设计图纸材料及有关资料收悉。该工程位于{{data.address}}内。{{data.descr}}。设计单位为<span *ngIf="examineFormDto.drawingOrg">{{examineFormDto.designOrg.companyName}}</span>，设计资质为建设工程{{examineFormDto.designOrg.qualifications}}级。按照图纸审查机构（<span *ngIf="examineFormDto.drawingOrg">{{examineFormDto.drawingOrg.companyName}}</span>）对该工程设计图纸的技术审查结论，我局提出以下意见：
               </p>
+            </div>
             </div>
             <textarea nz-input placeholder="请输入意见" [(ngModel)]="data.opinion" name="professionalContractorsopinion"
               required>
@@ -93,15 +97,7 @@
             </div>
 
           </td>
-        </tr>
-        <!-- <tr>
-          <td class="fontweight fontLeft leftTitle" style="padding-right: 20px;">建设单位收件人签名：<input
-              class="table_input_2" />
-            <p class="table_time">
-              <nz-date-picker name="t2"></nz-date-picker>
-            </p>
-          </td>
-        </tr> -->
+        </tr> 
         <tr>
           <td class="fontweight fontLeft leftTitle">本意见书一式两份，一份交建设单位，一份存档。 </td>
         </tr>

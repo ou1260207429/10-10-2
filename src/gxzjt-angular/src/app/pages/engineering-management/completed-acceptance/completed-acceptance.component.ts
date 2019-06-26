@@ -42,18 +42,27 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
             this.watchItem(record);
           },
         },
-        // {
-        //   text: '复查申请',
-        //   type: 'modal',
-        //   iif: record => (record.status  === 3 && (record.parentFlowId==null || record.parentFlowId==0)),//当状态是3即为不合格的时候显示此按钮，若需要方便调试可自己更改status的值改变按钮显示
-        //   click: (record: any, modal: any) => {
+        {
+          text: '重新申请',
+          type: 'modal',
+          iif: record => record.status  === 2 && record.parentFlowId!=null,
+          click: (record: any, modal: any) => {
+            this.router.navigate([`/app/engineering-management/addCompletedAcceptanceComponent/0/${record.projectId}/${record.id}`]);
+          },
+        },
+        {
+          text: '复查申请',
+          type: 'modal',
+          iif: record => (record.status  === 3 && (record.parentFlowId==null || record.parentFlowId==0)),//当状态是3即为不合格的时候显示此按钮，若需要方便调试可自己更改status的值改变按钮显示
+          click: (record: any, modal: any) => {
 
-        //     this.toreapply(record);
-        //   },
-        // },暂不知具体跳转先注释
+            this.toreapply(record);
+          },
+        },
         {
           text: '受理凭证',
           type: 'link',
+          iif: record => record.acceptAttachmentUrl!=null,
           // modal: {
           //   component: StatisticsAcceptCredentialsComponent,
           //   paramsName: 'record',
@@ -62,7 +71,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
             if(record.acceptAttachmentUrl){
               window.open(record.acceptAttachmentUrl)
             }else{
-              this.message.error('暂无受理凭证');
+              this.message.info('暂无受理凭证');
             }
 
           },
@@ -70,6 +79,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
         {
           text: '意见书',
           type: 'link',
+          iif: record => record.opinionAttachmentUrl!=null,
           // modal: {
           //   component: StatisticsPositionPaperComponent,
           //   paramsName: 'record',
@@ -78,7 +88,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
             if(record.opinionAttachmentUrl){
               window.open(record.opinionAttachmentUrl)
             }else{
-              this.message.error('暂无意见书');
+              this.message.info('暂无意见书');
             }
 
           },
@@ -88,26 +98,24 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     { title: '竣工验收备案申报编号', index: 'recordNumber' },
     { title: '工程名称', index: 'projectName' },
     { title: '建设单位', index: 'companyName' },
-    { title: '是否被抽中', index: 'isSelected',format: (item: any) => `${item.isSelected?item.isSelected:4001}`,type: 'tag', tag: {
-      4001:{text:'是',color: 'red' },
-      true: { text: '是', color: '' },
-      false: { text: '否',color: 'red' },
-    }},
+    // { title: '是否被抽中', index: 'isSelected',format: (item: any) => `${item.isSelected==null?4001:item.isSelected}`,type: 'tag', tag: {
+    //   4001:{text:'是',color: 'green' },
+    //   true: { text: '是', color: '' },
+    //   false: { text: '否',color: 'red' },
+    // }},
     // { title: '验证码', index: '无此字段返回' },
     { title: '当前处理环节', index: 'currentNodeName' },
-    { title: '流程是否超时', index: 'isExpireTime',format: (item: any) => `${item.isExpireTime?item.isExpireTime:4001}`,type: 'tag', tag: {
-      4001:{text:'是',color: 'red' },
-      true: { text: '是', color: '' },
-      false: { text: '否',color: 'red' },
+    { title: '流程是否超时', index: 'isExpireTime',format: (item: any) => `${item.isExpireTime==true?"是":(item.isExpireTime==false?"否":"是")}`,type: 'tag', tag: {
+      "是":{text:'是',color: 'red' },
+      "否": { text: '否',color: 'green' },
     }},
-    { title: '结果', index: 'status',format: (item: any) => `${item.status?item.status:4001}`,type: 'tag', tag: {
-      4001:{text:'待处理',color: '' },
-      0: { text: '未处理', color: '' },
-      1: { text: '受理', color: 'green' },
-      2:{ text: '不受理',color: 'red' },
-      3:{ text: '不合格',color: 'red' },
-      4:{ text: '合格', color: '' },
-      5:{ text: '未抽中', color: '' },
+    { title: '结果', index: 'status',format: (item: any) => `${item.status==0?"未处理":(item.status==1?"受理":(item.status==2?"不受理":(item.status==3?"不合格":(item.status==4?"合格":(item.status==5?"未抽中":"未处理")))))}`,type: 'tag', tag: {
+      "未处理": { text: '未处理', color: '' },
+      "受理": { text: '受理', color: 'green' },
+      "不受理":{ text: '不受理', color: 'red' },
+      "不合格":{ text: '不合格', color: 'red' },
+      "合格":{ text: '合格', color: '' },
+      "未抽中":{ text: '未抽中', color: '' },
     }},
     { title: '操作时间', index: 'applyTime',type:'date' },
   ];
@@ -185,7 +193,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.getList();
   }
   toreapply(item) {console.log(item);
-    this.router.navigate([`/app/work-matters/review-apply/${item.id}/2`]);
+    this.router.navigate([`/app/work-matters/review-apply/${item.id}/3`]);
   }
 
   watchItem(item) {
@@ -211,7 +219,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
    * 新增申报
    */
   addDeclare() {
-    this.router.navigate([`/app/engineering-management/addCompletedAcceptanceComponent/0/null`]);
+    this.router.navigate([`/app/engineering-management/addCompletedAcceptanceComponent/0/null/null`]);
   }
 
   /**

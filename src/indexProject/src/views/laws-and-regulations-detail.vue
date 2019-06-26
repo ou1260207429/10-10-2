@@ -21,6 +21,19 @@
               style="color:#bd1127;text-align:center;padding:20px 0;letter-spacing:3px; box-sizing: border-box;"
             >{{data.title}}</h1>
             <div class="lawContent" v-html="data.content"></div>
+            <div v-if="fileList.length>0" style="margin-top:20px;padding-left:30px;margin-bottom:20px;">
+              <p style="margin-bottom:10px;font-weight: bold;">相关文件下载</p>
+              <div>
+                <div
+                  v-for="(item,index) in fileList"
+                  :key="index"
+                  style="cursor: pointer;margin-bottom:10px;font-size: 14px;"
+                >
+                  <i class="el-icon-link"></i>
+                  <a @click="downLoadFile(item)">{{item.fileName}}</a>
+                </div>
+              </div>
+            </div>
           </div>
         </el-card>
       </el-row>
@@ -30,17 +43,20 @@
 
 <script>
 import { app } from "../assets/js/app";
-import { laws } from "../assets/js/apiValue";
+import { laws, table } from "../assets/js/apiValue";
 export default {
   data() {
     return {
+      id: "",
+      downLoadUrl: app.downLoadUrl,
       tableHight: "200px",
       isLoading: true,
       path: "",
       searchData: {
         regulationId: null
       },
-      data: null
+      data: null,
+      fileList: []
     };
   },
 
@@ -61,13 +77,25 @@ export default {
   },
 
   methods: {
+    getFileDetail(guid, id) {
+      let _this = this;
+      _this.fileList = [];
+      app.getFileDetail(guid, id).then(req => {
+        _this.fileList = req.data;
+      });
+    },
+    downLoadFile(req) {
+      app.downLoadFile(req, this.id);
+    },
     initData(id) {
       let _this = this;
       _this.isLoading = true;
-      app.post(laws.serach_lawsDetail+"?regulationId="+id).then(req => {
+      app.post(laws.serach_lawsDetail + "?regulationId=" + id).then(req => {
         _this.isLoading = false;
         if (req.success) {
           _this.data = req.result;
+          _this.id = req.result.id;
+          _this.getFileDetail(req.result.guid, req.result.id);
         }
       });
     }

@@ -18,13 +18,13 @@ export class PublicFormComponent {
 
     useSelect = false;
     isShowAdd = true;
-    nzPlaceHolder=[]
+    nzPlaceHolder = []
 
 
-    //过滤菜单
-    resetSearchFliterForm(): void {
-        this.fliterForm.reset();
-    }
+    // //过滤菜单
+    // resetSearchFliterForm(): void {
+    //     this.fliterForm.reset();
+    // }
 
     hiddenFliter = false;
     fliterForm: FormGroup;

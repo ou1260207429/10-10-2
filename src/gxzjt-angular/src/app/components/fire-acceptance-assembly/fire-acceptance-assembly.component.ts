@@ -7,6 +7,8 @@ import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import { DepFlags } from '@angular/compiler/src/core';
+import lodash from 'lodash'
+import { SelectorOrgComponent } from '@shared/components/selector/selector-org';
 
 /**
  * 消防验收的表单模块
@@ -14,7 +16,7 @@ import { DepFlags } from '@angular/compiler/src/core';
 @Component({
   selector: 'app-fire-acceptance-assembly',
   templateUrl: './fire-acceptance-assembly.component.html',
-  
+
 })
 export class FireAcceptanceAssemblyComponent implements OnInit {
 
@@ -47,14 +49,13 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
   @Output() private childOuter = new EventEmitter();
 
   //从父组件获取使用行性质的select
-  @Input() useNatureSelect:any
+  @Input() useNatureSelect: any
   constructor(public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
-    this.childOuter.emit(this.f); 
+    this.childOuter.emit(this.f);
     this.getAreaDropdown();
-    console.log(this.data)
   }
 
   /**
@@ -95,7 +96,7 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     const tid = file.uid
     this.data.fileList[this.uoloadIndex].array.push({
       name: file.name,
-      status: 'done',
+      status: 'uploading',
       tid: file.uid,
     })
 
@@ -109,7 +110,11 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     this._publicServices.newUpload(formData, params).subscribe(data => {
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL + data.data[0].localUrl
+      this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
+      this.data.fileList[this.uoloadIndex].array[index].status = 'done'
+      const fileList = lodash.cloneDeep(this.data.fileList);  
+      this.data.fileList = []
+      this.data.fileList = fileList 
     })
     return false;
   };
@@ -122,14 +127,25 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     this.uoloadIndex = index
   }
 
-  designUnitList=[];
-  isdesignUnitLoading=false;
 
-  onSearchDesignUnit(item){
-     
+
+
+  onSelectOrgItem(res, item) {
+    // console.log(res);
+    // console.log(item);
+    item.qualificationLevel=res.qualificationLevel;
+    item.contacts=res.contact;
+    item.contactsNumber=res.contactPhone;
+    item.legalRepresentative=res.leader;
 
   }
 
+  onSelectOrgTitle(res){
+    this.data.legalRepresentative=res.leader;
+    this.data.legalRepresentativeNo=res.leaderPhone;
 
+    
+
+  }
 
 }

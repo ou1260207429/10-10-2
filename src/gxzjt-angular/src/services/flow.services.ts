@@ -58,10 +58,10 @@ export class FlowServices {
   /**
    * 不通过的操作要选择指定的节点
    */
-  getAuditedNodeRecords(id){
+  getAuditedNodeRecords(id) {
     return this.http.get(XIEFENG_SERVICES_URL + '/api/services/app/WorkFlowInstanceManager/GetAuditedNodeRecords', {
-      params:{
-        Id:id
+      params: {
+        Id: id
       }
     });
   }
@@ -80,9 +80,9 @@ export class FlowServices {
 }
 
 export interface WorkFlow {
-  workFlow_TemplateInfoId?: string|number,
-  workFlow_InstanceId: string|number,
-  workFlow_NodeAuditorRecordId: string|number,
+  workFlow_TemplateInfoId?: string | number,
+  workFlow_InstanceId: string | number,
+  workFlow_NodeAuditorRecordId: string | number,
 }
 
 
@@ -108,6 +108,9 @@ export interface GXZJT_EditWorkFlow_NodeAuditorRecordDto {
 
   //部门路径
   deptFullPath: string,
+
+  //备注
+  details?: string
 }
 
 export interface GXZJT_Auditors {
