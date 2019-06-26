@@ -17,14 +17,14 @@ import { ControlContainer, NgForm } from '@angular/forms';
 
    <div class="org-input">
     <input  nz-input 
-      [(name)]="inputName"
+      [(name)]="name"
       [placeholder]="placeHolder"
      
-      [(ngModel)]="inputOrg"
+      [(ngModel)]="ngModel"
       (input)="onInput($event.target?.value)"
       [nzAutocomplete]="auto"
       (ngModelChange)="onChange($event)"
-      [required]="inputRequired"
+      [required]="required"
     
     />
     <nz-autocomplete nzBackfill #auto>
@@ -62,16 +62,17 @@ export class SelectorOrgComponent {
 
 
   orgList: EnterpriseDto[];
+  
+  @Input()  ngModel: string;
 
-  @Output('ngModel')
-  @Input('ngModel')
-  inputOrg: string;
+  @Output() ngModelChange = new EventEmitter();
 
-  @Input('name')
-  inputName: string;
+  @Input()
+  name: string;
 
-  @Input('required')
-  inputRequired: boolean;
+  @Input()
+  required: boolean;
+  
 
   @Input()
   placeHolder = "请输入单位名称";
@@ -81,8 +82,7 @@ export class SelectorOrgComponent {
   @Output() onSelectorEvent = new EventEmitter<EnterpriseDto>();
 
   onChange(value) {
-
-
+    this.ngModelChange.emit(value);
     if (this.orgList && this.orgList.length > 0) {
       for (let i of this.orgList) {
         if (i.name == value) {
@@ -93,20 +93,15 @@ export class SelectorOrgComponent {
       }
     }
 
-
   }
 
 
   onInput(value: string): void {
     this.isLoading = true;
-    // this.searchChange$.next(value);
+
     this._HomeServiceProxy.getOrganizationsByName(value).subscribe((res: EnterpriseDto[]) => {
       this.isLoading = false;
 
-      // var data = [];
-      // if (this.inputOrg && this.inputOrg.length > 0) {
-
-      // }
       this.orgList = res;
       // console.log(res);
 
