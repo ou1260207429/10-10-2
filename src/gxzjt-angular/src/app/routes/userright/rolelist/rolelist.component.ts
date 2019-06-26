@@ -107,7 +107,7 @@ export class UserrightRolelistComponent implements OnInit {
   }
   save(operate, item) {
 
-    if (this.operate == 0) {
+    if (operate == 0) {
       let params = Object.assign({ merchantId: this._appSessionService.user.merchantId }, item)
 
       this._userServices.addRoles(params).subscribe(data => {
@@ -119,7 +119,7 @@ export class UserrightRolelistComponent implements OnInit {
           this.message.error(data.message);
         }
       })
-    } else if (this.operate == 1) {
+    } else if (operate == 1) {
       this._userServices.editRoles(item).subscribe(data => {
         if (data.result == 0) {
           this.message.success("修改成功");
