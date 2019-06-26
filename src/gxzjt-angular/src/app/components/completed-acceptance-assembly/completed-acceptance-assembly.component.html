@@ -85,7 +85,7 @@
           <td rowspan='1' colspan='3'>联系电话</td>
         </tr>
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
-          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>建设单位:</td>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">建设单位:</td>
           <td rowspan='1' colspan='7'>
             <se error="必填">
               <!-- <input nz-input placeholder="请输入建设单位" [(ngModel)]="data.constructionUnit.name" name="constructionUnitname"
@@ -93,7 +93,7 @@
 
               <nz-rj-selector-org [(ngModel)]="data.constructionUnit.name"
                 (onSelectorEvent)="onSelectOrgItem($event,data.constructionUnit)" placeHolder="请输入建设单位"
-                name="constructionUnitname" required="true" ngDefaultControl></nz-rj-selector-org>
+                name="constructionUnitname"   ngDefaultControl></nz-rj-selector-org>
             </se>
           </td>
           <td rowspan='1' colspan='4'>
@@ -105,13 +105,13 @@
           <td rowspan='1' colspan='3'>
             <se error="必填">
               <input nz-input placeholder="请输入联系人" [(ngModel)]="data.constructionUnit.contacts"
-                name="constructionUnitcontacts" required />
+                name="constructionUnitcontacts" />
             </se>
           </td>
           <td rowspan='1' colspan='3'>
             <se error="请输入数字">
               <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.constructionUnit.contactsNumber"
-                pattern="^[0-9]*$" name="constructionUnitcontactsNumber" required />
+                pattern="^[0-9]*$" name="constructionUnitcontactsNumber"  />
             </se>
           </td>
         </tr>
