@@ -29,6 +29,7 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot,
 
   ): boolean {
+
     if (!this._sessionService.user || !this._tokenService.getToken()) {
 
       this._router.navigate(['/account/login']);
@@ -44,30 +45,31 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
 
 
 
-    if (route.data['role'] && !this._ACLService.can(route.data['role'])) {
+    if (route.data && route.data['role'] && !this._ACLService.can(route.data['role'])) {
       this._NzModalService.info({
         nzTitle: '提示',
         nzContent: '您没有权限访问该地址',
       }
       );
-      this._router.navigate([this.selectBestRoute()]);
+      // this._router.navigate([this.selectBestRoute()]);
       return false;
     }
 
 
+    return true;
 
 
 
-    if (!route.data || !route.data['permission']) {
-      return true;
-    }
+    // if (!route.data || !route.data['permission']) {
+    //   return true;
+    // }
 
-    if (this._permissionChecker.isGranted(route.data['permission'])) {
-      return true;
-    }
+    // if (this._permissionChecker.isGranted(route.data['permission'])) {
+    //   return true;
+    // }
 
-    this._router.navigate([this.selectBestRoute()]);
-    return false;
+    // this._router.navigate([this.selectBestRoute()]);
+    // return true;
   }
 
   canActivateChild(
@@ -78,13 +80,13 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
   }
 
   selectBestRoute(): string {
-    if (!this._sessionService.user|| !this._tokenService.getToken()) {
+    if (!this._sessionService.user || !this._tokenService.getToken()) {
       return '/account/login';
     }
 
-    if (this._permissionChecker.isGranted('Pages.Users')) {
-      return '/app/admin/users';
-    }
+    // if (this._permissionChecker.isGranted('Pages.Users')) {
+    //   return '/app/admin/users';
+    // }
 
     return '/app/home';
   }

@@ -28,7 +28,7 @@ import {
 } from '@shared/service-proxies/service-proxies';
 import { UrlHelper } from '@shared/helpers/UrlHelper';
 
-
+import { TokenService } from '@abp/auth/token.service';
 
 var checkCode: any;
 @Component({
@@ -54,18 +54,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
   switchUswPsw() {
     this.usePsw = !this.usePsw;
   }
-  // get userName() {
-  //   return this.form.controls.userName;
-  // }
-  // get password() {
-  //   return this.form.controls.password;
-  // }
-  // get mobile() {
-  //   return this.form.controls.mobile;
-  // }
-  // get captcha() {
-  //   return this.form.controls.captcha;
-  // }
+
   constructor(
     injector: Injector,
     private fb: FormBuilder,
@@ -75,32 +64,29 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     private _router: Router,
     public http: _HttpClient,
     private modalService: NzModalService,
+    private _TokenService: TokenService
   ) {
     super(injector);
 
-    // this.validateForm = fb.group({
 
-    //   password: [null, Validators.required, Validators.maxLength(32), Validators.minLength(6)],
-    //   mobile: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
-    //   captcha: [null, [Validators.required]],
-
-    // });
 
   }
 
 
 
   ngOnInit(): void {
-    this.titleSrvice.setTitle(this.l('LogIn'));
+    this.titleSrvice.setTitle("登录");
 
-
+    if (this._TokenService.getToken()) {
+      location.href = location.href.replace('#/account/login', '#/app/');
+    }
 
   }
 
 
   initSliter() {
     checkCode = "" + Math.ceil(Math.random() * 10000);
-    
+
     $(".inner").mousedown(function (e) {
       console.log(e)
       var el = $(".inner");
