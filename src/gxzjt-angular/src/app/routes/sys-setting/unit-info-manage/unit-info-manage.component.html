@@ -15,9 +15,10 @@
     <span>操作时间：</span>
     <nz-range-picker nzFormat="yyyy/MM/dd" formControlName="dateRange" class="search_menu"></nz-range-picker>
 
+    <button nz-button (click)="search()" nzType="primary">搜索</button>
     <button nz-button (click)="resetForm()" class="search_menu">重置</button>
 
-    <button nz-button (click)="search()" nzType="primary">搜索</button>
+
   </form>
   <st #st [data]="url" [columns]="columns"></st>
 </nz-card>

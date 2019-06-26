@@ -16,19 +16,19 @@
         <div style="margin-top: 8px" nz-row>
           <div nz-col nzSpan="5">登录账号</div>
           <div nz-col nzSpan="19">
-            <input nz-input placeholder="请输入登录账号" [(ngModel)]="submodel.EId" >
+            <input nz-input placeholder="请输入登录账号" [(ngModel)]="submodel.eId" >
           </div>
         </div>
         <div style="margin-top: 8px" nz-row>
           <div nz-col nzSpan="5">名称</div>
           <div nz-col nzSpan="19">
-            <input nz-input placeholder="请输入名称" [(ngModel)]="submodel.EName" >
+            <input nz-input placeholder="请输入名称" [(ngModel)]="submodel.eName" >
           </div>
         </div>
         <div style="margin-top: 8px" nz-row>
           <div nz-col nzSpan="5">密码</div>
           <div nz-col nzSpan="19">
-            <input nz-input placeholder="请输入密码" [(ngModel)]="submodel.Password" >
+            <input nz-input placeholder="请输入密码" [(ngModel)]="submodel.password" >
           </div>
         </div>
         <div style="margin-top: 8px" nz-row>
@@ -41,7 +41,7 @@
         <div style="margin-top: 8px" nz-row>
           <div nz-col nzSpan="5">性别</div>
           <div nz-col nzSpan="19">
-            <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="性别" [(ngModel)]="submodel.Sex">
+            <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="性别" [(ngModel)]="submodel.sex">
               <div>
                 <nz-option nzLabel="男" nzValue="0"></nz-option>
                 <nz-option nzLabel="女" nzValue="1"></nz-option>
@@ -53,14 +53,14 @@
         <div style="margin-top: 8px" nz-row>
           <div nz-col nzSpan="5">手机号</div>
           <div nz-col nzSpan="19">
-            <input nz-input placeholder="请输入手机号码" [(ngModel)]="submodel.Mobile" maxlength=11>
+            <input nz-input placeholder="请输入手机号码" [(ngModel)]="submodel.mobile" maxlength=11>
           </div>
         </div>
 
         <div style="margin-top: 8px" nz-row>
           <div nz-col nzSpan="5">身份证</div>
           <div nz-col nzSpan="19">
-            <input nz-input placeholder="请输入手机号码" [(ngModel)]="submodel.IdCardNo" maxlength=18>
+            <input nz-input placeholder="请输入身份证" [(ngModel)]="submodel.idCardNo" maxlength=18>
           </div>
         </div>
 
@@ -75,7 +75,7 @@
         <div *ngIf="rolelist.data" style="margin-top: 8px" nz-row>
           <div nz-col nzSpan="5">角色</div>
           <div nz-col nzSpan="19">
-            <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="角色" [(ngModel)]="submodel.RoleId">
+            <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="角色" [(ngModel)]="submodel.roleId">
               <div *ngFor="let item of rolelist.data">
                 <nz-option nzLabel="{{item.text}}" nzValue="{{item.id}}"></nz-option>
               </div>
@@ -87,7 +87,7 @@
           <div nz-col nzSpan="5">岗位</div>
           <div nz-col nzSpan="19">
             <nz-select style="width: 100%;" nzMode="multiple" nzPlaceHolder="请选择用户岗位"
-              [(ngModel)]="submodel.PositionIds">
+              [(ngModel)]="submodel.positionIds">
               <nz-option *ngFor="let item of positionlist.data" [nzLabel]="item.text" [nzValue]="item.id"></nz-option>
             </nz-select>
           </div>
@@ -98,7 +98,8 @@
         <div style="margin-top: 8px" nz-row>
           <div nz-col nzSpan="5">所属组织机构(点击单选)</div>
           <div nz-col nzSpan="19">
-            <nz-tree nzMultiple='false' (nzClick)="nzEventorg($event)" [nzData]="nodes" nzDraggable=false>
+              <nz-tree #treeCom [nzData]="nodes"  nzCheckable="true" nzMultiple="false"
+              [(nzCheckedKeys)]="defaultCheckedKeys" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzEventorg($event)">
             </nz-tree>
           </div>
         </div>
@@ -113,8 +114,8 @@
         <div style="margin-top: 8px" nz-row>
           <div nz-col nzSpan="5">可见数据(勾选需要的数据)：</div>
           <div nz-col nzSpan="19">
-            <nz-tree nzCheckable nzMultiple='false' (nzCheckBoxChange)="nzEvent($event)" [nzData]="nodes" nzCheckable=true
-              nzDraggable=false>
+              <nz-tree #treeCom [nzData]="nodes"  nzCheckable="true" nzMultiple="true"
+              [(nzCheckedKeys)]="defaultCheckedKeys" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzEvent($event)">
             </nz-tree>
           </div>
         </div>

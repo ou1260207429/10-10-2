@@ -105,19 +105,17 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     // }},
     // { title: '验证码', index: '无此字段返回' },
     { title: '当前处理环节', index: 'currentNodeName' },
-    { title: '流程是否超时', index: 'isExpireTime',format: (item: any) => `${item.isExpireTime?item.isExpireTime:4001}`,type: 'tag', tag: {
-      4001:{text:'是',color: 'red' },
-      true: { text: '是', color: '' },
-      false: { text: '否',color: 'red' },
+    { title: '流程是否超时', index: 'isExpireTime',format: (item: any) => `${item.isExpireTime==true?"是":(item.isExpireTime==false?"否":"是")}`,type: 'tag', tag: {
+      "是":{text:'是',color: 'red' },
+      "否": { text: '否',color: 'green' },
     }},
-    { title: '结果', index: 'status',format: (item: any) => `${item.status?item.status:4001}`,type: 'tag', tag: {
-      4001:{text:'待处理',color: '' },
-      0: { text: '未处理', color: '' },
-      1: { text: '受理', color: 'green' },
-      2:{ text: '不受理',color: 'red' },
-      3:{ text: '不合格',color: 'red' },
-      4:{ text: '合格', color: '' },
-      5:{ text: '未抽中', color: '' },
+    { title: '结果', index: 'status',format: (item: any) => `${item.status==0?"未处理":(item.status==1?"受理":(item.status==2?"不受理":(item.status==3?"不合格":(item.status==4?"合格":(item.status==5?"未抽中":"未处理")))))}`,type: 'tag', tag: {
+      "未处理": { text: '未处理', color: '' },
+      "受理": { text: '受理', color: 'green' },
+      "不受理":{ text: '不受理', color: 'red' },
+      "不合格":{ text: '不合格', color: 'red' },
+      "合格":{ text: '合格', color: '' },
+      "未抽中":{ text: '未抽中', color: '' },
     }},
     { title: '操作时间', index: 'applyTime',type:'date' },
   ];

@@ -11,11 +11,11 @@
 
   <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
     <!-- <span>竣工验收申报编号：</span> -->
-    <input nz-input  formControlName="proNo" placeholder="请输入竣工验收申报编号" class="search_menu_input">
+    <input nz-input formControlName="proNo" placeholder="请输入竣工验收申报编号" class="search_menu_input">
 
     <!-- <nz-select class="search_menu_input" nzShowSearch nzAllowClear nzPlaceHolder="工程名称" [(ngModel)]="selectedValuePro">     </nz-select>-->
     <!-- <span>工程名称：</span> -->
-    <input nz-input  formControlName="proName" placeholder="请输入工程名称" class="search_menu_input">
+    <input nz-input formControlName="proName" placeholder="请输入工程名称" class="search_menu_input">
     <!-- <span>审查结果：</span> -->
     <nz-select class="search_menu_input" formControlName="proType" nzShowSearch nzAllowClear nzPlaceHolder="审查结果">
       <nz-option nzLabel="未处理" nzValue="0"></nz-option>
@@ -28,9 +28,12 @@
     <!-- <span>申报时间：</span> -->
     <nz-range-picker nzFormat="yyyy/MM/dd" formControlName="dateRange" class="search_menu"></nz-range-picker>
 
+
+    <button nz-button (click)="search()" nzType="primary" autofocus="autofocus">搜索</button>
+
     <button nz-button (click)="resetForm()" class="search_menu">重置</button>
 
-    <button nz-button (click)="search()" nzType="primary">搜索</button>
+
   </form>
   <div style="margin-bottom: 10px">
     <!-- <button nz-button nzType="primary" (click)="addview()">新增申报</button> -->
