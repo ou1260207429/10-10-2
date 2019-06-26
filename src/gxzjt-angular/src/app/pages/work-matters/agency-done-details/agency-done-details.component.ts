@@ -195,15 +195,17 @@ export class AgencyDoneDetailsComponent implements OnInit {
   /**
    * 点击提交
    */
-  save(bo?: boolean) {
+  save(bo?: boolean) { 
     let num = bo ? 1 : 0;
-    if (this.flowPathType == 3 && !this.formDto.IsSelect) {
-      num = 0
+    //判断是竣工备案  
+    if (this.flowPathType == 3) {
+      //竣工备案判断抽中或者不抽中
+      num = this.formDto.isSelect?1:0
     }
     this.tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
       Area: this.formDto.area,
       IsChoose: num, 
-    }
+    } 
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptFullPath = this.appSession.user.organizationsName
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.formDto.opinion
