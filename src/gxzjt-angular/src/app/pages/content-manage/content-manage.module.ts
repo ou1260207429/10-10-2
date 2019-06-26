@@ -24,7 +24,7 @@ const COMPONENTS_NOROUNT = [PoliciesAndRegulationsComponent, HandlingGuideCompon
     ContentManageRoutingModule,
     UEditorModule
   ],
-  declarations: [...COMPONENTS,...COMPONENTS_NOROUNT, FormDownloadComponent, PoliciesAndRegulationsDetailsComponent, HandlingGuidDetailComponent, FormDownloadDetailComponent],
+  declarations: [...COMPONENTS,...COMPONENTS_NOROUNT,FormDownloadComponent, PoliciesAndRegulationsDetailsComponent, HandlingGuidDetailComponent, FormDownloadDetailComponent],
   entryComponents: COMPONENTS_NOROUNT
 })
 export class ContentManageModule { }

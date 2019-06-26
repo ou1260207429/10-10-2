@@ -5,6 +5,8 @@ import { PublicModel } from 'infrastructure/public-model';
 import { timeTrans } from 'infrastructure/regular-expression';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import { ModalHelper } from '@delon/theme'; 
+import { AddPostworkComponent } from '@app/components/add-postwork/add-postwork.component';
 
 @Component({
   selector: 'app-userright-postwork',
@@ -12,6 +14,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 })
 export class UserrightPostworkComponent implements OnInit {
   disabled = 1;
+  editName:"岗位名称"
   //0新增，1编辑，2查看
   operate = 0;
   url = `/user`;
@@ -37,29 +40,26 @@ export class UserrightPostworkComponent implements OnInit {
     {
       title: '操作',
       buttons: [
-        {
-          text: '查看', click: (item: any) => {
-            this.title = "查看岗位信息"
-            this.addVisible = true;
-            this.operate = 2
-            this.filterData(item)
-          }
-        },
+        // {
+        //   text: '查看', click: (item: any) => {
+           
+        //     this.add(2, this.filterData(item))
+        //     // this.title = "查看岗位信息"
+        //     // this.addVisible = true;
+        //     // this.operate = 2
+        //   }
+        // },
         {
           text: '编辑', click: (item: any) => {
-            this.operate = 1
-            this.getWorkName();
-            this.title = "编辑岗位信息"
-            this.addVisible = true;
-            this.editId = item.id
             this.filterData(item)
 
-          }
-        },
-        {
-          text: '删除', click: (item: any) => {
-            this.deleteList = [item.id]
-            this.deleteData()
+            this.add(1,this.filterData(item))
+            // this.operate = 1
+            // this.getWorkName();
+            // this.title = "编辑岗位信息"
+            // this.addVisible = true;
+            // this.editId = item.id
+
           }
         },
       ]
@@ -83,8 +83,9 @@ export class UserrightPostworkComponent implements OnInit {
     size: 10
   }
   workList: any[]
-  deleteList: any[];
-  constructor(private message: NzMessageService, public _appSessionService: AppSessionService, private _publicModel: PublicModel, private _userServices: UserServices) {
+  deleteList: any[]; 
+  
+  constructor(private ModelHelp: ModalHelper,private message: NzMessageService, public _appSessionService: AppSessionService, private _publicModel: PublicModel, private _userServices: UserServices) {
   }
 
   ngOnInit() {
@@ -117,14 +118,34 @@ export class UserrightPostworkComponent implements OnInit {
       }
     })
   }
-  add() {
-    this.operate = 0
-    this.addVisible = true;
-    this.addForm.isEnabled=false;
+
+  /**
+   * 新增 查看 编辑
+   * @param operate  0：新增  1：编辑  2：查看 
+   */
+  add(operate:number,item?:any) { 
+    this.addForm = operate == 0?{}:item
+    let title = '新增岗位信息'
+    if(operate!=0){
+      title = operate == 1?'编辑岗位信息':'查看岗位信息'
+    }
+    this.ModelHelp.static(
+      AddPostworkComponent,
+      {
+        operate:operate,
+        title:title,
+        addForm:item,
+        workList:this.workList
+      }
+    ).subscribe((res: any) => {
+      if(res.opt){
+        this.save(operate,item)
+      }
+    })
   }
-  save() {
-    if (this.operate == 0) {
-      let params = Object.assign({ merchantId: this._appSessionService.user.merchantId, appId: "9F947774-8CB4-4504-B441-2B9AAEEAF450" }, this.addForm)
+  save(operate,item) {
+    if (operate == 0) {
+      let params = Object.assign({ merchantId: this._appSessionService.user.merchantId, appId: "9F947774-8CB4-4504-B441-2B9AAEEAF450" }, item)
       this._userServices.addStation(params).subscribe(data => {
         if (data.result == 0) {
           this.message.success("新增成功");
@@ -134,10 +155,8 @@ export class UserrightPostworkComponent implements OnInit {
           this.message.error(data.message);
         }
       })
-    } else if (this.operate == 1) {
-      let params = Object.assign({}, this.addForm)
-      params.id = this.editId;
-      this._userServices.editStation(params).subscribe(data => {
+    } else if (operate == 1) {
+      this._userServices.editStation(item).subscribe(data => {
         if (data.result == 0) {
           this.message.success("修改成功");
           this.initTable();
@@ -149,7 +168,7 @@ export class UserrightPostworkComponent implements OnInit {
     }
   }
   filterData(obj) {
-    this.addForm = {
+   let item = {
       id: obj.id,
       // postId: obj.postId,
       merchantId: obj.merchantId,
@@ -158,6 +177,9 @@ export class UserrightPostworkComponent implements OnInit {
       isEnabled: obj.isEnabled,
       //  sortId: obj.sortId,
     }
+    console.log(item)
+
+    return item
   }
   handleCancel() {
     this.addVisible = false;

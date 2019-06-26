@@ -33,16 +33,19 @@
       <input type="text" nz-input [(ngModel)]="addForm.menuId" name="menuId" required>
     </se> -->
     <se label="角色名称" required>
-        <nz-select [disabled]="operate==2" *ngIf="operate==1" [(ngModel)]="addForm.name" name="name" nzAllowClear nzPlaceHolder="请选择">
-            <nz-option *ngFor="let item of roleList" [nzValue]="item.text" [nzLabel]="item.text"></nz-option>
-          </nz-select>
-      <input *ngIf="operate!=1" [disabled]="operate==2" type="text" nz-input [(ngModel)]="addForm.name" name="name" required>
+      <nz-select [disabled]="operate==2" *ngIf="operate==1" [(ngModel)]="addForm.name" name="name" nzAllowClear
+        nzPlaceHolder="请选择">
+        <nz-option *ngFor="let item of roleList" [nzValue]="item.text" [nzLabel]="item.text"></nz-option>
+      </nz-select>
+      <input *ngIf="operate!=1" [disabled]="operate==2" type="text" nz-input [(ngModel)]="addForm.name" name="name"
+        required>
     </se>
     <!-- <se label="图标" error="请填写" required>
       <input type="text" nz-input [(ngModel)]="addForm.icon" name="icon" required>
     </se> -->
     <se label="启用" required>
-      <nz-select [disabled]="operate==2" [(ngModel)]="addForm.isEnabled" name="isEnabled" nzAllowClear nzPlaceHolder="请选择">
+      <nz-select [disabled]="operate==2" [(ngModel)]="addForm.isEnabled" name="isEnabled" nzAllowClear
+        nzPlaceHolder="请选择">
         <nz-option [nzValue]="true" nzLabel="启用"></nz-option>
         <nz-option [nzValue]="false" nzLabel="不启用"></nz-option>
       </nz-select>
@@ -54,7 +57,8 @@
       <input type="text" nz-input [(ngModel)]="addForm.version" name="version" required>
     </se> -->
     <se>
-      <button nz-button nzType="primary" style="float: right" [disabled]="f.invalid" (click)="save()">确定</button>
+      <button *ngIf="operate!=2" nz-button nzType="primary" style="float: right" [disabled]="f.invalid"
+        (click)="save()">确定</button>
       <button nz-button nzType="primary" style="float: right;margin-right: 10px;" (click)="handleCancel()">取消</button>
     </se>
   </form>
