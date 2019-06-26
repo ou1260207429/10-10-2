@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <div class="modal-title">{{title}}</div>
+</div>
+
+
+<form nz-form #f="ngForm" se-container="1" gutter="32" style="padding-right: 50px;">
+  <div *ngIf="addForm">
+    <se [label]="editName" required>
+      <input [ngClass]="{pointerf5f5f5: operate == 2}" type="text" nz-input [(ngModel)]="addForm.name" name="name"
+        required>
+    </se>
+    <se label="启用" required>
+      <nz-select [ngClass]="{pointerf5f5f5: type == 2}" [(ngModel)]="addForm.isEnabled" name="isEnabled" nzAllowClear
+        nzPlaceHolder="请选择">
+        <nz-option [nzValue]="true" nzLabel="启用"></nz-option>
+        <nz-option [nzValue]="false" nzLabel="不启用"></nz-option>
+      </nz-select>
+    </se>
+  </div>
+</form>
+
+<div class="modal-footer">
+  <button nz-button type="button" (click)="close(false)">关闭</button>
+  <button nz-button type="button" (click)="close(true)">保存</button>
+</div>

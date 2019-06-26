@@ -32,7 +32,8 @@ export class UserrightRolelistComponent implements OnInit {
       buttons: [
         {
           text: '编辑', click: (item: any) => {
-
+            this.filterData(item)
+            this.add(1, this.filterData(item))
 
           }
         }
@@ -105,7 +106,7 @@ export class UserrightRolelistComponent implements OnInit {
     })
   }
   save(operate, item) {
-  
+
     if (this.operate == 0) {
       let params = Object.assign({ merchantId: this._appSessionService.user.merchantId }, item)
 
