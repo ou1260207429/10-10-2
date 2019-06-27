@@ -156,6 +156,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     this.getList();
   }
   reststart(){
+    this.resetTime();
     this.searchParam.projectName='';
     this.searchParam.status=-1;
     this.searchParam.page = 1;
@@ -164,7 +165,6 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     this.searchParam.sorting = 'projectId desc';
     this.searchParam.startApplyTime = moment(this.rangeTime[0])
     this.searchParam.endApplyTime =moment(this.rangeTime[1])
-    this.resetTime();
     this.getList();
   }
 
