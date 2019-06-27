@@ -19,13 +19,12 @@ import { AbpSessionService } from '@abp/session/abp-session.service';
 import { ReuseTabService } from '@delon/abc';
 
 
-import { REGISTER_URL } from 'infrastructure/expression';
+
 
 import * as $ from 'jquery';
 
 import { AppSessionService } from '@shared/session/app-session.service';
 
-import { isPhone } from '@shared/utils/regex';
 
 import {
   SessionServiceProxy
@@ -205,7 +204,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
   }
   getCaptcha(){
-    this.getServerCaptcha(this.loginService.authenticateModel.userNameOrEmailAddress);
+    this.getServerCaptcha(this.loginService.authenticateModel.userNameOrEmailAddress,0);
   }
 
 }

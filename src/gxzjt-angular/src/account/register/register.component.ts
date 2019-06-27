@@ -6,7 +6,6 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-// import {  FormBuilder } from '@angular/forms';
 
 // import {
 //   AccountServiceProxy,
@@ -17,16 +16,14 @@ import { Router } from '@angular/router';
 
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 
-// import { LoginService } from '../login/login.service';
 import { AppComponentBase } from '@shared/component-base/app-component-base';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-// import { environment } from 'environments/environment'
+
 
 import { REGISTER_URL } from 'infrastructure/expression';
 
-// import { NzModalService } from 'ng-zorro-antd';
 
 @Component({
   templateUrl: './register.component.html',
@@ -148,7 +145,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
 
 
   getCaptcha() {
-    this.getServerCaptcha(this.model.EId);
+    this.getServerCaptcha(this.model.EId,1);
   }
 
 
