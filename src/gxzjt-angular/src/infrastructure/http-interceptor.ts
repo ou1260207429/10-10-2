@@ -94,7 +94,7 @@ export class AuthInterceptor {
         break;
       case 500:
         // this.goTo(`/`);
-        this.notification.error(`服务器内部错误:500`, ``);
+        // this.notification.error(`服务器内部错误:500`, ``);
         break;
       default:
         if (ev instanceof HttpErrorResponse) {
