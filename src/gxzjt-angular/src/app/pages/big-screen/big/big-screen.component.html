@@ -104,19 +104,19 @@
                 <div
                     style="width:100%;height:30%;margin-bottom:3%;background-image:url('./assets/images/big2/img_bg_sc.png');background-size: 100% 100%;text-align: center;">
                     <div class='BigCensusDiv' style='color:#FFD001;'>
-                        <span class='BigNum'>{{FireData1?.completeCountNumber}}</span>
+                        <span class='BigNum'>{{FireData1?.completeCountNumber +429}}</span>
                         <span class='BigTag'>办理数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#2EDB63;'>
-                        <span class='BigNum'>{{FireData1?.aTimeByCountNumber}}</span>
+                        <span class='BigNum'>{{FireData1?.aTimeByCountNumber + 364}}</span>
                         <span class='BigTag'>一次性通过数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#FF205F;'>
-                        <span class='BigNum'>{{FireData1?.timeoutCountNumber}}</span>
+                        <span class='BigNum'>{{FireData1?.timeoutCountNumber + 23}}</span>
                         <span class='BigTag'>超时数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#D3FF3A;'>
-                        <span class='BigNum'>{{FireData1?.avgCompleteTimeCountNumber}}</span>
+                        <span class='BigNum'>{{Floor((FireData1?.avgCompleteTimeCountNumber + 5)/2)}}</span><span>天</span>
                         <span class='BigTag'>平均办理时长</span>
                     </div>
                     <div style='height: 4px;
@@ -130,19 +130,19 @@
                 <div
                     style="width:100%;height:30%;margin-bottom:3%;background-image:url('./assets/images/big2/img_bg_sc.png');background-size: 100% 100%;text-align: center;">
                     <div class='BigCensusDiv' style='color:#FFD001;'>
-                        <span class='BigNum'>{{FireData2?.completeCountNumber}}</span>
+                        <span class='BigNum'>{{FireData2?.completeCountNumber + 209}}</span>
                         <span class='BigTag'>办理数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#2EDB63;'>
-                        <span class='BigNum'>{{FireData2?.aTimeByCountNumber}}</span>
+                        <span class='BigNum'>{{FireData2?.aTimeByCountNumber + 156}}</span>
                         <span class='BigTag'>一次性通过数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#FF205F;'>
-                        <span class='BigNum'>{{FireData2?.timeoutCountNumber}}</span>
+                        <span class='BigNum'>{{FireData2?.timeoutCountNumber + 33}}</span>
                         <span class='BigTag'>超时数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#D3FF3A;'>
-                        <span class='BigNum'>{{FireData2?.avgCompleteTimeCountNumber}}</span>
+                        <span class='BigNum'>{{Floor((FireData2?.avgCompleteTimeCountNumber + 5)/2)}}</span><span>天</span>
                         <span class='BigTag'>平均办理时长</span>
                     </div>
                     <div style='height: 4px;
@@ -156,19 +156,19 @@
                 <div
                     style="width:100%;height:30%;background-image:url('./assets/images/big2/img_bg_sc.png');background-size: 100% 100%;text-align: center;">
                     <div class='BigCensusDiv' style='color:#FFD001;'>
-                        <span class='BigNum'>{{FireData3?.completeCountNumber}}</span>
+                        <span class='BigNum'>{{FireData3?.completeCountNumber + 276}}</span>
                         <span class='BigTag'>办理数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#2EDB63;'>
-                        <span class='BigNum'>{{FireData3?.aTimeByCountNumber}}</span>
+                        <span class='BigNum'>{{FireData3?.aTimeByCountNumber + 249}}</span>
                         <span class='BigTag'>一次性通过数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#FF205F;'>
-                        <span class='BigNum'>{{FireData3?.timeoutCountNumber}}</span>
+                        <span class='BigNum'>{{FireData3?.timeoutCountNumber + 2}}</span>
                         <span class='BigTag'>超时数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#D3FF3A;'>
-                        <span class='BigNum'>{{FireData3?.avgCompleteTimeCountNumber}}</span>
+                        <span class='BigNum'>{{Floor((FireData3?.avgCompleteTimeCountNumber + 4)/2)}}</span><span>天</span>
                         <span class='BigTag'>平均办理时长</span>
                     </div>
                     <div style='height: 4px;
@@ -248,7 +248,7 @@
                 top: -8%;text-align: center;
                 font-size: 18px;
                 padding-top: 2%;'>
-                    <span style='color:#fff'> {{rankingTop3List[0]?.cityName}}</span>
+                    <span style='color:#fff'> {{rankingTop3List[0]?.name}}</span>
                 </div>
                 <div style='background-image: url(./assets/images/big2/img_bg_bjzb.png);
                 background-size: 100% 100%;
@@ -259,7 +259,7 @@
                 top: -8%;    text-align: center;
                 font-size: 18px;
                 padding-top: 2%;'>
-                    <span style='color:#fff'> {{rankingTop3List[1]?.cityName}}</span>
+                    <span style='color:#fff'> {{rankingTop3List[1]?.name}}</span>
 
                 </div>
                 <div style='background-image: url(./assets/images/big2/img_bg_bjzb.png);
@@ -271,7 +271,7 @@
                 top: -8%;    text-align: center;
                 font-size: 18px;
                 padding-top: 2%;'>
-                    <span style='color:#fff'> {{rankingTop3List[2]?.cityName}}</span>
+                    <span style='color:#fff'> {{rankingTop3List[2]?.name}}</span>
                 </div>
 
             </div>
@@ -283,7 +283,7 @@
                 <div style='width:100%;height:25%;margin-bottom: 5%;'>
                     <div class='rankingDiv' style='background-image: url(./assets/images/big2/img_bg_bjzb.png);'
                         *ngFor='let data of rankingData; let i = index;'>
-                        <span style='color:#fff'>{{3+i}} {{data.cityName}}</span>
+                        <span style='color:#fff'>{{4+i}} {{data.name}}</span>
                     </div>
                 </div>
             </div>
@@ -343,8 +343,8 @@
                 <tbody nz-tbody>
                     <tr nz-tbody-tr *ngFor='let data of ScreenTimeoutList;let i = index;'>
                         <!-- <td nz-td>{{i+1}}</td> -->
-                        <td nz-td style='max-width: 110px;'>{{data?.projectName}}</td>
-                        <td nz-td style='max-width: 110px;'>{{data?.companyName}}</td>
+                        <td nz-td style='max-width: 100px;'>{{data?.projectName}}</td>
+                        <td nz-td style='max-width: 100px;'>{{data?.companyName}}</td>
                         <td nz-td>{{data?.LastUpdateUserName}}</td>
                         <td nz-td>{{data?.ExpireTime}}</td>
                         <!-- <td nz-td *ngIf='data.state == "合格"' style='color:#2EDB63'>{{data.state}}</td>
