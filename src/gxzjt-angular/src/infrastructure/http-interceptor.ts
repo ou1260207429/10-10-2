@@ -39,11 +39,6 @@ export class AuthInterceptor {
     return next.handle(authReq).pipe(
       // tap(
       //   event => {
-      //     console.log(event);
-
-      //     if (event instanceof HttpResponseBase) return this.handleData(event);
-      //     // 若一切都正常，则后续操作
-      //     return of(event);
       //   },
       //   error => {
       //     this.handleData(error);

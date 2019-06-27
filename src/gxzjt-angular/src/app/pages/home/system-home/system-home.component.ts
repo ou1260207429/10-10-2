@@ -2,6 +2,9 @@ import { _HttpClient } from '@delon/theme';
 import { Component, OnInit } from '@angular/core';
 import { ProjectFlowServcieServiceProxy } from '@shared/service-proxies/service-proxies';
 
+
+import { SERVER_URL } from 'infrastructure/expression';
+
 /**
  * 系统首页
  */
@@ -15,7 +18,7 @@ export class SystemHomeComponent implements OnInit {
   pagesize = 4;
   pageindex = 1;
   data: any = [{}];
-  BACKSTAGE_URL =  'http://222.84.250.158:8111/'; //'http://192.168.10.10:8088/'; //
+  // BACKSTAGE_URL =  'http://222.84.250.158:8111/'; //'http://192.168.10.10:8088/'; //
   constructor(
     private http: _HttpClient,
     private service: ProjectFlowServcieServiceProxy
@@ -37,7 +40,7 @@ export class SystemHomeComponent implements OnInit {
       processedStatus: 2
     };
     model.startDateTime = (new Date().getFullYear() + '-01-01');
-    this.http.post(this.BACKSTAGE_URL + 'api/services/app/ScreenService/Post_GetFireDataList', model).subscribe((res: any) => {
+    this.http.post(SERVER_URL + 'api/services/app/ScreenService/Post_GetFireDataList', model).subscribe((res: any) => {
       let MapBackList = [];
       if (res.success) {
         res.result.forEach(e => {
