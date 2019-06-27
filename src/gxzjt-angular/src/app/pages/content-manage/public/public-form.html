@@ -3,7 +3,7 @@
 
     <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
         type="{{ hiddenFliter?'down':'up'}}"></i>{{ hiddenFliter?'展开条件':'收起条件'}}</button>
-    <button (click)="refresh()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
+    <button (click)="resetSearchFliterForm()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
     <button (click)="st.export()" nz-button nzType="primary"><i nz-icon type="export"></i>导出</button>
   </ng-template>
 </page-header>
@@ -12,8 +12,8 @@
   <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
 
 
-    <button *ngIf="isShowAdd" nz-button (click)="add()" nzType="primary" style="margin-right: 10px;margin-top: 10px;"><i
-        nz-icon type="plus"></i>增加</button>
+    <a *ngIf="isShowAdd" nz-button (click)="add()" nzType="primary" style="margin-right: 10px;margin-top: 10px;"><i
+        nz-icon type="plus"></i>增加</a>
 
     <input nz-input [(ngModel)]="searchKey" formControlName="pro_no" [placeholder]="searchHolder"
       style="margin-right: 10px;margin-top: 10px;width: 200px;">

@@ -3,8 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { AttachmentServiceProxy, AttachmentDto } from '@shared/service-proxies/service-proxies';
 import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
-import { filter } from 'rxjs/operators';
 import { PublicServices } from 'services/public.services';
+import { createguid } from 'infrastructure/regular-expression';
+import { PANGBO_SERVICES_URL, AppId } from 'infrastructure/expression';
+import lodash from 'lodash'
+
 @Component({
   selector: 'app-form-download-detail',
   templateUrl: './form-download-detail.component.html',
@@ -13,11 +16,11 @@ import { PublicServices } from 'services/public.services';
 export class FormDownloadDetailComponent implements OnInit {
   //表单对象
   data: any;
-  fileList: UploadFile[] = [];
+  fileList: any = [];
   // acceptType: ".doc,.docx,.xls,.xlsx,.pdf"
   acceptType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
   uploadUrl = "http://demo.rjtx.net:5001/api/Upload/Upload"
-  files = []
+  filesUrl: any = {}
   sourceId: string
   constructor(private _publicServices: PublicServices, private _eventEmiter: EventEmiter, private message: NzMessageService, private _attachmentServiceProxy: AttachmentServiceProxy, private _activatedRoute: ActivatedRoute) {
   }
@@ -32,63 +35,37 @@ export class FormDownloadDetailComponent implements OnInit {
    * 提交
    */
   save() {
-    this.data.guid = this.createguid();
-    this.sourceId = this.createguid();
+    this.data.guid = createguid();
+    this.sourceId = createguid();
 
     this._attachmentServiceProxy.addAttachmentAsync(this.data).subscribe(data => {
       this.message.success("新增成功");
       this._eventEmiter.emit('init', []);
       this.goBack();
     })
-    //上传文件：判断是否选择了文件
-    if (this.fileList.length > 0) {
-      this.uploadFiles(this.data.guid);
-    }
   }
 
-  /**
-   * 生成36位guid码
-   */
-  createguid() {
-    var CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('')
-    var chars = CHARS,
-      uuid = [],
-      i
-    // rfc4122, version 4 form
-    var r
-    // rfc4122 requires these characters
-    uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-'
-    uuid[14] = '4'
-    for (i = 0; i < 36; i++) {
-      if (!uuid[i]) {
-        r = 0 | (Math.random() * 16)
-        uuid[i] = chars[i == 19 ? (r & 0x3) | 0x8 : r]
-      }
-    }
-
-    var ret = uuid.join('')
-    return ret
-  }
-  /**
-  * 上传文件
-  */
-  uploadFiles(guid) {
-    const formData = new FormData();
-    // tslint:disable-next-line:no-any
-    this.fileList.forEach((file: any) => {
-      formData.append('files', file);
-    });
-    let params = {
-      sourceId: guid,
-      AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
-      module: "table",
-    }
-    this._publicServices.newUpload(formData, params).subscribe(data => {
-    })
-  }
   //阻止自动上传
   beforeUpload = (file: UploadFile): boolean => {
-    this.fileList = [file];
+    const tid = file.uid
+    this.fileList.push({
+      name: file.name,
+      status: 'uploading',
+      tid: file.uid,
+    })
+    let params = {
+      sourceId: createguid(),
+      AppId: AppId,
+      module: "table",
+    }
+    const formData: any = new FormData();
+    formData.append('files', file);
+    this._publicServices.newUpload(formData, params).subscribe(data => {
+      this.fileList[0].url = PANGBO_SERVICES_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
+      this.fileList[0].status = 'done'
+      const fileList = lodash.cloneDeep(this.fileList);
+      this.fileList = fileList
+    })
     return false;
   };
   //删除上传文件
