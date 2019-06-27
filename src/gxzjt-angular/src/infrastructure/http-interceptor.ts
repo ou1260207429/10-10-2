@@ -89,6 +89,8 @@ export class AuthInterceptor {
         this.goTo('/account/login');
         break;
       case 403:
+        this.notification.error(`无法访问该资源:403`, ``);
+        break;
       case 404:
         this.notification.error(`无法访问该资源:404`, ``);
         break;
