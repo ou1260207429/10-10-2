@@ -80,9 +80,6 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     }
 
   }
-  goBack() {
-    history.go(-1);
-  }
   /**
    * 获取类型
    */
@@ -124,7 +121,10 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
       delete data[item]
     })
   }
+  goBack() {
+    history.go(-1);
 
+  }
   /**
    * 提交
    */
@@ -141,8 +141,8 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
       const name = this.operate == 0 ? '新增成功' : '修改成功';
       this.message.success(name);
       this._eventEmiter.emit('init', []);
-      this.goBack()
     })
+    this.goBack()
   }
   /**
    * 上传文件
@@ -151,7 +151,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     let params = {
       sourceId: guid,
       AppId: AppId,
-      module: "lawsRegulation",
+      module: "table",
     }
 
     this.fileList.forEach((file: any) => {
@@ -165,7 +165,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     let params = {
       sourceId: guid,
       AppId: AppId,
-      module: "lawsRegulation",
+      module: "table",
     }
     this.fileUrlList = [];
     this._publicServices.getFilesDetail(params).subscribe(data => {
@@ -218,7 +218,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     let params = {
       sourceId: this.sourceId,
       AppId: AppId,
-      module: "lawsRegulation",
+      module: "table",
     }
     const formData: any = new FormData();
     formData.append('files', file);

@@ -22,10 +22,12 @@ export class FormDownloadDetailComponent implements OnInit {
   uploadUrl = "http://demo.rjtx.net:5001/api/Upload/Upload"
   filesUrl: any = {}
   sourceId: string
+
   constructor(private _publicServices: PublicServices, private _eventEmiter: EventEmiter, private message: NzMessageService, private _attachmentServiceProxy: AttachmentServiceProxy, private _activatedRoute: ActivatedRoute) {
   }
   ngOnInit() {
     this.data = new AttachmentDto();
+    this.sourceId = createguid()
   }
   goBack() {
     history.go(-1);
@@ -35,9 +37,7 @@ export class FormDownloadDetailComponent implements OnInit {
    * 提交
    */
   save() {
-    this.data.guid = createguid();
-    this.sourceId = createguid();
-
+    this.data.guid = this.sourceId;
     this._attachmentServiceProxy.addAttachmentAsync(this.data).subscribe(data => {
       this.message.success("新增成功");
       this._eventEmiter.emit('init', []);
@@ -54,7 +54,7 @@ export class FormDownloadDetailComponent implements OnInit {
       isUpLoad: true
     })
     let params = {
-      sourceId: createguid(),
+      sourceId: this.sourceId,
       AppId: AppId,
       module: "table",
     }

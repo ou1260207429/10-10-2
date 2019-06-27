@@ -47,10 +47,10 @@ export class ForgotPswComponent extends AppComponentBase implements OnInit {
 
 
     this.model = {
-      mobile: "",
-      newPassword: "",
-      confirmPassword: "",
-      verificationCode: ""
+      Mobile: "",
+      NewPassword: "",
+      ConfirmPassword: "",
+      VerificationCode: ""
 
     };
   }
@@ -61,7 +61,7 @@ export class ForgotPswComponent extends AppComponentBase implements OnInit {
 
   save() {
     this.saving = true;
-    let url = REGISTER_URL + "api/User/Register";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
+    let url = REGISTER_URL + "api/User/BackUserPasswordAsync";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
 
 
     this.http.post(url, this.model, {
@@ -99,7 +99,7 @@ export class ForgotPswComponent extends AppComponentBase implements OnInit {
 
 
   getCaptcha() {
-    this.getServerCaptcha(this.model.mobile, 2);
+    this.getServerCaptcha(this.model.Mobile, 2);
   }
 
 }

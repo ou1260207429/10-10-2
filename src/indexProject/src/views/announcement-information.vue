@@ -119,7 +119,7 @@ export default {
   data() {
     return {
       //分页查询条件
-      pageSize: app.pageSize,
+      pageSize: { size: 10, page: 1, isAsc: true },
       tableHight: "200px",
       //时间
       dateTime: [],
@@ -280,7 +280,14 @@ export default {
     },
     //切换菜单查询数据
     getInfo(type) {
-      this.searchForm.flowType = type;
+      this.pageSize.page = 1;
+      this.dateTime = [];
+      this.searchForm = {
+        cityname: "",
+        regionname: "",
+        flowType: type
+      };
+
       app.setData("activeType", type);
       this.initTable();
       this.tableHight =

@@ -14,7 +14,7 @@
           <nz-form-item>
             <nz-form-control nzHasFeedback>
               <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-phone">
-                <input nz-input name="mobile" #mobile="ngModel" [(ngModel)]="model.mobile" placeholder="登录手机号码" required
+                <input nz-input name="mobile" #mobile="ngModel" [(ngModel)]="model.Mobile" placeholder="登录手机号码" required
                   maxlength="11" pattern="^1\d{10}$" />
               </nz-input-group>
               <nz-form-explain *ngIf="mobile.control.dirty&&mobile.control.errors">
@@ -28,7 +28,7 @@
               <nz-col [nzSpan]="16">
                 <nz-form-control nzHasFeedback>
                   <nz-input-group nzSize="large" nzSize="large" nzPrefixIcon="anticon anticon-mail">
-                    <input nz-input [(ngModel)]="model.verificationCode" #verificationCode="ngModel" placeholder="验证码"
+                    <input nz-input [(ngModel)]="model.VerificationCode" #verificationCode="ngModel" placeholder="验证码"
                       name="verificationCode" nz-form-control nzHasFeedback maxlength="6" minlength="6" />
                   </nz-input-group>
 
@@ -40,7 +40,7 @@
               <nz-col [nzSpan]="8" style="padding-left: 10px;">
                 <button type="button" nz-button nzSize="large" (click)="getCaptcha()" [disabled]="count" nzBlock
                   [nzLoading]="isSetCaptcha"
-                  [disabled]="countCaptcha!=0||(mobile.control.dirty&&mobile.control.errors)||model.mobile.length==0">
+                  [disabled]="countCaptcha!=0||(mobile.control.dirty&&mobile.control.errors)||model.Mobile.length==0">
                   {{ countCaptcha ? countCaptcha + 's' : (isSetCaptcha?'':'获取验证码') }}
                 </button>
               </nz-col>
@@ -52,8 +52,8 @@
           <nz-form-item>
             <nz-form-control nzHasFeedback>
               <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-lock">
-                <input nz-input type="password" name="newPassword" #newPassword="ngModel" [(ngModel)]="model.newPassword"
-                  type="password" placeholder="请输入新密码" required maxlength="32" minlength="6">
+                <input nz-input type="password" name="newPassword" #newPassword="ngModel" [(ngModel)]="model.NewPassword"
+                  type="password" placeholder="请输入新密码" required maxlength="18" minlength="8">
               </nz-input-group>
               <nz-form-explain *ngIf="newPassword.control.dirty&&newPassword.control.errors">
                 <ng-container *ngIf="newPassword.control.hasError('required')">不能为空！</ng-container>
@@ -69,7 +69,7 @@
             <nz-form-control nzHasFeedback>
               <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-lock">
                 <input nz-input type="password" name="ConfirmPassword" #ConfirmPassword="ngModel"
-                  [(ngModel)]="model.confirmPassword" placeholder="确认密码" required maxlength="32" minlength="6"
+                  [(ngModel)]="model.ConfirmPassword" placeholder="确认密码" required maxlength="18" minlength="8"
                   [pattern]="model.Password" />
               </nz-input-group>
               <nz-form-explain *ngIf="ConfirmPassword.control.dirty&&ConfirmPassword.control.errors">

@@ -90,8 +90,11 @@ export class AuthInterceptor {
         break;
       case 403:
       case 404:
+        this.notification.error(`无法访问该资源:404`, ``);
+        break;
       case 500:
-        this.goTo(`/`);
+        // this.goTo(`/`);
+        this.notification.error(`服务器内部错误:500`, ``);
         break;
       default:
         if (ev instanceof HttpErrorResponse) {

@@ -459,7 +459,8 @@
         <td colspan='12' style="text-align: left">
 
           <div>
-            <div *ngFor="let box of item.arr;let i =index">{{box.label}}
+            <div *ngFor="let box of item.arr;let i =index" style="margin-bottom: 1em">
+              <p>{{box.label}}</p>
               <div *ngIf="box.type=='radio'">
                 <nz-radio-group [(ngModel)]="box.value" name="xxradiogroup{{i}}{{index}}">
                   <label nz-radio nzValue="{{obj.value}}" *ngFor="let obj of box.list">{{obj.label}}</label>

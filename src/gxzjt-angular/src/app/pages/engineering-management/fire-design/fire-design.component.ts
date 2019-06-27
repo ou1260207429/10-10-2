@@ -31,7 +31,7 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
   templateUrl: './fire-design.component.html',
   styleUrls: ['./fire-design.component.less'],
 })
-export class FireDesignComponent extends PublicFormComponent implements  OnInit {
+export class FireDesignComponent extends PublicFormComponent implements OnInit {
   param = new FireAuditCompleteQueryDto();
   formResultData = [];
   rangeTime = [];
@@ -50,7 +50,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
         {
           text: '重新申请',
           type: 'modal',
-          iif: record => (record.status  === 2 || record.status  === 3) && record.isResubmitted!=true,
+          iif: record => (record.status === 2 || record.status === 3) && record.isResubmitted != true,
           click: (record: any, modal: any) => {
             this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/${record.projectId}/${record.id}`]);
           },
@@ -58,7 +58,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
         {
           text: '验收',
           type: 'modal',
-          iif: record => record.status  === 4 && record.isAcceptanceSubmitted!=true,
+          iif: record => record.status === 4 && record.isAcceptanceSubmitted != true,
           click: (record: any, modal: any) => {
             this.router.navigate([`/app/engineering-management/addFireAcceptanceComponent/0/${record.projectId}/${record.id}`]);
           },
@@ -66,15 +66,15 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
         {
           text: '受理凭证',
           type: 'link',
-          iif: record => record.acceptAttachmentUrl!=null,
+          iif: record => record.acceptAttachmentUrl != null,
           // modal: {
           //   component: StatisticsAcceptCredentialsComponent,
           //   paramsName: 'record',
           // },
           click: (record: any, modal: any) => {
-            if(record.acceptAttachmentUrl){
+            if (record.acceptAttachmentUrl) {
               window.open(record.acceptAttachmentUrl)
-            }else{
+            } else {
               this.message.info('暂无受理凭证');
             }
           },
@@ -82,15 +82,15 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
         {
           text: '意见书',
           type: 'link',
-          iif: record => record.opinionAttachmentUrl!=null,
+          iif: record => record.opinionAttachmentUrl != null,
           // modal: {
           //   component: StatisticsPositionPaperComponent,
           //   paramsName: 'record',
           // },
           click: (record: any, modal: any) => {
-            if(record.opinionAttachmentUrl){
+            if (record.opinionAttachmentUrl) {
               window.open(record.opinionAttachmentUrl)
-            }else{
+            } else {
               this.message.info('暂无意见书');
             }
           },
@@ -102,19 +102,23 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     { title: '建设单位', index: 'companyName' },
     { title: '联系人', index: 'contactPerson' },
     { title: '当前处理环节', index: 'currentNodeName' },
-    { title: '流程是否超时', index: 'isExpireTime',format:(item:any)=>`${item.isExpireTime==true?"是":"否"}`,type: 'tag', tag: {
-      "是": { text: '是', color: 'red' },
-      "否": { text: '否', color: '' },
-    }},
-    { title: '结果', index: 'status',format: (item: any) => `${item.status==0?"未处理":(item.status==1?"受理":(item.status==2?"不受理":(item.status==3?"不合格":(item.status==4?"合格":(item.status==5?"未抽中":"未处理")))))}`,type: 'tag', tag: {
-      "未处理": { text: '未处理', color: '' },
-      "受理": { text: '受理', color: 'green' },
-      "不受理":{ text: '不受理', color: 'red' },
-      "不合格":{ text: '不合格', color: 'red' },
-      "合格":{ text: '合格', color: '' },
-      "未抽中":{ text: '未抽中', color: '' },
-    }},
-    { title: '操作时间', index: 'applyTime',type:'date' },
+    {
+      title: '流程是否超时', index: 'isExpireTime', format: (item: any) => `${item.isExpireTime == true ? "是" : "否"}`, type: 'tag', tag: {
+        "是": { text: '是', color: 'red' },
+        "否": { text: '否', color: '' },
+      }
+    },
+    {
+      title: '结果', index: 'status', format: (item: any) => `${item.status == 0 ? "未处理" : (item.status == 1 ? "受理" : (item.status == 2 ? "不受理" : (item.status == 3 ? "不合格" : (item.status == 4 ? "合格" : (item.status == 5 ? "未抽中" : "未处理")))))}`, type: 'tag', tag: {
+        "未处理": { text: '未处理', color: '' },
+        "受理": { text: '受理', color: 'green' },
+        "不受理": { text: '不受理', color: 'red' },
+        "不合格": { text: '不合格', color: 'red' },
+        "合格": { text: '合格', color: '' },
+        "未抽中": { text: '未抽中', color: '' },
+      }
+    },
+    { title: '操作时间', index: 'applyTime', type: 'date' },
   ];
 
   pageConfig: STPage = publicPageConfig;
@@ -122,20 +126,20 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
     private modal: ModalHelper,
     private router: Router,
-    private publicModel:PublicModel,
+    private publicModel: PublicModel,
     private _eventEmiter: EventEmiter,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
     private formBuilder: FormBuilder,
     private xlsx: XlsxService, private message: NzMessageService) {
-      super();
-     }
+    super();
+  }
 
   ngOnInit() {
-    this.param.orgType=1;
+    this.param.orgType = 1;
     this.resetTime();
     this.init();
     const _slef = this;
-    this._eventEmiter.on('fireDesignComponentInit',()=>{
+    this._eventEmiter.on('fireDesignComponentInit', () => {
       _slef.init();
     });
   }
@@ -148,23 +152,23 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
     this.param.sorting = 'projectId desc';
     this.resetTime();
     this.param.startApplyTime = moment(this.rangeTime[0]);
-    this.param.endApplyTime =moment(this.rangeTime[1]);
+    this.param.endApplyTime = moment(this.rangeTime[1]);
     this.getList();
   }
-  reststart(){
-    this.param.projectName='';
-    this.param.status=-1;
+  reststart() {
+    this.param.projectName = '';
+    this.param.status = -1;
     this.param.page = 1;
     this.param.maxResultCount = 10;
     this.param.flowPathType = 1
     this.param.sorting = 'projectId desc';
     this.resetTime();
     this.param.startApplyTime = moment(this.rangeTime[0]);
-    this.param.endApplyTime =moment(this.rangeTime[1]);
+    this.param.endApplyTime = moment(this.rangeTime[1]);
     this.getList();
   }
 
-  addDeclare(){
+  addDeclare() {
     this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/null/null`]);
   }
   /**
@@ -173,7 +177,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
   query() {
     this.param.page = 1;
     this.param.startApplyTime = moment(this.rangeTime[0])
-    this.param.endApplyTime =moment(this.rangeTime[1])
+    this.param.endApplyTime = moment(this.rangeTime[1])
     this.getList();
   }
 
