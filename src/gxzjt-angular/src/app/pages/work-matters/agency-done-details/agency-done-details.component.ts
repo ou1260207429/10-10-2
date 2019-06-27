@@ -196,12 +196,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
    * 点击提交
    */
   save(bo?: boolean) {
-
-    console.log(this.curNodeName)
-    if ((this.curNodeName == '大厅受理' && !this.formDto.fileCodePrefix) || (!this.examineFormDto.fileCodePrefix && this.curNodeName == '业务承办人审核')) {
+    if ((this.curNodeName == '大厅受理' && !this.formDto.fileCodePrefix) || ((!this.examineFormDto.fileCodePrefix||!this.examineFormDto.opinion) && this.curNodeName == '业务承办人审核' && this.flowPathType!=3)||  (!this.examineFormDto.fileCodePrefix && this.curNodeName == '业务承办人审核' && this.flowPathType==3)) {
       this.message.error('请输入必填项')
       return false;
-    } 
+    }  
 
     let num = bo ? 1 : 0;
     //判断是竣工备案  
