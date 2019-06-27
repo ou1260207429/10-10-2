@@ -225,6 +225,21 @@ export class AgencyDoneDetailsComponent implements OnInit {
       }
       this._flowServices.tenant_NodeToNextNodeByNoPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
         this.butNzLoading = false;
+        // this.examineFormDto.handleUserList = [];
+        // this.examineFormDto.currentNodeId = data.result.cur_Node_Id
+        // this.examineFormDto.currentNodeName = data.result.cur_NodeName
+        // this.examineFormDto.workFlow_Instance_Id = data.result.workFlow_Instance_Id
+        // this.examineFormDto.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
+        // data.result.auditorRecords.forEach(element => {
+        //   const flowNodeUser = new FlowNodeUser()
+        //   flowNodeUser.userFlowId = element.id
+        //   flowNodeUser.userCode = element.applyEID
+        //   flowNodeUser.userName = element.applyEName
+        //   this.examineFormDto.handleUserList.push(flowNodeUser)
+        // });
+
+        this.examineFormDto.isTransfer = this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType == 3 ? true : false
+        this.examineFormDto.isPass =  bo; 
         this.examineFormDto.handleUserList = [];
         this.examineFormDto.currentNodeId = data.result.cur_Node_Id
         this.examineFormDto.currentNodeName = data.result.cur_NodeName
