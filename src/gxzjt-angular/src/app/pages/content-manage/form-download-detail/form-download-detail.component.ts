@@ -47,7 +47,6 @@ export class FormDownloadDetailComponent implements OnInit {
   //阻止自动上传
   beforeUpload = (file: UploadFile): boolean => {
     this.fileList = []
-    const tid = file.uid
     this.fileList.push({
       name: file.name,
       status: 'uploading',
@@ -55,23 +54,23 @@ export class FormDownloadDetailComponent implements OnInit {
     })
     let params = {
       sourceId: createguid(),
-    //  AppId: AppId,
+      AppId: AppId,
       module: "table",
     }
-    console.log(this.fileList)
 
     const formData: any = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
       if (data.result == 0) {
+        console.log(data)
         this.fileList[0].url = PANGBO_SERVICES_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
         this.fileList[0].status = 'done'
+        this.fileList[0].id = data.data[0].id
         const fileList = lodash.cloneDeep(this.fileList);
         this.fileList = fileList
       } else {
         this.fileList[0].status = 'error'
         const fileList = lodash.cloneDeep(this.fileList);
-        const that = this
         this.fileList = []
         this.fileList = fileList
       }
@@ -85,6 +84,17 @@ export class FormDownloadDetailComponent implements OnInit {
   //删除上传文件
   //删除上传文件
   removeFile = (file: UploadFile): boolean => {
+    let params = {
+      AppId: AppId,
+      id: file.id,
+    }
+    this._publicServices.delete(params).subscribe(data => {
+      if (data.result == 0) {
+        this.message.success(data.message)
+      } else {
+        this.message.error(data.message)
+      }
+    })
     this.fileList = [];
     return true;
   }
