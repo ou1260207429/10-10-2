@@ -47,7 +47,7 @@ export class FormDownloadComponent extends PublicFormComponent implements OnInit
         {
           text: '<font class="stButton">删除</font>', click: (record: any) => {
             this._publicModel.isDeleteModal(() => {
-              this._attachmentServiceProxy.deleteAttachmentById(record.id).subscribe(data => {
+              this._attachmentServiceProxy.post_DeleteAttachmentById(record.id).subscribe(data => {
                 this.init();
               })
             });

@@ -25,18 +25,20 @@
           [nzBeforeUpload]="beforeUpload" [nzRemove]="removeFile">
           <button style="width: 100%;" nz-button><i nz-icon type="upload" nzTheme="outline"></i><span>上传</span></button>
         </nz-upload>
-      </se>
-      <se *ngIf="operate!=0&&fileUrlList.length>0" label="附件下载">
-        <div *ngFor="let item of fileUrlList let i=index">
-          <div style="position: relative;cursor: pointer;" id="file">
-            <a style="text-decoration: none;" [href]="fileUrl+item.url" class="ant-upload-list"><i nz-icon type="link"
-                style="margin-right: 5px;" nzTheme="outline"></i>{{item.name}}
-            </a>
-            <span (click)="deleteFile(item.id)" class="deleteFile"
-              style="color: red;position: absolute;top: 0;right: 0;display: none;">删除文件</span>
+        <div id="File" *ngIf=fileUrlList>
+          <div *ngFor="let item of fileUrlList let i=index" style="margin-top: 10px;">
+            <div class="links" style="position: relative;cursor: pointer;">
+              <a style="text-decoration: none;display: block;" [href]="fileUrl+item.url" class="ant-upload-list"><i nz-icon type="link"
+                  style="margin-right: 11px;" nzTheme="outline"></i><span style="color: #BD1127">{{item.name}}</span>
+              </a>
+              <span (click)="deleteFile(item.id)" class="deleteFile"
+                style="position: absolute;top: -2px;right: 10px;display: none;font-size: 18px;">x</span>
+            </div>
           </div>
         </div>
+       
       </se>
+    
       <se label="简要信息管理" required>
 
         <textarea nz-input [disabled]="operate=='1'" placeholder="" [(ngModel)]="data.brief"

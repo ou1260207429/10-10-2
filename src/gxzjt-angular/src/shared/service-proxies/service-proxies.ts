@@ -1222,8 +1222,8 @@ export class AttachmentServiceProxy {
      * @param id (optional) 
      * @return Success
      */
-    deleteAttachmentById(id: number | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Attachment/DeleteAttachmentById?";
+    post_DeleteAttachmentById(id: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Attachment/Post_DeleteAttachmentById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
@@ -1235,12 +1235,12 @@ export class AttachmentServiceProxy {
             })
         };
 
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDeleteAttachmentById(response_);
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_DeleteAttachmentById(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processDeleteAttachmentById(<any>response_);
+                    return this.processPost_DeleteAttachmentById(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>_observableThrow(e);
                 }
@@ -1249,7 +1249,7 @@ export class AttachmentServiceProxy {
         }));
     }
 
-    protected processDeleteAttachmentById(response: HttpResponseBase): Observable<void> {
+    protected processPost_DeleteAttachmentById(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -3341,8 +3341,8 @@ export class NoticeServiceProxy {
      * @param id (optional) 
      * @return Success
      */
-    deleteNoticeByIdAsync(id: number | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Notice/DeleteNoticeByIdAsync?";
+    post_DeleteNoticeByIdAsync(id: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Notice/Post_DeleteNoticeByIdAsync?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
@@ -3354,12 +3354,12 @@ export class NoticeServiceProxy {
             })
         };
 
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDeleteNoticeByIdAsync(response_);
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_DeleteNoticeByIdAsync(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processDeleteNoticeByIdAsync(<any>response_);
+                    return this.processPost_DeleteNoticeByIdAsync(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>_observableThrow(e);
                 }
@@ -3368,7 +3368,7 @@ export class NoticeServiceProxy {
         }));
     }
 
-    protected processDeleteNoticeByIdAsync(response: HttpResponseBase): Observable<void> {
+    protected processPost_DeleteNoticeByIdAsync(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -5485,8 +5485,8 @@ export class RegulationServiceProxy {
      * @param id (optional) 
      * @return Success
      */
-    deleteRegulationByIdAsync(id: number | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Regulation/DeleteRegulationByIdAsync?";
+    post_DeleteRegulationByIdAsync(id: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Regulation/Post_DeleteRegulationByIdAsync?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
@@ -5498,12 +5498,12 @@ export class RegulationServiceProxy {
             })
         };
 
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDeleteRegulationByIdAsync(response_);
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_DeleteRegulationByIdAsync(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processDeleteRegulationByIdAsync(<any>response_);
+                    return this.processPost_DeleteRegulationByIdAsync(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>_observableThrow(e);
                 }
@@ -5512,7 +5512,7 @@ export class RegulationServiceProxy {
         }));
     }
 
-    protected processDeleteRegulationByIdAsync(response: HttpResponseBase): Observable<void> {
+    protected processPost_DeleteRegulationByIdAsync(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
