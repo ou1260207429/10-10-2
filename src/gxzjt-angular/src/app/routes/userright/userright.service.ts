@@ -48,7 +48,8 @@ export class UserRightService {
   }
     //重置密码
   Delete(model?: any): Observable<any> {
-      return this.http.post(PANGBO_SERVICES_URL + 'api/User/Delete', model);
+    // api/User/Delete?id=
+      return this.http.post(PANGBO_SERVICES_URL + 'api/User/Delete', model,model);
     }
 }
 
