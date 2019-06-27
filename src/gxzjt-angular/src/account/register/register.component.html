@@ -32,7 +32,7 @@
                 <nz-form-control nzHasFeedback>
                   <nz-input-group nzSize="large" nzSize="large" nzPrefixIcon="anticon anticon-mail">
                     <input nz-input [(ngModel)]="model.VerificationCode" #VerificationCode="ngModel" placeholder="验证码"
-                      name="VerificationCode" nz-form-control nzHasFeedback maxlength="6" minlength="6" required/>
+                      name="VerificationCode" nz-form-control nzHasFeedback maxlength="6" minlength="6" required />
                   </nz-input-group>
 
                   <nz-form-explain *ngIf="VerificationCode.control.dirty&&VerificationCode.control.errors">

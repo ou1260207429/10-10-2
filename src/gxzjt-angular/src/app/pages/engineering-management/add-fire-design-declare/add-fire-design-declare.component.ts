@@ -12,6 +12,7 @@ import { PublicFormComponent } from '../public/public-form.component'
 import { PANGBO_SERVICES_URL } from 'infrastructure/expression';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { EventEmiter } from 'infrastructure/eventEmiter';
+import { ReuseTabService } from '@delon/abc';
 
 /**
  * 工程管理->消防设计审查管理->新增申报
@@ -537,7 +538,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
   //使用性质
   useNatureSelect
 
-  constructor(private _eventEmiter: EventEmiter, private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
+  constructor(private reuseTabService: ReuseTabService,private _eventEmiter: EventEmiter, private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     super();
     this.flowFormQueryDto.flowType = 1;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
@@ -655,6 +656,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
         this._applyService.investigate(flowDataDto).subscribe(data => {
           this.butNzLoading = false;
           this.message.success('提交成功')
+          this.reuseTabService.replace('/app/addFireDesignDeclareComponent')
           this._eventEmiter.emit('fireDesignComponentInit', []);
           history.go(-1)
         }, error => {
@@ -683,6 +685,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     this.flowFormDto.projectTypeStatu = 0;
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
+      this.reuseTabService.replace('/app/addFireDesignDeclareComponent')
       this.message.success('保存成功')
       history.go(-1)
       this._eventEmiter.emit('draftsComponentInit', []);

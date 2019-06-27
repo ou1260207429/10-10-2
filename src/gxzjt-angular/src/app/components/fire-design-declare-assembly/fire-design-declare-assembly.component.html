@@ -31,7 +31,7 @@
           <td rowspan='1' colspan='1' class="fontweight fontLeft" required=true>联系电话:</td>
           <td rowspan='1' colspan='3'>
             <se error="请输入数字">
-              <input nz-input placeholder="请输入法定代表人/主要负责人联系电话" pattern="^[0-9]*$"
+              <input nz-input placeholder="请输入法定代表人/主要负责人联系电话" pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"
                 [(ngModel)]="data.legalRepresentativeNo" name="legalRepresentativeNo" required />
             </se>
           </td>
@@ -53,7 +53,7 @@
           <td rowspan='1' colspan='1' class="fontweight fontLeft" required=true>联系电话:</td>
           <td rowspan='1' colspan='3'>
             <se error="请输入数字">
-              <input nz-input placeholder="请输入联系电话" pattern="^[0-9]*$" [(ngModel)]="data.contactsNumber"
+              <input nz-input placeholder="请输入联系电话" pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)" [(ngModel)]="data.contactsNumber"
                 name="contactsNumber" required />
             </se>
           </td>
@@ -153,7 +153,7 @@
                 required /></se>
           </td>
           <td rowspan='1'>
-            <se error="请输入数字"><input nz-input placeholder="请输入联系电话" [(ngModel)]="item.contactsNumber" pattern="^[0-9]*$"
+            <se error="请输入数字"><input nz-input placeholder="请输入联系电话" [(ngModel)]="item.contactsNumber" pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"
                 name="designContactsNumber{{a}}" required /></se>
           </td>
           <td rowspan='1'>
@@ -188,7 +188,7 @@
               name="constructionDesignContacts{{a}}" /></td>
           <td rowspan='1'>
 
-            <se error="请输入数字"> <input nz-input placeholder="请输入联系电话" pattern="^[0-9]*$"
+            <se error="请输入数字"> <input nz-input placeholder="请输入联系电话" pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"
                 [(ngModel)]="item.contactsNumber" name="constructionContactsNumber{{a}}" /></se>
 
 
@@ -229,7 +229,7 @@
               [(ngModel)]="data.constructionControlUnit.contacts" name="constructionControlUnitDesignContacts" />
           </td>
           <td rowspan='1'>
-            <se error="请输入数字"> <input nz-input placeholder="请输入联系电话" pattern="^[0-9]*$"
+            <se error="请输入数字"> <input nz-input placeholder="请输入联系电话" pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"
                 [(ngModel)]="data.constructionControlUnit.contactsNumber"
                 name="constructionControlUnitContactsNumber" />
             </se>
@@ -275,7 +275,7 @@
           <td rowspan='1'>
 
             <se error="请输入数字">
-              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.mappingUnit.contactsNumber" pattern="^[0-9]*$"
+              <input nz-input placeholder="请输入联系电话" [(ngModel)]="data.mappingUnit.contactsNumber" pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"
                 name="mappingUnitUnitContactsNumber" required /></se>
           </td>
           <td rowspan='1'>无</td>

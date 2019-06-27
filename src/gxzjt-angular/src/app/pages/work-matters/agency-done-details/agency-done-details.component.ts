@@ -70,8 +70,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
   workFlowData
 
   tenantWorkFlowInstanceDto: any = {
-    editWorkFlow_NodeAuditorRecordDto:{
-      applyType:''
+    editWorkFlow_NodeAuditorRecordDto: {
+      applyType: ''
     }
   }
 
@@ -133,7 +133,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
         this.useNatureSelect = value[0].natures
         console.log(this.useNatureSelect)
         this.tenantWorkFlowInstanceDto = this.workFlowData = value[1].result;
-        this.tenantWorkFlowInstanceDto.workFlow_InstanceId = this.formDto.workFlow_Instance_Id 
+        this.tenantWorkFlowInstanceDto.workFlow_InstanceId = this.formDto.workFlow_Instance_Id
 
         //获取当前节点 由这个判断提交的接口
         this.curNodeName = this.workFlowData.nodeViewInfo.curNodeName
@@ -195,24 +195,28 @@ export class AgencyDoneDetailsComponent implements OnInit {
   /**
    * 点击提交
    */
-  save(bo?: boolean) { 
+  save(bo?: boolean) {
     let num = bo ? 1 : 0;
     //判断是竣工备案  
     if (this.flowPathType == 3) {
       //竣工备案判断抽中或者不抽中
-      num = this.formDto.isSelect?1:0
+      num = this.formDto.isSelect ? 1 : 0
     }
     this.tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
       Area: this.formDto.area,
-      IsChoose: num, 
-    } 
+      IsChoose: num,
+    }
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptFullPath = this.appSession.user.organizationsName
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.formDto.opinion
-    this.butNzLoading = true 
+    this.butNzLoading = true
     if (!bo && this.curNodeName == '业务审批负责人审批') {
-      this.noResult((data) => {
-        this._flowServices.tenant_NodeToNextNodeByNoPass(data.data).subscribe((data: any) => {
+      // this.noResult((data) => { 
+        this.tenantWorkFlowInstanceDto.backAuditedNode = {
+          nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
+          nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName
+        } 
+        this._flowServices.tenant_NodeToNextNodeByNoPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
           this.butNzLoading = false;
           this.examineFormDto.handleUserList = [];
           this.examineFormDto.currentNodeId = data.result.cur_Node_Id
@@ -228,18 +232,18 @@ export class AgencyDoneDetailsComponent implements OnInit {
           });
 
           this.finalExamine(this.examineFormDto);
-        },error=>{
+        }, error => {
           this.butNzLoading = false;
         })
-      })
+      // })
 
     } else {
- 
+
       this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
 
-        const type = this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType == 3?true:false
+        const type = this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType == 3 ? true : false
         this.examineFormDto.isTransfer = this.formDto.isTransfer = type
-        this.examineFormDto.isPass = this.formDto.isAccept = bo; 
+        this.examineFormDto.isPass = this.formDto.isAccept = bo;
         let form: any = this.curNodeName == '大厅受理' ? this.formDto : this.examineFormDto;
         this.formDto.handleUserList = [];
         this.formDto.currentNodeId = data.result.cur_Node_Id
@@ -266,7 +270,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
           flowNodeUser.userName = element.applyEName
           this.examineFormDto.handleUserList.push(flowNodeUser)
         });
- 
+
 
         switch (this.curNodeName) {
           case '大厅受理':
@@ -287,7 +291,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
             break;
         }
 
-      },error=>{
+      }, error => {
         this.isNoResult(error.error.message)
       })
     }
@@ -322,7 +326,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this._applyService.getReview(flowId).subscribe(data => {
       this.signForDtoData = data
       if (then) then()
-    },error=>{
+    }, error => {
       this.isNoResult(error.error.message)
     })
   }
@@ -334,7 +338,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
   signForOpinionFile() {
     this._examineService.signForOpinionFile(this.signForDto).subscribe(data => {
       this.serveResult('签收成功')
-    },error=>{
+    }, error => {
       this.isNoResult(error.error.message)
     })
   }
@@ -345,7 +349,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
   finalExamine(examineFormDto: ExamineFormDto) {
     this._examineService.finalExamine(examineFormDto).subscribe(data => {
       this.serveResult();
-    },error=>{
+    }, error => {
       this.isNoResult(error.error.message)
     })
   }
@@ -363,7 +367,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   isNoResult(name: string = "错误信息，请联系管理员") {
     this.butNzLoading = false
-    this.message.error(name) 
+    this.message.error(name)
   }
 
   serveResult(name: string = "提交成功") {
@@ -385,8 +389,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
       //已经驳回成功了
       if (!data.type) {
         if (then) then(data)
+      } else {
+        this.butNzLoading = false;
       }
-    },error=>{
+    }, error => {
       this.isNoResult(error.error.message)
     })
     return false;
@@ -400,7 +406,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this._flowServices.tenant_NodeToNextNodeByCancel(this.tenantWorkFlowInstanceDto).subscribe(data => {
       this.butNzLoading = false
       this.message.success('撤销成功')
-    },error=>{
+    }, error => {
       this.isNoResult(error.error.message)
     })
   }
@@ -408,18 +414,18 @@ export class AgencyDoneDetailsComponent implements OnInit {
   /**
    * 添加审批人或者转派
    */
-  goChoicePerson(){ 
-    if(!this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType){
+  goChoicePerson() {
+    if (!this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType) {
       this.message.error('选择指定的节点，如转派')
       return false
     }
-    const title = this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType ==3 ? '转派列表':'审核人列表'
-    this.tenantWorkFlowInstanceDto.auditors = this.tenantWorkFlowInstanceDto.auditors ?this.tenantWorkFlowInstanceDto.auditors:[]
+    const title = this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType == 3 ? '转派列表' : '审核人列表'
+    this.tenantWorkFlowInstanceDto.auditors = this.tenantWorkFlowInstanceDto.auditors ? this.tenantWorkFlowInstanceDto.auditors : []
     this.ModelHelp.static(
       InitiationProcessAddAuditorComponent,
       {
-         title:title,
-         auditors:this.tenantWorkFlowInstanceDto.auditors
+        title: title,
+        auditors: this.tenantWorkFlowInstanceDto.auditors
       }
     ).subscribe((res: any) => {
       if (res.opt) {
@@ -427,16 +433,16 @@ export class AgencyDoneDetailsComponent implements OnInit {
         const auditors = {
           eName: res.auditors.eName,
           eid: res.auditors.id,
-          auditType:this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType
+          auditType: this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType
         }
-        this.tenantWorkFlowInstanceDto.auditors.push(auditors) 
+        this.tenantWorkFlowInstanceDto.auditors.push(auditors)
 
         // ng-zorro 的select 多选框只显示单对象 
         this.selectMultiple = []
         this.tenantWorkFlowInstanceDto.auditors.forEach(item => {
           this.selectMultiple.push(item.eName);
-        }); 
- 
+        });
+
       } else {
         // this.input.selectMultiplee = res.copyControlSourceDatas
       }
