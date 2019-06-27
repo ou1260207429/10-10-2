@@ -92,10 +92,10 @@ export class AuthInterceptor {
       case 404:
         this.notification.error(`无法访问该资源:404`, ``);
         break;
-      case 500:
-        // this.goTo(`/`);
-        // this.notification.error(`服务器内部错误:500`, ``);
-        break;
+      // case 500:
+      //   // this.goTo(`/`);
+      //   this.notification.error(`服务器内部错误:500`, ``);
+      //   break;
       default:
         if (ev instanceof HttpErrorResponse) {
           console.warn('未可知错误，大部分是由于后端不支持CORS或无效配置引起', ev);
