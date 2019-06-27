@@ -19,6 +19,7 @@ import { PublicModel } from 'infrastructure/public-model';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import * as moment from 'moment';
 /**
  * 待办流程
  */
@@ -32,8 +33,8 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   signForDto = new SignForDto();
   examineFormDto = new ExamineFormDto();
   workFlowData;
-  isVisibleSelectModal:boolean=false;
-  isSelectModalOkLoading=false;
+  isVisibleSelectModal: boolean = false;
+  isSelectModalOkLoading = false;
 
   formResultData
 
@@ -74,13 +75,17 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     //     false: { text: '未超时', color: 'green' },
     //   }
     // },
-    { title: '流程是否超时', index: 'isExpire',format:(item:any)=>`${item.isExpire==true?"是":"否"}`,type: 'tag', tag: {
-      "是": { text: '是', color: 'red' },
-      "否": { text: '否', color: '' },
-    }},
+    {
+      title: '流程是否超时', index: 'isExpire', format: (item: any) => `${item.isExpire == true ? "是" : "否"}`, type: 'tag', tag: {
+        "是": { text: '是', color: 'red' },
+        "否": { text: '否', color: '' },
+      }
+    },
   ];
 
-  searchParam = new PendingWorkFlow_NodeAuditorRecordDto();
+  searchParam: any = {
+    pagedAndFilteredInputDto:{}
+  };
 
   pageConfig: STPage = publicPageConfig;
 
@@ -110,19 +115,19 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.resetTime();
     let _self = this;
     this.init();
-    this.eventEmiter.on('fireAcceptanceComponentInit',()=>{
+    this.eventEmiter.on('fireAcceptanceComponentInit', () => {
       _self.init();
     });
 
-    this.eventEmiter.on('fireDesignComponentInit',()=>{
+    this.eventEmiter.on('fireDesignComponentInit', () => {
       _self.init();
     });
 
-    this.eventEmiter.on('completedAcceptanceComponentInit',()=>{
+    this.eventEmiter.on('completedAcceptanceComponentInit', () => {
       _self.init();
     });
 
-    this.eventEmiter.on('agencyDoneInit',()=>{
+    this.eventEmiter.on('agencyDoneInit', () => {
       _self.init();
     });
 
@@ -139,6 +144,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.searchParam.projectTypeStatu = null;
     this.searchParam.isAlreadyDone = true
     if (this.rangeTime != null) {
+      
       this.searchParam.applyTimeStart = this.rangeTime[0];
       this.searchParam.applyTimeEnd = this.rangeTime[1];
     }
@@ -174,7 +180,9 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   /**
    * 点击查询
    */
-  query() {
+  query() {  
+    this.searchParam.applyTimeStart = timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-') + " 00:00:00";
+    this.searchParam.applyTimeEnd = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-') + " 23:59:59"; 
     this.searchParam.pagedAndFilteredInputDto.page = 1;
     this.getList();
   }
@@ -213,34 +221,34 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
   openSignFor(flowId) {
     //this. isVisibleSelectModal=true;
-    this.isVisibleSelectModal=false;
+    this.isVisibleSelectModal = false;
     this.signForDto = new SignForDto();
     this.signForDto.flowId = flowId;
     this._examineService.getPrimaryExamine(flowId).subscribe(data => {
       if (data != null) {
         this.examineFormDto = data;
-        if(this.examineFormDto.flowNodeUserInfo==null || this.examineFormDto.flowNodeUserInfo.userFlowId==null){
+        if (this.examineFormDto.flowNodeUserInfo == null || this.examineFormDto.flowNodeUserInfo.userFlowId == null) {
           this.message.error("无权限操作");
-          this.isVisibleSelectModal=false;
+          this.isVisibleSelectModal = false;
           return;
         }
-        else{
-          this.isVisibleSelectModal=true;
+        else {
+          this.isVisibleSelectModal = true;
         }
-      }else{
+      } else {
         this.message.error("找不到签到信息");
       }
     });
   }
 
-  closeSignFor(){
-    this.isVisibleSelectModal=false;
+  closeSignFor() {
+    this.isVisibleSelectModal = false;
   }
 
 
   signForOrg() {
 
-    if(this.signForDto.name==null || this.signForDto.name=="" || this.signForDto.phoneNumber==null || this.signForDto.phoneNumber==""){
+    if (this.signForDto.name == null || this.signForDto.name == "" || this.signForDto.phoneNumber == null || this.signForDto.phoneNumber == "") {
       this.message.error("请填写签收人信息");
       return;
     }
@@ -252,7 +260,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
       workFlow_NodeAuditorRecordId: this.examineFormDto.flowNodeUserInfo.userFlowId,
     }
 
-    this._flowServices.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow).subscribe((data:any) => {
+    this._flowServices.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow).subscribe((data: any) => {
 
       var tenantWorkFlowInstanceDto;
       tenantWorkFlowInstanceDto = data.result;
@@ -265,17 +273,17 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
           deptId: this.appSession.user.organizationsId,
           deptFullPath: this.appSession.user.organizationsName
         }
-      } 
+      }
 
       this._flowServices.tenant_NodeToNextNodeByPass(tenantWorkFlowInstanceDto).subscribe((data: any) => {
         this._examineService.signForOpinionFile(this.signForDto).subscribe(data => {
           this.message.success('签收成功');
-          this.isVisibleSelectModal=false;
+          this.isVisibleSelectModal = false;
           this.getList();
-        }, error=>{
+        }, error => {
           this.message.error(error.message);
         });
-      }, error=>{
+      }, error => {
         this.message.error(error.message);
       });
 
