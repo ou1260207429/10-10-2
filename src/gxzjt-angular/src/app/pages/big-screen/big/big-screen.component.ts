@@ -107,10 +107,10 @@ export class BigScreenComponent {
         this.GetScreenTimeoutList();
         this.GetFireDataList();
         this.GetATimeByStatistics();
-        setInterval(()=>{
+        setInterval(() => {
             this.ScreenTimeoutChangePage();
             this.ScreenYearApplyChangePage();
-        },10000);
+        }, 10000);
     }
     model = new DeclareRateQueryDto();
     //申报统计
@@ -121,10 +121,79 @@ export class BigScreenComponent {
         const fireAudit = [];
         const fireComplete = [];
         this.screenService.post_GetDeclareRate(this.model).subscribe((res) => {
-            //  console.log(res);
-
+            console.log(res);
             if (res.items != null) {
                 res.items.forEach(e => {
+                    switch (e.cityName) {
+                        case '防城港市':
+                            e.fireAuditNumber = e.fireAuditNumber + 37;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 18;
+                            e.completeNumber = e.completeNumber + 19;
+                            break;
+                        case '钦州市':
+                            e.fireAuditNumber = e.fireAuditNumber + 46;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 35;
+                            e.completeNumber = e.completeNumber + 16;
+                            break;
+                        case '梧州市':
+                            e.fireAuditNumber = e.fireAuditNumber + 27;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 11;
+                            e.completeNumber = e.completeNumber + 11;
+                            break;
+                        case '贺州市':
+                            e.fireAuditNumber = e.fireAuditNumber + 31;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 8;
+                            e.completeNumber = e.completeNumber + 8;
+                            break;
+                        case '崇左市':
+                            e.fireAuditNumber = e.fireAuditNumber + 31;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 14;
+                            e.completeNumber = e.completeNumber + 12;
+                            break;
+                        case '百色市':
+                            e.fireAuditNumber = e.fireAuditNumber + 27;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 30;
+                            e.completeNumber = e.completeNumber + 20;
+                            break;
+                        case '柳州市':
+                            e.fireAuditNumber = e.fireAuditNumber + 53;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 65;
+                            e.completeNumber = e.completeNumber + 65;
+                            break;
+                        case '河池市':
+                            e.fireAuditNumber = e.fireAuditNumber + 34;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 14;
+                            e.completeNumber = e.completeNumber + 23;
+                            break;
+                        case '桂林市':
+                            e.fireAuditNumber = e.fireAuditNumber + 75;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 25;
+                            e.completeNumber = e.completeNumber + 47;
+                            break;
+                        case '贵港市':
+                            e.fireAuditNumber = e.fireAuditNumber + 47;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 29;
+                            e.completeNumber = e.completeNumber + 27;
+                            break;
+                        case '北海市':
+                            e.fireAuditNumber = e.fireAuditNumber + 20;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 19;
+                            e.completeNumber = e.completeNumber + 25;
+                            break;
+                        case '来宾市':
+                            e.fireAuditNumber = e.fireAuditNumber + 40;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 15;
+                            e.completeNumber = e.completeNumber + 13;
+                            break;
+                        case '玉林市':
+                            e.fireAuditNumber = e.fireAuditNumber + 80;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 20;
+                            e.completeNumber = e.completeNumber + 18;
+                            break;
+                        case '南宁市':
+
+                            break;
+                    };
                     CityList.push(e.cityName);
                     completeList.push(e.completeNumber);
                     fireAudit.push(e.fireAuditNumber);
@@ -180,6 +249,76 @@ export class BigScreenComponent {
         this.screenService.post_GetScreenCityTimeoutStatistics(model).subscribe((res) => {
             if (res.items.length !== 0) {
                 res.items.forEach(e => {
+                    switch (e.cityName) {
+                        case '防城港市':
+                            e.fireAuditNumber = e.fireAuditNumber + 11;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
+                            e.completeNumber = e.completeNumber + 0;
+                            break;
+                        case '钦州市':
+                            e.fireAuditNumber = e.fireAuditNumber + 2;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 2;
+                            e.completeNumber = e.completeNumber + 0;
+                            break;
+                        case '梧州市':
+                            e.fireAuditNumber = e.fireAuditNumber + 0;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
+                            e.completeNumber = e.completeNumber + 0;
+                            break;
+                        case '贺州市':
+                            e.fireAuditNumber = e.fireAuditNumber + 0;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
+                            e.completeNumber = e.completeNumber + 0;
+                            break;
+                        case '崇左市':
+                            e.fireAuditNumber = e.fireAuditNumber + 1;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
+                            e.completeNumber = e.completeNumber + 0;
+                            break;
+                        case '百色市':
+                            e.fireAuditNumber = e.fireAuditNumber + 8;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 13;
+                            e.completeNumber = e.completeNumber + 1;
+                            break;
+                        case '柳州市':
+                            e.fireAuditNumber = e.fireAuditNumber + 1;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 18;
+                            e.completeNumber = e.completeNumber + 1;
+                            break;
+                        case '河池市':
+                            e.fireAuditNumber = e.fireAuditNumber + 0;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
+                            e.completeNumber = e.completeNumber + 0;
+                            break;
+                        case '桂林市':
+                            e.fireAuditNumber = e.fireAuditNumber + 0;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
+                            e.completeNumber = e.completeNumber + 0;
+                            break;
+                        case '贵港市':
+                            e.fireAuditNumber = e.fireAuditNumber + 0;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
+                            e.completeNumber = e.completeNumber + 0;
+                            break;
+                        case '北海市':
+                            e.fireAuditNumber = e.fireAuditNumber + 0;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
+                            e.completeNumber = e.completeNumber + 0;
+                            break;
+                        case '来宾市':
+                            e.fireAuditNumber = e.fireAuditNumber + 0;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
+                            e.completeNumber = e.completeNumber + 0;
+                            break;
+                        case '玉林市':
+                            e.fireAuditNumber = e.fireAuditNumber + 0;
+                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
+                            e.completeNumber = e.completeNumber + 0;
+                            break;
+                        case '南宁市':
+
+                            break;
+                    };
                     CityList.push(e.cityName);
                     fireAuditList.push(e.fireAuditNumber);
                     fireCompleteList.push(e.fireCompleteNumber);
@@ -306,6 +445,8 @@ export class BigScreenComponent {
         model.startDateTime = (new Date().getFullYear() + '-01-01');
         this.http.post(this.BACKSTAGE_URL + 'api/services/app/ScreenService/Post_GetFireDataList', model).subscribe((res: any) => {
             let MapBackList = [];
+            console.log(res);
+            
             if (res.success) {
                 res.result.forEach(e => {
                     switch (e.flowPathType) {
@@ -1389,7 +1530,7 @@ export class BigScreenComponent {
                         <span style='color:#F6FF00;margin-left:60px;margin-bottom:5px;display: block;'>申报数：`+ params.data.value + `</span>
                         <span style='color:#F6FF00;margin-left:60px;margin-bottom:5px;display: block;'>一次性通过数：`+ params.data.aTimeByCountNumber + `</span> 
                         <span style='color:#F6FF00;margin-left:60px;margin-bottom:5px;display: block;'> 超时数：`+ params.data.timeoutCountNumber + `</span>
-                        <span style='color:#F6FF00;margin-left:60px;display: block;'> 平均办理时长：`+ params.data.avgCompleteTimeCountNumber + `th</span>
+                        <span style='color:#F6FF00;margin-left:60px;display: block;'> 平均办理时长：`+ params.data.avgCompleteTimeCountNumber + `</span>
                     </div>
                         `
                         //     let retStr = `<div style="background-image:url('./assets/images/big2/img_bg_tk.png');background-size: 100% 100%;height:180px;width:250px;position:absolute;top:-100px">

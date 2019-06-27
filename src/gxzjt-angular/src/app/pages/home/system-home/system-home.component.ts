@@ -15,7 +15,7 @@ export class SystemHomeComponent implements OnInit {
   pagesize = 4;
   pageindex = 1;
   data: any = [{}];
-  BACKSTAGE_URL = 'http://192.168.10.10:8088/'; // 'http://222.84.250.158:8111/';
+  BACKSTAGE_URL =  'http://222.84.250.158:8111/'; //'http://192.168.10.10:8088/'; //
   constructor(
     private http: _HttpClient,
     private service: ProjectFlowServcieServiceProxy
@@ -62,7 +62,7 @@ export class SystemHomeComponent implements OnInit {
   }
   map: any;
   myChart: any;
-  MapList:any;
+  MapList:any = [];
   EchartsMap() {
     this.http.get('assets/guangxi.json').subscribe((e) => {
       this.echarts.registerMap('广西壮族自治区', e);
@@ -113,13 +113,13 @@ export class SystemHomeComponent implements OnInit {
               normal: { label: { show: true } },
               emphasis: { label: { show: true } }
             },
-            label: {
-              normal: {
-                textStyle: {
-                  color: '#fff'
-                }
-              }
-            },
+            // label: {
+            //   normal: {
+            //     textStyle: {
+            //       color: '#fff'
+            //     }
+            //   }
+            // },
             data: this.MapList
           }
         ]
