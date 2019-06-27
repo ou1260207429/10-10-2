@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PermissionCheckerService } from '@abp/auth/permission-checker.service';
+// import { PermissionCheckerService } from '@abp/auth/permission-checker.service';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { TokenService } from '@abp/auth/token.service';
 import { NzModalService } from 'ng-zorro-antd';
@@ -14,12 +14,12 @@ import {
   RouterStateSnapshot,
   CanActivateChild,
 } from '@angular/router';
-import { debug } from 'util';
+// import { debug } from 'util';
 
 @Injectable()
 export class AppRouteGuard implements CanActivate, CanActivateChild {
   constructor(
-    private _permissionChecker: PermissionCheckerService,
+    // private _permissionChecker: PermissionCheckerService,
     private _router: Router,
     private _sessionService: AppSessionService,
     private _tokenService: TokenService,
@@ -34,8 +34,6 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
   ): boolean {
 
     if (!this._sessionService.user || !this._tokenService.getToken()) {
-
-
 
       var href = location.href;
       var tag = href.substring(href.length - 5, href.length);

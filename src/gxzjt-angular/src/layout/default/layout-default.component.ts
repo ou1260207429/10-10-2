@@ -69,7 +69,7 @@ const ICONS = [
 // #endregion
 import { AppComponentBase } from '@shared/component-base';
 
-
+var hadShowModel = false;
 @Component({
   selector: 'layout-default',
   templateUrl: './layout-default.component.html',
@@ -83,7 +83,7 @@ export class LayoutDefaultComponent extends AppComponentBase
   private notify$: Subscription;
   isFetching = false;
 
-  // static hadShowModel = false;
+
   constructor(
     injector: Injector,
     iconSrv: NzIconService,
@@ -110,14 +110,37 @@ export class LayoutDefaultComponent extends AppComponentBase
         if (evt instanceof NavigationError) {
           // this.message.error(`无法加载${evt.url}路由`);
           if (!this._TokenService.getToken()) {
-            this.message.info(`您未登录，请先前往登录`);
+            // this.message.info(`您未登录，请先前往登录`);
+            if (!hadShowModel) {
+              hadShowModel = true;
 
-            router.navigate(['/account/login']);
+              this.modalService.info({
+                nzTitle: '提示',
+                nzContent: '您未登录，请先前往登录',
+                nzOnOk: () => {
+                  hadShowModel = false;
+                  router.navigate(['/account/login']);
+                },
+                nzOnCancel: () => hadShowModel = false,
+              });
+
+            }
+
+
 
           } else {
-            this.message.error(`页面出现错误，此页面页面无法正常加载`);
-        
-            history.back();
+            // this.message.error(`页面出现错误，此页面页面无法正常加载`);
+            if (!hadShowModel) {
+              hadShowModel = true;
+              this.modalService.info({
+                nzTitle: '提示',
+                nzContent: '页面出现错误，此页面页面无法正常加载',
+                nzOnOk: () => { hadShowModel = false },
+                nzOnCancel: () => { hadShowModel = false },
+              });
+
+            }
+
           }
 
         }
