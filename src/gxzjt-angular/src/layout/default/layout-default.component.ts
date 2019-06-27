@@ -110,34 +110,14 @@ export class LayoutDefaultComponent extends AppComponentBase
         if (evt instanceof NavigationError) {
           // this.message.error(`无法加载${evt.url}路由`);
           if (!this._TokenService.getToken()) {
-            // this.message.info(`您未登录，请先前往登录`);
-            // if (!LayoutDefaultComponent.hadShowModel) {
-            //   LayoutDefaultComponent.hadShowModel = true;
-
-            //   this.modalService.info({
-            //     nzTitle: '提示',
-            //     nzContent: '您未登录，请先前往登录',
-            //     nzOnOk: () => LayoutDefaultComponent.hadShowModel = false,
-            //     nzOnCancel: () => LayoutDefaultComponent.hadShowModel = false,
-            //   });
-
-            // }
+            this.message.info(`您未登录，请先前往登录`);
 
             router.navigate(['/account/login']);
 
           } else {
             this.message.error(`页面出现错误，此页面页面无法正常加载`);
-            // console.log(evt);
-            // if (!LayoutDefaultComponent.hadShowModel) {
-            //   LayoutDefaultComponent.hadShowModel = true;
-            //   this.modalService.info({
-            //     nzTitle: '提示',
-            //     nzContent: '页面出现错误，此页面页面无法正常加载',
-            //     nzOnOk: () => LayoutDefaultComponent.hadShowModel = false,
-            //     nzOnCancel: () => LayoutDefaultComponent.hadShowModel = false,
-            //   });
-
-            // }
+        
+            history.back();
           }
 
         }

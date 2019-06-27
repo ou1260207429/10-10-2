@@ -5,6 +5,8 @@ import { TokenService } from '@abp/auth/token.service';
 import { NzModalService } from 'ng-zorro-antd';
 import { ACLService } from '@delon/acl';
 
+import { AppMenus } from "@shared/AppMenus"
+
 import {
   CanActivate,
   Router,
@@ -37,7 +39,7 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
 
       var href = location.href;
       var tag = href.substring(href.length - 5, href.length);
-  
+
       if ("login" != tag) {
 
 
@@ -55,7 +57,7 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
 
 
 
-    if (route.data && route.data['role'] && !this._ACLService.can(route.data['role'])) {
+    if (route.data && route.data['role'] && route.data['role'] != AppMenus.aclAny && !this._ACLService.can(route.data['role'])) {
       this._NzModalService.info({
         nzTitle: '提示',
         nzContent: '您没有权限访问该地址',
