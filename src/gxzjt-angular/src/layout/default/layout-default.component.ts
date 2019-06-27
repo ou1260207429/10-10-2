@@ -126,15 +126,13 @@ export class LayoutDefaultComponent extends AppComponentBase
 
             }
 
-
-
           } else {
             // this.message.error(`页面出现错误，此页面页面无法正常加载`);
             if (!hadShowModel) {
               hadShowModel = true;
               this.modalService.info({
                 nzTitle: '提示',
-                nzContent: '页面出现错误，此页面页面无法正常加载',
+                nzContent: '页面出现错误，此页面页面无法正常加载。请检查您的网络是否已断开。',
                 nzOnOk: () => { hadShowModel = false },
                 nzOnCancel: () => { hadShowModel = false },
               });
