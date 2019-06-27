@@ -38,14 +38,14 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
         //     this.watchItem(item);
         //   }
         // },
-        {
-          text: '查看',
-          type: 'modal',
-          click: (record: any, modal: any) => {
+        // {
+        //   text: '查看',
+        //   type: 'modal',
+        //   click: (record: any, modal: any) => {
 
-            this.watchItem(record);
-          },
-        },
+        //     this.watchItem(record);
+        //   },
+        // },
         // {
         //   text: '受理凭证',
         //   type: 'link',
