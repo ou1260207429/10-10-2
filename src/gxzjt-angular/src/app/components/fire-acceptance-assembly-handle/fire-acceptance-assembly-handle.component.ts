@@ -6,7 +6,7 @@ import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile, NzMessageService } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import { ExamineFormDto, ProjectAttachment } from '@shared/service-proxies/service-proxies';
-
+import lodash from 'lodash'
 /**
  * 消防验收的表单模块的办理或者结果
  */
@@ -51,16 +51,18 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
     this.data.attachment = this.data.attachment ? this.data.attachment : []
   }
 
+
   beforeUpload = (file: any): boolean => {
-    if(this.examineFormDto){
-      this.examineFormDto.attachment = this.examineFormDto.attachment?this.examineFormDto.attachment:[]
+    if (this.examineFormDto) {
+      this.examineFormDto.attachment = this.examineFormDto.attachment ? this.examineFormDto.attachment : []
       console.log(this.examineFormDto.attachment);
     }
- 
+
     const name = file.name;
     const projectAttachment = new ProjectAttachment();
     projectAttachment['name'] = file.name;
     projectAttachment.attachmentName = file.name;
+    projectAttachment['status'] = 'uploading'
     // projectAttachment.flieCode = tid; 
     this.examineFormDto.attachment.push(projectAttachment)
 
@@ -72,12 +74,25 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
     const formData = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
-      const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)  
-      // this.examineFormDto.attachment[index].fileNo = data.data[0].id 
-      this.examineFormDto.attachment[index].fileUrl =PANGBO_SERVICES_URL+data.data[0].localUrl 
-    }) 
+      const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name) 
+
+      this.examineFormDto.attachment[index]['url'] = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
+      this.examineFormDto.attachment[index]['status'] = 'done'
+
+      this.examineFormDto.attachment[index].fileUrl = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
+      const fileList = lodash.cloneDeep(this.examineFormDto.attachment);  
+
+      this.examineFormDto.attachment = []
+      this.examineFormDto.attachment = fileList 
+    },error=>{
+      const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)
+      this.examineFormDto.attachment[index]['status'] = 'error'
+      const fileList = lodash.cloneDeep(this.examineFormDto.attachment);  
+      this.examineFormDto.attachment = []
+      this.examineFormDto.attachment = fileList 
+    })
     return false;
-  };
+  }; 
 
   removeFile = (file: UploadFile): boolean => {
     return true;

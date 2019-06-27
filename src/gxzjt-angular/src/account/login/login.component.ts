@@ -14,7 +14,7 @@ import { LoginService } from './login.service';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { AbpSessionService } from '@abp/session/abp-session.service';
-import { _HttpClient } from '@delon/theme';
+
 
 import { ReuseTabService } from '@delon/abc';
 
@@ -67,7 +67,6 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     // private _sessionService: AbpSessionService,
     // private _sessionAppService: SessionServiceProxy,
     private _router: Router,
-    public http: _HttpClient,
     // private modalService: NzModalService,
     private _TokenService: TokenService,
     private _AppSessionService: AppSessionService,
@@ -82,11 +81,12 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
 
   ngOnInit(): void {
-    this.titleSrvice.setTitle("登录");
 
+    this.titleSrvice.setTitle("登录");
+    
     if (this._TokenService.getToken()) {
-      // location.href = location.href.replace('#/account/login', '#/app/');
-      this._router.navigate(['/app/home/welcome']);
+      
+      this._router.navigate(['/home/welcome']);
     }
     this.reuseTabService.clear();
   }
@@ -96,7 +96,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     checkCode = "" + Math.ceil(Math.random() * 10000);
 
     $(".inner").mousedown(function (e) {
-      console.log(e)
+      
       var el = $(".inner");
 
       var os = el.offset();
@@ -182,7 +182,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
           /** 强制刷新导航栏url 跳转到首页 */
           // location.href = location.href.replace('#/account/login', '#/app/');
           this.submitting = false;
-          this._router.navigate(['#/app/home/welcome']);
+          this._router.navigate(['/home/welcome']);
 
         }, err => {
           this.modalService.warning({
@@ -204,30 +204,8 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
 
   }
-
-
-  interval$: any;
-  getCaptcha() {
-    let url = REGISTER_URL + "api/User/Register?phoneNum" + this.loginService.authenticateModel.userNameOrEmailAddress;
-    this.http.get(url).subscribe(res => {
-      this.startCount();
-    }
-
-    );
-
+  getCaptcha(){
+    this.getServerCaptcha(this.loginService.authenticateModel.userNameOrEmailAddress);
   }
 
-  startCount() {
-    this.count = 59;
-    this.interval$ = setInterval(() => {
-      this.count -= 1;
-      if (this.count <= 0) {
-        clearInterval(this.interval$);
-      }
-    }, 1000);
-  }
-
-  checkPhone() {
-    return isPhone(this.loginService.authenticateModel.userNameOrEmailAddress);
-  }
 }

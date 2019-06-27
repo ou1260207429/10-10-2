@@ -10,7 +10,9 @@ import { AbpMultiTenancyService } from '@abp/multi-tenancy/abp-multi-tenancy.ser
 import { ModalHelper, ALAIN_I18N_TOKEN, TitleService } from '@delon/theme';
 import { LocalizationService } from '@shared/i18n/localization.service';
 import { PermissionService } from '@shared/auth/permission.service';
+import { REGISTER_URL } from 'infrastructure/expression';
 
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 export abstract class AppComponentBase {
   localizationSourceName = AppConsts.localization.defaultLocalizationSourceName;
 
@@ -26,7 +28,7 @@ export abstract class AppComponentBase {
   elementRef: ElementRef;
   modalHelper: ModalHelper;
   titleSrvice: TitleService;
-
+  http: HttpClient;
   /**
    * 保存状态
    */
@@ -45,6 +47,7 @@ export abstract class AppComponentBase {
     this.modalHelper = injector.get(ModalHelper);
     this.titleSrvice = injector.get(TitleService);
     this.modalService = injector.get(NzModalService);
+    this.http = injector.get(HttpClient);
   }
 
   l(key: string, ...args: any[]): string {
@@ -64,4 +67,56 @@ export abstract class AppComponentBase {
   isGranted(permissionName: string): boolean {
     return this.permission.isGranted(permissionName);
   }
+
+
+  countCaptcha = 0;
+  isSetCaptcha = false;
+  interval$: any;
+  getServerCaptcha(phone) {
+    let url = REGISTER_URL + "api/User/SendValidationSMS?phoneNum=" + phone;
+
+    this.isSetCaptcha = true;
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    this.http.post(url, null, httpOptions).subscribe((res: any) => {
+
+      if (res) {
+        if (res.result && res.result == 0) {
+          this.startCount();
+        } else if (res.message) {
+          this.modalService.info({
+            nzTitle: '提示',
+            nzContent: res.message,
+          });
+        }
+
+      }
+
+      this.isSetCaptcha = false;
+    },
+      err => {
+
+        this.modalService.error({
+          nzTitle: '提示',
+          nzContent: err,
+        });
+        this.isSetCaptcha = false;
+      });
+
+  }
+
+  startCount() {
+    this.countCaptcha = 59;
+    this.interval$ = setInterval(() => {
+      this.countCaptcha -= 1;
+      if (this.countCaptcha <= 0) {
+        clearInterval(this.interval$);
+      }
+    }, 1000);
+  }
+
+
 }

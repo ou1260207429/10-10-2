@@ -30,8 +30,8 @@
                   <i nz-icon type="link" nzTheme="outline" style="margin-right: 10px;"></i><a
                     [href]="item.fileUrl">{{item.fileName}}</a>
                 </div>
-                <div *ngIf="!item.isDisplayFile">
-                  {{item.opinion}}
+                <div *ngIf="!item.isDisplayFile&&item.opinion">
+                  意见:{{item.opinion}}
                 </div>
               </div>
             </div>
@@ -39,7 +39,7 @@
         </tr>
       </table>
     <!-- 表单JSON -->
-    <form nz-form #f="ngForm" se-container="1">
+    <!-- <form nz-form #f="ngForm" se-container="1" *ngIf="flowPathType!=3||(flowPathType==3&&this.curNodeName=='业务审批负责人审批')">
       <table class="tables" style="box-sizing: border-box;" *ngIf="formDto">
       
         <tr>
@@ -54,24 +54,18 @@
             <div [ngSwitch]="flowPathType">
 
 
-              <div *ngSwitchCase="1">
-                <!-- 消防设计的意见书2 -->
+              <div *ngSwitchCase="1"> 
                 <app-fire-design-declare-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto" type="2">
-                </app-fire-design-declare-assembly-handle>
-                <!-- 消防设计的意见书 -->
+                </app-fire-design-declare-assembly-handle> 
               </div>
-              <div *ngSwitchCase="2">
-                <!-- 消防验收的意见书 -->
+              <div *ngSwitchCase="2"> 
                 <app-fire-acceptance-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto" type="2">
-                </app-fire-acceptance-assembly-handle>
-                <!-- 消防验收的意见书 -->
+                </app-fire-acceptance-assembly-handle> 
               </div>
-              <div *ngSwitchCase="3">
-                <!-- 竣工备案的抽中或者未抽中 -->
+              <div *ngSwitchCase="3"> 
                 <app-completed-acceptance-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto" type="7"
                   *ngIf="this.curNodeName=='业务审批负责人审批'">
-                </app-completed-acceptance-assembly-handle>
-                <!-- 竣工备案的抽中或者未抽中 -->
+                </app-completed-acceptance-assembly-handle> 
               </div>
             </div>
 
@@ -85,7 +79,7 @@
         </tr>
 
       </table>
-    </form>
+    </form> -->
 
   </div>
   <div [ngClass]="{hide: selectedIndex != 1}">

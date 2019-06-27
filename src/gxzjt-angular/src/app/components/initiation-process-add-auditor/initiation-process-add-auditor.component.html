@@ -17,9 +17,9 @@
         [nzShowTotal]="totalTemplate" [nzShowQuickJumper]="true" (nzPageIndexChange)="change($event)">
         <thead>
           <tr>
-            <th></th>
-            <th>编号</th>
+            <th>操作</th>
             <th>姓名</th>
+            <th>角色</th>
             <th>组织结构</th>
           </tr>
         </thead>
@@ -28,8 +28,8 @@
             <td>
               <label nz-radio [nzValue]="item"></label>
             </td>
-            <td>{{item.eid}}</td>
             <td>{{item.eName}}</td>
+            <td>{{item.roleName}}</td>
             <td>
               <div class="limit1">{{item.organizationsName}}</div>
             </td>

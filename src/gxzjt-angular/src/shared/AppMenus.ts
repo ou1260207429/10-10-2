@@ -7,6 +7,8 @@ export class AppMenus {
   static aclSys = "sys";//管理员
   static aclOrg = "org";//机构人员
 
+  static aclAny = "any";//所有人
+
 
   static Menus: Menu[] = [
     {
@@ -43,7 +45,7 @@ export class AppMenus {
       text: "",
       i18n: "工作事项",
       icon: { type: "icon", value: "bars" },// 图标
-      acl: [AppMenus.aclCompany, AppMenus.aclSys, AppMenus.aclOrg],
+      acl: [AppMenus.aclSys, AppMenus.aclOrg],
       children: [
         {
           text: "",
