@@ -77,7 +77,7 @@ export class PoliciesAndRegulationsComponent extends PublicFormComponent impleme
         {
           text: '<font class="stButton">删除</font>', click: (record: any) => {
             this._publicModel.isDeleteModal(() => {
-              this._regulationServiceProxy.deleteRegulationByIdAsync(record.id).subscribe(data => {
+              this._regulationServiceProxy.post_DeleteRegulationByIdAsync(record.id).subscribe(data => {
                 this.init();
               })
             });

@@ -79,7 +79,7 @@ export class HandlingGuideComponent extends PublicFormComponent implements OnIni
         {
           text: '<font class="stButton">删除</font>', click: (record: any) => {
             this._publicModel.isDeleteModal(() => {
-              this._noticeServiceProxy.deleteNoticeByIdAsync(record.id).subscribe(data => {
+              this._noticeServiceProxy.post_DeleteNoticeByIdAsync(record.id).subscribe(data => {
                 this.init();
               })
             });

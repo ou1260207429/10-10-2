@@ -4,12 +4,13 @@ import { _HttpClient } from '@delon/theme';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RegulationServiceProxy } from '@shared/service-proxies/service-proxies';
 import { PublicModel } from 'infrastructure/public-model';
-import { timeTrans } from 'infrastructure/regular-expression';
+import { timeTrans, createguid } from 'infrastructure/regular-expression';
 import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { UploadFileModel, PublicServices } from 'services/public.services';
 import { Buffer } from "buffer"
-import { PANGBO_SERVICES_URL } from 'infrastructure/expression';
+import { PANGBO_SERVICES_URL, AppId } from 'infrastructure/expression';
+import lodash from 'lodash'
 
 @Component({
   selector: 'app-policies-and-regulations-details',
@@ -42,26 +43,13 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   //     fileUrl: "string"
   //   }
   // ]
-  fileList: UploadFile[] = [];
+  fileList: any = [];
   uploading = false;
   // acceptType: ".doc,.docx,.xls,.xlsx,.pdf"
   acceptType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
   uploadUrl = "http://demo.rjtx.net:5001/api/Upload/Upload"
   files = []
   sourceId: string
-  filters: UploadFilter[] = [
-    {
-      name: 'type',
-      fn: (fileList: UploadFile[]) => {
-        const filterFiles = fileList.filter(w => ~['application/vnd.openxmlformats-officedocument.wordprocessingml.document'].indexOf(w.type));
-        if (filterFiles.length !== fileList.length) {
-          this.message.error("上传文件格式不正确，请选择.doc文件");
-          return filterFiles;
-        }
-        return fileList;
-      }
-    },
-  ];
 
   //表单对象
   data: any = {
@@ -86,6 +74,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     // this.data = new RegulationDto();
 
     if (this.operate == 0) {
+      this.sourceId = createguid();
     } else {
       this.getRegulationDetailsByIdAsync()
     }
@@ -110,6 +99,8 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     this._regulationServiceProxy.getRegulationDetailsByIdAsync(this.id).subscribe((data: any) => {
       this.data = data
       this.data.regulationId = this.id;
+      this.queryFiles(data.guid)
+      this.sourceId = data.guid
       this.data = {
         id: data.id,
         content: data.content,
@@ -120,7 +111,6 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
         regulationTypeId: data.regulationTypeId,
         title: data.title,
       }
-      this.queryFiles(data.guid)
     })
   }
 
@@ -140,11 +130,10 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
    */
   save() {
     if (this.operate == 0) {
-      this.data.guid = this.createguid();
+      this.data.guid = this.sourceId;
     } else {
       this.data.regulationId = this.id;
     }
-    this.uploadFiles(this.data.guid);
     this.data.issueDate = new Date(timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'))
     this.data.content = new Buffer(this.data.content).toString('base64');
     const src = this.operate == 0 ? this._regulationServiceProxy.addRegulationAsync(this.data) : this._regulationServiceProxy.editRegulationAsync(this.data)
@@ -155,36 +144,14 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
       this.goBack()
     })
   }
-
-  createguid() {
-    var CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('')
-    var chars = CHARS,
-      uuid = [],
-      i
-    // rfc4122, version 4 form
-    var r
-    // rfc4122 requires these characters
-    uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-'
-    uuid[14] = '4'
-    for (i = 0; i < 36; i++) {
-      if (!uuid[i]) {
-        r = 0 | (Math.random() * 16)
-        uuid[i] = chars[i == 19 ? (r & 0x3) | 0x8 : r]
-      }
-    }
-
-    var ret = uuid.join('')
-    console.log(ret);
-    return ret
-  }
   /**
    * 上传文件
    */
   uploadFiles(guid) {
     let params = {
       sourceId: guid,
-      AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
-      module: "table",
+      AppId: AppId,
+      module: "lawsRegulation",
     }
 
     this.fileList.forEach((file: any) => {
@@ -197,17 +164,16 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   queryFiles(guid) {
     let params = {
       sourceId: guid,
-      AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450",
-      module: "table",
+      AppId: AppId,
+      module: "lawsRegulation",
     }
     this.fileUrlList = [];
     this._publicServices.getFilesDetail(params).subscribe(data => {
-      console.log(data)
       data.forEach(element => {
         this.fileUrlList.push({
           id: element.id,
           name: element.fileName,
-          url: "api/Attachment/Download?appId=9F947774-8CB4-4504-B441-2B9AAEEAF450&id=" + element.id
+          url: "api/Attachment/Download?appId=" + AppId + "&id=" + element.id
         })
       });
 
@@ -218,31 +184,81 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   deleteFile(id) {
     let params = {
       id: id,
-      AppId: "9F947774-8CB4-4504-B441-2B9AAEEAF450"
+      AppId: AppId
     }
     this._publicServices.delete(params).subscribe(data => {
-      if (data.result == 2) {
-        this.message.error(data.message);
-      } else {
+      if (data.result == 0) {
         this.fileUrlList.forEach((item, index) => {
-          this.fileUrlList.splice(index, 1);
+          if (item.id == id) {
+            this.fileUrlList.splice(index, 1);
+          }
+        })
+        this.fileList.forEach((item, index) => {
+          if (item.tid == id) {
+            this.fileList.splice(index, 1);
+            const fileList = lodash.cloneDeep(this.fileList);
+            this.fileList = []
+            this.fileList = fileList
+          }
         })
         this.message.success(data.message);
+      } else {
+        this.message.error(data.message);
       }
     })
 
   }
   beforeUpload = (file: UploadFile): boolean => {
-    this.fileList = this.fileList.concat(file);
-
+    this.fileList.push({
+      name: file.name,
+      status: 'uploading',
+      tid: file.uid,
+      isUpLoad: true
+    })
+    let params = {
+      sourceId: this.sourceId,
+      AppId: AppId,
+      module: "lawsRegulation",
+    }
+    const formData: any = new FormData();
+    formData.append('files', file);
+    let index = this.fileList.length - 1
+    this._publicServices.newUpload(formData, params).subscribe(data => {
+      if (data.result == 0) {
+        this.fileList[index].url = this.fileUrl + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
+        this.fileList[index].status = 'done'
+        this.fileList[index].tid = data.data[0].id
+        const fileList = lodash.cloneDeep(this.fileList);
+        this.fileList = []
+        this.fileList = fileList
+      } else {
+        this.fileList[index].status = 'error'
+        this.fileList[index].isUpLoad = false
+        const fileList = lodash.cloneDeep(this.fileList);
+        this.fileList = []
+        this.fileList = fileList
+      }
+    }, error => {
+      this.fileList[0].status = 'error'
+      this.fileList[this.fileList.length - 1].isUpLoad = false
+      const fileList = lodash.cloneDeep(this.fileList);
+      this.fileList[this.fileList.length - 1] = fileList
+    })
     return false;
   };
   removeFile = (file: UploadFile): boolean => {
-    this.fileList.forEach((item, index) => {
-      if (item.uid == file.uid) {
-        this.fileList.splice(index, 1);
-      }
-    });
+    if (file.isUpLoad) {
+      this.deleteFile(file.tid)
+    } else {
+      this.fileList.forEach((item, index) => {
+        if (item.tid == file.tid) {
+          this.fileList.splice(index, 1);
+          const fileList = lodash.cloneDeep(this.fileList);
+          this.fileList = []
+          this.fileList = fileList
+        }
+      })
+    }
     return true;
   }
 }

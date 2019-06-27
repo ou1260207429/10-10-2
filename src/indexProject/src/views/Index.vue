@@ -1,6 +1,16 @@
 <!--  -->
 <template>
-  <div style="width:100%;overflow:hidden;margin-bottom: 20px;">
+  <div style="width:100%;overflow:hidden;margin-bottom: 20px;position:relative">
+    <div class="content">
+      <el-row>
+        <div id="breadcrumb" style="padding:10px 0px;">
+          <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item>建设大厅</el-breadcrumb-item>
+            <el-breadcrumb-item class="breadcrumb">首页</el-breadcrumb-item>
+          </el-breadcrumb>
+        </div>
+      </el-row>
+    </div>
     <div class="content">
       <el-row :gutter="16">
         <el-col :span="12">
@@ -20,12 +30,7 @@
               </div>
               <el-row :gutter="50" style="padding:20px 40px;overflow:hidden;padding-top:0;">
                 <el-col class="item" :span="8" :key="index" v-for="(item,index) in handleList">
-                  <router-link
-                    :to="{
-         path: '/handling-guid-list/detail/'+item.id, 
-      
-   }"
-                  >
+                  <router-link :to="{path: '/handling-guid-list/detail/'+item.id}">
                     <div class="cardList">
                       <img :src="item.src" alt>
                     </div>
@@ -104,7 +109,7 @@
                   @click="downList(item.guid,item.id)"
                 >
                   {{ item.attachmentName }}
-                  <span style="float: right">{{ item.creationTime }}</span>
+                  <!-- <span style="float: right">{{ item.creationTime }}</span> -->
                 </div>
               </div>
             </div>
@@ -118,6 +123,17 @@
           </el-card>
         </el-col>
       </el-row>
+    </div>
+    <div class="rightNav">
+      <div class="item">
+        <img src="../assets/images/icon_call.png" alt>
+        <span>联系电话</span>
+      </div>
+      <div class="item" style="margin-bottom:50px;">
+        <img src="../assets/images/icon_call.png" alt>
+        <span>消防系统服务支持Q <br>
+          Q群</span>
+      </div>
     </div>
   </div>
 </template>
@@ -281,6 +297,26 @@ export default {
 };
 </script>
 <style  lang='less' scoped>
+.rightNav {
+  width: 60px;
+  text-align: center;
+  position: fixed;
+  right: 0;
+  font-size: 14px;
+  top: 140px;
+  z-index: 999999;
+  background-color: #fff;
+  padding: 30px 10px;
+  box-sizing: border-box;
+  span {
+    display: inline-block;
+    width: 10px;
+  }
+  .item {
+    margin-top: 140px;
+    text-align: center;
+  }
+}
 .zhinan {
   background-image: url("../assets/images/img_bg_bszn.png");
 }
