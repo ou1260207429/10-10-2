@@ -22,10 +22,12 @@ export class FormDownloadDetailComponent implements OnInit {
   uploadUrl = "http://demo.rjtx.net:5001/api/Upload/Upload"
   filesUrl: any = {}
   sourceId: string
+
   constructor(private _publicServices: PublicServices, private _eventEmiter: EventEmiter, private message: NzMessageService, private _attachmentServiceProxy: AttachmentServiceProxy, private _activatedRoute: ActivatedRoute) {
   }
   ngOnInit() {
     this.data = new AttachmentDto();
+    this.sourceId = createguid()
   }
   goBack() {
     history.go(-1);
@@ -35,9 +37,7 @@ export class FormDownloadDetailComponent implements OnInit {
    * 提交
    */
   save() {
-    this.data.guid = createguid();
-    this.sourceId = createguid();
-
+    this.data.guid = this.sourceId;
     this._attachmentServiceProxy.addAttachmentAsync(this.data).subscribe(data => {
       this.message.success("新增成功");
       this._eventEmiter.emit('init', []);
@@ -51,9 +51,10 @@ export class FormDownloadDetailComponent implements OnInit {
       name: file.name,
       status: 'uploading',
       tid: file.uid,
+      isUpLoad: true
     })
     let params = {
-      sourceId: createguid(),
+      sourceId: this.sourceId,
       AppId: AppId,
       module: "table",
     }
@@ -62,39 +63,43 @@ export class FormDownloadDetailComponent implements OnInit {
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
       if (data.result == 0) {
-        console.log(data)
         this.fileList[0].url = PANGBO_SERVICES_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
         this.fileList[0].status = 'done'
-        this.fileList[0].id = data.data[0].id
+        this.fileList[0].tid = data.data[0].id
         const fileList = lodash.cloneDeep(this.fileList);
         this.fileList = fileList
       } else {
         this.fileList[0].status = 'error'
+        this.fileList[0].isUpLoad = false
         const fileList = lodash.cloneDeep(this.fileList);
         this.fileList = []
         this.fileList = fileList
       }
     }, error => {
-      this.message.error("上传文件失败");
       this.fileList[0].status = 'error'
+      this.fileList[0].isUpLoad = false
+      const fileList = lodash.cloneDeep(this.fileList);
       this.fileList = []
+      this.fileList = fileList
     })
     return false;
   };
   //删除上传文件
   //删除上传文件
   removeFile = (file: UploadFile): boolean => {
-    let params = {
-      AppId: AppId,
-      id: file.id,
-    }
-    this._publicServices.delete(params).subscribe(data => {
-      if (data.result == 0) {
-        this.message.success(data.message)
-      } else {
-        this.message.error(data.message)
+    if (file.isUpLoad) {
+      let params = {
+        AppId: AppId,
+        id: file.tid,
       }
-    })
+      this._publicServices.delete(params).subscribe(data => {
+        if (data.result == 0) {
+          this.message.success(data.message)
+        } else {
+          this.message.error(data.message)
+        }
+      })
+    }
     this.fileList = [];
     return true;
   }
