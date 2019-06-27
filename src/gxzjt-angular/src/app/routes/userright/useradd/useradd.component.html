@@ -97,8 +97,8 @@
 
         <div style="margin-top: 8px" nz-row>
           <div nz-col nzSpan="5">所属组织机构(点击单选)</div>
-          <div nz-col nzSpan="19">
-              <nz-tree #treeCom [nzData]="nodes"  nzCheckable="true" nzMultiple="false"
+          <div nz-col nzSpan="19" style="border: solid 1px">
+              <nz-tree #treeCom [nzData]="nodes"   nzCheckable="true" nzMultiple="false"
               [(nzCheckedKeys)]="defaultCheckedKeys" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzEventorg($event)">
             </nz-tree>
           </div>
@@ -113,8 +113,8 @@
       <div class="boday">
         <div style="margin-top: 8px" nz-row>
           <div nz-col nzSpan="5">可见数据(勾选需要的数据)：</div>
-          <div nz-col nzSpan="19">
-              <nz-tree #treeCom [nzData]="nodes"  nzCheckable="true" nzMultiple="true"
+          <div nz-col nzSpan="19" style="border: solid 1px">
+              <nz-tree #treeCom [nzData]="nodes"    nzCheckable="true" nzMultiple="true"
               [(nzCheckedKeys)]="defaultCheckedKeys" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzEvent($event)">
             </nz-tree>
           </div>

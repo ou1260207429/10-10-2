@@ -30,7 +30,7 @@
 
       <tr>
         <td class="fontweight fontLeft leftTitle">工程名称:</td>
-        <td colspan="3">
+        <td colspan="3" style="text-align: left">
           <!-- <input nz-input placeholder="请输入工程名称" [(ngModel)]="reviewFormDto.projectName" name="projectName" class="input-style" /> -->
           <span>{{reviewFormDto.projectName}}</span>
         </td>
@@ -38,7 +38,7 @@
 
       <tr>
         <td class="fontweight fontLeft leftTitle">工程地址:</td>
-        <td colspan="3">
+        <td colspan="3" style="text-align: left">
           <!-- <input nz-input placeholder="请输入工程地址" [(ngModel)]="reviewFormDto.address" name="address" class="input-style" /> -->
           <span>{{reviewFormDto.address}}</span>
         </td>
@@ -46,14 +46,15 @@
 
       <tr>
         <td class="fontweight fontLeft leftTitle">联系人:</td>
-        <td>
+        <td style="text-align: left"> 
           <!-- <input nz-input placeholder="请输入联系人" [(ngModel)]="reviewFormDto.constructOrg.contactPerson" name="contactPerson" class="input-style" /> -->
-          <input nz-input placeholder="请输入联系人" [(ngModel)]="reviewFormDto.constructOrg.contactPerson" name="contactPerson" class="input-style" />
+          <!-- <input nz-input placeholder="请输入联系人" [(ngModel)]="reviewFormDto.constructOrg.contactPerson" name="contactPerson" class="input-style" /> -->
+          <span style="text-align: left">{{reviewFormDto.constructOrg.contactPerson}}</span>
         </td>
         <td class="fontweight fontLeft leftTitle">联系电话:</td>
         <td>
           <!-- <input nz-input placeholder="请输入联系电话" [(ngModel)]="reviewFormDto.constructOrg.contactNumber" name="contactNumber" class="input-style" /> -->
-          <span>{{reviewFormDto.constructOrg.contactNumber}}</span>
+          <span style="text-align: left">{{reviewFormDto.constructOrg.contactNumber}}</span>
         </td>
       </tr>
 

@@ -45,7 +45,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
         {
           text: '重新申请',
           type: 'modal',
-          iif: record => record.status  === 2 && record.parentFlowId!=null,
+          iif: record => record.status  === 2 && record.isResubmitted!=true,
           click: (record: any, modal: any) => {
             this.router.navigate([`/app/engineering-management/addCompletedAcceptanceComponent/0/${record.projectId}/${record.id}`]);
           },
@@ -53,7 +53,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
         {
           text: '复查申请',
           type: 'modal',
-          iif: record => (record.status  === 3 && (record.parentFlowId==null || record.parentFlowId==0)),//当状态是3即为不合格的时候显示此按钮，若需要方便调试可自己更改status的值改变按钮显示
+          iif: record => (record.status  === 3 && record.isResubmitted!=true),//当状态是3即为不合格的时候显示此按钮，若需要方便调试可自己更改status的值改变按钮显示
           click: (record: any, modal: any) => {
 
             this.toreapply(record);
@@ -98,11 +98,10 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     { title: '竣工验收备案申报编号', index: 'recordNumber' },
     { title: '工程名称', index: 'projectName' },
     { title: '建设单位', index: 'companyName' },
-    // { title: '是否被抽中', index: 'isSelected',format: (item: any) => `${item.isSelected==null?4001:item.isSelected}`,type: 'tag', tag: {
-    //   4001:{text:'是',color: 'green' },
-    //   true: { text: '是', color: '' },
-    //   false: { text: '否',color: 'red' },
-    // }},
+    { title: '是否被抽中', index: 'isSelected',format: (item: any) => `${item.isSelected==true?"是":(item.isSelected==false?"否":"是")}`,type: 'tag', tag: {
+      "是":{text:'是',color: 'green' },
+      "否": { text: '否',color: 'red' },
+    }},
     // { title: '验证码', index: '无此字段返回' },
     { title: '当前处理环节', index: 'currentNodeName' },
     { title: '流程是否超时', index: 'isExpireTime',format: (item: any) => `${item.isExpireTime==true?"是":(item.isExpireTime==false?"否":"是")}`,type: 'tag', tag: {
