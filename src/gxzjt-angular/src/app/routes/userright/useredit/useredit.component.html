@@ -83,7 +83,7 @@
 
 
 
-          <div style="margin-top: 8px" nz-row>
+          <div style="margin-top: 8px" *ngIf='nodes.length> 0 ' nz-row>
             <div nz-col nzSpan="5">所属组织机构(点击单选)</div>
             <div nz-col nzSpan="19">
                 <nz-tree #treeCom [nzData]="nodes"  nzCheckable="true" nzMultiple="false" ref="tree"
@@ -96,7 +96,7 @@
       </div>
 
 
-      <div class="rightcenter">
+      <div class="rightcenter" *ngIf='nodes.length> 0 '>
         <div class="righttop"><span class="title">用户可见数据设置</span></div>
         <div class="boday">
           <div style="margin-top: 8px" nz-row>

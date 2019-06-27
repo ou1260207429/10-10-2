@@ -71,11 +71,15 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
     //     // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
     //   ]
     // },
-    { title: '竣工验收申报编号',default:'0', index: 'recordNumber' , },
+    { title: '竣工验收申报编号',default:'0', index: 'acceptanceNumber' , },
     { title: '工程名称', index: 'projectName' },
     { title: '建设单位', index: 'companyName' },
     { title: '联系人', index: 'contactPerson' },
     { title: '联系电话', index: 'contactNumber' },
+    { title: '流程是否超时', index: 'isExpireTime',format:(item:any)=>`${item.isExpireTime==true?"是":"否"}`,type: 'tag', tag: {
+      "是": { text: '是', color: 'red' },
+      "否": { text: '否', color: '' },
+    }},
     { title: '审核结果', index: 'status',format: (item: any) => `${item.status==0?"未处理":(item.status==1?"受理":(item.status==2?"不受理":(item.status==3?"不合格":(item.status==4?"合格":(item.status==5?"未抽中":"未处理")))))}`,type: 'tag', tag: {
       "未处理": { text: '未处理', color: '' },
       "受理": { text: '受理', color: 'green' },
@@ -84,8 +88,8 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
       "合格":{ text: '合格', color: '' },
       "未抽中":{ text: '未抽中', color: '' },
     }},
-    // { title: '操作人', index: '' },
-    { title: '操作时间', index: 'acceptTime',type:'date' },
+    { title: '操作人', index: 'currentHandleUserName' },
+    { title: '操作时间', index: 'acceptTime',type:'date' },//这个实际是申请时间操作时间暂时无数据
   ];
 
   constructor(private http: _HttpClient,
