@@ -124,15 +124,37 @@
         </el-col>
       </el-row>
     </div>
+    <div class="row"></div>
+
     <div class="rightNav">
       <div class="item">
-        <img src="../assets/images/icon_call.png" alt>
-        <span>联系电话</span>
+        <el-tooltip placement="left" effect="light">
+          <div slot="content" style="border:none;padding-left:10px;box-sizing:border-box;">
+            <p>电话号码：18607782223</p>
+            <p style="margin-top: 5px;">工作时间：09：00-22：00</p>
+          </div>
+          <div>
+            <img src="../assets/images/icon_call.png" alt>
+            <br>
+            <span>联系电话</span>
+          </div>
+        </el-tooltip>
       </div>
-      <div class="item" style="margin-bottom:50px;">
-        <img src="../assets/images/icon_call.png" alt>
-        <span>消防系统服务支持Q <br>
-          Q群</span>
+      <div class="item" style="border-top:1px solid #e7eaef">
+        <el-tooltip placement="left" effect="light">
+          <div slot="content" style="border:none;padding-left:10px;box-sizing:border-box;">
+            <p>QQ：49146664</p>
+            <p style="margin-top: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;96987252</p>
+          </div>
+          <div>
+            <img src="../assets/images/icon_qq.png" alt>
+            <br>
+            <span>
+              消防系统服务支持Q
+              <br>Q群
+            </span>
+          </div>
+        </el-tooltip>
       </div>
     </div>
   </div>
@@ -298,7 +320,7 @@ export default {
 </script>
 <style  lang='less' scoped>
 .rightNav {
-  width: 60px;
+  width: 50px;
   text-align: center;
   position: fixed;
   right: 0;
@@ -306,15 +328,22 @@ export default {
   top: 140px;
   z-index: 999999;
   background-color: #fff;
-  padding: 30px 10px;
+  padding: 30px 0px;
   box-sizing: border-box;
+  color: #bd1127;
   span {
     display: inline-block;
-    width: 10px;
+    width: 14px;
   }
   .item {
-    margin-top: 140px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 70px 0;
+    box-sizing: border-box;
     text-align: center;
+    cursor: pointer;
+  }
+  p {
   }
 }
 .zhinan {

@@ -121,7 +121,7 @@ export class HandlingGuidDetailComponent implements OnInit {
     let params = {
       sourceId: guid,
       AppId: AppId,
-      module: "handleGuid",
+      module: "table",
     }
     this.fileUrlList = [];
     this._publicServices.getFilesDetail(params).subscribe(data => {
@@ -173,7 +173,7 @@ export class HandlingGuidDetailComponent implements OnInit {
     let params = {
       sourceId: this.sourceId,
       AppId: AppId,
-      module: "handleGuid",
+      module: "table",
     }
     const formData: any = new FormData();
     formData.append('files', file);
