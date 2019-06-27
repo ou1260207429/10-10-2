@@ -12,14 +12,16 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-            <input class="table_input" [(ngModel)]="data.fileCodePrefix" name="fileCodePrefix" />住建消审凭字〔后台提供〕第（后台提供）号
+            <div><input class="table_input" [(ngModel)]="data.fileCodePrefix" name="fileCodePrefix" />住建消审凭字〔后台生成〕第后台生成号
+            </div>
+            <div *ngIf="!data.fileCodePrefix" class="rightSpan">必填</div>
           </td>
         </tr>
         <tr>
           <td rowspan='1' colspan='20'>
             <div class="table_detail">
               <h3>{{data.companyName}}：</h3>
-              <p>根据《中华人民共和国消防法》第十一条和《建设工程消防监督管理规定》第十五条的规定，你单位{{data.applyDateTime|date:'yyyy年MM月dd日'}}申请的
+              <p>根据《中华人民共和国消防法》第十一条的规定，你单位{{data.applyDateTime|date:'yyyy年MM月dd日'}}申请的
                 {{data.projectName}}
                 建设工程（地址：{{data.address}}）消防设计审查，提供了下列材料：</p>
             </div>
@@ -54,7 +56,7 @@
 
   <!-- 消防设计的审查意见书（合格）  -->
   <div *ngSwitchCase="1">
-  
+
     <table class="tables d_table" style="box-sizing: border-box;">
       <thead>
         <tr>
@@ -66,25 +68,25 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-            <input class="table_input" [(ngModel)]="data.fileCodePrefix" name="fileCodePrefix" />住建消审凭字〔后台提供〕第（后台提供）号
+            <div><input class="table_input" [(ngModel)]="examineFormDto.fileCodePrefix" name="fileCodePrefix" />住建消审凭字〔后台生成〕第后台生成号
+            </div>
+            <div *ngIf="!examineFormDto.fileCodePrefix" class="rightSpan">必填</div>
           </td>
         </tr>
         <tr>
           <td rowspan='1' colspan='20'>
             <div class="table_detail">
               <h3>{{data.companyName}}：</h3>
-
-
               <div *ngIf="examineFormDto">
-
-            
-              <p *ngIf="examineFormDto.designOrg">
-                你单位申请的{{data.projectName}}建设工程（受理凭证：{{data.acceptFileCode}}，{{data.applyDateTime|date:'yyyy年MM月dd日'}}收）消防设计图纸材料及有关资料收悉。该工程位于{{data.address}}内。{{data.descr}}。设计单位为<span *ngIf="examineFormDto.drawingOrg">{{examineFormDto.designOrg.companyName}}</span>，设计资质为建设工程{{examineFormDto.designOrg.qualifications}}级。按照图纸审查机构（<span *ngIf="examineFormDto.drawingOrg">{{examineFormDto.drawingOrg.companyName}}</span>）对该工程设计图纸的技术审查结论，我局提出以下意见：
-              </p>
+                <p *ngIf="examineFormDto.designOrg">
+                  你单位申请的{{data.projectName}}建设工程（受理凭证：{{data.acceptFileCode}}，{{data.applyDateTime|date:'yyyy年MM月dd日'}}收）消防设计文件收悉。该工程位于{{data.address}}内。{{data.descr}}。设计单位为<span
+                    *ngIf="examineFormDto.drawingOrg">{{examineFormDto.designOrg.companyName}}</span>，设计资质为建设工程{{examineFormDto.designOrg.qualifications}}级。按照图纸审查机构（<span
+                    *ngIf="examineFormDto.drawingOrg">{{examineFormDto.drawingOrg.companyName}}</span>）对该工程设计图纸的技术审查结论，我局提出以下意见：
+                </p>
+              </div>
             </div>
-            </div>
-            <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion" name="professionalContractorsopinion"
-              required>
+            <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion"
+              name="professionalContractorsopinion" required>
                   </textarea>
 
             <div class="textLeft" *ngIf="examineFormDto">
@@ -97,7 +99,7 @@
             </div>
 
           </td>
-        </tr> 
+        </tr>
         <tr>
           <td class="fontweight fontLeft leftTitle">本意见书一式两份，一份交建设单位，一份存档。 </td>
         </tr>
@@ -111,8 +113,8 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20'>
-            <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion" name="professionalContractorsopinion"
-              required>
+            <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion"
+              name="professionalContractorsopinion" required>
                     </textarea>
           </td>
         </tr>

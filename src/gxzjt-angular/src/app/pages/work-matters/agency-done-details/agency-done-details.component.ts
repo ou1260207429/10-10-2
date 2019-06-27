@@ -196,6 +196,13 @@ export class AgencyDoneDetailsComponent implements OnInit {
    * 点击提交
    */
   save(bo?: boolean) {
+
+    console.log(this.curNodeName)
+    if ((this.curNodeName == '大厅受理' && !this.formDto.fileCodePrefix) || (!this.examineFormDto.fileCodePrefix && this.curNodeName == '业务承办人审核')) {
+      this.message.error('请输入必填项')
+      return false;
+    } 
+
     let num = bo ? 1 : 0;
     //判断是竣工备案  
     if (this.flowPathType == 3) {
@@ -212,29 +219,29 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.butNzLoading = true
     if (!bo && this.curNodeName == '业务审批负责人审批') {
       // this.noResult((data) => { 
-        this.tenantWorkFlowInstanceDto.backAuditedNode = {
-          nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
-          nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName
-        } 
-        this._flowServices.tenant_NodeToNextNodeByNoPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
-          this.butNzLoading = false;
-          this.examineFormDto.handleUserList = [];
-          this.examineFormDto.currentNodeId = data.result.cur_Node_Id
-          this.examineFormDto.currentNodeName = data.result.cur_NodeName
-          this.examineFormDto.workFlow_Instance_Id = data.result.workFlow_Instance_Id
-          this.examineFormDto.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
-          data.result.auditorRecords.forEach(element => {
-            const flowNodeUser = new FlowNodeUser()
-            flowNodeUser.userFlowId = element.id
-            flowNodeUser.userCode = element.applyEID
-            flowNodeUser.userName = element.applyEName
-            this.examineFormDto.handleUserList.push(flowNodeUser)
-          });
+      this.tenantWorkFlowInstanceDto.backAuditedNode = {
+        nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
+        nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName
+      }
+      this._flowServices.tenant_NodeToNextNodeByNoPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
+        this.butNzLoading = false;
+        this.examineFormDto.handleUserList = [];
+        this.examineFormDto.currentNodeId = data.result.cur_Node_Id
+        this.examineFormDto.currentNodeName = data.result.cur_NodeName
+        this.examineFormDto.workFlow_Instance_Id = data.result.workFlow_Instance_Id
+        this.examineFormDto.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
+        data.result.auditorRecords.forEach(element => {
+          const flowNodeUser = new FlowNodeUser()
+          flowNodeUser.userFlowId = element.id
+          flowNodeUser.userCode = element.applyEID
+          flowNodeUser.userName = element.applyEName
+          this.examineFormDto.handleUserList.push(flowNodeUser)
+        });
 
-          this.finalExamine(this.examineFormDto);
-        }, error => {
-          this.butNzLoading = false;
-        })
+        this.finalExamine(this.examineFormDto);
+      }, error => {
+        this.butNzLoading = false;
+      })
       // })
 
     } else {

@@ -270,7 +270,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
       {
         label: '灭火器',
-        input: '楼梯间',
+        input: '',
         value: false,
         checked: false,
         arr: [

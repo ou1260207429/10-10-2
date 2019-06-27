@@ -30,47 +30,47 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
-    {
-      title: '操作',
-      buttons: [
-        // {
-        //   text: '执行', click: (item: any) => {
-        //     this.watchItem(item);
-        //   }
-        // },
-        // {
-        //   text: '查看',
-        //   type: 'modal',
-        //   click: (record: any, modal: any) => {
+    // {
+    //   title: '操作',
+    //   buttons: [
+    //     // {
+    //     //   text: '执行', click: (item: any) => {
+    //     //     this.watchItem(item);
+    //     //   }
+    //     // },
+    //     // {
+    //     //   text: '查看',
+    //     //   type: 'modal',
+    //     //   click: (record: any, modal: any) => {
 
-        //     this.watchItem(record);
-        //   },
-        // },
-        // {
-        //   text: '受理凭证',
-        //   type: 'link',
-        //   // modal: {
-        //   //   component: StatisticsAcceptCredentialsComponent,
-        //   //   paramsName: 'record',
-        //   // },
-        //   click: (record: any, modal: any) => {
-        //     window.open(record.acceptAttachmentFileUrl)
-        //   },
-        // },
-        // {
-        //   text: '意见书',
-        //   type: 'link',
-        //   // modal: {
-        //   //   component: StatisticsPositionPaperComponent,
-        //   //   paramsName: 'record',
-        //   // },
-        //   click: (record: any, modal: any) => {
+    //     //     this.watchItem(record);
+    //     //   },
+    //     // },
+    //     // {
+    //     //   text: '受理凭证',
+    //     //   type: 'link',
+    //     //   // modal: {
+    //     //   //   component: StatisticsAcceptCredentialsComponent,
+    //     //   //   paramsName: 'record',
+    //     //   // },
+    //     //   click: (record: any, modal: any) => {
+    //     //     window.open(record.acceptAttachmentFileUrl)
+    //     //   },
+    //     // },
+    //     // {
+    //     //   text: '意见书',
+    //     //   type: 'link',
+    //     //   // modal: {
+    //     //   //   component: StatisticsPositionPaperComponent,
+    //     //   //   paramsName: 'record',
+    //     //   // },
+    //     //   click: (record: any, modal: any) => {
 
-        //     window.open(record.opinionFileUrl)
-        //   },
-        // },
-      ]
-    },
+    //     //     window.open(record.opinionFileUrl)
+    //     //   },
+    //     // },
+    //   ]
+    // },
     { title: '工程名称', index: 'projectName' },
     { title: '工程编号', index: 'projectCode', },
     { title: '建设单位', index: 'companyName' },
