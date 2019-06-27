@@ -9,6 +9,7 @@ import { GXZJT_From, FlowServices } from 'services/flow.services';
 import { FormGroup } from '@angular/forms';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { EventEmiter } from 'infrastructure/eventEmiter';
+import { ReuseTabService } from '@delon/abc';
 
 /**
  * 工程管理->消防验收->新增申报
@@ -187,7 +188,7 @@ export class AddFireAcceptanceComponent implements OnInit {
   useNatureSelect
 
   butNzLoading: boolean = false;
-  constructor(private _eventEmiter: EventEmiter, private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
+  constructor(private reuseTabService: ReuseTabService,private _eventEmiter: EventEmiter, private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     this.flowFormQueryDto.flowType = 2;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.flowId=parseInt(this._ActivatedRoute.snapshot.paramMap.get('flowId'));
@@ -243,6 +244,7 @@ export class AddFireAcceptanceComponent implements OnInit {
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.butNzLoading = false;
       this.flowFormDto.projectId = data;
+      this.reuseTabService.replace('/app/addFireAcceptanceComponent')
       this.message.success('保存成功')
       this._eventEmiter.emit('draftsComponentInit', []);
       history.go(-1)
@@ -320,6 +322,7 @@ export class AddFireAcceptanceComponent implements OnInit {
           console.log(flowDataDto);
           this._applyService.acceptance(flowDataDto).subscribe(data => {
             this.butNzLoading = false;
+            this.reuseTabService.replace('/app/addFireAcceptanceComponent')
             this._eventEmiter.emit('fireAcceptanceComponentInit', []);
             this.message.success('提交成功')
             history.go(-1)

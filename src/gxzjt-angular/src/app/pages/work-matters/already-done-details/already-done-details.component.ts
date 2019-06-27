@@ -231,6 +231,7 @@ export class AlreadyDoneDetailsComponent implements OnInit {
   getPrimaryExamine(then?: Function) {
     this._examineService.getPrimaryExamine(this.flowId).subscribe(data => {
       this.examineFormDto = data
+      console.log(this.examineFormDto)
       if (then) then()
     })
     // return this._examineService.getPrimaryExamine(this.flowId).toPromise();
