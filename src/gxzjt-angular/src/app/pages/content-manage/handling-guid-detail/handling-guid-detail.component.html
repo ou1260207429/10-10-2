@@ -28,17 +28,18 @@
         <div id="File" *ngIf=fileUrlList>
           <div *ngFor="let item of fileUrlList let i=index" style="margin-top: 10px;">
             <div class="links" style="position: relative;cursor: pointer;">
-              <a style="text-decoration: none;display: block;" [href]="fileUrl+item.url" class="ant-upload-list"><i nz-icon type="link"
-                  style="margin-right: 11px;" nzTheme="outline"></i><span style="color: #BD1127">{{item.name}}</span>
+              <a style="text-decoration: none;display: block;" [href]="fileUrl+item.url" class="ant-upload-list"><i
+                  nz-icon type="link" style="margin-right: 11px;" nzTheme="outline"></i><span
+                  style="color: #BD1127">{{item.name}}</span>
               </a>
               <span (click)="deleteFile(item.id)" class="deleteFile"
                 style="position: absolute;top: -2px;right: 10px;display: none;font-size: 18px;">x</span>
             </div>
           </div>
         </div>
-       
+
       </se>
-    
+
       <se label="简要信息管理" required>
 
         <textarea nz-input [disabled]="operate=='1'" placeholder="" [(ngModel)]="data.brief"

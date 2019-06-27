@@ -169,7 +169,6 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     }
     this.fileUrlList = [];
     this._publicServices.getFilesDetail(params).subscribe(data => {
-      console.log(data)
       data.forEach(element => {
         this.fileUrlList.push({
           id: element.id,
