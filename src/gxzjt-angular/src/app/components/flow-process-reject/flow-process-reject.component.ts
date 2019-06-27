@@ -37,6 +37,7 @@ export class FlowProcessRejectComponent implements OnInit {
       return false
     }
     this.tenantWorkFlowInstanceDto.backAuditedNode = this.data[this.radioValue];
+    console.log(this.data[this.radioValue])
     const turnBack = {
       backAuditedNode: this.data[this.radioValue],
       editWorkFlow_NodeAuditorRecordDto: this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto,

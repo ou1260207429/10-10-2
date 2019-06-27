@@ -87,10 +87,7 @@
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">建设单位:</td>
           <td rowspan='1' colspan='7'>
-            <se error="必填">
-              <!-- <input nz-input placeholder="请输入建设单位" [(ngModel)]="data.constructionUnit.name" name="constructionUnitname"
-                required /> -->
-
+            <se error="必填">  
               <nz-rj-selector-org [(ngModel)]="data.constructionUnit.name"
                 (onSelectorEvent)="onSelectOrgItem($event,data.constructionUnit)" placeHolder="请输入建设单位"
                 name="constructionUnitname"   ngDefaultControl></nz-rj-selector-org>
@@ -555,10 +552,10 @@
           专业承包单位（如有）
         </td>
         <td colspan='14' style="text-align: left">
-          <se error="必填">
+          <se>
             <textarea nz-input placeholder="请输入具体情况"
               [(ngModel)]="data.acceptanceOpinions.professionalContractors.opinion"
-              name="professionalContractorsopinion" required>
+              name="professionalContractorsopinion" >
                   </textarea>
           </se>
           <div class="textRight">

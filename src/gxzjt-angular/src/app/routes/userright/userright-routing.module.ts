@@ -8,13 +8,12 @@ import { UserrightUsereditComponent } from './useredit/useredit.component';
 import { UserrightUserlookComponent } from './userlook/userlook.component';
 
 const routes: Routes = [
-
   { path: 'userlist', component: UserrightUserlistComponent },
   { path: 'rolelist', component: UserrightRolelistComponent },
   { path: 'postwork', component: UserrightPostworkComponent },
-  { path: 'useradd', component: UserrightUseraddComponent,data: { title: '添加用户' }  },
-  { path: 'useredit', component: UserrightUsereditComponent,data: { title: '编辑用户' } },
-  { path: 'userlook', component: UserrightUserlookComponent,data:{title:'查看用户'}  }];
+  { path: 'useradd', component: UserrightUseraddComponent,data:{ title: '添加用户',reuse:false},},
+  { path: 'useredit', component: UserrightUsereditComponent,data:{ title: '编辑用户',reuse:false}},
+  { path: 'userlook', component: UserrightUserlookComponent,data:{title:'查看用户',reuse:true}}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

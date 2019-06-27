@@ -204,7 +204,7 @@
 
                 <nz-select  [(ngModel)]="item.qualificationLevel"
                 name="constructionQualificationLevel{{a}}" required>
-                <nz-option *ngFor="let option of zzdjEnum4" [nzLabel]="option.label" [nzValue]="option.value">
+                <nz-option *ngFor="let option of zzdjEnum1" [nzLabel]="option.label" [nzValue]="option.value">
                 </nz-option>
               </nz-select>
             </se>
@@ -612,7 +612,7 @@
             <se error="必填">
               专业分包单位（如有）
               <input style="width: 320px;" nz-input placeholder="请输入施工总承包单位"
-                [(ngModel)]="data.constructionSituation.subcontractors" name="constructionsubcontractors" required />
+                [(ngModel)]="data.constructionSituation.subcontractors" name="constructionsubcontractors" />
             </se>
             <se error="必填">
               项目经理签名：<input style="width: 320px;" nz-input placeholder="请签名"

@@ -12,14 +12,15 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-            <input class="table_input" [(ngModel)]="data.fileCodePrefix" name="fileCodePrefix" />住建消审凭字〔后台生成〕第后台生成号
+              <div><input class="table_input" [(ngModel)]="data.fileCodePrefix" name="fileCodePrefix" />住建消审凭字〔后台生成〕第后台生成号</div>
+              <div *ngIf="!data.fileCodePrefix" class="rightSpan">必填</div>
           </td>
         </tr>
         <tr>
           <td rowspan='1' colspan='20'>
             <div class="table_detail">
               <h3>{{data.companyName}}：</h3>
-              <p>根据《中华人民共和国消防法》第十三条和《建设工程消防监督管理规定》第二十一条的规定，你单位{{data.applyDateTime|date:'yyyy年MM月dd日'}}申请的建设工程（地址：{{data.address}}）消防验收，提供了下列材料：</p>
+              <p>根据《中华人民共和国消防法》第十三条的规定，你单位{{data.applyDateTime|date:'yyyy年MM月dd日'}}申请的建设工程（地址：{{data.address}}）消防验收，提供了下列材料：</p>
             </div>
             <ul class="table_list">
               <li *ngFor="let item of data.attachmentItems;let index=index">
@@ -65,19 +66,16 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-            <input class="table_input" [(ngModel)]="data.fileCodePrefix" name="fileCodePrefix" />住建消审凭字〔后台生成〕第后台生成号
+              <div><input class="table_input" [(ngModel)]="examineFormDto.fileCodePrefix" name="fileCodePrefix" />住建消审凭字〔后台生成〕第后台生成号</div>
+              <div *ngIf="!examineFormDto.fileCodePrefix" class="rightSpan">必填</div>
           </td>
         </tr>
         <tr>
           <td rowspan='1' colspan='20'>
             <div class="table_detail">
-              <h3>{{data.companyName}}：</h3>
-              <!-- <p>
-                你单位报来{{data.projectName}}建设工程消防验收资料收悉（受理凭证：{{data.acceptFileCode}}）。该工程位于{{data.address}}，建筑高度98m，地上29层，地下2层，总建筑面积421000m2，属一类高层民用建筑。{{data.applyDateTime|date:'yyyy年MM月dd日'}}，{{data.cityName}}住房和城乡建设局组织你单位及设计、施工、监理、检测等单位有关人员对该工程进行了消防验收。经对验收资料、建设消防设施技术检测报告进行审查，对总平面布置和平面布置中涉及消防安全的防火间距、消防车道、消防水源，建设防火防烟分区和建设构造，安全疏散和消防电梯，消防给水和自动灭火系统，防烟、排烟和通风系统的防火设计，消防电源及其配电，火灾应急照明、应急广播和疏散指示标志，火灾自动报警系统和消防控制室，建筑灭火器等项目情况和性能进行抽查，按照你单位提供的XXXXX消防设施检测公司出具的《建筑消防设施检测报告》（项目编号：XXXXX），现提出以下意见：
-              </p> -->
-
+              <h3>{{data.companyName}}：</h3> 
               <p>
-                你单位报来{{data.projectName}}建设工程消防验收资料收悉（受理凭证：{{data.acceptFileCode}}）。该工程位于{{data.address}}，建筑高度98m，地上29层，地下2层，总建筑面积421000m2，属一类高层民用建筑。{{data.applyDateTime|date:'yyyy年MM月dd日'}}，{{data.cityName}}住房和城乡建设局组织你单位及设计、施工、监理、检测等单位有关人员对该工程进行了消防验收。经对验收资料、建设消防设施技术检测报告进行审查，对总平面布置和平面布置中涉及消防安全的防火间距、消防车道、消防水源，建设防火防烟分区和建设构造，安全疏散和消防电梯，消防给水和自动灭火系统，防烟、排烟和通风系统的防火设计，消防电源及其配电，火灾应急照明、应急广播和疏散指示标志，火灾自动报警系统和消防控制室，建筑灭火器等项目情况和性能进行抽查，现提出以下意见：
+                你单位报来{{data.projectName}}建设工程消防验收资料收悉（受理凭证：{{data.acceptFileCode}}）。该工程位于{{data.address}}，建筑高度98m，地上29层，地下2层，总建筑面积421000m2，属一类高层民用建筑。{{data.applyDateTime|date:'yyyy年MM月dd日'}}，{{data.cityName}}住房和城乡建设局组织你单位及设计、施工、监理、检测等单位有关人员对该工程进行了消防验收。经对验收资料、消防设施技术检测报告进行审查，对总平面布置和平面布置中涉及消防安全的防火间距、消防车道、消防水源，建设防火防烟分区和建设构造，安全疏散和消防电梯，消防给水和自动灭火系统，防烟、排烟和通风系统的防火设计，消防电源及其配电，火灾应急照明、应急广播和疏散指示标志，火灾自动报警系统和消防控制室，建筑灭火器等项目情况和性能进行抽查，现提出以下意见：
               </p>
             </div>
             <textarea nz-input placeholder="请输入意见" [(ngModel)]="data.opinion" name="professionalContractorsopinion"

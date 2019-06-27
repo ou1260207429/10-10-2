@@ -72,14 +72,13 @@ export abstract class AppComponentBase {
   countCaptcha = 0;
   isSetCaptcha = false;
   interval$: any;
-  getServerCaptcha(phone) {
-    let url = REGISTER_URL + "api/User/SendValidationSMS?phoneNum=" + phone;
+  // 0登录 1注册 2找回密码
+  getServerCaptcha(phone, type) {
+    let url = REGISTER_URL + "api/User/SendValidationSMS?mobile=" + phone + "&validationCodeType=" + type;
 
     this.isSetCaptcha = true;
     var httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+      headers: new HttpHeaders()
     };
     this.http.post(url, null, httpOptions).subscribe((res: any) => {
 

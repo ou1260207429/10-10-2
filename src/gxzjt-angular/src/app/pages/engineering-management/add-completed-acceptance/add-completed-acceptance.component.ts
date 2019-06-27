@@ -10,6 +10,7 @@ import { AppSessionService } from '@shared/session/app-session.service';
 
 import { NzModalService } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
+import { ReuseTabService } from '@delon/abc';
 
 /**
  * 工程管理->竣工验收->新增申报
@@ -269,7 +270,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
       {
         label: '灭火器',
-        input: '楼梯间',
+        input: '',
         value: false,
         checked: false,
         arr: [
@@ -392,6 +393,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   constructor(private _appSessionService: AppSessionService,
     private _flowServices: FlowServices,
     private _eventEmiter: EventEmiter,
+    private reuseTabService: ReuseTabService,
     private _ActivatedRoute: ActivatedRoute,
     private _applyService: ApplyServiceServiceProxy,
     // private message: NzMessageService,
@@ -437,6 +439,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this.flowFormDto.projectTypeStatu = 2;
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.butNzLoading = false;
+      this.reuseTabService.replace('/app/addCompletedAcceptanceComponent')
       this._eventEmiter.emit('draftsComponentInit', []);
       this.flowFormDto.projectId = data;
       this._NzModalService.success({
@@ -509,6 +512,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       this.isSelectModalOkLoading = true;
       this._applyService.post_PutOnRecord(flowDataDto).subscribe(data => {
         this.butNzLoading = false;
+        this.reuseTabService.replace('/app/addCompletedAcceptanceComponent')
         this._eventEmiter.emit('completedAcceptanceComponentInit', []);
         if (data == true) {
           this._NzModalService.success({

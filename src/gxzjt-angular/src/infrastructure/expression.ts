@@ -3,16 +3,19 @@
 import { STPage, STComponent } from "@delon/abc";
 
 
-export const IS_DEBUG=true;
+export const IS_DEBUG = true;
 
-export const FLOW_SERVICES_URL =IS_DEBUG?'http://222.84.250.158:8111':'http://dn5.gxcic.net:8303';
+
+export const SERVER_URL= IS_DEBUG ? 'http://222.84.250.158:8111/' : 'http://dn5.gxcic.net:8301/';
+
+export const FLOW_SERVICES_URL = IS_DEBUG ? 'http://222.84.250.158:8111' : 'http://dn5.gxcic.net:8303';
 
 
 //谢峰的服务地址
-export const XIEFENG_SERVICES_URL = IS_DEBUG?'http://222.84.250.158:8113':'http://dn5.gxcic.net:8305'
+export const XIEFENG_SERVICES_URL = IS_DEBUG ? 'http://222.84.250.158:8113' : 'http://dn5.gxcic.net:8305'
 
 //庞博的服务器上传图片地址
-export const PANGBO_SERVICES_URL = IS_DEBUG?'http://222.84.250.158:8000/':'http://dn5.gxcic.net:8304/';
+export const PANGBO_SERVICES_URL = IS_DEBUG ? 'http://222.84.250.158:8000/' : 'http://dn5.gxcic.net:8304/';
 
 //注册地址，勿随意动
 // export const REGISTER_URL = 'http://222.84.250.158:8000/';
@@ -108,29 +111,29 @@ export let zzdjEnum1 = [
   { label: '三级', value: '三级' },
 ]
 
-export let zzdjEnum2 = [ 
+export let zzdjEnum2 = [
   { label: '一级', value: '一级' },
-  { label: '二级', value: '二级' }, 
+  { label: '二级', value: '二级' },
 ]
 
 export let zzdjEnum3 = [
   { label: '甲级', value: '甲级' },
   { label: '乙级', value: '乙级' },
-  { label: '丙级', value: '丙级' }, 
+  { label: '丙级', value: '丙级' },
 ]
 
-export let zzdjEnum4 = [ 
+export let zzdjEnum4 = [
   { label: '一类', value: '一类' },
-  { label: '二类', value: '二类' }, 
+  { label: '二类', value: '二类' },
 ]
 
 export let zzdjEnum5 = [
   { label: '甲级', value: '甲级' },
   { label: '乙级', value: '乙级' },
-  { label: '丙级', value: '丙级' }, 
+  { label: '丙级', value: '丙级' },
   { label: '丁级', value: '丁级' },
   { label: '戊级', value: '戊级' },
-  { label: '民用', value: '民用' }, 
+  { label: '民用', value: '民用' },
 ]
 
 
@@ -218,7 +221,7 @@ export let RefractoryEnum = [
 export const ArchitectureTypeEnum = [
   { label: '砖木结构', value: '砖木结构' },
   { label: '混合结构', value: '混合结构' },
-  { label: '钢筋混凝土结构', value: '钢筋混凝土结构' }, 
+  { label: '钢筋混凝土结构', value: '钢筋混凝土结构' },
   { label: '钢结构', value: '钢结构' },
   { label: '轻钢结构', value: '轻钢结构' },
   { label: '其他结构', value: '其他结构' }
@@ -232,10 +235,10 @@ export const AdoptEnum = [
 /**
  * 单位类型
  */
-export const  FlowPathTypeEnum = [
+export const FlowPathTypeEnum = [
   { label: '消防设计审查', value: 1 },
   { label: '消防验收', value: 2 },
-  { label: '竣工验收消防备案', value: 3 }, 
+  { label: '竣工验收消防备案', value: 3 },
 ]
 
 /**

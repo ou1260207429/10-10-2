@@ -48,6 +48,7 @@ export class StatisticsWarningCenterComponent implements OnInit {
     //     // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
     //   ]
     // },
+    { title: '流程流水号',default:'', index: 'flowNo' },
     { title: '工程类型', index: 'flowPathType',
     format: (item: any) => `${item.flowPathType==0?"数据不存在":(item.flowPathType==1?"消防设计审查":(item.flowPathType==2?"消防验收":(item.flowPathType==3?"激竣工验收消防备案活":"数据不存在")))}`,
     type: 'tag', tag: {
@@ -59,6 +60,7 @@ export class StatisticsWarningCenterComponent implements OnInit {
     { title: '工程名称',default:'', index: 'projectName' },
     { title: '工程编号',default:'',  index: 'projectCode' },
     { title: '建设单位',default:'',  index: 'companyName' },
+    { title: '节点名称',default:'',  index: 'currentNodeName' },
     // {
     //   title: '节点名称', index: 'flowPathType',
     //   sort: {
@@ -78,7 +80,7 @@ export class StatisticsWarningCenterComponent implements OnInit {
     { title: '流程发起人', index: 'applyName' },
 
     { title: '申报时间', type: 'date', index: 'applyTime' },
-    { title: '流程到达时间', type: 'date', index: 'acceptTime' },
+    // { title: '流程结束时间', type: 'date', index: 'endTime' },
     { title: '剩余审批时间',index: 'approvalRemainingTime' },
 
   ];
