@@ -90,7 +90,7 @@ export class StatisticsProAppStaticComponent implements OnInit {
       "未抽中":{ text: '未抽中', color: '' },
     }},
     // { title: '操作人', index: '' },
-    { title: '操作时间', index: 'acceptTime',type:'date' },//这个实际是申请时间操作时间暂时无数据
+    { title: '申报时间', index: 'acceptTime',type:'date' },
   ];
 
   constructor(private http: _HttpClient,

@@ -89,7 +89,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
       "未抽中":{ text: '未抽中', color: '' },
     }},
     { title: '操作人', index: 'currentHandleUserName' },
-    { title: '操作时间', index: 'acceptTime',type:'date' },//这个实际是申请时间操作时间暂时无数据
+    { title: '申报时间', index: 'acceptTime',type:'date' },//这个实际是申请时间操作时间暂时无数据
   ];
 
   constructor(private http: _HttpClient,
