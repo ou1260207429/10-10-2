@@ -50,7 +50,7 @@ export class FireDesignComponent extends PublicFormComponent implements  OnInit 
         {
           text: '重新申请',
           type: 'modal',
-          iif: record => record.status  === 2 && record.isResubmitted!=true,
+          iif: record => (record.status  === 2 || record.status  === 3) && record.isResubmitted!=true,
           click: (record: any, modal: any) => {
             this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/${record.projectId}/${record.id}`]);
           },
