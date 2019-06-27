@@ -2,9 +2,11 @@
   margin: 0;
   padding: 0;
 }
-body{
+
+body {
   background-color: #f0f2f5;
 }
+
 a {
   text-decoration: none;
   color: #000;
@@ -24,7 +26,7 @@ ul {
 .item {
   cursor: pointer;
   margin-top: 25px;
-  
+
 }
 
 .tips {
@@ -117,7 +119,20 @@ th .cell {
 .el-card__body {
   padding: 0 !important;
 }
-.el-message{
-  top: 50%!important;
-  margin-top: -20px!important;
+
+.el-message {
+  top: 50% !important;
+  margin-top: -20px !important;
+}
+
+.el-tooltip__popper.is-light {
+  letter-spacing: 1px;
+  border: none !important;
+  background-color: #bd1127 !important;
+  color: #fff;
+}
+
+.el-tooltip__popper .popper__arrow,
+.el-tooltip__popper .popper__arrow::after {
+  border-color: transparent transparent transparent #bd1127 !important;
 }

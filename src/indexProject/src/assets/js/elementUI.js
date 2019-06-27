@@ -18,7 +18,8 @@ import {
   Cascader,
   DatePicker,
   Pagination,
-  Loading
+  Loading,
+  Tooltip
 } from 'element-ui'
 const element = {
   install: function (Vue) {
@@ -41,6 +42,7 @@ const element = {
     Vue.use(DatePicker)
     Vue.use(Pagination)
     Vue.use(Loading)
+    Vue.use(Tooltip)
 
 
   }
