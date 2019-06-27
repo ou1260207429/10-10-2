@@ -21,7 +21,7 @@
               style="color:#bd1127;text-align:center;padding:20px 0;letter-spacing:3px; box-sizing: border-box;"
             >{{data.title}}</h1>
             <div class="lawContent" v-html="data.content"></div>
-            <div v-if="fileList.length>0" style="margin-top:20px;padding-left:30px;margin-bottom:20px;">
+            <div v-if="fileList.length>0" style="width:80%;margin:20px auto">
               <p style="margin-bottom:10px;font-weight: bold;">相关文件下载</p>
               <div>
                 <div
@@ -105,6 +105,8 @@ export default {
 <style lang='less' scoped>
 .lawContent {
   padding: 0 10px;
+  width: 80%;
+  margin: 20px auto;
   box-sizing: border-box;
 }
 </style>

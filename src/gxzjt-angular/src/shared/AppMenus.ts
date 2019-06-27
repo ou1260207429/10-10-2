@@ -43,7 +43,7 @@ export class AppMenus {
       text: "",
       i18n: "工作事项",
       icon: { type: "icon", value: "bars" },// 图标
-      acl: [AppMenus.aclCompany, AppMenus.aclSys, AppMenus.aclOrg],
+      acl: [AppMenus.aclSys, AppMenus.aclOrg],
       children: [
         {
           text: "",

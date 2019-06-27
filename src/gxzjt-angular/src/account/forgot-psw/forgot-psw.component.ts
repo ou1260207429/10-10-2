@@ -36,7 +36,6 @@ export class ForgotPswComponent extends AppComponentBase implements OnInit {
     injector: Injector,
     private _accountService: AccountServiceProxy,
     private _router: Router,
-    public http: _HttpClient,
   ) {
     super(injector);
   }
@@ -68,44 +67,28 @@ export class ForgotPswComponent extends AppComponentBase implements OnInit {
 
   save(): void {
     this.saving = true;
-    this._accountService
-      .register(this.model)
-      .pipe(finalize(() => {
-        this.saving = false;
-      }))
-      .subscribe((result: RegisterOutput) => {
-        if (!result.canLogin) {
-          this.notify.success(this.l('SuccessfullyRegistered'));
-          this._router.navigate(['/login']);
-          return;
-        }
+    // this._accountService
+    //   .register(this.model)
+    //   .pipe(finalize(() => {
+    //     this.saving = false;
+    //   }))
+    //   .subscribe((result: RegisterOutput) => {
+    //     if (!result.canLogin) {
+    //       this.notify.success(this.l('SuccessfullyRegistered'));
+    //       this._router.navigate(['/login']);
+    //       return;
+    //     }
 
-        this.saving = true;
+    //     this.saving = true;
 
-        // Autheticate
-        // this._loginService.authenticateModel.userNameOrEmailAddress = this.model.userName;
-        // this._loginService.authenticateModel.password = this.model.password;
-        // this._loginService.authenticate(() => {
-        //   this.saving = false;
-        // });
-      });
+   
+    //   });
   }
 
 
-  interval$: any;
+
   getCaptcha() {
-    // if (this.mobile.invalid) {
-    //   this.mobile.markAsDirty({ onlySelf: true });
-    //   this.mobile.updateValueAndValidity({ onlySelf: true });
-    //   return;
-    // }
-    this.count = 59;
-    this.interval$ = setInterval(() => {
-      this.count -= 1;
-      if (this.count <= 0) {
-        clearInterval(this.interval$);
-      }
-    }, 1000);
+    this.getServerCaptcha(this.model.EId);
   }
 
 }

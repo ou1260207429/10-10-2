@@ -14,7 +14,7 @@
       <el-row>
         <el-card :style="{minHeight:tableHight}">
           <el-row :gutter="10">
-            <el-col :span="17" v-loading="!data">
+            <el-col :span="17" v-loading="!data"  :style="{minHeight:tableHight}">
               <div style="width:100%;height:2px;"></div>
               <div v-if="data">
                 <h1>{{data.title}}</h1>
