@@ -37,8 +37,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
 
 
   model: any;
-  captcha: {};
-  count = 0;
+
 
   constructor(
     injector: Injector,
@@ -78,7 +77,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
   back(): void {
     this._router.navigate(['/account/login']);
   }
-  isSetCaptcha = false;
+
 
   // save(): void {
   // this.saving = true;
@@ -147,30 +146,9 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
     });
   }
 
-  interval$: any;
+
   getCaptcha() {
-    let url = REGISTER_URL + "api/User/SendValidationSMS?phoneNum=" + this.model.EId;
-
-    this.isSetCaptcha = true;
-    this.http.post(url, null, this.httpOptions).subscribe(res => {
-      this.startCount();
-      this.isSetCaptcha = false;
-    },
-      err => {
-        this.showErr(err);
-        this.isSetCaptcha = false;
-      });
-
-  }
-
-  startCount() {
-    this.count = 59;
-    this.interval$ = setInterval(() => {
-      this.count -= 1;
-      if (this.count <= 0) {
-        clearInterval(this.interval$);
-      }
-    }, 1000);
+    this.getServerCaptcha(this.model.EId);
   }
 
 
