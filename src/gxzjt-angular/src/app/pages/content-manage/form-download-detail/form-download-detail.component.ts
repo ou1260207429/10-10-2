@@ -44,9 +44,9 @@ export class FormDownloadDetailComponent implements OnInit {
       this.goBack();
     })
   }
-
   //阻止自动上传
   beforeUpload = (file: UploadFile): boolean => {
+    this.fileList = []
     const tid = file.uid
     this.fileList.push({
       name: file.name,
@@ -55,9 +55,11 @@ export class FormDownloadDetailComponent implements OnInit {
     })
     let params = {
       sourceId: createguid(),
-      AppId: AppId,
+    //  AppId: AppId,
       module: "table",
     }
+    console.log(this.fileList)
+
     const formData: any = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
@@ -68,13 +70,10 @@ export class FormDownloadDetailComponent implements OnInit {
         this.fileList = fileList
       } else {
         this.fileList[0].status = 'error'
+        const fileList = lodash.cloneDeep(this.fileList);
         const that = this
-        setTimeout(function () {
-          that.message.error("上传文件失败");
-          that.fileList = []
-        }, 1000)
-
-
+        this.fileList = []
+        this.fileList = fileList
       }
     }, error => {
       this.message.error("上传文件失败");
