@@ -113,8 +113,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   ngOnInit() {
     this.init()
     this.resetTime();
-    let _self = this;
-    this.init();
+    let _self = this; 
     this.eventEmiter.on('fireAcceptanceComponentInit', () => {
       _self.init();
     });
