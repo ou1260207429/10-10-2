@@ -61,10 +61,25 @@ export class FormDownloadDetailComponent implements OnInit {
     const formData: any = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
-      this.fileList[0].url = PANGBO_SERVICES_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
-      this.fileList[0].status = 'done'
-      const fileList = lodash.cloneDeep(this.fileList);
-      this.fileList = fileList
+      if (data.result == 0) {
+        this.fileList[0].url = PANGBO_SERVICES_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
+        this.fileList[0].status = 'done'
+        const fileList = lodash.cloneDeep(this.fileList);
+        this.fileList = fileList
+      } else {
+        this.fileList[0].status = 'error'
+        const that = this
+        setTimeout(function () {
+          that.message.error("上传文件失败");
+          that.fileList = []
+        }, 1000)
+
+
+      }
+    }, error => {
+      this.message.error("上传文件失败");
+      this.fileList[0].status = 'error'
+      this.fileList = []
     })
     return false;
   };

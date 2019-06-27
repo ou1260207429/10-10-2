@@ -13,7 +13,7 @@ import lodash from 'lodash'
 @Component({
   selector: 'app-completed-acceptance-assembly',
   templateUrl: './completed-acceptance-assembly.component.html',
-  
+
 })
 export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
@@ -41,7 +41,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   decimationnumber
 
   //判断上传的焦点
-  uoloadIndex: number = -1; 
+  uoloadIndex: number = -1;
 
 
   //资质等级的列表
@@ -59,7 +59,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   }
 
   //从父组件获取使用行性质的select
-  @Input() useNatureSelect:any
+  @Input() useNatureSelect: any
   constructor(public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) {
     this.decimationnumber = [];
     for (let index = 1; index < 101; index++) {
@@ -130,12 +130,12 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     this._publicServices.newUpload(formData, params).subscribe(data => {
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
+      this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
       this.data.fileList[this.uoloadIndex].array[index].status = 'done'
-      const fileList = lodash.cloneDeep(this.data.fileList);  
+      const fileList = lodash.cloneDeep(this.data.fileList);
 
       this.data.fileList = []
-      this.data.fileList = fileList 
+      this.data.fileList = fileList
     })
     return false;
   };
@@ -154,10 +154,10 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     // console.log(res);
     // console.log(item);
     console.log(this.data);
-    item.qualificationLevel=res.qualificationLevel;
-    item.contacts=res.contact;
-    item.contactsNumber=res.contactPhone;
-    item.legalRepresentative=res.leader;
+    item.qualificationLevel = res.qualificationLevel;
+    item.contacts = res.contact;
+    item.contactsNumber = res.contactPhone;
+    item.legalRepresentative = res.leader;
 
   }
 
