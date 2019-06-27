@@ -6,8 +6,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Validators } from '@angular/forms';
 
+import { REGISTER_URL } from 'infrastructure/expression';
 import {
   AccountServiceProxy,
   RegisterInput,
@@ -18,8 +18,9 @@ import {
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 
 import { AppComponentBase } from '@shared/component-base/app-component-base';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { _HttpClient } from '@delon/theme';
+
 @Component({
   templateUrl: './forgot-psw.component.html',
   styleUrls: ['./forgot-psw.component.less'],
@@ -36,6 +37,7 @@ export class ForgotPswComponent extends AppComponentBase implements OnInit {
     injector: Injector,
     private _accountService: AccountServiceProxy,
     private _router: Router,
+    public http: HttpClient,
   ) {
     super(injector);
   }
@@ -45,18 +47,10 @@ export class ForgotPswComponent extends AppComponentBase implements OnInit {
 
 
     this.model = {
-      MerchantId: "C8793952-540E-414C-98FF-9C65D61",
-      EId: "",//登录手机号
-      EName: "",
-      Password: "",
-      ConfirmPassword: "",
-      EnterpriseCode: "",
-      EnterpriseName: "",
-      Leader: "",
-      LeaderPhone: "",
-      Contact: "",
-      ContactPhone: "",
-      VerificationCode: "",
+      mobile: "",
+      newPassword: "",
+      confirmPassword: "",
+      verificationCode: ""
 
     };
   }
@@ -65,30 +59,47 @@ export class ForgotPswComponent extends AppComponentBase implements OnInit {
     this._router.navigate(['/account/login']);
   }
 
-  save(): void {
+  save() {
     this.saving = true;
-    // this._accountService
-    //   .register(this.model)
-    //   .pipe(finalize(() => {
-    //     this.saving = false;
-    //   }))
-    //   .subscribe((result: RegisterOutput) => {
-    //     if (!result.canLogin) {
-    //       this.notify.success(this.l('SuccessfullyRegistered'));
-    //       this._router.navigate(['/login']);
-    //       return;
-    //     }
+    let url = REGISTER_URL + "api/User/Register";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
 
-    //     this.saving = true;
 
-   
-    //   });
+    this.http.post(url, this.model, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }).subscribe((res: any) => {
+
+      // console.log(res);
+      if (res) {
+        if (res.result == 0) {
+          this.modalService.info({
+            nzTitle: '提示',
+            nzContent: "注册成功",
+          });
+          this.back();
+        } else {
+          this.modalService.info({
+            nzTitle: '提示',
+            nzContent: res.message,
+          });
+        }
+      }
+      this.saving = false;
+    }, err => {
+      this.modalService.error({
+        nzTitle: '提示',
+        nzContent: err,
+      });
+      this.saving = false;
+    });
   }
 
 
 
+
   getCaptcha() {
-    this.getServerCaptcha(this.model.EId);
+    this.getServerCaptcha(this.model.mobile, 2);
   }
 
 }

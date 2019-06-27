@@ -73,6 +73,7 @@ export class AppPreBootstrap {
         httpClient.get(url).subscribe((response: any) => {
             let result = response.result;
 
+     
             // 填充数据
             _.merge(abp, result);
 
@@ -100,9 +101,6 @@ export class AppPreBootstrap {
             localization.extend(abp.localization);
 
 
-            // const _ACLService = injector.get(ACLService);
-
-            // _ACLService.setRole(['sys']);
             // 写入菜单
             const menuService = injector.get(MenuService);
 

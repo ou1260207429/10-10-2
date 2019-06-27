@@ -27,7 +27,7 @@ export class AppSessionService {
     private _ACLService: ACLService,
     private _MenuService: MenuService,
     private _TokenService: TokenService,
-    private _DelonACLConfig: DelonACLConfig
+    // private _DelonACLConfig: DelonACLConfig
   ) { }
 
   // get application(): ApplicationInfoDto {

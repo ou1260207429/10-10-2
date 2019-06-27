@@ -7,6 +7,8 @@ export class AppMenus {
   static aclSys = "sys";//管理员
   static aclOrg = "org";//机构人员
 
+  static aclAny = "any";//所有人
+
 
   static Menus: Menu[] = [
     {

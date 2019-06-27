@@ -37,148 +37,32 @@ export class UserrightUsereditComponent implements OnInit {
   orgtreefiter=[];
   nodes=[];
 
-  // nodes=[ {
-  //   "key": 2,
-  //   "title": "大口九有限责任公司",
-  //   "isLeaf": false,
-  //   "children": [
-  //     {
-  //       "key": 3,
-  //       "title": "财务部",
-  //       "isLeaf": false,
-  //       "children": [
-  //         {
-  //           "key": 25,
-  //           "title": "财务一组",
-  //           "isLeaf": true,
-  //           "children": []
-  //         },
-  //         {
-  //           "key": 151,
-  //           "title": "财务二组",
-  //           "isLeaf": true,
-  //           "children": []
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "key": 4,
-  //       "title": "工程部",
-  //       "isLeaf": false,
-  //       "children": [
-  //         {
-  //           "key": 23,
-  //           "title": "工程一部",
-  //           "isLeaf": false,
-  //           "children": [
-  //             {
-  //               "key": 24,
-  //               "title": "工程一部子一部",
-  //               "isLeaf": true,
-  //               "children": []
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           "key": 223,
-  //           "title": "12",
-  //           "isLeaf": true,
-  //           "children": []
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "key": 130,
-  //       "title": "巡查部",
-  //       "isLeaf": false,
-  //       "children": [
-  //         {
-  //           "key": 154,
-  //           "title": "测试1",
-  //           "isLeaf": false,
-  //           "children": [
-  //             {
-  //               "key": 239,
-  //               "title": "34",
-  //               "isLeaf": false,
-  //               "children": [
-  //                 {
-  //                   "key": 240,
-  //                   "title": "fg",
-  //                   "isLeaf": true,
-  //                   "children": []
-  //                 }
-  //               ]
-  //             }
-  //           ]
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "key": 132,
-  //       "title": "纪检部",
-  //       "isLeaf": false,
-  //       "children": [
-  //         {
-  //           "key": 212,
-  //           "title": "22",
-  //           "isLeaf": true,
-  //           "children": []
-  //         },
-  //         {
-  //           "key": 238,
-  //           "title": "eee",
-  //           "isLeaf": true,
-  //           "children": []
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "key": 138,
-  //       "title": "督查2",
-  //       "isLeaf": false,
-  //       "children": [
-  //         {
-  //           "key": 243,
-  //           "title": "er",
-  //           "isLeaf": true,
-  //           "children": []
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       "key": 214,
-  //       "title": "测试部门",
-  //       "isLeaf": false,
-  //       "children": [
-  //         {
-  //           "key": 215,
-  //           "title": "测试1",
-  //           "isLeaf": true,
-  //           "children": []
-  //         },
-  //         {
-  //           "key": 219,
-  //           "title": "12322",
-  //           "isLeaf": true,
-  //           "children": []
-  //         },
-  //         {
-  //           "key": 220,
-  //           "title": "42534543",
-  //           "isLeaf": true,
-  //           "children": []
-  //         },
-  //         {
-  //           "key": 221,
-  //           "title": "123123",
-  //           "isLeaf": true,
-  //           "children": []
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // }
+//   nodes=[ {
+//     key: "39B6CADE-DC11-4BA4-972E-3818276C9CDF",
+//     title: "大口九有限责任公司",
+//     isLeaf: false,
+//     children: [
+//       {
+//         "key": 3,
+//         "title": "财务部",
+//         "isLeaf": false,
+//         "children": [
+//           {
+//             "key": 25,
+//             "title": "财务一组",
+//             "isLeaf": true,
+//             "children": []
+//           },
+//           {
+//             "key": 151,
+//             "title": "财务二组",
+//             "isLeaf": true,
+//             "children": []
+//           }
+//         ]
+//       },
+//     ]
+//   }
 // ]
 
   Password2;//确认密码
@@ -299,6 +183,9 @@ export class UserrightUsereditComponent implements OnInit {
       res => {
         this.submodel = res.data;
         this.submodel.sex=res.data.sex+'';
+        this.defaultCheckedKeys2=res.data.userDataVisibilityIds
+        this.defaultCheckedKeys1.push(res.data.organizationsId)
+        debugger
       },
     );
   }

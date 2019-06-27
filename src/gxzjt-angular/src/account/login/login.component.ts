@@ -19,13 +19,12 @@ import { AbpSessionService } from '@abp/session/abp-session.service';
 import { ReuseTabService } from '@delon/abc';
 
 
-import { REGISTER_URL } from 'infrastructure/expression';
+
 
 import * as $ from 'jquery';
 
 import { AppSessionService } from '@shared/session/app-session.service';
 
-import { isPhone } from '@shared/utils/regex';
 
 import {
   SessionServiceProxy
@@ -81,11 +80,12 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
 
   ngOnInit(): void {
-    this.titleSrvice.setTitle("登录");
 
+    this.titleSrvice.setTitle("登录");
+    
     if (this._TokenService.getToken()) {
-      // location.href = location.href.replace('#/account/login', '#/app/');
-      this._router.navigate(['/app/home/welcome']);
+      
+      this._router.navigate(['/home/welcome']);
     }
     this.reuseTabService.clear();
   }
@@ -95,7 +95,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     checkCode = "" + Math.ceil(Math.random() * 10000);
 
     $(".inner").mousedown(function (e) {
-      console.log(e)
+      
       var el = $(".inner");
 
       var os = el.offset();
@@ -181,7 +181,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
           /** 强制刷新导航栏url 跳转到首页 */
           // location.href = location.href.replace('#/account/login', '#/app/');
           this.submitting = false;
-          this._router.navigate(['#/app/home/welcome']);
+          this._router.navigate(['/home/welcome']);
 
         }, err => {
           this.modalService.warning({
@@ -204,7 +204,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
   }
   getCaptcha(){
-    this.getServerCaptcha(this.loginService.authenticateModel.userNameOrEmailAddress);
+    this.getServerCaptcha(this.loginService.authenticateModel.userNameOrEmailAddress,0);
   }
 
 }

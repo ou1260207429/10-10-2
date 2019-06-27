@@ -30,7 +30,7 @@ export class UserrightUserlistComponent implements OnInit {
   postmodel = {
     eName:'',
     page: 1,
-    pageSize: 500,
+    pageSize: 2000,
   };
   formResultData;
 //锁定用户相关
