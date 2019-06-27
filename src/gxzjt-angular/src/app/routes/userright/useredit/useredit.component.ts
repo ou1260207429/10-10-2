@@ -172,7 +172,6 @@ export class UserrightUsereditComponent implements OnInit {
     console.log("所属组织机构"+event.keys);
     this.orgtreefiter=event.keys;
     this.submodel.organizationsId=event.keys[0];
-    debugger
   }
   getuserdetail(id){
     let model={
@@ -185,7 +184,6 @@ export class UserrightUsereditComponent implements OnInit {
         this.submodel.sex=res.data.sex+'';
         this.defaultCheckedKeys2=res.data.userDataVisibilityIds
         this.defaultCheckedKeys1.push(res.data.organizationsId)
-        debugger
       },
     );
   }

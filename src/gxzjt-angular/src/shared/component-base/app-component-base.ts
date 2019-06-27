@@ -83,9 +83,9 @@ export abstract class AppComponentBase {
     this.http.post(url, null, httpOptions).subscribe((res: any) => {
 
       if (res) {
-        if (res.result && res.result == 0) {
+        if (res.result == 0) {
           this.startCount();
-        } else if (res.message) {
+        } else {
           this.modalService.info({
             nzTitle: '提示',
             nzContent: res.message,

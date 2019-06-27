@@ -9072,6 +9072,7 @@ export class ExamineFormDto implements IExamineFormDto {
     acceptFileUrl: string | undefined;
     descr: string | undefined;
     isTransfer: boolean | undefined;
+    isFirstApply: boolean | undefined;
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -9139,6 +9140,7 @@ export class ExamineFormDto implements IExamineFormDto {
             this.acceptFileUrl = data["acceptFileUrl"];
             this.descr = data["descr"];
             this.isTransfer = data["isTransfer"];
+            this.isFirstApply = data["isFirstApply"];
         }
     }
 
@@ -9206,6 +9208,7 @@ export class ExamineFormDto implements IExamineFormDto {
         data["acceptFileUrl"] = this.acceptFileUrl;
         data["descr"] = this.descr;
         data["isTransfer"] = this.isTransfer;
+        data["isFirstApply"] = this.isFirstApply;
         return data; 
     }
 
@@ -9261,6 +9264,7 @@ export interface IExamineFormDto {
     acceptFileUrl: string | undefined;
     descr: string | undefined;
     isTransfer: boolean | undefined;
+    isFirstApply: boolean | undefined;
 }
 
 export class ProjectAttachment implements IProjectAttachment {
