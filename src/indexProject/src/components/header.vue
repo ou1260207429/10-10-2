@@ -27,7 +27,7 @@
           </li>
         </template>
         <li>
-          <a class="antivelogin" :href="loginUrl">登录</a>
+          <a class="antivelogin" href="http://222.84.250.158:8880/#/app">登录</a>
         </li>
       </ul>
     </el-row>
@@ -42,13 +42,6 @@
       </div>
     </el-row>
     <router-view></router-view>
-    <!-- <el-row>
-      <div class="content">
-        <el-row>
-
-        </el-row>
-      </div>
-    </el-row>-->
   </el-row>
 </template>
 
@@ -58,7 +51,6 @@ import { app } from "../assets/js/app";
 export default {
   data() {
     return {
-      loginUrl: app.loginUrl,
       currentPath: [],
       showPath: false,
       navList: [
@@ -112,7 +104,6 @@ export default {
   computed: {},
 
   mounted() {
-    console.log(this.loginUrl);
     this.showPath = this.$route.meta.show;
     this.currentPath = this.$route.meta.name;
   },

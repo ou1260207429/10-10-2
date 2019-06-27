@@ -11,7 +11,6 @@ import {
 } from './apiValue'
 var app = {
   downLoadUrl: Vue.prototype.downLoadUrl,
-  loginUrl: Vue.prototype.loginUrl,
   clentHeight() {
     let clientHeight = document.body.clientHeight;
     let topHeight = document.getElementById('top') ? document.getElementById('top').clientHeight : 0;
