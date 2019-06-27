@@ -109,8 +109,7 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
     const formData = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
-      const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)
-      // this.examineFormDto.attachment[index].fileNo = data.data[0].id 
+      const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name) 
 
       this.examineFormDto.attachment[index]['url'] = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
       this.examineFormDto.attachment[index]['status'] = 'done'
@@ -118,6 +117,12 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
       this.examineFormDto.attachment[index].fileUrl = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
       const fileList = lodash.cloneDeep(this.examineFormDto.attachment);  
 
+      this.examineFormDto.attachment = []
+      this.examineFormDto.attachment = fileList 
+    },error=>{
+      const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)
+      this.examineFormDto.attachment[index]['status'] = 'error'
+      const fileList = lodash.cloneDeep(this.examineFormDto.attachment);  
       this.examineFormDto.attachment = []
       this.examineFormDto.attachment = fileList 
     })

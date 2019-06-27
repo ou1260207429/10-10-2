@@ -124,6 +124,12 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
       const fileList = lodash.cloneDeep(this.data.fileList);  
       this.data.fileList = []
       this.data.fileList = fileList 
+    },error=>{
+      const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
+      this.data.fileList[this.uoloadIndex].array[index].status = 'error'
+      const fileList = lodash.cloneDeep(this.data.fileList);  
+      this.data.fileList = []
+      this.data.fileList = fileList 
     })
     return false;
   };

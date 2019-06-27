@@ -17,15 +17,18 @@ export class UserrightUserlookComponent implements OnInit {
     data:[]
   };//存放获取的角色列表
   submodel={
-    EId:'',//登录账号
-    EName:'',//名称
-    Password:'',//密码
-    OrganizationsId:'',//所属组织机构
-    Sex:null,//性别
-    Mobile:'',//手机号
-    IdCardNo:'',//身份证
-    PositionIds:[],//岗位编号集合
-    UserDataVisibilityIds:[]//用户可见数据集合
+    eId:'',//登录账号
+    eName:'',//名称
+    password:'',//密码
+    organizationsId:'',//所属组织机构
+    sex:null,//性别
+    mobile:'',//手机号
+    idCardNo:'',//身份证
+    positionIds:[],//岗位编号集合
+    userDataVisibilityIds:[],//用户可见数据集合
+    positionNames:'',
+    organizationsName:'',
+    userDataVisibilityNames:'',
   };
   id;
   user;//存放获取用户详情
@@ -220,7 +223,8 @@ export class UserrightUserlookComponent implements OnInit {
 
     this.UserRightService.Details(model).subscribe(
       res => {
-        this.user = res;
+        this.submodel = res.data;
+        debugger
       },
     );
   }
@@ -228,12 +232,5 @@ export class UserrightUserlookComponent implements OnInit {
   ret(){
     this.router.navigate([`/app/userright/userlist`]);
   }
-  nzEvent(event: NzFormatEmitEvent): void {
-    console.log("可见数据域"+event.keys);
-    this.submodel.UserDataVisibilityIds=event.keys;
-  }
-  nzEventorg(event: NzFormatEmitEvent): void {
-    console.log("所属组织机构"+event.keys);
-    this.submodel.OrganizationsId=event.keys[0];
-  }
+
 }

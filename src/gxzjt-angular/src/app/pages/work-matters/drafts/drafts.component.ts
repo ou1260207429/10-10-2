@@ -102,9 +102,9 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
     this.searchParam.maxResultCount = AppConsts.grid.defaultPageSize;
     this.searchParam.sorting = 'ProjectId';
     this.searchParam.number='';
-    this.searchParam.companyName='';
-    this.searchParam.applyTimeStart = moment(this.rangeTime[0]);
-    this.searchParam.applyTimeEnd =moment(this.rangeTime[1]);
+    this.searchParam.projectName='';
+    // this.searchParam.applyTimeStart = moment(this.rangeTime[0]);
+    // this.searchParam.applyTimeEnd =moment(this.rangeTime[1]);
     this.getList();
 
   }
@@ -127,8 +127,8 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
    */
   query() {
     this.searchParam.page = 1;
-    this.searchParam.applyTimeStart = moment(this.rangeTime[0])
-    this.searchParam.applyTimeEnd =moment(this.rangeTime[1])
+    // this.searchParam.applyTimeStart = moment(this.rangeTime[0])
+    // this.searchParam.applyTimeEnd =moment(this.rangeTime[1])
     this.getList();
   }
 
