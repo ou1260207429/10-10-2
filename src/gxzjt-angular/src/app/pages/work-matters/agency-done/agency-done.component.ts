@@ -181,8 +181,8 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
    * 点击查询
    */
   query() {  
-    this.searchParam.applyTimeStart = timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-') + " 00:00:00";
-    this.searchParam.applyTimeEnd = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-') + " 23:59:59"; 
+    this.searchParam.applyTimeStart = this.rangeTime[0] ? timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-') + " 00:00:00":this.searchParam.applyTimeStart
+    this.searchParam.applyTimeEnd  = this.rangeTime[1] ?timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-') + " 23:59:59":this.searchParam.applyTimeEnd
     this.searchParam.pagedAndFilteredInputDto.page = 1;
     this.getList();
   }
