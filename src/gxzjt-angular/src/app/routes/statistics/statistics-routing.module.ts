@@ -5,10 +5,12 @@ import { StatisticsWarningCenterComponent } from './warning-center/warning-cente
 import { StatisticsProAppStaticComponent } from './pro-app-static/pro-app-static.component';
 import { StatisticsTimeoutDealWithComponent } from './timeout-deal-with/timeout-deal-with.component';
 import { StatisticsTimeLimtDealComponent } from './time-limt-deal/time-limt-deal.component';
+import { AppMenus } from "@shared/AppMenus"
+
 const routes: Routes = [
 
   { path: '', component: StatisticsWarningCenterComponent, data: { title: '预警中心' } },
-  { path: 'warning-center', component: StatisticsWarningCenterComponent, data: { title: '预警中心' } },
+  { path: 'warning-center', component: StatisticsWarningCenterComponent, data: { title: '预警中心', role:[AppMenus.aclOrg,AppMenus.aclSys]} },
   { path: 'pro-app-static', component: StatisticsProAppStaticComponent, data: { title: '项目申报情况统计' } },
   { path: 'timeout-deal-with', component: StatisticsTimeoutDealWithComponent, data: { title: '超时办理情况分析' } },
   { path: 'time-limt-deal', component: StatisticsTimeLimtDealComponent, data: { title: '办理时限统计' } },

@@ -1,10 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 
-import { _HttpClient } from '@delon/theme';
-
-
-
+import { MenuService } from '@delon/theme';
 
 /**
  * 
@@ -16,13 +13,14 @@ import { _HttpClient } from '@delon/theme';
 export class WelcomeComponent implements OnInit {
 
   constructor(
-
+    private _MenuService: MenuService,
   ) {
 
   }
 
   ngOnInit() {
  
+    this._MenuService.resume();
   }
 
 

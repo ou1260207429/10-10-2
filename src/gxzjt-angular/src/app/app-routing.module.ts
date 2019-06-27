@@ -41,7 +41,7 @@ const routes: Routes = [
       {
         path: 'statistics', loadChildren: './routes/statistics/statistics.module#StatisticsModule',
         data: {
-          role: [AppMenus.aclSys]
+          role: [AppMenus.aclOrg,AppMenus.aclSys]
         },
 
       },
