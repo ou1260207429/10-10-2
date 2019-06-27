@@ -40,8 +40,9 @@
               </nz-col>
               <nz-col [nzSpan]="8" style="padding-left: 10px;">
                 <button type="button" nz-button nzSize="large" (click)="getCaptcha()" [disabled]="count" nzBlock
-                  [nzLoading]="isSetCaptcha">
-                  {{ count ? count + 's' : '获取验证码' }}
+                  [nzLoading]="isSetCaptcha"
+                  [disabled]="countCaptcha!=0||(EId.control.dirty&&EId.control.errors)||model.EId.length==0">
+                  {{ countCaptcha ? countCaptcha + 's' : (isSetCaptcha?'':'获取验证码') }}
                 </button>
               </nz-col>
             </nz-row>
@@ -57,7 +58,7 @@
               </nz-input-group>
               <nz-form-explain *ngIf="password.control.dirty&&password.control.errors">
                 <ng-container *ngIf="password.control.hasError('required')">不能为空！</ng-container>
-                <ng-container *ngIf="password.control.hasError('minlength')">请输入6-32个字符</ng-container>
+                <ng-container *ngIf="password.control.hasError('minlength')">请输入8-18位密码</ng-container>
               </nz-form-explain>
             </nz-form-control>
           </nz-form-item>

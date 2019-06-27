@@ -321,8 +321,8 @@
           </td>
         </tr>
         <tr style="border-top: 1px solid #e2e2e2;" [ngClass]="{pointerf5f5f5: type == 1}">
-          <td colspan='5' rowspan="2" class="fontweight">单体建筑名称</td>
-          <td colspan='2' rowspan="2" class="fontweight">结构类型</td>
+          <td colspan='3' rowspan="2" class="fontweight">单体建筑名称</td>
+          <td colspan='4' rowspan="2" class="fontweight">结构类型</td>
           <td colspan='1' rowspan="2" class="fontweight">耐火等级</td>
           <td colspan='2' rowspan="1" class="fontweight">层数</td>
           <td colspan='1' rowspan="2" class="fontweight">建筑高度（m）</td>
@@ -340,13 +340,13 @@
 
         <tr *ngFor="let item of data.basicInformation;let index = index" [ngClass]="{pointerf5f5f5: type == 1}">
           <!-- 请输入单体建筑名称 -->
-          <td colspan="5">
+          <td colspan="3">
             <se error="必填">
               <input nz-input [(ngModel)]="item.name" name="jbname{{index}}" required />
             </se>
           </td>
           <!-- 请输入结构类型 -->
-          <td colspan="2">
+          <td colspan="4" style="width: 300px">
             <se error="必填" >
               <nz-select [(ngModel)]="item.type" name="jbtype{{index}}" required>
                 <nz-option *ngFor="let option of typeSelect" [nzLabel]="option.label" [nzValue]="option.value">

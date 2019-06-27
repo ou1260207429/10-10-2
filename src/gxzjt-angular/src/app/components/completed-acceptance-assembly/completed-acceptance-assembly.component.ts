@@ -133,9 +133,14 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
       this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
       this.data.fileList[this.uoloadIndex].array[index].status = 'done'
       const fileList = lodash.cloneDeep(this.data.fileList);
-
       this.data.fileList = []
-      this.data.fileList = fileList
+      this.data.fileList = fileList 
+    },error=>{
+      const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
+      this.data.fileList[this.uoloadIndex].array[index].status = 'error'
+      const fileList = lodash.cloneDeep(this.data.fileList);  
+      this.data.fileList = []
+      this.data.fileList = fileList 
     })
     return false;
   };
