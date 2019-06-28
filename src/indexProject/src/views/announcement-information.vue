@@ -61,6 +61,7 @@
                     end-placeholder="公告结束日期"
                   ></el-date-picker>
                 </el-form-item>
+
                 <el-form-item>
                   <el-button
                     size="small"
@@ -68,6 +69,14 @@
                     type="primary"
                     @click="initTable"
                   >提交</el-button>
+                </el-form-item>
+                <el-form-item>
+                  <el-button
+                    size="small"
+                    style="background-color:#397CC8;border-color:#397CC8;"
+                    type="primary"
+                    @click="autoRefre"
+                  >重置</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -241,10 +250,17 @@ export default {
   },
 
   methods: {
+    autoRefre() {
+      this.dateTime = [];
+      this.searchForm.cityname = "";
+      this.searchForm.regionname = "";
+      this.searchForm.startTime = "";
+      this.searchForm.endTime = "";
+      this.initTable();
+    },
     /**
      * 查询表格数据
-     */
-    initTable() {
+     */ initTable() {
       if (this.dateTime && this.dateTime.length > 0) {
         this.searchForm.startTime = moment(this.dateTime[0]).format(
           "YYYY-MM-DD 00:00:00"
