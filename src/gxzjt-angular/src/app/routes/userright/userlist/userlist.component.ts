@@ -64,6 +64,7 @@ pageConfig: STPage = publicPageConfig;
           type: 'modal',
           click: (record: any, modal: any) => {
             this.tolook(record);
+            this.refresh();
 
           },
         },
@@ -72,6 +73,8 @@ pageConfig: STPage = publicPageConfig;
           type: 'modal',
           click: (record: any, modal: any) => {
             this.toedit(record);
+            this.refresh();
+
 
           },
 
