@@ -140,6 +140,7 @@ export class UserrightUsereditComponent implements OnInit {
       return
     }
     if(this.orgtreefiter.length!=1){
+      debugger
       this.message.error("所属组织为单选");
       return
     }
@@ -154,10 +155,16 @@ export class UserrightUsereditComponent implements OnInit {
 
     this.UserRightService.Edit(this.submodel).subscribe(
       res => {
-        this.message.success(res.message);
+        if(res.result!=0){
+          this.message.error(res.message);
+          return
+        }else{
+          this.message.success(res.message)
+          this.router.navigate([`/app/userright/userlist`]);
+        }
       },
     );
-    this.router.navigate([`/app/userright/userlist`]);
+
 
 
   }
@@ -182,8 +189,9 @@ export class UserrightUsereditComponent implements OnInit {
       res => {
         this.submodel = res.data;
         this.submodel.sex=res.data.sex+'';
-        this.defaultCheckedKeys2=res.data.userDataVisibilityIds
-        this.defaultCheckedKeys1.push(res.data.organizationsId)
+        this.defaultCheckedKeys2=res.data.userDataVisibilityIds;
+        this.defaultCheckedKeys1.push(res.data.organizationsId);
+        this.orgtreefiter.push(res.data.organizationsId);
       },
     );
   }
