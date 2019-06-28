@@ -15,7 +15,7 @@ export class AppMenus {
       text: "",
       i18n: "首页",
       icon: { type: "icon", value: "home" },// 图标
-      acl: AppMenus.aclSys,
+      acl: [AppMenus.aclSys]  ,
       children: [
         {
           text: "",
@@ -95,7 +95,7 @@ export class AppMenus {
     {
       text: "统计分析",
       icon: { type: "icon", value: "area-chart" },// 图标
-      acl: AppMenus.aclSys,
+      acl: [AppMenus.aclSys],
       children: [
         // {
         //   text: "预警中心",
@@ -218,7 +218,6 @@ export class AppMenus {
       text: "",
       i18n: "用户中心",
       icon: { type: "icon", value: "user" },// 图标
-      // acl: AppMenus.aclCompany,
       children: [
         {
           text: "修改密码",

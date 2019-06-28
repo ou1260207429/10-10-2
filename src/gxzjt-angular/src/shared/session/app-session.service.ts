@@ -72,7 +72,12 @@ export class AppSessionService {
         }, err => {
           location.href = AppConsts.appBaseUrl + '/#/account/login';
           // reject(err);
+          resolve(true);
         });
+        return;
+      } else {
+        resolve(true);
+        location.href = AppConsts.appBaseUrl + '/#/account/login';
       }
 
     });
@@ -132,14 +137,14 @@ export class AppSessionService {
               break;
             case '企业用户':
               this._ACLService.setRole([AppMenus.aclCompany]);
-              // this._DelonACLConfig.guard_url = '#/app/engineering-management/engineeringListComponent';
+
               break;
             default:
               this._ACLService.setRole([AppMenus.aclCompany]);
-              // this._DelonACLConfig.guard_url = '#/app/engineering-management/engineeringListComponent';
+
               break;
           }
-          // this._ACLService.setFull(true);
+
           // this._MenuService.clear();
           // this._MenuService.add(AppMenus.Menus);
 
