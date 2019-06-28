@@ -57,6 +57,7 @@ export class LoginService {
       .pipe(finalize(finallyCallback))
       .subscribe((result: AuthenticateResultModel) => {
         this.processAuthenticateResult(result);
+        finallyCallback();
       });
 
 
@@ -110,7 +111,7 @@ export class LoginService {
     if (initialUrl.indexOf('/login') > 0) {
       initialUrl = AppConsts.appBaseUrl;
     }
-    
+
 
     // this._AppSessionService.initUserInfo().then(() => {
     //   /** 强制刷新导航栏url 跳转到首页 */

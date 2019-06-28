@@ -82,9 +82,9 @@ export class LoginComponent extends AppComponentBase implements OnInit {
   ngOnInit(): void {
 
     this.titleSrvice.setTitle("登录");
-    
+
     if (this._TokenService.getToken()) {
-      
+
       this._router.navigate(['/home/welcome']);
     }
     this.reuseTabService.clear();
@@ -95,7 +95,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     checkCode = "" + Math.ceil(Math.random() * 10000);
 
     $(".inner").mousedown(function (e) {
-      
+
       var el = $(".inner");
 
       var os = el.offset();
@@ -170,6 +170,8 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     return true;
   }
 
+  loginErrMsg = "";
+
   login(): void {
     var str = $("#slider_content").attr("value");
     if (str === checkCode) {
@@ -184,27 +186,30 @@ export class LoginComponent extends AppComponentBase implements OnInit {
           this._router.navigate(['/home/welcome']);
 
         }, err => {
-          this.modalService.warning({
-            nzTitle: '提示',
-            nzContent: '登录出错:' + err
-          });
+          // this.modalService.warning({
+          //   nzTitle: '提示',
+          //   nzContent: '登录出错:' + err
+          // });
+          this.loginErrMsg = err;
           this.submitting = false;
         });
 
         this.resetSliter();
       });
     } else {
-      this.modalService.warning({
-        nzTitle: '提示',
-        nzContent: '请完成拖动验证！'
-      });
+
+      this.loginErrMsg = '请完成拖动验证！';
+      // this.modalService.warning({
+      //   nzTitle: '提示',
+      //   nzContent: '请完成拖动验证！'
+      // });
     }
 
 
 
   }
-  getCaptcha(){
-    this.getServerCaptcha(this.loginService.authenticateModel.userNameOrEmailAddress,0);
+  getCaptcha() {
+    this.getServerCaptcha(this.loginService.authenticateModel.userNameOrEmailAddress, 0);
   }
 
 }

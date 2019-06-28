@@ -117,16 +117,18 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
       // console.log(res);
       if (res) {
         if (res.result == 0) {
-          this.modalService.info({
-            nzTitle: '提示',
-            nzContent: "注册成功",
-          });
+          // this.modalService.info({
+          //   nzTitle: '提示',
+          //   nzContent: "注册成功",
+          // });
+          this.message.info("注册成功");
           this.back();
         } else {
-          this.modalService.info({
-            nzTitle: '提示',
-            nzContent: res.message,
-          });
+          // this.modalService.info({
+          //   nzTitle: '提示',
+          //   nzContent: res.message,
+          // });
+          this.message.info(res.message);
         }
       }
       this.saving = false;
@@ -137,10 +139,11 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
   }
 
   showErr(msg) {
-    this.modalService.error({
-      nzTitle: '出错啦',
-      nzContent: msg,
-    });
+    // this.modalService.error({
+    //   nzTitle: '出错啦',
+    //   nzContent: msg,
+    // });
+    this.message.error(msg);
   }
 
 

@@ -112,8 +112,16 @@
 
 
 
+          <label [hidden]="loginErrMsg.length==0" class="err_note">
+            <span>{{loginErrMsg}}</span>
+          </label>
+
+
+
+
+
           <button nz-button [nzLoading]="submitting" class="yoyo__block login_but"
-            [disabled]="!loginForm.form.valid||submitting">
+            [disabled]="!loginForm.form.valid||submitting" style="margin-top: 8px;">
             <!-- <i class="anticon anticon-login"></i> -->
             <span>登录</span>
           </button>
