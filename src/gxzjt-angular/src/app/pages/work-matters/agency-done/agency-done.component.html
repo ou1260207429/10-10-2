@@ -4,7 +4,7 @@
     <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
         type="{{ hiddenFliter?'down':'up'}}"></i>{{ hiddenFliter?'展开条件':'收起条件'}}</button>
     <button (click)="init()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
-    <button (click)="exportXlsx()" nz-button nzType="primary"><i nz-icon type="export"></i>导出</button>
+    <button (click)="st.export()" nz-button nzType="primary"><i nz-icon type="export"></i>导出</button>
   </ng-template>
 </page-header>
 <nz-card>
@@ -55,8 +55,8 @@
       <input type="text" nz-input [(ngModel)]="signForDto.phoneNumber" name="phoneNumber" required maxlength="32">
     </se>
     <div style="text-align: center;">
-      <a *ngIf="examineFormDto.acceptFileUrl!=null" [href]="examineFormDto.acceptFileUrl"> 下载受理/不受理凭证</a>
-      <a *ngIf="examineFormDto.opinionFileUrl!=null" [href]="examineFormDto.opinionFileUrl"> 下载意见书</a>
+      <p><a *ngIf="examineFormDto.acceptFileUrl!=null" [href]="examineFormDto.acceptFileUrl"> 下载受理/不受理凭证</a></p>
+      <p><a *ngIf="examineFormDto.opinionFileUrl!=null" [href]="examineFormDto.opinionFileUrl"> 下载意见书</a></p>
     </div>
   </form>
 </nz-modal>
