@@ -149,14 +149,8 @@ pageConfig: STPage = publicPageConfig;
         1: { text: '女', },
       },width:'50px'
     },
-    { title: '注册时间',type:'date', index: 'registerTime',width:'180px'  },
-    {
-      title: '',
-      buttons: [
-        // { text: '查看', click: (item: any) => `/form/${item.id}` },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
-      ]
-    }
+    // { title: '注册时间',type:'date', index: 'registerTime',width:'180px'  },
+
   ];
 
   constructor(private http: _HttpClient,
