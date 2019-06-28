@@ -100,6 +100,10 @@ export class UserrightUseraddComponent implements OnInit {
       this.message.error("密码长度错误！请输入8位以上密码！");
       return
     }
+    if(this.submodel.password!=this.Password2){
+      this.message.error("两次输入密码不一致！");
+      return
+    }
     if(this.submodel.sex==''||this.submodel.sex==null){
       this.message.error("性别不能为空！");
       return
@@ -117,6 +121,7 @@ export class UserrightUseraddComponent implements OnInit {
       return
     }
     if(this.orgtreefiter.length!=1){
+
       this.message.error("所属组织为单选");
       return
     }
@@ -128,17 +133,21 @@ export class UserrightUseraddComponent implements OnInit {
     //   this.message.error("所属组织机构不能为空！");
     //   return
     // }
-    if(this.submodel.password==this.Password2){
+
       this.UserRightService.Add(this.submodel).subscribe(
       res => {
-        this.message.success(res.message);
+        if(res.result!=0){
+          this.message.error(res.message);
+          return
+        }else{
+          this.message.success(res.message)
+          this.router.navigate([`/app/userright/userlist`]);
+        }
+
       },
     );
-    this.router.navigate([`/app/userright/userlist`]);}
-    else{
-      this.message.success("两次输入密码不一致！");
-      return
-    }
+
+
 
   }
   ret(){
