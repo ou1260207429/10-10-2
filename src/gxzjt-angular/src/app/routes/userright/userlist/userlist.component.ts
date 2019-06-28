@@ -57,6 +57,7 @@ pageConfig: STPage = publicPageConfig;
   columns: STColumn[] = [
     {
       title: '操作',
+      width:'280px',
       buttons: [
         {
           text: '查看',
@@ -125,30 +126,30 @@ pageConfig: STPage = publicPageConfig;
         }
       ]
     },
-    { title: '名称', index: 'eName' },
-    { title: '登录账号', index: 'eId' },
+    { title: '名称', index: 'eName',width:'80px' },
+    { title: '登录账号', index: 'eId',width:'90px'  },
     {
       title: '是否删除', index: 'isDeleted', type: 'tag', tag: {
         true: { text: '是', color: 'red' },
         false: { text: '否', color: 'green' },
-      }
+      },width:'90px'
     },
     {
       title: '锁定', index: 'isLocked', type: 'tag', tag: {
         true: { text: '是', color: 'red' },
         false: { text: '否', color: 'green' },
-      }
+      },width:'80px'
     },
-    { title: '组织机构', index: 'organizationsName' },
-    { title: '岗位', index: 'positionNames' },
-    { title: '角色名称', index: 'roleName' },
+    { title: '组织机构', index: 'organizationsName',width:'250px'  },
+    { title: '岗位', index: 'positionNames',width:'350px'  },
+    { title: '角色名称', index: 'roleName',width:'150px' },
     {
       title: '性别', index: 'sex', type: 'tag', tag: {
         0: { text: '男', },
         1: { text: '女', },
-      }
+      },width:'50px'
     },
-    { title: '注册时间',type:'date', index: 'registerTime' },
+    { title: '注册时间',type:'date', index: 'registerTime',width:'180px'  },
     {
       title: '',
       buttons: [
