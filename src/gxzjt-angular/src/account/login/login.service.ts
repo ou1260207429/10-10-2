@@ -57,7 +57,6 @@ export class LoginService {
       .pipe(finalize(finallyCallback))
       .subscribe((result: AuthenticateResultModel) => {
         this.processAuthenticateResult(result);
-        finallyCallback();
       });
 
 

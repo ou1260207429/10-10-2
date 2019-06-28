@@ -46,6 +46,8 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
           nzContent: '您未登录，请先前往登录',
         }
         );
+        this._tokenService.clearToken();
+        
         this._router.navigate(['/account/login']);
       }
 

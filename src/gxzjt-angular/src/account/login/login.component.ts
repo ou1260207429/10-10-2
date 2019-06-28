@@ -179,13 +179,13 @@ export class LoginComponent extends AppComponentBase implements OnInit {
       this.submitting = true;
       this.loginService.authenticate(() => {
 
-        this._AppSessionService.initUserInfo().then(() => {
+        this._AppSessionService.initUserInfo(() => {
           /** 强制刷新导航栏url 跳转到首页 */
           // location.href = location.href.replace('#/account/login', '#/app/');
           this.submitting = false;
           this._router.navigate(['/home/welcome']);
 
-        }, err => {
+        }, (err) => {
           // this.modalService.warning({
           //   nzTitle: '提示',
           //   nzContent: '登录出错:' + err

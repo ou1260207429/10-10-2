@@ -7,6 +7,7 @@ import { TokenService } from '@abp/auth/token.service';
 
 import { AppMenus } from '@shared/AppMenus';
 
+import { finalize } from 'rxjs/operators';
 import {
   LoginServiceProxy,
   // UserLoginInfoDto,
@@ -65,28 +66,27 @@ export class AppSessionService {
     return new Promise<boolean>((resolve, reject) => {
 
       if (this._TokenService.getToken()) {
-        resolve(true);
-        this.initUserInfo().then(() => {
+
+        this.initUserInfo(() => {
           resolve(true);
-        }).catch(
-          err => {
-            resolve(err);
-            location.href = AppConsts.appBaseUrl + '/#/account/login';
-            // reject(err);
-          });
-      } else {
-        resolve(true);
-        location.href = AppConsts.appBaseUrl + '/#/account/login';
+        }, err => {
+          location.href = AppConsts.appBaseUrl + '/#/account/login';
+          // reject(err);
+        });
       }
 
     });
   }
 
-  public initUserInfo() {
+  public initUserInfo(finallyCallback: () => void, errCallback: (e) => void) {
+    finallyCallback = finallyCallback || (() => { });
+
+    errCallback = errCallback || ((e) => { });
     return this._loginServiceProxy
       .getCurrentLoginUserInfoByUserId()
-      .toPromise()
-      .then(
+      .pipe(finalize(finallyCallback))
+      .subscribe
+      (
         (result: UserCacheDto) => {
           // this._application = new ApplicationInfoDto();
           // this._application.version = "1.0.0";
@@ -142,12 +142,17 @@ export class AppSessionService {
           // this._ACLService.setFull(true);
           // this._MenuService.clear();
           // this._MenuService.add(AppMenus.Menus);
-   
+
           this._MenuService.resume();
 
           this._tenant = new TenantLoginInfoDto();
 
           // resolve(true);
+        },
+        err => {
+          errCallback(err);
+
+
         }
       );
   }
