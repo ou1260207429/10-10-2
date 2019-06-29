@@ -113,7 +113,7 @@ export class UserrightUsereditComponent implements OnInit {
     );
   }
   sub(){
-    let myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0]{1})|(15[0-3]{1})|(15[5-9]{1})|(18[0-9]{1}))+\d{8})$/;  //手机号码正则
+    let myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(19[0-9]{1})|(17[0]{1})|(15[0-3]{1})|(15[5-9]{1})|(18[0-9]{1}))+\d{8})$/;  //手机号码正则
     let reg = /(^\d{15}$)|(^\d{17}(\d|X)$)/; //
     if(this.submodel.eId==''||this.submodel.eId==null){
       this.message.error("登录账号不能为空！");
@@ -153,6 +153,8 @@ export class UserrightUsereditComponent implements OnInit {
     //   return
     // }
 
+    this.submodel.positionIds=this.uniq(this.submodel.positionIds);
+    this.submodel.positionIds=this.trimNull(this.submodel.positionIds);
     this.UserRightService.Edit(this.submodel).subscribe(
       res => {
         if(res.result!=0){
@@ -195,4 +197,26 @@ export class UserrightUsereditComponent implements OnInit {
       },
     );
   }
+
+  uniq(array){
+    array.sort();
+    var temp=[array[0]];
+    for(var i = 1; i < array.length; i++){
+        if( array[i] !== temp[temp.length-1]){
+            temp.push(array[i]);
+        }
+    }
+    return temp;
+  }
+  trimNull(array) {
+    for (var i = 0; i < array.length; i++) {
+        if (array[i] == "" || typeof(array[i]) == "undefined") {
+            array.splice(i, 1);
+            i = i - 1;
+        }
+    }
+    return array;
 }
+}
+
+

@@ -74,6 +74,7 @@ pageConfig: STPage = publicPageConfig;
           click: (record: any, modal: any) => {
             this.toedit(record);
             this.refresh();
+            this.st.reload();
 
 
           },
