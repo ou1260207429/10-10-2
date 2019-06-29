@@ -11,7 +11,7 @@ import { SERVER_URL } from 'infrastructure/expression';
 
 export class BigScreenComponent {
     echarts = require('echarts');
-    // BACKSTAGE_URL = 'http://192.168.10.151:8087/'; //'http://192.168.10.10:8088/'; //
+    // BACKSTAGE_URL = 'http://222.84.250.158:8111/'; //'http://192.168.10.10:8088/'; //
     percent = 87;
     color = '#2f9cff';
     NewYear = new Date().getFullYear();
