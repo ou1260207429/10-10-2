@@ -10,6 +10,11 @@ import {
   table
 } from './apiValue'
 var app = {
+
+  loginUrl(){
+    let url = Vue.prototype.loginUrl
+    return url
+  },
   downLoadUrl: Vue.prototype.downLoadUrl,
   clentHeight() {
     let clientHeight = document.body.clientHeight;

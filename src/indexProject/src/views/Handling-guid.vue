@@ -16,7 +16,11 @@
                 <el-row :gutter="16">
                   <el-col :span="10">
                     <div ref="imgHeight">
-                      <img style="width:100%;" :src="allowImg[index]?allowImg[index]:allowImg[0]" alt>
+                      <img
+                        style="width:100%;"
+                        :src="allowImg[index]?allowImg[index]:allowImg[0]"
+                        alt
+                      >
                     </div>
                   </el-col>
                   <el-col :span="14">
@@ -52,7 +56,11 @@
                 <el-row :gutter="16">
                   <el-col :span="10">
                     <div ref="imgHeight">
-                      <img style="width:100%;" :src="recordImg[index]?recordImg[index]:recordImg[0]" alt>
+                      <img
+                        style="width:100%;"
+                        :src="recordImg[index]?recordImg[index]:recordImg[0]"
+                        alt
+                      >
                     </div>
                   </el-col>
                   <el-col :span="14">
@@ -134,8 +142,6 @@ export default {
       that.tableHight = app.clentHeight() + "px";
       that.$refs.imgHeight.forEach((item, index) => {
         that.$refs.routHeight[index].clentHeight = item.offsetHeight + 30;
-        console.log(that.$refs.routHeight[index].clentHeight);
-        console.log(item.offsetHeight);
       });
     };
   },
