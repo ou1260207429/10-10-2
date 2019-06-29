@@ -1,7 +1,7 @@
 import { PublicModel } from './../../../../infrastructure/public-model';
 import { Component, OnInit } from '@angular/core';
 // import { NzMessageService } from 'ng-zorro-antd';
-import { timeTrans } from 'infrastructure/regular-expression';
+import { timeTrans, getTimestamp } from 'infrastructure/regular-expression';
 import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto, FlowDataDto, ProjectFlowDto, FlowNodeUser } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute } from '@angular/router';
 import { FlowServices, GXZJT_From } from 'services/flow.services';
@@ -345,7 +345,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         ,
 
       },
-      filingTime: '',
+      filingTime: timeTrans(getTimestamp(),'yyyy-MM-dd','-'),
       luckNo: '',
     },
     engineerinDescription: '',

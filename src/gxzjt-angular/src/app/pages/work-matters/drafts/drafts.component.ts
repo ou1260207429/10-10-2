@@ -51,12 +51,14 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
     { title: '项目编号', index: 'projectId' },
     { title: '工程名称', index: 'projectName' },
     { title: '建设单位', index: 'constructOrgName' },
-    { title: '流程类型', index: 'projectTypeStatu',format: (item: any) => `${item.projectTypeStatu?item.projectTypeStatu:404}`,type: 'tag', tag: {
-      404:{text:'设计审查',color: '' },
-      0: { text: '设计审查', color: '' },
-      1:{ text: '消防验收',color: '' },
-      2:{ text: '竣工备案',color: '' },
-    }},
+    {
+      title: '流程类型', index: 'projectTypeStatu', format: (item: any) => `${item.projectTypeStatu ? item.projectTypeStatu : 404}`, type: 'tag', tag: {
+        404: { text: '设计审查', color: '' },
+        0: { text: '设计审查', color: '' },
+        1: { text: '消防验收', color: '' },
+        2: { text: '竣工备案', color: '' },
+      }
+    },
   ];
 
   searchParam = new DraftQueryDto();
@@ -83,7 +85,19 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
     this.init()
 
     const _slef = this;
-    this._eventEmiter.on('draftsComponentInit',()=>{
+    this._eventEmiter.on('draftsComponentInit', () => {
+      _slef.init();
+    });
+
+    this._eventEmiter.on('fireAcceptanceComponentInit', () => {
+      _slef.init();
+    });
+
+    this._eventEmiter.on('fireDesignComponentInit', () => {
+      _slef.init();
+    });
+
+    this._eventEmiter.on('completedAcceptanceComponentInit', () => {
       _slef.init();
     });
 
@@ -96,13 +110,13 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
     this.searchParam.sorting = 'ProjectId';
     this.getList();
   }
-  reststart(){
+  reststart() {
     this.resetTime();
     this.searchParam.page = 1;
     this.searchParam.maxResultCount = AppConsts.grid.defaultPageSize;
     this.searchParam.sorting = 'ProjectId';
-    this.searchParam.number='';
-    this.searchParam.projectName='';
+    this.searchParam.number = '';
+    this.searchParam.projectName = '';
     // this.searchParam.applyTimeStart = moment(this.rangeTime[0]);
     // this.searchParam.applyTimeEnd =moment(this.rangeTime[1]);
     this.getList();

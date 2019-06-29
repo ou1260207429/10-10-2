@@ -255,10 +255,13 @@ export class AcceptanceFileServiceProxy {
 
     /**
      * @param reviewFormDto (optional) 
+     * @param flowId (optional) 
      * @return Success
      */
-    createReviewFile(reviewFormDto: ReviewFormDto | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/CreateReviewFile";
+    createReviewFile(reviewFormDto: ReviewFormDto | null | undefined, flowId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/CreateReviewFile?";
+        if (flowId !== undefined)
+            url_ += "flowId=" + encodeURIComponent("" + flowId) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(reviewFormDto);
@@ -2890,7 +2893,7 @@ export class LoginServiceProxy {
      * @param input (optional) 
      * @return Success
      */
-    curMerchantUsers(input: PagedAndFilteredInputDto | null | undefined): Observable<DataSourceResult> {
+    curMerchantUsers(input: CurMerchantUsersDto | null | undefined): Observable<DataSourceResult> {
         let url_ = this.baseUrl + "/api/services/app/Login/CurMerchantUsers";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -4565,9 +4568,10 @@ export class PutOnRecordFileServiceProxy {
      * @param acceptRecordId (optional) 
      * @param template (optional) 
      * @param attachmentType (optional) 
+     * @param fileCodeFormat (optional) 
      * @return Success
      */
-    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined): Observable<void> {
+    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined, fileCodeFormat: string | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/AcceptFile?";
         if (acceptRecordId !== undefined)
             url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
@@ -4575,6 +4579,8 @@ export class PutOnRecordFileServiceProxy {
             url_ += "template=" + encodeURIComponent("" + template) + "&"; 
         if (attachmentType !== undefined)
             url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
+        if (fileCodeFormat !== undefined)
+            url_ += "fileCodeFormat=" + encodeURIComponent("" + fileCodeFormat) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(acceptApplyFormDto);
@@ -4623,10 +4629,13 @@ export class PutOnRecordFileServiceProxy {
 
     /**
      * @param reviewFormDto (optional) 
+     * @param flowId (optional) 
      * @return Success
      */
-    createReviewFile(reviewFormDto: ReviewFormDto | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/CreateReviewFile";
+    createReviewFile(reviewFormDto: ReviewFormDto | null | undefined, flowId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/CreateReviewFile?";
+        if (flowId !== undefined)
+            url_ += "flowId=" + encodeURIComponent("" + flowId) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(reviewFormDto);
@@ -12114,14 +12123,15 @@ export interface IUserCacheDto {
     lastModificationTime: moment.Moment | undefined;
 }
 
-export class PagedAndFilteredInputDto implements IPagedAndFilteredInputDto {
+export class CurMerchantUsersDto implements ICurMerchantUsersDto {
+    area: string | undefined;
     filterText: string | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
     maxResultCount: number | undefined;
 
-    constructor(data?: IPagedAndFilteredInputDto) {
+    constructor(data?: ICurMerchantUsersDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -12132,6 +12142,7 @@ export class PagedAndFilteredInputDto implements IPagedAndFilteredInputDto {
 
     init(data?: any) {
         if (data) {
+            this.area = data["area"];
             this.filterText = data["filterText"];
             this.page = data["page"];
             this.sorting = data["sorting"];
@@ -12140,15 +12151,16 @@ export class PagedAndFilteredInputDto implements IPagedAndFilteredInputDto {
         }
     }
 
-    static fromJS(data: any): PagedAndFilteredInputDto {
+    static fromJS(data: any): CurMerchantUsersDto {
         data = typeof data === 'object' ? data : {};
-        let result = new PagedAndFilteredInputDto();
+        let result = new CurMerchantUsersDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["area"] = this.area;
         data["filterText"] = this.filterText;
         data["page"] = this.page;
         data["sorting"] = this.sorting;
@@ -12157,15 +12169,16 @@ export class PagedAndFilteredInputDto implements IPagedAndFilteredInputDto {
         return data; 
     }
 
-    clone(): PagedAndFilteredInputDto {
+    clone(): CurMerchantUsersDto {
         const json = this.toJSON();
-        let result = new PagedAndFilteredInputDto();
+        let result = new CurMerchantUsersDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IPagedAndFilteredInputDto {
+export interface ICurMerchantUsersDto {
+    area: string | undefined;
     filterText: string | undefined;
     page: number | undefined;
     sorting: string | undefined;
@@ -12754,6 +12767,65 @@ export class Aggregator implements IAggregator {
 export interface IAggregator {
     field: string | undefined;
     aggregate: string | undefined;
+}
+
+export class PagedAndFilteredInputDto implements IPagedAndFilteredInputDto {
+    filterText: string | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+
+    constructor(data?: IPagedAndFilteredInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.filterText = data["filterText"];
+            this.page = data["page"];
+            this.sorting = data["sorting"];
+            this.skipCount = data["skipCount"];
+            this.maxResultCount = data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedAndFilteredInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedAndFilteredInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["filterText"] = this.filterText;
+        data["page"] = this.page;
+        data["sorting"] = this.sorting;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+
+    clone(): PagedAndFilteredInputDto {
+        const json = this.toJSON();
+        let result = new PagedAndFilteredInputDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPagedAndFilteredInputDto {
+    filterText: string | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
 }
 
 export class ListResultDtoOfProjectCompanyListDto implements IListResultDtoOfProjectCompanyListDto {
@@ -13590,6 +13662,8 @@ export class StatisticsQueryDto implements IStatisticsQueryDto {
     projectCode: string | undefined;
     projectName: string | undefined;
     companyName: string | undefined;
+    startApplyTime: moment.Moment | undefined;
+    endApplyTime: moment.Moment | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
@@ -13609,6 +13683,8 @@ export class StatisticsQueryDto implements IStatisticsQueryDto {
             this.projectCode = data["projectCode"];
             this.projectName = data["projectName"];
             this.companyName = data["companyName"];
+            this.startApplyTime = data["startApplyTime"] ? moment(data["startApplyTime"].toString()) : <any>undefined;
+            this.endApplyTime = data["endApplyTime"] ? moment(data["endApplyTime"].toString()) : <any>undefined;
             this.page = data["page"];
             this.sorting = data["sorting"];
             this.skipCount = data["skipCount"];
@@ -13628,6 +13704,8 @@ export class StatisticsQueryDto implements IStatisticsQueryDto {
         data["projectCode"] = this.projectCode;
         data["projectName"] = this.projectName;
         data["companyName"] = this.companyName;
+        data["startApplyTime"] = this.startApplyTime ? this.startApplyTime.toISOString() : <any>undefined;
+        data["endApplyTime"] = this.endApplyTime ? this.endApplyTime.toISOString() : <any>undefined;
         data["page"] = this.page;
         data["sorting"] = this.sorting;
         data["skipCount"] = this.skipCount;
@@ -13647,6 +13725,8 @@ export interface IStatisticsQueryDto {
     projectCode: string | undefined;
     projectName: string | undefined;
     companyName: string | undefined;
+    startApplyTime: moment.Moment | undefined;
+    endApplyTime: moment.Moment | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;

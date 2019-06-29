@@ -100,7 +100,7 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
   flowPathTypeEnum = FlowPathTypeEnum
 
   //时间
-  rangeTime = ['2019-02-19T05:46:09.135Z','2019-06-19T05:46:09.135Z'];
+  rangeTime = [];
   constructor(private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
     private _flowServices: FlowServices,
     private router: Router,
@@ -121,6 +121,8 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
     this.searchParam.projectName='';
     this.searchParam.companyName='';
     this.searchParam.sorting = 'ProjectName';
+    this.searchParam.startApplyTime = moment(this.rangeTime[0]);
+    this.searchParam.endApplyTime = moment(this.rangeTime[1]);
     this.getList();
   }
 
@@ -141,6 +143,8 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
    */
   query() {
     this.searchParam.page = 1;
+    this.searchParam.startApplyTime = moment(this.rangeTime[0])
+    this.searchParam.endApplyTime = moment(this.rangeTime[1])
     this.getList();
   }
 
