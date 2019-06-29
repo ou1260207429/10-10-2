@@ -89,7 +89,7 @@ export class AppSessionService {
     errCallback = errCallback || ((e) => { });
     return this._loginServiceProxy
       .getCurrentLoginUserInfoByUserId()
-      .pipe(finalize(finallyCallback))
+      // .pipe(finalize(finallyCallback))
       .subscribe
       (
         (result: UserCacheDto) => {
@@ -153,6 +153,7 @@ export class AppSessionService {
           this._tenant = new TenantLoginInfoDto();
 
           // resolve(true);
+          finallyCallback();
         },
         err => {
           errCallback(err);

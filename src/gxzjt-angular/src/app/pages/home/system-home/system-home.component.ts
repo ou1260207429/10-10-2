@@ -18,7 +18,7 @@ export class SystemHomeComponent implements OnInit {
   pagesize = 4;
   pageindex = 1;
   data: any = [{}];
-  // BACKSTAGE_URL =  'http://222.84.250.158:8111/'; //'http://192.168.10.10:8088/'; //
+  // BACKSTAGE_URL =  'http://192.168.10.151:8087/'; //'http://192.168.10.10:8088/'; //
   constructor(
     private http: _HttpClient,
     private service: ProjectFlowServcieServiceProxy
