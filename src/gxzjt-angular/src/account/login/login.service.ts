@@ -110,7 +110,7 @@ export class LoginService {
     if (initialUrl.indexOf('/login') > 0) {
       initialUrl = AppConsts.appBaseUrl;
     }
-    
+
 
     // this._AppSessionService.initUserInfo().then(() => {
     //   /** 强制刷新导航栏url 跳转到首页 */

@@ -70,7 +70,7 @@
               <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-lock">
                 <input nz-input type="password" name="ConfirmPassword" #ConfirmPassword="ngModel"
                   [(ngModel)]="model.ConfirmPassword" placeholder="确认密码" required maxlength="18" minlength="8"
-                  [pattern]="model.Password" />
+                  pattern="^{{model.NewPassword}}$" />
               </nz-input-group>
               <nz-form-explain *ngIf="ConfirmPassword.control.dirty&&ConfirmPassword.control.errors">
 

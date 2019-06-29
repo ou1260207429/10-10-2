@@ -118,12 +118,12 @@ export class LayoutDefaultComponent extends AppComponentBase
                 nzTitle: '提示',
                 nzContent: '您未登录，请先前往登录',
                 nzOnOk: () => {
+
                   hadShowModel = false;
-                  router.navigate(['/account/login']);
                 },
                 nzOnCancel: () => hadShowModel = false,
               });
-
+              router.navigate(['/account/login']);
             }
 
           } else {
