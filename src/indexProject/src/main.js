@@ -24,6 +24,7 @@ Vue.prototype.getConfigJson = function () {
   axios.get('static/serverconfig.json').then((result) => {
     Vue.prototype.baseUrl = result.data.ApiUrl; //设置成Vue的全局属性
     Vue.prototype.downLoadUrl = result.data.downLoadUrl; //设置成Vue的全局属性
+    Vue.prototype.loginUrl = result.data.loginUrl; //设置成Vue的全局属性
     new Vue({
       el: '#app',
       router,
