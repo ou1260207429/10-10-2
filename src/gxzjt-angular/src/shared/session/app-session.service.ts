@@ -4,6 +4,10 @@ import { ACLService, DelonACLConfig } from '@delon/acl';
 import { MenuService } from '@delon/theme';
 import { AppConsts } from '@shared/AppConsts';
 import { TokenService } from '@abp/auth/token.service';
+
+import { AppMenus } from '@shared/AppMenus';
+
+import { finalize } from 'rxjs/operators';
 import {
   LoginServiceProxy,
   // UserLoginInfoDto,
@@ -62,15 +66,15 @@ export class AppSessionService {
     return new Promise<boolean>((resolve, reject) => {
 
       if (this._TokenService.getToken()) {
-        resolve(true);
-        this.initUserInfo().then(() => {
+
+        this.initUserInfo(() => {
           resolve(true);
-        }).catch(
-          err => {
-            resolve(err);
-            location.href = AppConsts.appBaseUrl + '/#/account/login';
-            // reject(err);
-          });
+        }, err => {
+          location.href = AppConsts.appBaseUrl + '/#/account/login';
+          // reject(err);
+          resolve(true);
+        });
+        return;
       } else {
         resolve(true);
         location.href = AppConsts.appBaseUrl + '/#/account/login';
@@ -79,11 +83,15 @@ export class AppSessionService {
     });
   }
 
-  public initUserInfo() {
+  public initUserInfo(finallyCallback: () => void, errCallback: (e) => void) {
+    finallyCallback = finallyCallback || (() => { });
+
+    errCallback = errCallback || ((e) => { });
     return this._loginServiceProxy
       .getCurrentLoginUserInfoByUserId()
-      .toPromise()
-      .then(
+      // .pipe(finalize(finallyCallback))
+      .subscribe
+      (
         (result: UserCacheDto) => {
           // this._application = new ApplicationInfoDto();
           // this._application.version = "1.0.0";
@@ -95,54 +103,61 @@ export class AppSessionService {
               this._ACLService.setFull(true);
               break;
             case '管理员':
-              this._ACLService.setRole(['sys']);
+              this._ACLService.setRole([AppMenus.aclSys]);
               break;
             case '大厅窗口受理':
-              this._ACLService.setRole(['org']);
+              this._ACLService.setRole([AppMenus.aclOrg]);
               break;
             case '业务审批负责人（主要领导）':
-              this._ACLService.setRole(['org']);
+              this._ACLService.setRole([AppMenus.aclOrg]);
               break;
             case '业务审批负责人（分管领导）':
-              this._ACLService.setRole(['org']);
+              this._ACLService.setRole([AppMenus.aclOrg]);
               break;
             case '业务审批负责人':
-              this._ACLService.setRole(['org']);
+              this._ACLService.setRole([AppMenus.aclOrg]);
               break;
             case '业务承办人':
-              this._ACLService.setRole(['org']);
+              this._ACLService.setRole([AppMenus.aclOrg]);
               break;
             case '窗口受理':
-              this._ACLService.setRole(['org']);
+              this._ACLService.setRole([AppMenus.aclOrg]);
               break;
             case '审批负责人':
-              this._ACLService.setRole(['org']);
+              this._ACLService.setRole([AppMenus.aclOrg]);
               break;
             case '备案抽查审批负责人':
-              this._ACLService.setRole(['org']);
+              this._ACLService.setRole([AppMenus.aclOrg]);
               break;
             case '业务审批负责人（局主要领导）':
-              this._ACLService.setRole(['org']);
+              this._ACLService.setRole([AppMenus.aclOrg]);
               break;
             case '业务审批负责人（股长）':
-              this._ACLService.setRole(['org']);
+              this._ACLService.setRole([AppMenus.aclOrg]);
               break;
             case '企业用户':
-              this._ACLService.setRole(['reg']);
-              // this._DelonACLConfig.guard_url = '#/app/engineering-management/engineeringListComponent';
+              this._ACLService.setRole([AppMenus.aclCompany]);
               break;
             default:
-              this._ACLService.setRole(['reg']);
-              // this._DelonACLConfig.guard_url = '#/app/engineering-management/engineeringListComponent';
+              this._ACLService.setRole([AppMenus.aclCompany]);
+
               break;
           }
-          // this._ACLService.setFull(true);
+
+          // this._MenuService.clear();
+          // this._MenuService.add(AppMenus.Menus);
 
           this._MenuService.resume();
 
           this._tenant = new TenantLoginInfoDto();
 
           // resolve(true);
+          finallyCallback();
+        },
+        err => {
+          errCallback(err);
+
+
         }
       );
   }

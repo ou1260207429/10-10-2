@@ -48,15 +48,24 @@ export class LoginService {
     this.clear();
   }
 
-  authenticate(finallyCallback?: () => void): void {
+  authenticate(finallyCallback: () => void, errCallback: (e) => void): void {
 
 
     finallyCallback = finallyCallback || (() => { });
-
+    errCallback = errCallback || (() => { });
     this._tokenAuthService.authenticate(this.authenticateModel)
-      .pipe(finalize(finallyCallback))
+      // .pipe(finalize(finallyCallback))
       .subscribe((result: AuthenticateResultModel) => {
-        this.processAuthenticateResult(result);
+
+        if (result.success == true) {
+          this.processAuthenticateResult(result);
+          finallyCallback();
+        } else {
+          errCallback(result.error);
+        }
+
+      }, err => {
+        errCallback(err);
       });
 
 
@@ -84,6 +93,9 @@ export class LoginService {
       this._messageService.info('登录异常');
       // this._router.navigate(['account/login']);
     }
+
+
+
   }
 
   private login(
@@ -110,7 +122,7 @@ export class LoginService {
     if (initialUrl.indexOf('/login') > 0) {
       initialUrl = AppConsts.appBaseUrl;
     }
-    
+
 
     // this._AppSessionService.initUserInfo().then(() => {
     //   /** 强制刷新导航栏url 跳转到首页 */

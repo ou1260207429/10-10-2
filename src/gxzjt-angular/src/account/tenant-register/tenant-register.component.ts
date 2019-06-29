@@ -53,9 +53,9 @@ export class TenantRegisterComponent extends AppComponentBase
 
         this._loginService.authenticateModel.userNameOrEmailAddress = this.model.adminEmailAddress;
         this._loginService.authenticateModel.password = this.model.adminPassword;
-        this._loginService.authenticate(() => {
-          this.saving = false;
-        });
+        // this._loginService.authenticate(() => {
+        //   this.saving = false;
+        // });
       });
   }
 }

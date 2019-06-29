@@ -1,4 +1,4 @@
-import { LoginServiceProxy, PagedAndFilteredInputDto } from './../../../shared/service-proxies/service-proxies';
+import { LoginServiceProxy, PagedAndFilteredInputDto, CurMerchantUsersDto } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit } from '@angular/core';
 import { AppConsts } from '@shared/AppConsts';
 import { NzModalRef } from 'ng-zorro-antd';
@@ -14,7 +14,7 @@ import { checkChooseItemAttribute, checkArrayString } from 'infrastructure/regul
 })
 export class InitiationProcessAddAuditorComponent implements OnInit {
 
-  page = new PagedAndFilteredInputDto();
+  page = new CurMerchantUsersDto();
   data
 
   radioValue
@@ -24,6 +24,10 @@ export class InitiationProcessAddAuditorComponent implements OnInit {
 
   //从上个页面传来的数据。用来做列表判断的反选
   auditors
+
+  //区域的ID
+  area
+
   constructor(private _loginService: LoginServiceProxy, private subject: NzModalRef) { }
 
   ngOnInit() {
@@ -37,6 +41,7 @@ export class InitiationProcessAddAuditorComponent implements OnInit {
     this.page.page = 1;
     this.page.maxResultCount = AppConsts.grid.defaultPageSize;
     this.page.filterText = '';
+    this.page.area = this.area;
     this.employeesByDataSoureId()
   }
 

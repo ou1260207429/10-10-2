@@ -76,7 +76,7 @@ export default {
       app.post(table.search_tableList, _this.pageSize).then(req => {
         req.result.data.forEach(element => {
           element.creationTime = moment(element.creationTime).format(
-            "YYYY-MM-DD HH:mm:ss"
+            "YYYY-MM-DD"
           );
         });
         _this.downLoadList = req.result.data;

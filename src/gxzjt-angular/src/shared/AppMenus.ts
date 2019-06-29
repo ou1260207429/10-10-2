@@ -15,7 +15,7 @@ export class AppMenus {
       text: "",
       i18n: "首页",
       icon: { type: "icon", value: "home" },// 图标
-      acl: AppMenus.aclSys,
+      acl: [AppMenus.aclSys]  ,
       children: [
         {
           text: "",
@@ -84,16 +84,24 @@ export class AppMenus {
         // },
       ]
     },
+
+    {
+      text: "预警中心",
+      icon: { type: "icon", value: "warning" },// 图标
+      acl: [AppMenus.aclSys, AppMenus.aclOrg],
+      link: "/app/statistics/warning-center",
+    }
+    ,
     {
       text: "统计分析",
       icon: { type: "icon", value: "area-chart" },// 图标
-      acl: AppMenus.aclSys,
+      acl: [AppMenus.aclSys],
       children: [
-        {
-          text: "预警中心",
+        // {
+        //   text: "预警中心",
 
-          link: "/app/statistics/warning-center",
-        },
+        //   link: "/app/statistics/warning-center",
+        // },
         {
           text: "项目申报情况统计",
           link: "/app/statistics/pro-app-static",
@@ -113,7 +121,7 @@ export class AppMenus {
       text: "",
       i18n: "内容管理",
       icon: { type: "icon", value: "form" },// 图标\
-      acl: [ AppMenus.aclSys],
+      acl: [AppMenus.aclSys],
       children: [
         {
           text: "",
@@ -136,7 +144,7 @@ export class AppMenus {
       text: "",
       i18n: "工程管理",
       icon: { type: "icon", value: "project" },// 图标
-      acl: [AppMenus.aclCompany, AppMenus.aclSys,AppMenus.aclOrg],
+      acl: [AppMenus.aclCompany, AppMenus.aclSys, AppMenus.aclOrg],
       children: [
         {
           text: "",
@@ -169,7 +177,7 @@ export class AppMenus {
       text: "系统管理",
 
       icon: { type: "icon", value: "account-book" },// 图标
-      acl: [ AppMenus.aclSys],
+      acl: [AppMenus.aclSys],
       children: [
         {
           text: "抽查比例中心",
@@ -210,7 +218,6 @@ export class AppMenus {
       text: "",
       i18n: "用户中心",
       icon: { type: "icon", value: "user" },// 图标
-      // acl: AppMenus.aclCompany,
       children: [
         {
           text: "修改密码",
