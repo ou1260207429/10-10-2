@@ -515,13 +515,16 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         this.butNzLoading = false;
         this.reuseTabService.replace('/app/addCompletedAcceptanceComponent')
         this._eventEmiter.emit('completedAcceptanceComponentInit', []);
+        this.isSelectModalOkLoading = false;
+        this.isVisibleSelectModal = false;
+        this.butNzLoading = false;
         if (data == true) {
           this._NzModalService.success({
             nzTitle: '抽选结果',
             nzContent: this.data.projectName + '，已经被抽中',
             nzOnOk: () => {
 
-              this.hadSportCheck();
+              history.go(-1);
             }
           }
           );
@@ -531,7 +534,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
             nzContent: this.data.projectName + '，没有被抽中',
             nzOnOk: () => {
 
-              this.hadSportCheck();
+              history.go(-1);
             }
           }
           );
@@ -553,12 +556,6 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     })
   }
 
-  hadSportCheck() {
-    this.isSelectModalOkLoading = false;
-    this.isVisibleSelectModal = false;
-    this.butNzLoading = false;
-    history.go(-1)
-  }
 
   /**
      * 获取子组件发送的数据
