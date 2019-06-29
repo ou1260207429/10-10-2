@@ -106,42 +106,51 @@ export class LayoutDefaultComponent extends AppComponentBase
       }
       if (evt instanceof NavigationError || evt instanceof NavigationCancel) {
         this.isFetching = false;
-
-        if (evt instanceof NavigationError) {
-          // this.message.error(`无法加载${evt.url}路由`);
-          if (!this._TokenService.getToken()) {
-            // this.message.info(`您未登录，请先前往登录`);
-            if (!hadShowModel) {
-              hadShowModel = true;
-
-              this.modalService.info({
-                nzTitle: '提示',
-                nzContent: '您未登录，请先前往登录',
-                nzOnOk: () => {
-
-                  hadShowModel = false;
-                },
-                nzOnCancel: () => hadShowModel = false,
-              });
-              router.navigate(['/account/login']);
-            }
-
-          } else {
-            // this.message.error(`页面出现错误，此页面页面无法正常加载`);
-            if (!hadShowModel) {
-              hadShowModel = true;
-              this.modalService.info({
-                nzTitle: '提示',
-                nzContent: '页面出现错误，此页面页面无法正常加载。请检查您的网络是否已断开。',
-                nzOnOk: () => { hadShowModel = false },
-                nzOnCancel: () => { hadShowModel = false },
-              });
-
-            }
-
-          }
+        if (!hadShowModel) {
+          hadShowModel = true;
+          this.modalService.info({
+            nzTitle: '提示',
+            nzContent: '页面出现错误，此页面页面无法正常加载。请检查您的网络是否已断开。',
+            nzOnOk: () => { hadShowModel = false },
+            nzOnCancel: () => { hadShowModel = false },
+          });
 
         }
+        // if (evt instanceof NavigationError) {
+        //   // this.message.error(`无法加载${evt.url}路由`);
+        //   if (!this._TokenService.getToken()) {
+        //     // this.message.info(`您未登录，请先前往登录`);
+        //     if (!hadShowModel) {
+        //       hadShowModel = true;
+
+        //       this.modalService.info({
+        //         nzTitle: '提示',
+        //         nzContent: '您未登录，请先前往登录',
+        //         nzOnOk: () => {
+
+        //           hadShowModel = false;
+        //         },
+        //         nzOnCancel: () => hadShowModel = false,
+        //       });
+        //       router.navigate(['/account/login']);
+        //     }
+
+        //   } else {
+        //     // this.message.error(`页面出现错误，此页面页面无法正常加载`);
+        //     if (!hadShowModel) {
+        //       hadShowModel = true;
+        //       this.modalService.info({
+        //         nzTitle: '提示',
+        //         nzContent: '页面出现错误，此页面页面无法正常加载。请检查您的网络是否已断开。',
+        //         nzOnOk: () => { hadShowModel = false },
+        //         nzOnCancel: () => { hadShowModel = false },
+        //       });
+
+        //     }
+
+        //   }
+
+        // }
         return;
       }
       if (!(evt instanceof NavigationEnd)) {
