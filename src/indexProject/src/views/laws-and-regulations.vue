@@ -120,7 +120,7 @@ export default {
           req.result.data.forEach(element => {
             if (element.issueDate) {
               element.issueDate = moment(element.issueDate).format(
-                "YYYY-MM-DD hh:mm:ss"
+                "YYYY-MM-DD"
               );
             }
           });
@@ -143,7 +143,7 @@ export default {
           req.result.data.forEach(element => {
             if (element.issueDate) {
               element.issueDate = moment(element.issueDate).format(
-                "YYYY-MM-DD hh:mm:ss"
+                "YYYY-MM-DD"
               );
             }
           });

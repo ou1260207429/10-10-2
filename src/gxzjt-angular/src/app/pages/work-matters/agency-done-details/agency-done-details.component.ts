@@ -201,6 +201,11 @@ export class AgencyDoneDetailsComponent implements OnInit {
       return false;
     }  
 
+    if (this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType == 3 && (!this.tenantWorkFlowInstanceDto.auditors||this.tenantWorkFlowInstanceDto.auditors.length<1)) {
+      this.message.error('转派必须选择审批人')
+      return false;
+    }  
+
     let num = bo ? 1 : 0;
     //判断是竣工备案  
     if (this.flowPathType == 3) {
@@ -393,6 +398,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
   serveResult(name: string = "提交成功") {
     this.butNzLoading = false
     this.message.success(name)
+    this.reuseTabService.replace('/app/agencyDoneDetailsComponent')
     history.go(-1)
     this._eventEmiter.emit('agencyDoneInit', []);
   }
@@ -445,6 +451,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       InitiationProcessAddAuditorComponent,
       {
         title: title,
+        area: this.formDto.area,
         auditors: this.tenantWorkFlowInstanceDto.auditors
       }
     ).subscribe((res: any) => {

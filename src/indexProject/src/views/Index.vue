@@ -129,7 +129,7 @@
     <div class="rightNav">
       <div class="item">
         <el-tooltip placement="left" effect="light">
-          <div slot="content" style="border:none;padding-left:10px;box-sizing:border-box;">
+          <div class="propMsg call" slot="content">
             <p>电话号码：18607782223</p>
             <p style="margin-top: 5px;">工作时间：09：00-22：00</p>
           </div>
@@ -142,7 +142,7 @@
       </div>
       <div class="item" style="border-top:1px solid #e7eaef">
         <el-tooltip placement="left" effect="light">
-          <div slot="content" style="border:none;padding-left:10px;box-sizing:border-box;">
+          <div class="propMsg qq" slot="content">
             <p>QQ：49146664</p>
             <p style="margin-top: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;96987252</p>
           </div>
@@ -319,6 +319,23 @@ export default {
 };
 </script>
 <style  lang='less' scoped>
+.propMsg {
+  border: none;
+  padding-left: 50px;
+  box-sizing: border-box;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: left;
+  cursor: pointer;
+}
+
+.call {
+  background-image: url("../assets/images/icon_call02.png");
+}
+
+.qq {
+  background-image: url("../assets/images/icon_qq02.png");
+}
 .rightNav {
   width: 50px;
   text-align: center;

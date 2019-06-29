@@ -27,7 +27,7 @@
           </li>
         </template>
         <li>
-          <a class="antivelogin" href="http://222.84.250.158:8880/#/app">登录</a>
+          <a class="antivelogin" :href="loginUrl">登录</a>
         </li>
       </ul>
     </el-row>
@@ -90,7 +90,8 @@ export default {
         //   activeName: "antivelogin",
         //   acitve: "nowlogin"
         // }
-      ]
+      ],
+      loginUrl: app.loginUrl()
     };
   },
   watch: {

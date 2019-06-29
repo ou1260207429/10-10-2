@@ -23,7 +23,7 @@ const routes: Routes = [
   {
     path: 'alreadyDoneDetailsComponent/:flowNo/:flowId/:flowPathType',
     component: AlreadyDoneDetailsComponent,
-    data: { title: '已办流程详情' },
+    data: { title: '已办流程详情',reuse:true },
   },
   {
     path: 'agencyDoneComponent',
@@ -33,7 +33,7 @@ const routes: Routes = [
   {
     path: 'agencyDoneDetailsComponent/:flowNo/:flowId/:flowPathType/:operationType',
     component: AgencyDoneDetailsComponent,
-    data: { title: '待办流程详情' },
+    data: { title: '待办流程详情',reuse:true },
   },
 
   {
