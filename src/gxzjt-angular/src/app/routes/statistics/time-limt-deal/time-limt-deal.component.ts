@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { _HttpClient, ModalHelper } from '@delon/theme';
+import { _HttpClient, ModalHelper, DatePipe } from '@delon/theme';
 import { STColumn, STComponent, XlsxService } from '@delon/abc';
 import { StatisticalServiceServiceProxy, HandleLimitQueryDto } from '@shared/service-proxies/service-proxies';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { StatisticsTimeLimtDealDetailComponent } from '../time-limt-deal-detail/time-limt-deal-detail.component';
 
+
+
+var  datePipe=new  DatePipe();
 @Component({
   selector: 'app-statistics-time-limt-deal',
   templateUrl: './time-limt-deal.component.html',
@@ -816,7 +819,7 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     },
     { title: '当前处理人', index: 'currentHandleUserName' },
     { title: '申报时间', index: 'applyTime',type:'date' },
-    { title: '流程结束时间', index: 'endTime',type:'date'},
+    { title: '流程结束时间', index: 'endTime',format:(item:any)=>`${item.endTime=='0001-01-01T00:00:00'?'':datePipe.transform(item.endTime, 'YYYY-MM-DD HH:mm:ss')}`,type:'date'},
     { title: '超时时长', index: 'approvalRemainingTime' },
   ];
 
@@ -824,6 +827,7 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     private modal: ModalHelper,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
     private formBuilder: FormBuilder,
+
     private xlsx: XlsxService) { }
 
   ngOnInit() {
