@@ -20,6 +20,7 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   templateUrl: './forgot-psw.component.html',
@@ -38,6 +39,7 @@ export class ForgotPswComponent extends AppComponentBase implements OnInit {
     private _accountService: AccountServiceProxy,
     private _router: Router,
     public http: HttpClient,
+    private _NzNotificationService: NzNotificationService,
   ) {
     super(injector);
   }
@@ -73,28 +75,19 @@ export class ForgotPswComponent extends AppComponentBase implements OnInit {
       // console.log(res);
       if (res) {
         if (res.result == 0) {
-          // this.modalService.info({
-          //   nzTitle: '提示',
-          //   nzContent: "注册成功",
-          // });
 
-          this.message.info("注册成功");
+          this._NzNotificationService.info("修改成功", '');
           this.back();
         } else {
-          // this.modalService.info({
-          //   nzTitle: '提示',
-          //   nzContent: res.message,
-          // });
-          this.message.info(res.message);
+
+          this._NzNotificationService.info(res.message, '');
         }
       }
       this.saving = false;
     }, err => {
-      // this.modalService.error({
-      //   nzTitle: '提示',
-      //   nzContent: err,
-      // });
-      this.message.error(err);
+
+
+      this._NzNotificationService.info(err, '');
       this.saving = false;
     });
   }
