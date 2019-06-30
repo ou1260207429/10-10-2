@@ -511,11 +511,12 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       this.isSelectModalOkLoading = true;
       this._applyService.post_PutOnRecord(flowDataDto).subscribe(data => {
         this.butNzLoading = false;
-        this.reuseTabService.replace('/app/addCompletedAcceptanceComponent')
-        this._eventEmiter.emit('completedAcceptanceComponentInit', []);
         this.isSelectModalOkLoading = false;
         this.isVisibleSelectModal = false;
         this.butNzLoading = false;
+        this._eventEmiter.emit('completedAcceptanceComponentInit', []);
+        this.reuseTabService.replace('/app/addCompletedAcceptanceComponent')
+        
         if (data == true) {
           this._NzModalService.success({
             nzTitle: '抽选结果',
