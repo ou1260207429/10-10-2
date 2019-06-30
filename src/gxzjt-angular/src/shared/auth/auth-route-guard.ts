@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 // import { PermissionCheckerService } from '@abp/auth/permission-checker.service';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { TokenService } from '@abp/auth/token.service';
-import { NzModalService } from 'ng-zorro-antd';
+// import { NzModalService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd';
 import { ACLService } from '@delon/acl';
 
 import { AppMenus } from "@shared/AppMenus"
@@ -23,7 +24,8 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
     private _router: Router,
     private _sessionService: AppSessionService,
     private _tokenService: TokenService,
-    private _NzModalService: NzModalService,
+    // private _NzModalService: NzModalService,
+    private _NzMessageService: NzMessageService,
     private _ACLService: ACLService,
   ) { }
 
@@ -41,13 +43,15 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
       if ("login" != tag) {
 
 
-        this._NzModalService.info({
-          nzTitle: '提示',
-          nzContent: '您未登录，请先前往登录',
-        }
-        );
-        this._tokenService.clearToken();
-        
+        this._NzMessageService.info('您未登录，请先前往登录');
+        // this._NzModalService.info({
+        //   nzTitle: '提示',
+        //   nzContent: '您未登录，请先前往登录',
+
+        // }
+        // );
+        // this._tokenService.clearToken();
+
         this._router.navigate(['/account/login']);
       }
 
@@ -58,11 +62,12 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
 
 
     if (route.data && route.data['role'] && route.data['role'] != AppMenus.aclAny && !this._ACLService.can(route.data['role'])) {
-      this._NzModalService.info({
-        nzTitle: '提示',
-        nzContent: '您没有权限访问该地址',
-      }
-      );
+      this._NzMessageService.info('您没有权限访问该地址');
+      // this._NzModalService.info({
+      //   nzTitle: '提示',
+      //   nzContent: '您没有权限访问该地址',
+      // }
+      // );
       // this._router.navigate([this.selectBestRoute()]);
       return false;
     }

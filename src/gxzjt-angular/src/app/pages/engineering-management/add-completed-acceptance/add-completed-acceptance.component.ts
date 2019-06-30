@@ -1,7 +1,7 @@
 import { PublicModel } from './../../../../infrastructure/public-model';
 import { Component, OnInit } from '@angular/core';
-// import { NzMessageService } from 'ng-zorro-antd';
-import { timeTrans } from 'infrastructure/regular-expression';
+import { NzMessageService } from 'ng-zorro-antd';
+import { timeTrans, getTimestamp } from 'infrastructure/regular-expression';
 import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto, FlowDataDto, ProjectFlowDto, FlowNodeUser } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute } from '@angular/router';
 import { FlowServices, GXZJT_From } from 'services/flow.services';
@@ -11,6 +11,7 @@ import { AppSessionService } from '@shared/session/app-session.service';
 import { NzModalService } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { ReuseTabService } from '@delon/abc';
+
 
 /**
  * 工程管理->竣工验收->新增申报
@@ -345,7 +346,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         ,
 
       },
-      filingTime: '',
+      filingTime: timeTrans(getTimestamp(), 'yyyy-MM-dd', '-'),
       luckNo: '',
     },
     engineerinDescription: '',
@@ -396,19 +397,19 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     private reuseTabService: ReuseTabService,
     private _ActivatedRoute: ActivatedRoute,
     private _applyService: ApplyServiceServiceProxy,
-    // private message: NzMessageService,
+    private message: NzMessageService,
     public publicModel: PublicModel,
     private _NzModalService: NzModalService) {
     this.flowFormQueryDto.flowType = 3;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
-    this.flowFormQueryDto.flowId=parseInt(this._ActivatedRoute.snapshot.paramMap.get('flowId'));
+    this.flowFormQueryDto.flowId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('flowId'));
   }
 
   ngOnInit() {
     //if (this.type != 0) {
-      this.post_GetFlowFormData();
-   // }
+    this.post_GetFlowFormData();
+    // }
     this.initSelectModalData();
   }
 
@@ -419,7 +420,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   post_GetFlowFormData() {
     //this.data = '';
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
-      if (data.formJson!=null && data.formJson!="") {
+      if (data.formJson != null && data.formJson != "") {
         this.data = JSON.parse(data.formJson);
       }
       this.useNatureSelect = data.natures
@@ -453,8 +454,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     })
   }
   save() {
- 
-    console.log(this.form.valid)
+
+    // console.log(this.form.valid)
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
         Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length - 1],
@@ -472,8 +473,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
       const flowDataDto = new FlowDataDto();
-      flowDataDto.flowId=this.flowFormQueryDto.flowId;
-      flowDataDto.projectId=this.flowFormQueryDto.projectId;
+      flowDataDto.flowId = this.flowFormQueryDto.flowId;
+      flowDataDto.projectId = this.flowFormQueryDto.projectId;
       flowDataDto.formJson = JSON.stringify(this.data);
       flowDataDto.projectFlowInfo = new ProjectFlowDto();
 
@@ -507,46 +508,54 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       //待审人数组 等后台改模型
       // currentHandleUserCode: string | undefined; 
 
-      console.log(flowDataDto)
+      // console.log(flowDataDto)
 
       this.isSelectModalOkLoading = true;
       this._applyService.post_PutOnRecord(flowDataDto).subscribe(data => {
         this.butNzLoading = false;
         this.reuseTabService.replace('/app/addCompletedAcceptanceComponent')
         this._eventEmiter.emit('completedAcceptanceComponentInit', []);
+        this.isSelectModalOkLoading = false;
+        this.isVisibleSelectModal = false;
+        this.butNzLoading = false;
         if (data == true) {
           this._NzModalService.success({
             nzTitle: '抽选结果',
-            nzContent: this.data.projectName + '，已经被抽中'
+            nzContent: this.data.projectName + '，已经被抽中',
+            nzOnOk: () => {
 
+              history.go(-1);
+            }
           }
           );
         } else {
           this._NzModalService.info({
             nzTitle: '抽选结果',
-            nzContent: this.data.projectName + '，没有被抽中'
+            nzContent: this.data.projectName + '，没有被抽中',
+            nzOnOk: () => {
 
+              history.go(-1);
+            }
           }
           );
         }
 
-        this.isSelectModalOkLoading = false;
-        this.isVisibleSelectModal = false;
-        this.butNzLoading = false;
-        history.go(-1)
+
       }, err => {
         this.butNzLoading = false;
         this.isSelectModalOkLoading = false;
         this.isVisibleSelectModal = false;
-        this._NzModalService.error({
-          nzTitle: '操作失败',
-          nzContent: this.data.projectName + '，提交出错'
+        this.message.error(this.data.projectName + '，提交出错');
+        // this._NzModalService.error({
+        //   nzTitle: '操作失败',
+        //   nzContent: this.data.projectName + '，提交出错'
 
-        }
-        );
+        // }
+        // );
       })
     })
   }
+
 
   /**
      * 获取子组件发送的数据
@@ -565,13 +574,15 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this.isVisibleSelectModal = false;
   }
 
-  showSelectModal() { 
+  showSelectModal() {
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();
       this.form.controls[i].updateValueAndValidity();
     }
     if (this.form.valid) {
       this.isVisibleSelectModal = true;
+    } else {
+      this.message.error('有必填项未填写')
     }
   }
 

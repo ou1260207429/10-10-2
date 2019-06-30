@@ -89,7 +89,7 @@ export class AppSessionService {
     errCallback = errCallback || ((e) => { });
     return this._loginServiceProxy
       .getCurrentLoginUserInfoByUserId()
-      .pipe(finalize(finallyCallback))
+      // .pipe(finalize(finallyCallback))
       .subscribe
       (
         (result: UserCacheDto) => {
@@ -137,7 +137,6 @@ export class AppSessionService {
               break;
             case '企业用户':
               this._ACLService.setRole([AppMenus.aclCompany]);
-
               break;
             default:
               this._ACLService.setRole([AppMenus.aclCompany]);
@@ -153,6 +152,7 @@ export class AppSessionService {
           this._tenant = new TenantLoginInfoDto();
 
           // resolve(true);
+          finallyCallback();
         },
         err => {
           errCallback(err);

@@ -177,25 +177,33 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     if (str === checkCode) {
 
       this.submitting = true;
-      this.loginService.authenticate(() => {
+      this.loginService.authenticate(
+        () => {
 
-        this._AppSessionService.initUserInfo(() => {
-          /** 强制刷新导航栏url 跳转到首页 */
-          // location.href = location.href.replace('#/account/login', '#/app/');
-          this.submitting = false;
-          this._router.navigate(['/home/welcome']);
+          this._AppSessionService.initUserInfo(
+            () => {
+              /** 强制刷新导航栏url 跳转到首页 */
+              // location.href = location.href.replace('#/account/login', '#/app/');
+              this.submitting = false;
+              this._router.navigate(['/home/welcome']);
 
-        }, (err) => {
-          // this.modalService.warning({
-          //   nzTitle: '提示',
-          //   nzContent: '登录出错:' + err
-          // });
+            }, (err) => {
+              // this.modalService.warning({
+              //   nzTitle: '提示',
+              //   nzContent: '登录出错:' + err
+              // });
+              this.loginErrMsg = err;
+              this.submitting = false;
+            });
+
+          this.resetSliter();
+        },
+
+        (err: any) => {
+
           this.loginErrMsg = err;
           this.submitting = false;
         });
-
-        this.resetSliter();
-      });
     } else {
 
       this.loginErrMsg = '请完成拖动验证！';
