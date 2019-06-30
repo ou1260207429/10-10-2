@@ -495,7 +495,7 @@
           </se>
 
           <div class="textRight">
-            <se error="必填">（建设单位公章）<input style="width: 160px;margin-right: 20px" nz-input placeholder="建设单位"
+            <se error="必填">（建设单位公章）：<input style="width: 160px;margin-right: 20px" nz-input placeholder="建设单位"
                 [(ngModel)]="data.acceptanceOpinions.constructionUnit.officialSeal" name="constructionUnitofficialSeal"
                 required /></se>
             <se error="必填">项目负责人签名：<input style="width: 160px;margin-right: 20px" nz-input placeholder="请签名"
@@ -515,7 +515,7 @@
                   </textarea>
           </se>
           <div class="textRight">
-            <se error="必填">（设计单位公章）<input style="width: 160px;margin-right: 20px" nz-input placeholder="设计单位"
+            <se error="必填">（设计单位公章）：<input style="width: 160px;margin-right: 20px" nz-input placeholder="设计单位"
                 [(ngModel)]="data.acceptanceOpinions.designUnit.officialSeal" name="designUnitofficialSeal" required />
             </se>
             <se error="必填">项目负责人签名：<input style="width: 160px;margin-right: 20px" nz-input placeholder="请签名"
@@ -537,7 +537,7 @@
 
           <div class="textRight">
             <se error="必填">
-              （施工总承包单位）<input style="width: 160px;margin-right: 20px" nz-input placeholder="施工总承包单位"
+              （施工总承包单位）：<input style="width: 160px;margin-right: 20px" nz-input placeholder="施工总承包单位"
                 [(ngModel)]="data.acceptanceOpinions.contractingUnit.officialSeal" name="contractingUnitfficialSeal"
                 required />
             </se>
@@ -561,7 +561,7 @@
           </se>
           <div class="textRight">
             <se>
-              （专业承包单位公章）<input style="width: 160px;margin-right: 20" nz-input placeholder="专业承包单位公章"
+              （专业承包单位公章）：<input style="width: 160px;margin-right: 20px" nz-input placeholder="专业承包单位公章"
                 [(ngModel)]="data.acceptanceOpinions.professionalContractors.officialSeal"
                 name="professionalContractorsfficialSeal" />
             </se>
@@ -586,7 +586,7 @@
           </se>
           <div class="textRight">
             <se>
-              （监理单位公章）<input style="width: 160px;margin-right: 20px" nz-input placeholder="监理单位公章"
+              （监理单位公章）：<input style="width: 160px;margin-right: 20px" nz-input placeholder="监理单位公章"
                 [(ngModel)]="data.acceptanceOpinions.engineeringSupervisionUnit.officialSeal"
                 name="engineeringSupervisionUnitofficialSeal" />
             </se>
@@ -623,10 +623,10 @@
         </td>
       </tr>
       <tr [ngClass]="{pointerf5f5f5: type == 1}">
-        <td colspan='15' rowspan='1' style="text-align: right">备案时间:
-        </td>
-        <td colspan='5' rowspan='1' style="text-align: right">
-          <nz-date-picker name="t2" [(ngModel)]="data.acceptanceOpinions.filingTime" name="filingTime"></nz-date-picker>
+        <!-- <td colspan='15' rowspan='1' style="text-align: right">备案时间:
+        </td> -->
+        <td colspan='20' rowspan='1' style="text-align: right">
+          备案时间：<nz-date-picker style="width: 160px;margin-right: 20px" name="t2" [(ngModel)]="data.acceptanceOpinions.filingTime" name="filingTime"></nz-date-picker>
         </td>
       </tr>
 

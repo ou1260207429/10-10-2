@@ -163,10 +163,18 @@
     </div>
 
     <div class="textCenter" style="margin-bottom: 40px;" *ngIf="isLoginPerson">
-      <button nz-button nzType="primary" (click)="save(true)"
-        [nzLoading]="butNzLoading">{{curNodeName=='业务承办人审核'?'合格':'受理'}}</button>
-      <button nz-button nzType="primary" (click)="save(false)"
-        [nzLoading]="butNzLoading">{{curNodeName=='业务承办人审核'?'不合格':'不受理'}}</button>
+      <div *ngIf="curNodeName == '业务审批负责人审批'">
+        <button nz-button nzType="primary" (click)="save(true)" [nzLoading]="butNzLoading">通过</button>
+        <button nz-button nzType="primary" (click)="save(false)" [nzLoading]="butNzLoading">不通过</button>
+      </div>
+
+      <div *ngIf="curNodeName != '业务审批负责人审批'">
+        <button nz-button nzType="primary" (click)="save(true)"
+          [nzLoading]="butNzLoading">{{curNodeName=='业务承办人审核'?'合格':'受理'}}</button>
+        <button nz-button nzType="primary" (click)="save(false)"
+          [nzLoading]="butNzLoading">{{curNodeName=='业务承办人审核'?'不合格':'不受理'}}</button>
+      </div>
+
       <!-- <button nz-button nzType="primary" (click)="revoke()" *ngIf="curNodeName!='业务承办人审核'"
         [nzLoading]="butNzLoading">撤销</button> -->
     </div>
