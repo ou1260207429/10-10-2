@@ -440,7 +440,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this.flowFormDto.projectTypeStatu = 2;
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.butNzLoading = false;
-      this.reuseTabService.replace('/app/addCompletedAcceptanceComponent')
+      console.log(this.reuseTabService.curUrl);
+      this.reuseTabService.close(this.reuseTabService.curUrl)
       this._eventEmiter.emit('draftsComponentInit', []);
       this.flowFormDto.projectId = data;
       this._NzModalService.success({
@@ -515,14 +516,14 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         this.isVisibleSelectModal = false;
         this.butNzLoading = false;
         this._eventEmiter.emit('completedAcceptanceComponentInit', []);
-        this.reuseTabService.replace('/app/addCompletedAcceptanceComponent')
+        // this.reuseTabService.replace('/app/addCompletedAcceptanceComponent')
         
         if (data == true) {
           this._NzModalService.success({
             nzTitle: '抽选结果',
             nzContent: this.data.projectName + '，已经被抽中',
             nzOnOk: () => {
-              // history.go(-1);
+              this.reuseTabService.close(this.reuseTabService.curUrl)
             }
           }
           );
@@ -531,7 +532,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
             nzTitle: '抽选结果',
             nzContent: this.data.projectName + '，没有被抽中',
             nzOnOk: () => {
-              // history.go(-1);
+              this.reuseTabService.close(this.reuseTabService.curUrl)
             }
           }
           );
