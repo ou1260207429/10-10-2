@@ -814,7 +814,7 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
 
       }
     },
-    { title: '当前处理人', index: 'applyName' },
+    { title: '当前处理人', index: 'acceptName' },
     { title: '申报时间', index: 'applyTime',type:'date' },
     { title: '流程结束时间', index: 'endTime',type:'date' },
     { title: '超时时长', index: 'approvalRemainingTime' },

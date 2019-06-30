@@ -86,7 +86,7 @@ export class UserrightUseraddComponent implements OnInit {
     );
   }
   sub(){
-    let myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0]{1})|(15[0-3]{1})|(15[5-9]{1})|(18[0-9]{1}))+\d{8})$/;  //手机号码正则
+    let myreg =  /^(((13[0-9]{1})|(14[0-9]{1})|(19[0]{1})|(17[0]{1})|(15[0-3]{1})|(15[5-9]{1})|(18[0-9]{1}))+\d{8})$/;  //手机号码正则
     let reg = /(^\d{15}$)|(^\d{17}(\d|X)$)/; //
     if(this.submodel.eId==''||this.submodel.eId==null){
       this.message.error("登录账号不能为空！");
@@ -133,7 +133,15 @@ export class UserrightUseraddComponent implements OnInit {
     //   this.message.error("所属组织机构不能为空！");
     //   return
     // }
+    var arr = this.submodel.positionIds;
+    var newArr = [];
 
+      arr.forEach(function (e) {
+      if(!newArr.includes(e)){
+          newArr.push(e)
+      }
+     })
+     this.submodel.positionIds=newArr;
       this.UserRightService.Add(this.submodel).subscribe(
       res => {
         if(res.result!=0){
