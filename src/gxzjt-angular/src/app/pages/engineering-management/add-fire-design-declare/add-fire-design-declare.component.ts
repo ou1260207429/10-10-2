@@ -664,7 +664,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
         this._applyService.investigate(flowDataDto).subscribe(data => {
           this.butNzLoading = false;
           this.message.success('提交成功')
-          this.reuseTabService.replace('/app/addFireDesignDeclareComponent')
+          this.reuseTabService.close(this.reuseTabService.curUrl)
           this._eventEmiter.emit('fireDesignComponentInit', []);
           history.go(-1)
         }, error => {
@@ -693,7 +693,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     this.flowFormDto.projectTypeStatu = 0;
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
-      this.reuseTabService.replace('/app/addFireDesignDeclareComponent')
+      this.reuseTabService.close(this.reuseTabService.curUrl)
       this.message.success('保存成功')
       history.go(-1)
       this._eventEmiter.emit('draftsComponentInit', []);

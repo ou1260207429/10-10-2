@@ -244,7 +244,7 @@ export class AddFireAcceptanceComponent implements OnInit {
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.butNzLoading = false;
       this.flowFormDto.projectId = data;
-      this.reuseTabService.replace('/app/addFireAcceptanceComponent')
+      this.reuseTabService.close(this.reuseTabService.curUrl)
       this.message.success('保存成功')
       this._eventEmiter.emit('draftsComponentInit', []);
       history.go(-1)
@@ -330,7 +330,7 @@ export class AddFireAcceptanceComponent implements OnInit {
           console.log(flowDataDto);
           this._applyService.acceptance(flowDataDto).subscribe(data => {
             this.butNzLoading = false;
-            this.reuseTabService.replace('/app/addFireAcceptanceComponent')
+            this.reuseTabService.close(this.reuseTabService.curUrl)
             this._eventEmiter.emit('fireAcceptanceComponentInit', []);
             this.message.success('提交成功')
             history.go(-1)

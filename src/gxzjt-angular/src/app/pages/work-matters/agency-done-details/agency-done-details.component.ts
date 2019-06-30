@@ -408,7 +408,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
   serveResult(name: string = "提交成功") {
     this.butNzLoading = false
     this.message.success(name)
-    this.reuseTabService.replace('/app/agencyDoneDetailsComponent')
+    this.reuseTabService.close(this.reuseTabService.curUrl)
     history.go(-1)
     this._eventEmiter.emit('agencyDoneInit', []);
   }
