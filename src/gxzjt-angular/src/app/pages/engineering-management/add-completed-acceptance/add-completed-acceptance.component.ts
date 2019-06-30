@@ -581,6 +581,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     }
     if (this.form.valid) {
       this.isVisibleSelectModal = true;
+    } else {
+      this.message.error('有必填项未填写')
     }
   }
 
