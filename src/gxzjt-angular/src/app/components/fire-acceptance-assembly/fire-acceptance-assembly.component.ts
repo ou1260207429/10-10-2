@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVICES_URL, zzdjEnum4, zzdjEnum3, zzdjEnum2, zzdjEnum1, zzdjEnum } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
-import { UploadFile } from 'ng-zorro-antd';
+import { UploadFile, NzMessageService } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import { DepFlags } from '@angular/compiler/src/core';
 import lodash from 'lodash'
@@ -59,7 +59,7 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
   zzdjEnum3 = zzdjEnum3
   zzdjEnum4 = zzdjEnum4
 
-  constructor(public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) { }
+  constructor(private message: NzMessageService,public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
@@ -124,7 +124,8 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
       const fileList = lodash.cloneDeep(this.data.fileList);  
       this.data.fileList = []
       this.data.fileList = fileList 
-    },error=>{
+    }, error => { 
+      this.message.error('上传失败，上传文件不能超过30M');
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].status = 'error'
       const fileList = lodash.cloneDeep(this.data.fileList);  

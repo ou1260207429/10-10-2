@@ -2,7 +2,7 @@ import { ApplyServiceServiceProxy, FlowFormQueryDto, FlowFormDto, FlowDataDto, P
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ActivatedRoute } from '@angular/router';
-import { timeTrans } from 'infrastructure/regular-expression';
+import { timeTrans, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { GXZJT_From, FlowServices } from 'services/flow.services';
 import { FormGroup } from '@angular/forms';
@@ -598,6 +598,14 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
       this.showError.specialEngineering = false;
     }
     if (!this.showError.fireFightingFacilities && !this.showError.projectCategoryId && !this.showError.specialEngineering && this.form.valid) {
+      
+      for (let index = 0; index < this.data.fileList.length; index++) {
+        if (checkArrayString(this.data.fileList[index].array, 'status', 'uploading') != -1) {
+          this.message.error('要上传完文件才能提交表单')
+          return false;  
+        }
+      }
+
       this.butNzLoading = true;
       const from: GXZJT_From = {
         frow_TemplateInfo_Data: {

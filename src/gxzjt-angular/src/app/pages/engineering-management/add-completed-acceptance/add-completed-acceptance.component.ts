@@ -1,7 +1,7 @@
 import { PublicModel } from './../../../../infrastructure/public-model';
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { timeTrans, getTimestamp } from 'infrastructure/regular-expression';
+import { timeTrans, getTimestamp, checkArrayString } from 'infrastructure/regular-expression';
 import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto, FlowDataDto, ProjectFlowDto, FlowNodeUser } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute } from '@angular/router';
 import { FlowServices, GXZJT_From } from 'services/flow.services';
@@ -453,9 +453,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       this.butNzLoading = false;
     })
   }
-  save() {
-
-    // console.log(this.form.valid)
+  save() { 
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
         Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length - 1],
@@ -580,6 +578,13 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     
     if (this.form.valid) {
 
+      for (let index = 0; index < this.data.fileList.length; index++) {
+        if (checkArrayString(this.data.fileList[index].array, 'status', 'uploading') != -1) {
+          this.message.error('要上传完文件才能提交表单')
+          return false;  
+        }
+      }
+      
       if (this.flowFormQueryDto.flowId) {
         this.save();
       } else {

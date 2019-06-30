@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVICES_URL } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
-import { UploadFile } from 'ng-zorro-antd';
+import { UploadFile, NzMessageService } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import { ExamineFormDto, ProjectAttachment } from '@shared/service-proxies/service-proxies';
 import lodash from 'lodash'
@@ -42,7 +42,7 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
   @Input() examineFormDto: ExamineFormDto
 
 
-  constructor(public _publicServices: PublicServices, public publicModel: PublicModel, ) {
+  constructor(private message: NzMessageService,public _publicServices: PublicServices, public publicModel: PublicModel, ) {
   
   }
 
@@ -119,7 +119,8 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
 
       this.examineFormDto.attachment = []
       this.examineFormDto.attachment = fileList 
-    },error=>{
+    }, error => {
+      this.message.error('上传失败，上传文件不能超过30M');
       const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)
       this.examineFormDto.attachment[index]['status'] = 'error'
       const fileList = lodash.cloneDeep(this.examineFormDto.attachment);  

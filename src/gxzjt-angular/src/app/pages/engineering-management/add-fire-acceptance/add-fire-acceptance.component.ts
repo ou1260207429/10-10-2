@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { objDeleteType, timeTrans } from 'infrastructure/regular-expression';
+import { objDeleteType, timeTrans, checkArrayString } from 'infrastructure/regular-expression';
 import { NzMessageService } from 'ng-zorro-antd';
 import { OptionsEnum, ArchitectureTypeEnum } from 'infrastructure/expression';
 import { PublicModel } from 'infrastructure/public-model';
@@ -188,10 +188,10 @@ export class AddFireAcceptanceComponent implements OnInit {
   useNatureSelect
 
   butNzLoading: boolean = false;
-  constructor(private reuseTabService: ReuseTabService,private _eventEmiter: EventEmiter, private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
+  constructor(private reuseTabService: ReuseTabService, private _eventEmiter: EventEmiter, private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
     this.flowFormQueryDto.flowType = 2;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
-    this.flowFormQueryDto.flowId=parseInt(this._ActivatedRoute.snapshot.paramMap.get('flowId'));
+    this.flowFormQueryDto.flowId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('flowId'));
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
   }
   ngOnInit() {
@@ -206,29 +206,29 @@ export class AddFireAcceptanceComponent implements OnInit {
    */
   post_GetFlowFormData() {
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
-      if (data.formJson!=null && data.formJson!="") {
+      if (data.formJson != null && data.formJson != "") {
         this.data = JSON.parse(data.formJson);
-        if(this.data.detectionUnit==null){
-          this.data.detectionUnit={};
+        if (this.data.detectionUnit == null) {
+          this.data.detectionUnit = {};
         }
-        if(this.data.implementation==null){
-          this.data.implementation={};
+        if (this.data.implementation == null) {
+          this.data.implementation = {};
         }
-        if(this.data.constructionSituation==null){
-          this.data.constructionSituation={};
+        if (this.data.constructionSituation == null) {
+          this.data.constructionSituation = {};
         }
-        if(this.data.supervision==null){
-          this.data.supervision={};
+        if (this.data.supervision == null) {
+          this.data.supervision = {};
         }
-        if(this.data.detection==null){
-          this.data.detection={};
+        if (this.data.detection == null) {
+          this.data.detection = {};
         }
-        if(this.data.acceptance==null){
-          this.data.acceptance={};
+        if (this.data.acceptance == null) {
+          this.data.acceptance = {};
         }
 
       }
-      this.useNatureSelect = data.natures 
+      this.useNatureSelect = data.natures
     })
   }
 
@@ -269,6 +269,14 @@ export class AddFireAcceptanceComponent implements OnInit {
 
     if (!this.showError.projectCategoryId && this.form.valid) {
       if (!this.showError.projectCategoryId) {
+ 
+        for (let index = 0; index < this.data.fileList.length; index++) {
+          if (checkArrayString(this.data.fileList[index].array, 'status', 'uploading') != -1) {
+            this.message.error('要上传完文件才能提交表单')
+            return false;  
+          }
+        }
+
         const from: GXZJT_From = {
           frow_TemplateInfo_Data: {
             Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length - 1]
@@ -331,7 +339,7 @@ export class AddFireAcceptanceComponent implements OnInit {
           })
         })
       }
-    }else{
+    } else {
       console.log(this.form.errors);
       this.message.error('有必填项未填写')
     }
