@@ -102,9 +102,9 @@ export class AppPreBootstrap {
 
 
             // 写入菜单
-            const menuService = injector.get(MenuService);
+            // const menuService = injector.get(MenuService);
 
-            menuService.add(AppMenus.Menus);
+            // menuService.add(AppMenus.Menus);
 
 
             callback();
