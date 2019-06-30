@@ -523,8 +523,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
             nzTitle: '抽选结果',
             nzContent: this.data.projectName + '，已经被抽中',
             nzOnOk: () => {
-
-              history.go(-1);
+              // history.go(-1);
             }
           }
           );
@@ -533,8 +532,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
             nzTitle: '抽选结果',
             nzContent: this.data.projectName + '，没有被抽中',
             nzOnOk: () => {
-
-              history.go(-1);
+              // history.go(-1);
             }
           }
           );
@@ -578,9 +576,16 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();
       this.form.controls[i].updateValueAndValidity();
-    }
+    } 
+    
     if (this.form.valid) {
-      this.isVisibleSelectModal = true;
+
+      if (this.flowFormQueryDto.flowId) {
+        this.save();
+      } else {
+        this.isVisibleSelectModal = true;
+      }
+ 
     } else {
       this.message.error('有必填项未填写')
     }
