@@ -86,7 +86,7 @@
           <div style="margin-top: 8px" *ngIf='nodes.length> 0 ' nz-row>
             <div nz-col nzSpan="5">所属组织机构(点击单选)</div>
             <div nz-col nzSpan="19">
-                <nz-tree #treeCom [nzData]="nodes"  nzCheckable="true" nzMultiple="false" ref="tree"
+                <nz-tree #treeCom [nzData]="nodes"  nzCheckable="true" nzMultiple="true" ref="tree"
                 [(nzCheckedKeys)]="defaultCheckedKeys1" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzEventorg($event)">
               </nz-tree>
             </div>
