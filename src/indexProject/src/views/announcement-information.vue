@@ -68,7 +68,7 @@
                     style="background-color:#397CC8;border-color:#397CC8;"
                     type="primary"
                     @click="initTable"
-                  >提交</el-button>
+                  >查询</el-button>
                 </el-form-item>
                 <el-form-item>
                   <el-button
@@ -85,7 +85,7 @@
             <el-table v-loading="!tableData" :data="tableData" style="width: 100%">
               <el-table-column type="index" label="序号" width="50"></el-table-column>
               <template v-for="(item,index) in tableCols">
-                <template v-if="item.key=='recordCode'">
+                <!-- <template v-if="item.key=='recordCode'">
                   <el-table-column
                     v-if="searchForm.flowType==3"
                     :key="index"
@@ -100,8 +100,8 @@
                     :prop="item.key"
                     :label="item.label"
                   ></el-table-column>
-                </template>
-                <el-table-column v-else :key="index" :prop="item.key" :label="item.label"></el-table-column>
+                </template> -->
+                <el-table-column :key="index" :prop="item.key" :label="item.label"></el-table-column>
               </template>
             </el-table>
             <el-row style="margin-top:40px;margin-bottom:25px;">
@@ -171,10 +171,10 @@ export default {
         //   label: "序号"
         // },
 
-        {
-          key: "recordCode",
-          label: "备案编号"
-        },
+        // {
+        //   key: "recordCode",
+        //   label: "备案编号"
+        // },
         {
           key: "projectName",
           label: "工程名称"
@@ -191,18 +191,18 @@ export default {
           key: "address",
           label: "工程地址"
         },
-        {
-          key: "documentCode",
-          label: "文书编号"
-        },
+        // {
+        //   key: "documentCode",
+        //   label: "文书编号"
+        // },
         {
           key: "finishTime",
           label: "办结时间"
         },
-        {
-          key: "constructionPermit",
-          label: "施工许可证"
-        },
+        // {
+        //   key: "constructionPermit",
+        //   label: "施工许可证"
+        // },
         {
           key: "contact",
           label: "联系人"

@@ -2,7 +2,7 @@
 <template>
   <div style="width:100%;overflow:hidden;margin-bottom: 20px;">
     <div class="content">
-      <el-row>
+      <!-- <el-row>
         <div id="breadcrumb" style="padding:10px 0px;">
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item>建设大厅</el-breadcrumb-item>
@@ -10,7 +10,7 @@
             <el-breadcrumb-item v-if="data" class="breadcrumb">{{data.title}}</el-breadcrumb-item>
           </el-breadcrumb>
         </div>
-      </el-row>
+      </el-row> -->
       <el-row>
         <el-card :style="{minHeight:tableHight}">
           <el-row :gutter="10">
