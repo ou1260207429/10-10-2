@@ -98,7 +98,7 @@
         <div style="margin-top: 8px" nz-row>
           <div nz-col nzSpan="5">所属组织机构(点击单选)</div>
           <div nz-col nzSpan="19" style="border: solid 1px">
-              <nz-tree #treeCom [nzData]="nodes"   nzCheckable="true" nzMultiple="false"
+              <nz-tree #treeCom [nzData]="nodes"   nzCheckable="true" nzMultiple="true"
               [(nzCheckedKeys)]="defaultCheckedKeys" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzEventorg($event)">
             </nz-tree>
           </div>
