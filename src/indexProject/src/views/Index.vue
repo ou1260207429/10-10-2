@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div style="width:100%;overflow:hidden;margin-bottom: 20px;position:relative">
-    <div class="content">
+    <!-- <div class="content">
       <el-row>
         <div id="breadcrumb" style="padding:10px 0px;">
           <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -10,7 +10,7 @@
           </el-breadcrumb>
         </div>
       </el-row>
-    </div>
+    </div> -->
     <div class="content">
       <el-row :gutter="16">
         <el-col :span="12">

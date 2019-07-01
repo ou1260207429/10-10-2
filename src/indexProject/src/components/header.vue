@@ -4,7 +4,7 @@
     <el-row class="top" id="top">
       <el-row class="content">
         <el-col :span="19">
-          <img class="logo" src="../assets/images/logo.png" alt>
+          <img class="logo" src="../assets/images/logo.png" alt />
           <span class="title">广西建设工程消防设计审查验收备案管理平台</span>
         </el-col>
         <el-col :span="5" class="tip">
@@ -15,7 +15,7 @@
         </el-col>
       </el-row>
     </el-row>
-    <el-row id="nav" style="background-color:#fff;">
+    <el-row id="nav" style="background-color:#fff;margin-bottom:20px;">
       <ul class="nav content">
         <template v-for="(item,index) in navList">
           <li :key="index">
@@ -31,7 +31,7 @@
         </li>
       </ul>
     </el-row>
-    <el-row v-if="showPath" id="breadcrumb">
+    <!-- <el-row v-if="showPath" id="breadcrumb">
       <div style="padding:10px 0px;" class="content">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item>建设大厅</el-breadcrumb-item>
@@ -40,7 +40,7 @@
           </template>
         </el-breadcrumb>
       </div>
-    </el-row>
+    </el-row>-->
     <router-view></router-view>
   </el-row>
 </template>
@@ -51,8 +51,6 @@ import { app } from "../assets/js/app";
 export default {
   data() {
     return {
-      currentPath: [],
-      showPath: false,
       navList: [
         {
           path: "/index",
@@ -94,20 +92,11 @@ export default {
       loginUrl: app.loginUrl()
     };
   },
-  watch: {
-    $route(to, from) {
-      this.showPath = this.$route.meta.show;
-      this.currentPath = this.$route.meta.name;
-    }
-  },
   components: {},
 
   computed: {},
 
-  mounted() {
-    this.showPath = this.$route.meta.show;
-    this.currentPath = this.$route.meta.name;
-  },
+  mounted() {},
 
   methods: {}
 };
