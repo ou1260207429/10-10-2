@@ -17,7 +17,7 @@ import { ControlContainer, NgForm } from '@angular/forms';
 
    <div class="org-input">
     <input  nz-input 
-      [(name)]="name"
+      [name]="name"
       [placeholder]="placeHolder"
      
       [(ngModel)]="ngModel"
@@ -63,7 +63,7 @@ export class SelectorOrgComponent {
 
   orgList: EnterpriseDto[];
   
-  @Input()  ngModel: string;
+  @Input()  ngModel: any;
 
   @Output() ngModelChange = new EventEmitter();
 
