@@ -13,6 +13,7 @@ import { StatisticsTimeoutDealDetailComponent } from './timeout-deal-detail/time
 import { StatisticsWarningCenterDetailComponent } from './warning-center-detail/warning-center-detail.component';
 import { StatisticsAcceptCredentialsComponent } from './accept-credentials/accept-credentials.component';
 import { StatisticsPositionPaperComponent } from './position-paper/position-paper.component';
+import { UserRightService } from '../userright/userright.service';
 
 const COMPONENTS = [
   StatisticsWarningCenterComponent,
@@ -40,6 +41,9 @@ const COMPONENTS_NOROUNT = [
     ...COMPONENTS,
     ...COMPONENTS_NOROUNT
   ],
-  entryComponents: COMPONENTS_NOROUNT
+  entryComponents: COMPONENTS_NOROUNT,
+  providers:[
+    UserRightService,
+  ]
 })
 export class StatisticsModule { }

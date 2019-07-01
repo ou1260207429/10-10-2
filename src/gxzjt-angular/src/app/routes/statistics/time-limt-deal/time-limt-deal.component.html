@@ -14,13 +14,13 @@
     <nz-select class="search_menu_input" formControlName="city" nzShowSearch nzAllowClear nzPlaceHolder="选择市区"
       (ngModelChange)="cityChange($event)">
       <div *ngFor="let item of cityarray">
-        <nz-option nzLabel="{{item.label}}" nzValue="{{item.label}}"></nz-option>
+        <nz-option nzLabel="{{item.Name}}" nzValue="{{item.Name}}"></nz-option>
       </div>
     </nz-select>
     <!-- <span>区域：</span> -->
     <!-- <nz-select class="search_menu_input" formControlName="count" nzShowSearch nzAllowClear nzPlaceHolder="选择区县" >
       <div *ngFor="let item of countyarray">
-        <nz-option nzLabel="{{item.label}}" nzValue="{{item.label}}"></nz-option>
+        <nz-option nzLabel="{{item.Name}}" nzValue="{{item.Name}}"></nz-option>
       </div>
     </nz-select> -->
     <!-- <nz-select class="search_menu_input" nzShowSearch nzAllowClear nzPlaceHolder="工程名称" [(ngModel)]="selectedValuePro">     </nz-select>-->
