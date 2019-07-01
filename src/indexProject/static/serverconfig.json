@@ -1,5 +1,5 @@
 {
-  "ApiUrl": "http://222.84.250.158:8111/",
-  "downLoadUrl": "http://222.84.250.158:8000/",
-  "loginUrl": "http://222.84.250.158:8880/#/app"
+  "ApiUrl": "http://dn5.gxcic.net:8301/",
+  "downLoadUrl": "http://dn5.gxcic.net:8304/",
+  "loginUrl": "http://dn5.gxcic.net:8301/#/app"
 }
