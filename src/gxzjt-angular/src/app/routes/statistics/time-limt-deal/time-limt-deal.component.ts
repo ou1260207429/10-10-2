@@ -104,7 +104,6 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
   }
   search() {
     this.param.cityName = this.fliterForm.controls.city.value;
-    debugger
     this.param.area = this.fliterForm.controls.count.value;
     this.param.flowPathType = Number(this.fliterForm.controls.proType.value);
     if (this.param.flowPathType == 0) {
