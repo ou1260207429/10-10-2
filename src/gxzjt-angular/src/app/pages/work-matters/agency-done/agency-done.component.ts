@@ -20,6 +20,7 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { NzMessageService } from 'ng-zorro-antd';
 import * as moment from 'moment';
+import { FormGroup } from '@angular/forms';
 /**
  * 待办流程
  */
@@ -94,6 +95,9 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
   //时间
   rangeTime
+
+  //获取表单对象
+  @ViewChild('f') ngForm: FormGroup; 
   constructor(private workFlowedServiceProxy: WorkFlowedServiceProxy,
     private eventEmiter: EventEmiter,
     private _flowServices: FlowServices,
@@ -251,6 +255,11 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
       this.message.error("请填写签收人信息");
       return;
     }
+ 
+    if (!this.ngForm.valid) {
+      this.message.error("请填写正确的信息");
+      return;
+    } 
 
 
     const workFlow: WorkFlow = {

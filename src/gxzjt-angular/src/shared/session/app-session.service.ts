@@ -97,57 +97,73 @@ export class AppSessionService {
           // this._application.version = "1.0.0";
           // this._application.releaseDate = new Date();
           this._user = result;
+          // this._ACLService.removeRole([AppMenus.aclCompany,AppMenus.aclSys,AppMenus.aclOrg]);
+          this._MenuService.clear();
 
           switch (result.roleName) {
             case '系统管理员':
               this._ACLService.setFull(true);
+              this._MenuService.add(AppMenus.Menus);
               break;
             case '管理员':
               this._ACLService.setRole([AppMenus.aclSys]);
+              this._MenuService.add(AppMenus.Menus);
               break;
             case '大厅窗口受理':
               this._ACLService.setRole([AppMenus.aclOrg]);
+              this._MenuService.add(AppMenus.MenusOrg);
               break;
             case '业务审批负责人（主要领导）':
               this._ACLService.setRole([AppMenus.aclOrg]);
+              this._MenuService.add(AppMenus.MenusOrg);
               break;
             case '业务审批负责人（分管领导）':
               this._ACLService.setRole([AppMenus.aclOrg]);
+              this._MenuService.add(AppMenus.MenusOrg);
               break;
             case '业务审批负责人':
               this._ACLService.setRole([AppMenus.aclOrg]);
+              this._MenuService.add(AppMenus.MenusOrg);
               break;
             case '业务承办人':
               this._ACLService.setRole([AppMenus.aclOrg]);
+              this._MenuService.add(AppMenus.MenusOrg);
               break;
             case '窗口受理':
               this._ACLService.setRole([AppMenus.aclOrg]);
+              this._MenuService.add(AppMenus.MenusOrg);
               break;
             case '审批负责人':
               this._ACLService.setRole([AppMenus.aclOrg]);
+              this._MenuService.add(AppMenus.MenusOrg);
               break;
             case '备案抽查审批负责人':
               this._ACLService.setRole([AppMenus.aclOrg]);
+              this._MenuService.add(AppMenus.MenusOrg);
               break;
             case '业务审批负责人（局主要领导）':
               this._ACLService.setRole([AppMenus.aclOrg]);
+              this._MenuService.add(AppMenus.MenusOrg);
               break;
             case '业务审批负责人（股长）':
               this._ACLService.setRole([AppMenus.aclOrg]);
+              this._MenuService.add(AppMenus.MenusOrg);
               break;
             case '企业用户':
               this._ACLService.setRole([AppMenus.aclCompany]);
+              this._MenuService.add(AppMenus.MenusOrg);
               break;
             default:
               this._ACLService.setRole([AppMenus.aclCompany]);
+              this._MenuService.add(AppMenus.MenusOrg);
 
               break;
           }
 
-          // this._MenuService.clear();
-          // this._MenuService.add(AppMenus.Menus);
+    
 
           this._MenuService.resume();
+
 
           this._tenant = new TenantLoginInfoDto();
 

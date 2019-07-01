@@ -20,7 +20,7 @@ import { AppComponentBase } from '@shared/component-base/app-component-base';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-
+import { NzNotificationService } from 'ng-zorro-antd';
 
 import { REGISTER_URL } from 'infrastructure/expression';
 
@@ -42,6 +42,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
     private _router: Router,
     public http: HttpClient,
     // private modalService: NzModalService,
+    private _NzNotificationService: NzNotificationService,
   ) {
     super(injector);
   }
@@ -117,18 +118,11 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
       // console.log(res);
       if (res) {
         if (res.result == 0) {
-          // this.modalService.info({
-          //   nzTitle: '提示',
-          //   nzContent: "注册成功",
-          // });
-          this.message.info("注册成功");
+
+          this._NzNotificationService.info("注册成功",'');
           this.back();
         } else {
-          // this.modalService.info({
-          //   nzTitle: '提示',
-          //   nzContent: res.message,
-          // });
-          this.message.info(res.message);
+          this._NzNotificationService.info(res.message,'');
         }
       }
       this.saving = false;
@@ -139,16 +133,13 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
   }
 
   showErr(msg) {
-    // this.modalService.error({
-    //   nzTitle: '出错啦',
-    //   nzContent: msg,
-    // });
-    this.message.error(msg);
+    // this.message.error(msg);
+    this._NzNotificationService.error(msg,'');
   }
 
 
   getCaptcha() {
-    this.getServerCaptcha(this.model.EId,1);
+    this.getServerCaptcha(this.model.EId, 1);
   }
 
 

@@ -84,7 +84,8 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
 
       this.examineFormDto.attachment = []
       this.examineFormDto.attachment = fileList 
-    },error=>{
+    }, error => {
+      this.message.error('上传失败，上传文件不能超过30M');
       const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)
       this.examineFormDto.attachment[index]['status'] = 'error'
       const fileList = lodash.cloneDeep(this.examineFormDto.attachment);  

@@ -2,7 +2,7 @@ import { ApplyServiceServiceProxy, FlowFormQueryDto, FlowFormDto, FlowDataDto, P
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ActivatedRoute } from '@angular/router';
-import { timeTrans } from 'infrastructure/regular-expression';
+import { timeTrans, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { GXZJT_From, FlowServices } from 'services/flow.services';
 import { FormGroup } from '@angular/forms';
@@ -598,6 +598,14 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
       this.showError.specialEngineering = false;
     }
     if (!this.showError.fireFightingFacilities && !this.showError.projectCategoryId && !this.showError.specialEngineering && this.form.valid) {
+      
+      for (let index = 0; index < this.data.fileList.length; index++) {
+        if (checkArrayString(this.data.fileList[index].array, 'status', 'uploading') != -1) {
+          this.message.error('要上传完文件才能提交表单')
+          return false;  
+        }
+      }
+
       this.butNzLoading = true;
       const from: GXZJT_From = {
         frow_TemplateInfo_Data: {
@@ -656,7 +664,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
         this._applyService.investigate(flowDataDto).subscribe(data => {
           this.butNzLoading = false;
           this.message.success('提交成功')
-          this.reuseTabService.replace('/app/addFireDesignDeclareComponent')
+          this.reuseTabService.close(this.reuseTabService.curUrl)
           this._eventEmiter.emit('fireDesignComponentInit', []);
           history.go(-1)
         }, error => {
@@ -685,7 +693,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     this.flowFormDto.projectTypeStatu = 0;
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.flowFormDto.projectId = data;
-      this.reuseTabService.replace('/app/addFireDesignDeclareComponent')
+      this.reuseTabService.close(this.reuseTabService.curUrl)
       this.message.success('保存成功')
       history.go(-1)
       this._eventEmiter.emit('draftsComponentInit', []);

@@ -9,12 +9,12 @@ const routes: Routes = [
   {
     path: '',
     component: WelcomeComponent,
-    data: { title: '欢迎' }
+    data: { title: '欢迎', reuseClosable: false }
   },
   {
     path: 'welcome',
     component: WelcomeComponent,
-    data: { title: '欢迎' }
+    data: { title: '欢迎', reuseClosable: false }
   },
 
   {

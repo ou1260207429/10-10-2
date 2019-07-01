@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVICES_URL, zzdjEnum5, zzdjEnum4, zzdjEnum3, zzdjEnum2, zzdjEnum1, zzdjEnum } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
-import { UploadFile } from 'ng-zorro-antd';
+import { UploadFile, NzMessageService } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import lodash from 'lodash'
 /**
@@ -60,7 +60,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
   //从父组件获取使用行性质的select
   @Input() useNatureSelect: any
-  constructor(public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) {
+  constructor(private message: NzMessageService,public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) {
     this.decimationnumber = [];
     for (let index = 1; index < 101; index++) {
       this.decimationnumber.push({ label: index, value: index })
@@ -135,7 +135,8 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
       const fileList = lodash.cloneDeep(this.data.fileList);
       this.data.fileList = []
       this.data.fileList = fileList 
-    },error=>{
+    }, error => {
+      this.message.error('上传失败，上传文件不能超过30M');
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].status = 'error'
       const fileList = lodash.cloneDeep(this.data.fileList);  

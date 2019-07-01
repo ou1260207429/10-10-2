@@ -13,6 +13,7 @@ import { ReuseTabService } from '@delon/abc';
 import lodash from 'lodash'
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { InitiationProcessAddAuditorComponent } from '@app/components/initiation-process-add-auditor/initiation-process-add-auditor.component';
+import { checkArrayString } from 'infrastructure/regular-expression';
 /**
  * 待办详情->办理页面
  */
@@ -206,6 +207,15 @@ export class AgencyDoneDetailsComponent implements OnInit {
       return false;
     }  
 
+    if (this.curNodeName == '业务承办人审核' && this.flowPathType != 3 && this.examineFormDto.attachment) {
+      if (this.examineFormDto.attachment.length > 0) {
+        if (checkArrayString(this.examineFormDto.attachment, 'status', 'uploading') != -1) {
+          this.message.error('要上传完文件才能提交表单')
+          return false;  
+        }
+      } 
+    } 
+
     let num = bo ? 1 : 0;
     //判断是竣工备案  
     if (this.flowPathType == 3) {
@@ -218,7 +228,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     }
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptFullPath = this.appSession.user.organizationsName
-    this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.formDto.opinion
+    this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.formDto.opinion?this.formDto.opinion:this.examineFormDto.opinion
     this.butNzLoading = true
     if (!bo && this.curNodeName == '业务审批负责人审批') {
       // this.noResult((data) => { 
@@ -398,7 +408,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
   serveResult(name: string = "提交成功") {
     this.butNzLoading = false
     this.message.success(name)
-    this.reuseTabService.replace('/app/agencyDoneDetailsComponent')
+    this.reuseTabService.close(this.reuseTabService.curUrl)
     history.go(-1)
     this._eventEmiter.emit('agencyDoneInit', []);
   }

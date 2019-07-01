@@ -72,7 +72,7 @@ export class StatisticsProAppStaticComponent implements OnInit {
     //     // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
     //   ]
     // },
-    { title: '竣工验收申报编号', index: 'acceptanceNumber'},
+    // { title: '竣工验收申报编号', index: 'acceptanceNumber'},
     { title: '工程名称', index: 'projectName' },
     { title: '建设单位', index: 'companyName' },
     { title: '联系人', index: 'contactPerson' },

@@ -1,7 +1,7 @@
 import { PublicModel } from './../../../../infrastructure/public-model';
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { timeTrans, getTimestamp } from 'infrastructure/regular-expression';
+import { timeTrans, getTimestamp, checkArrayString } from 'infrastructure/regular-expression';
 import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto, FlowDataDto, ProjectFlowDto, FlowNodeUser } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute } from '@angular/router';
 import { FlowServices, GXZJT_From } from 'services/flow.services';
@@ -440,7 +440,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this.flowFormDto.projectTypeStatu = 2;
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.butNzLoading = false;
-      this.reuseTabService.replace('/app/addCompletedAcceptanceComponent')
+      console.log(this.reuseTabService.curUrl);
+      this.reuseTabService.close(this.reuseTabService.curUrl)
       this._eventEmiter.emit('draftsComponentInit', []);
       this.flowFormDto.projectId = data;
       this._NzModalService.success({
@@ -453,9 +454,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       this.butNzLoading = false;
     })
   }
-  save() {
-
-    // console.log(this.form.valid)
+  save() { 
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
         Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length - 1],
@@ -513,18 +512,18 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       this.isSelectModalOkLoading = true;
       this._applyService.post_PutOnRecord(flowDataDto).subscribe(data => {
         this.butNzLoading = false;
-        this.reuseTabService.replace('/app/addCompletedAcceptanceComponent')
-        this._eventEmiter.emit('completedAcceptanceComponentInit', []);
         this.isSelectModalOkLoading = false;
         this.isVisibleSelectModal = false;
         this.butNzLoading = false;
+        this._eventEmiter.emit('completedAcceptanceComponentInit', []);
+        // this.reuseTabService.replace('/app/addCompletedAcceptanceComponent')
+        
         if (data == true) {
           this._NzModalService.success({
             nzTitle: '抽选结果',
             nzContent: this.data.projectName + '，已经被抽中',
             nzOnOk: () => {
-
-              history.go(-1);
+              this.reuseTabService.close(this.reuseTabService.curUrl)
             }
           }
           );
@@ -533,8 +532,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
             nzTitle: '抽选结果',
             nzContent: this.data.projectName + '，没有被抽中',
             nzOnOk: () => {
-
-              history.go(-1);
+              this.reuseTabService.close(this.reuseTabService.curUrl)
             }
           }
           );
@@ -578,9 +576,23 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();
       this.form.controls[i].updateValueAndValidity();
-    }
+    } 
+    
     if (this.form.valid) {
-      this.isVisibleSelectModal = true;
+
+      for (let index = 0; index < this.data.fileList.length; index++) {
+        if (checkArrayString(this.data.fileList[index].array, 'status', 'uploading') != -1) {
+          this.message.error('要上传完文件才能提交表单')
+          return false;  
+        }
+      }
+      
+      if (this.flowFormQueryDto.flowId) {
+        this.save();
+      } else {
+        this.isVisibleSelectModal = true;
+      }
+ 
     } else {
       this.message.error('有必填项未填写')
     }

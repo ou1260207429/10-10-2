@@ -92,7 +92,7 @@
               <p>已经依法进行竣工验收消防备案的建设工程，如需扩建、改建（含室内外装修、建筑保温、用途变更）的，应当工程竣工验收合格之日起七个工作日内，依法申报消防验收备案。</p>
             </div>
           </td>
-        </tr> 
+        </tr>
         <tr>
           <td class="fontweight fontLeft leftTitle">一式两份，一份交建设单位，一份存档。 </td>
         </tr>
@@ -100,20 +100,21 @@
     </table>
   </div>
 
-  <!-- 消防竣工的复查意见书-->
+  <!-- 消防竣工的意见书-->
   <div *ngSwitchCase="5">
     <table class="tables d_table" style="box-sizing: border-box;">
       <thead>
         <tr>
           <td colspan='20' rowspan='1' class="table_title">
-            <h3>{{data.cityName}}住房和城乡建设局<br />建设工程竣工验收消防备案复查意见书</h3>
+            <h3>{{data.cityName}}住房和城乡建设局<br />建设工程竣工验收消防备案意见书</h3>
           </td>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle">
-            <div><input class="table_input" [(ngModel)]="examineFormDto.fileCodePrefix" name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号</div>
+            <div><input class="table_input" [(ngModel)]="examineFormDto.fileCodePrefix"
+                name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号</div>
             <div *ngIf="!examineFormDto.fileCodePrefix" class="rightSpan">必填</div>
           </td>
         </tr>
@@ -122,11 +123,15 @@
             <div class="table_detail">
               <h3>{{data.companyName}}：</h3>
               <p>
-                你单位备案的{{data.projectName}}工程(备案凭证文号：{{data.acceptFileCode}}，工程备案号：{{data.recordNumber}}，{{data.descr}})，经我单位竣工验收消防备案抽查不合格。你单位于{{data.applyDateTime|date:'yyyy年MM月dd日'}}申请复验，我单位根据{{data.acceptFileCode}}《建设工程竣工验收消防备案抽查不合格通知书》进行复查，存在问题均予以整改。该工程竣工验收消防备案复查合格，同意该工程恢复使用。
+                你单位备案的{{data.projectName}}工程(备案凭证文号：{{examineFormDto.acceptFileCode}}，工程备案号：{{examineFormDto.recordNumber}}，{{data.descr}})，经我单位竣工验收消防备案抽查不合格。你单位于{{data.applyDateTime|date:'yyyy年MM月dd日'}}申请复验，我单位根据{{data.acceptFileCode}}《建设工程竣工验收消防备案抽查不合格通知书》进行复查，存在问题均予以整改。该工程竣工验收消防备案复查合格，同意该工程恢复使用。
               </p>
               <p>该工程竣工验收消防备案合格投入使用后，管理单位应当对建筑消防设施进行定期维护保养，确保完好有效。</p>
               <p>工程如有扩建、改建（含室内外装修、建筑保温、用途变更），应当依法向我单位申报建设工程竣工验收消防备案。属于公众聚集场所的在投入使用、营业前，应依法申请消防安全检查。</p>
             </div>
+
+            <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion"
+              name="professionalContractorsopinion" required>
+                  </textarea>
           </td>
         </tr>
         <tr>
