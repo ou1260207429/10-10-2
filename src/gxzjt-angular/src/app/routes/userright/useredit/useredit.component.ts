@@ -19,7 +19,7 @@ export class UserrightUsereditComponent implements OnInit {
   submodel={
     eId:'',//登录账号
     eName:'',//名称
-    organizationsId:[],//所属组织机构
+    organizationsId:'',//所属组织机构
     sex:null,//性别
     mobile:'',//手机号
     idCardNo:'',//身份证
@@ -139,7 +139,10 @@ export class UserrightUsereditComponent implements OnInit {
       this.message.error("角色不能为空！");
       return
     }
-
+    if(this.orgtreefiter.length!=1){
+      this.message.error("组织架构需单选");
+      return
+    }
     // if(this.submodel.userDataVisibilityIds.length==0){
     //   this.message.error("可见数据域不能为空！");
     //   return
@@ -176,8 +179,9 @@ export class UserrightUsereditComponent implements OnInit {
   nzEventorg(event: NzFormatEmitEvent): void {
     console.log("所属组织机构"+event.keys);
     this.orgtreefiter=event.keys;
-    this.submodel.organizationsId=event.keys;
+    this.submodel.organizationsId=event.keys[0];
   }
+
   getuserdetail(id){
     let model={
       id:id

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PANGBO_SERVICES_URL } from 'infrastructure/expression';
+import { PANGBO_SERVICES_URL,SERVER_URL } from 'infrastructure/expression';
 type EntityResponseType = HttpResponse<any>;
 @Injectable({
   providedIn: 'root',
@@ -50,6 +50,11 @@ export class UserRightService {
   Delete(model?: any): Observable<any> {
     // api/User/Delete?id=
       return this.http.post(PANGBO_SERVICES_URL + 'api/User/Delete', model,model);
+    }
+   //获取市县级联
+  GetAreaDropdown(model?: any): Observable<any> {
+    // api/User/Delete?id=
+      return this.http.get(SERVER_URL+ 'api/services/app/Home/GetAreaDropdown');
     }
 }
 

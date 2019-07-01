@@ -157,7 +157,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     corporateOpinion: {
       seal: '',
       name: '',
-      opinion: '该项目消防设计文件的编制符合消防设计文件申请要求；建筑的总平面布局和平面布置、耐火等级、建筑构造、安全疏散、消防给水、消防电源及配电、消防设施等的消防设计符合国家工程建设消防技术标准。'
+      opinion: '该项目消防设计文件的编制符合消防设计文件申请要求；建筑的总平面布局和平面布置、耐火等级、建筑构造、安全疏散、消防给水、消防电源及配电、消防设施等的消防设计符合国家建设消防技术标准。'
     },
 
     uploadMaterial: {
@@ -528,7 +528,10 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
 
         ]
       },
-    ]
+    ],
+
+    //建设工程规划许可证号
+    licenseNumber:'' 
   }
 
   butNzLoading: boolean = false;

@@ -224,7 +224,7 @@ export class UserrightUserlookComponent implements OnInit {
     this.UserRightService.Details(model).subscribe(
       res => {
         this.submodel = res.data;
-        debugger
+
       },
     );
   }

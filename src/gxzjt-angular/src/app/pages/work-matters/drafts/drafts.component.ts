@@ -5,7 +5,7 @@ import { STColumn, STComponent, XlsxService, STPage } from '@delon/abc';
 import { _HttpClient } from '@delon/theme';
 
 
-import { ProjectFlowServcieServiceProxy, FireAuditCompleteQueryDto, DraftQueryDto } from '@shared/service-proxies/service-proxies'
+import { ProjectFlowServcieServiceProxy, FireAuditCompleteQueryDto, DraftQueryDto, ApplyServiceServiceProxy } from '@shared/service-proxies/service-proxies'
 
 
 import { Router } from '@angular/router';
@@ -17,6 +17,7 @@ import { AppConsts } from '@shared/AppConsts';
 import { PublicModel } from 'infrastructure/public-model';
 import { PublicFormComponent } from '../public/public-form.component';
 import { EventEmiter } from 'infrastructure/eventEmiter';
+import { NzMessageService } from 'ng-zorro-antd';
 /**
  *  草稿箱
  */
@@ -46,6 +47,16 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
             this.router.navigate([headerUrl + url + `/2/${record.projectId}/null`]);
           }
         },
+        {
+          text: '删除', click: (record) => { 
+            this._applyServiceService.post_DeleteDraft(record.projectId).subscribe(data => { 
+              this.message.success('删除成功')
+              this.st.reload()
+            }, () => {
+              this.message.error('删除失败')
+            })
+          }
+        },
       ]
     },
     { title: '项目编号', index: 'projectId' },
@@ -73,7 +84,9 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
   constructor(private _projectFlowServcieService: ProjectFlowServcieServiceProxy,
     private _flowServices: FlowServices,
     private _publicModel: PublicModel,
+    private message: NzMessageService,
     private router: Router,
+    private _applyServiceService:ApplyServiceServiceProxy,
     private _eventEmiter: EventEmiter,
     private http: _HttpClient,
     private xlsx: XlsxService) {

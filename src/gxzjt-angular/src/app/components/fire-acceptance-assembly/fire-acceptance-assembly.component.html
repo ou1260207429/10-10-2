@@ -128,7 +128,7 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>检测报告编号</td>
           <td rowspan='1' colspan='17'>
             <se error="必填">
-              <input nz-input placeholder="请输入施工许可证编号" [(ngModel)]="data.testReportNumber" name="testReportNumber"
+              <input nz-input placeholder="请输入检测报告编号" [(ngModel)]="data.testReportNumber" name="testReportNumber"
                 required />
             </se>
           </td>
@@ -334,10 +334,10 @@
         <tr [ngClass]="{pointerf5f5f5: type == 1}" style="border-top: 1px solid #e2e2e2;">
           <td colspan='3' rowspan="2" class="fontweight">单体建筑名称</td>
           <td colspan='4' rowspan="2" class="fontweight">结构类型</td>
-          <td colspan='1' rowspan="2" class="fontweight">耐火等级</td>
+          <td colspan='2' rowspan="2" class="fontweight">耐火等级</td>
           <td colspan='2' rowspan="1" class="fontweight">层数</td>
           <td colspan='1' rowspan="2" class="fontweight">建筑高度（m）</td>
-          <td colspan='1' rowspan="2" class="fontweight">建筑面积<br />（m<sup>2</sup>）</td>
+          <!-- <td colspan='1' rowspan="2" class="fontweight">建筑面积<br />（m<sup>2</sup>）</td> -->
           <td colspan='1' rowspan="2" class="fontweight">占地面积<br />（m<sup>2</sup>）</td>
           <td colspan='2' rowspan="1" class="fontweight">建筑面积<br />（m<sup>2</sup>）</td>
           <td colspan='1' rowspan="2" class="fontweight">操作</td>
@@ -366,7 +366,7 @@
             </se>
           </td>
           <!-- 请输入耐火等级 -->
-          <td>
+          <td colspan='2'>
             <se error="必填">
               <nz-select [(ngModel)]="item.grade" name="jbgrade{{index}}" required>
                 <nz-option *ngFor="let option of refractoryEnum" [nzLabel]="option.label" [nzValue]="option.value">
@@ -395,10 +395,10 @@
             </se>
           </td>
           <!-- 请输入占地面积 -->
-          <td>
+          <!-- <td>
             <se error="必填"><input nz-input [(ngModel)]="item.areaCovered" name="jbareaCovered{{index}}" required />
             </se>
-          </td>
+          </td> -->
 
           <!-- 建筑面积 地上、地下 -->
           <td>
@@ -611,7 +611,7 @@
           <div class="textRight" style="margin-top: 20px;">
             <se error="必填">
               专业分包单位（如有）
-              <input style="width: 320px;" nz-input placeholder="请输入施工总承包单位"
+              <input style="width: 320px;" nz-input placeholder="请输入专业分包单位"
                 [(ngModel)]="data.constructionSituation.subcontractors" name="constructionsubcontractors" />
             </se>
             <se error="必填">
@@ -717,7 +717,7 @@
 
       <tr>
         <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
-          style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>上传附件</td>
+          style="width: 36px;background-color: #f8f8f8;text-align: center;">上传附件</td>
         <td rowspan='1' colspan='14' class="textLeft">
           <div>
             1、建设工程消防验收申报表（纸质申报表的图片）

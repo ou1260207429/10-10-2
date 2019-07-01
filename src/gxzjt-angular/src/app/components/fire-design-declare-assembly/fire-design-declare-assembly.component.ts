@@ -158,6 +158,20 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     this.uoloadIndex = index
   }
 
+  disabledStartDate = (startValue: Date): boolean => {
+    if (!startValue || !this.data.planEndTime) {
+      return false;
+    }
+    return startValue.getTime() > this.data.planEndTime.getTime();
+  };
+
+  disabledEndDate = (endValue: Date): boolean => {
+    if (!endValue || !this.data.planStartTime) {
+      return false;
+    }
+    return endValue.getTime() <= this.data.planStartTime.getTime();
+  };
+
 
   onSelectOrgItem(res, item) {
     // console.log(res);
