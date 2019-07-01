@@ -182,6 +182,7 @@ export class UserrightUsereditComponent implements OnInit {
     this.orgtreefiter=event.keys;
     this.submodel.organizationsId=event.keys[0];
   }
+
   getuserdetail(id){
     let model={
       id:id

@@ -34,6 +34,7 @@ export class UserrightUseraddComponent implements OnInit {
   defaultExpandedKeys = ['0-0', '0-0-0', '0-0-1'];
   array;
 
+
   //控制所属组织机构树默认节点
   defaultCheckedKeys1=[];
   orgtreefiter=[];

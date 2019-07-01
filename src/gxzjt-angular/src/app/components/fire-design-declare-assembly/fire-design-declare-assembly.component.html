@@ -287,6 +287,18 @@
           <td rowspan='1'>无</td>
         </tr>
 
+        <tr [ngClass]="{pointerf5f5f5: type == 1}">
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">
+            建设工程规划许可证号
+          </td>
+          <td rowspan='1' colspan='13'>
+            <se error="必填">
+              <input nz-input placeholder="请输入建设工程规划许可证号" name="licenseNumber" [(ngModel)]="data.licenseNumber" />
+            </se>
+          </td>
+          <td rowspan='1'>无</td>
+        </tr>
+
         <!-- 使用性质 -->
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td colspan='1' class="fontweight fontLeft leftTitle"
@@ -318,10 +330,10 @@
         <tr style="border-top: 1px solid #e2e2e2;" [ngClass]="{pointerf5f5f5: type == 1}">
           <td colspan='3' rowspan="2" class="fontweight">单体建筑名称</td>
           <td colspan='4' rowspan="2" class="fontweight">结构类型</td>
-          <td colspan='1' rowspan="2" class="fontweight">耐火等级</td>
+          <td colspan='2' rowspan="2" class="fontweight">耐火等级</td>
           <td colspan='2' rowspan="1" class="fontweight">层数</td>
           <td colspan='1' rowspan="2" class="fontweight">建筑高度（m）</td>
-          <td colspan='1' rowspan="2" class="fontweight">建筑面积<br />（m<sup>2</sup>）</td>
+          <!-- <td colspan='1' rowspan="2" class="fontweight">建筑面积<br />（m<sup>2</sup>）</td> -->
           <td colspan='1' rowspan="2" class="fontweight">占地面积<br />（m<sup>2</sup>）</td>
           <td colspan='2' rowspan="1" class="fontweight">建筑面积<br />（m<sup>2</sup>）</td>
           <td colspan='1' rowspan="2" class="fontweight">操作</td>
@@ -350,7 +362,7 @@
             </se>
           </td>
           <!-- 请输入耐火等级 -->
-          <td>
+          <td colspan="2">
             <se error="必填">
               <nz-select [(ngModel)]="item.grade" name="jbgrade{{index}}">
                 <nz-option *ngFor="let option of refractoryEnum" [nzLabel]="option.label" [nzValue]="option.value">
@@ -374,10 +386,10 @@
             <se error="必填"><input nz-input [(ngModel)]="item.height" name="jbheight{{index}}" required /></se>
           </td>
           <!-- 请输入建筑面积 -->
-          <td>
+          <!-- <td>
             <se error="必填"><input nz-input [(ngModel)]="item.builtUpArea" name="jbbuiltUpArea{{index}}" required />
             </se>
-          </td>
+          </td> -->
           <!-- 请输入占地面积 -->
           <td>
             <se error="必填"><input nz-input [(ngModel)]="item.areaCovered" name="jbareaCovered{{index}}" required />
