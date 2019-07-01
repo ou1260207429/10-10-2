@@ -509,6 +509,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     };
 
     this.butNzLoading = true;
+    this.isSelectModalOkLoading = true;
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
       const flowDataDto = new FlowDataDto();
@@ -549,12 +550,11 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
       // console.log(flowDataDto)
 
-      this.isSelectModalOkLoading = true;
+      
       this._applyService.post_PutOnRecord(flowDataDto).subscribe(data => {
         this.butNzLoading = false;
         this.isSelectModalOkLoading = false;
-        this.isVisibleSelectModal = false;
-        this.butNzLoading = false;
+        this.isVisibleSelectModal = false; 
         this._eventEmiter.emit('completedAcceptanceComponentInit', []);
         // this.reuseTabService.replace('/app/addCompletedAcceptanceComponent')
         
@@ -627,7 +627,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         }
       }
       
-      if (this.flowFormQueryDto.flowId) {
+      if (this.flowFormQueryDto.flowId) { 
         this.save();
       } else {
         this.isVisibleSelectModal = true;

@@ -72,11 +72,11 @@
         <tr [ngClass]="{pointerf5f5f5: type == 1}">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">计划开工日期:</td>
           <td rowspan='1' colspan='8'>
-            <nz-date-picker name="planStartTime" [(ngModel)]="data.planStartTime"></nz-date-picker>
+            <nz-date-picker [nzDisabledDate]="disabledStartDate" name="planStartTime" [(ngModel)]="data.planStartTime"></nz-date-picker>
           </td>
           <td rowspan='1' colspan='2' class="fontweight fontLeft">计划竣工日期:</td>
           <td rowspan='1' colspan='4'>
-            <nz-date-picker [(ngModel)]="data.planEndTime" name="planEndTime"></nz-date-picker>
+            <nz-date-picker [nzDisabledDate]="disabledEndDate" [(ngModel)]="data.planEndTime" name="planEndTime"></nz-date-picker>
           </td>
         </tr>
 
@@ -573,7 +573,7 @@
 
       <tr>
         <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
-          style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>同时提交的材料</td>
+          style="width: 36px;background-color: #f8f8f8;text-align: center;">同时提交的材料</td>
         <td rowspan='1' colspan='14' class="textLeft">
           <div>
             1、建设工程消防设计审查申报表（纸质申报表的图片）

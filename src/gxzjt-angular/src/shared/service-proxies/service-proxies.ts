@@ -785,6 +785,56 @@ export class ApplyServiceServiceProxy {
     }
 
     /**
+     * @param projectId (optional) 
+     * @return Success
+     */
+    post_DeleteDraft(projectId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ApplyService/Post_DeleteDraft?";
+        if (projectId !== undefined)
+            url_ += "projectId=" + encodeURIComponent("" + projectId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_DeleteDraft(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_DeleteDraft(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_DeleteDraft(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
      * @param flowDataDto (optional) 
      * @return Success
      */
@@ -4569,9 +4619,10 @@ export class PutOnRecordFileServiceProxy {
      * @param template (optional) 
      * @param attachmentType (optional) 
      * @param fileCodeFormat (optional) 
+     * @param fileNo (optional) 
      * @return Success
      */
-    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined, fileCodeFormat: string | null | undefined): Observable<void> {
+    acceptFile(acceptApplyFormDto: AcceptApplyFormDto | null | undefined, acceptRecordId: number | null | undefined, template: string | null | undefined, attachmentType: string | null | undefined, fileCodeFormat: string | null | undefined, fileNo: number | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/AcceptFile?";
         if (acceptRecordId !== undefined)
             url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
@@ -4581,6 +4632,8 @@ export class PutOnRecordFileServiceProxy {
             url_ += "attachmentType=" + encodeURIComponent("" + attachmentType) + "&"; 
         if (fileCodeFormat !== undefined)
             url_ += "fileCodeFormat=" + encodeURIComponent("" + fileCodeFormat) + "&"; 
+        if (fileNo !== undefined)
+            url_ += "fileNo=" + encodeURIComponent("" + fileNo) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(acceptApplyFormDto);
