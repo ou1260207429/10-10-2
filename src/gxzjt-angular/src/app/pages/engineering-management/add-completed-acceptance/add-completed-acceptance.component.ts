@@ -42,6 +42,11 @@ import { ReuseTabService } from '@delon/abc';
 export class AddCompletedAcceptanceComponent implements OnInit {
 
   data: any = {
+
+    jsconstructionUnit: '',
+    legalRepresentative: '',
+    legalRepresentativeNo: '',
+
     recordNo: '',
     projectName: '',
     projectNumber: '',
@@ -51,12 +56,25 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     constructionPermitNumber: '',
     testReportNumber: '',
     planEndTime: '',
-    constructionUnit: {
-      name: '',
-      qualificationLevel: '',
-      contacts: '',
-      contactsNumber: ''
-    },
+    constructionUnit: [
+      {
+        designUnit: '',
+        qualificationLevel: '',
+        legalRepresentative: '',
+        contacts: '',
+        contactsNumber: ''
+      }
+    ],
+    design: [
+      {
+        designUnit: '',
+        qualificationLevel: '',
+        legalRepresentative: '',
+        contacts: '',
+        contactsNumber: ''
+      }
+    ],
+
     designUnit: {
       name: '',
       qualificationLevel: '',
@@ -69,6 +87,10 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       contacts: '',
       contactsNumber: ''
     },
+
+
+    
+
     subcontractors: {
       name: '',
       qualificationLevel: '',
@@ -94,6 +116,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         grade: '',
         height: '',
         builtUpArea: '',
+        //层数
+        ground: '',
         fireHazard: '',
       }
     ],
@@ -129,11 +153,24 @@ export class AddCompletedAcceptanceComponent implements OnInit {
           { label: '消防控制室', value: false, checked: false },
         ]
       },
-      {
-        label: '室内装修工程',
-        value: false,
-        checked: false,
-        arr: [
+      // {
+      //   label: '室内装修工程',
+      //   value: false,
+      //   checked: false,
+      //   arr: [
+      //     { label: '顶棚', value: false, checked: false },
+      //     { label: '墙面', value: false, checked: false },
+      //     { label: '地面', value: false, checked: false },
+      //     { label: '隔断 ', value: false, checked: false },
+      //     { label: '固定家具', value: false, checked: false },
+      //     { label: '装饰织物', value: false, checked: false },
+      //     { label: '其他装饰材料 ', value: false, checked: false },
+      //   ]
+      // }
+    ],
+    //室内装修工程
+    constructionProject: {
+      arr: [
           { label: '顶棚', value: false, checked: false },
           { label: '墙面', value: false, checked: false },
           { label: '地面', value: false, checked: false },
@@ -141,9 +178,12 @@ export class AddCompletedAcceptanceComponent implements OnInit {
           { label: '固定家具', value: false, checked: false },
           { label: '装饰织物', value: false, checked: false },
           { label: '其他装饰材料 ', value: false, checked: false },
-        ]
-      }
-    ],
+      ],
+      decorationArea:'',
+      ground:'',
+      useNature: '',
+      originallyUsed:''
+    },
 
     fireControlLinkageEngineering: [
       {

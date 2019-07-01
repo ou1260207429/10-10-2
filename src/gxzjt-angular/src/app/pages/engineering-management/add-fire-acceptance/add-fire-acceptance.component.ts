@@ -297,7 +297,6 @@ export class AddFireAcceptanceComponent implements OnInit {
           flowDataDto.projectFlowInfo = new ProjectFlowDto();
 
           flowDataDto.projectId = this.flowFormQueryDto.projectId
-
           flowDataDto.flowId=this.flowFormQueryDto.flowId;
 
           flowDataDto.projectFlowInfo.timeLimit = data.result.timeLimit

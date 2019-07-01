@@ -334,10 +334,10 @@
         <tr [ngClass]="{pointerf5f5f5: type == 1}" style="border-top: 1px solid #e2e2e2;">
           <td colspan='3' rowspan="2" class="fontweight">单体建筑名称</td>
           <td colspan='4' rowspan="2" class="fontweight">结构类型</td>
-          <td colspan='1' rowspan="2" class="fontweight">耐火等级</td>
+          <td colspan='2' rowspan="2" class="fontweight">耐火等级</td>
           <td colspan='2' rowspan="1" class="fontweight">层数</td>
           <td colspan='1' rowspan="2" class="fontweight">建筑高度（m）</td>
-          <td colspan='1' rowspan="2" class="fontweight">建筑面积<br />（m<sup>2</sup>）</td>
+          <!-- <td colspan='1' rowspan="2" class="fontweight">建筑面积<br />（m<sup>2</sup>）</td> -->
           <td colspan='1' rowspan="2" class="fontweight">占地面积<br />（m<sup>2</sup>）</td>
           <td colspan='2' rowspan="1" class="fontweight">建筑面积<br />（m<sup>2</sup>）</td>
           <td colspan='1' rowspan="2" class="fontweight">操作</td>
@@ -366,7 +366,7 @@
             </se>
           </td>
           <!-- 请输入耐火等级 -->
-          <td>
+          <td colspan='2'>
             <se error="必填">
               <nz-select [(ngModel)]="item.grade" name="jbgrade{{index}}" required>
                 <nz-option *ngFor="let option of refractoryEnum" [nzLabel]="option.label" [nzValue]="option.value">
@@ -395,10 +395,10 @@
             </se>
           </td>
           <!-- 请输入占地面积 -->
-          <td>
+          <!-- <td>
             <se error="必填"><input nz-input [(ngModel)]="item.areaCovered" name="jbareaCovered{{index}}" required />
             </se>
-          </td>
+          </td> -->
 
           <!-- 建筑面积 地上、地下 -->
           <td>
