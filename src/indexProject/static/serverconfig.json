@@ -1,12 +1,5 @@
 {
-<<<<<<< HEAD
   "ApiUrl": "http://222.84.250.158:8111/",
   "downLoadUrl": "http://222.84.250.158:8000/",
   "loginUrl": "http://222.84.250.158:8880/#/app"
 }
-=======
-  "ApiUrl": "http://dn5.gxcic.net:8301/",
-  "downLoadUrl": "http://dn5.gxcic.net:8304/",
-  "loginUrl": "http://dn5.gxcic.net:8301/#/app"
-}
->>>>>>> 4d774aa4d8ae7ef995d0dbe14f5a28c73457965b
