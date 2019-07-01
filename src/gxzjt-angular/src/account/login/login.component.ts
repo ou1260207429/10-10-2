@@ -17,7 +17,7 @@ import { AbpSessionService } from '@abp/session/abp-session.service';
 
 
 import { ReuseTabService } from '@delon/abc';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 
@@ -33,6 +33,9 @@ import { UrlHelper } from '@shared/helpers/UrlHelper';
 
 import { TokenService } from '@abp/auth/token.service';
 
+
+import { REGISTER_URL } from 'infrastructure/expression';
+import { UtilsService } from '@abp/utils/utils.service';
 
 var checkCode: any;
 @Component({
@@ -70,6 +73,8 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     private _TokenService: TokenService,
     private _AppSessionService: AppSessionService,
     private reuseTabService: ReuseTabService,
+    public http: HttpClient,
+    private _utilsService: UtilsService,
   ) {
     super(injector);
 
@@ -172,26 +177,106 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
   loginErrMsg = "";
 
+
+  model = {
+    // client_id: 'AEDA41B4-C038-4053-9105-3C73279E21C5',
+    // client_secret: 'secret',
+    // grant_type: 'password',
+    // username: '',
+    // password: ''
+    userNameOrEmailAddress: "",
+    password: "",
+    clientId: "AEDA41B4-C038-4053-9105-3C73279E21C5"
+  };
+
+
+
   login(): void {
     var str = $("#slider_content").attr("value");
     if (str === checkCode) {
 
       this.submitting = true;
+
+
+
+      let url = REGISTER_URL + "api/User/Login";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
+
+
+      this.model.userNameOrEmailAddress = this.loginService.authenticateModel.userNameOrEmailAddress;
+      this.model.password = this.loginService.authenticateModel.password;
+
+      this.http.post(url, this.model, {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      }).subscribe((res: any) => {
+
+
+        if (res) {
+          if (res.result == 0) {
+
+
+            this._TokenService.setToken(res.data.access_token);
+
+            // this._utilsService.setCookieValue(
+            //   AppConsts.authorization.encrptedAuthTokenName,
+            //   res.data.access_token,
+            //   null,
+            //   abp.appPath,
+            // );
+
+           
+            // this._router.navigate(['/home/welcome']);
+            this._AppSessionService.initUserInfo(
+              () => {
+                /** 强制刷新导航栏url 跳转到首页 */
+                this.submitting = false;
+                this._router.navigate(['/home/welcome']);
+  
+              }, (err) => {
+  
+                this.loginErrMsg = err;
+                this.submitting = false;
+              });
+          } else {
+            this.loginErrMsg = res.message;
+          }
+        }
+        this.submitting = false;
+        this.saving = false;
+      }, err => {
+        this.loginErrMsg = err;
+        this.saving = false;
+      });
+
+
+
+
+    } else {
+
+      this.loginErrMsg = '请完成拖动验证！';
+
+    }
+
+  }
+
+  login1(): void {
+    var str = $("#slider_content").attr("value");
+    if (str === checkCode) {
+
+      this.submitting = true;
+
       this.loginService.authenticate(
         () => {
 
           this._AppSessionService.initUserInfo(
             () => {
               /** 强制刷新导航栏url 跳转到首页 */
-              // location.href = location.href.replace('#/account/login', '#/app/');
               this.submitting = false;
               this._router.navigate(['/home/welcome']);
 
             }, (err) => {
-              // this.modalService.warning({
-              //   nzTitle: '提示',
-              //   nzContent: '登录出错:' + err
-              // });
+
               this.loginErrMsg = err;
               this.submitting = false;
             });
@@ -204,18 +289,17 @@ export class LoginComponent extends AppComponentBase implements OnInit {
           this.loginErrMsg = err;
           this.submitting = false;
         });
+
     } else {
 
       this.loginErrMsg = '请完成拖动验证！';
-      // this.modalService.warning({
-      //   nzTitle: '提示',
-      //   nzContent: '请完成拖动验证！'
-      // });
+
     }
 
-
-
   }
+
+
+
   getCaptcha() {
     this.getServerCaptcha(this.loginService.authenticateModel.userNameOrEmailAddress, 0);
   }
