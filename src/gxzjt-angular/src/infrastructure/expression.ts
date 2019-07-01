@@ -3,7 +3,7 @@
 import { STPage, STComponent } from "@delon/abc";
 
 
-export const IS_DEBUG = true;
+export const IS_DEBUG = false;
 
 
 export const SERVER_URL = IS_DEBUG ? 'http://222.84.250.158:8111/' : 'http://222.84.250.158:8111/';

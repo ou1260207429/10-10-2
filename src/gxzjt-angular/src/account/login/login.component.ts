@@ -191,7 +191,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
 
 
-  login(): void {
+  login1(): void {
     var str = $("#slider_content").attr("value");
     if (str === checkCode) {
 
@@ -239,7 +239,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
                 this.submitting = false;
               });
           } else {
-            this.loginErrMsg = res.message;
+            this.loginErrMsg = res.data.message;
           }
         }
         this.submitting = false;
@@ -247,6 +247,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
       }, err => {
         this.loginErrMsg = err;
         this.saving = false;
+        this.submitting = false;
       });
 
 
@@ -260,7 +261,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
   }
 
-  login1(): void {
+  login(): void {
     var str = $("#slider_content").attr("value");
     if (str === checkCode) {
 
