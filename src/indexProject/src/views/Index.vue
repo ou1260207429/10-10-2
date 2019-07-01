@@ -10,21 +10,21 @@
           </el-breadcrumb>
         </div>
       </el-row>
-    </div> -->
+    </div>-->
     <div class="content">
       <el-row :gutter="16">
         <el-col :span="12">
           <div ref="leftTop">
             <el-card class="comeIn">
-              <a href="http://222.84.250.158:8880/#/app">
-                <img style="width:100%;" src="../assets/images/img_bg_bsrk.png" alt>
+              <a :href="loginUrl">
+                <img style="width:100%;" src="../assets/images/img_bg_bsrk.png" alt />
                 <p style="color:#fff;">消防设计审查和验收办事入口</p>
               </a>
             </el-card>
             <el-card style="margin-top:8px;">
               <div style="overflow:hidden;">
                 <p class="tips" style="float: left">
-                  <img src="../assets/images/img_bg_bszn.png" alt>
+                  <img src="../assets/images/img_bg_bszn.png" alt />
                   <span>办事指南</span>
                 </p>
               </div>
@@ -32,7 +32,7 @@
                 <el-col class="item" :span="8" :key="index" v-for="(item,index) in handleList">
                   <router-link :to="{path: '/handling-guid-list/detail/'+item.id}">
                     <div class="cardList">
-                      <img :src="item.src" alt>
+                      <img :src="item.src" alt />
                     </div>
                   </router-link>
                   <div class="ttt">{{item.title}}</div>
@@ -43,7 +43,7 @@
           <el-card :style="{minHeight:leftHeight,marginTop:'8px', position: 'relative'}">
             <div style="overflow:hidden;">
               <p class="tips" style="float: left">
-                <img src="../assets/images/img_bg_flfg.png" alt>
+                <img src="../assets/images/img_bg_flfg.png" alt />
                 <span>法律法规</span>
               </p>
             </div>
@@ -69,7 +69,7 @@
             <div ref="rightTop">
               <div style="overflow:hidden">
                 <p class="tips" style="float: right">
-                  <img src="../assets/images/img_bg_ggxx.png" alt>
+                  <img src="../assets/images/img_bg_ggxx.png" alt />
                   <span>公告信息</span>
                 </p>
               </div>
@@ -77,7 +77,7 @@
                 <el-col class="item" :span="8" :key="index" v-for="(item,index) in infoList">
                   <router-link :to="'/announcement-information/'+item.type">
                     <div class="cardList">
-                      <img :src="infoImg[index]" alt>
+                      <img :src="infoImg[index]" alt />
                     </div>
                   </router-link>
                   <div>{{item.name}}</div>
@@ -95,7 +95,7 @@
           <el-card :style="{minHeight:rightHeight,marginTop:'8px', position: 'relative'}">
             <div style="overflow:hidden">
               <p class="tips" style="float: right">
-                <img src="../assets/images/img_bgxz.png" alt>
+                <img src="../assets/images/img_bgxz.png" alt />
                 <span>表格下载</span>
               </p>
             </div>
@@ -134,8 +134,8 @@
             <p style="margin-top: 5px;">工作时间：09：00-22：00</p>
           </div>
           <div>
-            <img src="../assets/images/icon_call.png" alt>
-            <br>
+            <img src="../assets/images/icon_call.png" alt />
+            <br />
             <span>联系电话</span>
           </div>
         </el-tooltip>
@@ -147,11 +147,11 @@
             <p style="margin-top: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;96987252</p>
           </div>
           <div>
-            <img src="../assets/images/icon_qq.png" alt>
-            <br>
+            <img src="../assets/images/icon_qq.png" alt />
+            <br />
             <span>
               消防系统服务支持Q
-              <br>Q群
+              <br />Q群
             </span>
           </div>
         </el-tooltip>
@@ -168,6 +168,7 @@ import { setTimeout } from "timers";
 export default {
   data() {
     return {
+      loginUrl: app.loginUrl(),
       leftHeight: "200px",
       rightHeight: "200px",
       lawsList: [],
@@ -224,6 +225,7 @@ export default {
   computed: {},
 
   mounted() {
+    console.log(this.loginUrl);
     const that = this;
     that.getlawsList();
     that.getTableList();
