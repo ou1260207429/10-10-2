@@ -116,7 +116,8 @@
                         <span class='BigTag'>超时数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#D3FF3A;'>
-                        <span class='BigNum'>{{Floor((FireData1?.avgCompleteTimeCountNumber + 5)/2)}}</span><span>天</span>
+                        <span
+                            class='BigNum'>{{Floor((FireData1?.avgCompleteTimeCountNumber + 5)/2)}}</span><span>天</span>
                         <span class='BigTag'>平均办理时长</span>
                     </div>
                     <div style='height: 4px;
@@ -142,7 +143,8 @@
                         <span class='BigTag'>超时数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#D3FF3A;'>
-                        <span class='BigNum'>{{Floor((FireData2?.avgCompleteTimeCountNumber + 5)/2)}}</span><span>天</span>
+                        <span
+                            class='BigNum'>{{Floor((FireData2?.avgCompleteTimeCountNumber + 5)/2)}}</span><span>天</span>
                         <span class='BigTag'>平均办理时长</span>
                     </div>
                     <div style='height: 4px;
@@ -168,7 +170,8 @@
                         <span class='BigTag'>超时数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#D3FF3A;'>
-                        <span class='BigNum'>{{Floor((FireData3?.avgCompleteTimeCountNumber + 4)/2)}}</span><span>天</span>
+                        <span
+                            class='BigNum'>{{Floor((FireData3?.avgCompleteTimeCountNumber + 4)/2)}}</span><span>天</span>
                         <span class='BigTag'>平均办理时长</span>
                     </div>
                     <div style='height: 4px;
@@ -317,7 +320,7 @@
             top: -4%;
             margin-bottom: 4%;'>超时预警列表</span>
             <nz-table class='FireTable' nzSize="small" nzBordered='false' [nzData]="ScreenTimeoutList"
-                nzShowPagination='false'>
+                nzShowPagination='false' style='table-layout:fixed;'>
                 <thead nz-thead>
                     <tr>
                         <!-- <th nz-th>
@@ -342,11 +345,34 @@
                 </thead>
                 <tbody nz-tbody>
                     <tr nz-tbody-tr *ngFor='let data of ScreenTimeoutList;let i = index;'>
+
+                        <td nz-td style='max-width: 100px; '>
+                            <div style='max-height: 60px;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                display: -webkit-box;
+                                -webkit-line-clamp: 3;
+                                -webkit-box-orient: vertical;'>
+                                {{data?.projectName}}
+                            </div>
+
+                        </td>
+                        <td nz-td style='max-width: 100px;'>
+                            <div style='max-height: 60px;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                display: -webkit-box;
+                                -webkit-line-clamp: 3;
+                                -webkit-box-orient: vertical;'>
+                                {{data?.companyName}}
+                            </div>
+                        </td>
+                        <td nz-td>{{data?.lastUpdateUserName}}</td>
+                        <td nz-td>{{data?.expireTime}}</td>
+
+
                         <!-- <td nz-td>{{i+1}}</td> -->
-                        <td nz-td style='max-width: 100px;'>{{data?.projectName}}</td>
-                        <td nz-td style='max-width: 100px;'>{{data?.companyName}}</td>
-                        <td nz-td>{{data?.LastUpdateUserName}}</td>
-                        <td nz-td>{{data?.ExpireTime}}</td>
+
                         <!-- <td nz-td *ngIf='data.state == "合格"' style='color:#2EDB63'>{{data.state}}</td>
                         <td nz-td *ngIf='data.state == "不合格"' style='color:red'>{{data.state}}</td> -->
                     </tr>
