@@ -34,6 +34,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   columns: STColumn[] = [
     {
       title: '操作',
+      width:'200px',
       buttons: [
         {
           text: '查看',
@@ -98,17 +99,17 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     { title: '竣工验收备案申报编号', index: 'recordNumber' },
     { title: '工程名称', index: 'projectName' },
     { title: '建设单位', index: 'companyName' },
-    { title: '是否被抽中', index: 'isSelected',format: (item: any) => `${item.isSelected==true?"是":(item.isSelected==false?"否":"是")}`,type: 'tag', tag: {
+    { title: '是否被抽中', index: 'isSelected',width:'120px',format: (item: any) => `${item.isSelected==true?"是":(item.isSelected==false?"否":"是")}`,type: 'tag', tag: {
       "是":{text:'是',color: 'green' },
       "否": { text: '否',color: 'red' },
     }},
     // { title: '验证码', index: '无此字段返回' },
-    { title: '当前处理环节', index: 'currentNodeName' },
-    { title: '流程是否超时', index: 'isExpireTime',format: (item: any) => `${item.isExpireTime==true?"是":(item.isExpireTime==false?"否":"是")}`,type: 'tag', tag: {
+    { title: '当前处理环节', index: 'currentNodeName',width:'120px' },
+    { title: '流程是否超时', index: 'isExpireTime',width:'120px',format: (item: any) => `${item.isExpireTime==true?"是":(item.isExpireTime==false?"否":"是")}`,type: 'tag', tag: {
       "是":{text:'是',color: 'red' },
       "否": { text: '否',color: 'green' },
     }},
-    { title: '结果', index: 'status',format: (item: any) => `${item.status==0?"未处理":(item.status==1?"受理":(item.status==2?"不受理":(item.status==3?"不合格":(item.status==4?"合格":(item.status==5?"未抽中":"未处理")))))}`,type: 'tag', tag: {
+    { title: '结果', index: 'status',width:'120px',format: (item: any) => `${item.status==0?"未处理":(item.status==1?"受理":(item.status==2?"不受理":(item.status==3?"不合格":(item.status==4?"合格":(item.status==5?"未抽中":"未处理")))))}`,type: 'tag', tag: {
       "未处理": { text: '未处理', color: '' },
       "受理": { text: '受理', color: 'green' },
       "不受理":{ text: '不受理', color: 'red' },
@@ -116,7 +117,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
       "合格":{ text: '合格', color: '' },
       "未抽中":{ text: '未抽中', color: '' },
     }},
-    { title: '操作时间', index: 'applyTime',type:'date' },
+    { title: '操作时间', index: 'applyTime',width:'120px',type:'date' },
   ];
 
   searchParam = new FireAuditCompleteQueryDto();
