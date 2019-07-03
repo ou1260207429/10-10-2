@@ -10,24 +10,31 @@
             <el-breadcrumb-item v-if="data" class="breadcrumb">{{data.title}}</el-breadcrumb-item>
           </el-breadcrumb>
         </div>
-      </el-row> -->
+      </el-row>-->
       <el-row>
         <el-card :style="{minHeight:tableHight}">
           <el-row :gutter="10">
-            <el-col :span="17" v-loading="!data"  :style="{minHeight:tableHight}">
+            <el-col :span="17" v-loading="!data" :style="{minHeight:tableHight}">
               <div style="width:100%;height:2px;"></div>
               <div v-if="data">
                 <h1>{{data.title}}</h1>
-                <p v-if="data.creationTime" style="text-align: center;color:#A3A3A3">发布日期：{{data.creationTime}}</p>
-                <div v-html="data.content" style="padding:20px;margin-bottom:50px;"></div>
+                <p
+                  v-if="data.creationTime"
+                  style="text-align: center;color:#A3A3A3"
+                >发布日期：{{data.creationTime}}</p>
+                <div
+                  id="contentHandel"
+                  v-html="data.content"
+                  style="padding:20px;margin-bottom:50px;"
+                ></div>
               </div>
             </el-col>
             <el-col :span="7">
-              <img style="width:100%;" src="../assets/images/办事指南详情_03.jpg" alt>
+              <img style="width:100%;" src="../assets/images/办事指南详情_03.jpg" alt />
               <div style="border:1px solid #DCDCDC;padding-bottom:20px;">
                 <div style="overflow:hidden;">
                   <p class="tips" style="float: left">
-                    <img style="height:28px;" src="../assets/images/img_bg_bszn00.png" alt>
+                    <img style="height:28px;" src="../assets/images/img_bg_bszn00.png" alt />
                     <span style="font-size:16px;">其他相关</span>
                   </p>
                 </div>
@@ -49,7 +56,7 @@
                         style="width:100%;"
                         :src="allowImg[index]?allowImg[index]:allowImg[0]"
                         alt
-                      >
+                      />
                     </el-col>
                     <el-col :span="14" style=" position: relative;height:80px;">
                       <h4>{{item.title}}</h4>
@@ -61,7 +68,7 @@
               <div style="padding-bottom:20px;border:1px solid #DCDCDC;margin-top:10px;">
                 <div style="overflow:hidden;">
                   <p class="tips" style="float: left">
-                    <img style="height:28px;" src="../assets/images/img_bg_bszn00.png" alt>
+                    <img style="height:28px;" src="../assets/images/img_bg_bszn00.png" alt />
                     <span style="font-size:16px;">网上备案</span>
                   </p>
                 </div>
@@ -82,7 +89,7 @@
                         style="width:100%;"
                         :src="recordImg[index]?recordImg[index]:recordImg[0]"
                         alt
-                      >
+                      />
                     </el-col>
                     <el-col :span="14" style=" position: relative;height:80px;">
                       <h4>{{item.title}}</h4>
@@ -92,10 +99,12 @@
                 </el-row>
               </div>
             </el-col>
-          
           </el-row>
           <el-row>
-             <div v-if="fileList.length>0" style="margin-top:20px;padding-left:30px;margin-bottom:20px;">
+            <div
+              v-if="fileList.length>0"
+              style="margin-top:20px;padding-left:30px;margin-bottom:20px;"
+            >
               <p style="margin-bottom:10px;font-weight: bold;">相关文件下载</p>
               <div>
                 <div
@@ -238,6 +247,10 @@ h1 {
   text-align: center;
   padding: 20px;
   color: #bd1127;
+}
+#contentHandel img {
+  display: inline-block;
+  max-width: 100%;
 }
 .tip {
   width: 41%;
