@@ -89,7 +89,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     },
 
 
-    
+
 
     subcontractors: {
       name: '',
@@ -171,18 +171,18 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     //室内装修工程
     constructionProject: {
       arr: [
-          { label: '顶棚', value: false, checked: false },
-          { label: '墙面', value: false, checked: false },
-          { label: '地面', value: false, checked: false },
-          { label: '隔断 ', value: false, checked: false },
-          { label: '固定家具', value: false, checked: false },
-          { label: '装饰织物', value: false, checked: false },
-          { label: '其他装饰材料 ', value: false, checked: false },
+        { label: '顶棚', value: false, checked: false },
+        { label: '墙面', value: false, checked: false },
+        { label: '地面', value: false, checked: false },
+        { label: '隔断 ', value: false, checked: false },
+        { label: '固定家具', value: false, checked: false },
+        { label: '装饰织物', value: false, checked: false },
+        { label: '其他装饰材料 ', value: false, checked: false },
       ],
-      decorationArea:'',
-      ground:'',
+      decorationArea: '',
+      ground: '',
       useNature: '',
-      originallyUsed:''
+      originallyUsed: ''
     },
 
     fireControlLinkageEngineering: [
@@ -494,7 +494,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       this.butNzLoading = false;
     })
   }
-  save() { 
+  save() {
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
         Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length - 1],
@@ -509,7 +509,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     };
 
     this.butNzLoading = true;
-    this.isSelectModalOkLoading = true;
+    this.isSelectModalOkLoading = true; 
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
       const flowDataDto = new FlowDataDto();
@@ -550,14 +550,14 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
       // console.log(flowDataDto)
 
-      
+
       this._applyService.post_PutOnRecord(flowDataDto).subscribe(data => {
         this.butNzLoading = false;
         this.isSelectModalOkLoading = false;
-        this.isVisibleSelectModal = false; 
+        this.isVisibleSelectModal = false;
         this._eventEmiter.emit('completedAcceptanceComponentInit', []);
         // this.reuseTabService.replace('/app/addCompletedAcceptanceComponent')
-        
+
         if (data == true) {
           this._NzModalService.success({
             nzTitle: '抽选结果',
@@ -591,6 +591,9 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         // }
         // );
       })
+    }, (error) => {
+      this.message.info(error.error.error.message)
+      this.butNzLoading = false;
     })
   }
 
@@ -616,23 +619,23 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();
       this.form.controls[i].updateValueAndValidity();
-    } 
-    
+    }
+
     if (this.form.valid) {
 
       for (let index = 0; index < this.data.fileList.length; index++) {
         if (checkArrayString(this.data.fileList[index].array, 'status', 'uploading') != -1) {
           this.message.error('要上传完文件才能提交表单')
-          return false;  
+          return false;
         }
       }
-      
-      if (this.flowFormQueryDto.flowId) { 
+
+      if (this.flowFormQueryDto.flowId) {
         this.save();
       } else {
         this.isVisibleSelectModal = true;
       }
- 
+
     } else {
       this.message.error('有必填项未填写')
     }

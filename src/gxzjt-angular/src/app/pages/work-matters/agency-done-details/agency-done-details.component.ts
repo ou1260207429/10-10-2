@@ -268,6 +268,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
         this.finalExamine(this.examineFormDto);
       }, error => {
+        this.message.info(error.error.error.message)
         this.butNzLoading = false;
       })
       // })

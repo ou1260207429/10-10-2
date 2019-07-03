@@ -673,6 +673,9 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
         }, error => {
           this.butNzLoading = false;
         })
+      }, (error) => {
+        this.message.info(error.error.error.message)
+        this.butNzLoading = false;
       })
 
     } else {
