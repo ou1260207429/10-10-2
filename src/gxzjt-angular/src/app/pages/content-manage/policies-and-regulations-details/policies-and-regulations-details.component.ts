@@ -59,6 +59,11 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     issueDate: '',
     content: '',
   };
+  editorParams = {
+    sourceId: "",
+    AppId: AppId,
+    module: "table",
+  }
   RegulationType: any
   constructor(private _publicServices: PublicServices, private _eventEmiter: EventEmiter, private message: NzMessageService, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute) {
     this.id = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
@@ -75,6 +80,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
 
     if (this.operate == 0) {
       this.sourceId = createguid();
+      this.editorParams.sourceId = this.sourceId;
     } else {
       this.getRegulationDetailsByIdAsync()
     }
@@ -98,6 +104,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
       this.data.regulationId = this.id;
       this.queryFiles(data.guid)
       this.sourceId = data.guid
+      this.editorParams.sourceId = data.guid;
       this.data = {
         id: data.id,
         content: data.content,
@@ -180,7 +187,10 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     })
 
   }
-
+  //编辑器change事件
+  keyupHandler(value) {
+    this.data.content = value;
+  }
   deleteFile(id) {
     let params = {
       id: id,

@@ -13,13 +13,13 @@ export class AddPostworkComponent implements OnInit {
   editName
   addForm
   operate
-  constructor(public subject:NzModalRef) { }
+  constructor(public subject: NzModalRef) { }
 
   ngOnInit() {
     console.log(this.editName);
   }
 
-  close(res){
+  close(res) {
     this.subject.destroy({
       opt: res,
       // auditors: this.radioValue,
