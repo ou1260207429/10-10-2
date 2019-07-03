@@ -336,6 +336,9 @@ export class AddFireAcceptanceComponent implements OnInit {
           }, error => {
             this.butNzLoading = false;
           })
+        }, (error) => { 
+          this.message.info(error.error.error.message)
+          this.butNzLoading = false;
         })
       }
     } else {

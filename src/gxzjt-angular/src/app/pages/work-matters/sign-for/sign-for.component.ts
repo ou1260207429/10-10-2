@@ -78,7 +78,9 @@ export class SignForComponent implements OnInit {
                 this._examineService.signForOpinionFile(this.signForDto).subscribe(data=>{
                     this.message.success('签收成功');
                 });
-            });
+            }, (error) => {
+                this.message.info(error.error.error.message) 
+              });
 
         });
     }

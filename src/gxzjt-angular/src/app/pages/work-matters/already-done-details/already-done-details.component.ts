@@ -221,6 +221,8 @@ export class AlreadyDoneDetailsComponent implements OnInit {
           break;
       }
 
+    }, (error) => {
+      this.message.info(error.error.error.message) 
     })
   };
 
