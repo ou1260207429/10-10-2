@@ -45,7 +45,7 @@ export class PublicServices {
    * 获取审批单位
    */
   getOrganizationTree() {
-    return this.http.get(FLOW_SERVICES_URL + '/api/services/app/ProjectFlowServcie/GetOrganizationTree');
+    return this.http.get(FLOW_SERVICES_URL + 'api/services/app/ProjectFlowServcie/GetOrganizationTree');
   }
 }
 
