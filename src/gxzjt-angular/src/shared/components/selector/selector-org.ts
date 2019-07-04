@@ -25,7 +25,7 @@ import { ControlContainer, NgForm } from '@angular/forms';
       [nzAutocomplete]="auto"
       (ngModelChange)="onChange($event)"
       [required]="required"
-    
+      [readonly]="readonly"
     />
     <nz-autocomplete nzBackfill #auto>
       <nz-auto-option *ngFor="let option of orgList" [nzValue]="option.name">
@@ -73,6 +73,8 @@ export class SelectorOrgComponent {
   @Input()
   required: boolean;
   
+  @Input()
+  readonly:boolean = false
 
   @Input()
   placeHolder = "请输入单位名称";
