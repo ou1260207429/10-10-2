@@ -42,7 +42,7 @@ export class SignForComponent implements OnInit {
    * 获取业务审批负责人审批详情的接口 
    */
     getPrimaryExamine(flowId) {
-        this._examineService.getPrimaryExamine(flowId).subscribe(data => {debugger
+        this._examineService.getPrimaryExamine(flowId).subscribe(data => {
             if (data != null) {
                 this.examineFormDto = data;
                 this.srcUrl=this.sanitizer.bypassSecurityTrustResourceUrl(this.examineFormDto.opinionFileUrl);
@@ -60,7 +60,7 @@ export class SignForComponent implements OnInit {
         this._flowServices.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow).subscribe(data => {
 
             var tenantWorkFlowInstanceDto;
-            tenantWorkFlowInstanceDto = data; debugger
+            tenantWorkFlowInstanceDto = data; 
             tenantWorkFlowInstanceDto.workFlow_InstanceId = this.examineFormDto.workFlow_Instance_Id;
 
             tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
