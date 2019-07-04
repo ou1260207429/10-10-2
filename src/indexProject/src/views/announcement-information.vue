@@ -228,7 +228,7 @@ export default {
         {
           key: "checkResultText",
           label: "结果",
-          width: "60px"
+          width: "80px"
         }
       ]
     };
