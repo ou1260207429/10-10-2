@@ -90,10 +90,12 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
     if (this._TokenService.getToken()) {
 
-      this._router.navigate(['/home/welcome']);
+      this._router.navigate(['/app/home/welcome']);
     }
     this.reuseTabService.clear();
   }
+
+  isSimplePsw = false;
 
 
   initSliter() {
@@ -146,6 +148,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
       })
     });
   }
+
   resetSliter() {
     checkCode = "" + Math.ceil(Math.random() * 10000);
     var el = $(".inner");
@@ -176,6 +179,62 @@ export class LoginComponent extends AppComponentBase implements OnInit {
   }
 
   loginErrMsg = "";
+
+  login(): void {
+    var str = $("#slider_content").attr("value");
+    if (str === checkCode) {
+
+      var reg = new RegExp(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$/);
+      this.isSimplePsw = !reg.test(this.loginService.authenticateModel.password);
+
+
+      this.submitting = true;
+
+      this.loginService.authenticate(
+        () => {
+
+          this._AppSessionService.initUserInfo(
+            () => {
+              /** 强制刷新导航栏url 跳转到首页 */
+              this.submitting = false;
+              this._router.navigate(['/app/home/welcome'], {
+
+                queryParams: { t: this.isSimplePsw ? 1 : 0 }
+              });
+
+            }, (err) => {
+
+              this.loginErrMsg = err;
+              this.submitting = false;
+            });
+
+          this.resetSliter();
+        },
+
+        (err: any) => {
+
+          this.loginErrMsg = err;
+          this.submitting = false;
+        });
+
+    } else {
+
+      this.loginErrMsg = '请完成拖动验证！';
+
+    }
+
+  }
+
+
+
+  getCaptcha() {
+    this.getServerCaptcha(this.loginService.authenticateModel.userNameOrEmailAddress, 0);
+  }
+
+
+
+
+
 
 
   model = {
@@ -218,23 +277,14 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
             this._TokenService.setToken(res.data.access_token);
 
-            // this._utilsService.setCookieValue(
-            //   AppConsts.authorization.encrptedAuthTokenName,
-            //   res.data.access_token,
-            //   null,
-            //   abp.appPath,
-            // );
-
-           
-            // this._router.navigate(['/home/welcome']);
             this._AppSessionService.initUserInfo(
               () => {
                 /** 强制刷新导航栏url 跳转到首页 */
                 this.submitting = false;
-                this._router.navigate(['/home/welcome']);
-  
+                this._router.navigate(['/app/home/welcome']);
+
               }, (err) => {
-  
+
                 this.loginErrMsg = err;
                 this.submitting = false;
               });
@@ -261,48 +311,5 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
   }
 
-  login(): void {
-    var str = $("#slider_content").attr("value");
-    if (str === checkCode) {
-
-      this.submitting = true;
-
-      this.loginService.authenticate(
-        () => {
-
-          this._AppSessionService.initUserInfo(
-            () => {
-              /** 强制刷新导航栏url 跳转到首页 */
-              this.submitting = false;
-              this._router.navigate(['/home/welcome']);
-
-            }, (err) => {
-
-              this.loginErrMsg = err;
-              this.submitting = false;
-            });
-
-          this.resetSliter();
-        },
-
-        (err: any) => {
-
-          this.loginErrMsg = err;
-          this.submitting = false;
-        });
-
-    } else {
-
-      this.loginErrMsg = '请完成拖动验证！';
-
-    }
-
-  }
-
-
-
-  getCaptcha() {
-    this.getServerCaptcha(this.loginService.authenticateModel.userNameOrEmailAddress, 0);
-  }
 
 }

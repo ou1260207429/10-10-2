@@ -61,9 +61,7 @@ const routes: Routes = [
       },
       {
         path: 'home', loadChildren: './pages/home/home.module#HomeModule',
-        data: {
-          role: [AppMenus.aclSys]
-        },
+       
 
       },
       {

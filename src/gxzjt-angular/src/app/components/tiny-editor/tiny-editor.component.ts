@@ -16,7 +16,7 @@ export class TinyEditorComponent implements OnInit {
   @Output() onEditorContentChange = new EventEmitter();
   editor;
   init = {
-    // selector: '#textarea',  // change this value according to your HTML
+    //selector: '#textarea',  // change this value according to your HTML
     plugins: 'advlist autolink link image lists preview hr anchor pagebreak ' +
       'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime nonbreaking ' +
       'save table contextmenu directionality emoticons paste textcolor',
@@ -24,7 +24,7 @@ export class TinyEditorComponent implements OnInit {
     language_url: "../assets/langs/zh_CN.js",
     language: "zh_CN",
     width: '100%',
-    height: 400,
+    height: 500,
     toolbar_drawer: 'sliding',   //工具栏太多，页面宽度太小时用省略号替代
     branding: false,
     menubar: true,

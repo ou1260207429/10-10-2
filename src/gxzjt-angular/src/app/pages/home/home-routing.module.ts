@@ -4,6 +4,7 @@ import { SystemHomeComponent } from './system-home/system-home.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 import { AppMenus } from "@shared/AppMenus";
+import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
   {
     path: 'systemHomeComponent',
     component: SystemHomeComponent,
+    canActivateChild: [AppRouteGuard],
     data: {
       title: '首页',
       role: [AppMenus.aclSys]

@@ -22,6 +22,9 @@ ul {
   margin: 0 auto;
 }
 
+.el-date-table__row .available:hover {
+  color: #bd1127 !important;
+}
 
 .item {
   cursor: pointer;
@@ -100,12 +103,12 @@ ul {
 .el-pager li:hover,
 .el-select-dropdown__item.selected,
 .el-date-table .today span {
-  color: #397cc8;
+  color: #bd1127 !important;
 }
 
 .el-date-table td.start-date span,
 .el-date-table td.end-date span {
-  background-color: #397cc8 !important;
+  background-color: #bd1127 !important;
 }
 
 th .cell {
