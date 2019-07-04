@@ -15,6 +15,7 @@ import {
   RouterStateSnapshot,
   CanActivateChild,
 } from '@angular/router';
+import { debug } from 'util';
 // import { debug } from 'util';
 
 @Injectable()
@@ -60,7 +61,7 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
 
 
 
-
+   
     if (route.data && route.data['role'] && route.data['role'] != AppMenus.aclAny && !this._ACLService.can(route.data['role'])) {
       this._NzMessageService.info('您没有权限访问该地址');
       // this._NzModalService.info({
