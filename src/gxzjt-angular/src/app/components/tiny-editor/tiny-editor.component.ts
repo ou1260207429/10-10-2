@@ -16,7 +16,7 @@ export class TinyEditorComponent implements OnInit {
   @Output() onEditorContentChange = new EventEmitter();
   editor;
   init = {
-    selector: '#textarea',  // change this value according to your HTML
+    // selector: '#textarea',  // change this value according to your HTML
     plugins: 'advlist autolink link image lists preview hr anchor pagebreak ' +
       'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime nonbreaking ' +
       'save table contextmenu directionality emoticons paste textcolor',

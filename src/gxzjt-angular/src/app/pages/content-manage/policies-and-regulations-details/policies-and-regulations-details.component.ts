@@ -64,6 +64,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     AppId: AppId,
     module: "table",
   }
+  editContent:any;
   RegulationType: any
   constructor(private _publicServices: PublicServices, private _eventEmiter: EventEmiter, private message: NzMessageService, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute) {
     this.id = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
@@ -109,7 +110,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
         id: data.id,
         content: data.content,
         guid: data.guid,
-        issueDate: timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'),
+        issueDate: this.data.issueDate?timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'):'',
         issueOrg: data.issueOrg,
         regulationCode: data.regulationCode,
         regulationTypeId: data.regulationTypeId,
@@ -141,8 +142,10 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     } else {
       this.data.regulationId = this.id;
     }
-    this.data.issueDate = new Date(timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'))
-    this.data.content = new Buffer(this.data.content).toString('base64');
+    if(this.data.issueDate){
+      this.data.issueDate = new Date(timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'))
+    }
+    this.data.content = new Buffer(this.editContent).toString('base64');
     const src = this.operate == 0 ? this._regulationServiceProxy.addRegulationAsync(this.data) : this._regulationServiceProxy.editRegulationAsync(this.data)
     src.subscribe(data => {
       const name = this.operate == 0 ? '新增成功' : '修改成功';
@@ -189,7 +192,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   }
   //编辑器change事件
   keyupHandler(value) {
-    this.data.content = value;
+    this.editContent = value;
   }
   deleteFile(id) {
     let params = {
