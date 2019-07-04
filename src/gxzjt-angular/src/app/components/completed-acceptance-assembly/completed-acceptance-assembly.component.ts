@@ -2,7 +2,7 @@ import { HomeServiceProxy } from './../../../shared/service-proxies/service-prox
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVICES_URL, zzdjEnum5, zzdjEnum4, zzdjEnum3, zzdjEnum2, zzdjEnum1, zzdjEnum } from 'infrastructure/expression';
-import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString } from 'infrastructure/regular-expression';
+import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString, newClassTreeChildrenArray, updateEngineeringNo } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile, NzMessageService } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
@@ -60,6 +60,10 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
   //从父组件获取使用行性质的select
   @Input() useNatureSelect: any
+
+  //审批单位
+  engineeringList
+  
   constructor(private message: NzMessageService,public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) {
     this.decimationnumber = [];
     for (let index = 1; index < 101; index++) {
@@ -71,6 +75,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
     this.getAreaDropdown();
+    this.getOrganizationTree()
 
     setTimeout(() => {
       console.log(this.data);
@@ -87,6 +92,26 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     })
   }
 
+  /**
+   * 获取审批单位
+   */
+  getOrganizationTree() {
+    this._publicServices.getOrganizationTree().subscribe((data: any) => {
+      this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]);;
+    })
+  }
+
+  /**
+   * 选择市县区
+   * @param v 
+   */
+  changeGetOrganizationTree(v) {
+    //联动处理
+    this.data.engineeringId = v
+    const result = updateEngineeringNo(this.engineeringList, this.data.engineeringId.length - 1, this.data.engineeringId, this.data.engineeringNo)
+    this.data.engineeringNo = result 
+  }
+
 
 
   /**
@@ -95,6 +120,11 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
    */
   changeCitycountyAndDistrict(v) {
     this.data.engineeringCitycountyAndDistrict = v;
+
+    //联动处理
+    this.data.engineeringId = v
+    const result = updateEngineeringNo(this.engineeringList, this.data.engineeringId.length - 1, this.data.engineeringId, this.data.engineeringNo)
+    this.data.engineeringNo = result
   }
 
   /**

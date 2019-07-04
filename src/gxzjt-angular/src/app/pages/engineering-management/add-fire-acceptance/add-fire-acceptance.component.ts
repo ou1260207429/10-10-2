@@ -169,7 +169,10 @@ export class AddFireAcceptanceComponent implements OnInit {
 
         ]
       },
-    ]
+    ],
+    //2019.7.4 新增审批单位
+    engineeringId: '',
+    engineeringNo:'',
 
   }
 
@@ -240,7 +243,7 @@ export class AddFireAcceptanceComponent implements OnInit {
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 2;
     this.flowFormDto.projectTypeStatu = 1;
-    this.data.dateOfReview = this.data.dateOfReview == '' ? '' : timeTrans(Date.parse(this.data.dateOfReview) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
+    this.data.dateOfReview = !this.data.dateOfReview ? '' : timeTrans(Date.parse(this.data.dateOfReview) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.butNzLoading = false;
       this.flowFormDto.projectId = data;
@@ -279,7 +282,7 @@ export class AddFireAcceptanceComponent implements OnInit {
 
         const from: GXZJT_From = {
           frow_TemplateInfo_Data: {
-            Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length - 1]
+            Area: this.data.engineeringNo
           },
           identify: 'xfsj',
           editWorkFlow_NodeAuditorRecordDto: {

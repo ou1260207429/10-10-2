@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Rx';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PANGBO_SERVICES_URL } from 'infrastructure/expression';
+import { PANGBO_SERVICES_URL, FLOW_SERVICES_URL } from 'infrastructure/expression';
 
 /**
  * 对接谢峰的表单接口和流程接口
@@ -41,6 +41,12 @@ export class PublicServices {
         return this.http.post(PANGBO_SERVICES_URL + url, page);
     }
 
+    /**
+   * 获取审批单位
+   */
+  getOrganizationTree() {
+    return this.http.get(FLOW_SERVICES_URL + '/api/services/app/ProjectFlowServcie/GetOrganizationTree');
+  }
 }
 
 export interface UploadFileModel {

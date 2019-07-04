@@ -15,7 +15,7 @@ export const FLOW_SERVICES_URL = SERVER_URL;
 export const XIEFENG_SERVICES_URL = IS_DEBUG ? 'http://222.84.250.158:8113' : 'http://dn5.gxcic.net:8305'
 
 //庞博的服务器上传图片地址
-export const PANGBO_SERVICES_URL = IS_DEBUG ? 'http://222.84.250.158:8000/' : 'http://222.84.250.158:8111/';
+export const PANGBO_SERVICES_URL = IS_DEBUG ? newFunction() : 'http://222.84.250.158:8111/';
 
 //注册地址，勿随意动
 // export const REGISTER_URL = 'http://222.84.250.158:8000/';
@@ -35,6 +35,10 @@ export let publicPageConfig: STPage = {
   showQuickJumper: true,
   total: '当前页{{range[1]}}条  共 {{total}} 条',
 };
+
+function newFunction() {
+  return 'http://222.84.250.158:8000/';
+}
 
 /**
  * @param event 根据点击分页传回来的值

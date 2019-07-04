@@ -179,7 +179,10 @@
         [nzLoading]="butNzLoading">撤销</button> -->
     </div>
   </div>
-  <div [ngClass]="{hide: selectedIndex != 1}">
-    <app-flow-route *ngIf="data" [data]="data" flowPathType="flowPathType"></app-flow-route>
-  </div>
 </nz-spin>
+
+<div [ngClass]="{hide: selectedIndex != 1}">
+  <nz-spin [nzSpinning]="!data">
+    <app-flow-route *ngIf="data" [data]="data" flowPathType="flowPathType"></app-flow-route>\
+  </nz-spin>
+</div>

@@ -112,9 +112,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
   }
 
   init() {
-    Promise.all([this.getWorkFlow_NodeRecordAndAuditorRecords(), this.getAcceptApplyForm()]).then((data: any) => {
-      this.data = data[0].result
-      this.formDto = data[1]
+    this.getWorkFlow_NodeRecordAndAuditorRecords()
+      
+    Promise.all([this.getAcceptApplyForm()]).then((data: any) => { 
+      this.formDto = data[0]
       const flowFormQueryDto = new FlowFormQueryDto();
       flowFormQueryDto.flowType = this.flowPathType
       flowFormQueryDto.projectId = this.formDto.projectId;
@@ -165,7 +166,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
    * 获取路径
    */
   getWorkFlow_NodeRecordAndAuditorRecords() {
-    return this._flowServices.getWorkFlow_NodeRecordAndAuditorRecords(this.flowNo).toPromise()
+    this._flowServices.getWorkFlow_NodeRecordAndAuditorRecords(this.flowNo).subscribe(data => { 
+      this.data = data.result
+      console.log(this.data)
+    }) 
   }
 
 
