@@ -30,8 +30,13 @@ export class HandlingGuidDetailComponent implements OnInit {
   fileUrlList = []
   //表单对象
   data: any = {
-
   };
+  editorParams = {
+    sourceId: "",
+    AppId: AppId,
+    module: "table",
+  }
+  editContent:any;
   RegulationType: any
   constructor(private _publicServices: PublicServices, private _eventEmiter: EventEmiter, private message: NzMessageService, private _noticeServiceProxy: NoticeServiceProxy, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute) {
     this.id = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
@@ -48,6 +53,8 @@ export class HandlingGuidDetailComponent implements OnInit {
 
     if (this.operate == 0) {
       this.sourceId = createguid();
+      this.editorParams.sourceId = this.sourceId;
+
     } else {
       this.getRegulationDetailsByIdAsync()
     }
@@ -72,6 +79,7 @@ export class HandlingGuidDetailComponent implements OnInit {
     this._noticeServiceProxy.noticeDetailsByIdAsync(this.id).subscribe((data: any) => {
       this.queryFiles(data.guid)
       this.sourceId = data.guid
+      this.editorParams.sourceId = data.guid;
       this.data = {
         brief: data.brief,
         id: data.id,
@@ -104,8 +112,7 @@ export class HandlingGuidDetailComponent implements OnInit {
     } else {
       this.data.noticeId = this.id;
     }
-
-    this.data.content = new Buffer(this.data.content).toString('base64');
+    this.data.content = new Buffer(this.editContent).toString('base64');
 
     const src = this.operate == 0 ? this._noticeServiceProxy.addNoticeAsync(this.data) : this._noticeServiceProxy.editNoticeAsync(this.data)
     src.subscribe(data => {
@@ -113,7 +120,6 @@ export class HandlingGuidDetailComponent implements OnInit {
       this.message.success(name);
       this.goBack();
       this._eventEmiter.emit('init', []);
-
     })
   }
 
@@ -201,7 +207,12 @@ export class HandlingGuidDetailComponent implements OnInit {
     })
     return false;
   };
-
+  //编辑器change事件
+  keyupHandler(value) {
+    this.editContent = value
+    console.log(value)
+    ///this.data.content = value;
+  }
   removeFile = (file: UploadFile): boolean => {
     if (file.isUpLoad) {
       this.deleteFile(file.tid)
