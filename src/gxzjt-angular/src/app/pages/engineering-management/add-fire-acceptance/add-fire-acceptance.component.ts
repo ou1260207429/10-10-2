@@ -163,7 +163,7 @@ export class AddFireAcceptanceComponent implements OnInit {
         ]
       },
       {
-        //符合要求的检测机构出具出具的消防设施及系统检测合格证明文件
+        //符合要求的检测机构出具的消防设施及系统检测合格证明文件
         type: 2,
         array: [
 

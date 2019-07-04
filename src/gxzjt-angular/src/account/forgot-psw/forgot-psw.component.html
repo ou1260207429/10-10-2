@@ -53,11 +53,11 @@
             <nz-form-control nzHasFeedback>
               <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-lock">
                 <input nz-input type="password" name="newPassword" #newPassword="ngModel" [(ngModel)]="model.NewPassword"
-                  type="password" placeholder="请输入新密码" required maxlength="18" minlength="8">
+                  type="password" placeholder="请输入新密码" required maxlength="18" minlength="8"  pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$">
               </nz-input-group>
               <nz-form-explain *ngIf="newPassword.control.dirty&&newPassword.control.errors">
                 <ng-container *ngIf="newPassword.control.hasError('required')">不能为空！</ng-container>
-                <ng-container *ngIf="newPassword.control.hasError('minlength')">请输入8-18位密码</ng-container>
+                <ng-container *ngIf="newPassword.control.hasError('minlength')||newPassword.control.hasError('pattern')">请输入8-18位数字和字母组成的新密码</ng-container>
               </nz-form-explain>
             </nz-form-control>
           </nz-form-item>
