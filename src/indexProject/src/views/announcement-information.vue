@@ -5,7 +5,7 @@
       <el-row :gutter="8">
         <el-col :span="4" style="background-color: transparent;">
           <div
-            style="background-color: #397CC8;color: #fff;font-size: 18px;padding: 6px 0;text-align:center;"
+            style="background-color: #bd1127;color: #fff;font-size: 18px;padding: 6px 0;text-align:center;"
           >公告信息</div>
           <p
             :class="{activeInfo:index+1==searchForm.flowType}"
@@ -65,7 +65,7 @@
                 <el-form-item>
                   <el-button
                     size="small"
-                    style="background-color:#397CC8;border-color:#397CC8;"
+                    style="background-color:#bd1127;border-color:#bd1127;"
                     type="primary"
                     @click="initTable"
                   >查询</el-button>
@@ -73,7 +73,7 @@
                 <el-form-item>
                   <el-button
                     size="small"
-                    style="background-color:#397CC8;border-color:#397CC8;"
+                    style="background-color:#bd1127;border-color:#bd1127;"
                     type="primary"
                     @click="autoRefre"
                   >重置</el-button>
@@ -100,7 +100,7 @@
                     :prop="item.key"
                     :label="item.label"
                   ></el-table-column>
-                </template> -->
+                </template>-->
                 <el-table-column :key="index" :prop="item.key" :label="item.label"></el-table-column>
               </template>
             </el-table>
@@ -256,6 +256,7 @@ export default {
       this.searchForm.regionname = "";
       this.searchForm.startTime = "";
       this.searchForm.endTime = "";
+      this.xianList = [];
       this.initTable();
     },
     /**
@@ -341,6 +342,6 @@ export default {
 <style lang='less' scoped>
 .activeInfo {
   background-color: transparent !important;
-  color: #397cc8;
+  color: #bd1127;
 }
 </style>
