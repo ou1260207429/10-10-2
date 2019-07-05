@@ -215,6 +215,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
           this.loginErrMsg = err;
           this.submitting = false;
+          this.resetSliter();
         });
 
     } else {

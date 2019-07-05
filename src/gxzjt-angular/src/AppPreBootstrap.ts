@@ -13,9 +13,10 @@ import * as _ from 'lodash';
 import { PermissionService } from '@shared/auth/permission.service';
 import { ALAIN_I18N_TOKEN, MenuService } from '@delon/theme';
 import { LocalizationService } from '@shared/i18n/localization.service';
-import { AppMenus } from '@shared/AppMenus';
-import { Menu } from '@delon/theme';
-import { ACLService } from '@delon/acl';
+// import { AppMenus } from '@shared/AppMenus';
+// import { Menu } from '@delon/theme';
+// import { ACLService } from '@delon/acl';
+import 'moment/locale/zh-cn';
 
 import { URL_CONFIG } from 'infrastructure/expression';
 export class AppPreBootstrap {
@@ -90,12 +91,13 @@ export class AppPreBootstrap {
 
             // 时区
             abp.clock.provider = this.getCurrentClockProvider("unspecifiedClockProvider");
-            moment.locale("zh-Hans");
+            moment.locale("zh-cn");
 
-            (window as any).moment.locale("zh-Hans");
+            (window as any).moment.locale("zh-cn");
             if (abp.clock.provider.supportsMultipleTimezone) {
-                moment.tz.setDefault("Etc/UTC");
-                (window as any).moment.tz.setDefault("Etc/UTC");
+                var moment1 = require('moment-timezone');
+                moment1.tz.setDefault("Asia/Shanghai");
+                (window as any).moment.tz.setDefault("Asia/Shanghai");
             }
 
 
