@@ -6,19 +6,19 @@ import { NzDropdownService, NzMenuItemDirective, NzFormatEmitEvent, NzMessageSer
 @Component({
   selector: 'app-userright-orgedit',
   templateUrl: './orgedit.component.html',
-  styleUrls:['./orgedit.component.less']
+  styleUrls: ['./orgedit.component.less']
 })
 export class UserrightOrgeditComponent implements OnInit {
   dropdown;
   nodes;
-  orgarray=[]
+  orgarray = []
 
 
   constructor(private http: _HttpClient,
-     private nzDropdownService: NzDropdownService,
-     private modal: ModalHelper,
-     private message: NzMessageService,
-     private UserRightService: UserRightService) { }
+    private nzDropdownService: NzDropdownService,
+    private modal: ModalHelper,
+    private message: NzMessageService,
+    private UserRightService: UserRightService) { }
 
   ngOnInit() {
     this.getTreeData();
@@ -27,11 +27,11 @@ export class UserrightOrgeditComponent implements OnInit {
   add() {
 
   }
-  getTreeData(){
+  getTreeData() {
     this.UserRightService.GetTreeData().subscribe(
       res => {
         this.nodes = res.data;
-        console.log(this,this.nodes)
+        console.log(this, this.nodes)
       },
     );
   }
@@ -47,45 +47,51 @@ export class UserrightOrgeditComponent implements OnInit {
   }
 
   nzEvent(event: NzFormatEmitEvent): void {
-  //  console.log(event.keys)
-   this.nodes.forEach(element => {
-     if(element.key==event.keys[0]){
-      this.orgarray=element.children;
+    //  console.log(event.keys)
+    this.nodes.forEach(element => {
+      if (element.key == event.keys[0]) {
+        this.orgarray = element.children;
 
-     }else{
-      element.children.forEach(city => {
-        if(city.key==event.keys[0]){
-          this.orgarray=city.children;
+      } else {
+        element.children.forEach(city => {
+          if (city.key == event.keys[0]) {
+            this.orgarray = city.children;
 
-        }else{
-          city.children.forEach(conuty => {
-            if(conuty.key==event.keys[0]){
-              this.orgarray=conuty.children;
+          } else {
+            city.children.forEach(conuty => {
+              if (conuty.key == event.keys[0]) {
+                this.orgarray = conuty.children;
 
-            }else{
-              conuty.children.forEach(xz => {
-                if(xz.key==event.keys[0]){
-                  this.orgarray=[];
-                }
+              } else {
+                conuty.children.forEach(xz => {
+                  if (xz.key == event.keys[0]) {
+                    this.orgarray = [];
+                  }
 
-              });
+                });
 
-            }
-          });
-        }
+              }
+            });
+          }
 
-       });
-     }
+        });
+      }
 
-   });
+    });
 
-   if(this.orgarray.length==0){
-    this.message.error("此级机构已无法进行编辑！");
-   }
+    if (this.orgarray.length == 0) {
+      this.message.error("此级机构已无法进行编辑！");
+    }
 
   }
 
   log(value: string[]): void {
     // console.log(value);
+  }
+
+  defaultCheckedKeys;
+
+  deleteData() {
+
   }
 }
