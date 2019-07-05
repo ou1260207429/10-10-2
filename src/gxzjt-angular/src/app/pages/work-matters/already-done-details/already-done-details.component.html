@@ -52,50 +52,11 @@
       </tr>
     </table>
     <!-- 表单JSON -->
-    <!-- <form nz-form #f="ngForm" se-container="1" *ngIf="flowPathType!=3||(flowPathType==3&&this.curNodeName=='业务审批负责人审批')">
-      <table class="tables" style="box-sizing: border-box;" *ngIf="formDto">
-      
-        <tr>
-          <td style="width: 37px;background-color: #ffedcc;color: #ff9c35;font-weight: 600;border-right: 0" rowspan='4'>
-            流程审批
-          </td>
-        </tr>
-        <tr style="text-align: left;">
-          <td colspan="20">
-
-
-            <div [ngSwitch]="flowPathType">
-
-
-              <div *ngSwitchCase="1"> 
-                <app-fire-design-declare-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto" type="2">
-                </app-fire-design-declare-assembly-handle> 
-              </div>
-              <div *ngSwitchCase="2"> 
-                <app-fire-acceptance-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto" type="2">
-                </app-fire-acceptance-assembly-handle> 
-              </div>
-              <div *ngSwitchCase="3"> 
-                <app-completed-acceptance-assembly-handle [examineFormDto]="examineFormDto" [data]="formDto" type="7"
-                  *ngIf="this.curNodeName=='业务审批负责人审批'">
-                </app-completed-acceptance-assembly-handle> 
-              </div>
-            </div>
-
-
-
-
-
-
-
-          </td>
-        </tr>
-
-      </table>
-    </form> -->
-
-  </div>
-  <div [ngClass]="{hide: selectedIndex != 1}">
-    <app-flow-route *ngIf="data" [data]="data"></app-flow-route>
   </div>
 </nz-spin>
+
+<div [ngClass]="{hide: selectedIndex != 1}">
+  <nz-spin [nzSpinning]="!data">
+  <app-flow-route *ngIf="data" [data]="data"></app-flow-route>
+  </nz-spin>
+</div>

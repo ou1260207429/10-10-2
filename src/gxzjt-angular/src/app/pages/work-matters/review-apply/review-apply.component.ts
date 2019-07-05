@@ -88,6 +88,8 @@ export class WorkMattersReviewApplyComponent implements OnInit {
         this.message.success('提交成功')
         history.go(-1)
       })
+    }, (error) => {
+      this.message.info(error.error.error.message) 
     })
 
   }

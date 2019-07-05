@@ -5,7 +5,7 @@
       <el-row :gutter="8">
         <el-col :span="4" style="background-color: transparent;">
           <div
-            style="background-color: #397CC8;color: #fff;font-size: 18px;padding: 6px 0;text-align:center;"
+            style="background-color: #bd1127;color: #fff;font-size: 18px;padding: 6px 0;text-align:center;"
           >公告信息</div>
           <p
             :class="{activeInfo:index+1==searchForm.flowType}"
@@ -65,7 +65,7 @@
                 <el-form-item>
                   <el-button
                     size="small"
-                    style="background-color:#397CC8;border-color:#397CC8;"
+                    style="background-color:#bd1127;border-color:#bd1127;"
                     type="primary"
                     @click="initTable"
                   >查询</el-button>
@@ -73,7 +73,7 @@
                 <el-form-item>
                   <el-button
                     size="small"
-                    style="background-color:#397CC8;border-color:#397CC8;"
+                    style="background-color:#bd1127;border-color:#bd1127;"
                     type="primary"
                     @click="autoRefre"
                   >重置</el-button>
@@ -81,8 +81,8 @@
               </el-form>
             </div>
           </el-card>
-          <el-card :style="{minHeight:tableHight}">
-            <el-table v-loading="!tableData" :data="tableData" style="width: 100%">
+          <el-card :style="{minHeight:tableHight,padding:'0 20px',boxSizing:'border-box'}">
+            <el-table v-loading="!tableData" :data="tableData" style>
               <el-table-column type="index" label="序号" width="50"></el-table-column>
               <template v-for="(item,index) in tableCols">
                 <!-- <template v-if="item.key=='recordCode'">
@@ -100,8 +100,14 @@
                     :prop="item.key"
                     :label="item.label"
                   ></el-table-column>
-                </template> -->
-                <el-table-column :key="index" :prop="item.key" :label="item.label"></el-table-column>
+                </template>-->
+                <el-table-column
+                  :width="item.width?item.width:''"
+                  :align="item.width?'center':'left'"
+                  :key="index"
+                  :prop="item.key"
+                  :label="item.label"
+                ></el-table-column>
               </template>
             </el-table>
             <el-row style="margin-top:40px;margin-bottom:25px;">
@@ -197,7 +203,8 @@ export default {
         // },
         {
           key: "finishTime",
-          label: "办结时间"
+          label: "办结时间",
+          width: "110px"
         },
         // {
         //   key: "constructionPermit",
@@ -205,19 +212,23 @@ export default {
         // },
         {
           key: "contact",
-          label: "联系人"
+          label: "联系人",
+          width: "110px"
         },
         {
           key: "announceTime",
-          label: "公告时间"
+          label: "公告时间",
+          width: "110px"
         },
         {
           key: "announceNum",
-          label: "第几次公告"
+          label: "第几次公告",
+          width: "95px"
         },
         {
           key: "checkResultText",
-          label: "结果"
+          label: "结果",
+          width: "80px"
         }
       ]
     };
@@ -256,6 +267,7 @@ export default {
       this.searchForm.regionname = "";
       this.searchForm.startTime = "";
       this.searchForm.endTime = "";
+      this.xianList = [];
       this.initTable();
     },
     /**
@@ -341,6 +353,6 @@ export default {
 <style lang='less' scoped>
 .activeInfo {
   background-color: transparent !important;
-  color: #397cc8;
+  color: #bd1127;
 }
 </style>

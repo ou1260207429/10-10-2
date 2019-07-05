@@ -1,7 +1,7 @@
 import { ProjectFlowServcieServiceProxy, ScreenServiceServiceProxy, ScreenTimeoutStatisticsQueryDto, DeclareRateQueryDto, YearApplyNumberQueryDto } from './../../../../shared/service-proxies/service-proxies';
 import { OnInit, Component } from "@angular/core";
 import { _HttpClient } from "@delon/theme";
-import { SERVER_URL } from 'infrastructure/expression';
+import {  URL_CONFIG } from 'infrastructure/expression';
 @Component({
     selector: 'app-big-screen',
     templateUrl: './big-screen.component.html',
@@ -479,8 +479,8 @@ export class BigScreenComponent {
             dateTimeNow: new Date(),
             processedStatus: 2
         };
-        model.startDateTime = (new Date().getFullYear() + '-01-01'); //
-        this.http.post( SERVER_URL + 'api/services/app/ScreenService/Post_GetFireDataList', model).subscribe((res: any) => {
+        model.startDateTime = (new Date().getFullYear() + '-01-01');
+        this.http.post( URL_CONFIG.getInstance().SERVER_URL + 'api/services/app/ScreenService/Post_GetFireDataList', model).subscribe((res: any) => {
             let MapBackList = [];
             console.log(res);
 

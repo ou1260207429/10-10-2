@@ -34,7 +34,7 @@ import { UrlHelper } from '@shared/helpers/UrlHelper';
 import { TokenService } from '@abp/auth/token.service';
 
 
-import { REGISTER_URL } from 'infrastructure/expression';
+import { URL_CONFIG } from 'infrastructure/expression';
 import { UtilsService } from '@abp/utils/utils.service';
 
 var checkCode: any;
@@ -90,10 +90,12 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
     if (this._TokenService.getToken()) {
 
-      this._router.navigate(['/home/welcome']);
+      this._router.navigate(['/app/home/welcome']);
     }
     this.reuseTabService.clear();
   }
+
+  isSimplePsw = false;
 
 
   initSliter() {
@@ -146,6 +148,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
       })
     });
   }
+
   resetSliter() {
     checkCode = "" + Math.ceil(Math.random() * 10000);
     var el = $(".inner");
@@ -177,93 +180,13 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
   loginErrMsg = "";
 
-
-  model = {
-    // client_id: 'AEDA41B4-C038-4053-9105-3C73279E21C5',
-    // client_secret: 'secret',
-    // grant_type: 'password',
-    // username: '',
-    // password: ''
-    userNameOrEmailAddress: "",
-    password: "",
-    clientId: "AEDA41B4-C038-4053-9105-3C73279E21C5"
-  };
-
-
-
-  login1(): void {
-    var str = $("#slider_content").attr("value");
-    if (str === checkCode) {
-
-      this.submitting = true;
-
-
-
-      let url = REGISTER_URL + "api/User/Login";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
-
-
-      this.model.userNameOrEmailAddress = this.loginService.authenticateModel.userNameOrEmailAddress;
-      this.model.password = this.loginService.authenticateModel.password;
-
-      this.http.post(url, this.model, {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json'
-        })
-      }).subscribe((res: any) => {
-
-
-        if (res) {
-          if (res.result == 0) {
-
-
-            this._TokenService.setToken(res.data.access_token);
-
-            // this._utilsService.setCookieValue(
-            //   AppConsts.authorization.encrptedAuthTokenName,
-            //   res.data.access_token,
-            //   null,
-            //   abp.appPath,
-            // );
-
-           
-            // this._router.navigate(['/home/welcome']);
-            this._AppSessionService.initUserInfo(
-              () => {
-                /** 强制刷新导航栏url 跳转到首页 */
-                this.submitting = false;
-                this._router.navigate(['/home/welcome']);
-  
-              }, (err) => {
-  
-                this.loginErrMsg = err;
-                this.submitting = false;
-              });
-          } else {
-            this.loginErrMsg = res.data.message;
-          }
-        }
-        this.submitting = false;
-        this.saving = false;
-      }, err => {
-        this.loginErrMsg = err;
-        this.saving = false;
-        this.submitting = false;
-      });
-
-
-
-
-    } else {
-
-      this.loginErrMsg = '请完成拖动验证！';
-
-    }
-
-  }
-
   login(): void {
     var str = $("#slider_content").attr("value");
     if (str === checkCode) {
+
+      var reg = new RegExp(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$/);
+      this.isSimplePsw = !reg.test(this.loginService.authenticateModel.password);
+
 
       this.submitting = true;
 
@@ -274,7 +197,10 @@ export class LoginComponent extends AppComponentBase implements OnInit {
             () => {
               /** 强制刷新导航栏url 跳转到首页 */
               this.submitting = false;
-              this._router.navigate(['/home/welcome']);
+              this._router.navigate(['/app/home/welcome'], {
+
+                queryParams: { t: this.isSimplePsw ? 1 : 0 }
+              });
 
             }, (err) => {
 
@@ -304,5 +230,86 @@ export class LoginComponent extends AppComponentBase implements OnInit {
   getCaptcha() {
     this.getServerCaptcha(this.loginService.authenticateModel.userNameOrEmailAddress, 0);
   }
+
+
+
+
+
+
+
+  model = {
+    // client_id: 'AEDA41B4-C038-4053-9105-3C73279E21C5',
+    // client_secret: 'secret',
+    // grant_type: 'password',
+    // username: '',
+    // password: ''
+    userNameOrEmailAddress: "",
+    password: "",
+    clientId: "AEDA41B4-C038-4053-9105-3C73279E21C5"
+  };
+
+
+
+  login1(): void {
+    var str = $("#slider_content").attr("value");
+    if (str === checkCode) {
+
+      this.submitting = true;
+
+
+
+      let url = URL_CONFIG.getInstance().REGISTER_URL + "api/User/Login";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
+
+
+      this.model.userNameOrEmailAddress = this.loginService.authenticateModel.userNameOrEmailAddress;
+      this.model.password = this.loginService.authenticateModel.password;
+
+      this.http.post(url, this.model, {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      }).subscribe((res: any) => {
+
+
+        if (res) {
+          if (res.result == 0) {
+
+
+            this._TokenService.setToken(res.data.access_token);
+
+            this._AppSessionService.initUserInfo(
+              () => {
+                /** 强制刷新导航栏url 跳转到首页 */
+                this.submitting = false;
+                this._router.navigate(['/app/home/welcome']);
+
+              }, (err) => {
+
+                this.loginErrMsg = err;
+                this.submitting = false;
+              });
+          } else {
+            this.loginErrMsg = res.data.message;
+          }
+        }
+        this.submitting = false;
+        this.saving = false;
+      }, err => {
+        this.loginErrMsg = err;
+        this.saving = false;
+        this.submitting = false;
+      });
+
+
+
+
+    } else {
+
+      this.loginErrMsg = '请完成拖动验证！';
+
+    }
+
+  }
+
 
 }

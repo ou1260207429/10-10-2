@@ -5,7 +5,7 @@ import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { PublicServices } from 'services/public.services';
 import { createguid } from 'infrastructure/regular-expression';
-import { PANGBO_SERVICES_URL, AppId } from 'infrastructure/expression';
+import { URL_CONFIG, AppId } from 'infrastructure/expression';
 import lodash from 'lodash'
 
 @Component({
@@ -63,7 +63,7 @@ export class FormDownloadDetailComponent implements OnInit {
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
       if (data.result == 0) {
-        this.fileList[0].url = PANGBO_SERVICES_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
+        this.fileList[0].url = URL_CONFIG.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
         this.fileList[0].status = 'done'
         this.fileList[0].tid = data.data[0].id
         const fileList = lodash.cloneDeep(this.fileList);

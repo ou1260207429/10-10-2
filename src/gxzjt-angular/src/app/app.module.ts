@@ -13,13 +13,15 @@ import { PoliciesAndRegulationsServices } from 'services/policies-and-regulation
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { AuthInterceptor } from 'infrastructure/http-interceptor';
 import { ContentManageModule } from './pages/content-manage/content-manage.module';
-import { UEditorModule } from 'ngx-ueditor';
+// import { UEditorModule } from 'ngx-ueditor';
 import { PublicModel } from 'infrastructure/public-model';
 import { PublicServices } from 'services/public.services';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 
 import { DelonACLModule } from '@delon/acl';
 import { UserServices } from 'services/user.services';
+// import { EditorModule } from '@tinymce/tinymce-angular';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -32,16 +34,17 @@ import { UserServices } from 'services/user.services';
     LayoutModule,
     SharedModule,
     NgxEchartsModule,
+    // EditorModule,
     DelonACLModule.forRoot(),
-    UEditorModule.forRoot({
-      js: [
-        `/assets/js/ueditor.config.js`,
-        `/assets/js/ueditor.all.min.js`,
-      ],
-      options: {
-        UEDITOR_HOME_URL: `//apps.bdimg.com/libs/ueditor/1.4.3.1/`,
-      },
-    }),
+    // UEditorModule.forRoot({
+    //   js: [
+    //     `/assets/ueditor/ueditor.config.js`,
+    //     `/assets/ueditor/ueditor.all.min.js`,
+    //   ],
+    //   options: {
+    //     UEDITOR_HOME_URL: `/assets/ueditor/`,
+    //   },
+    // }),
   ],
   declarations: [
     BigScreenComponent

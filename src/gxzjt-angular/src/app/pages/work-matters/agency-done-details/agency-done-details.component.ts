@@ -112,9 +112,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
   }
 
   init() {
-    Promise.all([this.getWorkFlow_NodeRecordAndAuditorRecords(), this.getAcceptApplyForm()]).then((data: any) => {
-      this.data = data[0].result
-      this.formDto = data[1]
+    this.getWorkFlow_NodeRecordAndAuditorRecords()
+      
+    Promise.all([this.getAcceptApplyForm()]).then((data: any) => { 
+      this.formDto = data[0]
       const flowFormQueryDto = new FlowFormQueryDto();
       flowFormQueryDto.flowType = this.flowPathType
       flowFormQueryDto.projectId = this.formDto.projectId;
@@ -165,7 +166,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
    * 获取路径
    */
   getWorkFlow_NodeRecordAndAuditorRecords() {
-    return this._flowServices.getWorkFlow_NodeRecordAndAuditorRecords(this.flowNo).toPromise()
+    this._flowServices.getWorkFlow_NodeRecordAndAuditorRecords(this.flowNo).subscribe(data => { 
+      this.data = data.result
+      console.log(this.data)
+    }) 
   }
 
 
@@ -268,6 +272,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
         this.finalExamine(this.examineFormDto);
       }, error => {
+        this.message.info(error.error.error.message)
         this.butNzLoading = false;
       })
       // })
@@ -326,8 +331,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
             break;
         }
 
-      }, error => {
-        this.isNoResult(error.error.message)
+      }, error => { 
+        this.isNoResult(error.error.error.message)
       })
     }
 
@@ -362,7 +367,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       this.signForDtoData = data
       if (then) then()
     }, error => {
-      this.isNoResult(error.error.message)
+      this.isNoResult(error.error.error.message)
     })
   }
 
@@ -374,7 +379,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this._examineService.signForOpinionFile(this.signForDto).subscribe(data => {
       this.serveResult('签收成功')
     }, error => {
-      this.isNoResult(error.error.message)
+      this.isNoResult(error.error.error.message)
     })
   }
 
@@ -385,7 +390,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this._examineService.finalExamine(examineFormDto).subscribe(data => {
       this.serveResult();
     }, error => {
-      this.isNoResult(error.error.message)
+      this.isNoResult(error.error.error.message)
     })
   }
 
@@ -429,7 +434,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
         this.butNzLoading = false;
       }
     }, error => {
-      this.isNoResult(error.error.message)
+      this.isNoResult(error.error.error.message)
     })
     return false;
   }
@@ -443,7 +448,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       this.butNzLoading = false
       this.message.success('撤销成功')
     }, error => {
-      this.isNoResult(error.error.message)
+      this.isNoResult(error.error.error.message)
     })
   }
 

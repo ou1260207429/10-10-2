@@ -4,8 +4,7 @@
 
 
 export const environment = {
-  // SERVER_URL: `http://dn5.gxcic.net:8301/`,
-  SERVER_URL:'http://dn5.gxcic.net:8301/',//: `http://dn5.gxcic.net:8301/`,
+
   production: false,
   useHash: true,
   hmr: false,

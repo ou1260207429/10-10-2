@@ -61,10 +61,14 @@
         </div>
       </se> -->
       <se label="富文本" required>
+        <app-tiny-editor *ngIf="operate!='1'" (onEditorContentChange)="keyupHandler($event)" [content]="data.content"
+          [params]="editorParams"></app-tiny-editor>
+
         <div *ngIf="operate=='1'"
+        id="textContent"
           style="min-height: 50px;border: 1px solid #d9d9d9;padding: 10px 15px;box-sizing: border-box;"
           [innerHTML]="data.content"></div>
-        <ueditor *ngIf="operate!='1'" name="content" [(ngModel)]="data.content"></ueditor>
+        <!-- <ueditor *ngIf="operate!='1'" name="content" [(ngModel)]="data.content"></ueditor> -->
       </se>
       <se *ngIf="operate!=1">
         <button nz-button nzType="primary" (click)="save()" [disabled]="f.invalid">提交</button>

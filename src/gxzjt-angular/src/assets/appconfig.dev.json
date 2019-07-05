@@ -1,3 +1,5 @@
 {
-  "remoteServiceBaseUrl": "http://dn5.gxcic.net:8301"
+  "SERVER_URL":"http://222.84.250.158:8111/",
+  "XIEFENG_SERVICES_URL":"http://222.84.250.158:8113/",
+  "REGISTER_URL":"http://222.84.250.158:8000/"
 }

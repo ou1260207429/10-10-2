@@ -33,6 +33,7 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
   columns: STColumn[] = [
     {
       title: '操作',
+      width:'200px',
       buttons: [
         {
           text: '编辑', click: (record) => {
@@ -48,8 +49,8 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
           }
         },
         {
-          text: '删除', click: (record) => { 
-            this._applyServiceService.post_DeleteDraft(record.projectId).subscribe(data => { 
+          text: '删除', click: (record) => {
+            this._applyServiceService.post_DeleteDraft(record.projectId).subscribe(data => {
               this.message.success('删除成功')
               this.st.reload()
             }, () => {
@@ -63,7 +64,7 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
     { title: '工程名称', index: 'projectName' },
     { title: '建设单位', index: 'constructOrgName' },
     {
-      title: '流程类型', index: 'projectTypeStatu', format: (item: any) => `${item.projectTypeStatu ? item.projectTypeStatu : 404}`, type: 'tag', tag: {
+      title: '流程类型', index: 'projectTypeStatu',width:'120px', format: (item: any) => `${item.projectTypeStatu ? item.projectTypeStatu : 404}`, type: 'tag', tag: {
         404: { text: '设计审查', color: '' },
         0: { text: '设计审查', color: '' },
         1: { text: '消防验收', color: '' },
