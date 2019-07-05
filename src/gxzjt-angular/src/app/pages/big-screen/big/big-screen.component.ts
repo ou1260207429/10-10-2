@@ -375,10 +375,14 @@ export class BigScreenComponent {
         model.startDateTime = (new Date().getFullYear() + '-01-01');
         this.screenService.post_GetScreenYearApplyNumber(model).subscribe(res => {
             this.ScreenYearApplyData = res.data;
-            if (res.total % 5 === 0) {
-                this.ScreenTimeoutNumBer = res.total / 5;
+            if (res.total <= 5) {
+                if (res.total % 5 === 0) {
+                    this.ScreenTimeoutNumBer = res.total / 5;
+                } else {
+                    this.ScreenTimeoutNumBer = Math.ceil(res.total / 5);
+                }
             } else {
-                this.ScreenTimeoutNumBer = Math.ceil(res.total / 5);
+                this.ScreenTimeoutNumBer = 0;
             }
         });
     }
@@ -436,11 +440,16 @@ export class BigScreenComponent {
         model.page = this.ScreenTimeoutPage;
         this.screenService.post_GetScreenTimeoutList(model).subscribe(res => {
             this.ScreenTimeoutList = res.data;
-            if (res.total % 3 === 0) {
-                this.ScreenTimeoutNumBer = res.total / 3;
-            } else {
-                this.ScreenTimeoutNumBer = Math.ceil(res.total / 3);
+            if(res.total <= 3){
+                if (res.total % 3 === 0) {
+                    this.ScreenTimeoutNumBer = res.total / 3;
+                } else {
+                    this.ScreenTimeoutNumBer = Math.ceil(res.total / 3);
+                }
+            }else{
+                this.ScreenTimeoutNumBer = 0;
             }
+            
         });
     }
     ScreenTimeoutNumBer = 0; // 翻页次数
@@ -464,6 +473,7 @@ export class BigScreenComponent {
     completeList = [];//竣工验收备
     rankingTop3List = [];
     GetFireDataList() {
+        this.rankingData = [];
         let model: any = {
             startDateTime: null,
             dateTimeNow: new Date(),
@@ -538,7 +548,7 @@ export class BigScreenComponent {
                             e.aTimeByCountNumber = e.aTimeByCountNumber + 32;
                             e.timeoutCountNumber = e.timeoutCountNumber;
                             e.completeCountNumber = e.completeCountNumber + 23 + 14 + 34;
-                            e.avgCompleteTimeCountNumber = e.avgCompleteTimeCountNumber +8;
+                            e.avgCompleteTimeCountNumber = e.avgCompleteTimeCountNumber + 8;
                             break;
                         case '桂林市':
                             e.aTimeByCountNumber = e.aTimeByCountNumber + 92;
