@@ -3,22 +3,22 @@
   <div nz-row *ngIf="data">
     <table class="tables" style="box-sizing: border-box;">
       <thead>
-        <tr >
+        <tr>
           <td colspan='20' rowspan='1'>建设工程竣工验收消防备案表</td>
         </tr>
       </thead>
       <tbody>
         <!--  由后台生成的接口。展示在提交流程页面-->
-        <tr >
+        <tr>
           <td nz-form-item colspan='20' rowspan='1' style="text-align: center;">
           </td>
         </tr>
-        <tr >
+        <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>建设单位:</td>
           <td rowspan='1' colspan='7'>
             <se error="必填">
-              <input [readonly]="type==1" nz-input placeholder="请输入建设单位" [(ngModel)]="data.jsconstructionUnit" name="jsconstructionUnit"
-                required />
+              <input [readonly]="type==1" nz-input placeholder="请输入建设单位" [(ngModel)]="data.jsconstructionUnit"
+                name="jsconstructionUnit" required />
             </se>
           </td>
 
@@ -32,7 +32,7 @@
           </td>
         </tr>
 
-        <tr >
+        <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>法定代表人/主要负责人:</td>
           <td rowspan='1' colspan='7'>
             <se error="必填">
@@ -44,12 +44,13 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程名称:</td>
           <td rowspan='1' colspan='7'>
             <se error="必填">
-              <input [readonly]="type==1" nz-input placeholder="请输入工程名称" [(ngModel)]="data.projectName" name="projectName" required />
+              <input [readonly]="type==1" nz-input placeholder="请输入工程名称" [(ngModel)]="data.projectName"
+                name="projectName" required />
             </se>
           </td>
 
         </tr>
-        <tr >
+        <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>联系电话:</td>
           <td rowspan='1' colspan='7'>
             <se error="请输入正确的电话号码">
@@ -63,8 +64,8 @@
           <td rowspan='1' colspan='7'>
             <se error="必填">
               <nz-spin [nzSpinning]="!useNatureSelect"></nz-spin>
-              <nz-select [ngClass]="{pointer: type == 1}" nzPlaceHolder='请选择使用性质' [(ngModel)]="data.useNature" name="useNature" required
-                *ngIf="useNatureSelect">
+              <nz-select [ngClass]="{pointer: type == 1}" nzPlaceHolder='请选择使用性质' [(ngModel)]="data.useNature"
+                name="useNature" required *ngIf="useNatureSelect">
                 <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.natureName"
                   [nzValue]="option.natureCode">
                 </nz-option>
@@ -73,7 +74,7 @@
           </td>
 
         </tr>
-        <tr >
+        <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>施工许可证号:</td>
           <td rowspan='1' colspan='7'>
             <se error="必填">
@@ -85,13 +86,13 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>检测报告编号：</td>
           <td rowspan='1' colspan='7'>
             <se error="必填">
-              <input [readonly]="type==1" nz-input placeholder="请输入检测报告编号" [(ngModel)]="data.testReportNumber" name="testReportNumber"
-                required />
+              <input [readonly]="type==1" nz-input placeholder="请输入检测报告编号" [(ngModel)]="data.testReportNumber"
+                name="testReportNumber" required />
             </se>
           </td>
 
         </tr>
-        <tr >
+        <tr>
 
           <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>验收合格日期:</td>
           <td rowspan='1' colspan='7'>
@@ -103,17 +104,45 @@
 
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程地址:</td>
           <td rowspan='1' colspan='7'>
-            <nz-cascader [ngClass]="{pointer: type == 1}" [nzPlaceHolder]="'请设置位置'" [nzSize]="'large'" [nzChangeOnSelect]="true" [nzOptions]="position"
-              (nzChange)="changeCitycountyAndDistrict($event)" [(ngModel)]="data.engineeringCitycountyAndDistrict"
-              name="engineeringCitycountyAndDistrict" required>
+            <nz-spin [nzSpinning]="!position"></nz-spin>
+            <nz-cascader *ngIf="position" [ngClass]="{pointer: type == 1}" [nzPlaceHolder]="'请设置位置'" [nzSize]="'large'"
+              [nzChangeOnSelect]="true" [nzOptions]="position" (nzChange)="changeCitycountyAndDistrict($event)"
+              [(ngModel)]="data.engineeringCitycountyAndDistrict" name="engineeringCitycountyAndDistrict" required>
             </nz-cascader>
             <se error="必填">
-              <input [readonly]="type==1" nz-input placeholder="请输入工程地址" [(ngModel)]="data.engineeringAddress" name="engineeringAddress"
+              <input [readonly]="type==1" nz-input placeholder="请输入工程地址" [(ngModel)]="data.engineeringAddress"
+                name="engineeringAddress" required />
+            </se>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>审批单位:</td>
+          <td rowspan='1' colspan='17'>
+            <se error="必填" style="float: left;">
+              <nz-spin [nzSpinning]="!engineeringList"></nz-spin>
+              <nz-cascader *ngIf="engineeringList" [ngClass]="{pointer: type == 1}" [nzLoadData]="position"
+                [nzPlaceHolder]="'请设置审批单位'" [nzChangeOnSelect]="true" [nzOptions]="engineeringList"
+                (nzChange)="changeGetOrganizationTree($event)" [(ngModel)]="data.engineeringId" name="engineeringId"
+                required>
+              </nz-cascader>
+            </se>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>申报人姓名:</td>
+          <td rowspan='1' colspan='17'>
+            <se error="必填" style="float: left;">
+              <input [readonly]="type==1" nz-input placeholder="请输入申报人姓名" [(ngModel)]="data.applyName" name="applyName"
                 required />
             </se>
           </td>
         </tr>
-        <tr  class="title">
+
+        <tr class="title">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">单位类别</td>
           <td rowspan='1' colspan='6' class="fontweight fontLeft">单位名称</td>
           <td rowspan='1' colspan='4' class="fontweight fontLeft">资质等级</td>
@@ -122,19 +151,21 @@
           <td rowspan='1'>操作</td>
         </tr>
 
-        <tr  *ngFor="let item of data.design;let a = index">
+        <tr *ngFor="let item of data.design;let a = index">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>设计单位:</td>
 
           <td rowspan='1' colspan='6'>
             <se error="必填">
-              <nz-rj-selector-org [readonly]="type==1" [(ngModel)]="item.designUnit" (onSelectorEvent)="onSelectOrgItem($event,item)"
-                placeHolder="请输入设计单位" name="designDesignUnit{{a}}" required="true" ngDefaultControl>
+              <nz-rj-selector-org [readonly]="type==1" [(ngModel)]="item.designUnit"
+                (onSelectorEvent)="onSelectOrgItem($event,item)" placeHolder="请输入设计单位" name="designDesignUnit{{a}}"
+                required="true" ngDefaultControl>
               </nz-rj-selector-org>
             </se>
           </td>
           <td rowspan='1' colspan='4'>
             <se error="必填">
-              <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="item.qualificationLevel" name="designQualificationLevel{{a}}" required>
+              <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="item.qualificationLevel"
+                name="designQualificationLevel{{a}}" required>
                 <nz-option *ngFor="let option of zzdjEnum" [nzLabel]="option.label" [nzValue]="option.value">
                 </nz-option>
               </nz-select>
@@ -142,7 +173,8 @@
           </td>
           <td rowspan='1' colspan='3'>
             <se error="必填">
-              <input [readonly]="type==1" nz-input placeholder="请输入联系人" [(ngModel)]="item.contacts" name="designContacts{{a}}" required />
+              <input [readonly]="type==1" nz-input placeholder="请输入联系人" [(ngModel)]="item.contacts"
+                name="designContacts{{a}}" required />
             </se>
           </td>
           <td rowspan='1' colspan='3'>
@@ -157,19 +189,21 @@
             <a (click)="deleteArray(data.design,a)">删除</a>
           </td>
         </tr>
-        <tr  *ngFor="let item of data.constructionUnit;let a = index">
+        <tr *ngFor="let item of data.constructionUnit;let a = index">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>施工总承包单位:</td>
 
           <td rowspan='1' colspan='6'>
             <se error="必填">
-              <nz-rj-selector-org [readonly]="type==1" [(ngModel)]="item.designUnit" (onSelectorEvent)="onSelectOrgItem($event,item)"
-                placeHolder="请输入施工单位" name="constructionUnitDesignUnit{{a}}" required="false" ngDefaultControl>
+              <nz-rj-selector-org [readonly]="type==1" [(ngModel)]="item.designUnit"
+                (onSelectorEvent)="onSelectOrgItem($event,item)" placeHolder="请输入施工单位"
+                name="constructionUnitDesignUnit{{a}}" required="false" ngDefaultControl>
               </nz-rj-selector-org>
             </se>
           </td>
           <td rowspan='1' colspan='4'>
             <se error="必填">
-              <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="item.qualificationLevel" name="constructionQualificationLevel{{a}}">
+              <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="item.qualificationLevel"
+                name="constructionQualificationLevel{{a}}">
                 <nz-option *ngFor="let option of zzdjEnum1" [nzLabel]="option.label" [nzValue]="option.value">
                 </nz-option>
               </nz-select>
@@ -177,7 +211,8 @@
           </td>
           <td rowspan='1' colspan='3'>
             <se error="必填">
-              <input [readonly]="type==1" nz-input placeholder="请输入联系人" [(ngModel)]="item.contacts" name="constructionDesignContacts{{a}}" />
+              <input [readonly]="type==1" nz-input placeholder="请输入联系人" [(ngModel)]="item.contacts"
+                name="constructionDesignContacts{{a}}" />
             </se>
           </td>
           <td rowspan='1' colspan='3'>
@@ -193,7 +228,7 @@
           </td>
 
         </tr>
-        <tr >
+        <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">分包单位（如有）:</td>
           <td rowspan='1' colspan='6'>
             <nz-rj-selector-org [readonly]="type==1" [(ngModel)]="data.subcontractors.name"
@@ -203,19 +238,20 @@
           </td>
           <td rowspan='1' colspan='4'>
 
-            <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="data.subcontractors.qualificationLevel" name="subcontractorsqualificationLevel">
+            <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="data.subcontractors.qualificationLevel"
+              name="subcontractorsqualificationLevel">
               <nz-option *ngFor="let option of zzdjEnum1" [nzLabel]="option.label" [nzValue]="option.value">
               </nz-option>
             </nz-select>
 
 
           </td>
-          <td rowspan='1' colspan='3'><input [readonly]="type==1" nz-input placeholder="请输入联系人" [(ngModel)]="data.subcontractors.contacts"
-              name="contractingUnitcontacts" /></td>
+          <td rowspan='1' colspan='3'><input [readonly]="type==1" nz-input placeholder="请输入联系人"
+              [(ngModel)]="data.subcontractors.contacts" name="contractingUnitcontacts" /></td>
           <td rowspan='1' colspan='3'>
             <se error="请输入正确的电话号码">
-              <input [readonly]="type==1" nz-input placeholder="请输入联系电话" [(ngModel)]="data.subcontractors.contactsNumber"
-                name="subcontractorscontactsNumber"
+              <input [readonly]="type==1" nz-input placeholder="请输入联系电话"
+                [(ngModel)]="data.subcontractors.contactsNumber" name="subcontractorscontactsNumber"
                 pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)" />
             </se>
           </td>
@@ -224,7 +260,7 @@
             无
           </td>
         </tr>
-        <tr >
+        <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">监理单位:</td>
           <td rowspan='1' colspan='6'>
             <nz-rj-selector-org [readonly]="type==1" [(ngModel)]="data.supervisoryUnit.name"
@@ -234,17 +270,18 @@
           </td>
           <td rowspan='1' colspan='4'>
 
-            <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="data.supervisoryUnit.qualificationLevel" name="supervisoryUnitqualificationLevel">
+            <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="data.supervisoryUnit.qualificationLevel"
+              name="supervisoryUnitqualificationLevel">
               <nz-option *ngFor="let option of zzdjEnum3" [nzLabel]="option.label" [nzValue]="option.value">
               </nz-option>
             </nz-select>
           </td>
-          <td rowspan='1' colspan='3'><input [readonly]="type==1" nz-input placeholder="请输入联系人" [(ngModel)]="data.supervisoryUnit.contacts"
-              name="supervisoryUnitcontacts" /></td>
+          <td rowspan='1' colspan='3'><input [readonly]="type==1" nz-input placeholder="请输入联系人"
+              [(ngModel)]="data.supervisoryUnit.contacts" name="supervisoryUnitcontacts" /></td>
           <td rowspan='1' colspan='3'>
             <se error="请输入正确的电话号码">
-              <input [readonly]="type==1" nz-input placeholder="请输入联系电话" [(ngModel)]="data.supervisoryUnit.contactsNumber"
-                name="supervisoryUnitcontactsNumber"
+              <input [readonly]="type==1" nz-input placeholder="请输入联系电话"
+                [(ngModel)]="data.supervisoryUnit.contactsNumber" name="supervisoryUnitcontactsNumber"
                 pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)" />
             </se>
           </td>
@@ -252,7 +289,7 @@
             无
           </td>
         </tr>
-        <tr >
+        <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>检测单位：</td>
           <td rowspan='1' colspan='6'>
             <se error="必填">
@@ -265,8 +302,8 @@
           <td rowspan='1' colspan='4'>
             <se error="必填">
               <!-- <input [readonly]="type==1" nz-input placeholder="请输入资质等级"  required /> -->
-              <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="data.detectionUnit.qualificationLevel" name="detectionUnitqualificationLevel"
-                required>
+              <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="data.detectionUnit.qualificationLevel"
+                name="detectionUnitqualificationLevel" required>
                 <nz-option *ngFor="let option of zzdjEnum2" [nzLabel]="option.label" [nzValue]="option.value">
                 </nz-option>
               </nz-select>
@@ -290,13 +327,13 @@
           </td>
         </tr>
 
-        <tr >
+        <tr>
           <td style="width: 37px;background-color: #d0e8fe;color: #5a95e9;font-weight: 600;border-right: 0;"
             [attr.rowspan]="data.basicInformation.length+3" colspan='1' required=true>
             工程基本情况
           </td>
         </tr>
-        <tr  class="title">
+        <tr class="title">
           <td rowspan='1' colspan='5' class="fontweight fontLeft leftTitle">建筑物名称</td>
           <td rowspan='1' colspan='2' class="fontweight fontLeft">结 构</td>
           <td rowspan='1' colspan='2' class="fontweight fontLeft">耐火等级</td>
@@ -306,10 +343,11 @@
           <td rowspan='1' colspan='2'>火灾危险性类别</td>
           <td rowspan='1' colspan='2'>操作</td>
         </tr>
-        <tr  *ngFor="let item of data.basicInformation;let index = index">
+        <tr *ngFor="let item of data.basicInformation;let index = index">
           <td rowspan='1' colspan='5' class="fontweight fontLeft leftTitle">
             <se error="必填">
-              <input [readonly]="type==1" nz-input placeholder="请输入建筑物名称" [(ngModel)]="item.name" name="jbname{{index}}" required />
+              <input [readonly]="type==1" nz-input placeholder="请输入建筑物名称" [(ngModel)]="item.name" name="jbname{{index}}"
+                required />
             </se>
           </td>
           <td rowspan='1' colspan='2' class="fontweight fontLeft">
@@ -331,18 +369,20 @@
           </td>
           <td rowspan='1' colspan='2' class="fontweight fontLeft">
             <se error="必填">
-              <input [readonly]="type==1" nz-input placeholder="请输入高度" [(ngModel)]="item.height" name="jbheight{{index}}" required />
+              <input [readonly]="type==1" nz-input placeholder="请输入高度" [(ngModel)]="item.height"
+                name="jbheight{{index}}" required />
             </se>
           </td>
           <td rowspan='1' colspan='2'>
             <se error="必填">
-              <input [readonly]="type==1" nz-input placeholder="请输入层数" [(ngModel)]="item.ground" name="jbbuiltground{{index}}" required />
+              <input [readonly]="type==1" nz-input placeholder="请输入层数" [(ngModel)]="item.ground"
+                name="jbbuiltground{{index}}" required />
             </se>
           </td>
           <td rowspan='1' colspan='2'>
             <se error="必填">
-              <input [readonly]="type==1" nz-input placeholder="请输入建筑面积" [(ngModel)]="item.builtUpArea" name="jbbuiltUpArea{{index}}"
-                required />
+              <input [readonly]="type==1" nz-input placeholder="请输入建筑面积" [(ngModel)]="item.builtUpArea"
+                name="jbbuiltUpArea{{index}}" required />
             </se>
           </td>
           <td rowspan='1' colspan='2'>
@@ -355,26 +395,29 @@
               <!-- <input [readonly]="type==1" nz-input placeholder="请输入危险性类别" [(ngModel)]="item.fireHazard" name="jbfireHazard" required /> -->
             </se>
           </td>
-          <td rowspan='1' colspan='2' [ngClass]="{pointer: type == 1}"><a (click)="addArray(data.basicInformation)">新增</a>
+          <td rowspan='1' colspan='2' [ngClass]="{pointer: type == 1}"><a
+              (click)="addArray(data.basicInformation)">新增</a>
             <a (click)="deleteArray(data.basicInformation,index)">删除</a> </td>
         </tr>
 
       <tbody *ngFor="let item of data.storageTank;let index = index">
-        <tr >
+        <tr>
           <td colspan='1' rowspan="6" class="fontweight fontLeft leftTitle"
             style="width: 36px;background-color: #f8f8f8;text-align: center;">储 罐</td>
         </tr>
-        <tr >
+        <tr>
           <td colspan='4' class="fontweight fontLeft leftTitle">设置位置</td>
           <td rowspan='1' colspan='14'>
-            <input [readonly]="type==1" nz-input placeholder="请输入设置位置" [(ngModel)]="item.position" name="storageTankposition{{index}}" />
+            <input [readonly]="type==1" nz-input placeholder="请输入设置位置" [(ngModel)]="item.position"
+              name="storageTankposition{{index}}" />
           </td>
           <td>操作</td>
         </tr>
-        <tr >
+        <tr>
           <td colspan='4' class="fontweight fontLeft leftTitle">设置形式</td>
           <td rowspan='1' colspan='14' style="text-align: left">
-            <nz-radio-group [ngClass]="{pointer: type == 1}" [(ngModel)]="item.settingForm" name="storagesettingForm{{index}}">
+            <nz-radio-group [ngClass]="{pointer: type == 1}" [(ngModel)]="item.settingForm"
+              name="storagesettingForm{{index}}">
               <label style="padding-right: 10px;" nz-radio nzValue="内浮顶罐">内浮顶罐</label>
               <label style="padding-right: 10px;" nz-radio nzValue="水槽式罐">水槽式罐</label>
               <label style="padding-right: 10px;" nz-radio nzValue="浮顶罐">浮顶罐</label>
@@ -387,7 +430,7 @@
           <td rowspan='5' [ngClass]="{pointer: type == 1}"><a (click)="addArray(data.storageTank)">新增</a>
             <a (click)="deleteArray(data.storageTank,index)">删除</a> </td>
         </tr>
-        <tr >
+        <tr>
           <td colspan='4' class="fontweight fontLeft leftTitle">储物类别</td>
           <td rowspan='1' colspan='14' style="text-align: left">
             <nz-radio-group [ngClass]="{pointer: type == 1}" [(ngModel)]="item.type" name="storagesetype{{index}}">
@@ -400,18 +443,19 @@
             </nz-radio-group>
           </td>
         </tr>
-        <tr  class="title">
+        <tr class="title">
           <td colspan='4' class="fontweight fontLeft leftTitle">储存物质名称</td>
           <td colspan='3' style="text-align: left">储罐材质</td>
           <td colspan='3' style="text-align: left">储存工作压力</td>
           <td colspan='4' style="text-align: left">储存温度</td>
           <td colspan='4' style="text-align: left">储存形式</td>
         </tr>
-        <tr >
+        <tr>
           <td colspan='4' class="fontweight fontLeft leftTitle"><input [readonly]="type==1" nz-input placeholder="请输入名称"
               [(ngModel)]="item.name" name="storagesematerialname{{index}}" /></td>
           <td colspan='3' style="text-align: left">
-            <nz-radio-group [ngClass]="{pointer: type == 1}" [(ngModel)]="item.materialQuality" name="storagesematerialQuality{{index}}">
+            <nz-radio-group [ngClass]="{pointer: type == 1}" [(ngModel)]="item.materialQuality"
+              name="storagesematerialQuality{{index}}">
               <label nz-radio nzValue="钢">钢</label>
               <label nz-radio nzValue="砼">砼</label>
               <label nz-radio nzValue="硅">硅</label>
@@ -419,14 +463,16 @@
             </nz-radio-group>
           </td>
           <td colspan='3' style="text-align: left">
-            <nz-radio-group [ngClass]="{pointer: type == 1}" [(ngModel)]="item.pressure" name="storagesepressure{{index}}">
+            <nz-radio-group [ngClass]="{pointer: type == 1}" [(ngModel)]="item.pressure"
+              name="storagesepressure{{index}}">
               <label nz-radio nzValue="高压">高压</label>
               <label nz-radio nzValue="中压">中压</label>
               <label nz-radio nzValue="低压">低压</label>
             </nz-radio-group>
           </td>
           <td colspan='4' style="text-align: left">
-            <nz-radio-group [ngClass]="{pointer: type == 1}" [(ngModel)]="item.temperature" name="storagesetemperature{{index}}">
+            <nz-radio-group [ngClass]="{pointer: type == 1}" [(ngModel)]="item.temperature"
+              name="storagesetemperature{{index}}">
               <label nz-radio nzValue="低温">低温</label>
               <label nz-radio nzValue="常温">常温</label>
             </nz-radio-group>
@@ -441,21 +487,22 @@
         </tr>
 
       </tbody>
-      <tr  *ngFor="let item of data.yard;let index = index">
+      <tr *ngFor="let item of data.yard;let index = index">
         <td colspan='5' class="fontweight fontLeft leftTitle">堆场</td>
         <td colspan='3' style="text-align: left">储量</td>
-        <td colspan='4' style="text-align: left"><input [readonly]="type==1" nz-input placeholder="请输入储量" [(ngModel)]="item.reserves"
-            name="yardreserves{{index}}" /></td>
+        <td colspan='4' style="text-align: left"><input [readonly]="type==1" nz-input placeholder="请输入储量"
+            [(ngModel)]="item.reserves" name="yardreserves{{index}}" /></td>
         <td colspan='3' style="text-align: left">储存物质名称</td>
-        <td colspan='4' style="text-align: left"><input [readonly]="type==1" nz-input placeholder="请输入名称" [(ngModel)]="item.name"
-            name="yardname{{index}}" /></td>
+        <td colspan='4' style="text-align: left"><input [readonly]="type==1" nz-input placeholder="请输入名称"
+            [(ngModel)]="item.name" name="yardname{{index}}" /></td>
         <td rowspan="1" colspan='1' [ngClass]="{pointer: type == 1}"><a (click)="addArray(data.yard)">新增</a>
           <a (click)="deleteArray(data.yard,index)">删除</a></td>
       </tr>
 
-      <tr  *ngFor="let item of data.newcheckboxEngineering;let index = index">
+      <tr *ngFor="let item of data.newcheckboxEngineering;let index = index">
         <td colspan='5' class="fontweight fontLeft leftTitle">
-          <nz-radio-group [ngClass]="{pointer: type == 1}" [(ngModel)]="item.value" name="nnewcheckboxEngineering{{i}}{{index}}">
+          <nz-radio-group [ngClass]="{pointer: type == 1}" [(ngModel)]="item.value"
+            name="nnewcheckboxEngineering{{i}}{{index}}">
             <!-- 
               2019.7.1 东兰确定不要单选框
               <label nz-radio nzValue="{{item.label}}">{{item.label}}</label> 
@@ -463,17 +510,18 @@
             <span>{{item.label}}</span>
           </nz-radio-group>
         </td>
-        <td colspan='15' style="text-align: left"><label nz-checkbox  [ngClass]="{pointer: type == 1}" name="newcheckboxEngineering{{i}}{{index}}"
-            *ngFor="let box of item.arr;let i=index" [(ngModel)]="box.value">{{box.label}}</label></td>
+        <td colspan='15' style="text-align: left"><label nz-checkbox [ngClass]="{pointer: type == 1}"
+            name="newcheckboxEngineering{{i}}{{index}}" *ngFor="let box of item.arr;let i=index"
+            [(ngModel)]="box.value">{{box.label}}</label></td>
       </tr>
 
-      <tr >
+      <tr>
         <td colspan='5' rowspan="3" class="fontweight fontLeft leftTitle">
           <span>室内装修工程</span>
         </td>
         <td colspan='3' style="text-align: left">装修部</td>
         <td colspan='12'>
-          <label nz-checkbox  [ngClass]="{pointer: type == 1}" name="constructionProjectArr{{i}}{{index}}"
+          <label nz-checkbox [ngClass]="{pointer: type == 1}" name="constructionProjectArr{{i}}{{index}}"
             *ngFor="let box of data.constructionProject.arr;let i=index" [(ngModel)]="box.value">{{box.label}}</label>
         </td>
       </tr>
@@ -481,8 +529,8 @@
       <tr>
         <td colspan='3' style="text-align: left">装修面积（m2） </td>
         <td colspan='4' style="text-align: left">
-          <input [readonly]="type==1" nz-input placeholder="请输入装修面积（m2）" [(ngModel)]="data.constructionProject.decorationArea"
-            name="constructionProjectdecorationArea" /></td>
+          <input [readonly]="type==1" nz-input placeholder="请输入装修面积（m2）"
+            [(ngModel)]="data.constructionProject.decorationArea" name="constructionProjectdecorationArea" /></td>
         <td colspan='3' style="text-align: left">装修层数</td>
         <td colspan='5' style="text-align: left"><input [readonly]="type==1" nz-input placeholder="请输入装修层数"
             [(ngModel)]="data.constructionProject.ground" name="constructionProjectground" /></td>
@@ -497,13 +545,12 @@
             [(ngModel)]="data.constructionProject.originallyUsed" name="constructionProjectoriginallyUsed" /></td>
       </tr>
 
-      <tr  class="title">
+      <tr class="title">
         <td colspan='6' class="fontweight fontLeft leftTitle">消防设施类别</td>
         <td colspan='2'>场所</td>
         <td colspan='12'>类型</td>
       </tr>
-      <tr 
-        *ngFor="let item of data.fireControlLinkageEngineering;let index = index">
+      <tr *ngFor="let item of data.fireControlLinkageEngineering;let index = index">
         <td colspan='6' class="fontweight fontLeft leftTitle">
           <!-- 
             2019.7.1 东兰确定不要单选框
@@ -512,91 +559,95 @@
           </nz-radio-group> -->
           <span>{{item.label}}</span>
         </td>
-        <td colspan='2'><input [readonly]="type==1" nz-input placeholder="请输入场所" [(ngModel)]="item.input" name="xxinput{{index}}" /></td>
+        <td colspan='2'><input [readonly]="type==1" nz-input placeholder="请输入场所" [(ngModel)]="item.input"
+            name="xxinput{{index}}" /></td>
         <td colspan='12' style="text-align: left">
 
           <div>
             <div *ngFor="let box of item.arr;let i =index" style="margin-bottom: 1em">
               <p>{{box.label}}</p>
               <div *ngIf="box.type=='radio'">
-                <nz-radio-group [ngClass]="{pointer: type == 1}" [(ngModel)]="box.value" name="xxradiogroup{{i}}{{index}}">
+                <nz-radio-group [ngClass]="{pointer: type == 1}" [(ngModel)]="box.value"
+                  name="xxradiogroup{{i}}{{index}}">
                   <label nz-radio nzValue="{{obj.value}}" *ngFor="let obj of box.list">{{obj.label}}</label>
                 </nz-radio-group>
               </div>
 
               <div *ngIf="box.type=='check'">
-                <label nz-checkbox  [ngClass]="{pointer: type == 1}" name="xxcheckbox{{i}}{{index}}" *ngFor="let obj of box.list;let i = index"
-                  [(ngModel)]="obj.value">{{obj.label}}</label>
+                <label nz-checkbox [ngClass]="{pointer: type == 1}" name="xxcheckbox{{i}}{{index}}"
+                  *ngFor="let obj of box.list;let i = index" [(ngModel)]="obj.value">{{obj.label}}</label>
               </div>
             </div>
           </div>
         </td>
       </tr>
 
-      <tr >
+      <tr>
         <td style="width: 37px;background-color: #d0e8fe;color: #5a95e9;font-weight: 600;border-right: 0;" rowspan='8'
           colspan='1'>
           竣工验收意见
         </td>
       </tr>
-      <tr >
+      <tr>
         <td colspan='6' class="fontweight fontLeft leftTitle" required=true>
           建设单位
         </td>
         <td colspan='14' style="text-align: left">
 
           <se error="必填">
-            <textarea [readonly]="type==1" nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.constructionUnit.opinion"
-              name="constructionUnitopinion" required>
+            <textarea [readonly]="type==1" nz-input placeholder="请输入具体情况"
+              [(ngModel)]="data.acceptanceOpinions.constructionUnit.opinion" name="constructionUnitopinion" required>
                   </textarea>
           </se>
 
           <div class="textRight">
-            <se error="必填">（建设单位公章）：<input [readonly]="type==1" style="width: 160px;margin-right: 20px" nz-input placeholder="建设单位"
-                [(ngModel)]="data.acceptanceOpinions.constructionUnit.officialSeal" name="constructionUnitofficialSeal"
-                required /></se>
-            <se error="必填">项目负责人签名：<input [readonly]="type==1" style="width: 160px;margin-right: 20px" nz-input placeholder="请签名"
-                [(ngModel)]="data.acceptanceOpinions.constructionUnit.autograph" name="constructionUnitautograph"
-                required /></se>
+            <se error="必填">（建设单位公章）：<input [readonly]="type==1" style="width: 160px;margin-right: 20px" nz-input
+                placeholder="建设单位" [(ngModel)]="data.acceptanceOpinions.constructionUnit.officialSeal"
+                name="constructionUnitofficialSeal" required /></se>
+            <se error="必填">项目负责人签名：<input [readonly]="type==1" style="width: 160px;margin-right: 20px" nz-input
+                placeholder="请签名" [(ngModel)]="data.acceptanceOpinions.constructionUnit.autograph"
+                name="constructionUnitautograph" required /></se>
           </div>
         </td>
       </tr>
-      <tr >
+      <tr>
         <td colspan='6' class="fontweight fontLeft leftTitle" required=true>
           设计单位
         </td>
         <td colspan='14' style="text-align: left">
           <se error="必填">
-            <textarea [readonly]="type==1" nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.designUnit.opinion"
-              name="designUnitopinion" required>
+            <textarea [readonly]="type==1" nz-input placeholder="请输入具体情况"
+              [(ngModel)]="data.acceptanceOpinions.designUnit.opinion" name="designUnitopinion" required>
                   </textarea>
           </se>
           <div class="textRight">
-            <se error="必填">（设计单位公章）：<input [readonly]="type==1" style="width: 160px;margin-right: 20px" nz-input placeholder="设计单位"
-                [(ngModel)]="data.acceptanceOpinions.designUnit.officialSeal" name="designUnitofficialSeal" required />
+            <se error="必填">（设计单位公章）：<input [readonly]="type==1" style="width: 160px;margin-right: 20px" nz-input
+                placeholder="设计单位" [(ngModel)]="data.acceptanceOpinions.designUnit.officialSeal"
+                name="designUnitofficialSeal" required />
             </se>
-            <se error="必填">项目负责人签名：<input [readonly]="type==1" style="width: 160px;margin-right: 20px" nz-input placeholder="请签名"
-                [(ngModel)]="data.acceptanceOpinions.designUnit.autograph" name="designUnitautograph" required />
+            <se error="必填">项目负责人签名：<input [readonly]="type==1" style="width: 160px;margin-right: 20px" nz-input
+                placeholder="请签名" [(ngModel)]="data.acceptanceOpinions.designUnit.autograph" name="designUnitautograph"
+                required />
             </se>
           </div>
         </td>
       </tr>
-      <tr >
+      <tr>
         <td colspan='6' class="fontweight fontLeft leftTitle" required=true>
           施工总承包单位
         </td>
         <td colspan='14' style="text-align: left">
           <se error="必填">
-            <textarea [readonly]="type==1" nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.contractingUnit.opinion"
-              name="contractingUnitopinion" required>
+            <textarea [readonly]="type==1" nz-input placeholder="请输入具体情况"
+              [(ngModel)]="data.acceptanceOpinions.contractingUnit.opinion" name="contractingUnitopinion" required>
                 </textarea>
           </se>
 
           <div class="textRight">
             <se error="必填">
-              （施工总承包单位）：<input [readonly]="type==1" style="width: 160px;margin-right: 20px" nz-input placeholder="施工总承包单位"
-                [(ngModel)]="data.acceptanceOpinions.contractingUnit.officialSeal" name="contractingUnitfficialSeal"
-                required />
+              （施工总承包单位）：<input [readonly]="type==1" style="width: 160px;margin-right: 20px" nz-input
+                placeholder="施工总承包单位" [(ngModel)]="data.acceptanceOpinions.contractingUnit.officialSeal"
+                name="contractingUnitfficialSeal" required />
             </se>
             <se error="必填">
               项目经理签名：<input [readonly]="type==1" style="width: 160px;margin-right: 20px" nz-input placeholder="请签名"
@@ -605,7 +656,7 @@
           </div>
         </td>
       </tr>
-      <tr >
+      <tr>
         <td colspan='6' class="fontweight fontLeft leftTitle">
           专业承包单位（如有）
         </td>
@@ -618,8 +669,8 @@
           </se>
           <div class="textRight">
             <se>
-              （专业承包单位公章）：<input [readonly]="type==1" style="width: 160px;margin-right: 20px" nz-input placeholder="专业承包单位公章"
-                [(ngModel)]="data.acceptanceOpinions.professionalContractors.officialSeal"
+              （专业承包单位公章）：<input [readonly]="type==1" style="width: 160px;margin-right: 20px" nz-input
+                placeholder="专业承包单位公章" [(ngModel)]="data.acceptanceOpinions.professionalContractors.officialSeal"
                 name="professionalContractorsfficialSeal" />
             </se>
             <se>
@@ -630,7 +681,7 @@
           </div>
         </td>
       </tr>
-      <tr >
+      <tr>
         <td colspan='6' class="fontweight fontLeft leftTitle">
           工程监理单位
         </td>
@@ -655,14 +706,15 @@
           </div>
         </td>
       </tr>
-      <tr >
+      <tr>
         <td colspan='6' class="fontweight fontLeft leftTitle" required=true>
           消防设施检测单位
         </td>
         <td colspan='14' style="text-align: left">
           <se error="必填">
-            <textarea [readonly]="type==1" nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.fireInspectionUnit.opinion"
-              name="fireInspectionUnitopinion" required>
+            <textarea [readonly]="type==1" nz-input placeholder="请输入具体情况"
+              [(ngModel)]="data.acceptanceOpinions.fireInspectionUnit.opinion" name="fireInspectionUnitopinion"
+              required>
                     </textarea>
           </se>
           <div class="textRight">
@@ -679,7 +731,7 @@
           </div>
         </td>
       </tr>
-      <tr >
+      <tr>
         <!-- <td colspan='15' rowspan='1' style="text-align: right">备案时间:
         </td> -->
         <td colspan='20' rowspan='1' style="text-align: right">
@@ -688,7 +740,7 @@
         </td>
       </tr>
 
-      <tr >
+      <tr>
         <td colspan='1' rowspan="1" class="fontweight fontLeft leftTitle"
           style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>工程简要说明</td>
         <td rowspan='1' colspan='20' class="textLeft">

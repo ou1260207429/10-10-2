@@ -41,6 +41,12 @@ export class PublicServices {
         return this.http.post(URL_CONFIG.getInstance().REGISTER_URL + url, page);
     }
 
+    /**
+   * 获取审批单位
+   */
+    getOrganizationTree() {
+        return this.http.get(URL_CONFIG.getInstance().SERVER_URL + 'api/services/app/ProjectFlowServcie/GetOrganizationTree');
+    }
 }
 
 export interface UploadFileModel {

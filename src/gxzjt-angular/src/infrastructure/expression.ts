@@ -53,6 +53,10 @@ export let publicPageConfig: STPage = {
   total: '当前页{{range[1]}}条  共 {{total}} 条',
 };
 
+function newFunction() {
+  return 'http://222.84.250.158:8000/';
+}
+
 /**
  * @param event 根据点击分页传回来的值
  * @param params 请求的参数

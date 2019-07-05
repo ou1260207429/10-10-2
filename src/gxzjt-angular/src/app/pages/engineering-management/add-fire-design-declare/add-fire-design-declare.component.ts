@@ -44,6 +44,9 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     contacts: '',
     contactsNumber: '',
     engineeringCitycountyAndDistrict: '',
+    //2019.7.4 新增审批单位
+    engineeringId: '',
+    engineeringNo:'',
     engineeringAddress: '',
     planStartTime: '',
     planEndTime: '',
@@ -531,7 +534,11 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     ],
 
     //建设工程规划许可证号
-    licenseNumber:'' 
+    licenseNumber: '',
+
+    //申报人姓名
+    applyName:'',
+    
   }
 
   butNzLoading: boolean = false;
@@ -547,14 +554,10 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
     this.flowFormQueryDto.flowId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('flowId'));
-    console.log(this.data)
-
   }
 
   ngOnInit() {
     this.init();
-    console.log(this.data)
-
   }
 
   /**
@@ -613,7 +616,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
       const from: GXZJT_From = {
         frow_TemplateInfo_Data: {
           //市县区  
-          Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length - 1]
+          Area: this.data.engineeringNo
         },
         //'xfsj,''xfys,'jgys  流程分类  英文简写(消防设计,消防验收,竣工验收)
         identify: 'xfsj',
@@ -691,9 +694,9 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
    * 存草稿
    */
   depositDraft() {
-    this.butNzLoading = true;
-    this.data.planStartTime = this.data.planStartTime == '' ? '' : timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
-    this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
+    this.butNzLoading = true; 
+    this.data.planStartTime = !this.data.planStartTime ? '' : timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
+    this.data.planEndTime = !this.data.planEndTime ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 1;
     this.flowFormDto.projectTypeStatu = 0;
