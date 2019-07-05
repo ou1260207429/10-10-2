@@ -59,6 +59,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
   //审批单位
   engineeringList
+  engineering
   constructor(private message: NzMessageService, private eventEmiter: EventEmiter, public _homeServiceProxy: HomeServiceProxy, public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
@@ -78,12 +79,11 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
    * @param v 
    */
   changeCitycountyAndDistrict(v) {
-    this.data.engineeringCitycountyAndDistrict = v;
-
-    //联动处理
-    this.data.engineeringId = v
-    const result = updateEngineeringNo(this.engineeringList, this.data.engineeringId.length - 1, this.data.engineeringId, this.data.engineeringNo)
-    this.data.engineeringNo = result
+    this.data.engineeringCitycountyAndDistrict = v
+    this.engineering = lodash.cloneDeep(v);   
+    const result = updateEngineeringNo(this.engineeringList, this.engineering.length - 1,this.engineering, this.data.engineeringNo)
+    this.data.engineeringNo = result.no  
+    this.data.engineeringId = this.engineering 
   }
 
   /**
@@ -112,7 +112,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     //联动处理
     this.data.engineeringId = v
     const result = updateEngineeringNo(this.engineeringList, this.data.engineeringId.length - 1, this.data.engineeringId, this.data.engineeringNo)
-    this.data.engineeringNo = result
+    this.data.engineeringNo = result.no
   }
 
 

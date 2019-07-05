@@ -275,7 +275,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
       tenantWorkFlowInstanceDto.workFlow_InstanceId = this.examineFormDto.workFlow_Instance_Id;
 
       tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
-        Area: this.examineFormDto.area,
+        Area: this.examineFormDto['engineeringNo'],
         IsChoose: 0,
         editWorkFlow_NodeAuditorRecordDto: {
           deptId: this.appSession.user.organizationsId,

@@ -290,7 +290,7 @@ export class AddFireAcceptanceComponent implements OnInit {
             deptId: this._appSessionService.user.organizationsId,
             deptFullPath: this._appSessionService.user.organizationsName,
           }
-        };
+        }; 
         this.butNzLoading = true;
         this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 

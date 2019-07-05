@@ -101,14 +101,28 @@
             </se>
           </td>
 
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>申报人姓名:</td>
+          <td rowspan='1' colspan='7'>
+            <se error="必填" style="float: left;">
+              <input [readonly]="type==1" nz-input placeholder="请输入申报人姓名" [(ngModel)]="data.applyName" name="applyName"
+                required />
+            </se>
+          </td>
+
+        </tr>
+
+        <tr>
 
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程地址:</td>
-          <td rowspan='1' colspan='7'>
-            <nz-spin [nzSpinning]="!position"></nz-spin>
-            <nz-cascader *ngIf="position" [ngClass]="{pointer: type == 1}" [nzPlaceHolder]="'请设置位置'" [nzSize]="'large'"
-              [nzChangeOnSelect]="true" [nzOptions]="position" (nzChange)="changeCitycountyAndDistrict($event)"
-              [(ngModel)]="data.engineeringCitycountyAndDistrict" name="engineeringCitycountyAndDistrict" required>
-            </nz-cascader>
+          <td rowspan='1' colspan='17'>
+            <se error="必填">
+              <nz-spin [nzSpinning]="!position"></nz-spin>
+              <nz-cascader *ngIf="position" [ngClass]="{pointer: type == 1}" [nzPlaceHolder]="'请设置位置'"
+                [nzSize]="'large'" [nzChangeOnSelect]="true" [nzOptions]="position"
+                (nzChange)="changeCitycountyAndDistrict($event)" [(ngModel)]="data.engineeringCitycountyAndDistrict"
+                name="engineeringCitycountyAndDistrict" required>
+              </nz-cascader>
+            </se>
             <se error="必填">
               <input [readonly]="type==1" nz-input placeholder="请输入工程地址" [(ngModel)]="data.engineeringAddress"
                 name="engineeringAddress" required />
@@ -131,16 +145,7 @@
           </td>
         </tr>
 
-        <tr>
 
-          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>申报人姓名:</td>
-          <td rowspan='1' colspan='17'>
-            <se error="必填" style="float: left;">
-              <input [readonly]="type==1" nz-input placeholder="请输入申报人姓名" [(ngModel)]="data.applyName" name="applyName"
-                required />
-            </se>
-          </td>
-        </tr>
 
         <tr class="title">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">单位类别</td>

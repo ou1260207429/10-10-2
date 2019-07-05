@@ -116,6 +116,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       
     Promise.all([this.getAcceptApplyForm()]).then((data: any) => { 
       this.formDto = data[0]
+      console.log(this.formDto)
       const flowFormQueryDto = new FlowFormQueryDto();
       flowFormQueryDto.flowType = this.flowPathType
       flowFormQueryDto.projectId = this.formDto.projectId;
@@ -131,23 +132,40 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
       //获取JSON和节点信息
       Promise.all([this.post_GetFlowFormData(flowFormQueryDto), this.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow)]).then((value: any) => {
-        this.formJson = JSON.parse(value[0].formJson);
+        const json = JSON.parse(value[0].formJson);
+        json.constructionUnit = json.constructionUnit instanceof Array ? json.constructionUnit : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }]
+        json.design = json.design?json.design: [{designUnit: '',qualificationLevel: '',legalRepresentative: '',contacts: '',contactsNumber: ''}],
+        json.engineeringId = json.engineeringId ? json.engineeringId : ''
+        json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
+        json.applyName = json.applyName ? json.applyName : '' 
+        json.constructionProject = json.constructionProject?json.constructionProject: {
+          arr: [
+            { label: '顶棚', value: false, checked: false },
+            { label: '墙面', value: false, checked: false },
+            { label: '地面', value: false, checked: false },
+            { label: '隔断 ', value: false, checked: false },
+            { label: '固定家具', value: false, checked: false },
+            { label: '装饰织物', value: false, checked: false },
+            { label: '其他装饰材料 ', value: false, checked: false },
+          ],
+          decorationArea: '',
+          ground: '',
+          useNature: '',
+          originallyUsed: ''
+        }
+        this.formJson = json; 
         this.useNatureSelect = value[0].natures
-        console.log(this.useNatureSelect)
         this.tenantWorkFlowInstanceDto = this.workFlowData = value[1].result;
         this.tenantWorkFlowInstanceDto.workFlow_InstanceId = this.formDto.workFlow_Instance_Id
 
         //获取当前节点 由这个判断提交的接口
-        this.curNodeName = this.workFlowData.nodeViewInfo.curNodeName
-        console.log(this.curNodeName);
+        this.curNodeName = this.workFlowData.nodeViewInfo.curNodeName 
         if (this.curNodeName != '大厅受理') {
           this.getPrimaryExamine(() => {
             this.type = false
           })
         } else {
           this.type = false
-
-          console.log(this.type)
         }
       })
 
@@ -168,7 +186,6 @@ export class AgencyDoneDetailsComponent implements OnInit {
   getWorkFlow_NodeRecordAndAuditorRecords() {
     this._flowServices.getWorkFlow_NodeRecordAndAuditorRecords(this.flowNo).subscribe(data => { 
       this.data = data.result
-      console.log(this.data)
     }) 
   }
 
@@ -225,9 +242,9 @@ export class AgencyDoneDetailsComponent implements OnInit {
     if (this.flowPathType == 3) {
       //竣工备案判断抽中或者不抽中
       num = this.formDto.isSelect ? 1 : 0
-    }
+    } 
     this.tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
-      Area: this.formDto.area,
+      Area: this.formJson.engineeringNo,
       IsChoose: num,
     }
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId
@@ -466,7 +483,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       InitiationProcessAddAuditorComponent,
       {
         title: title,
-        area: this.formDto.area,
+        area: this.formJson.engineeringNo,
         auditors: this.tenantWorkFlowInstanceDto.auditors
       }
     ).subscribe((res: any) => {

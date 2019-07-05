@@ -18,7 +18,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class SignForComponent implements OnInit {
 
     signForDto=new SignForDto();
-    examineFormDto = new ExamineFormDto();
+    examineFormDto 
     workFlowData;
     srcUrl:any;
 
@@ -64,7 +64,7 @@ export class SignForComponent implements OnInit {
             tenantWorkFlowInstanceDto.workFlow_InstanceId = this.examineFormDto.workFlow_Instance_Id;
 
             tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
-                Area: this.examineFormDto.area,
+                Area: this.examineFormDto.engineeringNo,
                 IsChoose: 0,
                 editWorkFlow_NodeAuditorRecordDto: {
                     deptId: this._appSessionService.user.organizationsId,

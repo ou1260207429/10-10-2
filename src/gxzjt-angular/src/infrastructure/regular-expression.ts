@@ -286,17 +286,18 @@ export function objDeleteType(box) {
 export function updateEngineeringNo(array: Array<any>, length, id, no) {
   let result = {
     i: -1,
-    index: - 1,
+    index: - 2,
+    no:'',
   };
   switch (length) {
     case 0:
       result.i = checkArrayString(array, 'value', id[length])
-      no = array[result.i].ID
+      result.no = array[result.i].ID
       break;
 
     case 1:
       result.i = checkArrayString(array[0].children, 'value', id[1])
-      no = array[0].children[result.i].ID
+      result.no = array[0].children[result.i].ID
       break;
 
     case 2:
@@ -305,16 +306,16 @@ export function updateEngineeringNo(array: Array<any>, length, id, no) {
 
       if (result.index == -1) {
         id.splice(id.length - 1, 1);
-        no = array[0].children[result.i].ID
+        result.no = array[0].children[result.i].ID
       } else {
-        no = array[0].children[result.i].children[result.index].ID
+        result.no = array[0].children[result.i].children[result.index].ID
       }
       break;
 
     default:
       break;
   }
-  return no
+  return result
 }
 
 
