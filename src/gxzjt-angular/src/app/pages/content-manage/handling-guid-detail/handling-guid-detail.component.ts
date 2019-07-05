@@ -7,7 +7,7 @@ import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { PublicServices } from 'services/public.services';
 import { Buffer } from "buffer"
-import { PANGBO_SERVICES_URL, AppId } from 'infrastructure/expression';
+import { URL_CONFIG, AppId } from 'infrastructure/expression';
 import lodash from 'lodash'
 
 @Component({
@@ -42,7 +42,7 @@ export class HandlingGuidDetailComponent implements OnInit {
     this.id = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
     this.operate = parseInt(this._activatedRoute.snapshot.paramMap.get('operate'));
     this.initType()
-    this.fileUrl = PANGBO_SERVICES_URL;
+    this.fileUrl = URL_CONFIG.getInstance().REGISTER_URL;
   }
   ngOnInit() {
     this.init()

@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Rx';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PANGBO_SERVICES_URL } from 'infrastructure/expression';
+import { URL_CONFIG } from 'infrastructure/expression';
 
 /**
  * 对接谢峰的表单接口和流程接口
@@ -19,7 +19,7 @@ export class UserServices {
      */
 
     queryStation(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/Position/GetPositionsByPage", params
+        return this.http.post(URL_CONFIG.getInstance().REGISTER_URL + "api/Position/GetPositionsByPage", params
         );
     }
     /**
@@ -27,7 +27,7 @@ export class UserServices {
  */
 
     addStation(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/Position/CreatePosition", params
+        return this.http.post(URL_CONFIG.getInstance().REGISTER_URL + "api/Position/CreatePosition", params
         );
     }
     /**
@@ -35,7 +35,7 @@ export class UserServices {
    */
 
     editStation(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/Position/UpdatePosition", params
+        return this.http.post(URL_CONFIG.getInstance().REGISTER_URL + "api/Position/UpdatePosition", params
         );
     }
     /**
@@ -43,7 +43,7 @@ export class UserServices {
       */
 
     deleteStation(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/Position/DeletePositionByIds", params
+        return this.http.post(URL_CONFIG.getInstance().REGISTER_URL + "api/Position/DeletePositionByIds", params
         );
     }
     /**
@@ -51,7 +51,7 @@ export class UserServices {
         */
 
     getStationName(): Observable<any> {
-        return this.http.get(PANGBO_SERVICES_URL + "api/Position/DropDownData", {});
+        return this.http.get(URL_CONFIG.getInstance().REGISTER_URL + "api/Position/DropDownData", {});
     }
 
 
@@ -64,7 +64,7 @@ export class UserServices {
         */
 
     queryRoles(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/Role/GetRolesByPage", params
+        return this.http.post(URL_CONFIG.getInstance().REGISTER_URL + "api/Role/GetRolesByPage", params
         );
     }
     /**
@@ -72,7 +72,7 @@ export class UserServices {
  */
 
     addRoles(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/Role/CreateRole", params
+        return this.http.post(URL_CONFIG.getInstance().REGISTER_URL + "api/Role/CreateRole", params
         );
     }
     /**
@@ -80,7 +80,7 @@ export class UserServices {
    */
 
     editRoles(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/Role/UpdateRole", params
+        return this.http.post(URL_CONFIG.getInstance().REGISTER_URL + "api/Role/UpdateRole", params
         );
     }
     /**
@@ -88,7 +88,7 @@ export class UserServices {
       */
 
     deleteRoles(params: any): Observable<any> {
-        return this.http.post(PANGBO_SERVICES_URL + "api/Role/DeleteRoleByIds", params
+        return this.http.post(URL_CONFIG.getInstance().REGISTER_URL + "api/Role/DeleteRoleByIds", params
         );
     }
 
@@ -97,7 +97,7 @@ export class UserServices {
           */
 
     getRolesName(): Observable<any> {
-        return this.http.get(PANGBO_SERVICES_URL + "api/Role/DropDownData", {});
+        return this.http.get(URL_CONFIG.getInstance().REGISTER_URL + "api/Role/DropDownData", {});
     }
 
 }

@@ -13,9 +13,12 @@ import * as _ from 'lodash';
 import { PermissionService } from '@shared/auth/permission.service';
 import { ALAIN_I18N_TOKEN, MenuService } from '@delon/theme';
 import { LocalizationService } from '@shared/i18n/localization.service';
-import { AppMenus } from '@shared/AppMenus';
-import { Menu } from '@delon/theme';
-import { ACLService } from '@delon/acl';
+// import { AppMenus } from '@shared/AppMenus';
+// import { Menu } from '@delon/theme';
+// import { ACLService } from '@delon/acl';
+import 'moment/locale/zh-cn';
+
+import { URL_CONFIG } from 'infrastructure/expression';
 export class AppPreBootstrap {
     static run(injector: Injector, callback: () => void): void {
         let httpClient = injector.get(HttpClient);
@@ -38,7 +41,7 @@ export class AppPreBootstrap {
     }
 
     private static getApplicationConfig(httpClient: HttpClient, callback: () => void) {
-        let envName = '';
+        let envName = 'prod';
         if (environment.production) {
             envName = 'prod';
         } else {
@@ -46,12 +49,20 @@ export class AppPreBootstrap {
         }
         let url = '/assets/appconfig.' + envName + '.json';
         httpClient.get(url).subscribe((result: any) => {
+
             AppConsts.appBaseUrl = window.location.protocol + '//' + window.location.host;
-            AppConsts.remoteServiceBaseUrl = result.remoteServiceBaseUrl;
+            AppConsts.remoteServiceBaseUrl = result.SERVER_URL;
+            URL_CONFIG.getInstance().SERVER_URL = result.SERVER_URL;
 
-
+            URL_CONFIG.getInstance().XIEFENG_SERVICES_URL = result.XIEFENG_SERVICES_URL;
+            URL_CONFIG.getInstance().REGISTER_URL = result.REGISTER_URL;
             callback();
         })
+        // AppConsts.appBaseUrl = window.location.protocol + '//' + window.location.host;
+
+        // ;
+        // callback();
+
     }
 
     private static getCurrentClockProvider(currentProviderName: string): abp.timing.IClockProvider {
@@ -73,19 +84,20 @@ export class AppPreBootstrap {
         httpClient.get(url).subscribe((response: any) => {
             let result = response.result;
 
-     
+
             // 填充数据
             _.merge(abp, result);
 
 
             // 时区
-            abp.clock.provider = this.getCurrentClockProvider(result.clock.provider);
-            moment.locale(abp.localization.currentLanguage.name);
+            abp.clock.provider = this.getCurrentClockProvider("unspecifiedClockProvider");
+            moment.locale("zh-cn");
 
-            (window as any).moment.locale(abp.localization.currentLanguage.name);
+            (window as any).moment.locale("zh-cn");
             if (abp.clock.provider.supportsMultipleTimezone) {
-                moment.tz.setDefault(abp.timing.timeZoneInfo.iana.timeZoneId);
-                (window as any).moment.tz.setDefault(abp.timing.timeZoneInfo.iana.timeZoneId);
+                var moment1 = require('moment-timezone');
+                moment1.tz.setDefault("Asia/Shanghai");
+                (window as any).moment.tz.setDefault("Asia/Shanghai");
             }
 
 

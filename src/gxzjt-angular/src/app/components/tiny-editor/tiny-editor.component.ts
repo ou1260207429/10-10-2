@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PublicServices } from 'services/public.services';
-import { PANGBO_SERVICES_URL } from 'infrastructure/expression';
+import { URL_CONFIG } from 'infrastructure/expression';
 
 @Component({
   selector: 'app-tiny-editor',
@@ -46,8 +46,8 @@ export class TinyEditorComponent implements OnInit {
     image_caption: true,
     image_advtab: true,
     // images_upload_url: "http://222.84.250.158:8111/api/services/app/Attachment/EditorUploadFile",
-    images_upload_url: PANGBO_SERVICES_URL,
-    images_upload_base_path: PANGBO_SERVICES_URL,
+    images_upload_url: URL_CONFIG.getInstance().REGISTER_URL,
+    images_upload_base_path: URL_CONFIG.getInstance().REGISTER_URL,
     setup: editor => {
       this.editor = editor;
       editor.on('keyup change', () => {
@@ -59,7 +59,7 @@ export class TinyEditorComponent implements OnInit {
       let formData = new FormData();
       formData.append("files", blobInfo.blob(), blobInfo.filename());
       this._publicServices.newUpload(formData, this.params).subscribe(data => {
-        success(PANGBO_SERVICES_URL + data.data[0].localUrl);
+        success(URL_CONFIG.getInstance().REGISTER_URL + data.data[0].localUrl);
       })
     },
     fontsize_formats: '11px 12px 14px 16px 18px 24px 36px 48px',  //字体大小

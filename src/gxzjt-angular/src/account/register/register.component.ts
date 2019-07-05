@@ -22,7 +22,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { NzNotificationService } from 'ng-zorro-antd';
 
-import { REGISTER_URL } from 'infrastructure/expression';
+import { URL_CONFIG } from 'infrastructure/expression';
 
 
 @Component({
@@ -110,7 +110,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
   };
   register() {
     this.saving = true;
-    let url = REGISTER_URL + "api/User/Register";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
+    let url = URL_CONFIG.getInstance().REGISTER_URL + "api/User/Register";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
 
 
     this.http.post(url, this.model, this.httpOptions).subscribe((res: any) => {

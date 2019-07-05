@@ -9,7 +9,7 @@ import { FormGroup } from '@angular/forms';
 import { SSL_OP_ALL } from 'constants';
 
 import { PublicFormComponent } from '../public/public-form.component'
-import { PANGBO_SERVICES_URL } from 'infrastructure/expression';
+import { URL_CONFIG } from 'infrastructure/expression';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { ReuseTabService } from '@delon/abc';

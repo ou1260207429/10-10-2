@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVICES_URL } from 'infrastructure/expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, URL_CONFIG } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile, NzMessageService } from 'ng-zorro-antd';
@@ -13,7 +13,7 @@ import lodash from 'lodash'
 @Component({
   selector: 'app-fire-design-declare-assembly-handle',
   templateUrl: './fire-design-declare-assembly-handle.component.html',
-  
+
 })
 export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
 
@@ -42,8 +42,8 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
   @Input() examineFormDto: ExamineFormDto
 
 
-  constructor(private message: NzMessageService,public _publicServices: PublicServices, public publicModel: PublicModel, ) {
-  
+  constructor(private message: NzMessageService, public _publicServices: PublicServices, public publicModel: PublicModel, ) {
+
   }
 
   ngOnInit() {
@@ -109,23 +109,23 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
     const formData = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
-      const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name) 
+      const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)
 
-      this.examineFormDto.attachment[index]['url'] = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
+      this.examineFormDto.attachment[index]['url'] = URL_CONFIG.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
       this.examineFormDto.attachment[index]['status'] = 'done'
 
-      this.examineFormDto.attachment[index].fileUrl = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
-      const fileList = lodash.cloneDeep(this.examineFormDto.attachment);  
+      this.examineFormDto.attachment[index].fileUrl = URL_CONFIG.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
+      const fileList = lodash.cloneDeep(this.examineFormDto.attachment);
 
       this.examineFormDto.attachment = []
-      this.examineFormDto.attachment = fileList 
+      this.examineFormDto.attachment = fileList
     }, error => {
       this.message.error('上传失败，上传文件不能超过30M');
       const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)
       this.examineFormDto.attachment[index]['status'] = 'error'
-      const fileList = lodash.cloneDeep(this.examineFormDto.attachment);  
+      const fileList = lodash.cloneDeep(this.examineFormDto.attachment);
       this.examineFormDto.attachment = []
-      this.examineFormDto.attachment = fileList 
+      this.examineFormDto.attachment = fileList
     })
     return false;
   };

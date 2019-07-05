@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVICES_URL } from 'infrastructure/expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, URL_CONFIG } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
@@ -14,7 +14,7 @@ import { ExamineFormDto, ProjectAttachment } from '@shared/service-proxies/servi
 @Component({
   selector: 'app-completed-acceptance-assembly-handle',
   templateUrl: './completed-acceptance-assembly-handle.component.html',
-  
+
 })
 export class CompletedAcceptanceAssemblyHandleComponent implements OnInit {
 
@@ -38,10 +38,10 @@ export class CompletedAcceptanceAssemblyHandleComponent implements OnInit {
 
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
- 
 
-  @Input() examineFormDto:ExamineFormDto
- 
+
+  @Input() examineFormDto: ExamineFormDto
+
 
   constructor(public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
@@ -52,10 +52,10 @@ export class CompletedAcceptanceAssemblyHandleComponent implements OnInit {
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
 
-    if(this.examineFormDto){
-      this.examineFormDto.attachment = this.examineFormDto.attachment?this.examineFormDto.attachment:[]
+    if (this.examineFormDto) {
+      this.examineFormDto.attachment = this.examineFormDto.attachment ? this.examineFormDto.attachment : []
     }
-     
+
   }
 
 
@@ -81,14 +81,14 @@ export class CompletedAcceptanceAssemblyHandleComponent implements OnInit {
    */
   deleteArray(arr, index) {
     this.publicModel.engineeringDeleteArray(arr, index)
-  } 
+  }
 
-  
+
 
   beforeUpload = (file: any): boolean => {
     const name = file.name;
     const projectAttachment = new ProjectAttachment();
-    projectAttachment.attachmentName = file.name; 
+    projectAttachment.attachmentName = file.name;
     this.examineFormDto.attachment.push(projectAttachment)
 
     let params = {
@@ -99,10 +99,10 @@ export class CompletedAcceptanceAssemblyHandleComponent implements OnInit {
     const formData = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
-      const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)  
+      const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)
       // this.examineFormDto.attachment[index].fileNo = data.data[0].id 
-      this.examineFormDto.attachment[index].fileUrl =PANGBO_SERVICES_URL+data.data[0].localUrl 
-    }) 
+      this.examineFormDto.attachment[index].fileUrl = URL_CONFIG.getInstance().REGISTER_URL + data.data[0].localUrl
+    })
     return false;
   };
 
