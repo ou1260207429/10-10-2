@@ -10,7 +10,7 @@ import { AbpMultiTenancyService } from '@abp/multi-tenancy/abp-multi-tenancy.ser
 import { ModalHelper, ALAIN_I18N_TOKEN, TitleService } from '@delon/theme';
 import { LocalizationService } from '@shared/i18n/localization.service';
 import { PermissionService } from '@shared/auth/permission.service';
-import { REGISTER_URL } from 'infrastructure/expression';
+import { URL_CONFIG } from 'infrastructure/expression';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 export abstract class AppComponentBase {
@@ -74,7 +74,7 @@ export abstract class AppComponentBase {
   interval$: any;
   // 0登录 1注册 2找回密码
   getServerCaptcha(phone, type) {
-    let url = REGISTER_URL + "api/User/SendValidationSMS?mobile=" + phone + "&validationCodeType=" + type;
+    let url = URL_CONFIG.getInstance().REGISTER_URL + "api/User/SendValidationSMS?mobile=" + phone + "&validationCodeType=" + type;
 
     this.isSetCaptcha = true;
     var httpOptions = {

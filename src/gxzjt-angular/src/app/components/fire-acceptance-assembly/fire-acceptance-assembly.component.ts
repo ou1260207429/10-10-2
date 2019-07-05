@@ -1,7 +1,7 @@
 import { HomeServiceProxy } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVICES_URL, zzdjEnum4, zzdjEnum3, zzdjEnum2, zzdjEnum1, zzdjEnum } from 'infrastructure/expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, URL_CONFIG, zzdjEnum4, zzdjEnum3, zzdjEnum2, zzdjEnum1, zzdjEnum } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile, NzMessageService } from 'ng-zorro-antd';
@@ -59,7 +59,7 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
   zzdjEnum3 = zzdjEnum3
   zzdjEnum4 = zzdjEnum4
 
-  constructor(private message: NzMessageService,public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) { }
+  constructor(private message: NzMessageService, public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
@@ -119,18 +119,18 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     this._publicServices.newUpload(formData, params).subscribe(data => {
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
+      this.data.fileList[this.uoloadIndex].array[index].url = URL_CONFIG.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
       this.data.fileList[this.uoloadIndex].array[index].status = 'done'
-      const fileList = lodash.cloneDeep(this.data.fileList);  
+      const fileList = lodash.cloneDeep(this.data.fileList);
       this.data.fileList = []
-      this.data.fileList = fileList 
-    }, error => { 
+      this.data.fileList = fileList
+    }, error => {
       this.message.error('上传失败，上传文件不能超过30M');
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].status = 'error'
-      const fileList = lodash.cloneDeep(this.data.fileList);  
+      const fileList = lodash.cloneDeep(this.data.fileList);
       this.data.fileList = []
-      this.data.fileList = fileList 
+      this.data.fileList = fileList
     })
     return false;
   };
@@ -149,18 +149,18 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
   onSelectOrgItem(res, item) {
     // console.log(res);
     // console.log(item);
-    item.qualificationLevel=res.qualificationLevel;
-    item.contacts=res.contact;
-    item.contactsNumber=res.contactPhone;
-    item.legalRepresentative=res.leader;
+    item.qualificationLevel = res.qualificationLevel;
+    item.contacts = res.contact;
+    item.contactsNumber = res.contactPhone;
+    item.legalRepresentative = res.leader;
 
   }
 
-  onSelectOrgTitle(res){
-    this.data.legalRepresentative=res.leader;
-    this.data.legalRepresentativeNo=res.leaderPhone;
+  onSelectOrgTitle(res) {
+    this.data.legalRepresentative = res.leader;
+    this.data.legalRepresentativeNo = res.leaderPhone;
 
-    
+
 
   }
 

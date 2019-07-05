@@ -1,7 +1,7 @@
 import { HomeServiceProxy, ExamineFormDto } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, PANGBO_SERVICES_URL, zzdjEnum, zzdjEnum1, zzdjEnum2, zzdjEnum3, zzdjEnum4 } from 'infrastructure/expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, URL_CONFIG, zzdjEnum, zzdjEnum1, zzdjEnum2, zzdjEnum3, zzdjEnum4 } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile, NzMessageService } from 'ng-zorro-antd';
@@ -15,7 +15,7 @@ import lodash from 'lodash'
 @Component({
   selector: 'app-fire-design-declare-assembly',
   templateUrl: './fire-design-declare-assembly.component.html',
-  
+
 })
 export class FireDesignDeclareAssemblyComponent implements OnInit {
 
@@ -55,8 +55,8 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   zzdjEnum4 = zzdjEnum4
 
   //从父组件获取使用行性质的select
-  @Input() useNatureSelect:any
-  constructor(private message: NzMessageService,private eventEmiter: EventEmiter,public _homeServiceProxy: HomeServiceProxy, public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
+  @Input() useNatureSelect: any
+  constructor(private message: NzMessageService, private eventEmiter: EventEmiter, public _homeServiceProxy: HomeServiceProxy, public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
@@ -64,10 +64,10 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
     this.getAreaDropdown();
     console.log(this.useNatureSelect)
-    
-    setTimeout(()=>{
+
+    setTimeout(() => {
       console.log(this.data)
-    },3400)
+    }, 3400)
   }
 
 
@@ -93,7 +93,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
    * @param value 值
    * @param type 字段类型
    */
-  changeValue(value, type) { 
+  changeValue(value, type) {
     if (!value && value == "") {
       this.errorData[type] = true
     } else {
@@ -130,22 +130,22 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     }
     const formData = new FormData();
     formData.append('files', file);
-    this._publicServices.newUpload(formData, params).subscribe(data => { 
+    this._publicServices.newUpload(formData, params).subscribe(data => {
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].url = PANGBO_SERVICES_URL+'api/Attachment/Download?appId='+AppId+'&id=' + data.data[0].id
+      this.data.fileList[this.uoloadIndex].array[index].url = URL_CONFIG.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
       this.data.fileList[this.uoloadIndex].array[index].status = 'done'
-      const fileList = lodash.cloneDeep(this.data.fileList);  
+      const fileList = lodash.cloneDeep(this.data.fileList);
 
       this.data.fileList = []
-      this.data.fileList = fileList 
-    }, error => { 
+      this.data.fileList = fileList
+    }, error => {
       this.message.error('上传失败，上传文件不能超过30M');
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].status = 'error'
-      const fileList = lodash.cloneDeep(this.data.fileList);  
+      const fileList = lodash.cloneDeep(this.data.fileList);
       this.data.fileList = []
-      this.data.fileList = fileList 
+      this.data.fileList = fileList
     })
     return false;
   };
@@ -176,18 +176,18 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   onSelectOrgItem(res, item) {
     // console.log(res);
     // console.log(item);
-    item.qualificationLevel=res.qualificationLevel;
-    item.contacts=res.contact;
-    item.contactsNumber=res.contactPhone;
-    item.legalRepresentative=res.leader;
+    item.qualificationLevel = res.qualificationLevel;
+    item.contacts = res.contact;
+    item.contactsNumber = res.contactPhone;
+    item.legalRepresentative = res.leader;
 
   }
 
 
 
-  onSelectOrgTitle(res){
-    this.data.legalRepresentative=res.leader;
-    this.data.legalRepresentativeNo=res.leaderPhone;
+  onSelectOrgTitle(res) {
+    this.data.legalRepresentative = res.leader;
+    this.data.legalRepresentativeNo = res.leaderPhone;
 
   }
 }

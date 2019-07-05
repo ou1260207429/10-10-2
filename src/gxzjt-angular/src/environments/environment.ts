@@ -4,8 +4,7 @@
 
 
 export const environment = {
-  // SERVER_URL: `http://222.84.250.158:8111/`,
-  SERVER_URL:'http://222.84.250.158:8111/',//: `http://222.84.250.158:8111/`,
+
   production: false,
   useHash: true,
   hmr: false,
