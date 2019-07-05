@@ -89,13 +89,13 @@ export class AppPreBootstrap {
 
 
             // 时区
-            abp.clock.provider = this.getCurrentClockProvider(result.clock.provider);
-            moment.locale(abp.localization.currentLanguage.name);
+            abp.clock.provider = this.getCurrentClockProvider("unspecifiedClockProvider");
+            moment.locale("zh-Hans");
 
-            (window as any).moment.locale(abp.localization.currentLanguage.name);
+            (window as any).moment.locale("zh-Hans");
             if (abp.clock.provider.supportsMultipleTimezone) {
-                moment.tz.setDefault(abp.timing.timeZoneInfo.iana.timeZoneId);
-                (window as any).moment.tz.setDefault(abp.timing.timeZoneInfo.iana.timeZoneId);
+                moment.tz.setDefault("Etc/UTC");
+                (window as any).moment.tz.setDefault("Etc/UTC");
             }
 
 
