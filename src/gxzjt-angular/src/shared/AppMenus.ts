@@ -237,6 +237,10 @@ export class AppMenus {
           text: "用户列表",
           link: "/app/userright/userlist",
         },
+        // {
+        //   text: "机构配置",
+        //   link: "/app/userright/orgedit",
+        // },
         {
           text: "岗位列表",
           link: "/app/userright/postwork",
@@ -252,7 +256,7 @@ export class AppMenus {
 
 
   static MenusOrg: Menu[] = [
-    
+
     {
       text: "",
       i18n: "工作事项",
@@ -269,7 +273,7 @@ export class AppMenus {
           i18n: "已办",
           link: "/app/work-matters/alreadyDoneComponent",
         },
-        
+
       ]
     },
 
@@ -279,7 +283,7 @@ export class AppMenus {
       acl: [AppMenus.aclSys, AppMenus.aclOrg],
       link: "/app/statistics/warning-center",
     },
-    
+
     {
       text: "",
       i18n: "工程管理",
@@ -313,7 +317,7 @@ export class AppMenus {
         },
       ]
     },
-    
+
     {
       text: "",
       i18n: "用户中心",
@@ -327,8 +331,8 @@ export class AppMenus {
 
       ]
     },
-   
+
   ];
-  
+
 }
 
