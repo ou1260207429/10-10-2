@@ -331,8 +331,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
             break;
         }
 
-      }, error => {
-        this.isNoResult(error.error.message)
+      }, error => { 
+        this.isNoResult(error.error.error.message)
       })
     }
 
@@ -367,7 +367,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       this.signForDtoData = data
       if (then) then()
     }, error => {
-      this.isNoResult(error.error.message)
+      this.isNoResult(error.error.error.message)
     })
   }
 
@@ -379,7 +379,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this._examineService.signForOpinionFile(this.signForDto).subscribe(data => {
       this.serveResult('签收成功')
     }, error => {
-      this.isNoResult(error.error.message)
+      this.isNoResult(error.error.error.message)
     })
   }
 
@@ -390,7 +390,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this._examineService.finalExamine(examineFormDto).subscribe(data => {
       this.serveResult();
     }, error => {
-      this.isNoResult(error.error.message)
+      this.isNoResult(error.error.error.message)
     })
   }
 
@@ -434,7 +434,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
         this.butNzLoading = false;
       }
     }, error => {
-      this.isNoResult(error.error.message)
+      this.isNoResult(error.error.error.message)
     })
     return false;
   }
@@ -448,7 +448,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       this.butNzLoading = false
       this.message.success('撤销成功')
     }, error => {
-      this.isNoResult(error.error.message)
+      this.isNoResult(error.error.error.message)
     })
   }
 

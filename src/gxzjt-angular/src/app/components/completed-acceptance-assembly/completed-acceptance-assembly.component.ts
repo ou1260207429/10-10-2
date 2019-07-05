@@ -97,7 +97,8 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
    */
   getOrganizationTree() {
     this._publicServices.getOrganizationTree().subscribe((data: any) => {
-      this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]);;
+      this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]);
+      console.log(this.engineeringList)
     })
   }
 

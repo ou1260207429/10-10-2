@@ -143,6 +143,16 @@
             </se>
           </td>
         </tr>
+
+        <tr >
+            <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>申报人姓名</td>
+            <td rowspan='1' colspan='17'>
+              <se error="必填">
+                <input [readonly]="type==1" nz-input placeholder="请输入申报人姓名" [(ngModel)]="data.applyName" name="applyName"
+                  required />
+              </se>
+            </td>
+          </tr>
         <tr  class="title">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">单位类别</td>
           <td rowspan='1' colspan='5' class="fontweight fontLeft" required=true>单位名称</td>

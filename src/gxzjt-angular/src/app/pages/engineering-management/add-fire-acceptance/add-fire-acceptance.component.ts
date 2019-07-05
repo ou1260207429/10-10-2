@@ -172,7 +172,9 @@ export class AddFireAcceptanceComponent implements OnInit {
     ],
     //2019.7.4 新增审批单位
     engineeringId: '',
-    engineeringNo:'',
+    engineeringNo: '',
+    //申报人姓名
+    applyName:'',
 
   }
 
@@ -255,10 +257,7 @@ export class AddFireAcceptanceComponent implements OnInit {
       this.butNzLoading = false;
     })
   }
-  save() {
-
-    console.log(this.form)
-    // console.log(this.form)
+  save() { 
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();
       this.form.controls[i].updateValueAndValidity();

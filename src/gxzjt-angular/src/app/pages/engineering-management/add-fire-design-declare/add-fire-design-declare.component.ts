@@ -535,7 +535,9 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
 
     //建设工程规划许可证号
     licenseNumber: '',
-    
+
+    //申报人姓名
+    applyName:'',
     
   }
 
@@ -552,14 +554,10 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
     this.flowFormQueryDto.flowId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('flowId'));
-    console.log(this.data)
-
   }
 
   ngOnInit() {
     this.init();
-    console.log(this.data)
-
   }
 
   /**

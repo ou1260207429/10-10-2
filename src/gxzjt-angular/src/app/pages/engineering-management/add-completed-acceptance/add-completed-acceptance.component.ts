@@ -415,8 +415,9 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     ],
     //2019.7.4 新增审批单位
     engineeringId: '',
-    engineeringNo:'',
-
+    engineeringNo: '',
+    //申报人姓名
+    applyName: '',
   }
 
 
@@ -464,7 +465,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     //this.data = '';
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
       if (data.formJson != null && data.formJson != "") {
-        this.data = JSON.parse(data.formJson); 
+        this.data = JSON.parse(data.formJson);
       }
       this.useNatureSelect = data.natures
     })
@@ -512,7 +513,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     };
 
     this.butNzLoading = true;
-    this.isSelectModalOkLoading = true; 
+    this.isSelectModalOkLoading = true;
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
       const flowDataDto = new FlowDataDto();
@@ -595,8 +596,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         // );
       })
     }, (error) => {
-        this.message.info(error.error.error.message)
-        this.isSelectModalOkLoading = false;
+      this.message.info(error.error.error.message)
+      this.isSelectModalOkLoading = false;
       this.butNzLoading = false;
     })
   }
