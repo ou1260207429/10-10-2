@@ -12,7 +12,8 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-            <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="data.fileCodePrefix" name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
+            <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="data.fileCodePrefix"
+                name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
             </div>
             <div *ngIf="!data.fileCodePrefix" class="rightSpan">必填</div>
           </td>
@@ -32,14 +33,13 @@
               </li>
             </ul>
             <div class="table_add_info">
-              <p>经核，申请材料项目符合规定，予以受理。我单位将自受理消防验收申请之日起<input class="table_input"
-                  [(ngModel)]="data.timeLimitOfDay" name="timeLimitOfDay"
-                  style="width: 80px" />个工作日内组织消防验收，并出具消防验收意见。依法需要听证、检验、检测、鉴定的，所需时间不计算在内</p>
+              <p>经核，申请材料项目符合规定，予以受理。我单位将自受理消防验收申请之日起<input class="table_input" [(ngModel)]="data.timeLimitOfDay"
+                  name="timeLimitOfDay" style="width: 80px" />个工作日内组织消防验收，并出具消防验收意见。依法需要听证、检验、检测、鉴定的，所需时间不计算在内</p>
             </div>
             <div class="table_add_info">
               经核，存在以下情形，不予受理：
-              <textarea nz-input placeholder="请输入意见" [(ngModel)]="data.completeContent" name="professionalContractorsopinion"
-                required>
+              <textarea nz-input placeholder="请输入意见" [(ngModel)]="data.completeContent"
+                name="professionalContractorsopinion" required>
                   </textarea>
             </div>
 
@@ -62,15 +62,15 @@
       <thead>
         <tr>
           <td colspan='20' rowspan='1' class="table_title">
-            <h3>{{data.orgName}}<br />建设工程消防验收意见书</h3>
+            <h3>{{data.cityName}}住房和城乡建设局<br />建设工程消防验收意见书</h3>
           </td>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-            <div><input class="table_input" [(ngModel)]="examineFormDto.fileCodePrefix"
-                name="fileCodePrefix"  placeholder="请输入区域简称" />住建消审字〔后台生成〕第后台生成号</div>
+            <div><input class="table_input" [(ngModel)]="examineFormDto.fileCodePrefix" name="fileCodePrefix"
+                placeholder="请输入区域简称" />住建消审字〔后台生成〕第后台生成号</div>
             <div *ngIf="!examineFormDto.fileCodePrefix" class="rightSpan">必填</div>
           </td>
         </tr>
@@ -78,12 +78,21 @@
           <td rowspan='1' colspan='20'>
             <div class="table_detail">
               <h3>{{data.companyName}}：</h3>
-              <p>
-                你单位报来{{data.projectName}}建设工程消防验收资料收悉（受理凭证：{{examineFormDto.acceptFileCode}}）。该工程位于{{data.address}}，{{examineFormDto.descr}}。{{data.applyDateTime|date:'yyyy年MM月dd日'}}，{{data.cityName}}住房和城乡建设局组织你单位及设计、施工、监理、检测等单位有关人员对该工程进行了消防验收。经对验收资料、消防设施技术检测报告进行审查，对总平面布置和平面布置中涉及消防安全的防火间距、消防车道、消防水源，建设防火防烟分区和建设构造，安全疏散和消防电梯，消防给水和自动灭火系统，防烟、排烟和通风系统的防火设计，消防电源及其配电，火灾应急照明、应急广播和疏散指示标志，火灾自动报警系统和消防控制室，建筑灭火器等项目情况和性能进行抽查，现提出以下意见：
-              </p>
+              <div style="line-height: 30px;font-size: 16px;">
+                你单位报来{{data.projectName}}建设工程消防验收资料收悉（受理凭证：{{examineFormDto.acceptFileCode}}）。该工程位于{{data.address}}，{{examineFormDto.descr}}。
+                <div class="flexBox">
+                  验收日期:
+                  <div class="flex1">
+                    <nz-date-picker [(ngModel)]="examineFormDto.checkDate" name="checkDate"></nz-date-picker>
+                  </div>
+                </div>
+                <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.checkDate">必填</p>
+
+                ，{{data.cityName}}住房和城乡建设局组织你单位及设计、施工、监理、检测等单位有关人员对该工程进行了消防验收。经对验收资料、消防设施技术检测报告进行审查，对总平面布置和平面布置中涉及消防安全的防火间距、消防车道、消防水源，建设防火防烟分区和建设构造，安全疏散和消防电梯，消防给水和自动灭火系统，防烟、排烟和通风系统的防火设计，消防电源及其配电，火灾应急照明、应急广播和疏散指示标志，火灾自动报警系统和消防控制室，建筑灭火器等项目情况和性能进行抽查，现提出以下意见：
+              </div>
             </div>
-            <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion" name="professionalContractorsopinion"
-              required>
+            <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion"
+              name="professionalContractorsopinion" required>
                   </textarea>
             <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.opinion">必填</p>
 
