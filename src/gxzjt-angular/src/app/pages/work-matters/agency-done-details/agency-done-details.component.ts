@@ -523,7 +523,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
         this.tenantWorkFlowInstanceDto.auditors = [];
         const auditors = {
           eName: res.auditors.eName,
-          eid: res.auditors.id,
+          eid: res.auditors.eid,
           auditType: this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType
         }
         this.tenantWorkFlowInstanceDto.auditors.push(auditors)
