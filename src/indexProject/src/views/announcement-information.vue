@@ -57,8 +57,8 @@
                     v-model="dateTime"
                     type="daterange"
                     range-separator="~"
-                    start-placeholder="公告开始日期"
-                    end-placeholder="公告结束日期"
+                    start-placeholder="办结开始日期"
+                    end-placeholder="办结结束日期"
                   ></el-date-picker>
                 </el-form-item>
 
@@ -215,11 +215,11 @@ export default {
           label: "联系人",
           width: "110px"
         },
-        {
-          key: "announceTime",
-          label: "公告时间",
-          width: "110px"
-        },
+        // {
+        //   key: "announceTime",
+        //   label: "公告时间",
+        //   width: "110px"
+        // },
         {
           key: "announceNum",
           label: "第几次公告",

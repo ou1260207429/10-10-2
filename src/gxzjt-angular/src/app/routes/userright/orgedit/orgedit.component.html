@@ -5,16 +5,16 @@
 </page-header>
 <!-- 组织框架管理-->
 
-<nz-card >
-  <div class="right" >
+<nz-card>
+  <div class="right">
     <div class="org"><span>组织机构</span></div>
     <div nz-col [nzSpan]="2">
       <div style="margin-top: 35px;">
-        <nz-tree #treeCom [nzData]="nodes"  nzMultiple="false"
-              [(nzCheckedKeys)]="defaultCheckedKeys" nzDefaultExpandAll="true"  (nzClick)="nzEvent($event)">
+        <nz-tree #treeCom [nzData]="nodes" nzMultiple="false" [(nzCheckedKeys)]="defaultCheckedKeys"
+          nzDefaultExpandAll="true" (nzClick)="nzEvent($event)">
 
-      <div>
-       <!-- <ng-template #nzTreeTemplate let-node>
+          <div>
+            <!-- <ng-template #nzTreeTemplate let-node>
          <span (contextmenu)="contextMenu($event,template)" class="min-w">树选择右键下拉菜单
           {{ node.title }}
 
@@ -28,43 +28,53 @@
         </ul>
         </ng-template>-->
 
-      </div>
+          </div>
         </nz-tree>
 
       </div>
     </div>
-    </div>
+  </div>
 
 
-    <div class="content">
-      <div class="org"><span>所辖机构</span></div>
-      <div> <a nz-button (click)="deleteData()" nzType="primary" style="margin-right: 10px;float: right;;margin-top: 5px;"><i
-        nz-icon type="delete" nzTheme="outline"></i>删除</a></div>
+  <div class="content">
+    <div class="org"><span>所辖机构</span></div>
+
+    <div *ngIf="orgarray!='' && orgarray!=null">
+      <div> <a nz-button (click)="deleteData()" nzType="primary"
+          style="margin-right: 10px;float: right;;margin-top: 5px;"><i nz-icon type="delete"
+            nzTheme="outline"></i>删除</a></div>
       <div style="padding: 5px;">
         <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="log($event)">
-          <div nz-row  >
-            <div *ngFor="let item of orgarray" nz-col nzSpan="8"><label nz-checkbox nzValue="item.title">{{item.title}}</label></div>
+          <div nz-row>
+            <div *ngFor="let item of orgarray" nz-col nzSpan="8"><label nz-checkbox
+                nzValue="item.title">{{item.title}}</label></div>
 
           </div>
         </nz-checkbox-wrapper>
-
       </div>
 
-    </div>
 
-    <div class="content">
-      <div class="org"><span>添加所辖机构</span></div>
-      <div> <a nz-button (click)="deleteData()" nzType="primary" style="margin-right: 10px;float: right;;margin-top: 5px;">增加</a></div>
+    </div>
+  </div>
+
+
+
+  <div class="content" *ngIf="orgarray!='' && orgarray!=null">
+    <div class="org"><span>添加所辖机构</span></div>
+
+    <div>
+      <div> <a nz-button (click)="deleteData()" nzType="primary"
+          style="margin-right: 10px;float: right;;margin-top: 5px;">增加</a></div>
       <!-- <nz-tree #treeCom [nzData]="nodes"    nzCheckable="true" nzMultiple="true"
       [(nzCheckedKeys)]="defaultCheckedKeys" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzEvent($event)">
     </nz-tree> -->
-    <div style="margin-top: 8px;padding: 5px" nz-row>
-      <div nz-col nzSpan="4">新增机构名称</div>
-      <div nz-col nzSpan="10">
-        <input nz-input  placeholder="请输入新增架构名称"  minlength="8" maxlength=11>
+      <div style="margin-top: 8px;padding: 5px" nz-row>
+        <div nz-col nzSpan="4">新增机构名称</div>
+        <div nz-col nzSpan="10">
+          <input nz-input placeholder="请输入新增架构名称" minlength="8" maxlength=11>
+        </div>
       </div>
     </div>
-    </div>
+  </div>
 
-
-  </nz-card>
+</nz-card>

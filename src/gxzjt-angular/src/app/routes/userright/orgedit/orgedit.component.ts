@@ -80,7 +80,7 @@ export class UserrightOrgeditComponent implements OnInit {
     });
 
     if (this.orgarray.length == 0) {
-      this.message.error("此级机构已无法进行编辑！");
+      this.message.warning("已无下级组织");
     }
 
   }
