@@ -6,7 +6,7 @@ export class AppMenus {
   static aclCompany = "reg";//注册公司
   static aclSys = "sys";//管理员
   static aclOrg = "org";//机构人员
-
+  static orgManager = "orgManager";//机构管理员
   static aclAny = "any";//所有人
 
 
@@ -15,7 +15,7 @@ export class AppMenus {
       text: "",
       i18n: "首页",
       icon: { type: "icon", value: "home" },// 图标
-      acl: [AppMenus.aclSys]  ,
+      acl: [AppMenus.aclSys, AppMenus.orgManager]  ,
       children: [
         {
           text: "",
@@ -45,7 +45,7 @@ export class AppMenus {
       text: "",
       i18n: "工作事项",
       icon: { type: "icon", value: "bars" },// 图标
-      acl: [AppMenus.aclSys, AppMenus.aclOrg],
+      acl: [AppMenus.aclSys, AppMenus.aclOrg, AppMenus.orgManager],
       children: [
         {
           text: "",
@@ -88,14 +88,14 @@ export class AppMenus {
     {
       text: "预警中心",
       icon: { type: "icon", value: "warning" },// 图标
-      acl: [AppMenus.aclSys, AppMenus.aclOrg],
+      acl: [AppMenus.aclSys, AppMenus.aclOrg, AppMenus.orgManager],
       link: "/app/statistics/warning-center",
     }
     ,
     {
       text: "统计分析",
       icon: { type: "icon", value: "area-chart" },// 图标
-      acl: [AppMenus.aclSys],
+      acl: [AppMenus.aclSys, AppMenus.orgManager],
       children: [
         // {
         //   text: "预警中心",
@@ -144,7 +144,7 @@ export class AppMenus {
       text: "",
       i18n: "工程管理",
       icon: { type: "icon", value: "project" },// 图标
-      acl: [AppMenus.aclCompany, AppMenus.aclSys, AppMenus.aclOrg],
+      acl: [AppMenus.aclCompany, AppMenus.aclSys, AppMenus.aclOrg, AppMenus.orgManager],
       children: [
         {
           text: "",
@@ -231,11 +231,12 @@ export class AppMenus {
       text: "",
       i18n: "用户权限",
       icon: { type: "icon", value: "cluster" },// 图标
-      acl: AppMenus.aclSys,
+      acl: [AppMenus.aclSys , AppMenus.orgManager],
       children: [
         {
           text: "用户列表",
           link: "/app/userright/userlist",
+          acl: [AppMenus.aclSys , AppMenus.orgManager],
         },
         // {
         //   text: "机构配置",
@@ -244,10 +245,12 @@ export class AppMenus {
         {
           text: "岗位列表",
           link: "/app/userright/postwork",
+          acl: [AppMenus.aclSys ],
         },
         {
           text: "角色列表",
           link: "/app/userright/rolelist",
+          acl: [AppMenus.aclSys ],
         },
 
       ]

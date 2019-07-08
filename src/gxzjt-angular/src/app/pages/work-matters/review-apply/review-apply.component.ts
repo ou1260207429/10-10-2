@@ -14,7 +14,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 })
 export class WorkMattersReviewApplyComponent implements OnInit {
 
-  reviewFormDto = new ReviewFormDto();
+  reviewFormDto 
   flowType;
   applyName;
   constructor(private _activatedRoute: ActivatedRoute,
@@ -52,7 +52,7 @@ export class WorkMattersReviewApplyComponent implements OnInit {
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
         //市县区  
-        Area: this.reviewFormDto.area
+        Area: this.reviewFormDto.engineeringNo
       },
       //'xfsj,''xfys,'jgys  流程分类  英文简写(消防设计,消防验收,竣工验收)
       identify: flowTypeFlag,

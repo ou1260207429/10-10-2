@@ -98,9 +98,6 @@ export class AlreadyDoneDetailsComponent implements OnInit {
       flowFormQueryDto.flowType = this.flowPathType
       flowFormQueryDto.projectId = this.formDto.projectId;
       flowFormQueryDto.flowId = this.flowId
-
-      console.log(this.formDto)
-      console.log(this.examineFormDto)
       const workFlow: WorkFlow = {
         workFlow_InstanceId: this.formDto.workFlow_Instance_Id,
         workFlow_TemplateInfoId: 10171,
@@ -108,7 +105,28 @@ export class AlreadyDoneDetailsComponent implements OnInit {
       }
       //获取JSON和节点信息
       Promise.all([this.post_GetFlowFormData(flowFormQueryDto), this.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow)]).then((value: any) => {
-        this.formJson = JSON.parse(value[0].formJson);
+        const json = JSON.parse(value[0].formJson);
+        json.constructionUnit = json.constructionUnit instanceof Array ? json.constructionUnit : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }]
+        json.design = json.design?json.design: [{designUnit: '',qualificationLevel: '',legalRepresentative: '',contacts: '',contactsNumber: ''}],
+        json.engineeringId = json.engineeringId ? json.engineeringId : ''
+        json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
+        json.applyName = json.applyName ? json.applyName : '' 
+        json.constructionProject = json.constructionProject?json.constructionProject: {
+          arr: [
+            { label: '顶棚', value: false, checked: false },
+            { label: '墙面', value: false, checked: false },
+            { label: '地面', value: false, checked: false },
+            { label: '隔断 ', value: false, checked: false },
+            { label: '固定家具', value: false, checked: false },
+            { label: '装饰织物', value: false, checked: false },
+            { label: '其他装饰材料 ', value: false, checked: false },
+          ],
+          decorationArea: '',
+          ground: '',
+          useNature: '',
+          originallyUsed: ''
+        }
+        this.formJson = json;
         this.useNatureSelect = value[0].natures
         this.tenantWorkFlowInstanceDto = this.workFlowData = value[1].result;
         this.tenantWorkFlowInstanceDto.workFlow_InstanceId = this.formDto.workFlow_Instance_Id
@@ -163,71 +181,7 @@ export class AlreadyDoneDetailsComponent implements OnInit {
     this.fileList = this.fileList.concat(file);
     return false;
   };
-
-  /**
-   * 点击提交
-   */
-  save(bo?: boolean) {
-    this.tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
-      Area: "450000"
-    }
-    this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId
-    this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptFullPath = this.appSession.user.organizationsName
-
-    if (!bo && this.curNodeName == '大厅受理') {
-      this.noResult((data) => {
-        this.acceptApply(data);
-      })
-      return false;
-    }
-
-
-    this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
-
-      let form: any = this.curNodeName == '大厅受理' ? this.formDto : this.examineFormDto;
-
-      form.handleUserList = [];
-      form.currentNodeId = data.result.cur_Node_Id
-      form.currentNodeName = data.result.cur_NodeName
-      form.workFlow_Instance_Id = data.result.workFlow_Instance_Id
-      form.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
-
-      data.result.auditorRecords.forEach(element => {
-        const flowNodeUser = new FlowNodeUser()
-        flowNodeUser.userFlowId = element.id
-        flowNodeUser.userCode = element.applyEID
-        flowNodeUser.userName = element.applyEName
-        form.handleUserList.push(flowNodeUser)
-      });
-
-      switch (this.curNodeName) {
-        case '大厅受理':
-          form.isAccept = bo;
-          this.acceptApply(form);
-          break;
-
-        case '业务承办人审核':
-          form.isPass = bo
-
-          this.primaryExamine(form);
-          break;
-
-
-        //按钮名字是通过 或者不通过
-        case '业务审批负责人审批':
-          form.isPass = bo;
-          this.finalExamine(form);
-          break;
-
-        default:
-          break;
-      }
-
-    }, (error) => {
-      this.message.info(error.error.error.message) 
-    })
-  };
-
+ 
 
   /**
    * 获取业务审批负责人审批详情的接口 
@@ -235,7 +189,6 @@ export class AlreadyDoneDetailsComponent implements OnInit {
   getPrimaryExamine(then?: Function) {
     this._examineService.getPrimaryExamine(this.flowId).subscribe(data => {
       this.examineFormDto = data
-      console.log(this.examineFormDto)
       if (then) then()
     })
     // return this._examineService.getPrimaryExamine(this.flowId).toPromise();

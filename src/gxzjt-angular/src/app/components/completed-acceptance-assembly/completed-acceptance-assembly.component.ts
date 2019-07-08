@@ -63,7 +63,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
   //审批单位
   engineeringList
-  
+  engineering
   constructor(private message: NzMessageService,public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) {
     this.decimationnumber = [];
     for (let index = 1; index < 101; index++) {
@@ -77,9 +77,6 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     this.getAreaDropdown();
     this.getOrganizationTree()
 
-    setTimeout(() => {
-      console.log(this.data);
-    }, 2000)
 
   }
 
@@ -98,7 +95,6 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   getOrganizationTree() {
     this._publicServices.getOrganizationTree().subscribe((data: any) => {
       this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]);
-      console.log(this.engineeringList)
     })
   }
 
@@ -110,7 +106,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     //联动处理
     this.data.engineeringId = v
     const result = updateEngineeringNo(this.engineeringList, this.data.engineeringId.length - 1, this.data.engineeringId, this.data.engineeringNo)
-    this.data.engineeringNo = result 
+    this.data.engineeringNo = result.no
   }
 
 
@@ -122,10 +118,10 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   changeCitycountyAndDistrict(v) {
     this.data.engineeringCitycountyAndDistrict = v;
 
-    //联动处理
-    this.data.engineeringId = v
-    const result = updateEngineeringNo(this.engineeringList, this.data.engineeringId.length - 1, this.data.engineeringId, this.data.engineeringNo)
-    this.data.engineeringNo = result
+    this.engineering = lodash.cloneDeep(v);   
+    const result = updateEngineeringNo(this.engineeringList, this.engineering.length - 1,this.engineering, this.data.engineeringNo)
+    this.data.engineeringNo = result.no  
+    this.data.engineeringId = this.engineering 
   }
 
   /**
@@ -188,9 +184,6 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
 
   onSelectOrgItem(res, item) {
-    // console.log(res);
-    // console.log(item);
-    console.log(this.data);
     item.qualificationLevel = res.qualificationLevel;
     item.contacts = res.contact;
     item.contactsNumber = res.contactPhone;

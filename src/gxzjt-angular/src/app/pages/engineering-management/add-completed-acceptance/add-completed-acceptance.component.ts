@@ -44,7 +44,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   data: any = {
 
     jsconstructionUnit: '',
-    legalRepresentative: '',
+    legalRepresentative: '', 
     legalRepresentativeNo: '',
 
     recordNo: '',
@@ -465,7 +465,30 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     //this.data = '';
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
       if (data.formJson != null && data.formJson != "") {
-        this.data = JSON.parse(data.formJson);
+
+        const json = JSON.parse(data.formJson);
+        json.constructionUnit = json.constructionUnit instanceof Array ? json.constructionUnit : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }]
+        json.design = json.design?json.design: [{designUnit: '',qualificationLevel: '',legalRepresentative: '',contacts: '',contactsNumber: ''}],
+        json.engineeringId = json.engineeringId ? json.engineeringId : ''
+        json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
+        json.applyName = json.applyName ? json.applyName : '' 
+        json.constructionProject = json.constructionProject?json.constructionProject: {
+          arr: [
+            { label: '顶棚', value: false, checked: false },
+            { label: '墙面', value: false, checked: false },
+            { label: '地面', value: false, checked: false },
+            { label: '隔断 ', value: false, checked: false },
+            { label: '固定家具', value: false, checked: false },
+            { label: '装饰织物', value: false, checked: false },
+            { label: '其他装饰材料 ', value: false, checked: false },
+          ],
+          decorationArea: '',
+          ground: '',
+          useNature: '',
+          originallyUsed: ''
+        }
+
+        this.data = json;
       }
       this.useNatureSelect = data.natures
     })
@@ -519,6 +542,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       const flowDataDto = new FlowDataDto();
       flowDataDto.flowId = this.flowFormQueryDto.flowId;
       flowDataDto.projectId = this.flowFormQueryDto.projectId;
+      console.log(this.data)
       flowDataDto.formJson = JSON.stringify(this.data);
       flowDataDto.projectFlowInfo = new ProjectFlowDto();
 
@@ -553,6 +577,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       // currentHandleUserCode: string | undefined; 
 
       // console.log(flowDataDto)
+
 
 
       this._applyService.post_PutOnRecord(flowDataDto).subscribe(data => {

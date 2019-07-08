@@ -99,7 +99,6 @@ export class AppSessionService {
           this._user = result;
           // this._ACLService.removeRole([AppMenus.aclCompany,AppMenus.aclSys,AppMenus.aclOrg]);
           this._MenuService.clear();
-
           switch (result.roleName) {
             case '系统管理员':
               this._ACLService.setFull(true);
@@ -107,6 +106,10 @@ export class AppSessionService {
               break;
             case '管理员':
               this._ACLService.setRole([AppMenus.aclSys]);
+              this._MenuService.add(AppMenus.Menus);
+              break;
+            case '单位管理员':
+              this._ACLService.setRole([AppMenus.orgManager]);
               this._MenuService.add(AppMenus.Menus);
               break;
             case '大厅窗口受理':
@@ -160,7 +163,7 @@ export class AppSessionService {
               break;
           }
 
-    
+
 
           this._MenuService.resume();
 

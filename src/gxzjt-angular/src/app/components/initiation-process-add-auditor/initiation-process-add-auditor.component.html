@@ -12,9 +12,7 @@
       </ng-template>
     </div>
     <nz-radio-group [(ngModel)]="radioValue" style="width: 100%">
-      <nz-table class="fixedTable" #chooseSt nzShowPagination [nzData]="data.data" [nzTotal]="data.total"
-        [nzPageSize]="page.maxResultCount" [nzFrontPagination]='false' [(nzPageIndex)]="page.page"
-        [nzShowTotal]="totalTemplate" [nzShowQuickJumper]="true" (nzPageIndexChange)="change($event)">
+      <nz-table class="fixedTable" [nzScroll]="{ y: '450px' }"  nzShowPagination="false" [nzData]="data.data">
         <thead>
           <tr>
             <th>操作</th>

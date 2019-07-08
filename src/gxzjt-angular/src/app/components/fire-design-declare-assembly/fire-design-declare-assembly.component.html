@@ -60,7 +60,7 @@
         </tr>
         <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>工程地址:</td>
-          <td rowspan='1' colspan='5'>
+          <td rowspan='1' colspan='15'>
             <se error="必填" style="float: left;">
               <nz-spin [nzSpinning]="!position"></nz-spin>
               <nz-cascader *ngIf="position" [ngClass]="{pointer: type == 1}" [nzLoadData]="position"
@@ -74,8 +74,12 @@
                 name="engineeringAddress" required />
             </se>
           </td>
-          <td rowspan='1' colspan='2' class="fontweight fontLeft leftTitle" required=true>审批单位:</td>
-          <td rowspan='1' colspan='7'>
+          
+
+        </tr>
+        <tr>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>审批单位:</td>
+          <td rowspan='1' colspan='15'>
             <se error="必填" style="float: left;">
               <nz-spin [nzSpinning]="!engineeringList"></nz-spin>
               <nz-cascader *ngIf="engineeringList" [ngClass]="{pointer: type == 1}" [nzLoadData]="position"
@@ -85,17 +89,20 @@
               </nz-cascader>
             </se>
           </td>
-
         </tr>
 
         <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">计划开工日期:</td>
-          <td rowspan='1' colspan='5'>
+          <td rowspan='1' colspan='15'>
             <nz-date-picker [ngClass]="{pointer: type == 1}" [nzDisabledDate]="disabledStartDate" name="planStartTime"
               [(ngModel)]="data.planStartTime"></nz-date-picker>
           </td>
-          <td rowspan='1' colspan='2' class="fontweight fontLeft">计划竣工日期:</td>
-          <td rowspan='1' colspan='7'>
+          
+        </tr>
+
+        <tr>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft">计划竣工日期:</td>
+          <td rowspan='1' colspan='15'>
             <nz-date-picker [ngClass]="{pointer: type == 1}" [nzDisabledDate]="disabledEndDate"
               [(ngModel)]="data.planEndTime" name="planEndTime"></nz-date-picker>
           </td>

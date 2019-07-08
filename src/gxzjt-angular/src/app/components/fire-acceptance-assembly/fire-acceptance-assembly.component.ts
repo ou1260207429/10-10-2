@@ -61,6 +61,9 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
   //审批单位
   engineeringList
+
+  engineering
+  
   constructor(private message: NzMessageService,public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
@@ -85,13 +88,13 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
    * 选择市县区
    * @param v 
    */
-  changeCitycountyAndDistrict(v) {
-    this.data.engineeringCitycountyAndDistrict = v;
-    //联动处理
-    this.data.engineeringId = v
-    const result = updateEngineeringNo(this.engineeringList, this.data.engineeringId.length - 1, this.data.engineeringId, this.data.engineeringNo)
-    this.data.engineeringNo = result
-  }
+  changeCitycountyAndDistrict(v) { 
+    this.data.engineeringCitycountyAndDistrict = v
+    this.engineering = lodash.cloneDeep(v);   
+    const result = updateEngineeringNo(this.engineeringList, this.engineering.length - 1,this.engineering, this.data.engineeringNo)
+    this.data.engineeringNo = result.no  
+    this.data.engineeringId = this.engineering 
+  } 
 
   /**
    * 获取审批单位
@@ -108,10 +111,12 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
    * @param v 
    */
   changeGetOrganizationTree(v) {
+    
     //联动处理
     this.data.engineeringId = v
+
     const result = updateEngineeringNo(this.engineeringList, this.data.engineeringId.length - 1, this.data.engineeringId, this.data.engineeringNo)
-    this.data.engineeringNo = result 
+    this.data.engineeringNo = result.no
   }
 
   /**
