@@ -62,6 +62,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     this.usePsw = !this.usePsw;
   }
 
+  isChrome = true;
   constructor(
     injector: Injector,
     private fb: FormBuilder,
@@ -79,7 +80,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     super(injector);
 
 
-
+    this.isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
   }
 
 

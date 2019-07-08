@@ -102,6 +102,13 @@
     .cs-loader-inner label:nth-child(1) {
       animation: lol 3s .5s infinite ease-in-out
     }
+
+    #browser_note {
+      position: absolute;
+      bottom: 20px;
+      color: white;
+      right: 20px;
+    }
   </style>
   <script language="javascript">
 
@@ -112,8 +119,8 @@
       if (r == true) {
         window.open("https://www.google.cn/chrome/");
       }
-     
-    
+
+
     }
   </script>
 
@@ -132,7 +139,6 @@
 
     }
 
-
   </script>
 
 
@@ -147,8 +153,21 @@
           ●</label><label>
           ●</label>
       </div>
+      <div id="browser_note">
+        如果浏览器在此页面停留无法正常登录，请使用<a href="https://www.google.cn/intl/zh-CN/chrome/" style="color: red;">谷歌浏览器</a>
+      </div>
     </div>
   </div>
+
+  <script>
+
+
+    if (window.navigator.userAgent.indexOf("Chrome") !== -1) {
+      document.getElementById("browser_note").style.display = "none";
+    }
+
+  </script>
+
 </body>
 
 </html>
