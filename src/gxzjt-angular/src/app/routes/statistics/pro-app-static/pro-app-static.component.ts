@@ -1,13 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent, XlsxService } from '@delon/abc';
-
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { StatisticsProAppStaticDetailComponent } from '../pro-app-static-detail/pro-app-static-detail.component';
-import { StatisticsAcceptCredentialsComponent } from '../accept-credentials/accept-credentials.component';
-import { StatisticsPositionPaperComponent } from '../position-paper/position-paper.component';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { StatisticalServiceServiceProxy, ProjectApplyQueryDto } from '@shared/service-proxies/service-proxies';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-statistics-pro-app-static',
   templateUrl: './pro-app-static.component.html',
@@ -132,9 +128,10 @@ export class StatisticsProAppStaticComponent implements OnInit {
     if(this.param.status==null){
       this.param.status=-1;
     }
-    this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
-    this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
-
+    // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+    // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
+    this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+    this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
     this.statisticalServiceServiceProxy.post_GetProjectApplyList(this.param).subscribe((result: any) => {
       if(result.data){
          this.formResultData = result.data;
@@ -201,8 +198,10 @@ export class StatisticsProAppStaticComponent implements OnInit {
         "skipCount": 0,
         "maxResultCount": 3000,
       });
-      this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
-      this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
+      // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+      // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
+      this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+      this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
     this.statisticalServiceServiceProxy.post_GetProjectApplyList(this.param).subscribe((result: any) => {
       this.formResultData = result.data;
     }, err => {

@@ -1,7 +1,7 @@
-import { ProjectFlowServcieServiceProxy, ScreenServiceServiceProxy, ScreenTimeoutStatisticsQueryDto, DeclareRateQueryDto, YearApplyNumberQueryDto } from './../../../../shared/service-proxies/service-proxies';
+import { ProjectFlowServcieServiceProxy, ScreenServiceServiceProxy } from './../../../../shared/service-proxies/service-proxies';
 import { OnInit, Component } from "@angular/core";
 import { _HttpClient } from "@delon/theme";
-import { SERVER_URL } from 'infrastructure/expression';
+import { URL_CONFIG } from 'infrastructure/expression';
 @Component({
     selector: 'app-big-screen',
     templateUrl: './big-screen.component.html',
@@ -21,7 +21,7 @@ export class BigScreenComponent {
     MiddleWidth = '';
     RightWidth = '';
     SignInData = [0, 0, 0, 1, 0, 0, 8, 6];
-    GetThrough = [0, 0, 2, 3, 4, 8, 9, 0];
+    GetThrough = [];
     rankingData = [
     ]
     constructor(
@@ -65,8 +65,6 @@ export class BigScreenComponent {
     pageindex = 1;
     ngOnInit() {
         this.Line();
-        this.Pie1();
-        this.Pie2();
         setInterval(() => {
             this.dateTime = new Date();
 
@@ -99,126 +97,118 @@ export class BigScreenComponent {
             }
         }, 3000);
         this.Post_GetDeclareRate();
-        this.GetScreenCityTimeoutStatistics();
         this.GetApplyStatistics();
         this.GetScreenYearApplyNumber();
         this.GetScreenTimeoutList();
         this.GetFireDataList();
         this.GetATimeByStatistics();
-        setInterval(() => {
-            this.ScreenTimeoutChangePage();
-            this.ScreenYearApplyChangePage();
-        }, 10000);
+        this.post_GetFireDataSumList();
+        this.Post_GetApplyRate();
+        // setInterval(() => {
+        //     this.ScreenTimeoutChangePage();
+        //     this.ScreenYearApplyChangePage();
+        // }, 10000);
         setInterval(() => {
             this.Post_GetDeclareRate();
-            this.GetScreenCityTimeoutStatistics();
             this.GetApplyStatistics();
             this.GetScreenYearApplyNumber();
             this.GetScreenTimeoutList();
             this.GetFireDataList();
             this.GetATimeByStatistics();
+            this.post_GetFireDataSumList();
         }, 10 * 60 * 1000)
     }
-    model = new DeclareRateQueryDto();
+    // model = new DeclareRateQueryDto();
     //申报统计
     Post_GetDeclareRate() {
-        this.model.processedStatus = 2;
+        // this.model.processedStatus = 2;
         const CityList = [];
         const completeList = [];
         const fireAudit = [];
         const fireComplete = [];
-        this.screenService.post_GetDeclareRate(this.model).subscribe((res) => {
-            console.log(res);
-            if (res.items != null) {
-                res.items.forEach(e => {
-                    switch (e.cityName) {
-                        case '防城港市':
-                            e.fireAuditNumber = e.fireAuditNumber + 37;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 18;
-                            e.completeNumber = e.completeNumber + 19;
-                            break;
-                        case '钦州市':
-                            e.fireAuditNumber = e.fireAuditNumber + 46;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 35;
-                            e.completeNumber = e.completeNumber + 16;
-                            break;
-                        case '梧州市':
-                            e.fireAuditNumber = e.fireAuditNumber + 27;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 11;
-                            e.completeNumber = e.completeNumber + 11;
-                            break;
-                        case '贺州市':
-                            e.fireAuditNumber = e.fireAuditNumber + 31;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 8;
-                            e.completeNumber = e.completeNumber + 8;
-                            break;
-                        case '崇左市':
-                            e.fireAuditNumber = e.fireAuditNumber + 31;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 14;
-                            e.completeNumber = e.completeNumber + 12;
-                            break;
-                        case '百色市':
-                            e.fireAuditNumber = e.fireAuditNumber + 27;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 30;
-                            e.completeNumber = e.completeNumber + 20;
-                            break;
-                        case '柳州市':
-                            e.fireAuditNumber = e.fireAuditNumber + 53;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 65;
-                            e.completeNumber = e.completeNumber + 65;
-                            break;
-                        case '河池市':
-                            e.fireAuditNumber = e.fireAuditNumber + 34;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 14;
-                            e.completeNumber = e.completeNumber + 23;
-                            break;
-                        case '桂林市':
-                            e.fireAuditNumber = e.fireAuditNumber + 75;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 25;
-                            e.completeNumber = e.completeNumber + 47;
-                            break;
-                        case '贵港市':
-                            e.fireAuditNumber = e.fireAuditNumber + 47;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 29;
-                            e.completeNumber = e.completeNumber + 27;
-                            break;
-                        case '北海市':
-                            e.fireAuditNumber = e.fireAuditNumber + 20;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 19;
-                            e.completeNumber = e.completeNumber + 25;
-                            break;
-                        case '来宾市':
-                            e.fireAuditNumber = e.fireAuditNumber + 40;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 15;
-                            e.completeNumber = e.completeNumber + 13;
-                            break;
-                        case '玉林市':
-                            e.fireAuditNumber = e.fireAuditNumber + 80;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 20;
-                            e.completeNumber = e.completeNumber + 18;
-                            break;
-                        case '南宁市':
 
-                            break;
-                    };
+        const OutTimecompleteList = [];
+        const OutTimefireAudit = [];
+        const OutTimefireComplete = [];
+
+        this.screenService.post_GetDeclareRate().subscribe((res) => {
+            if (res.data != null) {
+                res.data.forEach(e => {
                     switch (e.flowPathType) {
-                        case 1:
-                            fireAudit.push(e.fireAuditNumber);
+                        case '1':
+                            fireAudit.push(e.applyNumber);
                             CityList.push(e.cityName);
+                            OutTimefireAudit.push(e.outTimeNumber);
                             break;
-                        case 2:
-                            fireComplete.push(e.fireCompleteNumber);
+                        case '2':
+                            fireComplete.push(e.applyNumber);
+                            OutTimefireComplete.push(e.outTimeNumber);
                             break;
-                        case 3:
-                            completeList.push(e.completeNumber);
+                        case '3':
+                            completeList.push(e.applyNumber);
+                            OutTimecompleteList.push(e.outTimeNumber);
                             break;
                     }
 
                 });
+                this.CityList.forEach(e => {
+                    if (CityList.indexOf(e) === -1) {
+                        CityList.push(e);
+                        fireAudit.push(0);
+                        fireComplete.push(0);
+                        completeList.push(0);
+                        OutTimefireAudit.push(0);
+                        OutTimefireComplete.push(0);
+                        OutTimecompleteList.push(0);
+                    }
+                });
                 this.OverTimeBar1(CityList, fireAudit);
                 this.OverTimeBar2(CityList, fireComplete);
                 this.OverTimeBar3(CityList, completeList);
+
+                this.Bar2(CityList, OutTimefireAudit);
+                this.Bar3(CityList, OutTimefireComplete);
+                this.Bar4(CityList, OutTimecompleteList);
             }
+        });
+    }
+    // 各事项申报数量占比
+    Post_GetApplyRate() {
+        let Year1 = 0;
+        let Year2 = 0;
+        let Year3 = 0;
+        let Month1 = 0;
+        let Month2 = 0;
+        let Month3 = 0;
+
+        this.screenService.post_GetApplyRate().subscribe((res: any) => {
+            console.log(res);
+            
+            res.data.forEach(e => {
+                switch (e.flowPathType) {
+                    case 1:
+                        Year1 = e.numYear *100;
+                        Month1 = e.numMonth * 100;
+                        break;
+
+                    case 2:
+                        Year2 = e.numYear *100;
+                        Month2 = e.numMonth*100;
+                        break;
+                    case 3:
+                        Year3 = e.numYear*100;
+                        Month3 = e.numMonth*100;
+                        break;
+                }
+            });
+            Year1 =  this.Floor(Year1);
+            Year2 =  this.Floor(Year2);
+            Year3 =  this.Floor(Year3);
+            Month1 =  this.Floor(Month1);
+            Month2 =  this.Floor(Month2);
+            Month3 =  this.Floor(Month3);
+            this.Pie1(Year1, Year2, Year3);
+            this.Pie2(Month1, Month2, Month3);
         });
     }
     // 一次性通过率
@@ -229,9 +219,8 @@ export class BigScreenComponent {
         const fireCompleteList = [];
         const completeList = [];
         this.screenService.post_GetATimeByStatistics().subscribe((res) => {
-            console.log(res);
-            if (res.items != null) {
-                res.items.forEach(e => {
+            if (res.data != null) {
+                res.data.forEach(e => {
                     switch (e.flowPathType) {
                         case 1:
                             fireAuditList.push(e.throughRate);
@@ -246,139 +235,38 @@ export class BigScreenComponent {
                     }
                 });
             }
-
+            this.CityList.forEach(e => {
+                if (CityList.indexOf(e) === -1) {
+                    CityList.push(e);
+                    fireAuditList.push(0);
+                    fireCompleteList.push(0);
+                    completeList.push(0);
+                }
+            });
             this.Line2(CityList, fireAuditList, fireCompleteList, completeList);
-            // this.Bar3(CityList, flowPathTypeList);
-            // this.Bar4(CityList, fireComplete);
         });
-    }
-    // 超时统计 1.消防设计审查申报 2.消防竣工验收 3.竣工验收备案
-    GetScreenCityTimeoutStatistics() {
-        let model: any = {
-            dateTimeNow: new Date()
-        };
-        model.dateTimeNow = new Date();
-        const CityList = [];
-        const completeList = [];
-        const fireAuditList = [];
-        const fireCompleteList = [];
-        this.screenService.post_GetScreenCityTimeoutStatistics(model).subscribe((res) => {
-            if (res.items.length !== 0) {
-                res.items.forEach(e => {
-                    switch (e.cityName) {
-                        case '防城港市':
-                            e.fireAuditNumber = e.fireAuditNumber + 11;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
-                            e.completeNumber = e.completeNumber + 0;
-                            break;
-                        case '钦州市':
-                            e.fireAuditNumber = e.fireAuditNumber + 2;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 2;
-                            e.completeNumber = e.completeNumber + 0;
-                            break;
-                        case '梧州市':
-                            e.fireAuditNumber = e.fireAuditNumber + 0;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
-                            e.completeNumber = e.completeNumber + 0;
-                            break;
-                        case '贺州市':
-                            e.fireAuditNumber = e.fireAuditNumber + 0;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
-                            e.completeNumber = e.completeNumber + 0;
-                            break;
-                        case '崇左市':
-                            e.fireAuditNumber = e.fireAuditNumber + 1;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
-                            e.completeNumber = e.completeNumber + 0;
-                            break;
-                        case '百色市':
-                            e.fireAuditNumber = e.fireAuditNumber + 8;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 13;
-                            e.completeNumber = e.completeNumber + 1;
-                            break;
-                        case '柳州市':
-                            e.fireAuditNumber = e.fireAuditNumber + 1;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 18;
-                            e.completeNumber = e.completeNumber + 1;
-                            break;
-                        case '河池市':
-                            e.fireAuditNumber = e.fireAuditNumber + 0;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
-                            e.completeNumber = e.completeNumber + 0;
-                            break;
-                        case '桂林市':
-                            e.fireAuditNumber = e.fireAuditNumber + 0;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
-                            e.completeNumber = e.completeNumber + 0;
-                            break;
-                        case '贵港市':
-                            e.fireAuditNumber = e.fireAuditNumber + 0;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
-                            e.completeNumber = e.completeNumber + 0;
-                            break;
-                        case '北海市':
-                            e.fireAuditNumber = e.fireAuditNumber + 0;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
-                            e.completeNumber = e.completeNumber + 0;
-                            break;
-                        case '来宾市':
-                            e.fireAuditNumber = e.fireAuditNumber + 0;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
-                            e.completeNumber = e.completeNumber + 0;
-                            break;
-                        case '玉林市':
-                            e.fireAuditNumber = e.fireAuditNumber + 0;
-                            e.fireCompleteNumber = e.fireCompleteNumber + 0;
-                            e.completeNumber = e.completeNumber + 0;
-                            break;
-                        case '南宁市':
-
-                            break;
-                    };
-                    switch (e.flowPathType) {
-                        case 1:
-                            CityList.push(e.cityName);
-                            fireAuditList.push(e.fireAuditNumber);
-                            break;
-                        case 2:
-                            fireCompleteList.push(e.fireCompleteNumber);
-                            break;
-                        case 3:
-                            completeList.push(e.completeNumber);
-                            break;
-                    }
-
-
-
-                });
-            }
-            this.Bar2(CityList, fireAuditList);
-            this.Bar3(CityList, fireCompleteList);
-            this.Bar4(CityList, completeList);
-        })
     }
     // 累计办理情况
     ScreenYearApplyData: any = [];
     ScreenYearApplyNumBer = 0;
     GetScreenYearApplyNumber() {
         let model: any = {
-            dateTimeNow: new Date(),
-            startDateTime: null,
-            endDateTime: new Date(),
-            completeStatus: 2,
             page: 1,
-            sorting: "CityName",
+            sorting: "cityName",
             skipCount: 0,
             maxResultCount: 5
         };
         model.page = this.ScreenYearApplyPage;
-        model.startDateTime = (new Date().getFullYear() + '-01-01');
         this.screenService.post_GetScreenYearApplyNumber(model).subscribe(res => {
             this.ScreenYearApplyData = res.data;
-            if (res.total % 5 === 0) {
-                this.ScreenTimeoutNumBer = res.total / 5;
+            if (res.total <= 5) {
+                if (res.total % 5 === 0) {
+                    this.ScreenTimeoutNumBer = res.total / 5;
+                } else {
+                    this.ScreenTimeoutNumBer = Math.ceil(res.total / 5);
+                }
             } else {
-                this.ScreenTimeoutNumBer = Math.ceil(res.total / 5);
+                this.ScreenTimeoutNumBer = 0;
             }
         });
     }
@@ -400,25 +288,23 @@ export class BigScreenComponent {
     fireCompleteNumberCount: any = 0;
     completeNumberCount: any = 0;
     GetApplyStatistics() {
-        let model: any = {
-            startTime: new Date(),
-            endTime: null,
-        };
-        model.endTime = new Date(new Date().getFullYear() - 1 + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate());
-        this.screenService.post_GetApplyStatistics(model).subscribe(res => {
-            // this.ApplyStatistics = res;
-            this.statisticsNumberCount = res.statisticsNumberCount + 429;
-            this.fireCompleteNumberCount = res.fireCompleteNumberCount + 209;
-            this.completeNumberCount = res.completeNumberCount + 276;
-            if (res.statisticsNumberCount !== 0) {
-                this.ApplyStatistics1 = Math.floor((res.hasStatisticsNumber / res.statisticsNumberCount) * 100 / 100);
-            }
-            if (res.fireCompleteNumberCount !== 0) {
-                this.ApplyStatistics2 = Math.floor((res.hasFireCompleteNumber / res.fireCompleteNumberCount) * 100 / 100);
-            }
-            if (res.completeNumberCount !== 0) {
-                this.ApplyStatistics3 = Math.floor((res.hasCompleteNumber / res.completeNumberCount) * 100 / 100);
-            }
+        this.screenService.post_GetApplyStatistics().subscribe((res: any) => {
+            res.data.forEach(e => {
+                switch (e.flowPathType) {
+                    case 1:
+                        this.statisticsNumberCount = e.applyNumber;
+                        this.ApplyStatistics1 = e.rate;
+                        break;
+                    case 2:
+                        this.fireCompleteNumberCount = e.applyNumber;
+                        this.ApplyStatistics2 = e.rate;
+                        break;
+                    case 3:
+                        this.completeNumberCount = e.applyNumber;
+                        this.ApplyStatistics3 = e.rate;
+                        break;
+                }
+            });
         });
     }
     // 超时办理列表
@@ -426,21 +312,24 @@ export class BigScreenComponent {
     ScreenTimeoutTotal = 0;
     GetScreenTimeoutList() {
         let model: any = {
-            dateTimeNow: new Date(),
-            orderStatus: 2,
             page: 1,
-            sorting: "ProjectName",
+            sorting: "projectName",
             skipCount: 0,
-            maxResultCount: 3,
+            maxResultCount: 3
         };
         model.page = this.ScreenTimeoutPage;
         this.screenService.post_GetScreenTimeoutList(model).subscribe(res => {
             this.ScreenTimeoutList = res.data;
-            if (res.total % 3 === 0) {
-                this.ScreenTimeoutNumBer = res.total / 3;
+            if (res.total <= 3) {
+                if (res.total % 3 === 0) {
+                    this.ScreenTimeoutNumBer = res.total / 3;
+                } else {
+                    this.ScreenTimeoutNumBer = Math.ceil(res.total / 3);
+                }
             } else {
-                this.ScreenTimeoutNumBer = Math.ceil(res.total / 3);
+                this.ScreenTimeoutNumBer = 0;
             }
+
         });
     }
     ScreenTimeoutNumBer = 0; // 翻页次数
@@ -463,143 +352,78 @@ export class BigScreenComponent {
     fireCompleteList = [];//消防竣工验收
     completeList = [];//竣工验收备
     rankingTop3List = [];
+    CityList = ['南宁市', '崇左市', '北海市', '柳州市', '河池市', '桂林市', '贺州市', '梧州市', '玉林市', '钦州市', '百色市', '来宾市', '贵港市', '防城港市']
     GetFireDataList() {
-        let model: any = {
-            startDateTime: null,
-            dateTimeNow: new Date(),
-            processedStatus: 2
-        };
-        model.startDateTime = (new Date().getFullYear() + '-01-01');
-        this.http.post(SERVER_URL + 'api/services/app/ScreenService/Post_GetFireDataList', model).subscribe((res: any) => {
-            let MapBackList = [];
-            console.log(res);
-
-            if (res.success) {
-                res.result.forEach(e => {
-                    switch (e.flowPathType) {
-                        case 1:
-                            this.FireData1 = e;
-                            break;
-                        case 2:
-                            this.FireData2 = e;
-                            break;
-                        case 3:
-                            this.FireData3 = e;
-                            MapBackList = e.items;
-                            break;
-                    }
-
+        this.rankingData = [];
+        let CityName = [];
+        this.MapList = [];
+        this.rankingTop3List = [];
+        this.screenService.post_GetFireDataList().subscribe((res: any) => {
+            res.data.forEach(e => {
+                CityName.push(e.cityName);
+                this.MapList.push({
+                    name: e.cityName,
+                    value: e.completeNumber,
+                    aTimeByCountNumber: e.aTimeByNumber,
+                    avgCompleteTimeCountNumber: e.aTimeByNumber,
+                    timeoutCountNumber: e.timeoutNumber
                 });
-                MapBackList.forEach(e => {
-                    switch (e.cityName) {
-                        case '防城港市':
-                            e.aTimeByCountNumber = e.aTimeByCountNumber + 21;
-                            e.timeoutCountNumber = e.timeoutCountNumber + 11;
-                            e.completeCountNumber = e.completeCountNumber + 37 + 18 + 19;
-                            e.avgCompleteTimeCountNumber = e.avgCompleteTimeCountNumber + 3;
-                            break;
-                        case '钦州市':
-                            e.aTimeByCountNumber = e.aTimeByCountNumber + 67;
-                            e.timeoutCountNumber = e.timeoutCountNumber + 4;
-                            e.completeCountNumber = e.completeCountNumber + 16 + 35 + 46;
-                            e.avgCompleteTimeCountNumber = e.avgCompleteTimeCountNumber + 3;
-                            break;
-                        case '梧州市':
-                            e.aTimeByCountNumber = e.aTimeByCountNumber + 44;
-                            e.timeoutCountNumber = e.timeoutCountNumber;
-                            e.completeCountNumber = e.completeCountNumber + 11 + 11 + 35;
-                            e.avgCompleteTimeCountNumber = e.avgCompleteTimeCountNumber + 5;
-                            break;
-                        case '贺州市':
-                            e.aTimeByCountNumber = e.aTimeByCountNumber + 40;
-                            e.timeoutCountNumber = e.timeoutCountNumber;
-                            e.completeCountNumber = e.completeCountNumber + 8 + 8 + 27;
-                            e.avgCompleteTimeCountNumber = e.avgCompleteTimeCountNumber + 3;
-                            break;
-                        case '崇左市':
-                            e.aTimeByCountNumber = e.aTimeByCountNumber + 33;
-                            e.timeoutCountNumber = e.timeoutCountNumber + 1;
-                            e.completeCountNumber = e.completeCountNumber + 31 + 14 + 12;
-                            e.avgCompleteTimeCountNumber = e.avgCompleteTimeCountNumber + 5;
-                            break;
-                        case '百色市':
-                            e.aTimeByCountNumber = e.aTimeByCountNumber + 62;
-                            e.timeoutCountNumber = e.timeoutCountNumber + 8 + 13 + 1;
-                            e.completeCountNumber = e.completeCountNumber + 27 + 30 + 20;
-                            e.avgCompleteTimeCountNumber = e.avgCompleteTimeCountNumber + 6;
-                            break;
-                        case '柳州市':
-                            e.aTimeByCountNumber = e.aTimeByCountNumber + 91;
-                            e.timeoutCountNumber = e.timeoutCountNumber + 20;
-                            e.completeCountNumber = e.completeCountNumber + 65 + 53 + 65;
-                            e.avgCompleteTimeCountNumber = e.avgCompleteTimeCountNumber + 5;
-                            break;
-                        case '河池市':
-                            e.aTimeByCountNumber = e.aTimeByCountNumber + 32;
-                            e.timeoutCountNumber = e.timeoutCountNumber;
-                            e.completeCountNumber = e.completeCountNumber + 23 + 14 + 34;
-                            e.avgCompleteTimeCountNumber = e.avgCompleteTimeCountNumber +8;
-                            break;
-                        case '桂林市':
-                            e.aTimeByCountNumber = e.aTimeByCountNumber + 92;
-                            e.timeoutCountNumber = e.timeoutCountNumber;
-                            e.completeCountNumber = e.completeCountNumber + 75 + 25 + 47;
-                            e.avgCompleteTimeCountNumber = e.avgCompleteTimeCountNumber + 5;
-                            break;
-                        case '贵港市':
-                            e.aTimeByCountNumber = e.aTimeByCountNumber + 81;
-                            e.timeoutCountNumber = e.timeoutCountNumber + 29;
-                            e.completeCountNumber = e.completeCountNumber + 27 + 29 + 47;
-                            e.avgCompleteTimeCountNumber = e.avgCompleteTimeCountNumber + 4;
-                            break;
-                        case '北海市':
-                            e.aTimeByCountNumber = e.aTimeByCountNumber + 47;
-                            e.timeoutCountNumber = e.timeoutCountNumber;
-                            e.completeCountNumber = e.completeCountNumber + 25 + 20 + 19;
-                            e.avgCompleteTimeCountNumber = e.avgCompleteTimeCountNumber + 5;
-                            break;
-                        case '来宾市':
-                            e.aTimeByCountNumber = e.aTimeByCountNumber + 31;
-                            e.timeoutCountNumber = e.timeoutCountNumber;
-                            e.completeCountNumber = e.completeCountNumber + 13 + 15 + 40;
-                            e.avgCompleteTimeCountNumber = e.avgCompleteTimeCountNumber + 5;
-                            break;
-                        case '玉林市':
-                            e.aTimeByCountNumber = e.aTimeByCountNumber + 99;
-                            e.timeoutCountNumber = e.timeoutCountNumber;
-                            e.completeCountNumber = e.completeCountNumber + 18 + 80 + 20;
-                            e.avgCompleteTimeCountNumber = e.avgCompleteTimeCountNumber + 4;
-                            break;
-                        case '南宁市':
-
-                            break;
-                    };
+            });
+            this.CityList.forEach(e => {
+                if (CityName.indexOf(e) === -1) {
                     this.MapList.push({
-                        name: e.cityName,
-                        value: e.completeCountNumber,
-                        aTimeByCountNumber: e.aTimeByCountNumber,
-                        avgCompleteTimeCountNumber: e.avgCompleteTimeCountNumber,
-                        timeoutCountNumber: e.timeoutCountNumber
+                        name: e,
+                        value: 0,
+                        aTimeByCountNumber: 0,
+                        avgCompleteTimeCountNumber: 0,
+                        timeoutCountNumber: 0
                     });
-                });
-                this.rankingTop3List = this.MapList;
-                for (let i = 3; i < this.rankingTop3List.length; i++) {
-                    this.rankingData.push(this.rankingTop3List[i]);
                 }
-                for (let i = 0; i < this.rankingData.length - 1; i++) {
-                    for (let j = 0; j < this.rankingData.length - 1 - i; j++) {
-                        if (this.rankingData[j].completeCountNumber > this.rankingData[j + 1].completeCountNumber) {
-                            var temp = this.rankingData[j];
-                            this.rankingData[j] = this.rankingData[j + 1];
-                            this.rankingData[j + 1] = temp;
-                        }
+            });
+
+            this.rankingTop3List = this.MapList;
+            for (let i = 3; i < this.rankingTop3List.length; i++) {
+                this.rankingData.push(this.rankingTop3List[i]);
+            }
+            for (let i = 0; i < this.rankingData.length - 1; i++) {
+                for (let j = 0; j < this.rankingData.length - 1 - i; j++) {
+                    if (this.rankingData[j].completeCountNumber > this.rankingData[j + 1].completeCountNumber) {
+                        var temp = this.rankingData[j];
+                        this.rankingData[j] = this.rankingData[j + 1];
+                        this.rankingData[j + 1] = temp;
                     }
                 }
-
             }
-
             this.EchartsMap();
+
         });
+    }
+    post_GetFireDataSumList() {
+        this.GetThrough = [];
+        this.screenService.post_GetFireDataSumList().subscribe((res: any) => {
+            res.data.forEach(e => {
+                switch (e.flowPathType) {
+                    case 1:
+                        this.FireData1 = e;
+                        break;
+                    case 2:
+                        this.FireData2 = e;
+                        break;
+                    case 3:
+                        this.FireData3 = e;
+                        break;
+                }
+            });
+            let a = JSON.stringify(this.FireData1.completeNumber + this.FireData2.completeNumber + this.FireData3.completeNumber);
+            for (let i = 0; i < 8 - a.split("").length; i++) {
+                this.GetThrough.push(0);
+            }
+            a.split("").forEach(e => {
+                this.GetThrough.push(e);
+            });
+            // this.Pie1();
+        });
+
     }
     option: any;
     Line() { //city, flowPathTypeList, throughRateList
@@ -1430,7 +1254,7 @@ export class BigScreenComponent {
         };
     }
     pie1: any;
-    Pie1() {
+    Pie1(num1, num2, num3) {
         this.pie1 = {
             title: {
                 text: '本年',
@@ -1452,7 +1276,7 @@ export class BigScreenComponent {
             legend: {
                 orient: 'vertical',
                 left: 'left',
-                data: ['消防设计审查', '竣工验收备案', '消防验收'],
+                data: ['消防设计审查', '消防验收', '竣工验收备案'],
                 textStyle: {
                     color: '#fff'
                 },
@@ -1461,7 +1285,7 @@ export class BigScreenComponent {
             series: [
 
                 {
-                    // name: '数量',
+                    name: '占比',
                     type: 'pie',
                     radius: [30, 50],
                     center: ['75%', '50%'],
@@ -1478,7 +1302,7 @@ export class BigScreenComponent {
                     },
                     data: [
                         {
-                            value: 20, name: '消防设计审查', itemStyle: {
+                            value: num1, name: '消防设计审查', itemStyle: {
                                 normal: {
                                     color: '#F6FF00',
                                     shadowColor: '#F6FF00',
@@ -1489,23 +1313,23 @@ export class BigScreenComponent {
                             }
                         },
                         {
-                            value: 30, name: '竣工验收备案', itemStyle: {
-                                normal: {
-                                    color: '#0EF9B3',
-                                    shadowColor: '#0EF9B3',
-                                    borderWidth: 2,
-                                    borderColor: '#0EF9B3',
-                                    shadowBlur: 10
-                                }
-                            }
-                        },
-                        {
-                            value: 50, name: '消防验收', itemStyle: {
+                            value: num2, name: '消防验收', itemStyle: {
                                 normal: {
                                     color: '#01B4FF',
                                     shadowColor: '#01B4FF',
                                     borderWidth: 2,
                                     borderColor: '#01B4FF',
+                                    shadowBlur: 10
+                                }
+                            }
+                        },
+                        {
+                            value: num3, name: '竣工验收备案', itemStyle: {
+                                normal: {
+                                    color: '#0EF9B3',
+                                    shadowColor: '#0EF9B3',
+                                    borderWidth: 2,
+                                    borderColor: '#0EF9B3',
                                     shadowBlur: 10
                                 }
                             }
@@ -1517,7 +1341,8 @@ export class BigScreenComponent {
         };
     }
     pie2: any;
-    Pie2() {
+    Pie2(num1, num2, num3) {
+        
         this.pie2 = {
             title: {
                 text: '本月',
@@ -1539,7 +1364,7 @@ export class BigScreenComponent {
             legend: {
                 orient: 'vertical',
                 left: 'left',
-                data: ['消防设计审查', '竣工验收备案', '消防验收'],
+                data: ['消防设计审查', '消防验收', '竣工验收备案'],
                 textStyle: {
                     color: '#fff'
                 },
@@ -1548,7 +1373,7 @@ export class BigScreenComponent {
             series: [
 
                 {
-                    // name: '数量',
+                    name: '占比',
                     type: 'pie',
                     radius: [30, 50],
                     center: ['75%', '50%'],
@@ -1566,7 +1391,7 @@ export class BigScreenComponent {
                     },
                     data: [
                         {
-                            value: 60, name: '消防设计审查', itemStyle: {
+                            value: num1, name: '消防设计审查', itemStyle: {
                                 normal: {
                                     color: '#F6FF00',
                                     shadowColor: '#F6FF00',
@@ -1577,18 +1402,7 @@ export class BigScreenComponent {
                             }
                         },
                         {
-                            value: 120, name: '竣工验收备案', itemStyle: {
-                                normal: {
-                                    color: '#0EF9B3',
-                                    shadowColor: '#0EF9B3',
-                                    borderWidth: 2,
-                                    borderColor: '#0EF9B3',
-                                    shadowBlur: 10
-                                }
-                            }
-                        },
-                        {
-                            value: 80, name: '消防验收', itemStyle: {
+                            value: num2, name: '消防验收', itemStyle: {
                                 normal: {
                                     color: '#01B4FF',
                                     shadowColor: '#01B4FF',
@@ -1598,6 +1412,18 @@ export class BigScreenComponent {
                                 }
                             }
                         },
+                        ,
+                        {
+                            value: num3, name: '竣工验收备案', itemStyle: {
+                                normal: {
+                                    color: '#0EF9B3',
+                                    shadowColor: '#0EF9B3',
+                                    borderWidth: 2,
+                                    borderColor: '#0EF9B3',
+                                    shadowBlur: 10
+                                }
+                            }
+                        }
 
                     ]
                 }
@@ -1701,6 +1527,6 @@ export class BigScreenComponent {
 
     }
     Floor(num) {
-        return Math.floor(num);
+        return Math.floor(num * 100) / 100;
     }
 }

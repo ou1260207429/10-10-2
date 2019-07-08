@@ -1115,7 +1115,7 @@ export class AttachmentServiceProxy {
     /**
      * @return Success
      */
-    currentUser(): Observable<UserBaseDto> {
+    currentUser(): Observable<UserCacheDto> {
         let url_ = this.baseUrl + "/api/services/app/Attachment/CurrentUser";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1134,14 +1134,14 @@ export class AttachmentServiceProxy {
                 try {
                     return this.processCurrentUser(<any>response_);
                 } catch (e) {
-                    return <Observable<UserBaseDto>><any>_observableThrow(e);
+                    return <Observable<UserCacheDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<UserBaseDto>><any>_observableThrow(response_);
+                return <Observable<UserCacheDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processCurrentUser(response: HttpResponseBase): Observable<UserBaseDto> {
+    protected processCurrentUser(response: HttpResponseBase): Observable<UserCacheDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1152,7 +1152,7 @@ export class AttachmentServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? UserBaseDto.fromJS(resultData200) : new UserBaseDto();
+            result200 = resultData200 ? UserCacheDto.fromJS(resultData200) : new UserCacheDto();
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1160,7 +1160,7 @@ export class AttachmentServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<UserBaseDto>(<any>null);
+        return _observableOf<UserCacheDto>(<any>null);
     }
 
     /**
@@ -3180,7 +3180,7 @@ export class NoticeServiceProxy {
     /**
      * @return Success
      */
-    currentUser(): Observable<UserBaseDto> {
+    currentUser(): Observable<UserCacheDto> {
         let url_ = this.baseUrl + "/api/services/app/Notice/CurrentUser";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -3199,14 +3199,14 @@ export class NoticeServiceProxy {
                 try {
                     return this.processCurrentUser(<any>response_);
                 } catch (e) {
-                    return <Observable<UserBaseDto>><any>_observableThrow(e);
+                    return <Observable<UserCacheDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<UserBaseDto>><any>_observableThrow(response_);
+                return <Observable<UserCacheDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processCurrentUser(response: HttpResponseBase): Observable<UserBaseDto> {
+    protected processCurrentUser(response: HttpResponseBase): Observable<UserCacheDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -3217,7 +3217,7 @@ export class NoticeServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? UserBaseDto.fromJS(resultData200) : new UserBaseDto();
+            result200 = resultData200 ? UserCacheDto.fromJS(resultData200) : new UserCacheDto();
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -3225,7 +3225,7 @@ export class NoticeServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<UserBaseDto>(<any>null);
+        return _observableOf<UserCacheDto>(<any>null);
     }
 
     /**
@@ -4380,6 +4380,57 @@ export class ProjectFlowServcieServiceProxy {
         }
         return _observableOf<DataSourceResult>(<any>null);
     }
+
+    /**
+     * @return Success
+     */
+    getOrganizationTree(): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/ProjectFlowServcie/GetOrganizationTree";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetOrganizationTree(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetOrganizationTree(<any>response_);
+                } catch (e) {
+                    return <Observable<string>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetOrganizationTree(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(<any>null);
+    }
 }
 
 @Injectable()
@@ -4860,7 +4911,7 @@ export class RegulationServiceProxy {
     /**
      * @return Success
      */
-    currentUser(): Observable<UserBaseDto> {
+    currentUser(): Observable<UserCacheDto> {
         let url_ = this.baseUrl + "/api/services/app/Regulation/CurrentUser";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -4879,14 +4930,14 @@ export class RegulationServiceProxy {
                 try {
                     return this.processCurrentUser(<any>response_);
                 } catch (e) {
-                    return <Observable<UserBaseDto>><any>_observableThrow(e);
+                    return <Observable<UserCacheDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<UserBaseDto>><any>_observableThrow(response_);
+                return <Observable<UserCacheDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processCurrentUser(response: HttpResponseBase): Observable<UserBaseDto> {
+    protected processCurrentUser(response: HttpResponseBase): Observable<UserCacheDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -4897,7 +4948,7 @@ export class RegulationServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? UserBaseDto.fromJS(resultData200) : new UserBaseDto();
+            result200 = resultData200 ? UserCacheDto.fromJS(resultData200) : new UserCacheDto();
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -4905,7 +4956,7 @@ export class RegulationServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<UserBaseDto>(<any>null);
+        return _observableOf<UserCacheDto>(<any>null);
     }
 
     /**
@@ -6163,21 +6214,16 @@ export class ScreenServiceServiceProxy {
     }
 
     /**
-     * @param applyStatisticsQueryDto (optional) 
      * @return Success
      */
-    post_GetApplyStatistics(applyStatisticsQueryDto: ApplyStatisticsQueryDto | null | undefined): Observable<ApplyStatisticsDto> {
+    post_GetApplyStatistics(): Observable<DataSourceResult> {
         let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetApplyStatistics";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(applyStatisticsQueryDto);
-
         let options_ : any = {
-            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json", 
                 "Accept": "application/json"
             })
         };
@@ -6189,14 +6235,14 @@ export class ScreenServiceServiceProxy {
                 try {
                     return this.processPost_GetApplyStatistics(<any>response_);
                 } catch (e) {
-                    return <Observable<ApplyStatisticsDto>><any>_observableThrow(e);
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ApplyStatisticsDto>><any>_observableThrow(response_);
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPost_GetApplyStatistics(response: HttpResponseBase): Observable<ApplyStatisticsDto> {
+    protected processPost_GetApplyStatistics(response: HttpResponseBase): Observable<DataSourceResult> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -6207,7 +6253,7 @@ export class ScreenServiceServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? ApplyStatisticsDto.fromJS(resultData200) : new ApplyStatisticsDto();
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -6215,25 +6261,20 @@ export class ScreenServiceServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ApplyStatisticsDto>(<any>null);
+        return _observableOf<DataSourceResult>(<any>null);
     }
 
     /**
-     * @param declareRateQueryDto (optional) 
      * @return Success
      */
-    post_GetDeclareRate(declareRateQueryDto: DeclareRateQueryDto | null | undefined): Observable<ListResultDtoOfTimeoutStatisticsDto> {
+    post_GetDeclareRate(): Observable<DataSourceResult> {
         let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetDeclareRate";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(declareRateQueryDto);
-
         let options_ : any = {
-            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json", 
                 "Accept": "application/json"
             })
         };
@@ -6245,14 +6286,14 @@ export class ScreenServiceServiceProxy {
                 try {
                     return this.processPost_GetDeclareRate(<any>response_);
                 } catch (e) {
-                    return <Observable<ListResultDtoOfTimeoutStatisticsDto>><any>_observableThrow(e);
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ListResultDtoOfTimeoutStatisticsDto>><any>_observableThrow(response_);
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPost_GetDeclareRate(response: HttpResponseBase): Observable<ListResultDtoOfTimeoutStatisticsDto> {
+    protected processPost_GetDeclareRate(response: HttpResponseBase): Observable<DataSourceResult> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -6263,7 +6304,7 @@ export class ScreenServiceServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? ListResultDtoOfTimeoutStatisticsDto.fromJS(resultData200) : new ListResultDtoOfTimeoutStatisticsDto();
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -6271,69 +6312,13 @@ export class ScreenServiceServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ListResultDtoOfTimeoutStatisticsDto>(<any>null);
-    }
-
-    /**
-     * @param screenTimeoutStatisticsQueryDto (optional) 
-     * @return Success
-     */
-    post_GetScreenCityTimeoutStatistics(screenTimeoutStatisticsQueryDto: ScreenTimeoutStatisticsQueryDto | null | undefined): Observable<ListResultDtoOfTimeoutStatisticsDto> {
-        let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetScreenCityTimeoutStatistics";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(screenTimeoutStatisticsQueryDto);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPost_GetScreenCityTimeoutStatistics(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processPost_GetScreenCityTimeoutStatistics(<any>response_);
-                } catch (e) {
-                    return <Observable<ListResultDtoOfTimeoutStatisticsDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<ListResultDtoOfTimeoutStatisticsDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processPost_GetScreenCityTimeoutStatistics(response: HttpResponseBase): Observable<ListResultDtoOfTimeoutStatisticsDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? ListResultDtoOfTimeoutStatisticsDto.fromJS(resultData200) : new ListResultDtoOfTimeoutStatisticsDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<ListResultDtoOfTimeoutStatisticsDto>(<any>null);
+        return _observableOf<DataSourceResult>(<any>null);
     }
 
     /**
      * @return Success
      */
-    post_GetATimeByStatistics(): Observable<ListResultDtoOfATimeByStatisticsDto> {
+    post_GetATimeByStatistics(): Observable<DataSourceResult> {
         let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetATimeByStatistics";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -6352,14 +6337,14 @@ export class ScreenServiceServiceProxy {
                 try {
                     return this.processPost_GetATimeByStatistics(<any>response_);
                 } catch (e) {
-                    return <Observable<ListResultDtoOfATimeByStatisticsDto>><any>_observableThrow(e);
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ListResultDtoOfATimeByStatisticsDto>><any>_observableThrow(response_);
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPost_GetATimeByStatistics(response: HttpResponseBase): Observable<ListResultDtoOfATimeByStatisticsDto> {
+    protected processPost_GetATimeByStatistics(response: HttpResponseBase): Observable<DataSourceResult> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -6370,7 +6355,7 @@ export class ScreenServiceServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? ListResultDtoOfATimeByStatisticsDto.fromJS(resultData200) : new ListResultDtoOfATimeByStatisticsDto();
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -6378,7 +6363,7 @@ export class ScreenServiceServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ListResultDtoOfATimeByStatisticsDto>(<any>null);
+        return _observableOf<DataSourceResult>(<any>null);
     }
 
     /**
@@ -6438,14 +6423,14 @@ export class ScreenServiceServiceProxy {
     }
 
     /**
-     * @param yearApplyNumberQueryDto (optional) 
+     * @param screenYearApplyNumberQueryDto (optional) 
      * @return Success
      */
-    post_GetScreenYearApplyNumber(yearApplyNumberQueryDto: YearApplyNumberQueryDto | null | undefined): Observable<DataSourceResult> {
+    post_GetScreenYearApplyNumber(screenYearApplyNumberQueryDto: ScreenYearApplyNumberQueryDto | null | undefined): Observable<DataSourceResult> {
         let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetScreenYearApplyNumber";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(yearApplyNumberQueryDto);
+        const content_ = JSON.stringify(screenYearApplyNumberQueryDto);
 
         let options_ : any = {
             body: content_,
@@ -6494,21 +6479,16 @@ export class ScreenServiceServiceProxy {
     }
 
     /**
-     * @param fireDataListQueryDto (optional) 
      * @return Success
      */
-    post_GetFireDataList(fireDataListQueryDto: FireDataListQueryDto | null | undefined): Observable<FireDataListDto[]> {
+    post_GetFireDataList(): Observable<DataSourceResult> {
         let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetFireDataList";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(fireDataListQueryDto);
-
         let options_ : any = {
-            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json", 
                 "Accept": "application/json"
             })
         };
@@ -6520,14 +6500,14 @@ export class ScreenServiceServiceProxy {
                 try {
                     return this.processPost_GetFireDataList(<any>response_);
                 } catch (e) {
-                    return <Observable<FireDataListDto[]>><any>_observableThrow(e);
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<FireDataListDto[]>><any>_observableThrow(response_);
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPost_GetFireDataList(response: HttpResponseBase): Observable<FireDataListDto[]> {
+    protected processPost_GetFireDataList(response: HttpResponseBase): Observable<DataSourceResult> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -6538,11 +6518,7 @@ export class ScreenServiceServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (resultData200 && resultData200.constructor === Array) {
-                result200 = [];
-                for (let item of resultData200)
-                    result200.push(FireDataListDto.fromJS(item));
-            }
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -6550,7 +6526,109 @@ export class ScreenServiceServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FireDataListDto[]>(<any>null);
+        return _observableOf<DataSourceResult>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    post_GetFireDataSumList(): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetFireDataSumList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetFireDataSumList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetFireDataSumList(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetFireDataSumList(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    post_GetApplyRate(): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetApplyRate";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetApplyRate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetApplyRate(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetApplyRate(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
     }
 }
 
@@ -8162,6 +8240,8 @@ export class ProjectFlow implements IProjectFlow {
     parentFlowId: number | undefined;
     isResubmitted: boolean | undefined;
     isAcceptanceSubmitted: boolean | undefined;
+    orgCode: string | undefined;
+    orgName: string | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -8205,6 +8285,8 @@ export class ProjectFlow implements IProjectFlow {
             this.parentFlowId = data["parentFlowId"];
             this.isResubmitted = data["isResubmitted"];
             this.isAcceptanceSubmitted = data["isAcceptanceSubmitted"];
+            this.orgCode = data["orgCode"];
+            this.orgName = data["orgName"];
             this.isDeleted = data["isDeleted"];
             this.deleterUserId = data["deleterUserId"];
             this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
@@ -8248,6 +8330,8 @@ export class ProjectFlow implements IProjectFlow {
         data["parentFlowId"] = this.parentFlowId;
         data["isResubmitted"] = this.isResubmitted;
         data["isAcceptanceSubmitted"] = this.isAcceptanceSubmitted;
+        data["orgCode"] = this.orgCode;
+        data["orgName"] = this.orgName;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -8291,6 +8375,8 @@ export interface IProjectFlow {
     parentFlowId: number | undefined;
     isResubmitted: boolean | undefined;
     isAcceptanceSubmitted: boolean | undefined;
+    orgCode: string | undefined;
+    orgName: string | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -8341,6 +8427,8 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     descr: string | undefined;
     applyName: string | undefined;
     isTransfer: boolean | undefined;
+    orgName: string | undefined;
+    orgCode: string | undefined;
 
     constructor(data?: IAcceptApplyFormDto) {
         if (data) {
@@ -8408,6 +8496,8 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
             this.descr = data["descr"];
             this.applyName = data["applyName"];
             this.isTransfer = data["isTransfer"];
+            this.orgName = data["orgName"];
+            this.orgCode = data["orgCode"];
         }
     }
 
@@ -8475,6 +8565,8 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
         data["descr"] = this.descr;
         data["applyName"] = this.applyName;
         data["isTransfer"] = this.isTransfer;
+        data["orgName"] = this.orgName;
+        data["orgCode"] = this.orgCode;
         return data; 
     }
 
@@ -8526,6 +8618,8 @@ export interface IAcceptApplyFormDto {
     descr: string | undefined;
     applyName: string | undefined;
     isTransfer: boolean | undefined;
+    orgName: string | undefined;
+    orgCode: string | undefined;
 }
 
 export class FlowNodeUser implements IFlowNodeUser {
@@ -8851,6 +8945,8 @@ export class ReviewFormDto implements IReviewFormDto {
     provinceName: string | undefined;
     cityName: string | undefined;
     regionAndCountyName: string | undefined;
+    orgName: string | undefined;
+    orgCode: string | undefined;
 
     constructor(data?: IReviewFormDto) {
         if (data) {
@@ -8897,6 +8993,8 @@ export class ReviewFormDto implements IReviewFormDto {
             this.provinceName = data["provinceName"];
             this.cityName = data["cityName"];
             this.regionAndCountyName = data["regionAndCountyName"];
+            this.orgName = data["orgName"];
+            this.orgCode = data["orgCode"];
         }
     }
 
@@ -8943,6 +9041,8 @@ export class ReviewFormDto implements IReviewFormDto {
         data["provinceName"] = this.provinceName;
         data["cityName"] = this.cityName;
         data["regionAndCountyName"] = this.regionAndCountyName;
+        data["orgName"] = this.orgName;
+        data["orgCode"] = this.orgCode;
         return data; 
     }
 
@@ -8985,6 +9085,8 @@ export interface IReviewFormDto {
     provinceName: string | undefined;
     cityName: string | undefined;
     regionAndCountyName: string | undefined;
+    orgName: string | undefined;
+    orgCode: string | undefined;
 }
 
 export class ProjectCompany implements IProjectCompany {
@@ -9135,6 +9237,9 @@ export class ExamineFormDto implements IExamineFormDto {
     descr: string | undefined;
     isTransfer: boolean | undefined;
     isFirstApply: boolean | undefined;
+    orgName: string | undefined;
+    orgCode: string | undefined;
+    checkDate: moment.Moment | undefined;
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -9203,6 +9308,9 @@ export class ExamineFormDto implements IExamineFormDto {
             this.descr = data["descr"];
             this.isTransfer = data["isTransfer"];
             this.isFirstApply = data["isFirstApply"];
+            this.orgName = data["orgName"];
+            this.orgCode = data["orgCode"];
+            this.checkDate = data["checkDate"] ? moment(data["checkDate"].toString()) : <any>undefined;
         }
     }
 
@@ -9271,6 +9379,9 @@ export class ExamineFormDto implements IExamineFormDto {
         data["descr"] = this.descr;
         data["isTransfer"] = this.isTransfer;
         data["isFirstApply"] = this.isFirstApply;
+        data["orgName"] = this.orgName;
+        data["orgCode"] = this.orgCode;
+        data["checkDate"] = this.checkDate ? this.checkDate.toISOString() : <any>undefined;
         return data; 
     }
 
@@ -9327,6 +9438,9 @@ export interface IExamineFormDto {
     descr: string | undefined;
     isTransfer: boolean | undefined;
     isFirstApply: boolean | undefined;
+    orgName: string | undefined;
+    orgCode: string | undefined;
+    checkDate: moment.Moment | undefined;
 }
 
 export class ProjectAttachment implements IProjectAttachment {
@@ -10149,6 +10263,8 @@ export class ProjectFlowDto implements IProjectFlowDto {
     parentFlowId: number | undefined;
     isResubmitted: boolean | undefined;
     isAcceptanceSubmitted: boolean | undefined;
+    orgCode: string | undefined;
+    orgName: string | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -10192,6 +10308,8 @@ export class ProjectFlowDto implements IProjectFlowDto {
             this.parentFlowId = data["parentFlowId"];
             this.isResubmitted = data["isResubmitted"];
             this.isAcceptanceSubmitted = data["isAcceptanceSubmitted"];
+            this.orgCode = data["orgCode"];
+            this.orgName = data["orgName"];
             this.isDeleted = data["isDeleted"];
             this.deleterUserId = data["deleterUserId"];
             this.deletionTime = data["deletionTime"] ? moment(data["deletionTime"].toString()) : <any>undefined;
@@ -10235,6 +10353,8 @@ export class ProjectFlowDto implements IProjectFlowDto {
         data["parentFlowId"] = this.parentFlowId;
         data["isResubmitted"] = this.isResubmitted;
         data["isAcceptanceSubmitted"] = this.isAcceptanceSubmitted;
+        data["orgCode"] = this.orgCode;
+        data["orgName"] = this.orgName;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -10278,6 +10398,8 @@ export interface IProjectFlowDto {
     parentFlowId: number | undefined;
     isResubmitted: boolean | undefined;
     isAcceptanceSubmitted: boolean | undefined;
+    orgCode: string | undefined;
+    orgName: string | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -10288,14 +10410,35 @@ export interface IProjectFlowDto {
     id: number | undefined;
 }
 
-export class UserBaseDto implements IUserBaseDto {
+export class UserCacheDto implements IUserCacheDto {
+    merchantId: string | undefined;
+    merchantName: string | undefined;
     id: string | undefined;
-    userName: string | undefined;
-    userCode: string | undefined;
-    orgCode: string | undefined;
-    orgName: string | undefined;
+    head: string | undefined;
+    eid: string | undefined;
+    eName: string | undefined;
+    mobile: string | undefined;
+    organizationsId: string | undefined;
+    organizationsName: string | undefined;
+    sex: UserCacheDtoSex | undefined;
+    roleId: string | undefined;
+    roleName: string | undefined;
+    isLocked: boolean | undefined;
+    lockBeginTime: moment.Moment | undefined;
+    lockEndTime: moment.Moment | undefined;
+    registerTime: moment.Moment | undefined;
+    currentLoginIp: string | undefined;
+    currentLoginTime: moment.Moment | undefined;
+    lastLoginIp: string | undefined;
+    lastLoginTime: moment.Moment | undefined;
+    visibilityOrganizationsIds: string[] | undefined;
+    positionIds: string[] | undefined;
+    creatorId: string | undefined;
+    creationTime: moment.Moment | undefined;
+    lastModifierId: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
 
-    constructor(data?: IUserBaseDto) {
+    constructor(data?: IUserCacheDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -10306,45 +10449,124 @@ export class UserBaseDto implements IUserBaseDto {
 
     init(data?: any) {
         if (data) {
+            this.merchantId = data["merchantId"];
+            this.merchantName = data["merchantName"];
             this.id = data["id"];
-            this.userName = data["userName"];
-            this.userCode = data["userCode"];
-            this.orgCode = data["orgCode"];
-            this.orgName = data["orgName"];
+            this.head = data["head"];
+            this.eid = data["eid"];
+            this.eName = data["eName"];
+            this.mobile = data["mobile"];
+            this.organizationsId = data["organizationsId"];
+            this.organizationsName = data["organizationsName"];
+            this.sex = data["sex"];
+            this.roleId = data["roleId"];
+            this.roleName = data["roleName"];
+            this.isLocked = data["isLocked"];
+            this.lockBeginTime = data["lockBeginTime"] ? moment(data["lockBeginTime"].toString()) : <any>undefined;
+            this.lockEndTime = data["lockEndTime"] ? moment(data["lockEndTime"].toString()) : <any>undefined;
+            this.registerTime = data["registerTime"] ? moment(data["registerTime"].toString()) : <any>undefined;
+            this.currentLoginIp = data["currentLoginIp"];
+            this.currentLoginTime = data["currentLoginTime"] ? moment(data["currentLoginTime"].toString()) : <any>undefined;
+            this.lastLoginIp = data["lastLoginIp"];
+            this.lastLoginTime = data["lastLoginTime"] ? moment(data["lastLoginTime"].toString()) : <any>undefined;
+            if (data["visibilityOrganizationsIds"] && data["visibilityOrganizationsIds"].constructor === Array) {
+                this.visibilityOrganizationsIds = [];
+                for (let item of data["visibilityOrganizationsIds"])
+                    this.visibilityOrganizationsIds.push(item);
+            }
+            if (data["positionIds"] && data["positionIds"].constructor === Array) {
+                this.positionIds = [];
+                for (let item of data["positionIds"])
+                    this.positionIds.push(item);
+            }
+            this.creatorId = data["creatorId"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.lastModifierId = data["lastModifierId"];
+            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
         }
     }
 
-    static fromJS(data: any): UserBaseDto {
+    static fromJS(data: any): UserCacheDto {
         data = typeof data === 'object' ? data : {};
-        let result = new UserBaseDto();
+        let result = new UserCacheDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["merchantId"] = this.merchantId;
+        data["merchantName"] = this.merchantName;
         data["id"] = this.id;
-        data["userName"] = this.userName;
-        data["userCode"] = this.userCode;
-        data["orgCode"] = this.orgCode;
-        data["orgName"] = this.orgName;
+        data["head"] = this.head;
+        data["eid"] = this.eid;
+        data["eName"] = this.eName;
+        data["mobile"] = this.mobile;
+        data["organizationsId"] = this.organizationsId;
+        data["organizationsName"] = this.organizationsName;
+        data["sex"] = this.sex;
+        data["roleId"] = this.roleId;
+        data["roleName"] = this.roleName;
+        data["isLocked"] = this.isLocked;
+        data["lockBeginTime"] = this.lockBeginTime ? this.lockBeginTime.toISOString() : <any>undefined;
+        data["lockEndTime"] = this.lockEndTime ? this.lockEndTime.toISOString() : <any>undefined;
+        data["registerTime"] = this.registerTime ? this.registerTime.toISOString() : <any>undefined;
+        data["currentLoginIp"] = this.currentLoginIp;
+        data["currentLoginTime"] = this.currentLoginTime ? this.currentLoginTime.toISOString() : <any>undefined;
+        data["lastLoginIp"] = this.lastLoginIp;
+        data["lastLoginTime"] = this.lastLoginTime ? this.lastLoginTime.toISOString() : <any>undefined;
+        if (this.visibilityOrganizationsIds && this.visibilityOrganizationsIds.constructor === Array) {
+            data["visibilityOrganizationsIds"] = [];
+            for (let item of this.visibilityOrganizationsIds)
+                data["visibilityOrganizationsIds"].push(item);
+        }
+        if (this.positionIds && this.positionIds.constructor === Array) {
+            data["positionIds"] = [];
+            for (let item of this.positionIds)
+                data["positionIds"].push(item);
+        }
+        data["creatorId"] = this.creatorId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["lastModifierId"] = this.lastModifierId;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
         return data; 
     }
 
-    clone(): UserBaseDto {
+    clone(): UserCacheDto {
         const json = this.toJSON();
-        let result = new UserBaseDto();
+        let result = new UserCacheDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IUserBaseDto {
+export interface IUserCacheDto {
+    merchantId: string | undefined;
+    merchantName: string | undefined;
     id: string | undefined;
-    userName: string | undefined;
-    userCode: string | undefined;
-    orgCode: string | undefined;
-    orgName: string | undefined;
+    head: string | undefined;
+    eid: string | undefined;
+    eName: string | undefined;
+    mobile: string | undefined;
+    organizationsId: string | undefined;
+    organizationsName: string | undefined;
+    sex: UserCacheDtoSex | undefined;
+    roleId: string | undefined;
+    roleName: string | undefined;
+    isLocked: boolean | undefined;
+    lockBeginTime: moment.Moment | undefined;
+    lockEndTime: moment.Moment | undefined;
+    registerTime: moment.Moment | undefined;
+    currentLoginIp: string | undefined;
+    currentLoginTime: moment.Moment | undefined;
+    lastLoginIp: string | undefined;
+    lastLoginTime: moment.Moment | undefined;
+    visibilityOrganizationsIds: string[] | undefined;
+    positionIds: string[] | undefined;
+    creatorId: string | undefined;
+    creationTime: moment.Moment | undefined;
+    lastModifierId: string | undefined;
+    lastModificationTime: moment.Moment | undefined;
 }
 
 export class AttachmentDto implements IAttachmentDto {
@@ -12025,167 +12247,9 @@ export interface IAuthenticateResultModel {
     error: any | undefined;
 }
 
-export class UserCacheDto implements IUserCacheDto {
-    merchantId: string | undefined;
-    merchantName: string | undefined;
-    id: string | undefined;
-    head: string | undefined;
-    eid: string | undefined;
-    eName: string | undefined;
-    mobile: string | undefined;
-    organizationsId: string | undefined;
-    organizationsName: string | undefined;
-    sex: UserCacheDtoSex | undefined;
-    roleId: string | undefined;
-    roleName: string | undefined;
-    isLocked: boolean | undefined;
-    lockBeginTime: moment.Moment | undefined;
-    lockEndTime: moment.Moment | undefined;
-    registerTime: moment.Moment | undefined;
-    currentLoginIp: string | undefined;
-    currentLoginTime: moment.Moment | undefined;
-    lastLoginIp: string | undefined;
-    lastLoginTime: moment.Moment | undefined;
-    visibilityOrganizationsIds: string[] | undefined;
-    positionIds: string[] | undefined;
-    creatorId: string | undefined;
-    creationTime: moment.Moment | undefined;
-    lastModifierId: string | undefined;
-    lastModificationTime: moment.Moment | undefined;
-
-    constructor(data?: IUserCacheDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.merchantId = data["merchantId"];
-            this.merchantName = data["merchantName"];
-            this.id = data["id"];
-            this.head = data["head"];
-            this.eid = data["eid"];
-            this.eName = data["eName"];
-            this.mobile = data["mobile"];
-            this.organizationsId = data["organizationsId"];
-            this.organizationsName = data["organizationsName"];
-            this.sex = data["sex"];
-            this.roleId = data["roleId"];
-            this.roleName = data["roleName"];
-            this.isLocked = data["isLocked"];
-            this.lockBeginTime = data["lockBeginTime"] ? moment(data["lockBeginTime"].toString()) : <any>undefined;
-            this.lockEndTime = data["lockEndTime"] ? moment(data["lockEndTime"].toString()) : <any>undefined;
-            this.registerTime = data["registerTime"] ? moment(data["registerTime"].toString()) : <any>undefined;
-            this.currentLoginIp = data["currentLoginIp"];
-            this.currentLoginTime = data["currentLoginTime"] ? moment(data["currentLoginTime"].toString()) : <any>undefined;
-            this.lastLoginIp = data["lastLoginIp"];
-            this.lastLoginTime = data["lastLoginTime"] ? moment(data["lastLoginTime"].toString()) : <any>undefined;
-            if (data["visibilityOrganizationsIds"] && data["visibilityOrganizationsIds"].constructor === Array) {
-                this.visibilityOrganizationsIds = [];
-                for (let item of data["visibilityOrganizationsIds"])
-                    this.visibilityOrganizationsIds.push(item);
-            }
-            if (data["positionIds"] && data["positionIds"].constructor === Array) {
-                this.positionIds = [];
-                for (let item of data["positionIds"])
-                    this.positionIds.push(item);
-            }
-            this.creatorId = data["creatorId"];
-            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
-            this.lastModifierId = data["lastModifierId"];
-            this.lastModificationTime = data["lastModificationTime"] ? moment(data["lastModificationTime"].toString()) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): UserCacheDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserCacheDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["merchantId"] = this.merchantId;
-        data["merchantName"] = this.merchantName;
-        data["id"] = this.id;
-        data["head"] = this.head;
-        data["eid"] = this.eid;
-        data["eName"] = this.eName;
-        data["mobile"] = this.mobile;
-        data["organizationsId"] = this.organizationsId;
-        data["organizationsName"] = this.organizationsName;
-        data["sex"] = this.sex;
-        data["roleId"] = this.roleId;
-        data["roleName"] = this.roleName;
-        data["isLocked"] = this.isLocked;
-        data["lockBeginTime"] = this.lockBeginTime ? this.lockBeginTime.toISOString() : <any>undefined;
-        data["lockEndTime"] = this.lockEndTime ? this.lockEndTime.toISOString() : <any>undefined;
-        data["registerTime"] = this.registerTime ? this.registerTime.toISOString() : <any>undefined;
-        data["currentLoginIp"] = this.currentLoginIp;
-        data["currentLoginTime"] = this.currentLoginTime ? this.currentLoginTime.toISOString() : <any>undefined;
-        data["lastLoginIp"] = this.lastLoginIp;
-        data["lastLoginTime"] = this.lastLoginTime ? this.lastLoginTime.toISOString() : <any>undefined;
-        if (this.visibilityOrganizationsIds && this.visibilityOrganizationsIds.constructor === Array) {
-            data["visibilityOrganizationsIds"] = [];
-            for (let item of this.visibilityOrganizationsIds)
-                data["visibilityOrganizationsIds"].push(item);
-        }
-        if (this.positionIds && this.positionIds.constructor === Array) {
-            data["positionIds"] = [];
-            for (let item of this.positionIds)
-                data["positionIds"].push(item);
-        }
-        data["creatorId"] = this.creatorId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["lastModifierId"] = this.lastModifierId;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        return data; 
-    }
-
-    clone(): UserCacheDto {
-        const json = this.toJSON();
-        let result = new UserCacheDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IUserCacheDto {
-    merchantId: string | undefined;
-    merchantName: string | undefined;
-    id: string | undefined;
-    head: string | undefined;
-    eid: string | undefined;
-    eName: string | undefined;
-    mobile: string | undefined;
-    organizationsId: string | undefined;
-    organizationsName: string | undefined;
-    sex: UserCacheDtoSex | undefined;
-    roleId: string | undefined;
-    roleName: string | undefined;
-    isLocked: boolean | undefined;
-    lockBeginTime: moment.Moment | undefined;
-    lockEndTime: moment.Moment | undefined;
-    registerTime: moment.Moment | undefined;
-    currentLoginIp: string | undefined;
-    currentLoginTime: moment.Moment | undefined;
-    lastLoginIp: string | undefined;
-    lastLoginTime: moment.Moment | undefined;
-    visibilityOrganizationsIds: string[] | undefined;
-    positionIds: string[] | undefined;
-    creatorId: string | undefined;
-    creationTime: moment.Moment | undefined;
-    lastModifierId: string | undefined;
-    lastModificationTime: moment.Moment | undefined;
-}
-
 export class CurMerchantUsersDto implements ICurMerchantUsersDto {
     area: string | undefined;
+    name: string | undefined;
     filterText: string | undefined;
     page: number | undefined;
     sorting: string | undefined;
@@ -12204,6 +12268,7 @@ export class CurMerchantUsersDto implements ICurMerchantUsersDto {
     init(data?: any) {
         if (data) {
             this.area = data["area"];
+            this.name = data["name"];
             this.filterText = data["filterText"];
             this.page = data["page"];
             this.sorting = data["sorting"];
@@ -12222,6 +12287,7 @@ export class CurMerchantUsersDto implements ICurMerchantUsersDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["area"] = this.area;
+        data["name"] = this.name;
         data["filterText"] = this.filterText;
         data["page"] = this.page;
         data["sorting"] = this.sorting;
@@ -12240,6 +12306,7 @@ export class CurMerchantUsersDto implements ICurMerchantUsersDto {
 
 export interface ICurMerchantUsersDto {
     area: string | undefined;
+    name: string | undefined;
     filterText: string | undefined;
     page: number | undefined;
     sorting: string | undefined;
@@ -14690,430 +14757,7 @@ export interface IPagedResultDtoOfRoleDto {
     items: RoleDto[] | undefined;
 }
 
-export class ApplyStatisticsQueryDto implements IApplyStatisticsQueryDto {
-    startTime: moment.Moment | undefined;
-    endTime: moment.Moment | undefined;
-
-    constructor(data?: IApplyStatisticsQueryDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.startTime = data["startTime"] ? moment(data["startTime"].toString()) : <any>undefined;
-            this.endTime = data["endTime"] ? moment(data["endTime"].toString()) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): ApplyStatisticsQueryDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ApplyStatisticsQueryDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
-        data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
-        return data; 
-    }
-
-    clone(): ApplyStatisticsQueryDto {
-        const json = this.toJSON();
-        let result = new ApplyStatisticsQueryDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IApplyStatisticsQueryDto {
-    startTime: moment.Moment | undefined;
-    endTime: moment.Moment | undefined;
-}
-
-export class ApplyStatisticsDto implements IApplyStatisticsDto {
-    statisticsNumberCount: number | undefined;
-    fireCompleteNumberCount: number | undefined;
-    completeNumberCount: number | undefined;
-    hasStatisticsNumber: number | undefined;
-    notStatisticsNumber: number | undefined;
-    hasFireCompleteNumber: number | undefined;
-    notFireCompleteNumber: number | undefined;
-    hasCompleteNumber: number | undefined;
-    notCompleteNumber: number | undefined;
-
-    constructor(data?: IApplyStatisticsDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.statisticsNumberCount = data["statisticsNumberCount"];
-            this.fireCompleteNumberCount = data["fireCompleteNumberCount"];
-            this.completeNumberCount = data["completeNumberCount"];
-            this.hasStatisticsNumber = data["hasStatisticsNumber"];
-            this.notStatisticsNumber = data["notStatisticsNumber"];
-            this.hasFireCompleteNumber = data["hasFireCompleteNumber"];
-            this.notFireCompleteNumber = data["notFireCompleteNumber"];
-            this.hasCompleteNumber = data["hasCompleteNumber"];
-            this.notCompleteNumber = data["notCompleteNumber"];
-        }
-    }
-
-    static fromJS(data: any): ApplyStatisticsDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ApplyStatisticsDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["statisticsNumberCount"] = this.statisticsNumberCount;
-        data["fireCompleteNumberCount"] = this.fireCompleteNumberCount;
-        data["completeNumberCount"] = this.completeNumberCount;
-        data["hasStatisticsNumber"] = this.hasStatisticsNumber;
-        data["notStatisticsNumber"] = this.notStatisticsNumber;
-        data["hasFireCompleteNumber"] = this.hasFireCompleteNumber;
-        data["notFireCompleteNumber"] = this.notFireCompleteNumber;
-        data["hasCompleteNumber"] = this.hasCompleteNumber;
-        data["notCompleteNumber"] = this.notCompleteNumber;
-        return data; 
-    }
-
-    clone(): ApplyStatisticsDto {
-        const json = this.toJSON();
-        let result = new ApplyStatisticsDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IApplyStatisticsDto {
-    statisticsNumberCount: number | undefined;
-    fireCompleteNumberCount: number | undefined;
-    completeNumberCount: number | undefined;
-    hasStatisticsNumber: number | undefined;
-    notStatisticsNumber: number | undefined;
-    hasFireCompleteNumber: number | undefined;
-    notFireCompleteNumber: number | undefined;
-    hasCompleteNumber: number | undefined;
-    notCompleteNumber: number | undefined;
-}
-
-export class DeclareRateQueryDto implements IDeclareRateQueryDto {
-    processedStatus: number | undefined;
-
-    constructor(data?: IDeclareRateQueryDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.processedStatus = data["processedStatus"];
-        }
-    }
-
-    static fromJS(data: any): DeclareRateQueryDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new DeclareRateQueryDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["processedStatus"] = this.processedStatus;
-        return data; 
-    }
-
-    clone(): DeclareRateQueryDto {
-        const json = this.toJSON();
-        let result = new DeclareRateQueryDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IDeclareRateQueryDto {
-    processedStatus: number | undefined;
-}
-
-export class ListResultDtoOfTimeoutStatisticsDto implements IListResultDtoOfTimeoutStatisticsDto {
-    items: TimeoutStatisticsDto[] | undefined;
-
-    constructor(data?: IListResultDtoOfTimeoutStatisticsDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [];
-                for (let item of data["items"])
-                    this.items.push(TimeoutStatisticsDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): ListResultDtoOfTimeoutStatisticsDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ListResultDtoOfTimeoutStatisticsDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-
-    clone(): ListResultDtoOfTimeoutStatisticsDto {
-        const json = this.toJSON();
-        let result = new ListResultDtoOfTimeoutStatisticsDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IListResultDtoOfTimeoutStatisticsDto {
-    items: TimeoutStatisticsDto[] | undefined;
-}
-
-export class TimeoutStatisticsDto implements ITimeoutStatisticsDto {
-    cityName: string | undefined;
-    flowPathType: number | undefined;
-    fireAuditNumber: number | undefined;
-    fireCompleteNumber: number | undefined;
-    completeNumber: number | undefined;
-
-    constructor(data?: ITimeoutStatisticsDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.cityName = data["cityName"];
-            this.flowPathType = data["flowPathType"];
-            this.fireAuditNumber = data["fireAuditNumber"];
-            this.fireCompleteNumber = data["fireCompleteNumber"];
-            this.completeNumber = data["completeNumber"];
-        }
-    }
-
-    static fromJS(data: any): TimeoutStatisticsDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TimeoutStatisticsDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["cityName"] = this.cityName;
-        data["flowPathType"] = this.flowPathType;
-        data["fireAuditNumber"] = this.fireAuditNumber;
-        data["fireCompleteNumber"] = this.fireCompleteNumber;
-        data["completeNumber"] = this.completeNumber;
-        return data; 
-    }
-
-    clone(): TimeoutStatisticsDto {
-        const json = this.toJSON();
-        let result = new TimeoutStatisticsDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ITimeoutStatisticsDto {
-    cityName: string | undefined;
-    flowPathType: number | undefined;
-    fireAuditNumber: number | undefined;
-    fireCompleteNumber: number | undefined;
-    completeNumber: number | undefined;
-}
-
-export class ScreenTimeoutStatisticsQueryDto implements IScreenTimeoutStatisticsQueryDto {
-    dateTimeNow: moment.Moment | undefined;
-
-    constructor(data?: IScreenTimeoutStatisticsQueryDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): ScreenTimeoutStatisticsQueryDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ScreenTimeoutStatisticsQueryDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
-        return data; 
-    }
-
-    clone(): ScreenTimeoutStatisticsQueryDto {
-        const json = this.toJSON();
-        let result = new ScreenTimeoutStatisticsQueryDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IScreenTimeoutStatisticsQueryDto {
-    dateTimeNow: moment.Moment | undefined;
-}
-
-export class ListResultDtoOfATimeByStatisticsDto implements IListResultDtoOfATimeByStatisticsDto {
-    items: ATimeByStatisticsDto[] | undefined;
-
-    constructor(data?: IListResultDtoOfATimeByStatisticsDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [];
-                for (let item of data["items"])
-                    this.items.push(ATimeByStatisticsDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): ListResultDtoOfATimeByStatisticsDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ListResultDtoOfATimeByStatisticsDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-
-    clone(): ListResultDtoOfATimeByStatisticsDto {
-        const json = this.toJSON();
-        let result = new ListResultDtoOfATimeByStatisticsDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IListResultDtoOfATimeByStatisticsDto {
-    items: ATimeByStatisticsDto[] | undefined;
-}
-
-export class ATimeByStatisticsDto implements IATimeByStatisticsDto {
-    cityName: string | undefined;
-    flowPathType: number | undefined;
-    throughRate: number | undefined;
-
-    constructor(data?: IATimeByStatisticsDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.cityName = data["cityName"];
-            this.flowPathType = data["flowPathType"];
-            this.throughRate = data["throughRate"];
-        }
-    }
-
-    static fromJS(data: any): ATimeByStatisticsDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ATimeByStatisticsDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["cityName"] = this.cityName;
-        data["flowPathType"] = this.flowPathType;
-        data["throughRate"] = this.throughRate;
-        return data; 
-    }
-
-    clone(): ATimeByStatisticsDto {
-        const json = this.toJSON();
-        let result = new ATimeByStatisticsDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IATimeByStatisticsDto {
-    cityName: string | undefined;
-    flowPathType: number | undefined;
-    throughRate: number | undefined;
-}
-
 export class ScreenTimeoutListQueryDto implements IScreenTimeoutListQueryDto {
-    dateTimeNow: moment.Moment | undefined;
-    orderStatus: number | undefined;
-    orgType: number | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
@@ -15130,9 +14774,6 @@ export class ScreenTimeoutListQueryDto implements IScreenTimeoutListQueryDto {
 
     init(data?: any) {
         if (data) {
-            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
-            this.orderStatus = data["orderStatus"];
-            this.orgType = data["orgType"];
             this.page = data["page"];
             this.sorting = data["sorting"];
             this.skipCount = data["skipCount"];
@@ -15149,9 +14790,6 @@ export class ScreenTimeoutListQueryDto implements IScreenTimeoutListQueryDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
-        data["orderStatus"] = this.orderStatus;
-        data["orgType"] = this.orgType;
         data["page"] = this.page;
         data["sorting"] = this.sorting;
         data["skipCount"] = this.skipCount;
@@ -15168,26 +14806,19 @@ export class ScreenTimeoutListQueryDto implements IScreenTimeoutListQueryDto {
 }
 
 export interface IScreenTimeoutListQueryDto {
-    dateTimeNow: moment.Moment | undefined;
-    orderStatus: number | undefined;
-    orgType: number | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
     maxResultCount: number | undefined;
 }
 
-export class YearApplyNumberQueryDto implements IYearApplyNumberQueryDto {
-    dateTimeNow: moment.Moment | undefined;
-    startDateTime: moment.Moment | undefined;
-    endDateTime: moment.Moment | undefined;
-    completeStatus: number | undefined;
+export class ScreenYearApplyNumberQueryDto implements IScreenYearApplyNumberQueryDto {
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
     maxResultCount: number | undefined;
 
-    constructor(data?: IYearApplyNumberQueryDto) {
+    constructor(data?: IScreenYearApplyNumberQueryDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -15198,10 +14829,6 @@ export class YearApplyNumberQueryDto implements IYearApplyNumberQueryDto {
 
     init(data?: any) {
         if (data) {
-            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
-            this.startDateTime = data["startDateTime"] ? moment(data["startDateTime"].toString()) : <any>undefined;
-            this.endDateTime = data["endDateTime"] ? moment(data["endDateTime"].toString()) : <any>undefined;
-            this.completeStatus = data["completeStatus"];
             this.page = data["page"];
             this.sorting = data["sorting"];
             this.skipCount = data["skipCount"];
@@ -15209,19 +14836,15 @@ export class YearApplyNumberQueryDto implements IYearApplyNumberQueryDto {
         }
     }
 
-    static fromJS(data: any): YearApplyNumberQueryDto {
+    static fromJS(data: any): ScreenYearApplyNumberQueryDto {
         data = typeof data === 'object' ? data : {};
-        let result = new YearApplyNumberQueryDto();
+        let result = new ScreenYearApplyNumberQueryDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
-        data["startDateTime"] = this.startDateTime ? this.startDateTime.toISOString() : <any>undefined;
-        data["endDateTime"] = this.endDateTime ? this.endDateTime.toISOString() : <any>undefined;
-        data["completeStatus"] = this.completeStatus;
         data["page"] = this.page;
         data["sorting"] = this.sorting;
         data["skipCount"] = this.skipCount;
@@ -15229,208 +14852,19 @@ export class YearApplyNumberQueryDto implements IYearApplyNumberQueryDto {
         return data; 
     }
 
-    clone(): YearApplyNumberQueryDto {
+    clone(): ScreenYearApplyNumberQueryDto {
         const json = this.toJSON();
-        let result = new YearApplyNumberQueryDto();
+        let result = new ScreenYearApplyNumberQueryDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IYearApplyNumberQueryDto {
-    dateTimeNow: moment.Moment | undefined;
-    startDateTime: moment.Moment | undefined;
-    endDateTime: moment.Moment | undefined;
-    completeStatus: number | undefined;
+export interface IScreenYearApplyNumberQueryDto {
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
     maxResultCount: number | undefined;
-}
-
-export class FireDataListQueryDto implements IFireDataListQueryDto {
-    startDateTime: moment.Moment | undefined;
-    dateTimeNow: moment.Moment | undefined;
-    processedStatus: number | undefined;
-
-    constructor(data?: IFireDataListQueryDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.startDateTime = data["startDateTime"] ? moment(data["startDateTime"].toString()) : <any>undefined;
-            this.dateTimeNow = data["dateTimeNow"] ? moment(data["dateTimeNow"].toString()) : <any>undefined;
-            this.processedStatus = data["processedStatus"];
-        }
-    }
-
-    static fromJS(data: any): FireDataListQueryDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new FireDataListQueryDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["startDateTime"] = this.startDateTime ? this.startDateTime.toISOString() : <any>undefined;
-        data["dateTimeNow"] = this.dateTimeNow ? this.dateTimeNow.toISOString() : <any>undefined;
-        data["processedStatus"] = this.processedStatus;
-        return data; 
-    }
-
-    clone(): FireDataListQueryDto {
-        const json = this.toJSON();
-        let result = new FireDataListQueryDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IFireDataListQueryDto {
-    startDateTime: moment.Moment | undefined;
-    dateTimeNow: moment.Moment | undefined;
-    processedStatus: number | undefined;
-}
-
-export class FireDataListDto implements IFireDataListDto {
-    completeCountNumber: number | undefined;
-    timeoutCountNumber: number | undefined;
-    aTimeByCountNumber: number | undefined;
-    avgCompleteTimeCountNumber: number | undefined;
-    flowPathType: number | undefined;
-    items: CityFireDataList[] | undefined;
-
-    constructor(data?: IFireDataListDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.completeCountNumber = data["completeCountNumber"];
-            this.timeoutCountNumber = data["timeoutCountNumber"];
-            this.aTimeByCountNumber = data["aTimeByCountNumber"];
-            this.avgCompleteTimeCountNumber = data["avgCompleteTimeCountNumber"];
-            this.flowPathType = data["flowPathType"];
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [];
-                for (let item of data["items"])
-                    this.items.push(CityFireDataList.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): FireDataListDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new FireDataListDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["completeCountNumber"] = this.completeCountNumber;
-        data["timeoutCountNumber"] = this.timeoutCountNumber;
-        data["aTimeByCountNumber"] = this.aTimeByCountNumber;
-        data["avgCompleteTimeCountNumber"] = this.avgCompleteTimeCountNumber;
-        data["flowPathType"] = this.flowPathType;
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-
-    clone(): FireDataListDto {
-        const json = this.toJSON();
-        let result = new FireDataListDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IFireDataListDto {
-    completeCountNumber: number | undefined;
-    timeoutCountNumber: number | undefined;
-    aTimeByCountNumber: number | undefined;
-    avgCompleteTimeCountNumber: number | undefined;
-    flowPathType: number | undefined;
-    items: CityFireDataList[] | undefined;
-}
-
-export class CityFireDataList implements ICityFireDataList {
-    cityName: string | undefined;
-    flowPathType: number | undefined;
-    completeCountNumber: number | undefined;
-    timeoutCountNumber: number | undefined;
-    aTimeByCountNumber: number | undefined;
-    avgCompleteTimeCountNumber: number | undefined;
-
-    constructor(data?: ICityFireDataList) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.cityName = data["cityName"];
-            this.flowPathType = data["flowPathType"];
-            this.completeCountNumber = data["completeCountNumber"];
-            this.timeoutCountNumber = data["timeoutCountNumber"];
-            this.aTimeByCountNumber = data["aTimeByCountNumber"];
-            this.avgCompleteTimeCountNumber = data["avgCompleteTimeCountNumber"];
-        }
-    }
-
-    static fromJS(data: any): CityFireDataList {
-        data = typeof data === 'object' ? data : {};
-        let result = new CityFireDataList();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["cityName"] = this.cityName;
-        data["flowPathType"] = this.flowPathType;
-        data["completeCountNumber"] = this.completeCountNumber;
-        data["timeoutCountNumber"] = this.timeoutCountNumber;
-        data["aTimeByCountNumber"] = this.aTimeByCountNumber;
-        data["avgCompleteTimeCountNumber"] = this.avgCompleteTimeCountNumber;
-        return data; 
-    }
-
-    clone(): CityFireDataList {
-        const json = this.toJSON();
-        let result = new CityFireDataList();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ICityFireDataList {
-    cityName: string | undefined;
-    flowPathType: number | undefined;
-    completeCountNumber: number | undefined;
-    timeoutCountNumber: number | undefined;
-    aTimeByCountNumber: number | undefined;
-    avgCompleteTimeCountNumber: number | undefined;
 }
 
 export class GetCurrentLoginInformationsOutput implements IGetCurrentLoginInformationsOutput {
@@ -16702,6 +16136,65 @@ export class PagedResultDtoOfUserDto implements IPagedResultDtoOfUserDto {
 export interface IPagedResultDtoOfUserDto {
     totalCount: number | undefined;
     items: UserDto[] | undefined;
+}
+
+export class UserBaseDto implements IUserBaseDto {
+    id: string | undefined;
+    userName: string | undefined;
+    userCode: string | undefined;
+    orgCode: string | undefined;
+    orgName: string | undefined;
+
+    constructor(data?: IUserBaseDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.userName = data["userName"];
+            this.userCode = data["userCode"];
+            this.orgCode = data["orgCode"];
+            this.orgName = data["orgName"];
+        }
+    }
+
+    static fromJS(data: any): UserBaseDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserBaseDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["userName"] = this.userName;
+        data["userCode"] = this.userCode;
+        data["orgCode"] = this.orgCode;
+        data["orgName"] = this.orgName;
+        return data; 
+    }
+
+    clone(): UserBaseDto {
+        const json = this.toJSON();
+        let result = new UserBaseDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserBaseDto {
+    id: string | undefined;
+    userName: string | undefined;
+    userCode: string | undefined;
+    orgCode: string | undefined;
+    orgName: string | undefined;
 }
 
 export class PendingWorkFlow_NodeAuditorRecordDto implements IPendingWorkFlow_NodeAuditorRecordDto {

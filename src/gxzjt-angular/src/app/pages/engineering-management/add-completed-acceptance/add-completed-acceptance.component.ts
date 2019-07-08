@@ -44,7 +44,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   data: any = {
 
     jsconstructionUnit: '',
-    legalRepresentative: '',
+    legalRepresentative: '', 
     legalRepresentativeNo: '',
 
     recordNo: '',
@@ -412,8 +412,12 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
         ]
       },
-    ]
-
+    ],
+    //2019.7.4 新增审批单位
+    engineeringId: '',
+    engineeringNo: '',
+    //申报人姓名
+    applyName: '',
   }
 
 
@@ -461,7 +465,30 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     //this.data = '';
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
       if (data.formJson != null && data.formJson != "") {
-        this.data = JSON.parse(data.formJson);
+
+        const json = JSON.parse(data.formJson);
+        json.constructionUnit = json.constructionUnit instanceof Array ? json.constructionUnit : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }]
+        json.design = json.design?json.design: [{designUnit: '',qualificationLevel: '',legalRepresentative: '',contacts: '',contactsNumber: ''}],
+        json.engineeringId = json.engineeringId ? json.engineeringId : ''
+        json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
+        json.applyName = json.applyName ? json.applyName : '' 
+        json.constructionProject = json.constructionProject?json.constructionProject: {
+          arr: [
+            { label: '顶棚', value: false, checked: false },
+            { label: '墙面', value: false, checked: false },
+            { label: '地面', value: false, checked: false },
+            { label: '隔断 ', value: false, checked: false },
+            { label: '固定家具', value: false, checked: false },
+            { label: '装饰织物', value: false, checked: false },
+            { label: '其他装饰材料 ', value: false, checked: false },
+          ],
+          decorationArea: '',
+          ground: '',
+          useNature: '',
+          originallyUsed: ''
+        }
+
+        this.data = json;
       }
       this.useNatureSelect = data.natures
     })
@@ -472,9 +499,9 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   */
   depositDraft() {
     this.butNzLoading = true;
-    this.data.planEndTime = this.data.planEndTime == '' ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
+    this.data.planEndTime = !this.data.planEndTime ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
 
-    this.data.acceptanceOpinions.filingTime = this.data.acceptanceOpinions.filingTime == '' ? '' : timeTrans(Date.parse(this.data.acceptanceOpinions.filingTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
+    this.data.acceptanceOpinions.filingTime = !this.data.acceptanceOpinions.filingTime ? '' : timeTrans(Date.parse(this.data.acceptanceOpinions.filingTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 3;
     this.flowFormDto.projectTypeStatu = 2;
@@ -497,7 +524,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   save() {
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
-        Area: this.data.engineeringCitycountyAndDistrict[this.data.engineeringCitycountyAndDistrict.length - 1],
+        Area: this.data.engineeringNo
       },
       identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {
@@ -509,12 +536,13 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     };
 
     this.butNzLoading = true;
-    this.isSelectModalOkLoading = true; 
+    this.isSelectModalOkLoading = true;
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
       const flowDataDto = new FlowDataDto();
       flowDataDto.flowId = this.flowFormQueryDto.flowId;
       flowDataDto.projectId = this.flowFormQueryDto.projectId;
+      console.log(this.data)
       flowDataDto.formJson = JSON.stringify(this.data);
       flowDataDto.projectFlowInfo = new ProjectFlowDto();
 
@@ -549,6 +577,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       // currentHandleUserCode: string | undefined; 
 
       // console.log(flowDataDto)
+
 
 
       this._applyService.post_PutOnRecord(flowDataDto).subscribe(data => {
@@ -593,6 +622,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       })
     }, (error) => {
       this.message.info(error.error.error.message)
+      this.isSelectModalOkLoading = false;
       this.butNzLoading = false;
     })
   }

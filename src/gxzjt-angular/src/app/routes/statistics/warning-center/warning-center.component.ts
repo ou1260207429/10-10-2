@@ -3,7 +3,7 @@ import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent, XlsxService } from '@delon/abc';
 
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { StatisticsWarningCenterDetailComponent } from '../warning-center-detail/warning-center-detail.component';
+import * as moment from 'moment';
 import { StatisticalServiceServiceProxy, WarningCenterQueryDto } from '@shared/service-proxies/service-proxies';
 
 
@@ -122,6 +122,9 @@ export class StatisticsWarningCenterComponent implements OnInit {
     }
     this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
     this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
+    this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+    this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+
     this.statisticalServiceServiceProxy.post_GetWarningCenterList(this.param).subscribe((result: any) => {
       if(result.data){
          this.formResultData = result.data;
@@ -179,8 +182,10 @@ export class StatisticsWarningCenterComponent implements OnInit {
         "skipCount": 0,
         "maxResultCount": 3000
       });
-      this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
-      this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
+      // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+      // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
+      this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+      this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
     this.statisticalServiceServiceProxy.post_GetWarningCenterList(this.param).subscribe((result: any) => {
       this.formResultData = result.data;
     }, err => {

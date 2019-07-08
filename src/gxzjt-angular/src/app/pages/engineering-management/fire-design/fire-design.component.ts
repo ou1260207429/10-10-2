@@ -152,8 +152,8 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
     this.param.flowPathType = 1
     this.param.sorting = 'projectId desc';
     this.resetTime();
-    this.param.startApplyTime = moment(this.rangeTime[0]);
-    this.param.endApplyTime = moment(this.rangeTime[1]);
+    this.param.startApplyTime = moment(this.rangeTime[0]).add(28800000);
+    this.param.endApplyTime = moment(this.rangeTime[1]).add(28800000);
     this.getList();
   }
   reststart() {
@@ -164,8 +164,8 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
     this.param.flowPathType = 1
     this.param.sorting = 'projectId desc';
     this.resetTime();
-    this.param.startApplyTime = moment(this.rangeTime[0]);
-    this.param.endApplyTime = moment(this.rangeTime[1]);
+    this.param.startApplyTime = moment(this.rangeTime[0]).add(28800000);
+    this.param.endApplyTime = moment(this.rangeTime[1]).add(28800000);
     this.getList();
   }
 
@@ -177,8 +177,8 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
    */
   query() {
     this.param.page = 1;
-    this.param.startApplyTime = moment(this.rangeTime[0])
-    this.param.endApplyTime = moment(this.rangeTime[1])
+    this.param.startApplyTime = moment(this.rangeTime[0]).add(28800000);
+    this.param.endApplyTime = moment(this.rangeTime[1]).add(28800000);
     this.getList();
   }
 
@@ -213,7 +213,7 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
   }
   resetTime() {
     var startTime = new Date();
-    startTime.setDate(startTime.getDate() - 1)
+    startTime.setDate(startTime.getDate() - 7)
     this.rangeTime = [startTime, new Date()];
   }
 

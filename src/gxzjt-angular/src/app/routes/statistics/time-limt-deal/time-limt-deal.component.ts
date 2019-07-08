@@ -5,7 +5,7 @@ import { StatisticalServiceServiceProxy, HandleLimitQueryDto } from '@shared/ser
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { StatisticsTimeLimtDealDetailComponent } from '../time-limt-deal-detail/time-limt-deal-detail.component';
 import { UserRightService } from '../../userright/userright.service';
-
+import * as moment from 'moment';
 
 
 var  datePipe=new  DatePipe();
@@ -111,6 +111,9 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     }
     this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
     this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
+     this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+    this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+
     this.statisticalServiceServiceProxy.post_GetHandleLimitList(this.param).subscribe((result: any) => {
       if (result.data) {
         this.formResultData = result.data;
@@ -174,8 +177,10 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
         "skipCount": 0,
         "maxResultCount": 3000
       });
-      this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
-      this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
+      // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+      // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
+      this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+      this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
     this.statisticalServiceServiceProxy.post_GetHandleLimitList(this.param).subscribe((result: any) => {
       this.formResultData = result.data;
     }, err => {

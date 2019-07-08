@@ -283,6 +283,42 @@ export function objDeleteType(box) {
   return obj;
 }
 
+export function updateEngineeringNo(array: Array<any>, length, id, no) {
+  let result = {
+    i: -1,
+    index: - 2,
+    no:'',
+  };
+  switch (length) {
+    case 0:
+      result.i = checkArrayString(array, 'value', id[length])
+      result.no = array[result.i].ID
+      break;
+
+    case 1:
+      result.i = checkArrayString(array[0].children, 'value', id[1])
+      result.no = array[0].children[result.i].ID
+      break;
+
+    case 2:
+      result.i = checkArrayString(array[0].children, 'value', id[1])
+      result.index = checkArrayString(array[0].children[result.i].children, 'value', id[2])
+
+      if (result.index == -1) {
+        id.splice(id.length - 1, 1);
+        result.no = array[0].children[result.i].ID
+      } else {
+        result.no = array[0].children[result.i].children[result.index].ID
+      }
+      break;
+
+    default:
+      break;
+  }
+  return result
+}
+
+
 /**
  * 数组中单独判断
  * @param array 数组
@@ -381,6 +417,21 @@ export function classTreeChildrenArray(arr: Array<any>): Array<any> {
       element.children = []
       element.children = element.Children
       classTreeChildrenArray(element.children)
+    } else {
+      element['isLeaf'] = true
+    }
+  });
+  return arr;
+}
+
+export function newClassTreeChildrenArray(arr: Array<any>): Array<any> {
+  arr.forEach(element => {
+    element.label = element.Name;
+    element.value = element.AreaIds[0];
+    if (element.Children && element.Children.length > 0) {
+      element.children = []
+      element.children = element.Children
+      newClassTreeChildrenArray(element.children)
     } else {
       element['isLeaf'] = true
     }

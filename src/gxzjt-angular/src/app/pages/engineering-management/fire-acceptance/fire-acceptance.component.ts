@@ -147,13 +147,13 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
   }
 
   init() {
+    this.resetTime();
     this.searchParam.page = 1;
     this.searchParam.maxResultCount = 10;
     this.searchParam.flowPathType = 2
     this.searchParam.sorting = 'projectId desc';
-    this.searchParam.startApplyTime = moment(this.rangeTime[0])
-    this.searchParam.endApplyTime =moment(this.rangeTime[1])
-    this.resetTime();
+    this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
+    this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     this.getList();
   }
   reststart(){
@@ -164,8 +164,8 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     this.searchParam.maxResultCount = 10;
     this.searchParam.flowPathType = 2
     this.searchParam.sorting = 'projectId desc';
-    this.searchParam.startApplyTime = moment(this.rangeTime[0])
-    this.searchParam.endApplyTime =moment(this.rangeTime[1])
+    this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
+    this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     this.getList();
   }
 
@@ -185,8 +185,9 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
    */
   query() {
     this.searchParam.page = 1;
-    this.searchParam.startApplyTime = moment(this.rangeTime[0])
-    this.searchParam.endApplyTime =moment(this.rangeTime[1])
+
+    this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
+    this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     this.getList();
   }
 
@@ -220,7 +221,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
 
   resetTime() {
     var startTime = new Date();
-    startTime.setDate(startTime.getDate() - 30)
+    startTime.setDate(startTime.getDate() - 7)
     this.rangeTime = [startTime, new Date()];
   }
 }

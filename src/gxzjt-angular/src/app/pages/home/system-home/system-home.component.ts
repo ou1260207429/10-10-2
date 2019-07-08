@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectFlowServcieServiceProxy } from '@shared/service-proxies/service-proxies';
 
 
-import { SERVER_URL } from 'infrastructure/expression';
+import {  URL_CONFIG } from 'infrastructure/expression';
 
 /**
  * 系统首页
@@ -40,7 +40,7 @@ export class SystemHomeComponent implements OnInit {
       processedStatus: 2
     };
     model.startDateTime = (new Date().getFullYear() + '-01-01');
-    this.http.post(SERVER_URL + 'api/services/app/ScreenService/Post_GetFireDataList', model).subscribe((res: any) => {
+    this.http.post( URL_CONFIG.getInstance().SERVER_URL + 'api/services/app/ScreenService/Post_GetFireDataList', model).subscribe((res: any) => {
       let MapBackList = [];
       if (res.success) {
         res.result.forEach(e => {
