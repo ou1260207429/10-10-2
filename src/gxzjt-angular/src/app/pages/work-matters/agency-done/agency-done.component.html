@@ -65,8 +65,8 @@
         required maxlength="32">
     </se>
     <div style="text-align: center;">
-      <p><a *ngIf="examineFormDto.acceptFileUrl!=null" [href]="examineFormDto.acceptFileUrl"> 下载受理/不受理凭证</a></p>
-      <p><a *ngIf="examineFormDto.opinionFileUrl!=null" [href]="examineFormDto.opinionFileUrl"> 下载意见书</a></p>
+      <p><a *ngIf="examineFormDto.acceptFileUrl && examineFormDto.acceptFileUrl!=null" [href]="examineFormDto.acceptFileUrl"> 下载受理/不受理凭证</a></p>
+      <p><a *ngIf="examineFormDto.opinionFileUrl && examineFormDto.opinionFileUrl!=null" [href]="examineFormDto.opinionFileUrl"> 下载意见书</a></p>
     </div>
   </form>
 </nz-modal>

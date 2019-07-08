@@ -264,8 +264,8 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
     const workFlow: WorkFlow = {
       workFlow_InstanceId: this.examineFormDto.workFlow_Instance_Id,
-      workFlow_TemplateInfoId: 10171,
-      workFlow_NodeAuditorRecordId: this.examineFormDto.flowNodeUserInfo.userFlowId,
+      workFlow_TemplateInfoId: this.examineFormDto.workFlow_TemplateInfo_Id,
+      workFlow_NodeAuditorRecordId: +this.examineFormDto.flowNodeUserInfo.userFlowId,
     }
 
     this._flowServices.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow).subscribe((data: any) => {
