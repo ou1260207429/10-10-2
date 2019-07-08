@@ -121,8 +121,8 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
     this.searchParam.projectName='';
     this.searchParam.companyName='';
     this.searchParam.sorting = 'ProjectName';
-    this.searchParam.startApplyTime = moment(this.rangeTime[0]);
-    this.searchParam.endApplyTime = moment(this.rangeTime[1]);
+    this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
+    this.searchParam.endApplyTime = moment(this.rangeTime[1]).add(28800000);
     this.getList();
   }
 
@@ -143,8 +143,8 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
    */
   query() {
     this.searchParam.page = 1;
-    this.searchParam.startApplyTime = moment(this.rangeTime[0])
-    this.searchParam.endApplyTime = moment(this.rangeTime[1])
+    this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
+    this.searchParam.endApplyTime = moment(this.rangeTime[1]).add(28800000);
     this.getList();
   }
 

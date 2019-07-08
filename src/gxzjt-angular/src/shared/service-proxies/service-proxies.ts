@@ -6579,6 +6579,57 @@ export class ScreenServiceServiceProxy {
         }
         return _observableOf<DataSourceResult>(<any>null);
     }
+
+    /**
+     * @return Success
+     */
+    post_GetApplyRate(): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetApplyRate";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetApplyRate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetApplyRate(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetApplyRate(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
 }
 
 @Injectable()
@@ -8894,6 +8945,8 @@ export class ReviewFormDto implements IReviewFormDto {
     provinceName: string | undefined;
     cityName: string | undefined;
     regionAndCountyName: string | undefined;
+    orgName: string | undefined;
+    orgCode: string | undefined;
 
     constructor(data?: IReviewFormDto) {
         if (data) {
@@ -8940,6 +8993,8 @@ export class ReviewFormDto implements IReviewFormDto {
             this.provinceName = data["provinceName"];
             this.cityName = data["cityName"];
             this.regionAndCountyName = data["regionAndCountyName"];
+            this.orgName = data["orgName"];
+            this.orgCode = data["orgCode"];
         }
     }
 
@@ -8986,6 +9041,8 @@ export class ReviewFormDto implements IReviewFormDto {
         data["provinceName"] = this.provinceName;
         data["cityName"] = this.cityName;
         data["regionAndCountyName"] = this.regionAndCountyName;
+        data["orgName"] = this.orgName;
+        data["orgCode"] = this.orgCode;
         return data; 
     }
 
@@ -9028,6 +9085,8 @@ export interface IReviewFormDto {
     provinceName: string | undefined;
     cityName: string | undefined;
     regionAndCountyName: string | undefined;
+    orgName: string | undefined;
+    orgCode: string | undefined;
 }
 
 export class ProjectCompany implements IProjectCompany {
