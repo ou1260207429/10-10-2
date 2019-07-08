@@ -14,7 +14,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 })
 export class WorkMattersReviewApplyComponent implements OnInit {
 
-  reviewFormDto 
+  reviewFormDto;
   flowType;
   applyName;
   constructor(private _activatedRoute: ActivatedRoute,
@@ -23,6 +23,7 @@ export class WorkMattersReviewApplyComponent implements OnInit {
     public appSession: AppSessionService,
     private message: NzMessageService,
     private _appSessionService: AppSessionService, ) {
+    this.reviewFormDto={};
     this.reviewFormDto.constructOrg = new ProjectCompany();
     var flowId = +this._activatedRoute.snapshot.paramMap.get('flowId');
     this.flowType = +this._activatedRoute.snapshot.paramMap.get('flowType');

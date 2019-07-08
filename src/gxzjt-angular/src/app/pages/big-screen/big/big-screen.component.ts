@@ -65,7 +65,6 @@ export class BigScreenComponent {
     pageindex = 1;
     ngOnInit() {
         this.Line();
-        this.Pie2();
         setInterval(() => {
             this.dateTime = new Date();
 
@@ -104,6 +103,7 @@ export class BigScreenComponent {
         this.GetFireDataList();
         this.GetATimeByStatistics();
         this.post_GetFireDataSumList();
+        this.Post_GetApplyRate();
         // setInterval(() => {
         //     this.ScreenTimeoutChangePage();
         //     this.ScreenYearApplyChangePage();
@@ -132,7 +132,6 @@ export class BigScreenComponent {
         const OutTimefireComplete = [];
 
         this.screenService.post_GetDeclareRate().subscribe((res) => {
-            console.log(res);
             if (res.data != null) {
                 res.data.forEach(e => {
                     switch (e.flowPathType) {
@@ -173,6 +172,45 @@ export class BigScreenComponent {
             }
         });
     }
+    // 各事项申报数量占比
+    Post_GetApplyRate() {
+        let Year1 = 0;
+        let Year2 = 0;
+        let Year3 = 0;
+        let Month1 = 0;
+        let Month2 = 0;
+        let Month3 = 0;
+
+        this.screenService.post_GetApplyRate().subscribe((res: any) => {
+            console.log(res);
+            
+            res.data.forEach(e => {
+                switch (e.flowPathType) {
+                    case 1:
+                        Year1 = e.numYear *100;
+                        Month1 = e.numMonth * 100;
+                        break;
+
+                    case 2:
+                        Year2 = e.numYear *100;
+                        Month2 = e.numMonth*100;
+                        break;
+                    case 3:
+                        Year3 = e.numYear*100;
+                        Month3 = e.numMonth*100;
+                        break;
+                }
+            });
+            Year1 =  this.Floor(Year1);
+            Year2 =  this.Floor(Year2);
+            Year3 =  this.Floor(Year3);
+            Month1 =  this.Floor(Month1);
+            Month2 =  this.Floor(Month2);
+            Month3 =  this.Floor(Month3);
+            this.Pie1(Year1, Year2, Year3);
+            this.Pie2(Month1, Month2, Month3);
+        });
+    }
     // 一次性通过率
     GetATimeByStatistics() {
         const CityList = [];
@@ -181,7 +219,6 @@ export class BigScreenComponent {
         const fireCompleteList = [];
         const completeList = [];
         this.screenService.post_GetATimeByStatistics().subscribe((res) => {
-            console.log(res);
             if (res.data != null) {
                 res.data.forEach(e => {
                     switch (e.flowPathType) {
@@ -377,14 +414,14 @@ export class BigScreenComponent {
                         break;
                 }
             });
-            let a = JSON.stringify(this.FireData1.completeNumber  + this.FireData2.completeNumber + this.FireData3.completeNumber);
+            let a = JSON.stringify(this.FireData1.completeNumber + this.FireData2.completeNumber + this.FireData3.completeNumber);
             for (let i = 0; i < 8 - a.split("").length; i++) {
                 this.GetThrough.push(0);
             }
             a.split("").forEach(e => {
                 this.GetThrough.push(e);
             });
-            this.Pie1();
+            // this.Pie1();
         });
 
     }
@@ -1217,7 +1254,7 @@ export class BigScreenComponent {
         };
     }
     pie1: any;
-    Pie1() {
+    Pie1(num1, num2, num3) {
         this.pie1 = {
             title: {
                 text: '本年',
@@ -1239,7 +1276,7 @@ export class BigScreenComponent {
             legend: {
                 orient: 'vertical',
                 left: 'left',
-                data: ['消防设计审查', '竣工验收备案', '消防验收'],
+                data: ['消防设计审查', '消防验收', '竣工验收备案'],
                 textStyle: {
                     color: '#fff'
                 },
@@ -1265,7 +1302,7 @@ export class BigScreenComponent {
                     },
                     data: [
                         {
-                            value: 20, name: '消防设计审查', itemStyle: {
+                            value: num1, name: '消防设计审查', itemStyle: {
                                 normal: {
                                     color: '#F6FF00',
                                     shadowColor: '#F6FF00',
@@ -1276,23 +1313,23 @@ export class BigScreenComponent {
                             }
                         },
                         {
-                            value: 30, name: '竣工验收备案', itemStyle: {
-                                normal: {
-                                    color: '#0EF9B3',
-                                    shadowColor: '#0EF9B3',
-                                    borderWidth: 2,
-                                    borderColor: '#0EF9B3',
-                                    shadowBlur: 10
-                                }
-                            }
-                        },
-                        {
-                            value: 50, name: '消防验收', itemStyle: {
+                            value: num2, name: '消防验收', itemStyle: {
                                 normal: {
                                     color: '#01B4FF',
                                     shadowColor: '#01B4FF',
                                     borderWidth: 2,
                                     borderColor: '#01B4FF',
+                                    shadowBlur: 10
+                                }
+                            }
+                        },
+                        {
+                            value: num3, name: '竣工验收备案', itemStyle: {
+                                normal: {
+                                    color: '#0EF9B3',
+                                    shadowColor: '#0EF9B3',
+                                    borderWidth: 2,
+                                    borderColor: '#0EF9B3',
                                     shadowBlur: 10
                                 }
                             }
@@ -1304,7 +1341,8 @@ export class BigScreenComponent {
         };
     }
     pie2: any;
-    Pie2() {
+    Pie2(num1, num2, num3) {
+        
         this.pie2 = {
             title: {
                 text: '本月',
@@ -1326,7 +1364,7 @@ export class BigScreenComponent {
             legend: {
                 orient: 'vertical',
                 left: 'left',
-                data: ['消防设计审查', '竣工验收备案', '消防验收'],
+                data: ['消防设计审查', '消防验收', '竣工验收备案'],
                 textStyle: {
                     color: '#fff'
                 },
@@ -1335,7 +1373,7 @@ export class BigScreenComponent {
             series: [
 
                 {
-                    // name: '数量',
+                    name: '占比',
                     type: 'pie',
                     radius: [30, 50],
                     center: ['75%', '50%'],
@@ -1353,7 +1391,7 @@ export class BigScreenComponent {
                     },
                     data: [
                         {
-                            value: 60, name: '消防设计审查', itemStyle: {
+                            value: num1, name: '消防设计审查', itemStyle: {
                                 normal: {
                                     color: '#F6FF00',
                                     shadowColor: '#F6FF00',
@@ -1364,18 +1402,7 @@ export class BigScreenComponent {
                             }
                         },
                         {
-                            value: 120, name: '竣工验收备案', itemStyle: {
-                                normal: {
-                                    color: '#0EF9B3',
-                                    shadowColor: '#0EF9B3',
-                                    borderWidth: 2,
-                                    borderColor: '#0EF9B3',
-                                    shadowBlur: 10
-                                }
-                            }
-                        },
-                        {
-                            value: 80, name: '消防验收', itemStyle: {
+                            value: num2, name: '消防验收', itemStyle: {
                                 normal: {
                                     color: '#01B4FF',
                                     shadowColor: '#01B4FF',
@@ -1385,6 +1412,18 @@ export class BigScreenComponent {
                                 }
                             }
                         },
+                        ,
+                        {
+                            value: num3, name: '竣工验收备案', itemStyle: {
+                                normal: {
+                                    color: '#0EF9B3',
+                                    shadowColor: '#0EF9B3',
+                                    borderWidth: 2,
+                                    borderColor: '#0EF9B3',
+                                    shadowBlur: 10
+                                }
+                            }
+                        }
 
                     ]
                 }
@@ -1488,6 +1527,6 @@ export class BigScreenComponent {
 
     }
     Floor(num) {
-        return Math.floor(num);
+        return Math.floor(num * 100) / 100;
     }
 }
