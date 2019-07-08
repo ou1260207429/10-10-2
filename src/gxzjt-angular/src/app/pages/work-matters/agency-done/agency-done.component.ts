@@ -43,6 +43,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   columns: STColumn[] = [
     {
       title: '操作',
+      width:'200px',
       buttons: [
         {
           text: '执行',
