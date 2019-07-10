@@ -417,6 +417,61 @@ export class AcceptanceFileServiceProxy {
         }
         return _observableOf<void>(<any>null);
     }
+
+    /**
+     * @param projectAttachment (optional) 
+     * @param acceptRecordId (optional) 
+     * @return Success
+     */
+    updateOpinionFile(projectAttachment: ProjectAttachment | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/AcceptanceFile/UpdateOpinionFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(projectAttachment);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateOpinionFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateOpinionFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdateOpinionFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
 }
 
 @Injectable()
@@ -2765,6 +2820,61 @@ export class InvestigateFileServiceProxy {
         }
         return _observableOf<void>(<any>null);
     }
+
+    /**
+     * @param projectAttachment (optional) 
+     * @param acceptRecordId (optional) 
+     * @return Success
+     */
+    updateOpinionFile(projectAttachment: ProjectAttachment | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/InvestigateFile/UpdateOpinionFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(projectAttachment);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateOpinionFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateOpinionFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdateOpinionFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
 }
 
 @Injectable()
@@ -4878,6 +4988,61 @@ export class PutOnRecordFileServiceProxy {
     }
 
     protected processCreateQualifiedFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param projectAttachment (optional) 
+     * @param acceptRecordId (optional) 
+     * @return Success
+     */
+    updateOpinionFile(projectAttachment: ProjectAttachment | null | undefined, acceptRecordId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PutOnRecordFile/UpdateOpinionFile?";
+        if (acceptRecordId !== undefined)
+            url_ += "acceptRecordId=" + encodeURIComponent("" + acceptRecordId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(projectAttachment);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateOpinionFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateOpinionFile(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdateOpinionFile(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -9240,6 +9405,7 @@ export class ExamineFormDto implements IExamineFormDto {
     orgName: string | undefined;
     orgCode: string | undefined;
     checkDate: moment.Moment | undefined;
+    endDate: moment.Moment | undefined;
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -9311,6 +9477,7 @@ export class ExamineFormDto implements IExamineFormDto {
             this.orgName = data["orgName"];
             this.orgCode = data["orgCode"];
             this.checkDate = data["checkDate"] ? moment(data["checkDate"].toString()) : <any>undefined;
+            this.endDate = data["endDate"] ? moment(data["endDate"].toString()) : <any>undefined;
         }
     }
 
@@ -9382,6 +9549,7 @@ export class ExamineFormDto implements IExamineFormDto {
         data["orgName"] = this.orgName;
         data["orgCode"] = this.orgCode;
         data["checkDate"] = this.checkDate ? this.checkDate.toISOString() : <any>undefined;
+        data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
         return data; 
     }
 
@@ -9441,6 +9609,7 @@ export interface IExamineFormDto {
     orgName: string | undefined;
     orgCode: string | undefined;
     checkDate: moment.Moment | undefined;
+    endDate: moment.Moment | undefined;
 }
 
 export class ProjectAttachment implements IProjectAttachment {

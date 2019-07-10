@@ -47,6 +47,7 @@
     <!-- <button nz-button nzType="primary" (click)="addview()">新增申报</button> -->
 
   </div>
+  <nz-spin [nzSpinning]="!formResultData"></nz-spin>
   <st #st [data]="formResultData" [columns]="columns"></st>
   <!-- <br>
   <nz-pagination [nzPageIndex]="2" [nzTotal]="500" nzShowQuickJumper></nz-pagination> -->
