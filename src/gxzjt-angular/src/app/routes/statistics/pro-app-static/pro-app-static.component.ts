@@ -101,7 +101,7 @@ export class StatisticsProAppStaticComponent implements OnInit {
 
   ngOnInit() {
     this.param.page=1;
-    this.param.maxResultCount=10;
+    this.param.maxResultCount=3000;
     this.param.projectName =null
     this.param.recordNumber =null;
     this.param.status=-1;
@@ -219,5 +219,6 @@ export class StatisticsProAppStaticComponent implements OnInit {
     pageOnChange(v, this.param, () => {
       this.getList();
     })
+    this.st.reload();
   }
 }

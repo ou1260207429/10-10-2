@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent, XlsxService } from '@delon/abc';
-
+import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { StatisticalServiceServiceProxy, TimeoutQuetyDto } from '@shared/service-proxies/service-proxies';
@@ -17,7 +17,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
   fliterForm: FormGroup;
   hiddenFliter = false;
   formResultData = [];
-
+  total;
   isAddProducttyepe5 = false;
   rangeTime = [];
   submodel = {
@@ -94,9 +94,36 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
     private modal: ModalHelper,
     private formBuilder: FormBuilder,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
-    private xlsx: XlsxService) { }
+    private xlsx: XlsxService) { this.param.init(
+
+      {
+        "recordNumber": "",
+        "projectName": "",
+        "status": -1,
+        "startApplyTime": "",
+        "endApplyTime": "",
+        "dateTimeNow": "",
+        "page": 1,
+        "sorting": "ProjectName",
+        "skipCount": 0,
+        "maxResultCount": 3000
+      });}
 
   ngOnInit() {
+    // this.param.init(
+
+    //   {
+    //     "recordNumber": "",
+    //     "projectName": "",
+    //     "status": -1,
+    //     "startApplyTime": "",
+    //     "endApplyTime": "",
+    //     "dateTimeNow": "",
+    //     "page": 1,
+    //     "sorting": "ProjectName",
+    //     "skipCount": 0,
+    //     "maxResultCount": 10
+    //   });
     this.resetTime();
     this.fliterForm = this.formBuilder.group({
       proNo: [null],
@@ -130,6 +157,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
     this.statisticalServiceServiceProxy.post_GetTimeoutList(this.param).subscribe((result: any) => {
       if (result.data) {
         this.formResultData = result.data;
+        this.total=result.total;
       } else {
         this.formResultData = [];
       }
@@ -179,26 +207,14 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
     this.isAddProducttyepe5 = true;
   }
   getList() {
-    this.param.init(
 
-      {
-        "recordNumber": "",
-        "projectName": "",
-        "status": -1,
-        "startApplyTime": "",
-        "endApplyTime": "",
-        "dateTimeNow": "",
-        "page": 1,
-        "sorting": "ProjectName",
-        "skipCount": 0,
-        "maxResultCount": 3000
-      });
       // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
       // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
       this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
       this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
-    this.statisticalServiceServiceProxy.post_GetTimeoutList(this.param).subscribe((result: any) => {
+      this.statisticalServiceServiceProxy.post_GetTimeoutList(this.param).subscribe((result: any) => {
       this.formResultData = result.data;
+      this.total=result.total
     }, err => {
       console.log(err);
 
@@ -209,4 +225,9 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
     startTime.setDate(startTime.getDate() - 30)
     this.rangeTime = [startTime, new Date()];
   }
+  // change(v) {
+  //   pageOnChange(v, this.param, () => {
+  //     // this.getList();
+  //   })
+  // }
 }

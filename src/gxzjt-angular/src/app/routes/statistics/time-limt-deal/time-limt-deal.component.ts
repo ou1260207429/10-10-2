@@ -85,7 +85,7 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
 
   ngOnInit() {
     this.param.page=1;
-    this.param.maxResultCount=10;
+    this.param.maxResultCount=3000;
 
     this.resetTime();
     this.fliterForm = this.formBuilder.group({

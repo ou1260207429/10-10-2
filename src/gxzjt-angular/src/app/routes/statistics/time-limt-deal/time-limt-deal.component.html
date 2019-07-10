@@ -54,10 +54,10 @@
 
   </div>
   <nz-spin [nzSpinning]="!formResultData"></nz-spin>
-  <!-- <st #st [data]="formResultData" [columns]="columns"></st> -->
-  <st #st *ngIf="formResultData && total " [data]="formResultData" [columns]="columns"
+  <st #st [data]="formResultData" [columns]="columns"></st>
+  <!-- <st #st *ngIf="formResultData && total " [data]="formResultData" [columns]="columns"
   [total]="total" [pi]="param.page" [ps]="param.maxResultCount" (change)="change($event)">
-</st>
+</st> -->
   <!-- <br>
   <nz-pagination [nzPageIndex]="2" [nzTotal]="500" nzShowQuickJumper></nz-pagination> -->
 </nz-card>
