@@ -1,4 +1,4 @@
-<page-header [action]="phActionTpl">
+<!-- <page-header [action]="phActionTpl">
   <ng-template #phActionTpl>
 
     <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
@@ -6,7 +6,15 @@
     <button (click)="init()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
     <button (click)="st.export()" nz-button nzType="primary"><i nz-icon type="export"></i>导出</button>
   </ng-template>
-</page-header>
+</page-header> -->
+<nz-card>
+
+
+  <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
+      type="{{ hiddenFliter?'down':'up'}}"></i>{{ hiddenFliter?'展开条件':'收起条件'}}</button>
+  <button (click)="init()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
+
+</nz-card>
 <nz-card>
 
   <form nz-form class="mb-md" [hidden]="hiddenFliter">
@@ -52,11 +60,13 @@
       <input type="text" nz-input [(ngModel)]="signForDto.name" name="name" required>
     </se>
     <se label="联系电话" error="请输入正确电话号码">
-      <input type="text" nz-input [(ngModel)]="signForDto.phoneNumber" name="phoneNumber"  pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)" required maxlength="32">
+      <input type="text" nz-input [(ngModel)]="signForDto.phoneNumber" name="phoneNumber"
+        pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"
+        required maxlength="32">
     </se>
     <div style="text-align: center;">
-      <p><a *ngIf="examineFormDto.acceptFileUrl!=null" [href]="examineFormDto.acceptFileUrl"> 下载受理/不受理凭证</a></p>
-      <p><a *ngIf="examineFormDto.opinionFileUrl!=null" [href]="examineFormDto.opinionFileUrl"> 下载意见书</a></p>
+      <p><a *ngIf="examineFormDto.acceptFileUrl && examineFormDto.acceptFileUrl!=null" [href]="examineFormDto.acceptFileUrl"> 下载受理/不受理凭证</a></p>
+      <p><a *ngIf="examineFormDto.opinionFileUrl && examineFormDto.opinionFileUrl!=null" [href]="examineFormDto.opinionFileUrl"> 下载意见书</a></p>
     </div>
   </form>
 </nz-modal>

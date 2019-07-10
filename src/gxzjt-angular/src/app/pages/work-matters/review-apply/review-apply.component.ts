@@ -53,7 +53,7 @@ export class WorkMattersReviewApplyComponent implements OnInit {
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
         //市县区  
-        Area: this.reviewFormDto.engineeringNo
+        Area: this.reviewFormDto.orgCode
       },
       //'xfsj,''xfys,'jgys  流程分类  英文简写(消防设计,消防验收,竣工验收)
       identify: flowTypeFlag,

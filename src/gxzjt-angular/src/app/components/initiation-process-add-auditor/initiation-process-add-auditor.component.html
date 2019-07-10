@@ -5,7 +5,7 @@
   <div *ngIf="data">
     <div nz-col class="noSpan" style="position: relative;z-index: 99;">
       <nz-input-group nzSearch [nzAddOnAfter]="suffixButton">
-        <input type="text" (keyup)="onEnter($event)" nz-input placeholder="请输入编号/名称" [(ngModel)]="page.filterText">
+        <input type="text" (keyup)="onEnter($event)" nz-input placeholder="请输入姓名" [(ngModel)]="page.filterText">
       </nz-input-group>
       <ng-template #suffixButton>
         <button nz-button nzType="primary" nzSearch (click)="query()">查询</button>

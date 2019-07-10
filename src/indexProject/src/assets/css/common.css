@@ -109,6 +109,7 @@ ul {
 .el-date-table td.start-date span,
 .el-date-table td.end-date span {
   background-color: #bd1127 !important;
+  color: #fff !important;
 }
 
 th .cell {

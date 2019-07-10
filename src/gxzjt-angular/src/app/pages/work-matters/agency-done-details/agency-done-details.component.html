@@ -6,7 +6,7 @@
     </div>
   </nz-tabset>
 
-  <div [ngClass]="{hide: selectedIndex != 0}">
+  <div [ngClass]="{hide: selectedIndex != 0}" >
 
     <!-- 表单JSON -->
     <app-fire-design-declare-assembly [useNatureSelect]="useNatureSelect" [errorData]="showError"
@@ -54,7 +54,7 @@
     <!-- 表单JSON -->
     <form nz-form #f="ngForm" se-container="1">
 
-      <div *ngIf="!type&& curNodeName!='大厅发放结果'&&curNodeName!='建设单位申报'">
+      <div *ngIf="!type&& curNodeName!='大厅发放结果'&&curNodeName!='建设单位申报'" class="agencyDoneDetails">
         <table class="tables" style="box-sizing: border-box;" *ngIf="formDto">
           <tr>
             <td style="width: 37px;background-color: #ffedcc;color: #ff9c35;font-weight: 600;border-right: 0"

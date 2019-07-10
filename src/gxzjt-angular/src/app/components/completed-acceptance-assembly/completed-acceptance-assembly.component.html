@@ -22,6 +22,19 @@
             </se>
           </td>
 
+          <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>法定代表人/主要负责人:</td>
+          <td rowspan='1' colspan='7'>
+            <se error="必填">
+              <input [readonly]="type==1" nz-input placeholder="请输入法定代表人/主要负责人" [(ngModel)]="data.legalRepresentative"
+                name="legalRepresentative" required />
+            </se>
+          </td>
+
+        
+        </tr>
+
+        <tr>
+          
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>联系电话:</td>
           <td rowspan='1' colspan='7'>
             <se error="必填">
@@ -30,14 +43,25 @@
                 [(ngModel)]="data.legalRepresentativeNo" name="legalRepresentativeNo" required />
             </se>
           </td>
+
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>联系人:</td>
+          <td rowspan='1' colspan='7'>
+            <se error="必填">
+              <input [readonly]="type==1" nz-input placeholder="请输入联系人" [(ngModel)]="data.contacts" name="contacts"
+                required />
+            </se>
+          </td>
+         
         </tr>
 
         <tr>
-          <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>法定代表人/主要负责人:</td>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>联系电话:</td>
           <td rowspan='1' colspan='7'>
-            <se error="必填">
-              <input [readonly]="type==1" nz-input placeholder="请输入法定代表人/主要负责人" [(ngModel)]="data.legalRepresentative"
-                name="legalRepresentative" required />
+
+            <se error="请输入正确的电话号码">
+              <input [readonly]="type==1" nz-input placeholder="请输入联系电话"
+                pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"
+                [(ngModel)]="data.contactsNumber" name="contactsNumber" required />
             </se>
           </td>
 
@@ -49,31 +73,7 @@
             </se>
           </td>
 
-        </tr>
-        <tr>
-          <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>联系电话:</td>
-          <td rowspan='1' colspan='7'>
-            <se error="请输入正确的电话号码">
-              <input [readonly]="type==1" nz-input placeholder="请输入联系电话" [(ngModel)]="data.projectNumber"
-                pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"
-                name="projectNumber" required />
-            </se>
-          </td>
-
-          <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>使用性质:</td>
-          <td rowspan='1' colspan='7'>
-            <se error="必填">
-              <nz-spin [nzSpinning]="!useNatureSelect"></nz-spin>
-              <nz-select [ngClass]="{pointer: type == 1}" nzPlaceHolder='请选择使用性质' [(ngModel)]="data.useNature"
-                name="useNature" required *ngIf="useNatureSelect">
-                <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.natureName"
-                  [nzValue]="option.natureCode">
-                </nz-option>
-              </nz-select>
-            </se>
-          </td>
-
-        </tr>
+        </tr> 
         <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>施工许可证号:</td>
           <td rowspan='1' colspan='7'>
@@ -101,15 +101,53 @@
             </se>
           </td>
 
-          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>申报人姓名:</td>
+          <!-- <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>申报人姓名:</td>
           <td rowspan='1' colspan='7'>
             <se error="必填" style="float: left;">
               <input [readonly]="type==1" nz-input placeholder="请输入申报人姓名" [(ngModel)]="data.applyName" name="applyName"
                 required />
             </se>
+          </td> -->
+          <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>使用性质:</td>
+          <td rowspan='1' colspan='7'>
+            <se error="必填">
+              <nz-spin [nzSpinning]="!useNatureSelect"></nz-spin>
+              <nz-select [ngClass]="{pointer: type == 1}" nzPlaceHolder='请选择使用性质' [(ngModel)]="data.useNature"
+                name="useNature" required *ngIf="useNatureSelect">
+                <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.natureName"
+                  [nzValue]="option.natureCode">
+                </nz-option>
+              </nz-select>
+            </se>
+          </td>
+        </tr>
+
+        
+
+        <!-- <tr>
+         <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>联系电话:</td>
+          <td rowspan='1' colspan='7'>
+            <se error="请输入正确的电话号码">
+              <input [readonly]="type==1" nz-input placeholder="请输入联系电话" [(ngModel)]="data.projectNumber"
+                pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)"
+                name="projectNumber" required />
+            </se>
+          </td> 
+
+          <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>使用性质:</td>
+          <td rowspan='1' colspan='7'>
+            <se error="必填">
+              <nz-spin [nzSpinning]="!useNatureSelect"></nz-spin>
+              <nz-select [ngClass]="{pointer: type == 1}" nzPlaceHolder='请选择使用性质' [(ngModel)]="data.useNature"
+                name="useNature" required *ngIf="useNatureSelect">
+                <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.natureName"
+                  [nzValue]="option.natureCode">
+                </nz-option>
+              </nz-select>
+            </se>
           </td>
 
-        </tr>
+        </tr> -->
 
         <tr>
 
