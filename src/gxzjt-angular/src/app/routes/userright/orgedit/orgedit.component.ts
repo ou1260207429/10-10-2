@@ -11,7 +11,7 @@ import { NzDropdownService, NzMenuItemDirective, NzFormatEmitEvent, NzMessageSer
 export class UserrightOrgeditComponent implements OnInit {
   dropdown;
   nodes;
-  orgarray = []
+  // orgarray:[];
 
 
   constructor(private http: _HttpClient,
@@ -46,44 +46,44 @@ export class UserrightOrgeditComponent implements OnInit {
     this.dropdown.close();
   }
 
-  nzEvent(event: NzFormatEmitEvent): void {
-    //  console.log(event.keys)
-    this.nodes.forEach(element => {
-      if (element.key == event.keys[0]) {
-        this.orgarray = element.children;
+  // nzEvent(event: NzFormatEmitEvent): void {
+  //   //  console.log(event.keys)
+  //   this.nodes.forEach(element => {
+  //     if (element.key == event.keys[0]) {
+  //       this.orgarray = element.children;
 
-      } else {
-        element.children.forEach(city => {
-          if (city.key == event.keys[0]) {
-            this.orgarray = city.children;
+  //     } else {
+  //       element.children.forEach(city => {
+  //         if (city.key == event.keys[0]) {
+  //           this.orgarray = city.children;
 
-          } else {
-            city.children.forEach(conuty => {
-              if (conuty.key == event.keys[0]) {
-                this.orgarray = conuty.children;
+  //         } else {
+  //           city.children.forEach(conuty => {
+  //             if (conuty.key == event.keys[0]) {
+  //               this.orgarray = conuty.children;
 
-              } else {
-                conuty.children.forEach(xz => {
-                  if (xz.key == event.keys[0]) {
-                    this.orgarray = [];
-                  }
+  //             } else {
+  //               conuty.children.forEach(xz => {
+  //                 if (xz.key == event.keys[0]) {
+  //                   this.orgarray = [];
+  //                 }
 
-                });
+  //               });
 
-              }
-            });
-          }
+  //             }
+  //           });
+  //         }
 
-        });
-      }
+  //       });
+  //     }
 
-    });
+  //   });
 
-    if (this.orgarray.length == 0) {
-      this.message.warning("已无下级组织");
-    }
+  //   if (this.orgarray.length == 0) {
+  //     this.message.warning("已无下级组织");
+  //   }
 
-  }
+  // }
 
   log(value: string[]): void {
     // console.log(value);
