@@ -6,6 +6,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { StatisticsTimeLimtDealDetailComponent } from '../time-limt-deal-detail/time-limt-deal-detail.component';
 import { UserRightService } from '../../userright/userright.service';
 import * as moment from 'moment';
+import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 
 
 var  datePipe=new  DatePipe();
@@ -22,6 +23,7 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
   formData = {};
   formResultData = [];
   rangeTime = [];
+  total=100;
   param = new HandleLimitQueryDto();
   cityarray =[] ;
   selectedcity;//存市
@@ -82,6 +84,9 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
      }
 
   ngOnInit() {
+    this.param.page=1;
+    this.param.maxResultCount=10;
+
     this.resetTime();
     this.fliterForm = this.formBuilder.group({
       city: [null],
@@ -92,7 +97,8 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
       dateRange: [this.rangeTime],
 
     });
-    this.getList();
+    // this.getList();
+    this.search();
   }
 
   switchFilter() {
@@ -103,22 +109,33 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     this.getList();
   }
   search() {
-    this.param.cityName = this.fliterForm.controls.city.value;
-    this.param.area = this.fliterForm.controls.count.value;
-    this.param.flowPathType = Number(this.fliterForm.controls.proType.value);
-    if (this.param.flowPathType == 0) {
-      this.param.flowPathType = -1;
+    if(this.fliterForm.controls.city.value){
+      this.param.cityName = this.fliterForm.controls.city.value;
     }
-    this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
-    this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
-     this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
-    this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+    if(this.fliterForm.controls.count.value){
+      this.param.area = this.fliterForm.controls.count.value;
+    }
 
+    this.param.flowPathType = Number(this.fliterForm.controls.proType.value);
+      if (this.param.flowPathType == 0) {
+        this.param.flowPathType = -1;
+      }
+    // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+    // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
+    this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+    this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+    if(this,this.param.startApplyTime==this.param.endApplyTime){
+      this.param.startApplyTime=null;
+      this.param.endApplyTime=null;
+
+    }
     this.statisticalServiceServiceProxy.post_GetHandleLimitList(this.param).subscribe((result: any) => {
-      if (result.data) {
-        this.formResultData = result.data;
-      } else {
-        this.formResultData = [];
+      if(result.data){
+         this.formResultData = result.data;
+         this.total=result;
+         console.log(this.total)
+      }else{
+        this.formResultData=[];
       }
       this.st.reload()
     }, err => {
@@ -126,8 +143,37 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
       this.st.reload()
 
     });
-
   }
+  // search() {
+
+  //   this.param.cityName = this.fliterForm.controls.city.value;
+  //   this.param.area = this.fliterForm.controls.count.value;
+  //   this.param.flowPathType = Number(this.fliterForm.controls.proType.value);
+  //   if (this.param.flowPathType == 0) {
+  //     this.param.flowPathType = -1;
+  //   }
+  //   this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+  //   this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
+  //    this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+  //   this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+
+  //   this.statisticalServiceServiceProxy.post_GetHandleLimitList(this.param).subscribe((result: any) => {
+  //     if (result.data) {
+  //       this.formResultData = result.data;
+  //       this.total=result;
+  //       console.log(this.total)
+  //     } else {
+  //       this.formResultData = [];
+  //     }
+
+  //   }, err => {
+  //     console.log(err);
+
+
+  //   });
+
+
+  // }
 
   resetForm(): void {
     this.fliterForm = this.formBuilder.group({
@@ -139,7 +185,7 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
       dateRange: [this.rangeTime],
 
     });
-    this.search();
+    this.getList();
   }
 
   addview() {
@@ -160,34 +206,35 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
   //     ],
   //   });
   // }
+  // getList() {
+  //     // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+  //     // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
+  //     this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+  //     this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+  //   this.statisticalServiceServiceProxy.post_GetHandleLimitList(this.param).subscribe((result: any) => {
+  //     this.formResultData = result.data;
+  //     // this.total=result.total;
+  //     debugger
+  //   }, err => {
+  //     console.log(err);
+
+  //   });
+
+
+  // }
   getList() {
-
-
-    this.param.init(
-
-      {
-        "cityName": "",
-        "area": "",
-        "flowPathType": -1,
-        "startApplyTime": "",
-        "endApplyTime": "",
-        "dateTimeNow": "",
-        "page": 1,
-        "sorting": "CityName",
-        "skipCount": 0,
-        "maxResultCount": 3000
-      });
-      // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
-      // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
-      this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
-      this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+    // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+    // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
+    this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+    this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
     this.statisticalServiceServiceProxy.post_GetHandleLimitList(this.param).subscribe((result: any) => {
-      this.formResultData = result.data;
-    }, err => {
-      console.log(err);
+    this.formResultData = result;
+    this.total=result.total;
+  }, err => {
+    console.log(err);
 
-    });
-  }
+  });
+}
   getCityList() {
     this.UserRightService.GetAreaDropdown().subscribe(
       res => {
@@ -204,15 +251,15 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     this.rangeTime = [startTime, new Date()];
   }
   cityChange(e) {
-    this.fliterForm = this.formBuilder.group({
-      city: [e],
-      count: [null],
-      proNo: [null],
-      proName: [null],
-      proType: [null],
-      dateRange: [this.rangeTime],
+    // this.fliterForm = this.formBuilder.group({
+    //   city: [e],
+    //   count: [null],
+    //   proNo: [null],
+    //   proName: [null],
+    //   proType: [null],
+    //   dateRange: [this.rangeTime],
 
-    });
+    // });
     this.countyarray = []
     this.cityarray.forEach(element => {
       if (element.Name == e) {
@@ -221,5 +268,10 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
 
     });
 
+  }
+  change(v) {
+    pageOnChange(v, this.param, () => {
+      this.getList();
+    })
   }
 }

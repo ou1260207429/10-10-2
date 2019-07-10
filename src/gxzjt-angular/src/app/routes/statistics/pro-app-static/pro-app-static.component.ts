@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
-import { STColumn, STComponent, XlsxService } from '@delon/abc';
+import { STColumn, STComponent, XlsxService,STPage } from '@delon/abc';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { StatisticalServiceServiceProxy, ProjectApplyQueryDto } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
+import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 @Component({
   selector: 'app-statistics-pro-app-static',
   templateUrl: './pro-app-static.component.html',
@@ -21,8 +22,9 @@ export class StatisticsProAppStaticComponent implements OnInit {
   };
   rangeTime = [];
 
-  formData = {};
+  formData = {};total;
   param = new ProjectApplyQueryDto();
+  pageConfig: STPage = publicPageConfig;
 
 
   @ViewChild('st') st: STComponent;
@@ -98,6 +100,11 @@ export class StatisticsProAppStaticComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.param.page=1;
+    this.param.maxResultCount=10;
+    this.param.projectName =null
+    this.param.recordNumber =null;
+    this.param.status=-1;
 
     this.resetTime();
     this.fliterForm = this.formBuilder.group({
@@ -107,7 +114,8 @@ export class StatisticsProAppStaticComponent implements OnInit {
       dateRange: [this.rangeTime],
 
     });
-    this.getList();
+    // this.getList();
+    this.search();
   }
 
   switchFilter() {
@@ -132,9 +140,16 @@ export class StatisticsProAppStaticComponent implements OnInit {
     // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
     this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
     this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+    if(this,this.param.startApplyTime==this.param.endApplyTime){
+      this.param.startApplyTime=null;
+      this.param.endApplyTime=null;
+
+    }
     this.statisticalServiceServiceProxy.post_GetProjectApplyList(this.param).subscribe((result: any) => {
       if(result.data){
          this.formResultData = result.data;
+         this.total=result;
+         console.log(this.total)
       }else{
         this.formResultData=[];
       }
@@ -183,27 +198,13 @@ export class StatisticsProAppStaticComponent implements OnInit {
     this.isAddProducttyepe5 = true;
   }
   getList() {
-
-
-    this.param.init(
-
-      {
-        "recordNumber": "",
-        "projectName": "",
-        "status": -1,
-        "startApplyTime": "",
-        "endApplyTime": "",
-        "page": 1,
-        "sorting": "ProjectName",
-        "skipCount": 0,
-        "maxResultCount": 3000,
-      });
       // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
       // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
       this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
       this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
-    this.statisticalServiceServiceProxy.post_GetProjectApplyList(this.param).subscribe((result: any) => {
-      this.formResultData = result.data;
+      this.statisticalServiceServiceProxy.post_GetProjectApplyList(this.param).subscribe((result: any) => {
+      this.formResultData = result;
+      this.total=result.total;
     }, err => {
       console.log(err);
 
@@ -213,5 +214,10 @@ export class StatisticsProAppStaticComponent implements OnInit {
     var startTime = new Date();
     startTime.setDate(startTime.getDate() - 30)
     this.rangeTime = [startTime, new Date()];
+  }
+  change(v) {
+    pageOnChange(v, this.param, () => {
+      this.getList();
+    })
   }
 }
