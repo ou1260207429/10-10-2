@@ -85,7 +85,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   */
   getAreaDropdown() {
     this._homeServiceProxy.getAreaDropdown().subscribe(data => {
-      this.position = classTreeChildrenArray([JSON.parse(data)]);
+      this.position = classTreeChildrenArray([JSON.parse(data)]); 
     })
   }
 
@@ -94,7 +94,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
    */
   getOrganizationTree() {
     this._publicServices.getOrganizationTree().subscribe((data: any) => {
-      this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]);
+      this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]); 
     })
   }
 
@@ -103,13 +103,14 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
    * @param v 
    */
   changeGetOrganizationTree(v) {
-    //联动处理
-    this.data.engineeringId = v
-    const result = updateEngineeringNo(this.engineeringList, this.data.engineeringId.length - 1, this.data.engineeringId, this.data.engineeringNo)
-    this.data.engineeringNo = result.no
+    //联动处理   
+    this.data.engineeringId = lodash.cloneDeep(v); 
+    const list = this.publicModel.positionTreeArray(this.engineeringList, 'value', v, []) 
+    this.data.engineeringNo = list[list.length - 1].id  
   }
 
 
+  
 
   /**
    * 选择市县区
@@ -121,7 +122,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     this.engineering = lodash.cloneDeep(v);   
     const result = updateEngineeringNo(this.engineeringList, this.engineering.length - 1,this.engineering, this.data.engineeringNo)
     this.data.engineeringNo = result.no  
-    this.data.engineeringId = this.engineering 
+    this.data.engineeringId = this.engineering  
   }
 
   /**

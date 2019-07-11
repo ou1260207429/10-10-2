@@ -68,8 +68,8 @@ export class AlreadyDoneComponent
     { title: '建设单位', index: 'companyName' },
     { title: '工程类型', index: 'flowTypeName' },
     { title: '节点处理人', index: 'cur_NodeAuditorName' },
+    { title: '申报时间', index: 'applyTime', type: 'date' },
     { title: '处理时间', index: 'acceptTime',type:'date'},
-    { title: '申报时间', index: 'applyTime',type:'date' },
     // { title: '流程是否超时', index: 'isExpire',type: 'tag', tag: {
     //   true: { text: '超时', color: 'red' },
     //   false: { text: '未超时', color: 'green' },
