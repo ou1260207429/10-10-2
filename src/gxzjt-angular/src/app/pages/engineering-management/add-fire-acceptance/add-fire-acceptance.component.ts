@@ -298,8 +298,8 @@ export class AddFireAcceptanceComponent implements OnInit {
           flowDataDto.formJson = JSON.stringify(this.data);
           flowDataDto.projectFlowInfo = new ProjectFlowDto();
 
-          // flowDataDto.projectId = this.flowFormQueryDto.projectId
-          // flowDataDto.flowId=this.flowFormQueryDto.flowId;
+          flowDataDto.projectId = this.flowFormQueryDto.projectId
+          flowDataDto.flowId=this.flowFormQueryDto.flowId;
 
           flowDataDto.projectFlowInfo.timeLimit = data.result.timeLimit
           //类型  消防设计1   消防验收2   消防竣工3 

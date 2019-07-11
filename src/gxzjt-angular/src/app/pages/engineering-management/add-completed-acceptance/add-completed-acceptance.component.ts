@@ -540,8 +540,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
       const flowDataDto = new FlowDataDto();
-      // flowDataDto.flowId = this.flowFormQueryDto.flowId;
-      // flowDataDto.projectId = this.flowFormQueryDto.projectId; 
+      flowDataDto.flowId = this.flowFormQueryDto.flowId;
+      flowDataDto.projectId = this.flowFormQueryDto.projectId; 
       flowDataDto.formJson = JSON.stringify(this.data);
       flowDataDto.projectFlowInfo = new ProjectFlowDto();
 

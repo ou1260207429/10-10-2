@@ -640,8 +640,8 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
         flowDataDto.projectFlowInfo.timeLimit = data.result.timeLimit
         //类型  消防设计1   消防验收2   消防竣工3 
         flowDataDto.projectFlowInfo.flowPathType = 1
-        // flowDataDto.flowId = this.flowFormQueryDto.flowId;
-        // flowDataDto.projectId = this.flowFormQueryDto.projectId;
+        flowDataDto.flowId = this.flowFormQueryDto.flowId;
+        flowDataDto.projectId = this.flowFormQueryDto.projectId;
 
         flowDataDto.projectFlowInfo.flowNo = data.result.workFlow_Instance_Id
 
