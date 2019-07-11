@@ -2,12 +2,16 @@ import { Injectable } from "@angular/core";
 import { MessageService } from "abp-ng2-module/dist/src/message/message.service";
 import { NzMessageService } from "ng-zorro-antd";
 import { STColumn, XlsxService } from "@delon/abc";
+import { checkArrayString } from "./regular-expression";
 
 /**
  * 通用的方法
  */
 @Injectable()
 export class PublicModel {
+
+  positionIndex = 0;
+
   constructor(private xlsx: XlsxService,private message: MessageService, private nzMessage: NzMessageService, ) { }
   isDeleteModal(then?: Function) {
     this.message.confirm(
@@ -32,6 +36,25 @@ export class PublicModel {
       return false
     }
     arr.splice(index, 1)
+  }
+
+  /**
+   * 市县区获取当前选中的值
+   * @param arr 市县区的列表
+   * @param positionValue 选中的值 ：数组
+   * @param list 返回的值
+   */
+  positionTreeArray(arr: Array<any>,arrType:string, positionValue: Array<any>, list: Array<any>): Array<any> { 
+    for (let index = 0; index < positionValue.length; index++) { 
+      this.positionIndex = checkArrayString(arr, arrType, positionValue[index]) 
+      list.push({label:arr[this.positionIndex].label,value:arr[this.positionIndex].value,id:arr[this.positionIndex].ID})
+      if (arr[this.positionIndex].children && arr[this.positionIndex].children.length > 0) {
+        positionValue.splice(index, 1)
+        this.positionTreeArray(arr[this.positionIndex].children,arrType, positionValue, list)   
+        break
+      }
+    } 
+    return list;
   }
 
   exportXlsx(columns:STColumn[],array:Array<any>,filename:string='表单') {

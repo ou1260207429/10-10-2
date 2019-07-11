@@ -536,13 +536,12 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     };
 
     this.butNzLoading = true;
-    this.isSelectModalOkLoading = true;
+    this.isSelectModalOkLoading = true; 
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
       const flowDataDto = new FlowDataDto();
-      flowDataDto.flowId = this.flowFormQueryDto.flowId;
-      flowDataDto.projectId = this.flowFormQueryDto.projectId;
-      console.log(this.data)
+      // flowDataDto.flowId = this.flowFormQueryDto.flowId;
+      // flowDataDto.projectId = this.flowFormQueryDto.projectId; 
       flowDataDto.formJson = JSON.stringify(this.data);
       flowDataDto.projectFlowInfo = new ProjectFlowDto();
 

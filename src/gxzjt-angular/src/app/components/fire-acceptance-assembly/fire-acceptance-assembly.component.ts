@@ -113,10 +113,10 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
   changeGetOrganizationTree(v) {
     
     //联动处理
-    this.data.engineeringId = v
+    this.data.engineeringId = lodash.cloneDeep(v); 
 
-    const result = updateEngineeringNo(this.engineeringList, this.data.engineeringId.length - 1, this.data.engineeringId, this.data.engineeringNo)
-    this.data.engineeringNo = result.no
+    const list = this.publicModel.positionTreeArray(this.engineeringList, 'value', v, []) 
+    this.data.engineeringNo = list[list.length - 1].id  
   }
 
   /**
