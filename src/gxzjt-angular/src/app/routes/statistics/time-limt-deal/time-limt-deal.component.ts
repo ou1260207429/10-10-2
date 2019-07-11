@@ -7,6 +7,7 @@ import { StatisticsTimeLimtDealDetailComponent } from '../time-limt-deal-detail/
 import { UserRightService } from '../../userright/userright.service';
 import * as moment from 'moment';
 import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
+import { timeTrans } from 'infrastructure/regular-expression';
 
 
 var  datePipe=new  DatePipe();
@@ -122,12 +123,16 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
       }
     // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
     // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
-    this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
-    this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
-    if(this,this.param.startApplyTime==this.param.endApplyTime){
-      this.param.startApplyTime=null;
-      this.param.endApplyTime=null;
-
+    // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+    // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+    if(this.fliterForm.controls.dateRange.value.length!=0){
+      // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+      // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+      this.param.startApplyTime=timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
+      this.param.endApplyTime =timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
+    }else{
+      this.param.startApplyTime='';
+      this.param.endApplyTime='';
     }
     this.statisticalServiceServiceProxy.post_GetHandleLimitList(this.param).subscribe((result: any) => {
       if(result.data){
@@ -225,8 +230,10 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
   getList() {
     // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
     // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
-    this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
-    this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+    // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+    // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+    this.param.startApplyTime=timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
+    this.param.endApplyTime =timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
     this.statisticalServiceServiceProxy.post_GetHandleLimitList(this.param).subscribe((result: any) => {
     this.formResultData = result;
     this.total=result.total;

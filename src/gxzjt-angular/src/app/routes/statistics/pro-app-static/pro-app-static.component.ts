@@ -4,6 +4,7 @@ import { STColumn, STComponent, XlsxService,STPage } from '@delon/abc';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { StatisticalServiceServiceProxy, ProjectApplyQueryDto } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
+import { timeTrans } from 'infrastructure/regular-expression';
 import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 @Component({
   selector: 'app-statistics-pro-app-static',
@@ -138,13 +139,17 @@ export class StatisticsProAppStaticComponent implements OnInit {
     }
     // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
     // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
-    this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
-    this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
-    if(this,this.param.startApplyTime==this.param.endApplyTime){
-      this.param.startApplyTime=null;
-      this.param.endApplyTime=null;
 
+    if(this.fliterForm.controls.dateRange.value.length!=0){
+      // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+      // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+      this.param.startApplyTime=timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
+      this.param.endApplyTime =timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
+    }else{
+      this.param.startApplyTime='';
+      this.param.endApplyTime='';
     }
+
     this.statisticalServiceServiceProxy.post_GetProjectApplyList(this.param).subscribe((result: any) => {
       if(result.data){
          this.formResultData = result.data;
@@ -200,8 +205,8 @@ export class StatisticsProAppStaticComponent implements OnInit {
   getList() {
       // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
       // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
-      this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
-      this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+      this.param.startApplyTime=timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
+      this.param.endApplyTime =timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
       this.statisticalServiceServiceProxy.post_GetProjectApplyList(this.param).subscribe((result: any) => {
       this.formResultData = result;
       this.total=result.total;

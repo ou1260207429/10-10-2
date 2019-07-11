@@ -17,7 +17,7 @@ import * as moment from 'moment';
 import { PublicFormComponent } from '../public/public-form.component';
 import { NzMessageService } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
-
+import { timeTrans } from 'infrastructure/regular-expression';
 /**
  * 竣工验收
  */
@@ -155,8 +155,15 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.searchParam.maxResultCount = 10;
     this.searchParam.flowPathType = 3
     this.searchParam.sorting = 'projectId desc';
-    this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
-    this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
+    // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
+    // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
+    if(this.rangeTime.length!=0){
+    this.searchParam.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
+    this.searchParam.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
+   }else{
+    this.searchParam.startApplyTime='';
+    this.searchParam.endApplyTime ='';
+   }
     this.getList();
   }
   reststart(){
@@ -167,8 +174,15 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.searchParam.maxResultCount = 10;
     this.searchParam.flowPathType = 3
     this.searchParam.sorting = 'projectId desc';
-    this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
-    this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
+    // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
+    // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
+    if(this.rangeTime.length!=0){
+      this.searchParam.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
+      this.searchParam.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
+     }else{
+      this.searchParam.startApplyTime='';
+      this.searchParam.endApplyTime ='';
+     }
     this.getList();
   }
 
@@ -188,8 +202,15 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
    */
   query() {
     this.searchParam.page = 1;
-    this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
-    this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
+    // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
+    // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
+    if(this.rangeTime.length!=0){
+      this.searchParam.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
+      this.searchParam.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
+     }else{
+      this.searchParam.startApplyTime='';
+      this.searchParam.endApplyTime ='';
+     }
     this.getList();
   }
   toreapply(item) {console.log(item);

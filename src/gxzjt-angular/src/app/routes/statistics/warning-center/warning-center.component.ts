@@ -5,6 +5,7 @@ import { STColumn, STComponent, XlsxService } from '@delon/abc';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { StatisticalServiceServiceProxy, WarningCenterQueryDto } from '@shared/service-proxies/service-proxies';
+import { timeTrans } from 'infrastructure/regular-expression';
 
 
 @Component({
@@ -120,11 +121,19 @@ export class StatisticsWarningCenterComponent implements OnInit {
     if(this.param.flowPathType==0){
       this.param.flowPathType=-1;
     }
-    this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
-    this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
-    this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
-    this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
-
+    // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
+    // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
+    // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+    // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+    if(this.fliterForm.controls.dateRange.value.length!=0){
+      // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+      // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+      this.param.startApplyTime=timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
+      this.param.endApplyTime =timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
+    }else{
+      this.param.startApplyTime='';
+      this.param.endApplyTime='';
+    }
     this.statisticalServiceServiceProxy.post_GetWarningCenterList(this.param).subscribe((result: any) => {
       if(result.data){
          this.formResultData = result.data;
@@ -184,8 +193,17 @@ export class StatisticsWarningCenterComponent implements OnInit {
       });
       // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
       // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
-      this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
-      this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+      // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+      // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+      if(this.fliterForm.controls.dateRange.value.length!=0){
+        // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
+        // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+        this.param.startApplyTime=timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
+        this.param.endApplyTime =timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
+      }else{
+        this.param.startApplyTime='';
+        this.param.endApplyTime='';
+      }
     this.statisticalServiceServiceProxy.post_GetWarningCenterList(this.param).subscribe((result: any) => {
       this.formResultData = result.data;
     }, err => {

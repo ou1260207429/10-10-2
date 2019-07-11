@@ -36,16 +36,16 @@ export class PublicModel {
 
   exportXlsx(columns:STColumn[],array:Array<any>,filename:string='表单') {
     const expData = [columns.map(i => i.title)];
-    
+
     array.forEach((item,index)=>{
       const list = [];
-      columns.forEach((box,i)=>{ 
+      columns.forEach((box,i)=>{
         const value = box.index?item[box.index.toString()]:''
-        list.push(value) 
+        list.push(value)
       })
-      expData.push(list)  
-    }) 
-   
+      expData.push(list)
+    })
+
     this.xlsx.export({
       sheets: [
         {
@@ -57,5 +57,16 @@ export class PublicModel {
     });
   }
 
+  isAddModal(then?: Function) {
+    this.message.confirm(
+      '是否确认添加',
+      '温馨提示',
+      (result: boolean) => {
+        if (result) {
+          if (then) then();
+        }
+      },
+    );
+  }
 
 }

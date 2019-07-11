@@ -15,6 +15,7 @@ import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import { PublicFormComponent } from '../public/public-form.component';
 import * as moment from 'moment';
+import { timeTrans } from 'infrastructure/regular-expression';
 /**
  * 工程列表
  */
@@ -121,8 +122,12 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
     this.searchParam.projectName='';
     this.searchParam.companyName='';
     this.searchParam.sorting = 'ProjectName';
-    this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
-    this.searchParam.endApplyTime = moment(this.rangeTime[1]).add(28800000);
+    // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
+    // this.searchParam.endApplyTime = moment(this.rangeTime[1]).add(28800000);
+    // let a=this.rangeTime[0]
+    // this.searchParam.startApplyTime=timeTrans( Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-'+" 00:00:00");
+    // this.searchParam.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-'+" 23:59:59") ;
+
     this.getList();
   }
 
@@ -143,8 +148,10 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
    */
   query() {
     this.searchParam.page = 1;
-    this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
-    this.searchParam.endApplyTime = moment(this.rangeTime[1]).add(28800000);
+    // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
+    // this.searchParam.endApplyTime = moment(this.rangeTime[1]).add(28800000);
+    // this.searchParam.startApplyTime=timeTrans( Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-'+" 00:00:00");
+    // this.searchParam.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-'+" 23:59:59") ;
     this.getList();
   }
 

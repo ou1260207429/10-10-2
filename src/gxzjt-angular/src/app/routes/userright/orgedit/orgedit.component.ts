@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { UserRightService } from '../userright.service';
 import { NzDropdownService, NzMenuItemDirective, NzFormatEmitEvent, NzMessageService } from 'ng-zorro-antd';
+import { PublicModel } from 'infrastructure/public-model';
 
 @Component({
   selector: 'app-userright-orgedit',
@@ -11,13 +12,14 @@ import { NzDropdownService, NzMenuItemDirective, NzFormatEmitEvent, NzMessageSer
 export class UserrightOrgeditComponent implements OnInit {
   dropdown;
   nodes;
-  // orgarray:[];
+  orgarray;
 
 
   constructor(private http: _HttpClient,
     private nzDropdownService: NzDropdownService,
     private modal: ModalHelper,
     private message: NzMessageService,
+    private _publicModel: PublicModel,
     private UserRightService: UserRightService) { }
 
   ngOnInit() {
@@ -46,52 +48,72 @@ export class UserrightOrgeditComponent implements OnInit {
     this.dropdown.close();
   }
 
-  // nzEvent(event: NzFormatEmitEvent): void {
-  //   //  console.log(event.keys)
-  //   this.nodes.forEach(element => {
-  //     if (element.key == event.keys[0]) {
-  //       this.orgarray = element.children;
+  nzEvent(event: NzFormatEmitEvent): void {
+    //  console.log(event.keys)
+    this.nodes.forEach(element => {
+      if (element.key == event.keys[0]) {
+        this.orgarray = element.children;
 
-  //     } else {
-  //       element.children.forEach(city => {
-  //         if (city.key == event.keys[0]) {
-  //           this.orgarray = city.children;
+      } else {
+        element.children.forEach(city => {
+          if (city.key == event.keys[0]) {
+            this.orgarray = city.children;
 
-  //         } else {
-  //           city.children.forEach(conuty => {
-  //             if (conuty.key == event.keys[0]) {
-  //               this.orgarray = conuty.children;
+          } else {
+            city.children.forEach(conuty => {
+              if (conuty.key == event.keys[0]) {
+                this.orgarray = conuty.children;
 
-  //             } else {
-  //               conuty.children.forEach(xz => {
-  //                 if (xz.key == event.keys[0]) {
-  //                   this.orgarray = [];
-  //                 }
+              } else {
+                conuty.children.forEach(xz => {
+                  if (xz.key == event.keys[0]) {
+                    this.orgarray = null;
+                  }
 
-  //               });
+                });
 
-  //             }
-  //           });
-  //         }
+              }
+            });
+          }
 
-  //       });
-  //     }
+        });
+      }
 
-  //   });
+    });
 
-  //   if (this.orgarray.length == 0) {
-  //     this.message.warning("已无下级组织");
-  //   }
-
-  // }
+    if (this.orgarray==null||this.orgarray.length == 0) {
+      this.message.warning("已无下级组织");
+    }
+  console.log(event.keys)
+  }
 
   log(value: string[]): void {
-    // console.log(value);
+    console.log(value);
   }
 
   defaultCheckedKeys;
 
-  deleteData() {
-
+  addData() {
+    this._publicModel.isAddModal(() => {
+      // this._userServices.deleteRoles({ ids: this.deleteList }).subscribe(data => {
+      //   this.initTable();
+      // })
+    });
   }
+  deleteData(){
+    this._publicModel.isAddModal(() => {
+      // this._userServices.deleteRoles({ ids: this.deleteList }).subscribe(data => {
+      //   this.initTable();
+      // })
+    });
+  }
+
+  edit(){
+    this._publicModel.isAddModal(() => {
+      // this._userServices.deleteRoles({ ids: this.deleteList }).subscribe(data => {
+      //   this.initTable();
+      // })
+    });
+  }
+
 }
