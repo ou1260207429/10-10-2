@@ -76,8 +76,18 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     this.childOuter.emit(this.f);
     this.getAreaDropdown();
     this.getOrganizationTree()
+    const a:any = this.f; 
 
 
+    if (this.type == 1) {
+      setTimeout(() => { 
+        const a:any = this.f; 
+        this.f.controls.jsconstructionUnit.disable({onlySelf:false,emitEvent:false})
+        Object.keys(this.f.controls).forEach(function (key) { 
+          a.controls[key].disable({onlySelf:false,emitEvent:false})
+        });
+      },500)
+    } 
   }
 
   /**
@@ -86,6 +96,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   getAreaDropdown() {
     this._homeServiceProxy.getAreaDropdown().subscribe(data => {
       this.position = classTreeChildrenArray([JSON.parse(data)]); 
+      console.log(this.position)
     })
   }
 
@@ -95,6 +106,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   getOrganizationTree() {
     this._publicServices.getOrganizationTree().subscribe((data: any) => {
       this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]); 
+      console.log(this.engineeringList)
     })
   }
 

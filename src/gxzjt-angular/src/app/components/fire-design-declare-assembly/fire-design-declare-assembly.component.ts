@@ -70,6 +70,16 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
     this.getOrganizationTree()
 
+
+    if (this.type == 1) {
+      setTimeout(() => { 
+        const a:any = this.f; 
+        this.f.controls.jsconstructionUnit.disable({onlySelf:false,emitEvent:false})
+        Object.keys(this.f.controls).forEach(function (key) { 
+          a.controls[key].disable({onlySelf:false,emitEvent:false})
+        });
+      },500)
+    } 
   }
 
 
