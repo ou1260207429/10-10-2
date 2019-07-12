@@ -106,7 +106,7 @@
       <thead>
         <tr>
           <td colspan='20' rowspan='1' class="table_title">
-            <h3>{{data.orgName}}<br />建设工程竣工验收消防备案意见书</h3>
+            <h3>{{data.orgName}}<br />建设工程竣工验收消防备案抽查不合格通知书<span style="color: red">（不合格才需要填写意见）</span></h3>
           </td>
         </tr>
       </thead>
@@ -123,10 +123,9 @@
             <div class="table_detail">
               <h3>{{data.companyName}}：</h3>
               <p>
-                你单位备案的{{data.projectName}}工程(备案凭证文号：{{examineFormDto.acceptFileCode}}，工程备案号：{{examineFormDto.recordNumber}}，{{data.descr}})，经我单位竣工验收消防备案抽查不合格。你单位于{{data.applyDateTime|date:'yyyy年MM月dd日'}}申请复验，我单位根据{{data.acceptFileCode}}《建设工程竣工验收消防备案抽查不合格通知书》进行复查，存在问题均予以整改。该工程竣工验收消防备案复查合格，同意该工程恢复使用。
+                  经随机抽查，你单位{{data.address}}{{examineFormDto.projectName}}工程(备案凭证文号：{{examineFormDto.acceptFileCode}}，工程备案号为{{examineFormDto.recordNumber}})),被确定为检查对象。{{data.descr}}
               </p>
-              <p>该工程竣工验收消防备案合格投入使用后，管理单位应当对建筑消防设施进行定期维护保养，确保完好有效。</p>
-              <p>工程如有扩建、改建（含室内外装修、建筑保温、用途变更），应当依法向我单位申报建设工程竣工验收消防备案。属于公众聚集场所的在投入使用、营业前，应依法申请消防安全检查。</p>
+              <p>我局按照建设工程消防验收评定标准进行了检查。经审查资料及现场检查测试，综合评定该工程为不合格。主要存在下列问题：</p>
             </div>
 
             <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion"

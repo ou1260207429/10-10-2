@@ -226,8 +226,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
         }
         break;
 
-      case '业务承办人审核':
-
+      case '业务承办人审核': 
         if ((!this.examineFormDto.fileCodePrefix || !this.examineFormDto.opinion) && this.flowPathType != 3 ) {
           this.message.error('请输入必填项')
           return false;
@@ -239,15 +238,17 @@ export class AgencyDoneDetailsComponent implements OnInit {
         } else {
           this.examineFormDto.checkDate = moment(timeTrans(Date.parse(this.examineFormDto.checkDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'))
         }
-
-        if(!this.examineFormDto.fileCodePrefix && this.flowPathType == 3){
+ 
+        if (!this.examineFormDto.fileCodePrefix && this.flowPathType == 3) {  
           this.message.error('请输入必填项')
           return false;
+        } else {
+          if (!bo && !this.examineFormDto.opinion) {
+            this.message.error('不合格需要填写意见')
+            return false;
+          }
         }
-
-
         break;
-
       default:
         break;
     }
@@ -267,6 +268,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
         }
       }
     }
+ 
     let num = bo ? 1 : 0;
     //判断是竣工备案  
     if (this.flowPathType == 3 && !this.formDto.isSelect) {
@@ -280,7 +282,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptFullPath = this.appSession.user.organizationsName
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.curNodeName=='大厅受理' ? this.formDto.opinion : this.examineFormDto.opinion
-    this.butNzLoading = true 
+    this.butNzLoading = true  
     if (!bo && this.curNodeName == '业务审批负责人审批') {
       // this.noResult((data) => { 
       this.tenantWorkFlowInstanceDto.backAuditedNode = {
