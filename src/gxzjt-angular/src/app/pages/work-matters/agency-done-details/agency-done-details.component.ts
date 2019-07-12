@@ -274,7 +274,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       num = 0
     }
     this.tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
-      Area: this.formJson.engineeringNo,
+      Area: this.formJson.engineeringNo[this.formJson.engineeringNo.length-1], 
       IsChoose: num,
     }
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId
@@ -495,7 +495,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       InitiationProcessAddAuditorComponent,
       {
         title: title,
-        area: this.formJson.engineeringNo,
+        area: this.formJson.engineeringNo[this.formJson.engineeringNo.length-1],
         auditors: this.tenantWorkFlowInstanceDto.auditors
       }
     ).subscribe((res: any) => {

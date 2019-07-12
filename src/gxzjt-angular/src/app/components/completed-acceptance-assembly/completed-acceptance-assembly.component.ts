@@ -105,8 +105,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
    */
   getOrganizationTree() {
     this._publicServices.getOrganizationTree().subscribe((data: any) => {
-      this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]); 
-      console.log(this.engineeringList)
+      this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]);  
     })
   }
 
@@ -116,9 +115,10 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
    */
   changeGetOrganizationTree(v) {
     //联动处理   
-    this.data.engineeringId = lodash.cloneDeep(v); 
-    const list = this.publicModel.positionTreeArray(this.engineeringList, 'value', v, []) 
-    this.data.engineeringNo = list[list.length - 1].id  
+    // this.data.engineeringId = lodash.cloneDeep(v); 
+    // const list = this.publicModel.positionTreeArray(this.engineeringList, 'value', v, []) 
+    // this.data.engineeringNo = list[list.length - 1].id 
+    // console.log(list) 
   }
 
 
@@ -129,12 +129,16 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
    * @param v 
    */
   changeCitycountyAndDistrict(v) {
+    
     this.data.engineeringCitycountyAndDistrict = v;
-
-    this.engineering = lodash.cloneDeep(v);   
-    const result = updateEngineeringNo(this.engineeringList, this.engineering.length - 1,this.engineering, this.data.engineeringNo)
-    this.data.engineeringNo = result.no  
-    this.data.engineeringId = this.engineering  
+    const t = lodash.cloneDeep(v)
+    const list = this.publicModel.positionTreeArray(this.engineeringList, 'areaIds', t, []) 
+    this.data.engineeringNo = []
+    if (list.length > 0) {
+      list.forEach(item => { 
+        this.data.engineeringNo.push(item.value)
+      })
+    } 
   }
 
   /**

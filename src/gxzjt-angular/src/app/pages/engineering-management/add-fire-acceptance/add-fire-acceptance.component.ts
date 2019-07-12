@@ -281,7 +281,7 @@ export class AddFireAcceptanceComponent implements OnInit {
 
         const from: GXZJT_From = {
           frow_TemplateInfo_Data: {
-            Area: this.data.engineeringNo
+            Area: this.data.engineeringNo[this.data.engineeringNo.length-1]
           },
           identify: 'xfsj',
           editWorkFlow_NodeAuditorRecordDto: {

@@ -12,7 +12,7 @@ export class PublicModel {
 
   positionIndex = 0;
 
-  constructor(private xlsx: XlsxService,private message: MessageService, private nzMessage: NzMessageService, ) { }
+  constructor(private xlsx: XlsxService, private message: MessageService, private nzMessage: NzMessageService, ) { }
   isDeleteModal(then?: Function) {
     this.message.confirm(
       '是否确认删除',
@@ -44,26 +44,32 @@ export class PublicModel {
    * @param positionValue 选中的值 ：数组
    * @param list 返回的值
    */
-  positionTreeArray(arr: Array<any>,arrType:string, positionValue: Array<any>, list: Array<any>): Array<any> { 
-    for (let index = 0; index < positionValue.length; index++) { 
-      this.positionIndex = checkArrayString(arr, arrType, positionValue[index]) 
-      list.push({label:arr[this.positionIndex].label,value:arr[this.positionIndex].value,id:arr[this.positionIndex].ID})
-      if (arr[this.positionIndex].children && arr[this.positionIndex].children.length > 0) {
-        positionValue.splice(index, 1)
-        this.positionTreeArray(arr[this.positionIndex].children,arrType, positionValue, list)   
+  positionTreeArray(arr: Array<any>, arrType: string, positionValue: Array<any>, list: Array<any>): Array<any> { 
+    for (let index = 0; index < positionValue.length; index++) {
+      this.positionIndex = checkArrayString(arr, arrType, positionValue[index])
+      if (this.positionIndex == -1) {
+        this.positionIndex = 0
         break
+      } else {
+        list.push({ label: arr[this.positionIndex].label, value: arr[this.positionIndex].value, id: arr[this.positionIndex].ID })
+        if (arr[this.positionIndex].children && arr[this.positionIndex].children.length > 0) {
+          positionValue.splice(index, 1)
+          this.positionTreeArray(arr[this.positionIndex].children, arrType, positionValue, list)
+          break
+        }
       }
-    } 
+
+    }
     return list;
   }
 
-  exportXlsx(columns:STColumn[],array:Array<any>,filename:string='表单') {
+  exportXlsx(columns: STColumn[], array: Array<any>, filename: string = '表单') {
     const expData = [columns.map(i => i.title)];
 
-    array.forEach((item,index)=>{
+    array.forEach((item, index) => {
       const list = [];
-      columns.forEach((box,i)=>{
-        const value = box.index?item[box.index.toString()]:''
+      columns.forEach((box, i) => {
+        const value = box.index ? item[box.index.toString()] : ''
         list.push(value)
       })
       expData.push(list)
@@ -76,7 +82,7 @@ export class PublicModel {
           name: 'sheet name',
         },
       ],
-      filename:filename,
+      filename: filename,
     });
   }
 

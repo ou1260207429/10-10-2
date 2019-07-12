@@ -1,4 +1,4 @@
-<form nz-form #f="ngForm" class="formTables" se-container="1" labelWidth="0">
+<form nz-form #f="ngForm" class="formTables" se-container="1" labelWidth="0" style="padding: 0 20px;box-sizing: border-box">
   <div nz-row *ngIf="data!=''">
     <table class="tables" style="box-sizing: border-box;">
       <thead>
@@ -100,7 +100,7 @@
               <nz-spin [nzSpinning]="!engineeringList"></nz-spin>
               <nz-cascader *ngIf="engineeringList" [ngClass]="{pointer: type == 1}" [nzLoadData]="position"
                 [nzPlaceHolder]="'请设置审批单位'" [nzChangeOnSelect]="true" [nzOptions]="engineeringList"
-                (nzChange)="changeGetOrganizationTree($event)" [(ngModel)]="data.engineeringId" name="engineeringId"
+                (nzChange)="changeGetOrganizationTree($event)" [(ngModel)]="data.engineeringNo" name="engineeringNo"
                 required>
               </nz-cascader>
             </se>
@@ -437,9 +437,9 @@
             <input  nz-input placeholder="请输入设置位置" [(ngModel)]="item.position"
               name="storageTankPosition{{index}}" />
           </td>
-          <td colspan='3' class="fontweight fontLeft leftTitle">总容量（m3）</td>
+          <td colspan='3' class="fontweight fontLeft leftTitle">总容量（m³）</td>
           <td rowspan='1' colspan='4'>
-            <input  nz-input placeholder="请输入总容量（m3）" [(ngModel)]="item.totalCapacity"
+            <input  nz-input placeholder="请输入总容量（m³）" [(ngModel)]="item.totalCapacity"
               name="storageTotalCapacity{{index}}" />
           </td>
           <td rowspan="1" colspan='1'>操作</td>
@@ -554,9 +554,9 @@
       </tr>
 
       <tr>
-        <td colspan='3' class="fontweight fontLeft leftTitle">装修面积（m2）</td>
+        <td colspan='3' class="fontweight fontLeft leftTitle">装修面积（㎡）</td>
         <td rowspan='1' colspan='4'>
-          <input  nz-input placeholder="请输入装修面积（m2）"
+          <input  nz-input placeholder="请输入装修面积（㎡）"
             [(ngModel)]="data.decorationProject.decorationArea" name="decorationProjectdecorationArea" />
         </td>
         <td colspan='3' class="fontweight fontLeft leftTitle">装修层数</td>

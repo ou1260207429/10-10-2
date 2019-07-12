@@ -78,6 +78,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
         Object.keys(this.f.controls).forEach(function (key) { 
           a.controls[key].disable({onlySelf:false,emitEvent:false})
         });
+        
       },500)
     } 
   }
@@ -89,11 +90,16 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
    * @param v 
    */
   changeCitycountyAndDistrict(v) {
-    this.data.engineeringCitycountyAndDistrict = v
-    this.engineering = lodash.cloneDeep(v);   
-    const result = updateEngineeringNo(this.engineeringList, this.engineering.length - 1,this.engineering, this.data.engineeringNo)
-    this.data.engineeringNo = result.no  
-    this.data.engineeringId = this.engineering 
+    this.data.engineeringCitycountyAndDistrict = v;
+    const t = lodash.cloneDeep(v)
+    const list = this.publicModel.positionTreeArray(this.engineeringList, 'areaIds', t, []) 
+    this.data.engineeringNo = []
+    if (list.length > 0) {
+      list.forEach(item => { 
+        this.data.engineeringNo.push(item.value)
+      })
+    } 
+    console.log(this.data.engineeringNo)
   }
 
   /**
@@ -102,6 +108,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   getAreaDropdown() {
     this._homeServiceProxy.getAreaDropdown().subscribe(data => {
       this.position = classTreeChildrenArray([JSON.parse(data)]);
+      console.log(this.position);
     })
   }
 
@@ -110,7 +117,8 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
    */
   getOrganizationTree() {
     this._publicServices.getOrganizationTree().subscribe((data: any) => {
-      this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]);;
+      this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]);
+      console.log(this.engineeringList);
     })
   }
 
@@ -120,9 +128,9 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
    */
   changeGetOrganizationTree(v) {
     //联动处理
-    this.data.engineeringId = lodash.cloneDeep(v); 
-    const list = this.publicModel.positionTreeArray(this.engineeringList, 'value', v, []) 
-    this.data.engineeringNo = list[list.length - 1].id  
+    // this.data.engineeringId = lodash.cloneDeep(v); 
+    // const list = this.publicModel.positionTreeArray(this.engineeringList, 'value', v, []) 
+    // this.data.engineeringNo = list[list.length - 1].id  
   }
 
 

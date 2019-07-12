@@ -176,7 +176,7 @@
               <nz-spin [nzSpinning]="!engineeringList"></nz-spin>
               <nz-cascader *ngIf="engineeringList" [ngClass]="{pointer: type == 1}" [nzLoadData]="position"
                 [nzPlaceHolder]="'请设置审批单位'" [nzChangeOnSelect]="true" [nzOptions]="engineeringList"
-                (nzChange)="changeGetOrganizationTree($event)" [(ngModel)]="data.engineeringId" name="engineeringId"
+                (nzChange)="changeGetOrganizationTree($event)" [(ngModel)]="data.engineeringNo" name="engineeringNo"
                 required>
               </nz-cascader>
             </se>
@@ -570,9 +570,9 @@
       </tr>
 
       <tr>
-        <td colspan='3' style="text-align: left">装修面积（m2） </td>
+        <td colspan='3' style="text-align: left">装修面积（㎡） </td>
         <td colspan='4' style="text-align: left">
-          <input  nz-input placeholder="请输入装修面积（m2）"
+          <input  nz-input placeholder="请输入装修面积（㎡）"
             [(ngModel)]="data.constructionProject.decorationArea" name="constructionProjectdecorationArea" /></td>
         <td colspan='3' style="text-align: left">装修层数</td>
         <td colspan='5' style="text-align: left"><input  nz-input placeholder="请输入装修层数"

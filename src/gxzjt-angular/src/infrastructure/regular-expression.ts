@@ -427,7 +427,8 @@ export function classTreeChildrenArray(arr: Array<any>): Array<any> {
 export function newClassTreeChildrenArray(arr: Array<any>): Array<any> {
   arr.forEach(element => {
     element.label = element.Name;
-    element.value = element.AreaIds[0];
+    element.value = element.ID;
+    element.areaIds = element.AreaIds[0]
     if (element.Children && element.Children.length > 0) {
       element.children = []
       element.children = element.Children

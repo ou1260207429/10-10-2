@@ -573,7 +573,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
   post_GetFlowFormData() {
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
       if (data != null && data.formJson != null && data.formJson != "") {
-        this.data = JSON.parse(data.formJson);
+        this.data = JSON.parse(data.formJson); 
       }
       this.useNatureSelect = data.natures
     })
@@ -616,7 +616,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
       const from: GXZJT_From = {
         frow_TemplateInfo_Data: {
           //市县区  
-          Area: this.data.engineeringNo
+          Area: this.data.engineeringNo[this.data.engineeringNo.length-1]
         },
         //'xfsj,''xfys,'jgys  流程分类  英文简写(消防设计,消防验收,竣工验收)
         identify: 'xfsj',

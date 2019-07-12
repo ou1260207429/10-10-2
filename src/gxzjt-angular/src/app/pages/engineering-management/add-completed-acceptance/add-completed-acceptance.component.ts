@@ -470,6 +470,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         json.constructionUnit = json.constructionUnit instanceof Array ? json.constructionUnit : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }]
         json.design = json.design?json.design: [{designUnit: '',qualificationLevel: '',legalRepresentative: '',contacts: '',contactsNumber: ''}],
         json.engineeringId = json.engineeringId ? json.engineeringId : ''
+        
+        console.log(json.engineeringNo)
         json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
         json.applyName = json.applyName ? json.applyName : '' 
         json.constructionProject = json.constructionProject?json.constructionProject: {
@@ -521,10 +523,10 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       this.butNzLoading = false;
     })
   }
-  save() {
+  save() { 
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
-        Area: this.data.engineeringNo
+        Area: this.data.engineeringNo[this.data.engineeringNo.length-1]
       },
       identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {
@@ -536,7 +538,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     };
 
     this.butNzLoading = true;
-    this.isSelectModalOkLoading = true; 
+    this.isSelectModalOkLoading = true;  
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
       const flowDataDto = new FlowDataDto();
