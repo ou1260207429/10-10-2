@@ -238,10 +238,14 @@ export class AppMenus {
           link: "/app/userright/userlist",
           acl: [AppMenus.aclSys , AppMenus.orgManager],
         },
-        // {
-        //   text: "机构配置",
-        //   link: "/app/userright/orgedit",
-        // },
+        {
+          text: "机构配置",
+          link: "/app/userright/orgedit",
+        },
+        {
+          text: "区域配置",
+          link: "/app/userright/Aareedit",
+        },
         {
           text: "岗位列表",
           link: "/app/userright/postwork",

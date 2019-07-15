@@ -1,0 +1,105 @@
+<page-header>
+  <ng-template #action>
+    <button (click)="add()" nz-button nzType="primary">新建</button>
+  </ng-template>
+</page-header>
+<!-- 组织框架管理-->
+
+<nz-card>
+  <div class="right">
+    <div class="org"><span>区域机构</span></div>
+    <div nz-col [nzSpan]="2">
+      <div style="margin-top: 35px;">
+        <nz-tree #treeCom [nzData]="nodes" nzMultiple="false"  [(nzCheckedKeys)]="defaultCheckedKeys"
+          nzDefaultExpandAll="true" (nzClick)="nzEvent($event)">
+
+          <div
+            *ngIf="this.editmodel.code != '450000' && this.editmodel.name != '广西壮族自治区' && this.editmodel.id != '450000' ">
+            <ng-template #nzTreeTemplate let-node>
+              <span (contextmenu)="contextMenu($event,template)" class="min-w">
+                {{ node.title }}
+
+              </span>
+
+            </ng-template>
+            <ng-template #template>
+              <ul nz-menu nzInDropDown (nzClick)="close($event)">
+                <li nz-menu-item (click)="edit()">编辑</li>
+                <li nz-menu-item (click)="add()">添加</li>
+                <li nz-menu-item (click)="deleteData()">删除</li>
+
+
+              </ul>
+            </ng-template>
+
+          </div>
+        </nz-tree>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="content">
+    <div class="org"><span>所辖区域</span></div>
+
+    <div *ngIf="orgarray!='' && orgarray!=null ">
+      <div> <a nz-button (click)="deleteData()" nzType="primary"
+          style="margin-right: 10px;float: right;;margin-top: 5px;"><i nz-icon type="delete"
+            nzTheme="outline"></i>删除</a></div>
+      <div> <a nz-button (click)="add()" nzType="primary"
+          style="margin-right: 10px;float: right;;margin-top: 5px;"><i nz-icon type="delete"
+            nzTheme="outline"></i>增加</a></div>
+      <div style="padding: 5px;">
+        <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="log($event)">
+          <div nz-row>
+            <div *ngFor="let item of orgarray" nz-col nzSpan="8"><label nz-checkbox
+                nzValue="{{item.key}}">{{item.title}}</label></div>
+
+          </div>
+        </nz-checkbox-wrapper>
+      </div>
+    </div>
+
+  </div>
+
+
+</nz-card>
+
+<!-- 编辑 -->
+<nz-modal [(nzVisible)]="isAddProducttyepe1" nzTitle="编辑区域" (nzOnCancel)="handleCancel1()" (nzOnOk)="subProducttype1()">
+  <div nz-row>
+    <div nz-col nzSpan="5">行政区域名称</div>
+    <div nz-col nzSpan="19">
+      <input nz-input [(ngModel)]="editmodel.name">
+    </div>
+
+    <div style="margin-top: 50px;">
+      <div nz-col nzSpan="5">行政区域编码</div>
+      <div nz-col nzSpan="19">
+        <input nz-input placeholder="请输入新增区域编码" [(ngModel)]="editmodel.code">
+      </div>
+    </div>
+
+
+  </div>
+</nz-modal>
+
+<!-- 添加 -->
+<nz-modal [(nzVisible)]="isAddProducttyepe2" nzTitle="添加区域" (nzOnCancel)="handleCancel2()" (nzOnOk)="subProducttype2()">
+  <div nz-row>
+    <div nz-col nzSpan="5">行政区域名称</div>
+    <div nz-col nzSpan="19">
+      <input nz-input [(ngModel)]="addAreaModel.name">
+    </div>
+
+    <div style="margin-top: 50px;">
+      <div nz-col nzSpan="5">行政区域编码</div>
+      <div nz-col nzSpan="19">
+        <input nz-input placeholder="请输入新增区域编码" [(ngModel)]="addAreaModel.code">
+      </div>
+    </div>
+
+
+  </div>
+</nz-modal>

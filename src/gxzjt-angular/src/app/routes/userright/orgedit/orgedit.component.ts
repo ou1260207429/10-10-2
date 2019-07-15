@@ -12,8 +12,28 @@ import { PublicModel } from 'infrastructure/public-model';
 export class UserrightOrgeditComponent implements OnInit {
   dropdown;
   nodes;
+  Areanodes;
   orgarray;
+  orgdetail;//获取组织详情
+  isAddProducttyepe1 = false;//编辑
+  isAddProducttyepe2 = false;//添加
+  parentorgname;
 
+  defaultCheckedKeysArea=["450300"];//所属区域数组
+  defaultCheckedKeys2=[];
+  defaultCheckedKeys3=[];//添加默认节点
+
+  defaultCheckedKeys=[];
+  addOrgModel={
+    name:'',
+    parentId:'',
+    orgChargeUid:[],//所属区域id数组
+  }
+  editOrgModel={
+    id:'',
+    name:'',
+    orgChargeUid:[],
+  }
 
   constructor(private http: _HttpClient,
     private nzDropdownService: NzDropdownService,
@@ -24,10 +44,12 @@ export class UserrightOrgeditComponent implements OnInit {
 
   ngOnInit() {
     this.getTreeData();
+    this.getAreaTreeData();
+
   }
 
   add() {
-
+    this.isAddProducttyepe2 = true;
   }
   getTreeData() {
     this.UserRightService.GetTreeData().subscribe(
@@ -49,7 +71,19 @@ export class UserrightOrgeditComponent implements OnInit {
   }
 
   nzEvent(event: NzFormatEmitEvent): void {
-    //  console.log(event.keys)
+     console.log(event)
+     this.addOrgModel.parentId=event.keys[0];//点击获取ID作为添加父ID
+     //根据点击的ID获取详细
+     let getdetailmodel={
+       id:this.addOrgModel.parentId+''
+     }
+     this.getorgdetail(getdetailmodel);
+
+     //点击获取编辑模型数据作为ID
+     this.editOrgModel.id=event.keys[0];
+     this.editOrgModel.name=event.node.title;
+
+     this.parentorgname=event.node.title;
     this.nodes.forEach(element => {
       if (element.key == event.keys[0]) {
         this.orgarray = element.children;
@@ -81,17 +115,26 @@ export class UserrightOrgeditComponent implements OnInit {
 
     });
 
-    if (this.orgarray==null||this.orgarray.length == 0) {
-      this.message.warning("已无下级组织");
-    }
-  console.log(event.keys)
   }
+  //获取组织详情
+  getorgdetail(id){
+    this.UserRightService.GetOrgDetail(id).subscribe(
+      res => {
+        this.orgdetail = res.data;
+        if(res.data.areaIds){
+          this.defaultCheckedKeys2= res.data.areaIds
+        }
+
+      },
+    );
+
+  }
+
 
   log(value: string[]): void {
     console.log(value);
   }
 
-  defaultCheckedKeys;
 
   addData() {
     this._publicModel.isAddModal(() => {
@@ -101,7 +144,7 @@ export class UserrightOrgeditComponent implements OnInit {
     });
   }
   deleteData(){
-    this._publicModel.isAddModal(() => {
+    this._publicModel.isDeleteModal(() => {
       // this._userServices.deleteRoles({ ids: this.deleteList }).subscribe(data => {
       //   this.initTable();
       // })
@@ -109,11 +152,73 @@ export class UserrightOrgeditComponent implements OnInit {
   }
 
   edit(){
-    this._publicModel.isAddModal(() => {
+    // this.defaultCheckedKeys2=["450200", "450300"] 进入编辑页面加载所属区域
+    this.isAddProducttyepe1 = true;
+  }
+
+  handleCancel1(): void {
+
+    this.isAddProducttyepe1 = false;
+  }
+  subProducttype1(): void {
+    console.log(this.editOrgModel)
       // this._userServices.deleteRoles({ ids: this.deleteList }).subscribe(data => {
       //   this.initTable();
-      // })
-    });
+
+
+    this.isAddProducttyepe1 = false;
+  }
+  // nzEventor(event: NzFormatEmitEvent): void {
+  //   // console.log(event)
+  // }
+
+  getAreaTreeData() {
+    this.UserRightService.AreaGetAreaTree().subscribe(
+      res => {
+        this.Areanodes = res.data;
+      },
+    );
+  }
+
+  nzAreaEvent(event: NzFormatEmitEvent): void {
+     this.addOrgModel.orgChargeUid=event.keys;//点击获取区域ID放入添加模型
+
+     this.editOrgModel.orgChargeUid=event.keys;//点击获取区域ID放入编辑模型
+
+
+  }
+  handleCancel2(): void {
+    this.addOrgModel={
+      name:'',
+      parentId:'',
+      orgChargeUid:[],//所属区域id数组
+    }
+    this.defaultCheckedKeys3=[];
+    this.isAddProducttyepe2 = false;
+  }
+  subProducttype2(): void {
+    this.UserRightService.OrgaAdd(this.addOrgModel).subscribe(data => {
+      if(data.result==0){
+        this.getTreeData();
+        this.message.success("操作成功")
+        this.addOrgModel={
+          name:'',
+          parentId:'',
+          orgChargeUid:[],//所属区域id数组
+        }
+        this.defaultCheckedKeys3=[];
+        this.isAddProducttyepe2 = false;
+
+      }else{
+        this.message.error(data.message)
+
+
+        return
+      }
+
+    })
+
+
   }
 
 }
