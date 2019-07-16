@@ -617,8 +617,8 @@
               </div>
 
               <div *ngIf="box.type=='check'">
-                <label nz-checkbox [ngClass]="{pointer: type == 1}" name="xxcheckbox{{i}}{{index}}"
-                  *ngFor="let obj of box.list;let i = index" [(ngModel)]="obj.value">{{obj.label}}</label>
+                <label nz-checkbox [ngClass]="{pointer: type == 1}" 
+                  *ngFor="let obj of box.list;let a = index" [(ngModel)]="obj.value" name="xxcheckbox{{a}}{{i}}{{index}}">{{obj.label}}</label>
               </div>
             </div>
           </div>
