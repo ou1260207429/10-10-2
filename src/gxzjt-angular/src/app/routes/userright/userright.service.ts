@@ -88,6 +88,11 @@ export class UserRightService {
       return this.http.get(URL_CONFIG.getInstance().REGISTER_URL+ 'api/Organizations/Details',model);
     }
 
+     //批量删除区域
+  OrganizationsDelete(model?: any): Observable<any> {
+      return this.http.post(URL_CONFIG.getInstance().REGISTER_URL + 'api/Organizations/Delete', model)
+    }
+
 
 }
 

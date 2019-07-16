@@ -35,6 +35,8 @@ export class UserrightOrgeditComponent implements OnInit {
     orgChargeUid:[],
   }
 
+  deletearray=[];//删除数组
+
   constructor(private http: _HttpClient,
     private nzDropdownService: NzDropdownService,
     private modal: ModalHelper,
@@ -83,6 +85,8 @@ export class UserrightOrgeditComponent implements OnInit {
      this.editOrgModel.id=event.keys[0];
      this.editOrgModel.name=event.node.title;
 
+    //  this.editOrgModel.orgChargeUid=e
+
      this.parentorgname=event.node.title;
     this.nodes.forEach(element => {
       if (element.key == event.keys[0]) {
@@ -118,21 +122,28 @@ export class UserrightOrgeditComponent implements OnInit {
   }
   //获取组织详情
   getorgdetail(id){
-    this.UserRightService.GetOrgDetail(id).subscribe(
-      res => {
-        this.orgdetail = res.data;
-        if(res.data.areaIds){
-          this.defaultCheckedKeys2= res.data.areaIds
-        }
+    if(id!=null&&id!=''){
+      this.UserRightService.GetOrgDetail(id).subscribe(
+        res => {
+          this.orgdetail = res.data;
+          if(res.data!=null && res.data.areaIds && res.data.areaIds!=null && res.data.areaIds!=''){
+            this.defaultCheckedKeys2= res.data.areaIds
+            this.editOrgModel.orgChargeUid=res.data.areaIds
+          }else{
+            this.defaultCheckedKeys2=[];
+            this.editOrgModel.orgChargeUid=[];
+          }
 
-      },
-    );
+        },
+      );
+    }
+
 
   }
 
 
   log(value: string[]): void {
-    console.log(value);
+    this.deletearray=value
   }
 
 
@@ -145,9 +156,16 @@ export class UserrightOrgeditComponent implements OnInit {
   }
   deleteData(){
     this._publicModel.isDeleteModal(() => {
-      // this._userServices.deleteRoles({ ids: this.deleteList }).subscribe(data => {
-      //   this.initTable();
-      // })
+      this.UserRightService.OrganizationsDelete({ ids: this.deletearray }).subscribe(data => {
+       if(data.result==0){
+        this.message.success("删除成功")
+        this.getTreeData();
+        this.isAddProducttyepe1 = false;
+      }else{
+        this.message.error(data.message)
+        return
+      }
+      })
     });
   }
 
@@ -161,12 +179,19 @@ export class UserrightOrgeditComponent implements OnInit {
     this.isAddProducttyepe1 = false;
   }
   subProducttype1(): void {
-    console.log(this.editOrgModel)
-      // this._userServices.deleteRoles({ ids: this.deleteList }).subscribe(data => {
-      //   this.initTable();
+    this.UserRightService.OrgaUpdate(this.editOrgModel).subscribe(data => {
+      if(data.result==0){
+        this.message.success("操作成功")
+        this.getTreeData();
+        this.isAddProducttyepe1 = false;
+      }else{
+        this.message.error(data.message)
+        return
+      }
+
+     })
 
 
-    this.isAddProducttyepe1 = false;
   }
   // nzEventor(event: NzFormatEmitEvent): void {
   //   // console.log(event)
