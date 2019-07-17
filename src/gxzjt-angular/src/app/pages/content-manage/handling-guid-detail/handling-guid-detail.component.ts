@@ -7,9 +7,9 @@ import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { PublicServices } from 'services/public.services';
 import { Buffer } from "buffer"
-import { URL_CONFIG, AppId } from 'infrastructure/expression';
+import { AppId } from 'infrastructure/expression';
 import lodash from 'lodash'
-
+import { URLConfig } from "@shared/config/host";
 @Component({
   selector: 'app-handling-guid-detail',
   templateUrl: './handling-guid-detail.component.html',
@@ -36,13 +36,13 @@ export class HandlingGuidDetailComponent implements OnInit {
     AppId: AppId,
     module: "table",
   }
-  editContent:any;
+  editContent: any;
   RegulationType: any
   constructor(private _publicServices: PublicServices, private _eventEmiter: EventEmiter, private message: NzMessageService, private _noticeServiceProxy: NoticeServiceProxy, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute) {
     this.id = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
     this.operate = parseInt(this._activatedRoute.snapshot.paramMap.get('operate'));
     this.initType()
-    this.fileUrl = URL_CONFIG.getInstance().REGISTER_URL;
+    this.fileUrl = URLConfig.getInstance().REGISTER_URL;
   }
   ngOnInit() {
     this.init()

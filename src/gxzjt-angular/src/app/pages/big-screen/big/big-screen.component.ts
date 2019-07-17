@@ -1,7 +1,8 @@
 import { ProjectFlowServcieServiceProxy, ScreenServiceServiceProxy } from './../../../../shared/service-proxies/service-proxies';
 import { OnInit, Component } from "@angular/core";
 import { _HttpClient } from "@delon/theme";
-import { URL_CONFIG } from 'infrastructure/expression';
+
+import { URLConfig } from "@shared/config/host";
 @Component({
     selector: 'app-big-screen',
     templateUrl: './big-screen.component.html',
@@ -183,30 +184,30 @@ export class BigScreenComponent {
 
         this.screenService.post_GetApplyRate().subscribe((res: any) => {
             console.log(res);
-            
+
             res.data.forEach(e => {
                 switch (e.flowPathType) {
                     case 1:
-                        Year1 = e.numYear *100;
+                        Year1 = e.numYear * 100;
                         Month1 = e.numMonth * 100;
                         break;
 
                     case 2:
-                        Year2 = e.numYear *100;
-                        Month2 = e.numMonth*100;
+                        Year2 = e.numYear * 100;
+                        Month2 = e.numMonth * 100;
                         break;
                     case 3:
-                        Year3 = e.numYear*100;
-                        Month3 = e.numMonth*100;
+                        Year3 = e.numYear * 100;
+                        Month3 = e.numMonth * 100;
                         break;
                 }
             });
-            Year1 =  this.Floor(Year1);
-            Year2 =  this.Floor(Year2);
-            Year3 =  this.Floor(Year3);
-            Month1 =  this.Floor(Month1);
-            Month2 =  this.Floor(Month2);
-            Month3 =  this.Floor(Month3);
+            Year1 = this.Floor(Year1);
+            Year2 = this.Floor(Year2);
+            Year3 = this.Floor(Year3);
+            Month1 = this.Floor(Month1);
+            Month2 = this.Floor(Month2);
+            Month3 = this.Floor(Month3);
             this.Pie1(Year1, Year2, Year3);
             this.Pie2(Month1, Month2, Month3);
         });
@@ -1342,7 +1343,7 @@ export class BigScreenComponent {
     }
     pie2: any;
     Pie2(num1, num2, num3) {
-        
+
         this.pie2 = {
             title: {
                 text: '本月',

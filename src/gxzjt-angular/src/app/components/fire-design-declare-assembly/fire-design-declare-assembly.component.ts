@@ -1,13 +1,14 @@
 import { HomeServiceProxy, ExamineFormDto } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, URL_CONFIG, zzdjEnum, zzdjEnum1, zzdjEnum2, zzdjEnum3, zzdjEnum4 } from 'infrastructure/expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, zzdjEnum, zzdjEnum1, zzdjEnum2, zzdjEnum3, zzdjEnum4 } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString, newClassTreeChildrenArray, updateEngineeringNo } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile, NzMessageService } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import { EventEmiter } from 'infrastructure/eventEmiter';
-import lodash from 'lodash'
+import lodash from 'lodash';
+import { URLConfig } from "@shared/config/host";
 
 /**
  * 消防设计的表单模块
@@ -180,7 +181,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     this._publicServices.newUpload(formData, params).subscribe(data => {
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].url = URL_CONFIG.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
+      this.data.fileList[this.uoloadIndex].array[index].url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
       this.data.fileList[this.uoloadIndex].array[index].status = 'done'
       const fileList = lodash.cloneDeep(this.data.fileList);
 

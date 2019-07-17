@@ -7,7 +7,8 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { URL_CONFIG } from 'infrastructure/expression';
+import { URLConfig } from '@shared/config/host';
+
 import {
   AccountServiceProxy,
   RegisterInput,
@@ -63,7 +64,7 @@ export class ForgotPswComponent extends AppComponentBase implements OnInit {
 
   save() {
     this.saving = true;
-    let url = URL_CONFIG.getInstance().REGISTER_URL + "api/User/BackUserPasswordAsync";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
+    let url = URLConfig.getInstance().REGISTER_URL + "api/User/BackUserPasswordAsync";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
 
 
     this.http.post(url, this.model, {

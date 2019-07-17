@@ -9,7 +9,7 @@ import { FormGroup } from '@angular/forms';
 import { SSL_OP_ALL } from 'constants';
 
 import { PublicFormComponent } from '../public/public-form.component'
-import { URL_CONFIG } from 'infrastructure/expression';
+import { URLConfig } from "@shared/config/host";
 import { AppSessionService } from '@shared/session/app-session.service';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { ReuseTabService } from '@delon/abc';

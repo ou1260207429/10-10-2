@@ -2,7 +2,7 @@
 import { Observable } from 'rxjs/Rx';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { URL_CONFIG } from 'infrastructure/expression';
+import { URLConfig } from "@shared/config/host";
 
 @Injectable()
 export class PoliciesAndRegulationsServices {
@@ -12,21 +12,21 @@ export class PoliciesAndRegulationsServices {
      */
     get_PoliciesAndRegulations(params?: any): Observable<any> {
         console.log(params);
-        return this.http.post(URL_CONFIG.getInstance().SERVER_URL + 'api/services/app/Regulation/RegulationListAsync', params);
+        return this.http.post(URLConfig.getInstance().SERVER_URL + 'api/services/app/Regulation/RegulationListAsync', params);
     }
 
     /**
      * 编辑政策法规
      */
     edit_PoliciesAndRegulations_NodeAuditorRecord(page?: any): Observable<any> {
-        return this.http.post(URL_CONFIG.getInstance().SERVER_URL + 'api/services/app/WorkFlowInstanceManager/PendingWorkFlow_NodeAuditorRecord', page);
+        return this.http.post(URLConfig.getInstance().SERVER_URL + 'api/services/app/WorkFlowInstanceManager/PendingWorkFlow_NodeAuditorRecord', page);
     }
 
     /**
      * 获取政策法规的详情的路径
      */
     get_PoliciesAndRegulationsDetail(Id: string): Observable<any> {
-        return this.http.get(URL_CONFIG.getInstance().SERVER_URL + 'api/services/app/WorkFlowInstanceManager/getWorkFlow_NodeRecordAndAuditorRecords', {
+        return this.http.get(URLConfig.getInstance().SERVER_URL + 'api/services/app/WorkFlowInstanceManager/getWorkFlow_NodeRecordAndAuditorRecords', {
             params: {
                 Id: Id
             }

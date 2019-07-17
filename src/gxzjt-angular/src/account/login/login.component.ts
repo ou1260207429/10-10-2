@@ -34,7 +34,7 @@ import { UrlHelper } from '@shared/helpers/UrlHelper';
 import { TokenService } from '@abp/auth/token.service';
 
 
-import { URL_CONFIG } from 'infrastructure/expression';
+import { URLConfig } from '@shared/config/host';
 import { UtilsService } from '@abp/utils/utils.service';
 
 var checkCode: any;
@@ -260,7 +260,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
 
 
-      let url = URL_CONFIG.getInstance().REGISTER_URL + "api/User/Login";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
+      let url = URLConfig.getInstance().REGISTER_URL + "api/User/Login";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
 
 
       this.model.userNameOrEmailAddress = this.loginService.authenticateModel.userNameOrEmailAddress;

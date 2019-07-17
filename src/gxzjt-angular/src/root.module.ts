@@ -28,6 +28,7 @@ import { ICONS } from './style-icons';
 import { AbpModule } from '@abp/abp.module';
 import { LocalizationService } from '@shared/i18n/localization.service';
 
+import { URLConfig } from "@shared/config/host"
 
 export function appInitializerFactory(injector: Injector) {
 

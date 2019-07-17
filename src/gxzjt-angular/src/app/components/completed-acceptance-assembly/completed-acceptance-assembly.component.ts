@@ -1,12 +1,13 @@
 import { HomeServiceProxy } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, URL_CONFIG, zzdjEnum5, zzdjEnum4, zzdjEnum3, zzdjEnum2, zzdjEnum1, zzdjEnum } from 'infrastructure/expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, zzdjEnum5, zzdjEnum4, zzdjEnum3, zzdjEnum2, zzdjEnum1, zzdjEnum } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString, newClassTreeChildrenArray, updateEngineeringNo } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile, NzMessageService } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import lodash from 'lodash'
+import { URLConfig } from "@shared/config/host";
 /**
  * 竣工验收的表单模块
  */
@@ -64,7 +65,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   //审批单位
   engineeringList
   engineering
-  constructor(private message: NzMessageService,public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) {
+  constructor(private message: NzMessageService, public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) {
     this.decimationnumber = [];
     for (let index = 1; index < 101; index++) {
       this.decimationnumber.push({ label: index, value: index })
@@ -76,18 +77,18 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     this.childOuter.emit(this.f);
     this.getAreaDropdown();
     this.getOrganizationTree()
-    const a:any = this.f; 
+    const a: any = this.f;
 
 
     if (this.type == 1) {
-      setTimeout(() => { 
-        const a:any = this.f; 
-        this.f.controls.jsconstructionUnit.disable({onlySelf:false,emitEvent:false})
-        Object.keys(this.f.controls).forEach(function (key) { 
-          a.controls[key].disable({onlySelf:false,emitEvent:false})
+      setTimeout(() => {
+        const a: any = this.f;
+        this.f.controls.jsconstructionUnit.disable({ onlySelf: false, emitEvent: false })
+        Object.keys(this.f.controls).forEach(function (key) {
+          a.controls[key].disable({ onlySelf: false, emitEvent: false })
         });
-      },500)
-    } 
+      }, 500)
+    }
   }
 
   /**
@@ -95,7 +96,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   */
   getAreaDropdown() {
     this._homeServiceProxy.getAreaDropdown().subscribe(data => {
-      this.position = classTreeChildrenArray([JSON.parse(data)]); 
+      this.position = classTreeChildrenArray([JSON.parse(data)]);
       console.log(this.position)
     })
   }
@@ -105,7 +106,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
    */
   getOrganizationTree() {
     this._publicServices.getOrganizationTree().subscribe((data: any) => {
-      this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]);  
+      this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]);
     })
   }
 
@@ -122,23 +123,23 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   }
 
 
-  
+
 
   /**
    * 选择市县区
    * @param v 
    */
   changeCitycountyAndDistrict(v) {
-    
+
     this.data.engineeringCitycountyAndDistrict = v;
     const t = lodash.cloneDeep(v)
-    const list = this.publicModel.positionTreeArray(this.engineeringList, 'areaIds', t, []) 
+    const list = this.publicModel.positionTreeArray(this.engineeringList, 'areaIds', t, [])
     this.data.engineeringNo = []
     if (list.length > 0) {
-      list.forEach(item => { 
+      list.forEach(item => {
         this.data.engineeringNo.push(item.value)
       })
-    } 
+    }
   }
 
   /**
@@ -174,7 +175,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     this._publicServices.newUpload(formData, params).subscribe(data => {
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].url = URL_CONFIG.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
+      this.data.fileList[this.uoloadIndex].array[index].url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
       this.data.fileList[this.uoloadIndex].array[index].status = 'done'
       const fileList = lodash.cloneDeep(this.data.fileList);
       this.data.fileList = []

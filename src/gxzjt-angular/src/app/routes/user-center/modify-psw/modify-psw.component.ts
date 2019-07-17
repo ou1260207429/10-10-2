@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 import { NzModalService } from 'ng-zorro-antd';
-import { URL_CONFIG } from 'infrastructure/expression';
+import { URLConfig } from "@shared/config/host";
 import { TokenService } from 'abp-ng2-module/dist/src/auth/token.service';
 
 @Component({
@@ -51,7 +51,7 @@ export class UserCenterModifyPswComponent implements OnInit {
 
   modify() {
     this.modifying = true;
-    let url = URL_CONFIG.getInstance().REGISTER_URL + "api/User/LoginUserChangePassword";
+    let url = URLConfig.getInstance().REGISTER_URL + "api/User/LoginUserChangePassword";
 
     var httpOptions = {
       headers: new HttpHeaders({
