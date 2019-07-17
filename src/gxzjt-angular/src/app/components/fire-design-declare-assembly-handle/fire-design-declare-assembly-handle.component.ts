@@ -49,10 +49,6 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
 
   ngOnInit() {
 
-    setTimeout(() => {
-      console.log(this.examineFormDto)
-      console.log(this.data)
-    }, 3000)
 
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
@@ -91,7 +87,7 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
   beforeUpload = (file: any): boolean => {
     if (this.examineFormDto) {
       this.examineFormDto.attachment = this.examineFormDto.attachment ? this.examineFormDto.attachment : []
-      console.log(this.examineFormDto.attachment);
+      // console.log(this.examineFormDto.attachment);
     }
 
     const name = file.name;

@@ -79,7 +79,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
   //当前节点的名称
   curNodeName
 
-  examineFormDto :any = {}
+  examineFormDto: any = {}
 
   //走流程或者查看  0是走流程  1是查看
   operationType
@@ -217,7 +217,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
   /**
    * 点击提交
    */
-  save(bo?: boolean) { 
+  save(bo?: boolean) {
     switch (this.curNodeName) {
       case '大厅受理':
         if (!this.formDto.fileCodePrefix) {
@@ -226,8 +226,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
         }
         break;
 
-      case '业务承办人审核': 
-        if ((!this.examineFormDto.fileCodePrefix || !this.examineFormDto.opinion) && this.flowPathType != 3 ) {
+      case '业务承办人审核':
+        if ((!this.examineFormDto.fileCodePrefix || !this.examineFormDto.opinion) && this.flowPathType != 3) {
           this.message.error('请输入必填项')
           return false;
         }
@@ -238,8 +238,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
         } else {
           this.examineFormDto.checkDate = moment(timeTrans(Date.parse(this.examineFormDto.checkDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'))
         }
- 
-        if (!this.examineFormDto.fileCodePrefix && this.flowPathType == 3) {  
+
+        if (!this.examineFormDto.fileCodePrefix && this.flowPathType == 3) {
           this.message.error('请输入必填项')
           return false;
         } else {
@@ -268,7 +268,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
         }
       }
     }
- 
+
     let num = bo ? 1 : 0;
     //判断是竣工备案  
     if (this.flowPathType == 3 && !this.formDto.isSelect) {
@@ -276,13 +276,13 @@ export class AgencyDoneDetailsComponent implements OnInit {
       num = 0
     }
     this.tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
-      Area: this.formJson.engineeringNo[this.formJson.engineeringNo.length-1], 
+      Area: this.formJson.engineeringNo[this.formJson.engineeringNo.length - 1],
       IsChoose: num,
     }
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptFullPath = this.appSession.user.organizationsName
-    this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.curNodeName=='大厅受理' ? this.formDto.opinion : this.examineFormDto.opinion
-    this.butNzLoading = true  
+    this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.curNodeName == '大厅受理' ? this.formDto.opinion : this.examineFormDto.opinion
+    this.butNzLoading = true
     if (!bo && this.curNodeName == '业务审批负责人审批') {
       // this.noResult((data) => { 
       this.tenantWorkFlowInstanceDto.backAuditedNode = {
@@ -310,9 +310,9 @@ export class AgencyDoneDetailsComponent implements OnInit {
       }, error => {
         this.message.info(error.error.error.message)
         this.butNzLoading = false;
-      }) 
-    } else {   
-      this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => { 
+      })
+    } else {
+      this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
         const type = this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType == 3 ? true : false
         this.examineFormDto.isTransfer = this.formDto.isTransfer = type
         this.examineFormDto.isPass = this.formDto.isAccept = bo;
@@ -328,7 +328,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
           flowNodeUser.userCode = element.applyEID
           flowNodeUser.userName = element.applyEName
           this.formDto.handleUserList.push(flowNodeUser)
-        }); 
+        });
         this.examineFormDto.handleUserList = [];
         this.examineFormDto.currentNodeId = data.result.cur_Node_Id
         this.examineFormDto.currentNodeName = data.result.cur_NodeName
@@ -377,6 +377,9 @@ export class AgencyDoneDetailsComponent implements OnInit {
   getPrimaryExamine(then?: Function) {
     this._examineService.getPrimaryExamine(this.flowId).subscribe(data => {
       this.examineFormDto = data;
+
+      if (this.examineFormDto.acceptFileCode)
+        this.formDto.acceptFileCode = this.examineFormDto.acceptFileCode;
       if (then) {
         then();
       }
@@ -497,7 +500,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       InitiationProcessAddAuditorComponent,
       {
         title: title,
-        area: this.formJson.engineeringNo[this.formJson.engineeringNo.length-1],
+        area: this.formJson.engineeringNo[this.formJson.engineeringNo.length - 1],
         auditors: this.tenantWorkFlowInstanceDto.auditors
       }
     ).subscribe((res: any) => {
