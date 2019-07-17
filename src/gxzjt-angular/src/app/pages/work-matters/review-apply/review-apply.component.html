@@ -23,7 +23,8 @@
         </td>
         <td class="fontweight fontLeft leftTitle">申请人:</td>
         <td>
-          <input nz-input placeholder="请输入申请人" [(ngModel)]="reviewFormDto.applyName" name="applyName" class="input-style" />
+          <input nz-input placeholder="请输入申请人" [(ngModel)]="reviewFormDto.applyName" name="applyName"
+            class="input-style" />
           <!-- <span>{{reviewFormDto.constructOrg.companyName}}</span> -->
         </td>
       </tr>
@@ -46,7 +47,7 @@
 
       <tr>
         <td class="fontweight fontLeft leftTitle">联系人:</td>
-        <td style="text-align: left"> 
+        <td style="text-align: left">
           <!-- <input nz-input placeholder="请输入联系人" [(ngModel)]="reviewFormDto.constructOrg.contactPerson" name="contactPerson" class="input-style" /> -->
           <!-- <input nz-input placeholder="请输入联系人" [(ngModel)]="reviewFormDto.constructOrg.contactPerson" name="contactPerson" class="input-style" /> -->
           <span style="text-align: left">{{reviewFormDto.constructOrg.contactPerson}}</span>
@@ -61,19 +62,21 @@
       <tr>
         <td class="fontweight fontLeft leftTitle">凭证文号:</td>
         <td>
-          <input nz-input placeholder="请输入凭证文号" [(ngModel)]="reviewFormDto.recordFileCode" name="recordFileCode" class="input-style" />
+          <input nz-input placeholder="请输入凭证文号" [(ngModel)]="reviewFormDto.recordFileCode" name="recordFileCode"
+            class="input-style" />
         </td>
         <td style="width: 200px;" class="fontweight fontLeft leftTitle">建设工程消防验收意见书/竣工验收备案检查不合格通知书文号:</td>
         <td>
-          <input nz-input placeholder="" [(ngModel)]="reviewFormDto.unqualifiedFileCode" name="unqualifiedFileCode" class="input-style" />
+          <input nz-input placeholder="" [(ngModel)]="reviewFormDto.unqualifiedFileCode" name="unqualifiedFileCode"
+            class="input-style" />
         </td>
       </tr>
 
       <tr>
         <td style="width: 200px;" class="fontweight fontLeft leftTitle">违规或者违法问题整改情况:</td>
         <td colspan="3">
-          <textarea nz-input placeholder="请输入违规或者违法问题整改情况" [(ngModel)]="reviewFormDto.situation"
-            name="situation" class="input-style" style="height: 200px;">
+          <textarea nz-input placeholder="请输入违规或者违法问题整改情况" [(ngModel)]="reviewFormDto.situation" name="situation"
+            class="input-style" style="height: 200px;" required>
                     </textarea>
         </td>
       </tr>
@@ -81,8 +84,8 @@
       <tr>
         <td class="fontweight fontLeft leftTitle">其他情况:</td>
         <td colspan="4">
-          <textarea nz-input placeholder="请输入其他的需要说明的情况" [(ngModel)]="reviewFormDto.note"
-            name="note" class="input-style" style="height: 200px;">
+          <textarea nz-input placeholder="请输入其他的需要说明的情况" [(ngModel)]="reviewFormDto.note" name="note"
+            class="input-style" style="height: 200px;" required>
                       </textarea>
         </td>
       </tr>
@@ -90,6 +93,6 @@
   </table>
 
   <div class="textCenter" style="margin-bottom: 40px;">
-      <button nz-button nzType="primary" (click)="applay()">提交申请</button>
-    </div>
+    <button nz-button nzType="primary" (click)="applay()">提交申请</button>
+  </div>
 </div>

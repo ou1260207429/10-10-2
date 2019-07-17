@@ -44,7 +44,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   data: any = {
 
     jsconstructionUnit: '',
-    legalRepresentative: '', 
+    legalRepresentative: '',
     legalRepresentativeNo: '',
 
     recordNo: '',
@@ -421,10 +421,10 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   }
 
 
-  flowFormDto = new FlowFormDto()
+  flowFormDto = new FlowFormDto();
 
   //0是新增  1是查看  2是修改
-  type
+  type: any;
 
   flowFormQueryDto = new FlowFormQueryDto();
   //子组件的表单对象
@@ -433,7 +433,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   butNzLoading: boolean = false;
 
   //使用性质
-  useNatureSelect
+  useNatureSelect: any;
 
   constructor(private _appSessionService: AppSessionService,
     private _flowServices: FlowServices,
@@ -468,13 +468,13 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
         const json = JSON.parse(data.formJson);
         json.constructionUnit = json.constructionUnit instanceof Array ? json.constructionUnit : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }]
-        json.design = json.design?json.design: [{designUnit: '',qualificationLevel: '',legalRepresentative: '',contacts: '',contactsNumber: ''}],
-        json.engineeringId = json.engineeringId ? json.engineeringId : ''
-        
+        json.design = json.design ? json.design : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }],
+          json.engineeringId = json.engineeringId ? json.engineeringId : ''
+
         console.log(json.engineeringNo)
         json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
-        json.applyName = json.applyName ? json.applyName : '' 
-        json.constructionProject = json.constructionProject?json.constructionProject: {
+        json.applyName = json.applyName ? json.applyName : ''
+        json.constructionProject = json.constructionProject ? json.constructionProject : {
           arr: [
             { label: '顶棚', value: false, checked: false },
             { label: '墙面', value: false, checked: false },
@@ -523,10 +523,10 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       this.butNzLoading = false;
     })
   }
-  save() { 
+  save() {
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
-        Area: this.data.engineeringNo[this.data.engineeringNo.length-1]
+        Area: this.data.engineeringNo[this.data.engineeringNo.length - 1]
       },
       identify: 'xfsj',
       editWorkFlow_NodeAuditorRecordDto: {
@@ -538,12 +538,12 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     };
 
     this.butNzLoading = true;
-    this.isSelectModalOkLoading = true;  
+    this.isSelectModalOkLoading = true;
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
       const flowDataDto = new FlowDataDto();
       flowDataDto.flowId = this.flowFormQueryDto.flowId;
-      flowDataDto.projectId = this.flowFormQueryDto.projectId; 
+      flowDataDto.projectId = this.flowFormQueryDto.projectId;
       flowDataDto.formJson = JSON.stringify(this.data);
       flowDataDto.projectFlowInfo = new ProjectFlowDto();
 

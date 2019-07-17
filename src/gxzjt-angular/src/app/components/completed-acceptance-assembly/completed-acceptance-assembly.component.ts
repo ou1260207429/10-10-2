@@ -6,7 +6,7 @@ import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayStr
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile, NzMessageService } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
-import lodash from 'lodash'
+import lodash from 'lodash';
 import { URLConfig } from "@shared/config/host";
 /**
  * 竣工验收的表单模块
@@ -19,18 +19,18 @@ import { URLConfig } from "@shared/config/host";
 export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
   //判断是新增或者办理  0是新增 1是办理
-  @Input() type: number = 0
+  @Input() type: number = 0;
 
-  @Input() data: any
+  @Input() data: any;
 
   //市县区
   position// = OptionsEnum
 
   //结构类型
-  typeSelect = ArchitectureTypeEnum
+  typeSelect = ArchitectureTypeEnum;
 
   //耐火结构
-  refractoryEnum = RefractoryEnum
+  refractoryEnum = RefractoryEnum;
 
   //获取表单对象
   @ViewChild('f') f: FormGroup;
@@ -39,19 +39,19 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   @Output() private childOuter = new EventEmitter();
 
   //抽取号
-  decimationnumber
+  decimationnumber: any;
 
   //判断上传的焦点
   uoloadIndex: number = -1;
 
 
   //资质等级的列表
-  zzdjEnum = zzdjEnum
-  zzdjEnum1 = zzdjEnum1
-  zzdjEnum2 = zzdjEnum2
-  zzdjEnum3 = zzdjEnum3
-  zzdjEnum4 = zzdjEnum4
-  zzdjEnum5 = zzdjEnum5
+  zzdjEnum = zzdjEnum;
+  zzdjEnum1 = zzdjEnum1;
+  zzdjEnum2 = zzdjEnum2;
+  zzdjEnum3 = zzdjEnum3;
+  zzdjEnum4 = zzdjEnum4;
+  zzdjEnum5 = zzdjEnum5;
 
   @Input() errorData = {
     projectCategoryId: false,
@@ -97,7 +97,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   getAreaDropdown() {
     this._homeServiceProxy.getAreaDropdown().subscribe(data => {
       this.position = classTreeChildrenArray([JSON.parse(data)]);
-      console.log(this.position)
+      // console.log(this.position)
     })
   }
 

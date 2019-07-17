@@ -21,19 +21,19 @@ import { URLConfig } from "@shared/config/host";
 export class FireAcceptanceAssemblyHandleComponent implements OnInit {
 
   //0是受理凭证  1是合格  2是不合格
-  @Input() type = 0
+  @Input() type = 0;
 
   //从父页面传来的数据
-  @Input() data: any
+  @Input() data: any;
 
   //市县区
-  position = OptionsEnum
+  position = OptionsEnum;
 
   //结构类型
-  typeSelect = ArchitectureTypeEnum
+  typeSelect = ArchitectureTypeEnum;
 
   //耐火结构
-  refractoryEnum = RefractoryEnum
+  refractoryEnum = RefractoryEnum;
 
   //获取表单对象
   @ViewChild('f') f: FormGroup;
@@ -44,14 +44,14 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
   //判断上传的焦点
   uoloadIndex: number = -1;
 
-  @Input() examineFormDto: ExamineFormDto
+  @Input() examineFormDto: ExamineFormDto;
 
   constructor(private message: NzMessageService, public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
-    this.data.attachment = this.data.attachment ? this.data.attachment : []
+    this.data.attachment = this.data.attachment ? this.data.attachment : [];
   }
 
 
