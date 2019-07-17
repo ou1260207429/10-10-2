@@ -4,7 +4,7 @@
     height: 30px;
   }
 </style>
-<form style="margin: 20px;">
+<form nz-form #validateForm="ngForm" se-container="1" style="margin: 20px;" (ngSubmit)="applay()">
   <div style="clear:both;">
     <div style="float: left;">
       申请单位(盖章)：<span>{{reviewFormDto.constructOrg.companyName}}</span>
@@ -73,26 +73,41 @@
       </tr>
 
       <tr>
-        <td style="width: 200px;" class="fontweight fontLeft leftTitle">违规或者违法问题整改情况:</td>
+        <td style="width: 200px;" class="fontweight fontLeft leftTitle" required=true>违规或者违法问题整改情况:</td>
         <td colspan="3">
-          <textarea nz-input placeholder="请输入违规或者违法问题整改情况" [(ngModel)]="reviewFormDto.situation" name="situation"
-            class="input-style" style="height: 200px;" required>
+          <nz-form-item>
+            <nz-form-control>
+              <textarea nz-input placeholder="请输入违规或者违法问题整改情况" [(ngModel)]="reviewFormDto.situation" name="situation"
+                class="input-style" style="height: 200px;" #situation="ngModel" required>
                     </textarea>
+              <nz-form-explain *ngIf="situation.control.dirty&&situation.control.errors">
+                <ng-container>必填</ng-container>
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
         </td>
       </tr>
 
       <tr>
-        <td class="fontweight fontLeft leftTitle">其他情况:</td>
+        <td class="fontweight fontLeft leftTitle" required=true>其他情况:</td>
         <td colspan="4">
-          <textarea nz-input placeholder="请输入其他的需要说明的情况" [(ngModel)]="reviewFormDto.note" name="note"
-            class="input-style" style="height: 200px;" required>
+          <nz-form-item>
+            <nz-form-control>
+              <textarea nz-input placeholder="请输入其他的需要说明的情况" [(ngModel)]="reviewFormDto.note" name="note"
+                class="input-style" style="height: 200px;" #note="ngModel" required>
                       </textarea>
+
+              <nz-form-explain *ngIf="note.control.dirty&&note.control.errors">
+                <ng-container>必填</ng-container>
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
         </td>
       </tr>
     </tbody>
   </table>
 
   <div class="textCenter" style="margin-bottom: 40px;">
-    <button nz-button nzType="primary" (click)="applay()">提交申请</button>
+    <button nz-button nzType="primary" type="submit" [disabled]="!validateForm.valid||saving">提交申请</button>
   </div>
 </form>
