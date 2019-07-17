@@ -41,5 +41,8 @@ export class SidebarComponent extends AppComponentBase implements OnInit {
   toggleCollapsedSidebar() {
     this.settings.setLayout('collapsed', !this.settings.layout.collapsed);
   }
+  openHome() {
+    window.open("http://dn5.gxcic.net:8302/#/index");
+  }
 
 }

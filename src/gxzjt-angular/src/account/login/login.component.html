@@ -3,7 +3,7 @@
     <nz-spin nzTip="正在登录..." [nzSpinning]="submitting">
       <nz-card [nzTitle]="nzTitle" style="width: 400px">
         <ng-template #nzTitle>
-          <div class="text-center yoyo__block title">
+          <div class="text-center  title">
             <!-- <img src="/assets/images/logo.png" /><br />
             <br> -->
             <span>广西建设工程</span>
@@ -93,22 +93,6 @@
 
           </div>
 
-          <!-- 记住我 -->
-
-          <!-- <nz-form-item>
-            <nz-col [nzSpan]="12">
-
-              <label nz-checkbox [(ngModel)]="loginService.rememberMe" name="rememberMe" id="rememberme">
-                <span>{{l("RememberMe")}}</span>
-              </label>
-            </nz-col>
-
-            //todo:忘记密码 等待有缘人帮我们完善吧-
-           <nz-col [nzSpan]="12" class="text-right">
-            <a routerLink="/account/forgot-password" class="forgot forget-password">{{l("ForgotPassword")}}</a>
-          </nz-col> 
-
-          </nz-form-item> -->
 
 
 
@@ -120,8 +104,8 @@
 
 
 
-          <button nz-button [nzLoading]="submitting" class="yoyo__block login_but"
-            [disabled]="!loginForm.form.valid||submitting" style="margin-top: 8px;">
+          <button nz-button [nzLoading]="submitting" class="login_but" [disabled]="!loginForm.form.valid||submitting"
+            style="margin-top: 8px;width: 100%;">
             <!-- <i class="anticon anticon-login"></i> -->
             <span>登录</span>
           </button>
