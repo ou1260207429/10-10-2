@@ -119,22 +119,22 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
       if (res) {
         if (res.result == 0) {
 
-          this._NzNotificationService.info("注册成功",'');
+          this._NzNotificationService.info("注册成功", '');
           this.back();
         } else {
-          this._NzNotificationService.info(res.message,'');
+          this._NzNotificationService.info(res.message, '');
         }
       }
       this.saving = false;
     }, err => {
-      this.showErr(err);
+      this.showErr("请求出现服务器内部错误:" + err);
       this.saving = false;
     });
   }
 
   showErr(msg) {
     // this.message.error(msg);
-    this._NzNotificationService.error(msg,'');
+    this._NzNotificationService.error(msg, '');
   }
 
 
