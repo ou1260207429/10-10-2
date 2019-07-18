@@ -12,6 +12,7 @@ import { NzModalService } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { ReuseTabService } from '@delon/abc';
 
+import {convertToArray} from '@shared/utils/array'
 
 /**
  * 工程管理->竣工验收->新增申报
@@ -351,17 +352,17 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         opinion: '本工程所提交的材料真实、准确、齐全，基本按照消防设计文件实施，符合国家工程建设消防技术标准，本工程消防验收合格。',
       },
 
-      designUnit: {
+      designUnit: [{
         officialSeal: '',
         autograph: '',
         opinion: '本工程消防设计符合国家工程建设消防技术标准，基本按照消防设计文件施工，本工程消防验收合格。',
-      },
+      }],
 
-      contractingUnit: {
+      contractingUnit: [{
         officialSeal: '',
         autograph: '',
         opinion: '本工程消防设计符合国家工程建设消防技术标准，基本按照消防设计文件施工，本工程消防验收合格。',
-      },
+      }],
 
       professionalContractors: {
         officialSeal: '',
@@ -464,37 +465,51 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   post_GetFlowFormData() {
     //this.data = '';
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
-      if (data.formJson != null && data.formJson != "") {
+      try {
+        if (data.formJson != null && data.formJson != "") {
 
-        const json = JSON.parse(data.formJson);
-        json.constructionUnit = json.constructionUnit instanceof Array ? json.constructionUnit : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }]
-        json.design = json.design ? json.design : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }],
+          var json = JSON.parse(data.formJson);
+          json.constructionUnit = json.constructionUnit instanceof Array ? json.constructionUnit : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }]
+        
+          json.design = json.design ? json.design : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }],
+          
           json.engineeringId = json.engineeringId ? json.engineeringId : ''
 
-        console.log(json.engineeringNo)
-        json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
-        json.applyName = json.applyName ? json.applyName : ''
-        json.constructionProject = json.constructionProject ? json.constructionProject : {
-          arr: [
-            { label: '顶棚', value: false, checked: false },
-            { label: '墙面', value: false, checked: false },
-            { label: '地面', value: false, checked: false },
-            { label: '隔断 ', value: false, checked: false },
-            { label: '固定家具', value: false, checked: false },
-            { label: '装饰织物', value: false, checked: false },
-            { label: '其他装饰材料 ', value: false, checked: false },
-          ],
-          decorationArea: '',
-          ground: '',
-          useNature: '',
-          originallyUsed: ''
-        }
 
-        this.data = json;
+          json.acceptanceOpinions.contractingUnit = convertToArray(json.acceptanceOpinions.contractingUnit);
+          json.acceptanceOpinions.designUnit = convertToArray(json.acceptanceOpinions.designUnit);
+
+
+          json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
+          json.applyName = json.applyName ? json.applyName : ''
+          json.constructionProject = json.constructionProject ? json.constructionProject : {
+            arr: [
+              { label: '顶棚', value: false, checked: false },
+              { label: '墙面', value: false, checked: false },
+              { label: '地面', value: false, checked: false },
+              { label: '隔断 ', value: false, checked: false },
+              { label: '固定家具', value: false, checked: false },
+              { label: '装饰织物', value: false, checked: false },
+              { label: '其他装饰材料 ', value: false, checked: false },
+            ],
+            decorationArea: '',
+            ground: '',
+            useNature: '',
+            originallyUsed: ''
+          }
+
+          this.data = json;
+        }
+        this.useNatureSelect = data.natures;
+      } catch (e) {
+        console.log(e);
       }
-      this.useNatureSelect = data.natures
-    })
+
+
+    });
   }
+
+
 
   /**
   * 存草稿
@@ -509,7 +524,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this.flowFormDto.projectTypeStatu = 2;
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.butNzLoading = false;
-      console.log(this.reuseTabService.curUrl);
+      // console.log(this.reuseTabService.curUrl);
       this.reuseTabService.close(this.reuseTabService.curUrl)
       this._eventEmiter.emit('draftsComponentInit', []);
       this.flowFormDto.projectId = data;
