@@ -31,12 +31,13 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
 
 
   formResultData;
+  isAddProducttyepe1=true;
   companyName;
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     {
       title: '操作',
-      width:'200px',
+      width:'270px',
       buttons: [
         {
           text: '查看',
@@ -44,6 +45,15 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
           click: (record: any, modal: any) => {
 
             this.watchItem(record);
+          },
+        },
+        {
+          text: '撤回申请',
+          type: 'modal',
+          iif: record => (record.status === 0) ,
+          click: (record: any, modal: any) => {
+            this.withdraw()
+            // this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/${record.projectId}/${record.id}`]);
           },
         },
         {
@@ -245,5 +255,24 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     var startTime = new Date();
     startTime.setDate(startTime.getDate() - 7)
     this.rangeTime = [startTime, new Date()];
+  }
+  withdraw(){
+    this.isAddProducttyepe1=true;
+
+  }
+
+  handleCancel1(): void {
+
+    this.isAddProducttyepe1 = false;
+  }
+  subProducttype1(): void {
+    // this.EngManageService.WithdrawCheck().subscribe(
+    //   res => {
+    //     this.message.success(res.message);
+
+    //   },
+    // );
+
+    this.isAddProducttyepe1 = false;
   }
 }

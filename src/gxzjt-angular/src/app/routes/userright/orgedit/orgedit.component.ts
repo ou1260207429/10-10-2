@@ -27,12 +27,14 @@ export class UserrightOrgeditComponent implements OnInit {
   addOrgModel={
     name:'',
     parentId:'',
-    orgChargeUid:[],//所属区域id数组
+    AreaIds:[],//所属区域id数组
+    typenumberPrefix:''
   }
   editOrgModel={
     id:'',
     name:'',
-    orgChargeUid:[],
+    AreaIds:[],
+    typenumberPrefix:'',
   }
 
   deletearray=[];//删除数组
@@ -128,10 +130,10 @@ export class UserrightOrgeditComponent implements OnInit {
           this.orgdetail = res.data;
           if(res.data!=null && res.data.areaIds && res.data.areaIds!=null && res.data.areaIds!=''){
             this.defaultCheckedKeys2= res.data.areaIds
-            this.editOrgModel.orgChargeUid=res.data.areaIds
+            this.editOrgModel.AreaIds=res.data.areaIds
           }else{
             this.defaultCheckedKeys2=[];
-            this.editOrgModel.orgChargeUid=[];
+            this.editOrgModel.AreaIds=[];
           }
 
         },
@@ -206,9 +208,9 @@ export class UserrightOrgeditComponent implements OnInit {
   }
 
   nzAreaEvent(event: NzFormatEmitEvent): void {
-     this.addOrgModel.orgChargeUid=event.keys;//点击获取区域ID放入添加模型
+     this.addOrgModel.AreaIds=event.keys;//点击获取区域ID放入添加模型
 
-     this.editOrgModel.orgChargeUid=event.keys;//点击获取区域ID放入编辑模型
+     this.editOrgModel.AreaIds=event.keys;//点击获取区域ID放入编辑模型
 
 
   }
@@ -216,7 +218,8 @@ export class UserrightOrgeditComponent implements OnInit {
     this.addOrgModel={
       name:'',
       parentId:'',
-      orgChargeUid:[],//所属区域id数组
+      AreaIds:[],//所属区域id数组
+      typenumberPrefix:'',
     }
     this.defaultCheckedKeys3=[];
     this.isAddProducttyepe2 = false;
@@ -229,7 +232,8 @@ export class UserrightOrgeditComponent implements OnInit {
         this.addOrgModel={
           name:'',
           parentId:'',
-          orgChargeUid:[],//所属区域id数组
+          AreaIds:[],//所属区域id数组
+          typenumberPrefix:'',
         }
         this.defaultCheckedKeys3=[];
         this.isAddProducttyepe2 = false;

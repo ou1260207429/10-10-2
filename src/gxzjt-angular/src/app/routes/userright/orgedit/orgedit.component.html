@@ -91,6 +91,12 @@
       <input nz-input  [(ngModel)]="editOrgModel.name" >
     </div>
   </div>
+  <div style="margin-top: 8px" nz-row>
+    <div nz-col nzSpan="5">文号前缀</div>
+    <div nz-col nzSpan="19">
+      <input nz-input  [(ngModel)]="editOrgModel.name" >
+    </div>
+  </div>
   <div style="margin-top: 10px" nz-row>
     <div nz-col nzSpan="5">所属区域</div>
     <div nz-col nzSpan="19">
@@ -120,7 +126,15 @@
     <div nz-col nzSpan="19">
       <input nz-input [(ngModel)]="addOrgModel.name">
     </div>
+  </div>
 
+    <div nz-row style="margin-top: 15px">
+
+      <div nz-col nzSpan="5">文号前缀</div>
+      <div nz-col nzSpan="19">
+        <input nz-input [(ngModel)]="addOrgModel.typenumberPrefix">
+      </div>
+    </div>
     <div style="margin-top: 50px" nz-row>
       <div nz-col nzSpan="5">所属区域</div>
       <div nz-col nzSpan="19">
@@ -136,5 +150,4 @@
     </div>
 
 
-  </div>
 </nz-modal>

@@ -21,6 +21,7 @@ import { FormBuilder } from '@angular/forms';
 import * as moment from 'moment';
 import { NzMessageService } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
+import { EngManageService } from '../engineering-management.service';
 
 
 /**
@@ -35,17 +36,27 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
   param = new FireAuditCompleteQueryDto();
   formResultData = [];
   rangeTime = [];
+  isAddProducttyepe1 = false;
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     {
       title: '操作',
-      width:'200px',
+      width:'270px',
       buttons: [
         {
           text: '查看',
           type: 'modal',
           click: (record: any, modal: any) => {
             this.watchItem(record)
+          },
+        },
+        {
+          text: '撤回申请',
+          type: 'modal',
+          iif: record => (record.status === 0) ,
+          click: (record: any, modal: any) => {
+            this.withdraw();
+            // this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/${record.projectId}/${record.id}`]);
           },
         },
         {
@@ -127,6 +138,7 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
     private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
     private modal: ModalHelper,
     private router: Router,
+    private EngManageService:EngManageService,
     private publicModel: PublicModel,
     private _eventEmiter: EventEmiter,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
@@ -240,5 +252,24 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
     pageOnChange(v, this.param, () => {
       this.getList();
     })
+  }
+  withdraw(){
+    this.isAddProducttyepe1=true;
+
+  }
+
+  handleCancel1(): void {
+
+    this.isAddProducttyepe1 = false;
+  }
+  subProducttype1(): void {
+    // this.EngManageService.WithdrawCheck().subscribe(
+    //   res => {
+    //     this.message.success(res.message);
+
+    //   },
+    // );
+
+    this.isAddProducttyepe1 = false;
   }
 }
