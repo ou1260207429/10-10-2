@@ -30,7 +30,7 @@ import { timeTrans } from 'infrastructure/regular-expression';
 export class CompletedAcceptanceComponent extends PublicFormComponent implements OnInit {
 
   formResultData;
-  isAddProducttyepe1=true;
+  isAddProducttyepe1=false;
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [

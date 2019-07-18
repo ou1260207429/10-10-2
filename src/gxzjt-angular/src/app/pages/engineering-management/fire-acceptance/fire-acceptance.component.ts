@@ -31,7 +31,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
 
 
   formResultData;
-  isAddProducttyepe1=true;
+  isAddProducttyepe1=false;
   companyName;
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
