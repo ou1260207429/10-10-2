@@ -6,6 +6,11 @@
           <i nz-icon type="menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
         </div>
       </li>
+      <li [hidden]="settings.layout.collapsed">
+        <div class="alain-default__nav-item" (click)="openHome()">
+          <i nz-icon type="home"></i>
+        </div>
+      </li>
     </ul>
   </div>
   <!-- <div><a (click)="logout()">

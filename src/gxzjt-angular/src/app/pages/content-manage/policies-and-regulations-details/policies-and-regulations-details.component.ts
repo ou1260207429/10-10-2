@@ -9,8 +9,9 @@ import { NzMessageService, UploadFile, UploadFilter } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { UploadFileModel, PublicServices } from 'services/public.services';
 import { Buffer } from "buffer"
-import { URL_CONFIG, AppId } from 'infrastructure/expression';
-import lodash from 'lodash'
+import { AppId } from 'infrastructure/expression';
+import lodash from 'lodash';
+import { URLConfig } from "@shared/config/host";
 
 @Component({
   selector: 'app-policies-and-regulations-details',
@@ -64,13 +65,13 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     AppId: AppId,
     module: "table",
   }
-  editContent:any;
+  editContent: any;
   RegulationType: any
   constructor(private _publicServices: PublicServices, private _eventEmiter: EventEmiter, private message: NzMessageService, private _regulationServiceProxy: RegulationServiceProxy, private _activatedRoute: ActivatedRoute) {
     this.id = parseInt(this._activatedRoute.snapshot.paramMap.get('id'));
     this.operate = parseInt(this._activatedRoute.snapshot.paramMap.get('operate'));
     this.initType();
-    this.fileUrl = URL_CONFIG.getInstance().REGISTER_URL
+    this.fileUrl = URLConfig.getInstance().REGISTER_URL
 
   }
   ngOnInit() {
@@ -110,7 +111,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
         id: data.id,
         content: data.content,
         guid: data.guid,
-        issueDate: this.data.issueDate?timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'):'',
+        issueDate: this.data.issueDate ? timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-') : '',
         issueOrg: data.issueOrg,
         regulationCode: data.regulationCode,
         regulationTypeId: data.regulationTypeId,
@@ -142,7 +143,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
     } else {
       this.data.regulationId = this.id;
     }
-    if(this.data.issueDate){
+    if (this.data.issueDate) {
       this.data.issueDate = new Date(timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy-MM-dd HH:mm:ss', '-'))
     }
     this.data.content = new Buffer(this.editContent).toString('base64');

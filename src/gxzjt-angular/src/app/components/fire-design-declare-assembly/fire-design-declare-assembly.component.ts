@@ -1,13 +1,14 @@
 import { HomeServiceProxy, ExamineFormDto } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, URL_CONFIG, zzdjEnum, zzdjEnum1, zzdjEnum2, zzdjEnum3, zzdjEnum4 } from 'infrastructure/expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, zzdjEnum, zzdjEnum1, zzdjEnum2, zzdjEnum3, zzdjEnum4 } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString, newClassTreeChildrenArray, updateEngineeringNo } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile, NzMessageService } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import { EventEmiter } from 'infrastructure/eventEmiter';
-import lodash from 'lodash'
+import lodash from 'lodash';
+import { URLConfig } from "@shared/config/host";
 
 /**
  * 消防设计的表单模块
@@ -70,6 +71,17 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
     this.getOrganizationTree()
 
+
+    if (this.type == 1) {
+      setTimeout(() => { 
+        const a:any = this.f; 
+        this.f.controls.jsconstructionUnit.disable({onlySelf:false,emitEvent:false})
+        Object.keys(this.f.controls).forEach(function (key) { 
+          a.controls[key].disable({onlySelf:false,emitEvent:false})
+        });
+        
+      },500)
+    } 
   }
 
 
@@ -79,11 +91,16 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
    * @param v 
    */
   changeCitycountyAndDistrict(v) {
-    this.data.engineeringCitycountyAndDistrict = v
-    this.engineering = lodash.cloneDeep(v);   
-    const result = updateEngineeringNo(this.engineeringList, this.engineering.length - 1,this.engineering, this.data.engineeringNo)
-    this.data.engineeringNo = result.no  
-    this.data.engineeringId = this.engineering 
+    this.data.engineeringCitycountyAndDistrict = v;
+    const t = lodash.cloneDeep(v)
+    const list = this.publicModel.positionTreeArray(this.engineeringList, 'areaIds', t, []) 
+    this.data.engineeringNo = []
+    if (list.length > 0) {
+      list.forEach(item => { 
+        this.data.engineeringNo.push(item.value)
+      })
+    } 
+    console.log(this.data.engineeringNo)
   }
 
   /**
@@ -92,6 +109,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   getAreaDropdown() {
     this._homeServiceProxy.getAreaDropdown().subscribe(data => {
       this.position = classTreeChildrenArray([JSON.parse(data)]);
+      console.log(this.position);
     })
   }
 
@@ -100,7 +118,8 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
    */
   getOrganizationTree() {
     this._publicServices.getOrganizationTree().subscribe((data: any) => {
-      this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]);;
+      this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]);
+      console.log(this.engineeringList);
     })
   }
 
@@ -110,9 +129,9 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
    */
   changeGetOrganizationTree(v) {
     //联动处理
-    this.data.engineeringId = lodash.cloneDeep(v); 
-    const list = this.publicModel.positionTreeArray(this.engineeringList, 'value', v, []) 
-    this.data.engineeringNo = list[list.length - 1].id  
+    // this.data.engineeringId = lodash.cloneDeep(v); 
+    // const list = this.publicModel.positionTreeArray(this.engineeringList, 'value', v, []) 
+    // this.data.engineeringNo = list[list.length - 1].id  
   }
 
 
@@ -162,7 +181,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     this._publicServices.newUpload(formData, params).subscribe(data => {
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].url = URL_CONFIG.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
+      this.data.fileList[this.uoloadIndex].array[index].url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
       this.data.fileList[this.uoloadIndex].array[index].status = 'done'
       const fileList = lodash.cloneDeep(this.data.fileList);
 

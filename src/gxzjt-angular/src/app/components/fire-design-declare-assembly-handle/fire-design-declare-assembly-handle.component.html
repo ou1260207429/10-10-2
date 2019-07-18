@@ -80,7 +80,7 @@
               <div *ngIf="examineFormDto">
                 <p *ngIf="examineFormDto.designOrg">
                   你单位申请的{{data.projectName}}建设工程（受理凭证：{{data.acceptFileCode}}，{{data.applyDateTime|date:'yyyy年MM月dd日'}}收）消防设计文件收悉。该工程位于{{data.address}}内。{{data.descr}}。设计单位为<span
-                    *ngIf="examineFormDto.drawingOrg">{{examineFormDto.designOrg.companyName}}</span>，设计资质为建设工程{{examineFormDto.designOrg.qualifications}}级。按照图纸审查机构（<span
+                    *ngIf="examineFormDto.drawingOrg">{{examineFormDto.designOrg.companyName}}</span>，设计资质为建设工程{{examineFormDto.designOrg.qualifications}}。按照图纸审查机构（<span
                     *ngIf="examineFormDto.drawingOrg">{{examineFormDto.drawingOrg.companyName}}</span>）对该工程设计图纸的技术审查结论，我局提出以下意见：
                 </p>
               </div>

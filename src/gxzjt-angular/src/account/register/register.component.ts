@@ -22,7 +22,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { NzNotificationService } from 'ng-zorro-antd';
 
-import { URL_CONFIG } from 'infrastructure/expression';
+import { URLConfig } from '@shared/config/host';
 
 
 @Component({
@@ -110,7 +110,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
   };
   register() {
     this.saving = true;
-    let url = URL_CONFIG.getInstance().REGISTER_URL + "api/User/Register";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
+    let url = URLConfig.getInstance().REGISTER_URL + "api/User/Register";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
 
 
     this.http.post(url, this.model, this.httpOptions).subscribe((res: any) => {
@@ -119,22 +119,22 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
       if (res) {
         if (res.result == 0) {
 
-          this._NzNotificationService.info("注册成功",'');
+          this._NzNotificationService.info("注册成功", '');
           this.back();
         } else {
-          this._NzNotificationService.info(res.message,'');
+          this._NzNotificationService.info(res.message, '');
         }
       }
       this.saving = false;
     }, err => {
-      this.showErr(err);
+      this.showErr("请求出现服务器内部错误:" + err);
       this.saving = false;
     });
   }
 
   showErr(msg) {
     // this.message.error(msg);
-    this._NzNotificationService.error(msg,'');
+    this._NzNotificationService.error(msg, '');
   }
 
 

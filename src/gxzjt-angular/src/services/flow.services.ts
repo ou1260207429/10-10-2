@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Rx';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { URL_CONFIG } from 'infrastructure/expression';
+import { URLConfig } from "@shared/config/host";
 
 /**
  * 对接谢峰的表单接口和流程接口
@@ -13,21 +13,21 @@ export class FlowServices {
    * 查询已办流程
    */
   tenant_ProcessedWorkFlow_NodeAuditorRecord(page?: any): Observable<any> {
-    return this.http.post(URL_CONFIG.getInstance().XIEFENG_SERVICES_URL + 'api/services/app/WorkFlowInstanceManager/ProcessedWorkFlow_NodeAuditorRecord', page);
+    return this.http.post(URLConfig.getInstance().XIEFENG_SERVICES_URL + 'api/services/app/WorkFlowInstanceManager/ProcessedWorkFlow_NodeAuditorRecord', page);
   }
 
   /**
    * 查询待办流程
    */
   pendingWorkFlow_NodeAuditorRecord(page?: any): Observable<any> {
-    return this.http.post(URL_CONFIG.getInstance().SERVER_URL + 'api/services/app/WorkFlowed/PendingWorkFlow_NodeAuditorRecord', page);
+    return this.http.post(URLConfig.getInstance().SERVER_URL + 'api/services/app/WorkFlowed/PendingWorkFlow_NodeAuditorRecord', page);
   }
 
   /**
    * 获取已办流程的详情的路径
    */
   getWorkFlow_NodeRecordAndAuditorRecords(Id: string): Observable<any> {
-    return this.http.get(URL_CONFIG.getInstance().XIEFENG_SERVICES_URL + 'api/services/app/WorkFlowInstanceManager/getWorkFlow_NodeRecordAndAuditorRecords', {
+    return this.http.get(URLConfig.getInstance().XIEFENG_SERVICES_URL + 'api/services/app/WorkFlowInstanceManager/getWorkFlow_NodeRecordAndAuditorRecords', {
       params: {
         Id: Id
       }
@@ -38,28 +38,28 @@ export class FlowServices {
    * 获取待办的详情
    */
   tenant_GetWorkFlowInstanceFrowTemplateInfoById(data: WorkFlow) {
-    return this.http.post(URL_CONFIG.getInstance().XIEFENG_SERVICES_URL + 'api/services/app/WorkFlowInstanceManager/Tenant_GetWorkFlowInstanceFrowTemplateInfoById', data);
+    return this.http.post(URLConfig.getInstance().XIEFENG_SERVICES_URL + 'api/services/app/WorkFlowInstanceManager/Tenant_GetWorkFlowInstanceFrowTemplateInfoById', data);
   }
 
   /**
    * 通过操作
    */
   tenant_NodeToNextNodeByPass(data: any) {
-    return this.http.post(URL_CONFIG.getInstance().XIEFENG_SERVICES_URL + 'api/services/app/WorkFlowInstanceManager/Tenant_NodeToNextNodeByPass', data);
+    return this.http.post(URLConfig.getInstance().XIEFENG_SERVICES_URL + 'api/services/app/WorkFlowInstanceManager/Tenant_NodeToNextNodeByPass', data);
   }
 
   /**
    * 不通过操作
    */
   tenant_NodeToNextNodeByNoPass(data: any) {
-    return this.http.post(URL_CONFIG.getInstance().XIEFENG_SERVICES_URL + 'api/services/app/WorkFlowInstanceManager/Tenant_NodeToNextNodeByNoPass', data);
+    return this.http.post(URLConfig.getInstance().XIEFENG_SERVICES_URL + 'api/services/app/WorkFlowInstanceManager/Tenant_NodeToNextNodeByNoPass', data);
   }
 
   /**
    * 不通过的操作要选择指定的节点
    */
   getAuditedNodeRecords(id) {
-    return this.http.get(URL_CONFIG.getInstance().XIEFENG_SERVICES_URL + 'api/services/app/WorkFlowInstanceManager/GetAuditedNodeRecords', {
+    return this.http.get(URLConfig.getInstance().XIEFENG_SERVICES_URL + 'api/services/app/WorkFlowInstanceManager/GetAuditedNodeRecords', {
       params: {
         Id: id
       }
@@ -71,11 +71,11 @@ export class FlowServices {
    * @param data  参数
    */
   tenant_NodeToNextNodeByCancel(data: GXZJT_From) {
-    return this.http.post(URL_CONFIG.getInstance().XIEFENG_SERVICES_URL + 'api/services/app/WorkFlowInstanceManager/Tenant_NodeToNextNodeByCancel', data);
+    return this.http.post(URLConfig.getInstance().XIEFENG_SERVICES_URL + 'api/services/app/WorkFlowInstanceManager/Tenant_NodeToNextNodeByCancel', data);
   }
 
   GXZJT_StartWorkFlowInstanceAsync(data: GXZJT_From) {
-    return this.http.post(URL_CONFIG.getInstance().XIEFENG_SERVICES_URL + 'api/services/app/WorkFlowInstanceManager/GXZJT_StartWorkFlowInstanceAsync', data);
+    return this.http.post(URLConfig.getInstance().XIEFENG_SERVICES_URL + 'api/services/app/WorkFlowInstanceManager/GXZJT_StartWorkFlowInstanceAsync', data);
   }
 }
 

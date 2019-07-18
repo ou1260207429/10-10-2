@@ -23,7 +23,7 @@ export class WorkMattersReviewApplyComponent implements OnInit {
     public appSession: AppSessionService,
     private message: NzMessageService,
     private _appSessionService: AppSessionService, ) {
-    this.reviewFormDto={};
+    this.reviewFormDto = {};
     this.reviewFormDto.constructOrg = new ProjectCompany();
     var flowId = +this._activatedRoute.snapshot.paramMap.get('flowId');
     this.flowType = +this._activatedRoute.snapshot.paramMap.get('flowType');
@@ -43,7 +43,9 @@ export class WorkMattersReviewApplyComponent implements OnInit {
     });
   }
 
+  saving = false;
   applay() {
+    this.saving = true;
     var flowTypeFlag;
     if (this.flowType == 2) {
       flowTypeFlag = "xfys";
@@ -87,10 +89,12 @@ export class WorkMattersReviewApplyComponent implements OnInit {
 
       this._applyService.reviewApply(this.reviewFormDto).subscribe(data => {
         this.message.success('提交成功')
+        this.saving = false;
         history.go(-1)
       })
     }, (error) => {
-      this.message.info(error.error.error.message) 
+      this.message.info(error.error.error.message);
+      this.saving = false;
     })
 
   }

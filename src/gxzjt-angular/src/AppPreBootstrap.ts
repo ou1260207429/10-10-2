@@ -18,7 +18,7 @@ import { LocalizationService } from '@shared/i18n/localization.service';
 // import { ACLService } from '@delon/acl';
 import 'moment/locale/zh-cn';
 
-import { URL_CONFIG } from 'infrastructure/expression';
+import { URLConfig } from '@shared/config/host';
 export class AppPreBootstrap {
     static run(injector: Injector, callback: () => void): void {
         let httpClient = injector.get(HttpClient);
@@ -52,10 +52,10 @@ export class AppPreBootstrap {
 
             AppConsts.appBaseUrl = window.location.protocol + '//' + window.location.host;
             AppConsts.remoteServiceBaseUrl = result.SERVER_URL;
-            URL_CONFIG.getInstance().SERVER_URL = result.SERVER_URL;
+            URLConfig.getInstance().SERVER_URL = result.SERVER_URL;
 
-            URL_CONFIG.getInstance().XIEFENG_SERVICES_URL = result.XIEFENG_SERVICES_URL;
-            URL_CONFIG.getInstance().REGISTER_URL = result.REGISTER_URL;
+            URLConfig.getInstance().XIEFENG_SERVICES_URL = result.XIEFENG_SERVICES_URL;
+            URLConfig.getInstance().REGISTER_URL = result.REGISTER_URL;
             callback();
         })
         // AppConsts.appBaseUrl = window.location.protocol + '//' + window.location.host;

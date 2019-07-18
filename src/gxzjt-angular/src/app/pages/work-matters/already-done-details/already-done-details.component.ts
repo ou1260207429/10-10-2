@@ -73,7 +73,7 @@ export class AlreadyDoneDetailsComponent implements OnInit {
 
   //走流程或者查看  0是走流程  1是查看
   operationType
- 
+
   //使用性质
   useNatureSelect
   constructor(private _examineService: ExamineServiceServiceProxy, private reuseTabService: ReuseTabService, private ModelHelp: ModalHelper, public appSession: AppSessionService, private message: NzMessageService, private _applyService: ApplyServiceServiceProxy, private _acceptServiceServiceProxy: AcceptServiceServiceProxy, private _flowServices: FlowServices, private _activatedRoute: ActivatedRoute, private _ActivatedRoute: ActivatedRoute, ) {
@@ -91,7 +91,7 @@ export class AlreadyDoneDetailsComponent implements OnInit {
 
   init() {
     this.getWorkFlow_NodeRecordAndAuditorRecords()
-    Promise.all([ this.getAcceptApplyForm(), this.getPrimaryExamine()]).then((data: any) => {
+    Promise.all([this.getAcceptApplyForm(), this.getPrimaryExamine()]).then((data: any) => {
       this.formDto = data[0]
       if (data[1]) this.examineFormDto = data[1]
       const flowFormQueryDto = new FlowFormQueryDto();
@@ -107,11 +107,11 @@ export class AlreadyDoneDetailsComponent implements OnInit {
       Promise.all([this.post_GetFlowFormData(flowFormQueryDto), this.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow)]).then((value: any) => {
         const json = JSON.parse(value[0].formJson);
         json.constructionUnit = json.constructionUnit instanceof Array ? json.constructionUnit : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }]
-        json.design = json.design?json.design: [{designUnit: '',qualificationLevel: '',legalRepresentative: '',contacts: '',contactsNumber: ''}],
-        json.engineeringId = json.engineeringId ? json.engineeringId : ''
+        json.design = json.design ? json.design : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }],
+          json.engineeringId = json.engineeringId ? json.engineeringId : ''
         json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
-        json.applyName = json.applyName ? json.applyName : '' 
-        json.constructionProject = json.constructionProject?json.constructionProject: {
+        json.applyName = json.applyName ? json.applyName : ''
+        json.constructionProject = json.constructionProject ? json.constructionProject : {
           arr: [
             { label: '顶棚', value: false, checked: false },
             { label: '墙面', value: false, checked: false },
@@ -152,7 +152,7 @@ export class AlreadyDoneDetailsComponent implements OnInit {
    * 获取路径
    */
   getWorkFlow_NodeRecordAndAuditorRecords() {
-    this._flowServices.getWorkFlow_NodeRecordAndAuditorRecords(this.flowNo).subscribe(data => { 
+    this._flowServices.getWorkFlow_NodeRecordAndAuditorRecords(this.flowNo).subscribe(data => {
       this.data = data.result
     })
   }
@@ -181,7 +181,7 @@ export class AlreadyDoneDetailsComponent implements OnInit {
     this.fileList = this.fileList.concat(file);
     return false;
   };
- 
+
 
   /**
    * 获取业务审批负责人审批详情的接口 
@@ -189,6 +189,9 @@ export class AlreadyDoneDetailsComponent implements OnInit {
   getPrimaryExamine(then?: Function) {
     this._examineService.getPrimaryExamine(this.flowId).subscribe(data => {
       this.examineFormDto = data
+      if (this.examineFormDto.acceptFileCode)
+        this.formDto.acceptFileCode = this.examineFormDto.acceptFileCode;
+
       if (then) then()
     })
     // return this._examineService.getPrimaryExamine(this.flowId).toPromise();

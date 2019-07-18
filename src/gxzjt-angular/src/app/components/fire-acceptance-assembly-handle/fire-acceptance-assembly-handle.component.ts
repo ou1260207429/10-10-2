@@ -1,12 +1,15 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, URL_CONFIG } from 'infrastructure/expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile, NzMessageService } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import { ExamineFormDto, ProjectAttachment } from '@shared/service-proxies/service-proxies';
-import lodash from 'lodash'
+import lodash from 'lodash';
+import { URLConfig } from "@shared/config/host";
+
+
 /**
  * 消防验收的表单模块的办理或者结果
  */
@@ -18,19 +21,19 @@ import lodash from 'lodash'
 export class FireAcceptanceAssemblyHandleComponent implements OnInit {
 
   //0是受理凭证  1是合格  2是不合格
-  @Input() type = 0
+  @Input() type = 0;
 
   //从父页面传来的数据
-  @Input() data: any
+  @Input() data: any;
 
   //市县区
-  position = OptionsEnum
+  position = OptionsEnum;
 
   //结构类型
-  typeSelect = ArchitectureTypeEnum
+  typeSelect = ArchitectureTypeEnum;
 
   //耐火结构
-  refractoryEnum = RefractoryEnum
+  refractoryEnum = RefractoryEnum;
 
   //获取表单对象
   @ViewChild('f') f: FormGroup;
@@ -41,14 +44,14 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
   //判断上传的焦点
   uoloadIndex: number = -1;
 
-  @Input() examineFormDto: ExamineFormDto
+  @Input() examineFormDto: ExamineFormDto;
 
   constructor(private message: NzMessageService, public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
-    this.data.attachment = this.data.attachment ? this.data.attachment : []
+    this.data.attachment = this.data.attachment ? this.data.attachment : [];
   }
 
 
@@ -76,10 +79,10 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
     this._publicServices.newUpload(formData, params).subscribe(data => {
       const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)
 
-      this.examineFormDto.attachment[index]['url'] = URL_CONFIG.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
+      this.examineFormDto.attachment[index]['url'] = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
       this.examineFormDto.attachment[index]['status'] = 'done'
 
-      this.examineFormDto.attachment[index].fileUrl = URL_CONFIG.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
+      this.examineFormDto.attachment[index].fileUrl = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
       const fileList = lodash.cloneDeep(this.examineFormDto.attachment);
 
       this.examineFormDto.attachment = []

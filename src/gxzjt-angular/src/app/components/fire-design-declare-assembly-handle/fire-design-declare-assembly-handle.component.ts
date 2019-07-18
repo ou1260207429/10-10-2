@@ -1,12 +1,13 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, URL_CONFIG } from 'infrastructure/expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile, NzMessageService } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import { ExamineFormDto, ProjectAttachment } from '@shared/service-proxies/service-proxies';
-import lodash from 'lodash'
+import lodash from 'lodash';
+import { URLConfig } from "@shared/config/host";
 /**
  * 消防设计的表单模块的办理或者结果
  */
@@ -48,10 +49,6 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
 
   ngOnInit() {
 
-    setTimeout(() => {
-      console.log(this.examineFormDto)
-      console.log(this.data)
-    }, 3000)
 
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
@@ -90,7 +87,7 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
   beforeUpload = (file: any): boolean => {
     if (this.examineFormDto) {
       this.examineFormDto.attachment = this.examineFormDto.attachment ? this.examineFormDto.attachment : []
-      console.log(this.examineFormDto.attachment);
+      // console.log(this.examineFormDto.attachment);
     }
 
     const name = file.name;
@@ -111,10 +108,10 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
     this._publicServices.newUpload(formData, params).subscribe(data => {
       const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)
 
-      this.examineFormDto.attachment[index]['url'] = URL_CONFIG.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
+      this.examineFormDto.attachment[index]['url'] = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
       this.examineFormDto.attachment[index]['status'] = 'done'
 
-      this.examineFormDto.attachment[index].fileUrl = URL_CONFIG.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
+      this.examineFormDto.attachment[index].fileUrl = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
       const fileList = lodash.cloneDeep(this.examineFormDto.attachment);
 
       this.examineFormDto.attachment = []

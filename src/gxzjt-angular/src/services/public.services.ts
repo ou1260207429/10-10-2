@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Rx';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { URL_CONFIG } from 'infrastructure/expression';
+import { URLConfig } from "@shared/config/host";
 
 /**
  * 对接谢峰的表单接口和流程接口
@@ -14,12 +14,12 @@ export class PublicServices {
      */
 
     upload(page: any): Observable<any> {
-        return this.http.post(URL_CONFIG.getInstance().REGISTER_URL + "api/Upload/Upload", page
+        return this.http.post(URLConfig.getInstance().REGISTER_URL + "api/Upload/Upload", page
         );
     }
     newUpload(files: any, params): Observable<any> {
         let url = "api/Upload/Upload?" + "AppId=" + params.AppId + "&module=" + params.module + "&sourceId=" + params.sourceId
-        return this.http.post(URL_CONFIG.getInstance().REGISTER_URL + url, files, {
+        return this.http.post(URLConfig.getInstance().REGISTER_URL + url, files, {
             headers: new HttpHeaders({
                 responseType: 'text'
             })
@@ -32,20 +32,20 @@ export class PublicServices {
     getFilesDetail(page: any): Observable<any> {
         let url = "api/Attachment/AttachmentListBySourceId?" + "appId=" + page.AppId + "&module=" + page.module + "&sourceId=" + page.sourceId
 
-        return this.http.post(URL_CONFIG.getInstance().REGISTER_URL + url, page
+        return this.http.post(URLConfig.getInstance().REGISTER_URL + url, page
         );
 
     }
     delete(page: any): Observable<any> {
         let url = "api/Attachment/Delete?" + "appId=" + page.AppId + "&id=" + page.id
-        return this.http.post(URL_CONFIG.getInstance().REGISTER_URL + url, page);
+        return this.http.post(URLConfig.getInstance().REGISTER_URL + url, page);
     }
 
     /**
    * 获取审批单位
    */
     getOrganizationTree() {
-        return this.http.get(URL_CONFIG.getInstance().SERVER_URL + 'api/services/app/ProjectFlowServcie/GetOrganizationTree');
+        return this.http.get(URLConfig.getInstance().SERVER_URL + 'api/services/app/ProjectFlowServcie/GetOrganizationTree');
     }
 }
 

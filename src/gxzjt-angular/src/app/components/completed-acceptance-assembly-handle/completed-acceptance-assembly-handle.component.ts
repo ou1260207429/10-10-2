@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, URL_CONFIG } from 'infrastructure/expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import { ExamineFormDto, ProjectAttachment } from '@shared/service-proxies/service-proxies';
-
+import { URLConfig } from "@shared/config/host";
 
 /**
  * 消竣工验收的表单模块的办理或者结果
@@ -101,7 +101,7 @@ export class CompletedAcceptanceAssemblyHandleComponent implements OnInit {
     this._publicServices.newUpload(formData, params).subscribe(data => {
       const index = checkArrayString(this.examineFormDto.attachment, 'attachmentName', name)
       // this.examineFormDto.attachment[index].fileNo = data.data[0].id 
-      this.examineFormDto.attachment[index].fileUrl = URL_CONFIG.getInstance().REGISTER_URL + data.data[0].localUrl
+      this.examineFormDto.attachment[index].fileUrl = URLConfig.getInstance().REGISTER_URL + data.data[0].localUrl
     })
     return false;
   };

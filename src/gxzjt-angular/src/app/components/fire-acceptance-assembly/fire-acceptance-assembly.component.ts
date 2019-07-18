@@ -1,7 +1,7 @@
 import { HomeServiceProxy } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, URL_CONFIG, zzdjEnum4, zzdjEnum3, zzdjEnum2, zzdjEnum1, zzdjEnum } from 'infrastructure/expression';
+import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, zzdjEnum4, zzdjEnum3, zzdjEnum2, zzdjEnum1, zzdjEnum } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString, newClassTreeChildrenArray, updateEngineeringNo } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { UploadFile, NzMessageService } from 'ng-zorro-antd';
@@ -9,6 +9,7 @@ import { PublicServices } from 'services/public.services';
 import { DepFlags } from '@angular/compiler/src/core';
 import lodash from 'lodash'
 import { SelectorOrgComponent } from '@shared/components/selector/selector-org';
+import { URLConfig } from "@shared/config/host";
 
 /**
  * 消防验收的表单模块
@@ -71,6 +72,16 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     this.childOuter.emit(this.f);
     this.getAreaDropdown();
     this.getOrganizationTree()
+
+    if (this.type == 1) {
+      setTimeout(() => { 
+        const a:any = this.f; 
+        this.f.controls.jsconstructionUnit.disable({onlySelf:false,emitEvent:false})
+        Object.keys(this.f.controls).forEach(function (key) { 
+          a.controls[key].disable({onlySelf:false,emitEvent:false})
+        });
+      },500)
+    } 
   }
 
   /**
@@ -89,11 +100,15 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
    * @param v 
    */
   changeCitycountyAndDistrict(v) { 
-    this.data.engineeringCitycountyAndDistrict = v
-    this.engineering = lodash.cloneDeep(v);   
-    const result = updateEngineeringNo(this.engineeringList, this.engineering.length - 1,this.engineering, this.data.engineeringNo)
-    this.data.engineeringNo = result.no  
-    this.data.engineeringId = this.engineering 
+    this.data.engineeringCitycountyAndDistrict = v;
+    const t = lodash.cloneDeep(v)
+    const list = this.publicModel.positionTreeArray(this.engineeringList, 'areaIds', t, []) 
+    this.data.engineeringNo = []
+    if (list.length > 0) {
+      list.forEach(item => { 
+        this.data.engineeringNo.push(item.value)
+      })
+    } 
   } 
 
   /**
@@ -112,11 +127,11 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
    */
   changeGetOrganizationTree(v) {
     
-    //联动处理
-    this.data.engineeringId = lodash.cloneDeep(v); 
+    // //联动处理
+    // this.data.engineeringId = lodash.cloneDeep(v); 
 
-    const list = this.publicModel.positionTreeArray(this.engineeringList, 'value', v, []) 
-    this.data.engineeringNo = list[list.length - 1].id  
+    // const list = this.publicModel.positionTreeArray(this.engineeringList, 'value', v, []) 
+    // this.data.engineeringNo = list[list.length - 1].id  
   }
 
   /**
@@ -152,7 +167,7 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     this._publicServices.newUpload(formData, params).subscribe(data => {
       const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
       this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].url = URL_CONFIG.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
+      this.data.fileList[this.uoloadIndex].array[index].url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
       this.data.fileList[this.uoloadIndex].array[index].status = 'done'
       const fileList = lodash.cloneDeep(this.data.fileList);
       this.data.fileList = []

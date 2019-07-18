@@ -1,4 +1,5 @@
-<nz-spin [nzSpinning]="type">
+<!-- <nz-spin [nzSpinning]="type"> -->
+<nz-card>
   <nz-tabset [(nzSelectedIndex)]="selectedIndex" [nzType]="'card'">
     <div *ngFor="let tab of tabs">
       <nz-tab [nzTitle]="tab.name">
@@ -53,10 +54,11 @@
     </table>
     <!-- 表单JSON -->
   </div>
-</nz-spin>
 
-<div [ngClass]="{hide: selectedIndex != 1}">
-  <nz-spin [nzSpinning]="!data">
-  <app-flow-route *ngIf="data" [data]="data"></app-flow-route>
-  </nz-spin>
-</div>
+
+  <div [ngClass]="{hide: selectedIndex != 1}">
+    <nz-spin [nzSpinning]="!data">
+      <app-flow-route *ngIf="data" [data]="data"></app-flow-route>
+    </nz-spin>
+  </div>
+</nz-card>

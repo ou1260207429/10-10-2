@@ -10,16 +10,16 @@ import {
   AuthenticateModel,
   AuthenticateResultModel,
 } from '@shared/service-proxies/service-proxies';
-import { UrlHelper } from '@shared/helpers/UrlHelper';
+// import { UrlHelper } from '@shared/helpers/UrlHelper';
 import { AppConsts } from '@shared/AppConsts';
 
 
 import * as _ from 'lodash';
 import { MessageService } from '@abp/message/message.service';
-import { LogService } from '@abp/log/log.service';
+// import { LogService } from '@abp/log/log.service';
 import { TokenService } from '@abp/auth/token.service';
 import { UtilsService } from '@abp/utils/utils.service';
-import { finalize } from 'rxjs/operators';
+// import { finalize } from 'rxjs/operators';
 
 
 // import { AppSessionService } from '@shared/session/app-session.service';
@@ -118,10 +118,10 @@ export class LoginService {
     );
 
 
-    let initialUrl = UrlHelper.initialUrl;
-    if (initialUrl.indexOf('/login') > 0) {
-      initialUrl = AppConsts.appBaseUrl;
-    }
+    // let initialUrl = UrlHelper.initialUrl;
+    // if (initialUrl.indexOf('/login') > 0) {
+    //   initialUrl = AppConsts.appBaseUrl;
+    // }
 
 
     // this._AppSessionService.initUserInfo().then(() => {

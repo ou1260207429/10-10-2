@@ -64,7 +64,7 @@ export class SignForComponent implements OnInit {
             tenantWorkFlowInstanceDto.workFlow_InstanceId = this.examineFormDto.workFlow_Instance_Id;
 
             tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
-                Area: this.examineFormDto.engineeringNo,
+                Area: this.examineFormDto.engineeringNo[this.examineFormDto.engineeringNo.length-1],
                 IsChoose: 0,
                 editWorkFlow_NodeAuditorRecordDto: {
                     deptId: this._appSessionService.user.organizationsId,
