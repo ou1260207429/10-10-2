@@ -39,10 +39,10 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   @Output() private childOuter = new EventEmitter();
 
   //抽取号
-  decimationnumber: any;
+  // decimationnumber: any;
 
   //判断上传的焦点
-  uoloadIndex: number = -1;
+  uploadIndex: number = -1;
 
 
   //资质等级的列表
@@ -57,19 +57,19 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     projectCategoryId: false,
     specialEngineering: false,
     fireFightingFacilities: false
-  }
+  };
 
   //从父组件获取使用行性质的select
-  @Input() useNatureSelect: any
+  @Input() useNatureSelect: any;
 
   //审批单位
-  engineeringList
-  engineering
+  engineeringList: any;
+  engineering: any;
   constructor(private message: NzMessageService, public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) {
-    this.decimationnumber = [];
-    for (let index = 1; index < 101; index++) {
-      this.decimationnumber.push({ label: index, value: index })
-    }
+    // this.decimationnumber = [];
+    // for (let index = 1; index < 101; index++) {
+    //   this.decimationnumber.push({ label: index, value: index })
+    // }
   }
 
   ngOnInit() {
@@ -159,7 +159,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
   beforeUpload = (file: any): boolean => {
     const tid = file.uid
-    this.data.fileList[this.uoloadIndex].array.push({
+    this.data.fileList[this.uploadIndex].array.push({
       name: file.name,
       status: 'uploading',
       tid: file.uid,
@@ -173,20 +173,20 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     const formData = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
-      const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
-      this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].status = 'done'
+      const index = checkArrayString(this.data.fileList[this.uploadIndex].array, 'tid', tid)
+      this.data.fileList[this.uploadIndex].array[index].uid = data.data[0].id
+      this.data.fileList[this.uploadIndex].array[index].url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
+      this.data.fileList[this.uploadIndex].array[index].status = 'done'
       const fileList = lodash.cloneDeep(this.data.fileList);
-      this.data.fileList = []
-      this.data.fileList = fileList
+      this.data.fileList = [];
+      this.data.fileList = fileList;
     }, error => {
       this.message.error('上传失败，上传文件不能超过30M');
-      const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
-      this.data.fileList[this.uoloadIndex].array[index].status = 'error'
+      const index = checkArrayString(this.data.fileList[this.uploadIndex].array, 'tid', tid)
+      this.data.fileList[this.uploadIndex].array[index].status = 'error';
       const fileList = lodash.cloneDeep(this.data.fileList);
-      this.data.fileList = []
-      this.data.fileList = fileList
+      this.data.fileList = [];
+      this.data.fileList = fileList;
     })
     return false;
   };
@@ -196,7 +196,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   }
 
   handleChange(index) {
-    this.uoloadIndex = index
+    this.uploadIndex = index
   }
 
 

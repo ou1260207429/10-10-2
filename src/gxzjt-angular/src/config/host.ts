@@ -11,6 +11,7 @@ export class URLConfig {
 
     public SERVER_URL = "http://222.84.250.158:8111/";
     public REGISTER_URL = "http://222.84.250.158:8000/";
+    public XIEFENG_SERVICES_URL = 'http://222.84.250.158:8113/';
     public APP_URL = "./";
 
     public static getInstance() {

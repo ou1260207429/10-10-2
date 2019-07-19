@@ -225,11 +225,12 @@
           </td>
           <td rowspan='1' [ngClass]="{pointer: type == 1}">
             <a (click)="addArray(data.design)">新增</a>
+            <br>
             <a (click)="deleteArray(data.design,a)">删除</a>
           </td>
         </tr>
         <tr *ngFor="let item of data.constructionUnit;let a = index">
-          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>施工总承包单位:</td>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>施工单位:</td>
 
           <td rowspan='1' colspan='6'>
             <se error="必填">
@@ -261,6 +262,7 @@
           </td>
           <td rowspan='1' [ngClass]="{pointer: type == 1}">
             <a (click)="addArray(data.constructionUnit)">新增</a>
+            <br>
             <a (click)="deleteArray(data.constructionUnit,a)">删除</a>
           </td>
 
@@ -371,14 +373,22 @@
           </td>
         </tr>
         <tr class="title">
-          <td rowspan='1' colspan='5' class="fontweight fontLeft leftTitle">建筑物名称</td>
-          <td rowspan='1' colspan='2' class="fontweight fontLeft">结 构</td>
-          <td rowspan='1' colspan='2' class="fontweight fontLeft">耐火等级</td>
-          <td rowspan='1' colspan='2' class="fontweight fontLeft">高度（m）</td>
-          <td rowspan='1' colspan='2' class="fontweight fontLeft">层数</td>
-          <td rowspan='1' colspan='2'>建筑面积（m<sup>2</sup>）</td>
-          <td rowspan='1' colspan='2'>火灾危险性类别</td>
-          <td rowspan='1' colspan='2'>操作</td>
+          <td rowspan='2' colspan='5' class="fontweight fontLeft leftTitle">建筑物名称</td>
+          <td rowspan='2' colspan='2' class="fontweight fontLeft">结 构</td>
+          <td rowspan='2' colspan='2' class="fontweight fontLeft">耐火等级</td>
+          <td rowspan='2' colspan='2' class="fontweight fontLeft">高度（m）</td>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft">层数</td>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft">建筑面积（m<sup>2</sup>）</td>
+          <td rowspan='2' colspan='2' class="fontweight fontLeft">火灾危险性类别</td>
+          <td rowspan='2' colspan='2'>操作</td>
+        </tr>
+        <tr class="title">
+          <td colspan='1' rowspan="1" class="fontweight">地上</td>
+          <td colspan='1' rowspan="1" class="fontweight">地下</td>
+          <td colspan='1' rowspan="1" class="fontweight">总计</td>
+          <td colspan='1' rowspan="1" class="fontweight">地上</td>
+          <td colspan='1' rowspan="1" class="fontweight">地下</td>
+          <td colspan='1' rowspan="1" class="fontweight">总计</td>
         </tr>
         <tr *ngFor="let item of data.basicInformation;let index = index">
           <td rowspan='1' colspan='5' class="fontweight fontLeft leftTitle">
@@ -408,16 +418,35 @@
               <input nz-input placeholder="请输入高度" [(ngModel)]="item.height" name="jbheight{{index}}" required />
             </se>
           </td>
-          <td rowspan='1' colspan='2'>
+          <td rowspan='1' colspan='1'>
             <se error="必填">
-              <input nz-input placeholder="请输入层数" [(ngModel)]="item.ground" name="jbbuiltground{{index}}" required />
-            </se>
-          </td>
-          <td rowspan='1' colspan='2'>
-            <se error="必填">
-              <input nz-input placeholder="请输入建筑面积" [(ngModel)]="item.builtUpArea" name="jbbuiltUpArea{{index}}"
+              <input nz-input placeholder="请输入地上层数" [(ngModel)]="item.upGround" name="jbbuiltground{{index}}"
                 required />
             </se>
+          </td>
+          <td rowspan='1' colspan='1'>
+            <se error="必填">
+              <input nz-input placeholder="请输入地下层数" [(ngModel)]="item.underGround" name="jbbuiltunderGround{{index}}"
+                required />
+            </se>
+          </td>
+          <td rowspan='1' colspan='1'>
+            <label>{{item.ground&&!item.upGround?item.ground:+item.upGround++item.underGround}}</label>
+          </td>
+          <td rowspan='1' colspan='1'>
+            <se error="必填">
+              <input nz-input placeholder="请输入地上建筑面积" [(ngModel)]="item.builtUpArea2" name="jbbuiltUpArea{{index}}"
+                required />
+            </se>
+          </td>
+          <td rowspan='1' colspan='1'>
+            <se error="必填">
+              <input nz-input placeholder="请输入地下建筑面积" [(ngModel)]="item.builtUnderArea" name="builtUnderArea{{index}}"
+                required />
+            </se>
+          </td>
+          <td rowspan='1' colspan='1'>
+            <label>{{item.builtUpArea&&!item.builtUpArea2?item.builtUpArea:+item.builtUpArea2++item.builtUnderArea}}</label>
           </td>
           <td rowspan='1' colspan='2'>
             <se error="必填">
@@ -429,9 +458,11 @@
               <!-- <input  nz-input placeholder="请输入危险性类别" [(ngModel)]="item.fireHazard" name="jbfireHazard" required /> -->
             </se>
           </td>
-          <td rowspan='1' colspan='2' [ngClass]="{pointer: type == 1}"><a
-              (click)="addArray(data.basicInformation)">新增</a>
-            <a (click)="deleteArray(data.basicInformation,index)">删除</a> </td>
+          <td rowspan='1' colspan='2' [ngClass]="{pointer: type == 1}">
+            <a (click)="addArray(data.basicInformation)">新增</a>
+            <br>
+            <a (click)="deleteArray(data.basicInformation,index)">删除</a>
+          </td>
         </tr>
 
       <tbody *ngFor="let item of data.storageTank;let index = index">
@@ -460,7 +491,9 @@
               <label style="padding-right: 10px;" nz-radio nzValue="其它">其它</label>
             </nz-radio-group>
           </td>
-          <td rowspan='5' [ngClass]="{pointer: type == 1}"><a (click)="addArray(data.storageTank)">新增</a>
+          <td rowspan='5' [ngClass]="{pointer: type == 1}">
+            <a (click)="addArray(data.storageTank)">新增</a>
+            <br>
             <a (click)="deleteArray(data.storageTank,index)">删除</a> </td>
         </tr>
         <tr>
@@ -478,15 +511,15 @@
         </tr>
         <tr class="title">
           <td colspan='4' class="fontweight fontLeft leftTitle">储存物质名称</td>
-          <td colspan='3' style="text-align: left">储罐材质</td>
-          <td colspan='3' style="text-align: left">储存工作压力</td>
-          <td colspan='4' style="text-align: left">储存温度</td>
+          <td colspan='4' style="text-align: left">储罐材质</td>
+          <td colspan='4' style="text-align: left">储存工作压力</td>
+          <td colspan='2' style="text-align: left">储存温度</td>
           <td colspan='4' style="text-align: left">储存形式</td>
         </tr>
         <tr>
           <td colspan='4' class="fontweight fontLeft leftTitle"><input nz-input placeholder="请输入名称"
               [(ngModel)]="item.name" name="storagesematerialname{{index}}" /></td>
-          <td colspan='3' style="text-align: left">
+          <td colspan='4' style="text-align: left">
             <nz-radio-group [ngClass]="{pointer: type == 1}" [(ngModel)]="item.materialQuality"
               name="storagesematerialQuality{{index}}">
               <label nz-radio nzValue="钢">钢</label>
@@ -495,7 +528,7 @@
               <label nz-radio nzValue="洞穴">洞穴</label>
             </nz-radio-group>
           </td>
-          <td colspan='3' style="text-align: left">
+          <td colspan='4' style="text-align: left">
             <nz-radio-group [ngClass]="{pointer: type == 1}" [(ngModel)]="item.pressure"
               name="storagesepressure{{index}}">
               <label nz-radio nzValue="高压">高压</label>
@@ -503,7 +536,7 @@
               <label nz-radio nzValue="低压">低压</label>
             </nz-radio-group>
           </td>
-          <td colspan='4' style="text-align: left">
+          <td colspan='2' style="text-align: left">
             <nz-radio-group [ngClass]="{pointer: type == 1}" [(ngModel)]="item.temperature"
               name="storagesetemperature{{index}}">
               <label nz-radio nzValue="低温">低温</label>
@@ -528,8 +561,11 @@
         <td colspan='3' style="text-align: left">储存物质名称</td>
         <td colspan='4' style="text-align: left"><input nz-input placeholder="请输入名称" [(ngModel)]="item.name"
             name="yardname{{index}}" /></td>
-        <td rowspan="1" colspan='1' [ngClass]="{pointer: type == 1}"><a (click)="addArray(data.yard)">新增</a>
-          <a (click)="deleteArray(data.yard,index)">删除</a></td>
+        <td rowspan="1" colspan='1' [ngClass]="{pointer: type == 1}">
+          <a (click)="addArray(data.yard)">新增</a>
+          <br>
+          <a (click)="deleteArray(data.yard,index)">删除</a>
+        </td>
       </tr>
 
       <tr *ngFor="let item of data.newcheckboxEngineering;let index = index">
@@ -583,7 +619,7 @@
         <td colspan='2'>场所</td>
         <td colspan='12'>类型</td>
       </tr>
-      
+
       <tr *ngFor="let item of data.fireControlLinkageEngineering;let index = index">
         <td colspan='6' class="fontweight fontLeft leftTitle">
           <!-- 
@@ -621,6 +657,7 @@
           竣工验收意见
         </td>
       </tr>
+
       <tr>
         <td colspan='6' class="fontweight fontLeft leftTitle" required=true>
           建设单位
@@ -642,51 +679,66 @@
                 required /></se>
           </div>
         </td>
+
       </tr>
-      <tr>
+
+
+      <tr *ngFor="let item of data.acceptanceOpinions.designUnit;let index = index">
         <td colspan='6' class="fontweight fontLeft leftTitle" required=true>
           设计单位
         </td>
-        <td colspan='14' style="text-align: left">
+        <td colspan='12' style="text-align: left">
           <se error="必填">
-            <textarea nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.designUnit.opinion"
-              name="designUnitopinion" required>
+            <textarea nz-input placeholder="请输入具体情况" [(ngModel)]="item.opinion" name="designUnitopinion{{index}}"
+              required>
                   </textarea>
           </se>
           <div class="textRight">
             <se error="必填">（设计单位公章）：<input style="width: 160px;margin-right: 20px" nz-input placeholder="设计单位"
-                [(ngModel)]="data.acceptanceOpinions.designUnit.officialSeal" name="designUnitofficialSeal" required />
+                [(ngModel)]="item.officialSeal" name="designUnitofficialSeal{{index}}" required />
             </se>
             <se error="必填">项目负责人签名：<input style="width: 160px;margin-right: 20px" nz-input placeholder="请签名"
-                [(ngModel)]="data.acceptanceOpinions.designUnit.autograph" name="designUnitautograph" required />
+                [(ngModel)]="item.autograph" name="designUnitautograph{{index}}" required />
             </se>
           </div>
         </td>
-      </tr>
-      <tr>
-        <td colspan='6' class="fontweight fontLeft leftTitle" required=true>
-          施工总承包单位
+        <td rowspan='1' colspan='1' [ngClass]="{pointer: type == 1}">
+          <a (click)="addArray(data.acceptanceOpinions.designUnit)">新增</a>
+          <br>
+          <a (click)="deleteArray(data.acceptanceOpinions.designUnit,index)">删除</a>
         </td>
-        <td colspan='14' style="text-align: left">
+      </tr>
+
+
+      <tr *ngFor="let item of data.acceptanceOpinions.contractingUnit;let index = index">
+        <td colspan='6' class="fontweight fontLeft leftTitle" required=true>
+          施工单位
+        </td>
+        <td colspan='12' style="text-align: left">
           <se error="必填">
-            <textarea nz-input placeholder="请输入具体情况" [(ngModel)]="data.acceptanceOpinions.contractingUnit.opinion"
-              name="contractingUnitopinion" required>
+            <textarea nz-input placeholder="请输入具体情况" [(ngModel)]="item.opinion" name="contractingUnitopinion{{index}}"
+              required>
                 </textarea>
           </se>
 
           <div class="textRight">
             <se error="必填">
-              （施工总承包单位）：<input style="width: 160px;margin-right: 20px" nz-input placeholder="施工总承包单位"
-                [(ngModel)]="data.acceptanceOpinions.contractingUnit.officialSeal" name="contractingUnitfficialSeal"
-                required />
+              （施工单位）：<input style="width: 160px;margin-right: 20px" nz-input placeholder="施工单位"
+                [(ngModel)]="item.officialSeal" name="contractingUnitfficialSeal{{index}}" required />
             </se>
             <se error="必填">
               项目经理签名：<input style="width: 160px;margin-right: 20px" nz-input placeholder="请签名"
-                [(ngModel)]="data.acceptanceOpinions.contractingUnit.autograph" name="contractingUnitoautograph"
-                required /></se>
+                [(ngModel)]="item.autograph" name="contractingUnitoautograph{{index}}" required />
+            </se>
           </div>
         </td>
+        <td rowspan='1' colspan='1' [ngClass]="{pointer: type == 1}">
+          <a (click)="addArray(data.acceptanceOpinions.contractingUnit)">新增</a>
+          <br>
+          <a (click)="deleteArray(data.acceptanceOpinions.contractingUnit,index)">删除</a>
+        </td>
       </tr>
+
       <tr>
         <td colspan='6' class="fontweight fontLeft leftTitle">
           专业承包单位（如有）
