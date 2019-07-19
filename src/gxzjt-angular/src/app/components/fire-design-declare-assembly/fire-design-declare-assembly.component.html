@@ -287,16 +287,16 @@
           <td rowspan='1' colspan='13'>
             <nz-form-item>
               <nz-form-control>
-                <input nz-input placeholder="请输入审图编号" name="ststbh{{index}}" [(ngModel)]="strItem.value" />
+                <input nz-input placeholder="请输入审图编号" name="ststbh{{index}}" [(ngModel)]="strItem.noValue" />
                 <nz-form-explain
-                  *ngIf="(data.mappingUnit.mainAddressNo==''||data.mappingUnit.mainAddressNo==null)&&strItem.value==''">
+                  *ngIf="(data.mappingUnit.mainAddressNo==''||data.mappingUnit.mainAddressNo==null)&&strItem.noValue==''">
                   <span style="color: red;">主体消防验收意见书编号、审图编号，两者必填一个</span>
                 </nz-form-explain>
               </nz-form-control>
             </nz-form-item>
           </td>
           <td rowspan='1' [ngClass]="{pointer: type == 1}">
-            <a (click)="addArrayStr(data.mappingUnit.no)">新增</a>
+            <a (click)="addArray(data.mappingUnit.no)">新增</a>
             <br>
             <a (click)="deleteArray(data.mappingUnit.no,index)">删除</a>
           </td>

@@ -85,7 +85,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
       contacts: '',
       contactsNumber: '',
       mainAdviseNo: '',
-      no: [{ value: '' }],
+      no: [{ noValue: '' }],
     },
     basicInformation: [
       {
@@ -589,13 +589,18 @@ export class AddFireDesignDeclareComponent implements OnInit {
         var json = JSON.parse(data.formJson);
 
         if (json.mappingUnit.no instanceof String) {
-          json.mappingUnit.no = [{ value: json.mappingUnit.no }];
+          json.mappingUnit.no = [{ noValue: json.mappingUnit.no }];
         }
+        // if(json.mappingUnit.no instanceof Array){
+        //   if (json.mappingUnit.no[0] instanceof String){
+            
+        //   }       
+        // }
         json.mappingUnit.no = convertToArray(json.mappingUnit.no);
 
         this.data = json;
       }
-      this.useNatureSelect = data.natures
+      this.useNatureSelect = data.natures;
     })
   }
 
