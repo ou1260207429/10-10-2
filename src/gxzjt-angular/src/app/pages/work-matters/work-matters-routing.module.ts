@@ -9,6 +9,7 @@ import { DraftsComponent } from './drafts/drafts.component';
 import { SearchHadDoneComponent } from './search-had-done/search-had-done';
 import { WorkMattersReviewApplyComponent } from './review-apply/review-apply.component';
 import { SignForComponent } from './sign-for/sign-for.component';
+import { WorkMattersAllDoneComponent } from './all-done/all-done.component';
 
 const routes: Routes = [
   {
@@ -49,8 +50,9 @@ const routes: Routes = [
 
   { path: 'review-apply/:flowId/:flowType', component: WorkMattersReviewApplyComponent ,data: { title: '复查申请' } },
 
-  { path: 'sign-for/:flowId', component: SignForComponent ,data: { title: '签收' } }
-];
+  { path: 'sign-for/:flowId', component: SignForComponent ,data: { title: '签收' } },
+
+  { path: 'all-done', component: WorkMattersAllDoneComponent ,data: { title: '经办事项' }  }];
 
 
 @NgModule({

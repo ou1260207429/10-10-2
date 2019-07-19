@@ -9,6 +9,7 @@ import { UserrightUseraddComponent } from './useradd/useradd.component';
 import { UserrightUsereditComponent } from './useredit/useredit.component';
 import { UserrightUserlookComponent } from './userlook/userlook.component';
 import { UserrightOrgeditComponent } from './orgedit/orgedit.component';
+import { UserrightAareeditComponent } from './aareedit/aareedit.component';
 
 const COMPONENTS = [
   UserrightUserlistComponent,
@@ -17,7 +18,8 @@ const COMPONENTS = [
   UserrightUseraddComponent,
   UserrightUsereditComponent,
   UserrightUserlookComponent,
-  UserrightOrgeditComponent];
+  UserrightOrgeditComponent,
+  UserrightAareeditComponent];
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({

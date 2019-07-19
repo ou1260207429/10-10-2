@@ -56,6 +56,44 @@ export class UserRightService {
     // api/User/Delete?id=
       return this.http.get(URLConfig.getInstance().SERVER_URL+ 'api/services/app/Home/GetAreaDropdown');
     }
+   //获取区域树
+  AreaGetAreaTree(model?: any): Observable<any> {
+    // api/User/Delete?id=
+      return this.http.get(URLConfig.getInstance().REGISTER_URL+ 'api/Area/GetAreaTree');
+    }
+  //添加区域
+  AreaAddArea(model?: any): Observable<any> {
+    return this.http.post(URLConfig.getInstance().REGISTER_URL + 'api/Area/AddArea', model)
+  }
+   //批量删除区域
+  AreaDeleteArea(model?: any): Observable<any> {
+    return this.http.post(URLConfig.getInstance().REGISTER_URL + 'api/Area/DeleteArea', model)
+  }
+  //编辑区域
+  AreaUpdateArea(model?: any): Observable<any> {
+      return this.http.post(URLConfig.getInstance().REGISTER_URL + 'api/Area/UpdateArea', model)
+    }
+
+  //编辑组织机构
+  OrgaUpdate(model?: any): Observable<any> {
+      return this.http.post(URLConfig.getInstance().REGISTER_URL + 'api/Organizations/Edit', model)
+    }
+  //添加组织机构
+  OrgaAdd(model?: any): Observable<any> {
+    return this.http.post(URLConfig.getInstance().REGISTER_URL + 'api/Organizations/Create', model)
+  }
+  //根据id获取组织详情
+  GetOrgDetail(model?: any): Observable<any> {
+    // api/User/Delete?id=
+      return this.http.get(URLConfig.getInstance().REGISTER_URL+ 'api/Organizations/Details',model);
+    }
+
+     //批量删除区域
+  OrganizationsDelete(model?: any): Observable<any> {
+      return this.http.post(URLConfig.getInstance().REGISTER_URL + 'api/Organizations/Delete', model)
+    }
+
+
 }
 
 /**

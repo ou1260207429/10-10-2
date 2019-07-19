@@ -10,7 +10,7 @@
     <div class="org"><span>组织机构</span></div>
     <div nz-col [nzSpan]="2">
       <div style="margin-top: 35px;">
-        <nz-tree #treeCom [nzData]="nodes" nzMultiple="false" [(nzCheckedKeys)]="defaultCheckedKeys"
+        <nz-tree #treeCom [nzData]="nodes" nzMultiple="false"
           nzDefaultExpandAll="true" (nzClick)="nzEvent($event)">
 
           <div>
@@ -24,6 +24,7 @@
        <ng-template #template>
         <ul nz-menu nzInDropDown (nzClick)="close($event)">
           <li nz-menu-item (click)="edit()">编辑</li>
+          <li nz-menu-item (click)="add()">添加</li>
 
         </ul>
         </ng-template>
@@ -52,12 +53,19 @@
           </div>
         </nz-checkbox-wrapper>
       </div>
+    </div>
 
+    <div *ngIf="defaultCheckedKeys2 !=null">
+      <div class="org" style="margin-top: 5px"><span>所属区域</span>
+      </div>
 
+      <nz-tree #treeCom [nzData]="Areanodes" nzCheckable="true" nzMultiple="true" ref="tree"
+       [(nzCheckedKeys)]="defaultCheckedKeys2" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzAreaEvent($event)">
+      </nz-tree>
     </div>
   </div>
 
-  <div class="content" *ngIf="orgarray!='' && orgarray!=null">
+  <!-- <div class="content" *ngIf="orgarray!='' && orgarray!=null">
     <div class="org"><span>添加所辖机构</span></div>
 
     <div >
@@ -72,8 +80,74 @@
 
 
     </div>
+  </div> -->
+</nz-card>
+
+<!-- 编辑部门 -->
+<nz-modal [(nzVisible)]="isAddProducttyepe1" nzTitle="编辑组织机构" (nzOnCancel)="handleCancel1()" (nzOnOk)="subProducttype1()">
+  <div style="margin-top: 8px" nz-row>
+    <div nz-col nzSpan="5">机构名称</div>
+    <div nz-col nzSpan="19">
+      <input nz-input  [(ngModel)]="editOrgModel.name" >
+    </div>
+  </div>
+  <div style="margin-top: 8px" nz-row>
+    <div nz-col nzSpan="5">文号前缀</div>
+    <div nz-col nzSpan="19">
+      <input nz-input  [(ngModel)]="editOrgModel.name" >
+    </div>
+  </div>
+  <div style="margin-top: 10px" nz-row>
+    <div nz-col nzSpan="5">所属区域</div>
+    <div nz-col nzSpan="19">
+      <nz-tree #treeCom [nzData]="Areanodes" nzCheckable="true" nzMultiple="true" ref="tree"
+      [(nzCheckedKeys)]="defaultCheckedKeys2" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzAreaEvent($event)">
+      <div>
+      </div>
+    </nz-tree>
+    </div>
+  </div>
+</nz-modal>
+
+<!-- 添加 -->
+<nz-modal [(nzVisible)]="isAddProducttyepe2" nzTitle="添加区域" (nzOnCancel)="handleCancel2()" (nzOnOk)="subProducttype2()">
+    <div nz-row>
+
+        <div nz-col nzSpan="5">上级机构</div>
+        <div nz-col nzSpan="19">
+          <!-- <input nz-input [(ngModel)]="parentorgname"> -->
+          <span>{{parentorgname}}</span>
+        </div>
+    </div>
+
+  <div nz-row style="margin-top: 15px">
+
+    <div nz-col nzSpan="5">组织机构名称</div>
+    <div nz-col nzSpan="19">
+      <input nz-input [(ngModel)]="addOrgModel.name">
+    </div>
   </div>
 
+    <div nz-row style="margin-top: 15px">
+
+      <div nz-col nzSpan="5">文号前缀</div>
+      <div nz-col nzSpan="19">
+        <input nz-input [(ngModel)]="addOrgModel.typenumberPrefix">
+      </div>
+    </div>
+    <div style="margin-top: 50px" nz-row>
+      <div nz-col nzSpan="5">所属区域</div>
+      <div nz-col nzSpan="19">
+        <nz-tree #treeCom [nzData]="Areanodes" nzCheckable="true" nzMultiple="true" ref="tree"
+        [(nzCheckedKeys)]="defaultCheckedKeys3" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzAreaEvent($event)">
+
+        <div>
+        </div>
+      </nz-tree>
 
 
-</nz-card>
+      </div>
+    </div>
+
+
+</nz-modal>
