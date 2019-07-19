@@ -85,7 +85,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
       contacts: '',
       contactsNumber: '',
       mainAdviseNo: '',
-      no: [''],
+      no: [{ value: '' }],
     },
     basicInformation: [
       {
@@ -561,7 +561,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
     private nzModalService: NzModalService,
     private _ActivatedRoute: ActivatedRoute,
     private message: NzMessageService, ) {
-    
+
     this.flowFormQueryDto.flowType = 1;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
@@ -588,6 +588,9 @@ export class AddFireDesignDeclareComponent implements OnInit {
 
         var json = JSON.parse(data.formJson);
 
+        if (json.mappingUnit.no instanceof String) {
+          json.mappingUnit.no = [{ value: json.mappingUnit.no }];
+        }
         json.mappingUnit.no = convertToArray(json.mappingUnit.no);
 
         this.data = json;
