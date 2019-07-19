@@ -634,12 +634,12 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       }
     };
 
-    this.butNzLoading = true;
     this.isSelectModalOkLoading = true;
 
     this.filterFileList();
 
 
+    this.butNzLoading = true;
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
       const flowDataDto = new FlowDataDto();

@@ -313,6 +313,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       })
     } else {
       this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
+        this.butNzLoading = false;
         const type = this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType == 3 ? true : false
         this.examineFormDto.isTransfer = this.formDto.isTransfer = type
         this.examineFormDto.isPass = this.formDto.isAccept = bo;
@@ -364,6 +365,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
       }, error => {
         this.isNoResult(error.error.error.message)
+        this.butNzLoading = false;
       })
     }
 
