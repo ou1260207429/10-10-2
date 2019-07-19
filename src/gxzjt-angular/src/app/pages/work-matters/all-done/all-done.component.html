@@ -1,33 +1,33 @@
-<page-header>
+<!-- <page-header>
   <ng-template #action>
     <button (click)="add()" nz-button nzType="primary">新建</button>
   </ng-template>
 </page-header>
 <nz-card>
-    <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
+    <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm"> -->
         <!-- <span>地市：</span> -->
-        <nz-select class="search_menu_input" formControlName="city" nzShowSearch nzAllowClear nzPlaceHolder="选择市区"
+        <!-- <nz-select class="search_menu_input" formControlName="city" nzShowSearch nzAllowClear nzPlaceHolder="选择市区"
           (ngModelChange)="cityChange($event)">
           <div *ngFor="let item of cityarray">
             <nz-option nzLabel="{{item.Name}}" nzValue="{{item.Name}}"></nz-option>
           </div>
-        </nz-select>
+        </nz-select> -->
         <!-- <span>区域：</span> -->
-        <nz-select class="search_menu_input" formControlName="count" nzShowSearch nzAllowClear nzPlaceHolder="选择区县" >
+        <!-- <nz-select class="search_menu_input" formControlName="count" nzShowSearch nzAllowClear nzPlaceHolder="选择区县" >
           <div *ngFor="let item of countyarray">
             <nz-option nzLabel="{{item.Name}}" nzValue="{{item.Name}}"></nz-option>
           </div>
-        </nz-select>
+        </nz-select> -->
         <!-- <nz-select class="search_menu_input" nzShowSearch nzAllowClear nzPlaceHolder="工程名称" [(ngModel)]="selectedValuePro">     </nz-select>-->
         <!-- <span>工程类型：</span> -->
         <!-- <input nz-input  formControlName="proName" placeholder="请输入工程类型" class="search_menu_input"> -->
-        <nz-select class="search_menu_input" formControlName="proType" nzShowSearch nzAllowClear nzPlaceHolder="工程类型">
+        <!-- <nz-select class="search_menu_input" formControlName="proType" nzShowSearch nzAllowClear nzPlaceHolder="工程类型">
           <nz-option nzLabel="消防设计审查" nzValue="1"></nz-option>
           <nz-option nzLabel="消防验收" nzValue="2"></nz-option>
           <nz-option nzLabel="竣工验收消防备案" nzValue="3"></nz-option>
-        </nz-select>
+        </nz-select> -->
         <!-- <span>申报时间：</span> -->
-        <nz-range-picker nzFormat="yyyy/MM/dd" formControlName="dateRange" class="search_menu"></nz-range-picker>
+        <!-- <nz-range-picker nzFormat="yyyy/MM/dd" formControlName="dateRange" class="search_menu"></nz-range-picker>
 
 
         <button nz-button (click)="search()" nzType="primary">搜索</button>
@@ -37,5 +37,5 @@
 
       </form>
   <st #st [data]="url" [columns]="columns"></st>
-</nz-card>
+</nz-card> -->
 
