@@ -268,7 +268,7 @@
 
         </tr>
         <tr>
-          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">分包单位（如有）:</td>
+          <!-- <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">分包单位（如有）:</td>
           <td rowspan='1' colspan='6'>
             <nz-rj-selector-org [(ngModel)]="data.subcontractors.name"
               (onSelectorEvent)="onSelectOrgItem($event,data.subcontractors)" placeHolder="请输入分包单位"
@@ -298,7 +298,7 @@
           <td rowspan='1'>
             无
           </td>
-        </tr>
+        </tr> -->
         <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">监理单位:</td>
           <td rowspan='1' colspan='6'>
@@ -841,24 +841,21 @@
         <td rowspan='1' colspan='20' class="textLeft">
           <div>
             1、建设工程消防验收申报表（纸质申报表的图片）
-            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq"
-              (click)="handleChange(0)">
+            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" (click)="handleChange(0)">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             2、与消防验收有关的竣工图纸及隐蔽工程记录
-            <nz-upload [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq"
-              (click)="handleChange(1)">
+            <nz-upload [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             3、符合要求的检测机构出具的消防设施及系统检测合格证明文件
-            <nz-upload [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq"
-              (click)="handleChange(2)">
+            <nz-upload [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
