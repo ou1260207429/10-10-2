@@ -630,16 +630,16 @@ export class AddFireDesignDeclareComponent implements OnInit {
 
     this.filterFileList();
     //校验mappingUnit
-    var isMainAdviceNoEmpty = false;
+    var ismainAdviseNoEmpty = false;
 
     for (let item in this.data.mappingUnit.no) {
       if (item == '') {
-        isMainAdviceNoEmpty = true;
+        ismainAdviseNoEmpty = true;
         break;
       }
     }
 
-    if (this.data.mappingUnit.mainAdviseNo == '' && isMainAdviceNoEmpty) {
+    if (this.data.mappingUnit.mainAdviseNo == '' && ismainAdviseNoEmpty) {
       return;
     }
 

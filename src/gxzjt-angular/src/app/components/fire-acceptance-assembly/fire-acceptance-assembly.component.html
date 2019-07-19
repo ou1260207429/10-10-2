@@ -139,14 +139,29 @@
         </tr>
         <!-- 6 -->
         <tr>
-          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>施工许可证编号</td>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">施工许可证编号</td>
           <td rowspan='1' colspan='17'>
-            <se error="必填">
-              <input nz-input placeholder="请输入施工许可证编号" [(ngModel)]="data.constructionPermitNumber"
-                name="constructionPermitNumber" required />
-            </se>
+            <nz-form-item>
+              <nz-form-control>
+                <input nz-input placeholder="请输入施工许可证编号" [(ngModel)]="data.constructionPermitNumber"
+                  name="constructionPermitNumber" required />
+                <nz-form-explain
+                  *ngIf="(data.constructionPermitNumber==''||data.constructionPermitNumber==null)&&data.mainAdiseNo==''">
+                  <span style="color: red;">主体消防验收意见书编号、请输入施工许可证编号，两者必填一个</span>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
           </td>
         </tr>
+        <tr>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" >主体消防验收意见书编号</td>
+          <td rowspan='1' colspan='17'>
+
+            <input nz-input placeholder="主体消防验收意见书编号" [(ngModel)]="data.mainAdiseNo" name="mainAdiseNo"  />
+
+          </td>
+        </tr>
+
         <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>检测报告编号</td>
           <td rowspan='1' colspan='17'>

@@ -39,6 +39,7 @@ export class AddFireAcceptanceComponent implements OnInit {
     symbol: '',
     dateOfReview: '',
     constructionPermitNumber: '',
+    mainAdviseNo:'',
     testReportNumber: '',
     design: [{
       designUnit: '',
