@@ -12,7 +12,10 @@ import { NzModalService } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { ReuseTabService } from '@delon/abc';
 
-import {convertToArray} from '@shared/utils/array'
+import { convertToArray } from '@shared/utils/array';
+
+
+
 
 /**
  * 工程管理->竣工验收->新增申报
@@ -470,10 +473,10 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
           var json = JSON.parse(data.formJson);
           json.constructionUnit = json.constructionUnit instanceof Array ? json.constructionUnit : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }]
-        
+
           json.design = json.design ? json.design : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }],
-          
-          json.engineeringId = json.engineeringId ? json.engineeringId : ''
+
+            json.engineeringId = json.engineeringId ? json.engineeringId : ''
 
 
           json.acceptanceOpinions.contractingUnit = convertToArray(json.acceptanceOpinions.contractingUnit);
@@ -510,12 +513,69 @@ export class AddCompletedAcceptanceComponent implements OnInit {
   }
 
 
+  filterFileList() {
 
+
+    //文件过滤
+    for (let x = 0; x < this.data.fileList.length; ++x) {
+      var uploadList = [];
+      for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
+
+        if (this.data.fileList[x].array[y].status == "done") {
+          uploadList.push(this.data.fileList[x].array[y]);
+
+        }
+      }
+      this.data.fileList[x].array = uploadList;
+    }
+  }
+
+
+
+  checkFileList() {
+
+    //文件过滤
+    for (let x = 0; x < this.data.fileList.length; ++x) {
+
+      for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
+
+        if (this.data.fileList[x].array[y].status != "done") {
+          return false;
+        }
+      }
+
+    }
+    return true;
+  }
+
+
+  savingDraft = false;
+
+
+  depositDraftPreCheck() {
+    if (this.checkFileList()) {
+      this.depositDraft();
+    } else {
+      this._NzModalService.warning(
+        {
+          nzTitle: '提示',
+          nzContent: "存在没有成功上传的文件，草稿不会保留，是否继续？",
+          nzOnOk: () => {
+            this.depositDraft();
+
+          }
+        }
+      );
+    }
+  }
   /**
   * 存草稿
   */
   depositDraft() {
-    this.butNzLoading = true;
+    this.savingDraft = true;
+
+    this.filterFileList();
+
     this.data.planEndTime = !this.data.planEndTime ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
 
     this.data.acceptanceOpinions.filingTime = !this.data.acceptanceOpinions.filingTime ? '' : timeTrans(Date.parse(this.data.acceptanceOpinions.filingTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
@@ -523,7 +583,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     this.flowFormDto['flowPathType'] = 3;
     this.flowFormDto.projectTypeStatu = 2;
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
-      this.butNzLoading = false;
+      this.savingDraft = false;
       // console.log(this.reuseTabService.curUrl);
       this.reuseTabService.close(this.reuseTabService.curUrl)
       this._eventEmiter.emit('draftsComponentInit', []);
@@ -535,9 +595,31 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       );
       history.go(-1)
     }, error => {
-      this.butNzLoading = false;
+      this.savingDraft = false;
     })
   }
+
+
+
+
+
+  savePreCheckFile() {
+    if (this.checkFileList()) {
+      this.showSelectModal();
+    } else {
+      this._NzModalService.warning(
+        {
+          nzTitle: '提示',
+          nzContent: "存在没有成功上传的文件，提交不会保留，是否继续？",
+          nzOnOk: () => {
+            this.showSelectModal();
+
+          }
+        }
+      );
+    }
+  }
+
   save() {
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
@@ -554,6 +636,10 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
     this.butNzLoading = true;
     this.isSelectModalOkLoading = true;
+
+    this.filterFileList();
+
+
     this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
       const flowDataDto = new FlowDataDto();
@@ -669,12 +755,12 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
     if (this.form.valid) {
 
-      for (let index = 0; index < this.data.fileList.length; index++) {
-        if (checkArrayString(this.data.fileList[index].array, 'status', 'uploading') != -1) {
-          this.message.error('要上传完文件才能提交表单')
-          return false;
-        }
-      }
+      // for (let index = 0; index < this.data.fileList.length; index++) {
+      //   if (checkArrayString(this.data.fileList[index].array, 'status', 'uploading') != -1) {
+      //     this.message.error('要上传完文件才能提交表单')
+      //     return false;
+      //   }
+      // }
 
       if (this.flowFormQueryDto.flowId) {
         this.save();

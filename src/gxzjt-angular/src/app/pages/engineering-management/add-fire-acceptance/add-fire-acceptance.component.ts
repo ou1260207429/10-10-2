@@ -10,6 +10,8 @@ import { FormGroup } from '@angular/forms';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { ReuseTabService } from '@delon/abc';
+import { NzModalService, UploadXHRArgs } from 'ng-zorro-antd';
+
 
 /**
  * 工程管理->消防验收->新增申报
@@ -19,7 +21,7 @@ import { ReuseTabService } from '@delon/abc';
   templateUrl: './add-fire-acceptance.component.html',
 
 })
-export class AddFireAcceptanceComponent implements OnInit {
+export class AddFireAcceptanceComponent  implements OnInit {
   showError = {
     projectCategoryId: false,
   }
@@ -174,12 +176,12 @@ export class AddFireAcceptanceComponent implements OnInit {
     engineeringId: '',
     engineeringNo: '',
     //申报人姓名
-    applyName:'',
+    applyName: '',
 
   }
 
   //0是新增  1是查看  2是修改
-  type
+  type: any;
 
 
 
@@ -193,7 +195,16 @@ export class AddFireAcceptanceComponent implements OnInit {
   useNatureSelect
 
   butNzLoading: boolean = false;
-  constructor(private reuseTabService: ReuseTabService, private _eventEmiter: EventEmiter, private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
+  constructor(private reuseTabService: ReuseTabService,
+    private _eventEmiter: EventEmiter,
+    private _appSessionService: AppSessionService,
+    private _flowServices: FlowServices,
+    private _applyService: ApplyServiceServiceProxy,
+    public publicModel: PublicModel,
+    private _ActivatedRoute: ActivatedRoute,
+
+    private nzModalService: NzModalService,
+    private message: NzMessageService, ) {
     this.flowFormQueryDto.flowType = 2;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.flowId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('flowId'));
@@ -237,27 +248,106 @@ export class AddFireAcceptanceComponent implements OnInit {
     })
   }
 
+
+  filterFileList() {
+
+
+    //文件过滤
+    for (let x = 0; x < this.data.fileList.length; ++x) {
+      var uploadList = [];
+      for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
+
+        if (this.data.fileList[x].array[y].status == "done") {
+          uploadList.push(this.data.fileList[x].array[y]);
+
+        }
+      }
+      this.data.fileList[x].array = uploadList;
+    }
+  }
+
+
+
+  checkFileList() {
+
+    //文件过滤
+    for (let x = 0; x < this.data.fileList.length; ++x) {
+
+      for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
+
+        if (this.data.fileList[x].array[y].status != "done") {
+          return false;
+        }
+      }
+
+    }
+    return true;
+  }
+
+  savingDraft = false;
+
+
+
+  depositDraftPreCheckFile() {
+    if (this.checkFileList()) {
+      this.depositDraft();
+    } else {
+      this.nzModalService.warning(
+        {
+          nzTitle: '提示',
+          nzContent: "存在没有成功上传的文件，草稿不会保留，是否继续？",
+          nzOnOk: () => {
+            this.depositDraft();
+
+          }
+        }
+      );
+    }
+  }
   /**
    * 存草稿
    */
   depositDraft() {
-    this.butNzLoading = true;
+    this.savingDraft = true;
+    this.filterFileList();
+
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 2;
     this.flowFormDto.projectTypeStatu = 1;
     this.data.dateOfReview = !this.data.dateOfReview ? '' : timeTrans(Date.parse(this.data.dateOfReview) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
-      this.butNzLoading = false;
+      this.savingDraft = false;
       this.flowFormDto.projectId = data;
       this.reuseTabService.close(this.reuseTabService.curUrl)
       this.message.success('保存成功')
       this._eventEmiter.emit('draftsComponentInit', []);
       history.go(-1)
     }, error => {
-      this.butNzLoading = false;
+      this.savingDraft = false;
     })
   }
-  save() { 
+
+
+
+
+  savePreCheckFile() {
+    if (this.checkFileList()) {
+      this.save();
+    } else {
+      this.nzModalService.warning(
+        {
+          nzTitle: '提示',
+          nzContent: "存在没有成功上传的文件，提交不会保留，是否继续？",
+          nzOnOk: () => {
+            this.save();
+
+          }
+        }
+      );
+    }
+  }
+  
+  save() {
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();
       this.form.controls[i].updateValueAndValidity();
@@ -271,17 +361,16 @@ export class AddFireAcceptanceComponent implements OnInit {
 
     if (!this.showError.projectCategoryId && this.form.valid) {
       if (!this.showError.projectCategoryId) {
- 
+
         for (let index = 0; index < this.data.fileList.length; index++) {
           if (checkArrayString(this.data.fileList[index].array, 'status', 'uploading') != -1) {
             this.message.error('要上传完文件才能提交表单')
-            return false;  
+            return false;
           }
         }
-
         const from: GXZJT_From = {
           frow_TemplateInfo_Data: {
-            Area: this.data.engineeringNo[this.data.engineeringNo.length-1]
+            Area: this.data.engineeringNo[this.data.engineeringNo.length - 1]
           },
           identify: 'xfsj',
           editWorkFlow_NodeAuditorRecordDto: {
@@ -290,7 +379,7 @@ export class AddFireAcceptanceComponent implements OnInit {
             deptId: this._appSessionService.user.organizationsId,
             deptFullPath: this._appSessionService.user.organizationsName,
           }
-        }; 
+        };
         this.butNzLoading = true;
         this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
@@ -299,7 +388,7 @@ export class AddFireAcceptanceComponent implements OnInit {
           flowDataDto.projectFlowInfo = new ProjectFlowDto();
 
           flowDataDto.projectId = this.flowFormQueryDto.projectId
-          flowDataDto.flowId=this.flowFormQueryDto.flowId;
+          flowDataDto.flowId = this.flowFormQueryDto.flowId;
 
           flowDataDto.projectFlowInfo.timeLimit = data.result.timeLimit
           //类型  消防设计1   消防验收2   消防竣工3 
@@ -338,7 +427,7 @@ export class AddFireAcceptanceComponent implements OnInit {
           }, error => {
             this.butNzLoading = false;
           })
-        }, (error) => { 
+        }, (error) => {
           this.message.info(error.error.error.message)
           this.butNzLoading = false;
         })

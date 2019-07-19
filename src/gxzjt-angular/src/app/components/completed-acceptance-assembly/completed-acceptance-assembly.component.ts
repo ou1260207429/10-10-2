@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, zzdjEnum5, zzdjEnum4, zzdjEnum3, zzdjEnum2, zzdjEnum1, zzdjEnum } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString, newClassTreeChildrenArray, updateEngineeringNo } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
-import { UploadFile, NzMessageService } from 'ng-zorro-antd';
+import { UploadFile, NzMessageService,UploadXHRArgs } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import lodash from 'lodash';
 import { URLConfig } from "@shared/config/host";
@@ -209,4 +209,48 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
   }
 
+
+  customReq = (item: UploadXHRArgs) => {
+
+    var file = item.file as any;
+    let params = {
+      sourceId: createguid(),
+      AppId: AppId,
+      module: "table",
+    };
+
+    var formData = new FormData();
+    formData.append('files', file);
+
+
+    const index = this.uploadIndex;
+
+    this._publicServices.newUpload(formData, params).subscribe(data => {
+
+
+      var list = this.data.fileList[index].array;
+
+      var file = list[list.length - 1];
+
+      file.uid = data.data[0].id;
+      file.name = file.name;
+      file.status = 'done';
+      file.tid = file.uid;
+      file.url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
+
+      item.onSuccess!(data, item.file!, event);
+
+
+    }, error => {
+      this.message.error('上传失败:' + error);
+
+      item.onError!(error, item.file!);
+
+      // this.data.fileList[index].pop();
+    },
+
+
+    )
+
+  }
 }

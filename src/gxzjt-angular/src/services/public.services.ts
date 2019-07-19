@@ -18,12 +18,12 @@ export class PublicServices {
         );
     }
     newUpload(files: any, params): Observable<any> {
-        let url = "api/Upload/Upload?" + "AppId=" + params.AppId + "&module=" + params.module + "&sourceId=" + params.sourceId
+        let url = "api/Upload/Upload?" + "AppId=" + params.AppId + "&module=" + params.module + "&sourceId=" + params.sourceId;
         return this.http.post(URLConfig.getInstance().REGISTER_URL + url, files, {
             headers: new HttpHeaders({
                 responseType: 'text'
-            })
-        }
+            }),
+        },
         );
     }
     /**

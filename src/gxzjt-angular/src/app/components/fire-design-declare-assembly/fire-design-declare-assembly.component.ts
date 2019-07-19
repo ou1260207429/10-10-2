@@ -1,14 +1,22 @@
 import { HomeServiceProxy, ExamineFormDto } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+
 import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, zzdjEnum, zzdjEnum1, zzdjEnum2, zzdjEnum3, zzdjEnum4 } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString, newClassTreeChildrenArray, updateEngineeringNo } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
-import { UploadFile, NzMessageService } from 'ng-zorro-antd';
+import { UploadFile, NzMessageService, UploadXHRArgs } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import lodash from 'lodash';
 import { URLConfig } from "@shared/config/host";
+import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
+
+import { TokenService } from 'abp-ng2-module/dist/src/auth/token.service';
+
+import { HttpClient} from '@angular/common/http';
+
+
+
 
 /**
  * 消防设计的表单模块
@@ -23,7 +31,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   //判断是新增或者办理  0是新增 1是办理
   @Input() type: number = 0
 
-  @Input() data: any
+  @Input() data: any;
   @Input() errorData = {
     projectCategoryId: false,
     specialEngineering: false,
@@ -41,6 +49,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   refractoryEnum = RefractoryEnum
 
   //获取表单对象
+
   @ViewChild('f') f: FormGroup;
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
@@ -59,11 +68,23 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   @Input() useNatureSelect: any
 
   //审批单位
-  engineeringList
-  engineering
-  constructor(private message: NzMessageService, private eventEmiter: EventEmiter, public _homeServiceProxy: HomeServiceProxy, public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
+  engineeringList: any;
+  engineering: any;
+  constructor(private message: NzMessageService,
+    private eventEmiter: EventEmiter,
+    public _homeServiceProxy: HomeServiceProxy,
+    public _publicServices: PublicServices,
+    public publicModel: PublicModel,
+    private http: HttpClient,
+    private _tokenService: TokenService,
+    private fb: FormBuilder) {
+
+  }
+
+
 
   ngOnInit() {
+
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
 
@@ -73,15 +94,15 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
 
     if (this.type == 1) {
-      setTimeout(() => { 
-        const a:any = this.f; 
-        this.f.controls.jsconstructionUnit.disable({onlySelf:false,emitEvent:false})
-        Object.keys(this.f.controls).forEach(function (key) { 
-          a.controls[key].disable({onlySelf:false,emitEvent:false})
+      setTimeout(() => {
+        const a: any = this.f;
+        this.f.controls.jsconstructionUnit.disable({ onlySelf: false, emitEvent: false })
+        Object.keys(this.f.controls).forEach(function (key) {
+          a.controls[key].disable({ onlySelf: false, emitEvent: false })
         });
-        
-      },500)
-    } 
+
+      }, 500)
+    }
   }
 
 
@@ -93,14 +114,14 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   changeCitycountyAndDistrict(v) {
     this.data.engineeringCitycountyAndDistrict = v;
     const t = lodash.cloneDeep(v)
-    const list = this.publicModel.positionTreeArray(this.engineeringList, 'areaIds', t, []) 
+    const list = this.publicModel.positionTreeArray(this.engineeringList, 'areaIds', t, [])
     this.data.engineeringNo = []
     if (list.length > 0) {
-      list.forEach(item => { 
+      list.forEach(item => {
         this.data.engineeringNo.push(item.value)
       })
-    } 
-    console.log(this.data.engineeringNo)
+    }
+
   }
 
   /**
@@ -109,7 +130,6 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   getAreaDropdown() {
     this._homeServiceProxy.getAreaDropdown().subscribe(data => {
       this.position = classTreeChildrenArray([JSON.parse(data)]);
-      console.log(this.position);
     })
   }
 
@@ -119,7 +139,6 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   getOrganizationTree() {
     this._publicServices.getOrganizationTree().subscribe((data: any) => {
       this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]);
-      console.log(this.engineeringList);
     })
   }
 
@@ -156,6 +175,9 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     arr.push(objDeleteType(arr[0]))
   }
 
+  addArrayStr(arr) {
+    arr.push("");
+  }
   /**
    * 删除数组
    */
@@ -163,40 +185,91 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     this.publicModel.engineeringDeleteArray(arr, index)
   }
 
+  customReq = (item: UploadXHRArgs) => {
+
+    var file = item.file as any;
+    let params = {
+      sourceId: createguid(),
+      AppId: AppId,
+      module: "table",
+    };
+
+    var formData = new FormData();
+    formData.append('files', file);
+
+
+    const index = this.uoloadIndex;
+
+    this._publicServices.newUpload(formData, params).subscribe(data => {
+
+
+      var list = this.data.fileList[index].array;
+
+      var file = list[list.length - 1];
+
+      file.uid = data.data[0].id;
+      file.name = file.name;
+      file.status = 'done';
+      file.tid = file.uid;
+      file.url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
+
+      item.onSuccess!(data, item.file!, event);
+
+
+    }, error => {
+      this.message.error('上传失败:' + error);
+
+      item.onError!(error, item.file!);
+
+      // this.data.fileList[index].pop();
+    },
+
+
+    )
+
+  }
+
+
+
   beforeUpload = (file: any): boolean => {
-    const tid = file.uid
-    this.data.fileList[this.uoloadIndex].array.push({
-      name: file.name,
-      status: 'uploading',
-      tid: file.uid,
-    })
 
     let params = {
       sourceId: createguid(),
       AppId: AppId,
       module: "table",
-    }
-    const formData = new FormData();
+    };
+
+    var formData = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
-      const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
-      this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].status = 'done'
-      const fileList = lodash.cloneDeep(this.data.fileList);
 
-      this.data.fileList = []
-      this.data.fileList = fileList
+      const tid = file.uid
+      this.data.fileList[this.uoloadIndex].array.push({
+        name: file.name,
+        status: 'uploading',
+        tid: file.uid,
+      });
+      var index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid);
+      this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id;
+      this.data.fileList[this.uoloadIndex].array[index].url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
+      this.data.fileList[this.uoloadIndex].array[index].status = 'done';
+
     }, error => {
-      this.message.error('上传失败，上传文件不能超过30M');
-      const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
-      this.data.fileList[this.uoloadIndex].array[index].status = 'error'
-      const fileList = lodash.cloneDeep(this.data.fileList);
-      this.data.fileList = []
-      this.data.fileList = fileList
+      this.message.error('上传失败:' + error);
+
+
+      // this.data.fileList = []
+      // var index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid);
+      // this.data.fileList[this.uoloadIndex].array[index].status = 'error';
+      // var fileList = lodash.cloneDeep(this.data.fileList);
+      // this.data.fileList = [];
+      // this.data.fileList = fileList;
     })
     return false;
   };
+
+
+
 
   removeFile = (file: UploadFile): boolean => {
     return true;
@@ -238,4 +311,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     this.data.legalRepresentativeNo = res.leaderPhone;
 
   }
+
+
+
 }

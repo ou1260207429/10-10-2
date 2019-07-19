@@ -276,7 +276,7 @@ export function deleteArray(array: any, checkAttribute: string, ) {
 }
 
 export function objDeleteType(box) {
-  const obj = lodash.cloneDeep(box);
+  var obj = lodash.cloneDeep(box);
   Object.keys(obj).forEach(function (key) {
     obj[key] = '';
   });
