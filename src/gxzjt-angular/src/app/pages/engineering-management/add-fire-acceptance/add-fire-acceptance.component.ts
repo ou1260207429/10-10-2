@@ -119,11 +119,11 @@ export class AddFireAcceptanceComponent implements OnInit {
       useNature: '',
       originallyUsed: '',
     },
-    implementation: {
+    implementation: [{
       designUnit: '',
       personInChargeName: '',
       opinion: '本工程能按照经审查合格的消防设计文件施工，施工质量满足消防设计和国家工程建设消防技术标准要求 。'
-    },
+    }],
     constructionSituation: [{
       contractingUnit: '',
       projectManagerName: '',
@@ -237,7 +237,9 @@ export class AddFireAcceptanceComponent implements OnInit {
           this.data.constructionSituation = [];
         }
         this.data.constructionSituation = convertToArray(this.data.constructionSituation);
+        this.data.implementation = convertToArray(this.data.implementation);
 
+        
 
         if (this.data.supervision == null) {
           this.data.supervision = {};

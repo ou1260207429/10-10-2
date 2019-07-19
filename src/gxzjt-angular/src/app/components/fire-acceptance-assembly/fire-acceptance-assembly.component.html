@@ -579,20 +579,34 @@
         <td rowspan='1' colspan='20' class="textLeft">
           <div>一、 经审查合格的消防设计文件实施情况</div>
 
-          <se error="必填" style="margin-top:8px;">
-            <textarea nz-input placeholder="请输入审图公司意见" [(ngModel)]="data.implementation.opinion"
-              name="implementationopinion" required>
+          <div style="margin-top:8px;" *ngFor="let item of data.implementation;let index = index">
+            <se error="必填">
+              <textarea nz-input placeholder="请输入审图公司意见" [(ngModel)]="item.opinion"
+                name="implementationopinion{{index}}" required>
               </textarea>
-          </se>
-          <div class="textRight">
-            <se error="必填">
-              设计单位：<input style="width: 320px" nz-input placeholder="请输入设计单位"
-                [(ngModel)]="data.implementation.designUnit" name="implementationdesignUnit" required />
             </se>
-            <se error="必填">
-              设计单位项目负责人签名：<input style="width: 320px" nz-input placeholder="请输入签名"
-                [(ngModel)]="data.implementation.personInChargeName" name="implementationpersonInChargeName" required />
-            </se>
+            <div class="textRight">
+
+              <div>
+                <se error="必填">
+                  设计单位：<input style="width: 320px" nz-input placeholder="请输入设计单位" [(ngModel)]="item.designUnit"
+                    name="implementationdesignUnit{{index}}" required />
+                </se>
+                <se error="必填">
+                  设计单位项目负责人签名：<input style="width: 320px" nz-input placeholder="请输入签名"
+                    [(ngModel)]="item.personInChargeName" name="implementationpersonInChargeName{{index}}" required />
+                </se>
+              </div>
+
+
+              <div [ngClass]="{pointer: type == 1}" style="margin-top:8px;">
+                <a (click)="addArray(data.implementation)">新增</a>
+                <br>
+                <a (click)="deleteArray(data.implementation,index)">删除</a>
+              </div>
+            </div>
+
+
           </div>
         </td>
       </tr>

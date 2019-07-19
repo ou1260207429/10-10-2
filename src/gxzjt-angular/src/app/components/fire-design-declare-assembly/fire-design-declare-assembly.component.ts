@@ -14,12 +14,14 @@ import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms'
 import { TokenService } from 'abp-ng2-module/dist/src/auth/token.service';
 
 import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 
 
 
 /**
  * 消防设计的表单模块
+ * 建设工程消防设计审查申报表
  */
 @Component({
   selector: 'app-fire-design-declare-assembly',
@@ -213,7 +215,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
       file.status = 'done';
       file.tid = file.uid;
       file.url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
-
+      file.hadUpLoad = 1;
       // item.onSuccess!(data, item.file!, HttpEventType.Response);
 
     }, error => {
@@ -272,11 +274,31 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
 
   removeFile = (file: UploadFile): boolean => {
+
     return true;
+    // if (file.hadUpLoad && file.hadUpLoad == 1) {
+    //   let params = {
+    //     id: file.uid,
+    //     AppId: AppId,
+    //   };
+
+
+    //   this._publicServices.delete(params).subscribe(data => {
+    //     return true;
+    //   }, err => {
+    //     return false;
+    //   });
+
+    // } else {
+    //   return true;
+    // }
+
+
+
   }
 
   handleChange(index) {
-    this.uploadIndex = index
+    this.uploadIndex = index;
   }
 
   disabledStartDate = (startValue: Date): boolean => {
