@@ -1,9 +1,13 @@
 import { HttpClient, HttpEvent, HttpEventType, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { UploadXHRArgs, UploadFile, NzMessageService } from 'ng-zorro-antd';
 // import { forkJoin } from 'rxjs';
 import { Observable, Observer } from 'rxjs';
 import { TokenService } from 'abp-ng2-module/dist/src/auth/token.service';
+import { URLConfig } from "@shared/config/host";
+
+import { createguid } from 'infrastructure/regular-expression';
+import { AppId } from 'infrastructure/expression';
 
 @Component({
     selector: 'nz-rj-upload-file',
@@ -20,19 +24,27 @@ export class UploadFileComponent {
         private _tokenService: TokenService) { }
 
 
-    @Input()
     @Output()
     fileList: any;
 
+
+    @Output() fileListChange = new EventEmitter();
+
+
+
+    onChange(value) {
+        this.fileListChange.emit(value);
+    }
+
+
     @Input()
-    @Output()
     nzFileType = "";
 
 
     @Input()
-    @Output()
     errMsg = "";
 
+    @Input()
     beforeUpload = (file: File) => {
 
         if (this.nzFileType != "" && this.nzFileType !== file.type) {
@@ -46,40 +58,40 @@ export class UploadFileComponent {
 
 
     @Input()
-    @Output()
-    public uploadUrl = "http://demo.rjtx.net:5001/api/Attachment/AttachmentListBySourceId";
-    // appId = “9F947774-8CB4-4504-B441-2B9AAEEAF450”
+    public uploadUrl = '';
 
-    @Input()
-    @Output()
-    public module: any;
-
-    @Input()
-    @Output()
-    public sourceId: any;
-    
-    @Input()
     @Output()
     customReq = (item: UploadXHRArgs) => {
         // 构建一个 FormData 对象，用于存储文件或其他参数
         const formData = new FormData();
 
         formData.append('files', item.file as any);
-        formData.append('AppId', '9F947774-8CB4-4504-B441-2B9AAEEAF450');
-        formData.append('module', this.module);
-        formData.append('sourceId', this.sourceId);
+        // formData.append('AppId', '9F947774-8CB4-4504-B441-2B9AAEEAF450');
+        // formData.append('module', this.module);
+        // formData.append('sourceId', this.sourceId);
 
         var header = new HttpHeaders();
         header.set(
             "Content-Type", "multipart/form-data");
         header.set('Authorization', 'Bearer ' + this._tokenService.getToken());
+        let params = {
+            sourceId: createguid(),
+            AppId: AppId,
+            module: "table",
+        };
 
+        if (this.uploadUrl == '') {
+            this.uploadUrl == "api/Upload/Upload?" + "AppId=" + params.AppId + "&module=" + params.module + "&sourceId=" + params.sourceId;
 
-        const req = new HttpRequest('post', item.action!, formData, {
+        }
+
+        const req = new HttpRequest('post', this.uploadUrl, formData, {
             headers: header,
             reportProgress: true,
             withCredentials: true
         });
+
+
 
         // 始终返回一个 `Subscription` 对象，nz-upload 会在适当时机自动取消订阅
         return this.http.request(req).subscribe(
@@ -106,45 +118,14 @@ export class UploadFileComponent {
             }
         );
     };
-    
+
     @Input()
-    @Output()
     remove = (file: UploadFile) => {
-        console.log(file);
+        // console.log(file);
+        if (file.error) {
+            return true;
+        }
         return true;
     }
-    // 一个简单的分片上传
-    // customBigReq = (item: UploadXHRArgs) => {
-    //     const size = item.file.size;
-    //     const chunkSize = parseInt(size / 3 + '', 10);
-    //     const maxChunk = Math.ceil(size / chunkSize);
-    //     const reqs = Array(maxChunk)
-    //         .fill(0)
-    //         .map((_: {}, index: number) => {
-    //             const start = index * chunkSize;
-    //             let end = start + chunkSize;
-    //             if (size - end < 0) {
-    //                 end = size;
-    //             }
-    //             const formData = new FormData();
-    //             formData.append('file', item.file.slice(start, end));
-    //             formData.append('start', start.toString());
-    //             formData.append('end', end.toString());
-    //             formData.append('index', index.toString());
-    //             const req = new HttpRequest('POST', item.action!, formData, {
-    //                 withCredentials: true
-    //             });
-    //             return this.http.request(req);
-    //         });
-    //     return forkJoin(...reqs).subscribe(
-    //         () => {
-    //             // 处理成功
-    //             item.onSuccess!({}, item.file!, event);
-    //         },
-    //         err => {
-    //             // 处理失败
-    //             item.onError!(err, item.file!);
-    //         }
-    //     );
-    // };
+
 }

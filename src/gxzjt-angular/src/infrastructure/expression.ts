@@ -245,7 +245,21 @@ export const ArchitectureTypeEnum = [
   { label: '钢筋混凝土结构', value: '钢筋混凝土结构' },
   { label: '钢结构', value: '钢结构' },
   { label: '轻钢结构', value: '轻钢结构' },
-  { label: '其他结构', value: '其他结构' }
+
+  { label: '素混凝土结构', value: '素混凝土结构' },
+  { label: '预应力混凝土结构', value: '预应力混凝土结构' },
+  { label: '砌体结构', value: '砌体结构' },
+  { label: '木结构', value: '木结构' },
+  { label: '墙承重结构', value: '墙承重结构' },
+
+  { label: '排架结构', value: '排架结构' },
+  { label: '框架结构', value: '框架结构' },
+
+  { label: '剪力墙结构', value: '剪力墙结构' },
+
+  { label: '其他结构', value: '其他结构' },
+
+
 ]
 
 export const AdoptEnum = [

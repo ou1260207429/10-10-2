@@ -174,6 +174,7 @@
           </td>
           <td rowspan='1' [ngClass]="{pointer: type == 1}">
             <a (click)="addArray(data.design)">新增</a>
+            <br>
             <a (click)="deleteArray(data.design,a)">删除</a>
           </td>
         </tr>
@@ -203,6 +204,7 @@
           </td>
           <td rowspan='1' [ngClass]="{pointer: type == 1}">
             <a (click)="addArray(data.constructionUnit)">新增</a>
+            <br>
             <a (click)="deleteArray(data.constructionUnit,a)">删除</a>
           </td>
         </tr>
@@ -278,16 +280,39 @@
           </td>
           <td rowspan='1'>无</td>
         </tr>
-        <tr>
-          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>
+        <tr *ngFor="let strItem of data.mappingUnit.no;let index = index">
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">
             审图编号
           </td>
           <td rowspan='1' colspan='13'>
-            <se error="必填">
-              <input nz-input placeholder="请输入审图编号" name="ststbh" [(ngModel)]="data.mappingUnit.no" required />
-            </se>
+            <nz-form-item>
+              <nz-form-control>
+                <input nz-input placeholder="请输入审图编号" name="ststbh{{index}}" [(ngModel)]="data.mappingUnit.no[index]" />
+                <nz-form-explain
+                  *ngIf="(data.mappingUnit.mainAddressNo==''||data.mappingUnit.mainAddressNo==null)&&data.mappingUnit.no[index]==''">
+                  <span style="color: red;">主体消防验收意见书编号、审图编号，两者必填一个</span>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
           </td>
-          <td rowspan='1'>无</td>
+          <td rowspan='1' [ngClass]="{pointer: type == 1}">
+            <a (click)="addArrayStr(data.mappingUnit.no)">新增</a>
+            <br>
+            <a (click)="deleteArray(data.mappingUnit.no,index)">删除</a>
+          </td>
+        </tr>
+
+
+        <tr>
+          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">
+            主体消防验收意见书编号
+          </td>
+          <td rowspan='1' colspan='14'>
+
+            <input nz-input placeholder="请输入主体消防验收意见书编号" name="ststbh" [(ngModel)]="data.mappingUnit.mainAddressNo" />
+
+          </td>
+
         </tr>
 
         <tr>
@@ -407,6 +432,7 @@
 
 
           <td [ngClass]="{pointer: type == 1}"><a (click)="addArray(data.basicInformation)">新增</a>
+            <br>
             <a (click)="deleteArray(data.basicInformation,index)">删除</a> </td>
         </tr>
 
@@ -452,8 +478,11 @@
               name="storagesetupType11{{index}}"> <label style="padding-right: 20px;" nz-radio nzValue="其他">其他 </label>
             </nz-radio-group>
           </td>
-          <td rowspan="2" colspan='1' [ngClass]="{pointer: type == 1}"><a (click)="addArray(data.storageTank)">新增</a>
-            <a (click)="deleteArray(data.storageTank,index)">删除</a></td>
+          <td rowspan="2" colspan='1' [ngClass]="{pointer: type == 1}">
+            <a (click)="addArray(data.storageTank)">新增</a>
+            <br>
+            <a (click)="deleteArray(data.storageTank,index)">删除</a>
+          </td>
         </tr>
 
         <tr>
@@ -483,7 +512,9 @@
         <td rowspan='1' colspan='4'>
           <input nz-input placeholder="请输入储存物质名称" [(ngModel)]="item.name" name="yardname{{index}}" />
         </td>
-        <td rowspan="1" colspan='1' [ngClass]="{pointer: type == 1}"><a (click)="addArray(data.yard)">新增</a>
+        <td rowspan="1" colspan='1' [ngClass]="{pointer: type == 1}">
+          <a (click)="addArray(data.yard)">新增</a>
+          <br>
           <a (click)="deleteArray(data.yard,index)">删除</a></td>
       </tr>
 
@@ -579,7 +610,7 @@
         <td rowspan='1' colspan='14' class="textLeft">
           <div>
             1、建设工程消防设计审查申报表（纸质申报表的图片）
-            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzSize]="10240" [nzBeforeUpload]="beforeUpload"
+            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq"
               (click)="handleChange(0)">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -587,7 +618,7 @@
 
           <div>
             2、消防设计文件
-            <nz-upload [(nzFileList)]="data.fileList[1].array" [nzBeforeUpload]="beforeUpload"
+            <nz-upload [(nzFileList)]="data.fileList[1].array"  [nzCustomRequest]="customReq"
               (click)="handleChange(1)">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -595,7 +626,7 @@
 
           <div>
             3、专家评审申报材料
-            <nz-upload [(nzFileList)]="data.fileList[2].array" [nzBeforeUpload]="beforeUpload"
+            <nz-upload [(nzFileList)]="data.fileList[2].array"  [nzCustomRequest]="customReq"
               (click)="handleChange(2)">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -603,7 +634,7 @@
 
           <div>
             4、建设工程规划许可证明文件
-            <nz-upload [(nzFileList)]="data.fileList[3].array" [nzBeforeUpload]="beforeUpload"
+            <nz-upload [(nzFileList)]="data.fileList[3].array"  [nzCustomRequest]="customReq"
               (click)="handleChange(3)">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -611,7 +642,7 @@
 
           <div>
             5、城乡规划主管部门批准的临时性建筑证明文件
-            <nz-upload [(nzFileList)]="data.fileList[4].array" [nzBeforeUpload]="beforeUpload"
+            <nz-upload [(nzFileList)]="data.fileList[4].array"  [nzCustomRequest]="customReq"
               (click)="handleChange(4)">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -619,7 +650,7 @@
 
           <div>
             6、生产工艺和物品有特殊灭火要求的消防设计说明材料
-            <nz-upload [(nzFileList)]="data.fileList[5].array" [nzBeforeUpload]="beforeUpload"
+            <nz-upload [(nzFileList)]="data.fileList[5].array"  [nzCustomRequest]="customReq"
               (click)="handleChange(5)">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>

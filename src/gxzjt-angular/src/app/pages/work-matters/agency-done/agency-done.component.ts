@@ -68,7 +68,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     { title: '工程编号', index: 'projectCode' },
     { title: '建设单位', index: 'companyName' },
     { title: '工程类型', index: 'flowTypeName' },
-    { title: '提交人', index: 'cur_NodeAuditorName' },
+    // { title: '提交人', index: 'cur_NodeAuditorName' },
     { title: '申报时间', index: 'applyTime', type: 'date' },
     { title: '到达时间', index: 'acceptTime', type: 'date' },
     // {

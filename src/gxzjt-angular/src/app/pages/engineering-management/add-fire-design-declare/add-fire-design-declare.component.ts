@@ -1,18 +1,20 @@
 import { ApplyServiceServiceProxy, FlowFormQueryDto, FlowFormDto, FlowDataDto, ProjectFlowDto, FlowNodeUser } from './../../../../shared/service-proxies/service-proxies';
 import { Component, OnInit } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { ActivatedRoute } from '@angular/router';
 import { timeTrans, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { GXZJT_From, FlowServices } from 'services/flow.services';
 import { FormGroup } from '@angular/forms';
-import { SSL_OP_ALL } from 'constants';
 
 import { PublicFormComponent } from '../public/public-form.component'
-import { URLConfig } from "@shared/config/host";
+
 import { AppSessionService } from '@shared/session/app-session.service';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { ReuseTabService } from '@delon/abc';
+
+import { convertToArray } from "@shared/utils/array"
+
 
 /**
  * 工程管理->消防设计审查管理->新增申报
@@ -22,13 +24,13 @@ import { ReuseTabService } from '@delon/abc';
   templateUrl: './add-fire-design-declare.component.html',
 
 })
-export class AddFireDesignDeclareComponent extends PublicFormComponent implements OnInit {
+export class AddFireDesignDeclareComponent implements OnInit {
   flowFormQueryDto = new FlowFormQueryDto();
 
   flowFormDto = new FlowFormDto();
 
   //0是新增  1是查看  2是修改
-  type
+  type: any;
 
   showError = {
     projectCategoryId: false,
@@ -46,7 +48,7 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     engineeringCitycountyAndDistrict: '',
     //2019.7.4 新增审批单位
     engineeringId: '',
-    engineeringNo:'',
+    engineeringNo: '',
     engineeringAddress: '',
     planStartTime: '',
     planEndTime: '',
@@ -82,7 +84,8 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
       legalRepresentative: '',
       contacts: '',
       contactsNumber: '',
-      no: ''
+      mainAdviseNo: '',
+      no: [''],
     },
     basicInformation: [
       {
@@ -537,8 +540,8 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
     licenseNumber: '',
 
     //申报人姓名
-    applyName:'',
-    
+    applyName: '',
+
   }
 
   butNzLoading: boolean = false;
@@ -548,8 +551,17 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
   //使用性质
   useNatureSelect
 
-  constructor(private reuseTabService: ReuseTabService,private _eventEmiter: EventEmiter, private _appSessionService: AppSessionService, private _flowServices: FlowServices, private _applyService: ApplyServiceServiceProxy, public publicModel: PublicModel, private _ActivatedRoute: ActivatedRoute, private message: NzMessageService, ) {
-    super();
+  constructor(private reuseTabService: ReuseTabService,
+    private _eventEmiter: EventEmiter,
+    private _appSessionService: AppSessionService,
+    private _flowServices: FlowServices,
+    private _applyService: ApplyServiceServiceProxy,
+    public publicModel: PublicModel,
+
+    private nzModalService: NzModalService,
+    private _ActivatedRoute: ActivatedRoute,
+    private message: NzMessageService, ) {
+    
     this.flowFormQueryDto.flowType = 1;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
@@ -573,16 +585,57 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
   post_GetFlowFormData() {
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
       if (data != null && data.formJson != null && data.formJson != "") {
-        this.data = JSON.parse(data.formJson); 
+
+        var json = JSON.parse(data.formJson);
+
+        json.mappingUnit.no = convertToArray(json.mappingUnit.no);
+
+        this.data = json;
       }
       this.useNatureSelect = data.natures
     })
+  }
+
+
+  savePreCheckFile() {
+    if (this.checkFileList()) {
+      this.save();
+    } else {
+      this.nzModalService.warning(
+        {
+          nzTitle: '提示',
+          nzContent: "存在没有成功上传的文件，提交不会保留，是否继续？",
+          nzOnOk: () => {
+            this.save();
+
+          }
+        }
+      );
+    }
   }
 
   /**
    * 申请提交
    */
   save() {
+    this.butNzLoading = true;
+
+    this.filterFileList();
+    //校验mappingUnit
+    var isMainAdviceNoEmpty = false;
+
+    for (let item in this.data.mappingUnit.no) {
+      if (item == '') {
+        isMainAdviceNoEmpty = true;
+        break;
+      }
+    }
+
+    if (this.data.mappingUnit.mainAdviseNo == '' && isMainAdviceNoEmpty) {
+      return;
+    }
+
+
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();
       this.form.controls[i].updateValueAndValidity();
@@ -604,19 +657,19 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
       this.showError.specialEngineering = false;
     }
     if (!this.showError.fireFightingFacilities && !this.showError.projectCategoryId && !this.showError.specialEngineering && this.form.valid) {
-      
+
       for (let index = 0; index < this.data.fileList.length; index++) {
         if (checkArrayString(this.data.fileList[index].array, 'status', 'uploading') != -1) {
           this.message.error('要上传完文件才能提交表单')
-          return false;  
+          return false;
         }
       }
 
-      this.butNzLoading = true;
+
       const from: GXZJT_From = {
         frow_TemplateInfo_Data: {
           //市县区  
-          Area: this.data.engineeringNo[this.data.engineeringNo.length-1]
+          Area: this.data.engineeringNo[this.data.engineeringNo.length - 1]
         },
         //'xfsj,''xfys,'jgys  流程分类  英文简写(消防设计,消防验收,竣工验收)
         identify: 'xfsj',
@@ -690,11 +743,65 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
   }
 
 
+  filterFileList() {
+
+
+    //文件过滤
+    for (let x = 0; x < this.data.fileList.length; ++x) {
+      var uploadList = [];
+      for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
+
+        if (this.data.fileList[x].array[y].status == "done") {
+          uploadList.push(this.data.fileList[x].array[y]);
+
+        }
+      }
+      this.data.fileList[x].array = uploadList;
+    }
+  }
+
+  depositDraftPreCheckFile() {
+    if (this.checkFileList()) {
+      this.depositDraft();
+    } else {
+      this.nzModalService.warning(
+        {
+          nzTitle: '提示',
+          nzContent: "存在没有成功上传的文件，草稿不会保留，是否继续？",
+          nzOnOk: () => {
+            this.depositDraft();
+          }
+        }
+      );
+    }
+  }
+
+  checkFileList() {
+
+    //文件过滤
+    for (let x = 0; x < this.data.fileList.length; ++x) {
+
+      for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
+
+        if (this.data.fileList[x].array[y].status != "done") {
+          return false;
+        }
+      }
+
+    }
+    return true;
+  }
+
+
+  savingDraft = false;
   /**
    * 存草稿
    */
   depositDraft() {
-    this.butNzLoading = true; 
+    this.savingDraft = true;
+
+    this.filterFileList();
+
     this.data.planStartTime = !this.data.planStartTime ? '' : timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
     this.data.planEndTime = !this.data.planEndTime ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
     this.flowFormDto.formJson = JSON.stringify(this.data);
@@ -706,9 +813,9 @@ export class AddFireDesignDeclareComponent extends PublicFormComponent implement
       this.message.success('保存成功')
       history.go(-1)
       this._eventEmiter.emit('draftsComponentInit', []);
-      this.butNzLoading = false;
+      this.savingDraft = false;
     }, error => {
-      this.butNzLoading = false;
+      this.savingDraft = false;
     })
   }
 

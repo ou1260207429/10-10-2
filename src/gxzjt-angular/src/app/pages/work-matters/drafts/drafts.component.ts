@@ -44,7 +44,8 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
               url = record.projectTypeStatu == 1 ? `addFireAcceptanceComponent` : `addCompletedAcceptanceComponent`
             }
             const headerUrl = `/app/engineering-management/`
-            console.log(headerUrl + url + `/2/${record.projectId}`);
+
+
             this.router.navigate([headerUrl + url + `/2/${record.projectId}/null`]);
           }
         },
@@ -175,7 +176,7 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
   }
 
   okRangeTime(v) {
-    console.log(v);
+    // console.log(v);
     // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')
     // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')
     // this.searchParam.applyTimeStart = applyTimeStart;
