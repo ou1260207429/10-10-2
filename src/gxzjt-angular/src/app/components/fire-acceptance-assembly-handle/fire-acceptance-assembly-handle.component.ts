@@ -136,9 +136,9 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
       // item.onSuccess!(data, item.file!, HttpEventType.Response);
 
     }, error => {
-      this.message.error('上传失败:' + error);
+      this.message.error('上传失败');
 
-      item.onError!(error, item.file!);
+      item.onError!('上传失败', item.file!);
 
       // this.data.fileList[index].pop();
     },

@@ -234,12 +234,12 @@ export class AddFireAcceptanceComponent implements OnInit {
         }
 
         if (this.data.constructionSituation == null) {
-          this.data.constructionSituation = [];
+          this.data.constructionSituation = {};
         }
         this.data.constructionSituation = convertToArray(this.data.constructionSituation);
         this.data.implementation = convertToArray(this.data.implementation);
 
-        
+
 
         if (this.data.supervision == null) {
           this.data.supervision = {};

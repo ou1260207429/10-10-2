@@ -287,7 +287,7 @@ export function updateEngineeringNo(array: Array<any>, length, id, no) {
   let result = {
     i: -1,
     index: - 2,
-    no:'',
+    no: '',
   };
   switch (length) {
     case 0:
@@ -606,10 +606,21 @@ export function removeComma(str: string): string {
   return str.replace(/,$/gi, "");
 }
 
+
+export function createguid() {
+  var d = new Date().getTime();
+  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = (d + Math.random() * 16) % 16 | 0;
+    d = Math.floor(d / 16);
+    return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+  return uuid;
+};
+
 /**
  * 创建uid
  */
-export function createguid() {
+export function createguidOld() {
   var CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('')
   var chars = CHARS,
     uuid = [],
