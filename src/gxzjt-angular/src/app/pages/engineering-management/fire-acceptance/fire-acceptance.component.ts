@@ -47,15 +47,15 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
             this.watchItem(record);
           },
         },
-        {
-          text: '撤回申请',
-          type: 'modal',
-          iif: record => (record.status === 0) ,
-          click: (record: any, modal: any) => {
-            this.withdraw()
-            // this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/${record.projectId}/${record.id}`]);
-          },
-        },
+        // {
+        //   text: '撤回申请',
+        //   type: 'modal',
+        //   iif: record => (record.status === 0) ,
+        //   click: (record: any, modal: any) => {
+        //     this.withdraw()
+        //     // this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/${record.projectId}/${record.id}`]);
+        //   },
+        // },
         {
           text: '重新申请',
           type: 'modal',

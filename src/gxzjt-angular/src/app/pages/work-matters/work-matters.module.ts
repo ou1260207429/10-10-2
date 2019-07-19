@@ -14,9 +14,10 @@ import { WorkMattersReviewApplyComponent } from './review-apply/review-apply.com
 import { SignForComponent } from './sign-for/sign-for.component';
 import { WorkMattersService } from './work-matters.service';
 import { WorkMattersAllDoneComponent } from './all-done/all-done.component';
+import { UserRightService } from '@app/routes/userright/userright.service';
 
 const COMPONENTS = [
-  
+
   WorkMattersAllDoneComponent];
 const COMPONENTS_NOROUNT = [
   FormModuleComponent,
