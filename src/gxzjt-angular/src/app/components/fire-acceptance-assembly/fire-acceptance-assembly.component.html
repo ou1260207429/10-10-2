@@ -213,7 +213,7 @@
                 name="designContactsNumber{{a}}" required />
             </se>
           </td>
-          <td rowspan='1' [ngClass]="{pointer: type == 1}"> 
+          <td rowspan='1' [ngClass]="{pointer: type == 1}">
             <a (click)="addArray(data.design)">新增</a>
             <br>
             <a (click)="deleteArray(data.design,a)">删除</a></td>
@@ -601,32 +601,33 @@
 
           <div>二、消防施工情况</div>
 
-          <se error="必填" style="margin-top:8px;">
-            <textarea nz-input placeholder="请输入审图公司意见" [(ngModel)]="data.constructionSituation.opinion"
-              name="constructionSituationopinion" required>
+          <div *ngFor="let item of data.constructionSituation;let index = index">
+            <se error="必填" style="margin-top:8px;">
+              <textarea nz-input placeholder="请输入审图公司意见" [(ngModel)]="item.opinion"
+                name="constructionSituationopinion{{index}}" required>
               </textarea>
-          </se>
-          <div class="textRight" *ngFor="let item of data.constructionSituation;let index = index">
-            <div style="margin-top:8px;">
-              <se error="必填">
-                施工单位
+            </se>
+            <div class="textRight">
+              <div style="margin-top:8px;">
+                <se error="必填">
+                  施工单位
 
-                <input style="width: 320px;" nz-input placeholder="请输入施工单位" [(ngModel)]="item.contractingUnit"
-                  name="constructionSituationcontractingUnit{{index}}" required />
-              </se>
-              <se error="必填">
-                项目经理签名：<input style="width: 320px;" nz-input placeholder="请签名" [(ngModel)]="item.projectManagerName"
-                  name="constructionprojectManagerName{{index}}" required />
-              </se>
-            </div>
+                  <input style="width: 320px;" nz-input placeholder="请输入施工单位" [(ngModel)]="item.contractingUnit"
+                    name="constructionSituationcontractingUnit{{index}}" required />
+                </se>
+                <se error="必填">
+                  项目经理签名：<input style="width: 320px;" nz-input placeholder="请签名" [(ngModel)]="item.projectManagerName"
+                    name="constructionprojectManagerName{{index}}" required />
+                </se>
+              </div>
 
-            <div [ngClass]="{pointer: type == 1}" style="margin-top:8px;">
-              <a (click)="addArray(data.constructionSituation)">新增</a>
-              <br>
-              <a (click)="deleteArray(data.constructionSituation,index)">删除</a>
+              <div [ngClass]="{pointer: type == 1}" style="margin-top:8px;">
+                <a (click)="addArray(data.constructionSituation)">新增</a>
+                <br>
+                <a (click)="deleteArray(data.constructionSituation,index)">删除</a>
+              </div>
             </div>
           </div>
-
           <!-- <div class="textRight" style="margin-top: 20px;">
             <se error="必填">
               专业分包单位（如有）
@@ -652,7 +653,7 @@
           </se>
 
           <div class="textRight">
-            <se error="必填" >
+            <se error="必填">
               监理单位：<input style="width: 320px" nz-input placeholder="请输入监理单位"
                 [(ngModel)]="data.supervision.constructionControlUnit" name="supervisionconstructionControlUnit"
                 required />
