@@ -13,7 +13,7 @@ import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms'
 
 import { TokenService } from 'abp-ng2-module/dist/src/auth/token.service';
 
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
 
 
 
@@ -40,13 +40,13 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   //市县区
   // position = OptionsEnum
 
-  position
+  position: any;
 
   //结构类型
-  typeSelect = ArchitectureTypeEnum
+  typeSelect = ArchitectureTypeEnum;
 
   //耐火结构
-  refractoryEnum = RefractoryEnum
+  refractoryEnum = RefractoryEnum;
 
   //获取表单对象
 
@@ -55,17 +55,17 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   @Output() private childOuter = new EventEmitter();
 
   //判断上传的焦点
-  uoloadIndex: number = -1;
+  uploadIndex: number = -1;
 
   //资质等级的列表
-  zzdjEnum = zzdjEnum
-  zzdjEnum1 = zzdjEnum1
-  zzdjEnum2 = zzdjEnum2
-  zzdjEnum3 = zzdjEnum3
-  zzdjEnum4 = zzdjEnum4
+  zzdjEnum = zzdjEnum;
+  zzdjEnum1 = zzdjEnum1;
+  zzdjEnum2 = zzdjEnum2;
+  zzdjEnum3 = zzdjEnum3;
+  zzdjEnum4 = zzdjEnum4;
 
   //从父组件获取使用行性质的select
-  @Input() useNatureSelect: any
+  @Input() useNatureSelect: any;
 
   //审批单位
   engineeringList: any;
@@ -90,7 +90,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
     this.getAreaDropdown();
 
-    this.getOrganizationTree()
+    this.getOrganizationTree();
 
 
     if (this.type == 1) {
@@ -101,7 +101,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
           a.controls[key].disable({ onlySelf: false, emitEvent: false })
         });
 
-      }, 500)
+      }, 500);
     }
   }
 
@@ -198,14 +198,15 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     formData.append('files', file);
 
 
-    const index = this.uoloadIndex;
+    const index = this.uploadIndex;
 
-    this._publicServices.newUpload(formData, params).subscribe(data => {
+    return this._publicServices.newUpload(formData, params).subscribe(data => {
 
+      item.onSuccess!({}, item.file!, event);
 
       var list = this.data.fileList[index].array;
 
-      var file = list[list.length - 1];
+      var file = list.length - 1 >= 0 ? list[list.length - 1] : list[0];
 
       file.uid = data.data[0].id;
       file.name = file.name;
@@ -213,8 +214,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
       file.tid = file.uid;
       file.url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
 
-      item.onSuccess!(data, item.file!, event);
-
+      // item.onSuccess!(data, item.file!, HttpEventType.Response);
 
     }, error => {
       this.message.error('上传失败:' + error);
@@ -244,15 +244,15 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     this._publicServices.newUpload(formData, params).subscribe(data => {
 
       const tid = file.uid
-      this.data.fileList[this.uoloadIndex].array.push({
+      this.data.fileList[this.uploadIndex].array.push({
         name: file.name,
         status: 'uploading',
         tid: file.uid,
       });
-      var index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid);
-      this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id;
-      this.data.fileList[this.uoloadIndex].array[index].url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
-      this.data.fileList[this.uoloadIndex].array[index].status = 'done';
+      var index = checkArrayString(this.data.fileList[this.uploadIndex].array, 'tid', tid);
+      this.data.fileList[this.uploadIndex].array[index].uid = data.data[0].id;
+      this.data.fileList[this.uploadIndex].array[index].url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
+      this.data.fileList[this.uploadIndex].array[index].status = 'done';
 
     }, error => {
       this.message.error('上传失败:' + error);
@@ -276,7 +276,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   }
 
   handleChange(index) {
-    this.uoloadIndex = index
+    this.uploadIndex = index
   }
 
   disabledStartDate = (startValue: Date): boolean => {

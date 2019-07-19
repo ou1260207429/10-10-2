@@ -119,12 +119,13 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
 
     const index = this.uoloadIndex;
 
-    this._publicServices.newUpload(formData, params).subscribe(data => {
+    return this._publicServices.newUpload(formData, params).subscribe(data => {
 
+      item.onSuccess!({}, item.file!, event);
 
       var list = this.data.fileList[index].array;
 
-      var file = list[list.length - 1];
+      var file = list.length - 1 >= 0 ? list[list.length - 1] : list[0];
 
       file.uid = data.data[0].id;
       file.name = file.name;
@@ -132,8 +133,7 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
       file.tid = file.uid;
       file.url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
 
-      item.onSuccess!(data, item.file!, event);
-
+      // item.onSuccess!(data, item.file!, HttpEventType.Response);
 
     }, error => {
       this.message.error('上传失败:' + error);

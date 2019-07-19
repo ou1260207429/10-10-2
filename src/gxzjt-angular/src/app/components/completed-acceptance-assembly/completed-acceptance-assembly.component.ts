@@ -4,12 +4,13 @@ import { FormGroup } from '@angular/forms';
 import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, zzdjEnum5, zzdjEnum4, zzdjEnum3, zzdjEnum2, zzdjEnum1, zzdjEnum } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString, newClassTreeChildrenArray, updateEngineeringNo } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
-import { UploadFile, NzMessageService,UploadXHRArgs } from 'ng-zorro-antd';
+import { UploadFile, NzMessageService, UploadXHRArgs } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import lodash from 'lodash';
 import { URLConfig } from "@shared/config/host";
 /**
  * 竣工验收的表单模块
+ * 建设工程竣工验收消防备案表
  */
 @Component({
   selector: 'app-completed-acceptance-assembly',
@@ -225,12 +226,13 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
     const index = this.uploadIndex;
 
-    this._publicServices.newUpload(formData, params).subscribe(data => {
+    return this._publicServices.newUpload(formData, params).subscribe(data => {
 
-
+      // item.onError!(data, item.file!);
+      item.onSuccess!({}, item.file!, event);
       var list = this.data.fileList[index].array;
 
-      var file = list[list.length - 1];
+      var file = list.length - 1 >= 0 ? list[list.length - 1] : list[0];
 
       file.uid = data.data[0].id;
       file.name = file.name;
@@ -238,8 +240,8 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
       file.tid = file.uid;
       file.url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
 
-      item.onSuccess!(data, item.file!, event);
 
+   
 
     }, error => {
       this.message.error('上传失败:' + error);
