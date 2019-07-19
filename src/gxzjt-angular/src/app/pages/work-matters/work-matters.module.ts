@@ -12,9 +12,12 @@ import { DraftsComponent } from './drafts/drafts.component';
 import { SearchHadDoneComponent } from './search-had-done/search-had-done';
 import { WorkMattersReviewApplyComponent } from './review-apply/review-apply.component';
 import { SignForComponent } from './sign-for/sign-for.component';
+import { WorkMattersService } from './work-matters.service';
+import { WorkMattersAllDoneComponent } from './all-done/all-done.component';
 
 const COMPONENTS = [
-  ];
+  
+  WorkMattersAllDoneComponent];
 const COMPONENTS_NOROUNT = [
   FormModuleComponent,
   AgencyDoneComponent,
@@ -39,7 +42,7 @@ const COMPONENTS_NOROUNT = [
     ...COMPONENTS_NOROUNT,
 
   ],
-  providers: [],
+  providers: [WorkMattersService],
   entryComponents: COMPONENTS_NOROUNT
 })
 export class WorkMattersModule { }
