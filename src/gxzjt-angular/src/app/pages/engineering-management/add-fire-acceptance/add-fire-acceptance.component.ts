@@ -11,7 +11,7 @@ import { AppSessionService } from '@shared/session/app-session.service';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { ReuseTabService } from '@delon/abc';
 import { NzModalService, UploadXHRArgs } from 'ng-zorro-antd';
-
+import { convertToArray } from '@shared/utils/array'
 
 /**
  * 工程管理->消防验收->新增申报
@@ -21,7 +21,7 @@ import { NzModalService, UploadXHRArgs } from 'ng-zorro-antd';
   templateUrl: './add-fire-acceptance.component.html',
 
 })
-export class AddFireAcceptanceComponent  implements OnInit {
+export class AddFireAcceptanceComponent implements OnInit {
   showError = {
     projectCategoryId: false,
   }
@@ -124,13 +124,13 @@ export class AddFireAcceptanceComponent  implements OnInit {
       personInChargeName: '',
       opinion: '本工程能按照经审查合格的消防设计文件施工，施工质量满足消防设计和国家工程建设消防技术标准要求 。'
     },
-    constructionSituation: {
+    constructionSituation: [{
       contractingUnit: '',
       projectManagerName: '',
       subcontractors: '',
       personInChargeName: '',
       opinion: '按照经审查合格的消防设计文件实施，符合国家工程建设消防技术标准。'
-    },
+    }],
     supervision: {
       constructionControlUnit: '',
       signatureOfChiefEngineer: '',
@@ -224,15 +224,21 @@ export class AddFireAcceptanceComponent  implements OnInit {
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
       if (data.formJson != null && data.formJson != "") {
         this.data = JSON.parse(data.formJson);
+
+
         if (this.data.detectionUnit == null) {
           this.data.detectionUnit = {};
         }
         if (this.data.implementation == null) {
           this.data.implementation = {};
         }
+
         if (this.data.constructionSituation == null) {
-          this.data.constructionSituation = {};
+          this.data.constructionSituation = [];
         }
+        this.data.constructionSituation = convertToArray(this.data.constructionSituation);
+
+
         if (this.data.supervision == null) {
           this.data.supervision = {};
         }
@@ -346,7 +352,7 @@ export class AddFireAcceptanceComponent  implements OnInit {
       );
     }
   }
-  
+
   save() {
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();

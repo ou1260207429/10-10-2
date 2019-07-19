@@ -431,7 +431,7 @@
             </se>
           </td>
           <td rowspan='1' colspan='1'>
-            <label>{{item.ground&&!item.upGround?item.ground:+item.upGround++item.underGround}}</label>
+            <label>{{item.ground&&!item.upGround?item.ground:(item.upGround?+item.upGround:0)+(item.underGround?+item.underGround:0)}}</label>
           </td>
           <td rowspan='1' colspan='1'>
             <se error="必填">
@@ -446,7 +446,7 @@
             </se>
           </td>
           <td rowspan='1' colspan='1'>
-            <label>{{item.builtUpArea&&!item.builtUpArea2?item.builtUpArea:+item.builtUpArea2++item.builtUnderArea}}</label>
+            <label>{{item.builtUpArea&&!item.builtUpArea2?item.builtUpArea:(item.builtUpArea2?+item.builtUpArea2:0)+(item.builtUnderArea?+item.builtUnderArea:0)}}</label>
           </td>
           <td rowspan='1' colspan='2'>
             <se error="必填">

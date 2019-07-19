@@ -4,7 +4,7 @@
   </ng-template>
 </page-header>
 <nz-card>
-    <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
+    <form nz-form class="mb-md"  [formGroup]="fliterForm">
         <!-- <span>地市：</span> -->
         <div style="width:100%">
         <nz-select class="search_menu_input" formControlName="city" nzShowSearch nzAllowClear nzPlaceHolder="选择市区"
@@ -45,6 +45,6 @@
 
       </div>
       </form>
-  <st #st [data]="url" [columns]="columns"></st>
+  <st #st [columns]="columns"></st>
 </nz-card>
 
