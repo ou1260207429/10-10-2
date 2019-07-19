@@ -626,7 +626,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
    * 申请提交
    */
   save() {
-    this.butNzLoading = true;
+ 
 
     this.filterFileList();
     //校验mappingUnit
@@ -690,7 +690,8 @@ export class AddFireDesignDeclareComponent implements OnInit {
           deptFullPath: this._appSessionService.user.organizationsName,
         }
       };
-
+      
+      this.butNzLoading = true;
       this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
         const flowDataDto = new FlowDataDto();
