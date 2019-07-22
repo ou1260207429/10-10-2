@@ -556,7 +556,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     if (this.checkFileList()) {
       this.depositDraft();
     } else {
-      this._NzModalService.warning(
+      this._NzModalService.confirm(
         {
           nzTitle: '提示',
           nzContent: "存在没有成功上传的文件，草稿不会保留，是否继续？",
@@ -607,7 +607,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
     if (this.checkFileList()) {
       this.showSelectModal();
     } else {
-      this._NzModalService.warning(
+      this._NzModalService.confirm(
         {
           nzTitle: '提示',
           nzContent: "存在没有成功上传的文件，提交不会保留，是否继续？",

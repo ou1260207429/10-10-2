@@ -208,7 +208,9 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
       var list = this.data.fileList[index].array;
 
-      var file = list.length - 1 >= 0 ? list[list.length - 1] : list[0];
+      // var file = list.length - 1 >= 0 ? list[list.length - 1] : list[0];
+      var file = list[list.lastIndexOf(item.file as any)] as any;
+
 
       file.uid = data.data[0].id;
       file.name = file.name;

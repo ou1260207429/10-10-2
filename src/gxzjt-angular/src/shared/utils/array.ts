@@ -7,3 +7,14 @@ export function convertToArray(src): any {
     }
     return src;
 }
+
+
+
+// export function indexOfFile<File>(arr:[],item:File): any {
+//     for(var i=arr.length;i>=0;--i){
+//         if(arr.lastIndexOf){
+
+//         }
+//     }
+//     return src;
+// }

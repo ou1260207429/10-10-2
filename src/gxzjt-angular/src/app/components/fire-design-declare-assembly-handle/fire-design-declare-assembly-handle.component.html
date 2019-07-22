@@ -12,7 +12,8 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-            <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="data.fileCodePrefix" name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
+            <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="data.fileCodePrefix"
+                name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
             </div>
             <div *ngIf="!data.fileCodePrefix" class="rightSpan">必填</div>
           </td>
@@ -68,7 +69,8 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-            <div><input class="table_input"  placeholder="请输入区域简称" [(ngModel)]="examineFormDto.fileCodePrefix" name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
+            <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="examineFormDto.fileCodePrefix"
+                name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
             </div>
             <div *ngIf="!examineFormDto.fileCodePrefix" class="rightSpan">必填</div>
           </td>
@@ -89,10 +91,11 @@
               name="professionalContractorsopinion" required>
                   </textarea>
 
-                  <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.opinion">必填</p>
+            <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.opinion">必填</p>
 
             <div class="textLeft" *ngIf="examineFormDto">
-              <nz-upload [(nzFileList)]="examineFormDto.attachment" [nzBeforeUpload]="beforeUpload" [nzRemove]="removeFile">
+              <nz-upload [(nzFileList)]="examineFormDto.attachment" [nzCustomRequest]="customReq"
+                [nzRemove]="removeFile">
                 <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
               </nz-upload>
             </div>

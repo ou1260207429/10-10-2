@@ -609,7 +609,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
     if (this.checkFileList()) {
       this.save();
     } else {
-      this.nzModalService.warning(
+      this.nzModalService.confirm(
         {
           nzTitle: '提示',
           nzContent: "存在没有成功上传的文件，提交不会保留，是否继续？",
@@ -773,7 +773,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
     if (this.checkFileList()) {
       this.depositDraft();
     } else {
-      this.nzModalService.warning(
+      this.nzModalService.confirm(
         {
           nzTitle: '提示',
           nzContent: "存在没有成功上传的文件，草稿不会保留，是否继续？",
