@@ -84,7 +84,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
       legalRepresentative: '',
       contacts: '',
       contactsNumber: '',
-      mainAdviseNo: '',
+      mainAdiseNo: '',
       no: [{ noValue: '' }],
     },
     basicInformation: [
@@ -639,7 +639,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
       }
     }
 
-    if (this.data.mappingUnit.mainAdviseNo == '' && ismainAdviseNoEmpty) {
+    if (this.data.mappingUnit.mainAdiseNo == '' && ismainAdviseNoEmpty) {
       return;
     }
 
