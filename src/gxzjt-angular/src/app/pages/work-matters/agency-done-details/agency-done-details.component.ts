@@ -243,10 +243,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
     //文件过滤
     var uploadList = [];
-    for (let i = 0; i < this.examineFormDto.attachment.array.length; ++i) {
+    for (let i = 0; i < this.examineFormDto.attachment.length; ++i) {
 
-      if (this.examineFormDto.attachment.array[i].status == "done") {
-        uploadList.push(this.examineFormDto.attachment.array[i]);
+      if (this.examineFormDto.attachment[i].status == "done") {
+        uploadList.push(this.examineFormDto.attachment[i]);
 
       }
     }
