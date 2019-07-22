@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, checkArrayString } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
-import { UploadFile, NzMessageService } from 'ng-zorro-antd';
+import { UploadFile, NzMessageService, UploadXHRArgs } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import { ExamineFormDto, ProjectAttachment } from '@shared/service-proxies/service-proxies';
 import lodash from 'lodash';
@@ -87,7 +87,7 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
   beforeUpload = (file: any): boolean => {
     if (this.examineFormDto) {
       this.examineFormDto.attachment = this.examineFormDto.attachment ? this.examineFormDto.attachment : []
-      // console.log(this.examineFormDto.attachment);
+
     }
 
     const name = file.name;
@@ -130,6 +130,49 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
   removeFile = (file: UploadFile): boolean => {
     return true;
   }
+
+
+  customReq = (item: UploadXHRArgs) => {
+    var file = item.file as any;
+
+    let params = {
+      sourceId: createguid(),
+      AppId: AppId,
+      module: "table",
+    }
+    const formData = new FormData();
+    formData.append('files', file);
+    return this._publicServices.newUpload(formData, params).subscribe(data => {
+
+      item.onSuccess!({}, item.file!, event);
+
+      // var file = item.file;
+      var list = this.examineFormDto.attachment;
+
+      // var file = (list.length - 1 >= 0 ? list[list.length - 1] : list[0]) as any;
+      var file = list[list.lastIndexOf(item.file as any)] as any;
+
+
+      file.uid = data.data[0].id;
+      file.name = file.name;
+      file.status = 'done';
+      file.tid = file.uid;
+      file.url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
+      file.fileUrl = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
+
+
+    }, error => {
+      this.message.error('上传失败，文件不能超过200M！');
+
+      item.onError!('上传失败，文件不能超过200M！', item.file!);
+
+
+    });
+
+
+  }
+
+
 
 
 }

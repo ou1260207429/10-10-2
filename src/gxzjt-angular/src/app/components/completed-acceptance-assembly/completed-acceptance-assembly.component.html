@@ -374,13 +374,13 @@
         </tr>
         <tr class="title">
           <td rowspan='2' colspan='5' class="fontweight fontLeft leftTitle">建筑物名称</td>
-          <td rowspan='2' colspan='2' class="fontweight fontLeft">结 构</td>
+          <td rowspan='2' colspan='1' class="fontweight fontLeft">结 构</td>
           <td rowspan='2' colspan='2' class="fontweight fontLeft">耐火等级</td>
           <td rowspan='2' colspan='2' class="fontweight fontLeft">高度（m）</td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft">层数</td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft">建筑面积（m<sup>2</sup>）</td>
           <td rowspan='2' colspan='2' class="fontweight fontLeft">火灾危险性类别</td>
-          <td rowspan='2' colspan='2'>操作</td>
+          <td rowspan='2' colspan='1'>操作</td>
         </tr>
         <tr class="title">
           <td colspan='1' rowspan="1" class="fontweight">地上</td>
@@ -404,7 +404,7 @@
               </nz-select>
             </se>
           </td>
-          <td rowspan='1' colspan='2' class="fontweight fontLeft">
+          <td rowspan='1' colspan='1' class="fontweight fontLeft">
             <se error="必填">
               <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="item.grade" name="jbgrade{{index}}" required>
                 <nz-option *ngFor="let option of refractoryEnum" [nzLabel]="option.label" [nzValue]="option.value">
@@ -458,7 +458,7 @@
               <!-- <input  nz-input placeholder="请输入危险性类别" [(ngModel)]="item.fireHazard" name="jbfireHazard" required /> -->
             </se>
           </td>
-          <td rowspan='1' colspan='2' [ngClass]="{pointer: type == 1}">
+          <td rowspan='1' colspan='1' [ngClass]="{pointer: type == 1}">
             <a (click)="addArray(data.basicInformation)">新增</a>
             <br>
             <a (click)="deleteArray(data.basicInformation,index)">删除</a>

@@ -156,7 +156,7 @@
         <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">主体消防验收意见书编号</td>
           <td rowspan='1' colspan='17'>
-            <nz-form-control>
+            <nz-form-item>
               <nz-form-control>
                 <input nz-input placeholder="二次装修无施工许可证编号的请填写主体消防验收意见书编号" [(ngModel)]="data.mainAdiseNo"
                   name="mainAdiseNo" />
@@ -165,7 +165,7 @@
                   <span style="color: red;">主体消防验收意见书编号、请输入施工许可证编号，两者必填一个</span>
                 </nz-form-explain>
               </nz-form-control>
-            </nz-form-control>
+            </nz-form-item>
           </td>
         </tr>
 
@@ -179,14 +179,14 @@
           </td>
         </tr>
 
-        <tr>
+        <!-- <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>申报人姓名</td>
           <td rowspan='1' colspan='17'>
             <se error="必填">
               <input nz-input placeholder="请输入申报人姓名" [(ngModel)]="data.applyName" name="applyName" required />
             </se>
           </td>
-        </tr>
+        </tr> -->
         <tr class="title">
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">单位类别</td>
           <td rowspan='1' colspan='5' class="fontweight fontLeft" required=true>单位名称</td>
@@ -778,24 +778,21 @@
         <td rowspan='1' colspan='14' class="textLeft">
           <div>
             1、建设工程消防验收申报表（纸质申报表的图片）
-            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq"
-              (click)="handleChange(0)">
+            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" (click)="handleChange(0)">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             2、与消防验收有关的竣工图纸及隐蔽工程记录
-            <nz-upload [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq"
-              (click)="handleChange(1)">
+            <nz-upload [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             3、符合要求的检测机构出具的消防设施及系统检测合格证明文件
-            <nz-upload [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq"
-              (click)="handleChange(2)">
+            <nz-upload [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>

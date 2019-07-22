@@ -92,7 +92,7 @@
                   <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.opinion">必填</p>
 
             <div class="textLeft" *ngIf="examineFormDto">
-              <nz-upload [(nzFileList)]="examineFormDto.attachment" [nzBeforeUpload]="beforeUpload">
+              <nz-upload [(nzFileList)]="examineFormDto.attachment" [nzCustomRequest]="customReq"  >
                 <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
               </nz-upload>
             </div>

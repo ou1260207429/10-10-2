@@ -58,7 +58,7 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
   beforeUpload = (file: any): boolean => {
     if (this.examineFormDto) {
       this.examineFormDto.attachment = this.examineFormDto.attachment ? this.examineFormDto.attachment : []
-      console.log(this.examineFormDto.attachment);
+
     }
 
     const name = file.name;
@@ -107,45 +107,43 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
   customReq = (item: UploadXHRArgs) => {
 
     var file = item.file as any;
+
     let params = {
       sourceId: createguid(),
       AppId: AppId,
       module: "table",
-    };
-
-    var formData = new FormData();
+    }
+    const formData = new FormData();
     formData.append('files', file);
 
-
-    const index = this.uoloadIndex;
 
     return this._publicServices.newUpload(formData, params).subscribe(data => {
 
       item.onSuccess!({}, item.file!, event);
 
-      var list = this.data.fileList[index].array;
 
-      var file = list.length - 1 >= 0 ? list[list.length - 1] : list[0];
+      var list = this.examineFormDto.attachment;
+
+      var file = list[list.lastIndexOf(item.file as any)] as any;
+      // var file = (list.length - 1 >= 0 ? list[list.length - 1] : list[0]) as any;
+      // var file = item.file;
 
       file.uid = data.data[0].id;
       file.name = file.name;
       file.status = 'done';
       file.tid = file.uid;
       file.url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
+      file.fileUrl = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
 
-      // item.onSuccess!(data, item.file!, HttpEventType.Response);
 
     }, error => {
       this.message.error('上传失败，文件不能超过200M！');
 
       item.onError!('上传失败，文件不能超过200M！', item.file!);
 
+    }
 
-      // this.data.fileList[index].pop();
-    },
-
-
-    )
+    );
 
   }
 }
