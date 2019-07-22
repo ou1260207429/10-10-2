@@ -270,31 +270,19 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     return false;
   };
 
-
-
-
   removeFile = (file: UploadFile): boolean => {
-
-    return true;
-    // if (file.hadUpLoad && file.hadUpLoad == 1) {
-    //   let params = {
-    //     id: file.uid,
-    //     AppId: AppId,
-    //   };
-
-
-    //   this._publicServices.delete(params).subscribe(data => {
-    //     return true;
-    //   }, err => {
-    //     return false;
-    //   });
-
-    // } else {
-    //   return true;
-    // }
-
-
-
+    if (file.hadUpLoad && file.hadUpLoad == 1) {
+      let params = {
+        id: file.uid,
+        AppId: AppId,
+      };
+      this._publicServices.delete(params).subscribe(data => {
+        this.message.success(data.message)
+      }, err => {
+        this.message.error(err.message)
+      });
+    };
+    return true
   }
 
   handleChange(index) {
