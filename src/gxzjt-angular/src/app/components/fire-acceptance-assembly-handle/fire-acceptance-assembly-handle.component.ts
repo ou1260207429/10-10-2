@@ -136,9 +136,10 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
       // item.onSuccess!(data, item.file!, HttpEventType.Response);
 
     }, error => {
-      this.message.error('上传失败');
+      this.message.error('上传失败，文件不能超过200M！');
 
-      item.onError!('上传失败', item.file!);
+      item.onError!('上传失败，文件不能超过200M！', item.file!);
+
 
       // this.data.fileList[index].pop();
     },

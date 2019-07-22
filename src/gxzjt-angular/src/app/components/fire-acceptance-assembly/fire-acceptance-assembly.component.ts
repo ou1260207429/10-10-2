@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { ArchitectureTypeEnum, OptionsEnum, RefractoryEnum, AppId, zzdjEnum4, zzdjEnum3, zzdjEnum2, zzdjEnum1, zzdjEnum } from 'infrastructure/expression';
 import { objDeleteType, genID, createguid, classTreeChildrenArray, checkArrayString, newClassTreeChildrenArray, updateEngineeringNo } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
-import { UploadFile, NzMessageService } from 'ng-zorro-antd';
+import { UploadFile, NzMessageService, UploadXHRArgs } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import { DepFlags } from '@angular/compiler/src/core';
 import lodash from 'lodash'
@@ -44,7 +44,7 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
   @ViewChild('f') f: FormGroup;
 
   //判断上传的焦点
-  uoloadIndex: number = -1;
+  uploadIndex: number = -1;
 
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
@@ -64,8 +64,8 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
   engineeringList
 
   engineering
-  
-  constructor(private message: NzMessageService,public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) { }
+
+  constructor(private message: NzMessageService, public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) { }
 
   ngOnInit() {
     //向父组件发送数据   把表单对象传过去
@@ -74,14 +74,14 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     this.getOrganizationTree()
 
     if (this.type == 1) {
-      setTimeout(() => { 
-        const a:any = this.f; 
-        this.f.controls.jsconstructionUnit.disable({onlySelf:false,emitEvent:false})
-        Object.keys(this.f.controls).forEach(function (key) { 
-          a.controls[key].disable({onlySelf:false,emitEvent:false})
+      setTimeout(() => {
+        const a: any = this.f;
+        this.f.controls.jsconstructionUnit.disable({ onlySelf: false, emitEvent: false })
+        Object.keys(this.f.controls).forEach(function (key) {
+          a.controls[key].disable({ onlySelf: false, emitEvent: false })
         });
-      },500)
-    } 
+      }, 500)
+    }
   }
 
   /**
@@ -99,17 +99,17 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
    * 选择市县区
    * @param v 
    */
-  changeCitycountyAndDistrict(v) { 
+  changeCitycountyAndDistrict(v) {
     this.data.engineeringCitycountyAndDistrict = v;
     const t = lodash.cloneDeep(v)
-    const list = this.publicModel.positionTreeArray(this.engineeringList, 'areaIds', t, []) 
+    const list = this.publicModel.positionTreeArray(this.engineeringList, 'areaIds', t, [])
     this.data.engineeringNo = []
     if (list.length > 0) {
-      list.forEach(item => { 
+      list.forEach(item => {
         this.data.engineeringNo.push(item.value)
       })
-    } 
-  } 
+    }
+  }
 
   /**
    * 获取审批单位
@@ -119,14 +119,14 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
       this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]);;
     })
   }
-  
+
 
   /**
    * 选择市县区
    * @param v 
    */
   changeGetOrganizationTree(v) {
-    
+
     // //联动处理
     // this.data.engineeringId = lodash.cloneDeep(v); 
 
@@ -151,7 +151,7 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
   beforeUpload = (file: any): boolean => {
     const tid = file.uid
-    this.data.fileList[this.uoloadIndex].array.push({
+    this.data.fileList[this.uploadIndex].array.push({
       name: file.name,
       status: 'uploading',
       tid: file.uid,
@@ -165,17 +165,17 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     const formData = new FormData();
     formData.append('files', file);
     this._publicServices.newUpload(formData, params).subscribe(data => {
-      const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
-      this.data.fileList[this.uoloadIndex].array[index].uid = data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
-      this.data.fileList[this.uoloadIndex].array[index].status = 'done'
+      const index = checkArrayString(this.data.fileList[this.uploadIndex].array, 'tid', tid)
+      this.data.fileList[this.uploadIndex].array[index].uid = data.data[0].id
+      this.data.fileList[this.uploadIndex].array[index].url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id
+      this.data.fileList[this.uploadIndex].array[index].status = 'done'
       const fileList = lodash.cloneDeep(this.data.fileList);
       this.data.fileList = []
       this.data.fileList = fileList
     }, error => {
       this.message.error('上传失败，上传文件不能超过30M');
-      const index = checkArrayString(this.data.fileList[this.uoloadIndex].array, 'tid', tid)
-      this.data.fileList[this.uoloadIndex].array[index].status = 'error'
+      const index = checkArrayString(this.data.fileList[this.uploadIndex].array, 'tid', tid)
+      this.data.fileList[this.uploadIndex].array[index].status = 'error'
       const fileList = lodash.cloneDeep(this.data.fileList);
       this.data.fileList = []
       this.data.fileList = fileList
@@ -188,7 +188,7 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
   }
 
   handleChange(index) {
-    this.uoloadIndex = index
+    this.uploadIndex = index
   }
 
 
@@ -212,4 +212,48 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
   }
 
+  customReq = (item: UploadXHRArgs) => {
+
+    var file = item.file as any;
+    let params = {
+      sourceId: createguid(),
+      AppId: AppId,
+      module: "table",
+    };
+
+    var formData = new FormData();
+    formData.append('files', file);
+
+
+    const index = this.uploadIndex;
+
+    return this._publicServices.newUpload(formData, params).subscribe(data => {
+
+      // item.onError!(data, item.file!);
+      item.onSuccess!({}, item.file!, event);
+      var list = this.data.fileList[index].array;
+
+      var file = list.length - 1 >= 0 ? list[list.length - 1] : list[0];
+
+      file.uid = data.data[0].id;
+      file.name = file.name;
+      file.status = 'done';
+      file.tid = file.uid;
+      file.url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
+
+
+
+
+    }, error => {
+      this.message.error('上传失败，文件不能超过200M！');
+
+      item.onError!('上传失败，文件不能超过200M！', item.file!);
+
+      // this.data.fileList[index].pop();
+    },
+
+
+    )
+
+  }
 }

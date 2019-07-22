@@ -241,12 +241,12 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
       file.url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
 
 
-   
+
 
     }, error => {
-      this.message.error('上传失败');
+      this.message.error('上传失败，文件不能超过200M！');
 
-      item.onError!('上传失败', item.file!);
+      item.onError!('上传失败，文件不能超过200M！', item.file!);
 
       // this.data.fileList[index].pop();
     },
