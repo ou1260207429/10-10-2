@@ -39,7 +39,7 @@ export class AddFireAcceptanceComponent implements OnInit {
     symbol: '',
     dateOfReview: '',
     constructionPermitNumber: '',
-    mainAdiseNo:'',
+    mainAdiseNo: '',
     testReportNumber: '',
     design: [{
       designUnit: '',
@@ -253,25 +253,33 @@ export class AddFireAcceptanceComponent implements OnInit {
         }
 
       }
-      this.useNatureSelect = data.natures
-    })
+      this.useNatureSelect = data.natures;
+      this.filterFileList();
+    });
   }
 
 
   filterFileList() {
 
-
+    if (!this.data.fileList) {
+      return;
+    }
     //文件过滤
     for (let x = 0; x < this.data.fileList.length; ++x) {
-      var uploadList = [];
-      for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
+      if (this.data.fileList[x].array) {
+        var uploadList = [];
+        for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
+          if (this.data.fileList[x].array[y].status == "done"
+            && this.data.fileList[x].array[y].url
+            && this.data.fileList[x].array[y].url != '') {
+            uploadList.push(this.data.fileList[x].array[y]);
 
-        if (this.data.fileList[x].array[y].status == "done") {
-          uploadList.push(this.data.fileList[x].array[y]);
-
+          }
         }
+        this.data.fileList[x].array = uploadList;
+
       }
-      this.data.fileList[x].array = uploadList;
+
     }
   }
 
@@ -284,7 +292,10 @@ export class AddFireAcceptanceComponent implements OnInit {
 
       for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
 
-        if (this.data.fileList[x].array[y].status != "done") {
+        if (this.data.fileList[x].array[y].status != "done"
+          || !this.data.fileList[x].array[y].url
+          || this.data.fileList[x].array[y].url == '') {
+
           return false;
         }
       }
@@ -357,6 +368,8 @@ export class AddFireAcceptanceComponent implements OnInit {
   }
 
   save() {
+    
+    this.filterFileList();
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();
       this.form.controls[i].updateValueAndValidity();

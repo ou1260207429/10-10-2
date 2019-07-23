@@ -593,12 +593,14 @@ export class AddFireDesignDeclareComponent implements OnInit {
         }
         // if(json.mappingUnit.no instanceof Array){
         //   if (json.mappingUnit.no[0] instanceof String){
-            
+
         //   }       
         // }
         json.mappingUnit.no = convertToArray(json.mappingUnit.no);
 
+
         this.data = json;
+        this.filterFileList();
       }
       this.useNatureSelect = data.natures;
     })
@@ -626,7 +628,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
    * 申请提交
    */
   save() {
- 
+
 
     this.filterFileList();
     //校验mappingUnit
@@ -666,12 +668,12 @@ export class AddFireDesignDeclareComponent implements OnInit {
     }
     if (!this.showError.fireFightingFacilities && !this.showError.projectCategoryId && !this.showError.specialEngineering && this.form.valid) {
 
-      for (let index = 0; index < this.data.fileList.length; index++) {
-        if (checkArrayString(this.data.fileList[index].array, 'status', 'uploading') != -1) {
-          this.message.error('要上传完文件才能提交表单')
-          return false;
-        }
-      }
+      // for (let index = 0; index < this.data.fileList.length; index++) {
+      //   if (checkArrayString(this.data.fileList[index].array, 'status', 'uploading') != -1) {
+      //     this.message.error('要上传完文件才能提交表单')
+      //     return false;
+      //   }
+      // }
 
 
       const from: GXZJT_From = {
@@ -690,7 +692,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
           deptFullPath: this._appSessionService.user.organizationsName,
         }
       };
-      
+
       this.butNzLoading = true;
       this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
@@ -744,7 +746,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
       })
 
     } else {
-      console.log(this.form);
+      // console.log(this.form);
       this.message.error('有必填项未填写')
     }
 
@@ -754,20 +756,28 @@ export class AddFireDesignDeclareComponent implements OnInit {
 
   filterFileList() {
 
-
+    if (!this.data.fileList) {
+      return;
+    }
     //文件过滤
     for (let x = 0; x < this.data.fileList.length; ++x) {
-      var uploadList = [];
-      for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
+      if (this.data.fileList[x].array) {
+        var uploadList = [];
+        for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
+          if (this.data.fileList[x].array[y].status == "done"
+            && this.data.fileList[x].array[y].url
+            && this.data.fileList[x].array[y].url != '') {
+            uploadList.push(this.data.fileList[x].array[y]);
 
-        if (this.data.fileList[x].array[y].status == "done") {
-          uploadList.push(this.data.fileList[x].array[y]);
-
+          }
         }
+        this.data.fileList[x].array = uploadList;
+
       }
-      this.data.fileList[x].array = uploadList;
+
     }
   }
+
 
   depositDraftPreCheckFile() {
     if (this.checkFileList()) {
@@ -792,7 +802,12 @@ export class AddFireDesignDeclareComponent implements OnInit {
 
       for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
 
-        if (this.data.fileList[x].array[y].status != "done") {
+
+        if (this.data.fileList[x].array[y].status != "done"
+          || !this.data.fileList[x].array[y].url
+          || this.data.fileList[x].array[y].url == '') {
+
+
           return false;
         }
       }

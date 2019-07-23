@@ -10,6 +10,7 @@ import { DepFlags } from '@angular/compiler/src/core';
 import lodash from 'lodash'
 import { SelectorOrgComponent } from '@shared/components/selector/selector-org';
 import { URLConfig } from "@shared/config/host";
+import { indexOfFileByName } from "@shared/utils/array";
 
 /**
  * 消防验收的表单模块
@@ -223,7 +224,7 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
   customReq = (item: UploadXHRArgs) => {
 
-    var file = item.file as any;
+    var filePost = item.file as any;
     let params = {
       sourceId: createguid(),
       AppId: AppId,
@@ -231,7 +232,7 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     };
 
     var formData = new FormData();
-    formData.append('files', file);
+    formData.append('files', filePost);
 
 
     const index = this.uploadIndex;
@@ -244,7 +245,7 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
       // var file = list.length - 1 >= 0 ? list[list.length - 1] : list[0];
 
-      var file = list[list.lastIndexOf(item.file as any)] as any;
+      var file = indexOfFileByName(list, item.file.name);
 
       file.uid = data.data[0].id;
       file.name = file.name;
