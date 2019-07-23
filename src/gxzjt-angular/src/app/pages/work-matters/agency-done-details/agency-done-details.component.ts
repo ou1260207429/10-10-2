@@ -226,6 +226,9 @@ export class AgencyDoneDetailsComponent implements OnInit {
   };
 
   checkFileList() {
+    if (!this.examineFormDto.attachment) {
+      return true;
+    }
 
     //文件过滤
     for (let x = 0; x < this.examineFormDto.attachment.length; ++x) {
@@ -239,6 +242,11 @@ export class AgencyDoneDetailsComponent implements OnInit {
   }
 
   filterFileList() {
+
+    if (!this.examineFormDto.attachment) {
+      return;
+    }
+
 
 
     //文件过滤
@@ -254,23 +262,24 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   }
 
-  
-  save() {
+
+  save(bo?: boolean) {
     if (this.checkFileList()) {
-      this.savePost();
+      this.savePost(bo);
     } else {
       this._NzModalService.confirm(
         {
           nzTitle: '提示',
           nzContent: "存在没有成功上传的文件，提交不会保留，是否继续？",
           nzOnOk: () => {
-            this.savePost();
+            this.savePost(bo);
 
           }
         }
       );
     }
   }
+
   /**
    * 点击提交
    */
