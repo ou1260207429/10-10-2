@@ -99,6 +99,15 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
   };
 
   removeFile = (file: UploadFile): boolean => {
+    let params = {
+      id: file.uid,
+      AppId: AppId,
+    };
+    this._publicServices.delete(params).subscribe(data => {
+      this.message.success(data.message)
+    }, err => {
+      this.message.error(err.message)
+    });
     return true;
   }
 
