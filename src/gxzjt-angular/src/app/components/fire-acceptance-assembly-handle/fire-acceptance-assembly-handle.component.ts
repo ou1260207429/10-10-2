@@ -8,7 +8,7 @@ import { PublicServices } from 'services/public.services';
 import { ExamineFormDto, ProjectAttachment } from '@shared/service-proxies/service-proxies';
 import lodash from 'lodash';
 import { URLConfig } from "@shared/config/host";
-
+import { indexOfFileByName } from "@shared/utils/array";
 
 /**
  * 消防验收的表单模块的办理或者结果
@@ -52,6 +52,10 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
     this.data.attachment = this.data.attachment ? this.data.attachment : [];
+
+    // if(this.examineFormDto.buildFileAdise){
+
+    // }
   }
 
 
@@ -99,6 +103,15 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
   };
 
   removeFile = (file: UploadFile): boolean => {
+    let params = {
+      id: file.uid,
+      AppId: AppId,
+    };
+    this._publicServices.delete(params).subscribe(data => {
+      this.message.success(data.message)
+    }, err => {
+      this.message.error(err.message)
+    });
     return true;
   }
 
@@ -106,7 +119,7 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
 
   customReq = (item: UploadXHRArgs) => {
 
-    var file = item.file as any;
+    var filePost = item.file as any;
 
     let params = {
       sourceId: createguid(),
@@ -114,7 +127,7 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
       module: "table",
     }
     const formData = new FormData();
-    formData.append('files', file);
+    formData.append('files', filePost);
 
 
     return this._publicServices.newUpload(formData, params).subscribe(data => {
@@ -124,9 +137,9 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
 
       var list = this.examineFormDto.attachment;
 
-      var file = list[list.lastIndexOf(item.file as any)] as any;
+
       // var file = (list.length - 1 >= 0 ? list[list.length - 1] : list[0]) as any;
-      // var file = item.file;
+      var file = indexOfFileByName(list, item.file.name);
 
       file.uid = data.data[0].id;
       file.name = file.name;

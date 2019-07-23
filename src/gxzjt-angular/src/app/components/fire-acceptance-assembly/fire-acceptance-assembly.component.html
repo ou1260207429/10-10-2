@@ -144,7 +144,7 @@
             <nz-form-item>
               <nz-form-control>
                 <input nz-input placeholder="请输入施工许可证编号" [(ngModel)]="data.constructionPermitNumber"
-                  name="constructionPermitNumber" required />
+                  name="constructionPermitNumber" />
                 <nz-form-explain
                   *ngIf="(data.constructionPermitNumber==''||data.constructionPermitNumber==null)&&data.mainAdiseNo==''">
                   <span style="color: red;">主体消防验收意见书编号、请输入施工许可证编号，两者必填一个</span>
@@ -778,21 +778,24 @@
         <td rowspan='1' colspan='14' class="textLeft">
           <div>
             1、建设工程消防验收申报表（纸质申报表的图片）
-            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" (click)="handleChange(0)">
+            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" (click)="handleChange(0)"
+              [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             2、与消防验收有关的竣工图纸及隐蔽工程记录
-            <nz-upload [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)">
+            <nz-upload [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)"
+              [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             3、符合要求的检测机构出具的消防设施及系统检测合格证明文件
-            <nz-upload [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)">
+            <nz-upload [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)"
+              [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>

@@ -502,6 +502,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
           }
 
           this.data = json;
+
+          this.filterFileList();
         }
         this.useNatureSelect = data.natures;
       } catch (e) {
@@ -515,18 +517,25 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
   filterFileList() {
 
-
+    if (!this.data.fileList) {
+      return;
+    }
     //文件过滤
     for (let x = 0; x < this.data.fileList.length; ++x) {
-      var uploadList = [];
-      for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
+      if (this.data.fileList[x].array) {
+        var uploadList = [];
+        for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
+          if (this.data.fileList[x].array[y].status == "done"
+            && this.data.fileList[x].array[y].url
+            && this.data.fileList[x].array[y].url != '') {
+            uploadList.push(this.data.fileList[x].array[y]);
 
-        if (this.data.fileList[x].array[y].status == "done") {
-          uploadList.push(this.data.fileList[x].array[y]);
-
+          }
         }
+        this.data.fileList[x].array = uploadList;
+
       }
-      this.data.fileList[x].array = uploadList;
+
     }
   }
 
@@ -539,7 +548,10 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
       for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
 
-        if (this.data.fileList[x].array[y].status != "done") {
+        if (this.data.fileList[x].array[y].status != "done"
+          || !this.data.fileList[x].array[y].url
+          || this.data.fileList[x].array[y].url == '') {
+
           return false;
         }
       }

@@ -57,11 +57,11 @@ export class AppMenus {
           i18n: "已办",
           link: "/app/work-matters/alreadyDoneComponent",
         },
-        // {
-        //   text: "",
-        //   i18n: "经办事项",
-        //   link: "/app/work-matters/all-done",
-        // },
+        {
+          text: "",
+          i18n: "经办事项",
+          link: "/app/work-matters/all-done",
+        },
 
         // {
         //   text: "办结查询",
@@ -244,10 +244,10 @@ export class AppMenus {
           link: "/app/userright/userlist",
           acl: [AppMenus.aclSys , AppMenus.orgManager],
         },
-        // {
-        //   text: "机构配置",
-        //   link: "/app/userright/orgedit",
-        // },
+        {
+          text: "机构配置",
+          link: "/app/userright/orgedit",
+        },
         {
           text: "区域配置",
           link: "/app/userright/Aareedit",
@@ -285,6 +285,11 @@ export class AppMenus {
           text: "",
           i18n: "已办",
           link: "/app/work-matters/alreadyDoneComponent",
+        },
+        {
+          text: "",
+          i18n: "经办事项",
+          link: "/app/work-matters/all-done",
         },
 
       ]

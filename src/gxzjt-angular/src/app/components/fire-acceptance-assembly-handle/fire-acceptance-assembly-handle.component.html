@@ -76,28 +76,43 @@
         </tr>
         <tr>
           <td rowspan='1' colspan='20'>
-            <div class="table_detail">
-              <h3>{{data.companyName}}：</h3>
-              <div style="line-height: 30px;font-size: 16px;">
-                你单位报来{{data.projectName}}建设工程消防验收资料收悉（受理凭证：{{examineFormDto.acceptFileCode}}）。该工程位于{{data.address}}，{{examineFormDto.descr}}。
-                <div class="flexBox">
-                  验收日期:
-                  <div class="flex1">
-                    <nz-date-picker [(ngModel)]="examineFormDto.checkDate" name="checkDate"></nz-date-picker>
-                  </div>
-                </div>
-                <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.checkDate">必填</p>
 
-                ，{{data.cityName}}住房和城乡建设局组织你单位及设计、施工、监理、检测等单位有关人员对该工程进行了消防验收。经对验收资料、消防设施技术检测报告进行审查，对总平面布置和平面布置中涉及消防安全的防火间距、消防车道、消防水源，建设防火防烟分区和建设构造，安全疏散和消防电梯，消防给水和自动灭火系统，防烟、排烟和通风系统的防火设计，消防电源及其配电，火灾应急照明、应急广播和疏散指示标志，火灾自动报警系统和消防控制室，建筑灭火器等项目情况和性能进行抽查，现提出以下意见：
+            <!-- <div *ngIf="examineFormDto.opinion"> -->
+            <div>
+              <div class="table_detail">
+                <h3>{{data.companyName}}：</h3>
+                <div style="line-height: 30px;font-size: 16px;">
+                  你单位报来{{data.projectName}}建设工程消防验收资料收悉（受理凭证：{{examineFormDto.acceptFileCode}}）。该工程位于{{data.address}}，{{examineFormDto.descr}}。
+                  <div class="flexBox">
+                    验收日期:
+                    <div class="flex1">
+                      <nz-date-picker [(ngModel)]="examineFormDto.checkDate" name="checkDate"></nz-date-picker>
+                    </div>
+                  </div>
+                  <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.checkDate">必填
+                  </p>
+
+                  ，{{data.cityName}}住房和城乡建设局组织你单位及设计、施工、监理、检测等单位有关人员对该工程进行了消防验收。经对验收资料、消防设施技术检测报告进行审查，对总平面布置和平面布置中涉及消防安全的防火间距、消防车道、消防水源，建设防火防烟分区和建设构造，安全疏散和消防电梯，消防给水和自动灭火系统，防烟、排烟和通风系统的防火设计，消防电源及其配电，火灾应急照明、应急广播和疏散指示标志，火灾自动报警系统和消防控制室，建筑灭火器等项目情况和性能进行抽查，现提出以下意见：
+                </div>
               </div>
-            </div>
-            <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion"
-              name="professionalContractorsopinion" required>
+
+              <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion"
+                name="professionalContractorsopinion" required>
                   </textarea>
+
+            </div>
+<!-- 
+            <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.advise"
+              name="professionalContractorsopinion" required>
+              </textarea> -->
+
+
+
             <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.opinion">必填</p>
 
             <div class="textLeft" *ngIf="examineFormDto">
-              <nz-upload [(nzFileList)]="examineFormDto.attachment" [nzCustomRequest]="customReq">
+              <nz-upload [(nzFileList)]="examineFormDto.attachment" [nzCustomRequest]="customReq"
+                [nzRemove]="removeFile">
                 <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
               </nz-upload>
             </div>

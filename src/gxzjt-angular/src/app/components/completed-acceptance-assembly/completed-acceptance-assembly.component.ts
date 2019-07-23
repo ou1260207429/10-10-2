@@ -8,6 +8,7 @@ import { UploadFile, NzMessageService, UploadXHRArgs } from 'ng-zorro-antd';
 import { PublicServices } from 'services/public.services';
 import lodash from 'lodash';
 import { URLConfig } from "@shared/config/host";
+import { indexOfFileByName } from "@shared/utils/array";
 /**
  * 竣工验收的表单模块
  * 建设工程竣工验收消防备案表
@@ -193,6 +194,15 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   };
 
   removeFile = (file: UploadFile): boolean => {
+    let params = {
+      id: file.uid,
+      AppId: AppId,
+    };
+    this._publicServices.delete(params).subscribe(data => {
+      this.message.success(data.message)
+    }, err => {
+      this.message.error(err.message)
+    });
     return true;
   }
 
@@ -228,13 +238,13 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
     return this._publicServices.newUpload(formData, params).subscribe(data => {
 
-      // item.onError!(data, item.file!);
       item.onSuccess!({}, item.file!, event);
+
       var list = this.data.fileList[index].array;
 
-      var file = list[list.lastIndexOf(item.file)];
+      var file = indexOfFileByName(list, item.file.name);
       // var file = list.length - 1 >= 0 ? list[list.length - 1] : list[0];
-      var file = list.in
+      // var file = list.in
       file.uid = data.data[0].id;
       file.name = file.name;
       file.status = 'done';

@@ -611,42 +611,48 @@
         <td rowspan='1' colspan='14' class="textLeft">
           <div>
             1、建设工程消防设计审查申报表（纸质申报表的图片）
-            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" [nzRemove]="removeFile" (click)="handleChange(0)">
+            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" [nzRemove]="removeFile"
+              (click)="handleChange(0)">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             2、消防设计文件
-            <nz-upload [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)">
+            <nz-upload [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)"
+              [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             3、专家评审申报材料
-            <nz-upload [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)">
+            <nz-upload [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)"
+              [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             4、建设工程规划许可证明文件
-            <nz-upload [(nzFileList)]="data.fileList[3].array" [nzCustomRequest]="customReq" (click)="handleChange(3)">
+            <nz-upload [(nzFileList)]="data.fileList[3].array" [nzCustomRequest]="customReq" (click)="handleChange(3)"
+              [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             5、城乡规划主管部门批准的临时性建筑证明文件
-            <nz-upload [(nzFileList)]="data.fileList[4].array" [nzCustomRequest]="customReq" (click)="handleChange(4)">
+            <nz-upload [(nzFileList)]="data.fileList[4].array" [nzCustomRequest]="customReq" (click)="handleChange(4)"
+              [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             6、生产工艺和物品有特殊灭火要求的消防设计说明材料
-            <nz-upload [(nzFileList)]="data.fileList[5].array" [nzCustomRequest]="customReq" (click)="handleChange(5)">
+            <nz-upload [(nzFileList)]="data.fileList[5].array" [nzCustomRequest]="customReq" (click)="handleChange(5)"
+              [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>

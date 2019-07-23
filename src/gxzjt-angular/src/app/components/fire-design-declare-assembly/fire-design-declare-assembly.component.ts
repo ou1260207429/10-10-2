@@ -14,9 +14,9 @@ import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms'
 import { TokenService } from 'abp-ng2-module/dist/src/auth/token.service';
 
 import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 
+import { indexOfFileByName } from "@shared/utils/array";
 
 
 /**
@@ -189,7 +189,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
   customReq = (item: UploadXHRArgs) => {
 
-    var file = item.file as any;
+    var filePost = item.file as any;
     let params = {
       sourceId: createguid(),
       AppId: AppId,
@@ -197,21 +197,25 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     };
 
     var formData = new FormData();
-    formData.append('files', file);
+    formData.append('files', filePost);
 
 
     const index = this.uploadIndex;
 
     return this._publicServices.newUpload(formData, params).subscribe(data => {
 
+    
       item.onSuccess!({}, item.file!, event);
-
       var list = this.data.fileList[index].array;
 
       // var file = list.length - 1 >= 0 ? list[list.length - 1] : list[0];
-      var file = list[list.lastIndexOf(item.file as any)] as any;
+      var file = indexOfFileByName(list, item.file.name);
 
-
+      if (!file) {
+        item.onError!('上传失败，文件不能超过200M！', item.file!);
+        return;
+      }
+  
       file.uid = data.data[0].id;
       file.name = file.name;
       file.status = 'done';
@@ -219,6 +223,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
       file.url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
       file.hadUpLoad = 1;
       // item.onSuccess!(data, item.file!, HttpEventType.Response);
+   
 
     }, error => {
       this.message.error('上传失败，文件不能超过200M！');
@@ -272,31 +277,19 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     return false;
   };
 
-
-
-
   removeFile = (file: UploadFile): boolean => {
-
-    return true;
-    // if (file.hadUpLoad && file.hadUpLoad == 1) {
-    //   let params = {
-    //     id: file.uid,
-    //     AppId: AppId,
-    //   };
-
-
-    //   this._publicServices.delete(params).subscribe(data => {
-    //     return true;
-    //   }, err => {
-    //     return false;
-    //   });
-
-    // } else {
-    //   return true;
-    // }
-
-
-
+    if (file.hadUpLoad && file.hadUpLoad == 1) {
+      let params = {
+        id: file.uid,
+        AppId: AppId,
+      };
+      this._publicServices.delete(params).subscribe(data => {
+        this.message.success(data.message)
+      }, err => {
+        this.message.error(err.message)
+      });
+    };
+    return true
   }
 
   handleChange(index) {

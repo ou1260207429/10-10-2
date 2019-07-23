@@ -39,7 +39,7 @@ export class AddFireAcceptanceComponent implements OnInit {
     symbol: '',
     dateOfReview: '',
     constructionPermitNumber: '',
-    mainAdiseNo:'',
+    mainAdiseNo: '',
     testReportNumber: '',
     design: [{
       designUnit: '',
@@ -253,25 +253,33 @@ export class AddFireAcceptanceComponent implements OnInit {
         }
 
       }
-      this.useNatureSelect = data.natures
-    })
+      this.useNatureSelect = data.natures;
+      this.filterFileList();
+    });
   }
 
 
   filterFileList() {
 
-
+    if (!this.data.fileList) {
+      return;
+    }
     //文件过滤
     for (let x = 0; x < this.data.fileList.length; ++x) {
-      var uploadList = [];
-      for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
+      if (this.data.fileList[x].array) {
+        var uploadList = [];
+        for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
+          if (this.data.fileList[x].array[y].status == "done"
+            && this.data.fileList[x].array[y].url
+            && this.data.fileList[x].array[y].url != '') {
+            uploadList.push(this.data.fileList[x].array[y]);
 
-        if (this.data.fileList[x].array[y].status == "done") {
-          uploadList.push(this.data.fileList[x].array[y]);
-
+          }
         }
+        this.data.fileList[x].array = uploadList;
+
       }
-      this.data.fileList[x].array = uploadList;
+
     }
   }
 
@@ -284,7 +292,10 @@ export class AddFireAcceptanceComponent implements OnInit {
 
       for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
 
-        if (this.data.fileList[x].array[y].status != "done") {
+        if (this.data.fileList[x].array[y].status != "done"
+          || !this.data.fileList[x].array[y].url
+          || this.data.fileList[x].array[y].url == '') {
+
           return false;
         }
       }
@@ -357,6 +368,8 @@ export class AddFireAcceptanceComponent implements OnInit {
   }
 
   save() {
+    
+    this.filterFileList();
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();
       this.form.controls[i].updateValueAndValidity();
@@ -371,12 +384,12 @@ export class AddFireAcceptanceComponent implements OnInit {
     if (!this.showError.projectCategoryId && this.form.valid) {
       if (!this.showError.projectCategoryId) {
 
-        for (let index = 0; index < this.data.fileList.length; index++) {
-          if (checkArrayString(this.data.fileList[index].array, 'status', 'uploading') != -1) {
-            this.message.error('要上传完文件才能提交表单')
-            return false;
-          }
-        }
+        // for (let index = 0; index < this.data.fileList.length; index++) {
+        //   if (checkArrayString(this.data.fileList[index].array, 'status', 'uploading') != -1) {
+        //     this.message.error('要上传完文件才能提交表单')
+        //     return false;
+        //   }
+        // }
         const from: GXZJT_From = {
           frow_TemplateInfo_Data: {
             Area: this.data.engineeringNo[this.data.engineeringNo.length - 1]
@@ -426,7 +439,7 @@ export class AddFireAcceptanceComponent implements OnInit {
           //待审人数组 等后台改模型
           // currentHandleUserCode: string | undefined; 
 
-          console.log(flowDataDto);
+          // console.log(flowDataDto);
           this._applyService.acceptance(flowDataDto).subscribe(data => {
             this.butNzLoading = false;
             this.reuseTabService.close(this.reuseTabService.curUrl)
@@ -442,7 +455,7 @@ export class AddFireAcceptanceComponent implements OnInit {
         })
       }
     } else {
-      console.log(this.form.errors);
+      // console.log(this.form.errors);
       this.message.error('有必填项未填写')
     }
   }

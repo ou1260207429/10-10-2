@@ -66,7 +66,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
   formDto: any = new AcceptApplyFormDto();
 
   //表单json对象
-  formJson
+  formJson;
 
   workFlowData
 
@@ -177,7 +177,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
           })
         } else {
           this.type = false
-        }
+        };
+        this.filterFileList();
       })
 
     })
@@ -226,11 +227,18 @@ export class AgencyDoneDetailsComponent implements OnInit {
   };
 
   checkFileList() {
+    if (!this.examineFormDto.attachment) {
+      return true;
+    }
 
     //文件过滤
     for (let x = 0; x < this.examineFormDto.attachment.length; ++x) {
 
-      if (this.examineFormDto.attachment[x].status != "done") {
+
+      if (this.examineFormDto.attachment[x].status != "done"
+        || !this.examineFormDto.attachment[x].url
+        || this.examineFormDto.attachment[x].url == '') {
+
         return false;
       }
 
@@ -240,13 +248,21 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   filterFileList() {
 
+    if (!this.examineFormDto.attachment) {
+      return;
+    }
+
+
 
     //文件过滤
     var uploadList = [];
-    for (let i = 0; i < this.examineFormDto.attachment.array.length; ++i) {
+    for (let i = 0; i < this.examineFormDto.attachment.length; ++i) {
 
-      if (this.examineFormDto.attachment.array[i].status == "done") {
-        uploadList.push(this.examineFormDto.attachment.array[i]);
+      if (this.examineFormDto.attachment[i].status == "done"
+        && this.examineFormDto.attachment[i].status.url
+        && this.examineFormDto.attachment[i].status.url != '') {
+
+        uploadList.push(this.examineFormDto.attachment[i]);
 
       }
     }
@@ -254,23 +270,26 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   }
 
-  
-  save() {
+
+  save(bo?: boolean) {
     if (this.checkFileList()) {
-      this.savePost();
+      this.savePost(bo);
     } else {
       this._NzModalService.confirm(
         {
           nzTitle: '提示',
           nzContent: "存在没有成功上传的文件，提交不会保留，是否继续？",
           nzOnOk: () => {
-            this.savePost();
+            this.savePost(bo);
 
           }
         }
       );
     }
   }
+
+
+
   /**
    * 点击提交
    */
@@ -309,6 +328,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       default:
         break;
     }
+
 
 
 

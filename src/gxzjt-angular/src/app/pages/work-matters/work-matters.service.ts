@@ -19,11 +19,17 @@ export class WorkMattersService {
   //   return this.http.get(URLConfig.getInstance().REGISTER_URL + 'api/User/Details', model);
   // }
 
-   //获取市县级联
-   GetAreaDropdown(model?: any): Observable<any> {
+  //获取市县级联
+  GetAreaDropdown(model?: any): Observable<any> {
     // api/User/Delete?id=
-      return this.http.get(URLConfig.getInstance().SERVER_URL+ 'api/services/app/Home/GetAreaDropdown');
-    }
+    return this.http.get(URLConfig.getInstance().SERVER_URL + 'api/services/app/Home/GetAreaDropdown');
+  }
+  //获取市县级联
+  GetHandlingMatters(model?: any): Observable<any> {
+    // api/User/Delete?id=
+    return this.http.post(URLConfig.getInstance().SERVER_URL + 'api/services/app/WorkFlowed/HandlingMatters',model);
+  }
+
 
 }
 

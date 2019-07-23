@@ -9,12 +9,18 @@ export function convertToArray(src): any {
 }
 
 
+/**
+ * 根据文件名检索
+ */
+export function indexOfFileByName(arr: any, fileName): any {
+    if (arr instanceof Array) {
+        for (var i = arr.length - 1; i >= 0; --i) {
+            var item = arr[i];
+            if (item.name && item.name == fileName) {
+                return item;
+            }
+        }
+    }
 
-// export function indexOfFile<File>(arr:[],item:File): any {
-//     for(var i=arr.length;i>=0;--i){
-//         if(arr.lastIndexOf){
-
-//         }
-//     }
-//     return src;
-// }
+    return null;
+}
