@@ -136,6 +136,10 @@ export class AppSessionService {
               this._ACLService.setRole([AppMenus.aclOrg]);
               this._MenuService.add(AppMenus.MenusOrg);
               break;
+            case '窗口负责人':
+              this._ACLService.setRole([AppMenus.aclOrg]);
+              this._MenuService.add(AppMenus.MenusOrg);
+              break;
             case '审批负责人':
               this._ACLService.setRole([AppMenus.aclOrg]);
               this._MenuService.add(AppMenus.MenusOrg);

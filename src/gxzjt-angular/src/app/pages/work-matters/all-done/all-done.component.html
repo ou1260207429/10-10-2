@@ -21,30 +21,40 @@
         </nz-select>
         <input nz-input  formControlName="proName" placeholder="请输入工程名称" class="search_menu_input">
         <input nz-input  formControlName="buildname" placeholder="建设单位名称" class="search_menu_input">
-
-      </div>
-
-      <div style="width:100%;">
         <nz-select class="search_menu_input" formControlName="proType" nzShowSearch nzAllowClear nzPlaceHolder="工程类型">
           <nz-option nzLabel="消防设计审查" nzValue="1"></nz-option>
           <nz-option nzLabel="消防验收" nzValue="2"></nz-option>
           <nz-option nzLabel="竣工验收消防备案" nzValue="3"></nz-option>
         </nz-select>
         <nz-select class="search_menu_input" formControlName="timetype" nzShowSearch nzAllowClear nzPlaceHolder="是否超时">
-          <nz-option nzLabel="是" nzValue="1"></nz-option>
-          <nz-option nzLabel="否" nzValue="2"></nz-option>
+          <nz-option nzLabel="是" nzValue="true"></nz-option>
+          <nz-option nzLabel="否" nzValue="false"></nz-option>
 
         </nz-select>
+      </div>
+      <div style="width: 100%;height: 10px;"></div>
+      <div style="width:100%;">
+        <nz-select class="search_menu_input" formControlName="status" nzShowSearch nzAllowClear nzPlaceHolder="状态">
+          <nz-option nzLabel="不受理" nzValue="0"></nz-option>
+          <nz-option nzLabel="审核中" nzValue="1"></nz-option>
+          <nz-option nzLabel="已完结" nzValue="2"></nz-option>
+        </nz-select>
+
         <span>完成时间：</span>
-        <nz-range-picker nzFormat="yyyy/MM/dd" formControlName="dateRange" class="search_menu"></nz-range-picker>
+        <nz-range-picker style="width: 340px" nzFormat="yyyy/MM/dd" formControlName="sbdateRange" class="search_menu"></nz-range-picker>
 
-
+        <span>申报时间：</span>
+        <nz-range-picker style="width: 340px" nzFormat="yyyy/MM/dd" formControlName="dateRange" class="search_menu"></nz-range-picker>
         <button nz-button (click)="search()" nzType="primary">搜索</button>
 
         <button nz-button (click)="resetForm()" class="search_menu">重置</button>
 
       </div>
       </form>
-  <st #st [data]="url" [columns]="columns"></st>
+  <!-- <st #st [data]="data" [columns]="columns"></st> -->
+  <st #st  [data]="data" [columns]="columns" [page]="pageConfig"
+    [total]="total" [pi]="param.page"
+    [ps]="param.size" (change)="change($event)">
+  </st>
 </nz-card>
 

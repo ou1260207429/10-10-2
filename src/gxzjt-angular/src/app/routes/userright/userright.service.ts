@@ -67,7 +67,7 @@ export class UserRightService {
   }
    //批量删除区域
   AreaDeleteArea(model?: any): Observable<any> {
-    return this.http.post(URLConfig.getInstance().REGISTER_URL + 'api/Area/DeleteArea', model)
+    return this.http.post(URLConfig.getInstance().REGISTER_URL + 'api/Area/DeleteArea', model,model)
   }
   //编辑区域
   AreaUpdateArea(model?: any): Observable<any> {
@@ -90,7 +90,7 @@ export class UserRightService {
 
      //批量删除区域
   OrganizationsDelete(model?: any): Observable<any> {
-      return this.http.post(URLConfig.getInstance().REGISTER_URL + 'api/Organizations/Delete', model)
+      return this.http.post(URLConfig.getInstance().REGISTER_URL + 'api/Organizations/Delete', model,model)
     }
 
 

@@ -20,7 +20,7 @@ export class UserrightOrgeditComponent implements OnInit {
   parentorgname;
 
   defaultCheckedKeysArea=["450300"];//所属区域数组
-  defaultCheckedKeys2=[];
+  defaultCheckedKeys2=null;
   defaultCheckedKeys3=[];//添加默认节点
 
   defaultCheckedKeys=[];
@@ -35,6 +35,7 @@ export class UserrightOrgeditComponent implements OnInit {
     name:'',
     AreaIds:[],
     typenumberPrefix:'',
+    parentId:'',
   }
 
   deletearray=[];//删除数组
@@ -59,7 +60,36 @@ export class UserrightOrgeditComponent implements OnInit {
     this.UserRightService.GetTreeData().subscribe(
       res => {
         this.nodes = res.data;
-        console.log(this, this.nodes)
+    this.nodes.forEach(element => {
+      if (element.key == this.editOrgModel.id) {
+        this.orgarray = element.children;
+
+      } else {
+        element.children.forEach(city => {
+          if (city.key == this.editOrgModel.id) {
+            this.orgarray = city.children;
+
+          } else {
+            city.children.forEach(conuty => {
+              if (conuty.key == this.editOrgModel.id) {
+                this.orgarray = conuty.children;
+
+              } else {
+                conuty.children.forEach(xz => {
+                  if (xz.key == this.editOrgModel.id) {
+                    this.orgarray = null;
+                  }
+
+                });
+
+              }
+            });
+          }
+
+        });
+      }
+
+    });
       },
     );
   }
@@ -75,7 +105,7 @@ export class UserrightOrgeditComponent implements OnInit {
   }
 
   nzEvent(event: NzFormatEmitEvent): void {
-     console.log(event)
+
      this.addOrgModel.parentId=event.keys[0];//点击获取ID作为添加父ID
      //根据点击的ID获取详细
      let getdetailmodel={
@@ -86,10 +116,15 @@ export class UserrightOrgeditComponent implements OnInit {
      //点击获取编辑模型数据作为ID
      this.editOrgModel.id=event.keys[0];
      this.editOrgModel.name=event.node.title;
+     if(event.node.parentNode){
+      this.editOrgModel.parentId=event.node.parentNode.key;
+
+     }
 
     //  this.editOrgModel.orgChargeUid=e
 
      this.parentorgname=event.node.title;
+
     this.nodes.forEach(element => {
       if (element.key == event.keys[0]) {
         this.orgarray = element.children;
@@ -124,13 +159,13 @@ export class UserrightOrgeditComponent implements OnInit {
   }
   //获取组织详情
   getorgdetail(id){
-    if(id!=null&&id!=''){
+    if(id.id!=null&&id.id!=''){
       this.UserRightService.GetOrgDetail(id).subscribe(
         res => {
           this.orgdetail = res.data;
           if(res.data!=null && res.data.areaIds && res.data.areaIds!=null && res.data.areaIds!=''){
-            this.defaultCheckedKeys2= res.data.areaIds
-            this.editOrgModel.AreaIds=res.data.areaIds
+            this.defaultCheckedKeys2= res.data.areaIds;
+            this.editOrgModel.AreaIds=res.data.areaIds;
           }else{
             this.defaultCheckedKeys2=[];
             this.editOrgModel.AreaIds=[];
@@ -145,7 +180,7 @@ export class UserrightOrgeditComponent implements OnInit {
 
 
   log(value: string[]): void {
-    this.deletearray=value
+    this.deletearray=value;
   }
 
 
@@ -157,14 +192,18 @@ export class UserrightOrgeditComponent implements OnInit {
     });
   }
   deleteData(){
+    if(this.deletearray.length==0){
+      this.message.error("请先选择需要删除的数据！");
+      return
+    }
     this._publicModel.isDeleteModal(() => {
-      this.UserRightService.OrganizationsDelete({ ids: this.deletearray }).subscribe(data => {
+      this.UserRightService.OrganizationsDelete({ids: this.deletearray }).subscribe(data => {
        if(data.result==0){
-        this.message.success("删除成功")
         this.getTreeData();
-        this.isAddProducttyepe1 = false;
+        this.message.success("删除成功");
+
       }else{
-        this.message.error(data.message)
+        this.message.error(data.message);
         return
       }
       })

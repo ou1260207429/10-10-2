@@ -32,6 +32,9 @@ export class UserrightAareeditComponent implements OnInit {
     name:'',
     id:'',
   }
+  deletemodel={
+    ids:[]
+  }
 
   constructor(private http: _HttpClient,
     private nzDropdownService: NzDropdownService,
@@ -144,18 +147,21 @@ export class UserrightAareeditComponent implements OnInit {
   }
 
   log(value: string[]): void {
-    this.areaModel.ids=value
+    this.deletemodel.ids=value
+
   }
 
 
 
 
   deleteData(){
-    if(this.areaModel.ids.length==0){
+    console.log(this.areaModel)
+    if(this.deletemodel.ids.length==0){
       this.message.error("请先选择需要删除的选项!")
+      return
     }
     this._publicModel.isDeleteModal(() => {
-      this.UserRightService.AreaDeleteArea(this.areaModel).subscribe(data => {
+      this.UserRightService.AreaDeleteArea({ids: this.deletemodel.ids}).subscribe(data => {
         this.getTreeData()
         this.message.success(data.message)
       })
