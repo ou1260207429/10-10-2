@@ -10,24 +10,23 @@
     <div class="org"><span>组织机构</span></div>
     <div nz-col [nzSpan]="2">
       <div style="margin-top: 35px;">
-        <nz-tree #treeCom [nzData]="nodes" nzMultiple="false"
-          nzDefaultExpandAll="true" (nzClick)="nzEvent($event)">
+        <nz-tree #treeCom [nzData]="nodes" nzMultiple="false"   nzDefaultExpandAll="true" (nzClick)="nzEvent($event)">
 
-          <div>
+          <div *ngIf="this.addOrgModel.parentId != '39B6CADE-DC11-4BA4-972E-3818276C9CDF'">
             <ng-template #nzTreeTemplate let-node>
-         <span (contextmenu)="contextMenu($event,template)" class="min-w">
-          {{ node.title }}
+              <span (contextmenu)="contextMenu($event,template)" class="min-w">
+                {{ node.title }}
 
-         </span>
+              </span>
 
-       </ng-template>
-       <ng-template #template>
-        <ul nz-menu nzInDropDown (nzClick)="close($event)">
-          <li nz-menu-item (click)="edit()">编辑</li>
-          <li nz-menu-item (click)="add()">添加</li>
+            </ng-template>
+            <ng-template #template>
+              <ul nz-menu nzInDropDown (nzClick)="close($event)">
+                <li nz-menu-item (click)="edit()">编辑</li>
+                <li nz-menu-item (click)="add()">添加</li>
 
-        </ul>
-        </ng-template>
+              </ul>
+            </ng-template>
 
           </div>
         </nz-tree>
@@ -44,6 +43,8 @@
       <div> <a nz-button (click)="deleteData()" nzType="primary"
           style="margin-right: 10px;float: right;;margin-top: 5px;"><i nz-icon type="delete"
             nzTheme="outline"></i>删除</a></div>
+      <div> <a nz-button (click)="add()" nzType="primary" style="margin-right: 10px;float: right;;margin-top: 5px;"><i
+            nz-icon type="delete" nzTheme="outline"></i>增加</a></div>
       <div style="padding: 5px;">
         <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="log($event)">
           <div nz-row>
@@ -60,7 +61,7 @@
       </div>
 
       <nz-tree #treeCom [nzData]="Areanodes" nzCheckable="true" nzMultiple="true" ref="tree"
-       [(nzCheckedKeys)]="defaultCheckedKeys2" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzAreaEvent($event)">
+        [(nzCheckedKeys)]="defaultCheckedKeys2" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzAreaEvent($event)">
       </nz-tree>
     </div>
   </div>
@@ -84,41 +85,42 @@
 </nz-card>
 
 <!-- 编辑部门 -->
-<nz-modal [(nzVisible)]="isAddProducttyepe1" nzTitle="编辑组织机构" (nzOnCancel)="handleCancel1()" (nzOnOk)="subProducttype1()">
+<nz-modal [(nzVisible)]="isAddProducttyepe1" nzTitle="编辑组织机构" (nzOnCancel)="handleCancel1()"
+  (nzOnOk)="subProducttype1()">
   <div style="margin-top: 8px" nz-row>
     <div nz-col nzSpan="5">机构名称</div>
     <div nz-col nzSpan="19">
-      <input nz-input  [(ngModel)]="editOrgModel.name" >
+      <input nz-input [(ngModel)]="editOrgModel.name">
     </div>
   </div>
   <div style="margin-top: 8px" nz-row>
     <div nz-col nzSpan="5">文号前缀</div>
     <div nz-col nzSpan="19">
-      <input nz-input  [(ngModel)]="editOrgModel.name" >
+      <input nz-input [(ngModel)]="editOrgModel.typenumberPrefix">
     </div>
   </div>
   <div style="margin-top: 10px" nz-row>
     <div nz-col nzSpan="5">所属区域</div>
     <div nz-col nzSpan="19">
       <nz-tree #treeCom [nzData]="Areanodes" nzCheckable="true" nzMultiple="true" ref="tree"
-      [(nzCheckedKeys)]="defaultCheckedKeys2" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzAreaEvent($event)">
-      <div>
-      </div>
-    </nz-tree>
+        [(nzCheckedKeys)]="defaultCheckedKeys2" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzAreaEvent($event)">
+        <div>
+        </div>
+      </nz-tree>
     </div>
   </div>
 </nz-modal>
 
 <!-- 添加 -->
 <nz-modal [(nzVisible)]="isAddProducttyepe2" nzTitle="添加区域" (nzOnCancel)="handleCancel2()" (nzOnOk)="subProducttype2()">
-    <div nz-row>
+  <div nz-row>
 
-        <div nz-col nzSpan="5">上级机构</div>
-        <div nz-col nzSpan="19">
-          <!-- <input nz-input [(ngModel)]="parentorgname"> -->
-          <span>{{parentorgname}}</span>
-        </div>
+    <div nz-col nzSpan="5">上级机构</div>
+    <div nz-col nzSpan="19">
+      <!-- <input nz-input [(ngModel)]="parentorgname"> -->
+      <span>{{parentorgname}}</span>
     </div>
+  </div>
 
   <div nz-row style="margin-top: 15px">
 
@@ -128,17 +130,17 @@
     </div>
   </div>
 
-    <div nz-row style="margin-top: 15px">
+  <div nz-row style="margin-top: 15px">
 
-      <div nz-col nzSpan="5">文号前缀</div>
-      <div nz-col nzSpan="19">
-        <input nz-input [(ngModel)]="addOrgModel.typenumberPrefix">
-      </div>
+    <div nz-col nzSpan="5">文号前缀</div>
+    <div nz-col nzSpan="19">
+      <input nz-input [(ngModel)]="addOrgModel.typenumberPrefix">
     </div>
-    <div style="margin-top: 50px" nz-row>
-      <div nz-col nzSpan="5">所属区域</div>
-      <div nz-col nzSpan="19">
-        <nz-tree #treeCom [nzData]="Areanodes" nzCheckable="true" nzMultiple="true" ref="tree"
+  </div>
+  <div style="margin-top: 50px" nz-row>
+    <div nz-col nzSpan="5">所属区域</div>
+    <div nz-col nzSpan="19">
+      <nz-tree #treeCom [nzData]="Areanodes" nzCheckable="true" nzMultiple="true" ref="tree"
         [(nzCheckedKeys)]="defaultCheckedKeys3" nzDefaultExpandAll="true" (nzCheckBoxChange)="nzAreaEvent($event)">
 
         <div>
@@ -146,8 +148,8 @@
       </nz-tree>
 
 
-      </div>
     </div>
+  </div>
 
 
 </nz-modal>
