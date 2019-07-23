@@ -278,7 +278,7 @@ export class WorkMattersAllDoneComponent implements OnInit {
     this.router.navigate([`/app/work-matters/alreadyDoneDetailsComponent/${item.flowNo}/${item.flowId}/${item.flowPathType}`]);
   }
   change(v) {
-    console.log(v)
+
     this.param.page = v.pi;
     this.GetHandlingMatters();
   }
