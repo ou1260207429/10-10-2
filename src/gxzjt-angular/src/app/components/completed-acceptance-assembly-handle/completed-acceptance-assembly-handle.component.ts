@@ -107,6 +107,7 @@ export class CompletedAcceptanceAssemblyHandleComponent implements OnInit {
   };
 
   removeFile = (file: UploadFile): boolean => {
+    
     return true;
   }
 

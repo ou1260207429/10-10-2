@@ -84,8 +84,8 @@ export class AddFireDesignDeclareComponent implements OnInit {
       legalRepresentative: '',
       contacts: '',
       contactsNumber: '',
-      mainAdviseNo: '',
-      no: [''],
+      mainAdiseNo: '',
+      no: [{ noValue: '' }],
     },
     basicInformation: [
       {
@@ -561,7 +561,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
     private nzModalService: NzModalService,
     private _ActivatedRoute: ActivatedRoute,
     private message: NzMessageService, ) {
-    
+
     this.flowFormQueryDto.flowType = 1;
     this.type = this._ActivatedRoute.snapshot.paramMap.get('type');
     this.flowFormQueryDto.projectId = this.flowFormDto.projectId = parseInt(this._ActivatedRoute.snapshot.paramMap.get('projectId'));
@@ -588,11 +588,19 @@ export class AddFireDesignDeclareComponent implements OnInit {
 
         var json = JSON.parse(data.formJson);
 
+        if (json.mappingUnit.no instanceof String) {
+          json.mappingUnit.no = [{ noValue: json.mappingUnit.no }];
+        }
+        // if(json.mappingUnit.no instanceof Array){
+        //   if (json.mappingUnit.no[0] instanceof String){
+            
+        //   }       
+        // }
         json.mappingUnit.no = convertToArray(json.mappingUnit.no);
 
         this.data = json;
       }
-      this.useNatureSelect = data.natures
+      this.useNatureSelect = data.natures;
     })
   }
 
@@ -601,7 +609,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
     if (this.checkFileList()) {
       this.save();
     } else {
-      this.nzModalService.warning(
+      this.nzModalService.confirm(
         {
           nzTitle: '提示',
           nzContent: "存在没有成功上传的文件，提交不会保留，是否继续？",
@@ -618,20 +626,20 @@ export class AddFireDesignDeclareComponent implements OnInit {
    * 申请提交
    */
   save() {
-    this.butNzLoading = true;
+ 
 
     this.filterFileList();
     //校验mappingUnit
-    var isMainAdviceNoEmpty = false;
+    var ismainAdviseNoEmpty = false;
 
     for (let item in this.data.mappingUnit.no) {
       if (item == '') {
-        isMainAdviceNoEmpty = true;
+        ismainAdviseNoEmpty = true;
         break;
       }
     }
 
-    if (this.data.mappingUnit.mainAdviseNo == '' && isMainAdviceNoEmpty) {
+    if (this.data.mappingUnit.mainAdiseNo == '' && ismainAdviseNoEmpty) {
       return;
     }
 
@@ -682,7 +690,8 @@ export class AddFireDesignDeclareComponent implements OnInit {
           deptFullPath: this._appSessionService.user.organizationsName,
         }
       };
-
+      
+      this.butNzLoading = true;
       this._flowServices.GXZJT_StartWorkFlowInstanceAsync(from).subscribe((data: any) => {
 
         const flowDataDto = new FlowDataDto();
@@ -764,7 +773,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
     if (this.checkFileList()) {
       this.depositDraft();
     } else {
-      this.nzModalService.warning(
+      this.nzModalService.confirm(
         {
           nzTitle: '提示',
           nzContent: "存在没有成功上传的文件，草稿不会保留，是否继续？",

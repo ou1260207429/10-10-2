@@ -86,7 +86,6 @@ export class FormDownloadDetailComponent implements OnInit {
     return false;
   };
   //删除上传文件
-  //删除上传文件
   removeFile = (file: UploadFile): boolean => {
     if (file.isUpLoad) {
       let params = {

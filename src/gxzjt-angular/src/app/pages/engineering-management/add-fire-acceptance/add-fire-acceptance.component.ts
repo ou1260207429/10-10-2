@@ -11,7 +11,7 @@ import { AppSessionService } from '@shared/session/app-session.service';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { ReuseTabService } from '@delon/abc';
 import { NzModalService, UploadXHRArgs } from 'ng-zorro-antd';
-
+import { convertToArray } from '@shared/utils/array'
 
 /**
  * 工程管理->消防验收->新增申报
@@ -21,7 +21,7 @@ import { NzModalService, UploadXHRArgs } from 'ng-zorro-antd';
   templateUrl: './add-fire-acceptance.component.html',
 
 })
-export class AddFireAcceptanceComponent  implements OnInit {
+export class AddFireAcceptanceComponent implements OnInit {
   showError = {
     projectCategoryId: false,
   }
@@ -39,6 +39,7 @@ export class AddFireAcceptanceComponent  implements OnInit {
     symbol: '',
     dateOfReview: '',
     constructionPermitNumber: '',
+    mainAdiseNo:'',
     testReportNumber: '',
     design: [{
       designUnit: '',
@@ -119,18 +120,18 @@ export class AddFireAcceptanceComponent  implements OnInit {
       useNature: '',
       originallyUsed: '',
     },
-    implementation: {
+    implementation: [{
       designUnit: '',
       personInChargeName: '',
       opinion: '本工程能按照经审查合格的消防设计文件施工，施工质量满足消防设计和国家工程建设消防技术标准要求 。'
-    },
-    constructionSituation: {
+    }],
+    constructionSituation: [{
       contractingUnit: '',
       projectManagerName: '',
       subcontractors: '',
       personInChargeName: '',
       opinion: '按照经审查合格的消防设计文件实施，符合国家工程建设消防技术标准。'
-    },
+    }],
     supervision: {
       constructionControlUnit: '',
       signatureOfChiefEngineer: '',
@@ -224,15 +225,23 @@ export class AddFireAcceptanceComponent  implements OnInit {
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
       if (data.formJson != null && data.formJson != "") {
         this.data = JSON.parse(data.formJson);
+
+
         if (this.data.detectionUnit == null) {
           this.data.detectionUnit = {};
         }
         if (this.data.implementation == null) {
           this.data.implementation = {};
         }
+
         if (this.data.constructionSituation == null) {
           this.data.constructionSituation = {};
         }
+        this.data.constructionSituation = convertToArray(this.data.constructionSituation);
+        this.data.implementation = convertToArray(this.data.implementation);
+
+
+
         if (this.data.supervision == null) {
           this.data.supervision = {};
         }
@@ -292,7 +301,7 @@ export class AddFireAcceptanceComponent  implements OnInit {
     if (this.checkFileList()) {
       this.depositDraft();
     } else {
-      this.nzModalService.warning(
+      this.nzModalService.confirm(
         {
           nzTitle: '提示',
           nzContent: "存在没有成功上传的文件，草稿不会保留，是否继续？",
@@ -334,7 +343,7 @@ export class AddFireAcceptanceComponent  implements OnInit {
     if (this.checkFileList()) {
       this.save();
     } else {
-      this.nzModalService.warning(
+      this.nzModalService.confirm(
         {
           nzTitle: '提示',
           nzContent: "存在没有成功上传的文件，提交不会保留，是否继续？",
@@ -346,7 +355,7 @@ export class AddFireAcceptanceComponent  implements OnInit {
       );
     }
   }
-  
+
   save() {
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();
@@ -362,12 +371,12 @@ export class AddFireAcceptanceComponent  implements OnInit {
     if (!this.showError.projectCategoryId && this.form.valid) {
       if (!this.showError.projectCategoryId) {
 
-        for (let index = 0; index < this.data.fileList.length; index++) {
-          if (checkArrayString(this.data.fileList[index].array, 'status', 'uploading') != -1) {
-            this.message.error('要上传完文件才能提交表单')
-            return false;
-          }
-        }
+        // for (let index = 0; index < this.data.fileList.length; index++) {
+        //   if (checkArrayString(this.data.fileList[index].array, 'status', 'uploading') != -1) {
+        //     this.message.error('要上传完文件才能提交表单')
+        //     return false;
+        //   }
+        // }
         const from: GXZJT_From = {
           frow_TemplateInfo_Data: {
             Area: this.data.engineeringNo[this.data.engineeringNo.length - 1]
@@ -417,7 +426,7 @@ export class AddFireAcceptanceComponent  implements OnInit {
           //待审人数组 等后台改模型
           // currentHandleUserCode: string | undefined; 
 
-          console.log(flowDataDto);
+          // console.log(flowDataDto);
           this._applyService.acceptance(flowDataDto).subscribe(data => {
             this.butNzLoading = false;
             this.reuseTabService.close(this.reuseTabService.curUrl)
@@ -433,7 +442,7 @@ export class AddFireAcceptanceComponent  implements OnInit {
         })
       }
     } else {
-      console.log(this.form.errors);
+      // console.log(this.form.errors);
       this.message.error('有必填项未填写')
     }
   }

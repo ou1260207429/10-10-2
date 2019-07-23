@@ -268,7 +268,7 @@
 
         </tr>
         <tr>
-          <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">分包单位（如有）:</td>
+          <!-- <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">分包单位（如有）:</td>
           <td rowspan='1' colspan='6'>
             <nz-rj-selector-org [(ngModel)]="data.subcontractors.name"
               (onSelectorEvent)="onSelectOrgItem($event,data.subcontractors)" placeHolder="请输入分包单位"
@@ -298,7 +298,7 @@
           <td rowspan='1'>
             无
           </td>
-        </tr>
+        </tr> -->
         <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">监理单位:</td>
           <td rowspan='1' colspan='6'>
@@ -374,13 +374,13 @@
         </tr>
         <tr class="title">
           <td rowspan='2' colspan='5' class="fontweight fontLeft leftTitle">建筑物名称</td>
-          <td rowspan='2' colspan='2' class="fontweight fontLeft">结 构</td>
+          <td rowspan='2' colspan='1' class="fontweight fontLeft">结 构</td>
           <td rowspan='2' colspan='2' class="fontweight fontLeft">耐火等级</td>
           <td rowspan='2' colspan='2' class="fontweight fontLeft">高度（m）</td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft">层数</td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft">建筑面积（m<sup>2</sup>）</td>
           <td rowspan='2' colspan='2' class="fontweight fontLeft">火灾危险性类别</td>
-          <td rowspan='2' colspan='2'>操作</td>
+          <td rowspan='2' colspan='1'>操作</td>
         </tr>
         <tr class="title">
           <td colspan='1' rowspan="1" class="fontweight">地上</td>
@@ -404,7 +404,7 @@
               </nz-select>
             </se>
           </td>
-          <td rowspan='1' colspan='2' class="fontweight fontLeft">
+          <td rowspan='1' colspan='1' class="fontweight fontLeft">
             <se error="必填">
               <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="item.grade" name="jbgrade{{index}}" required>
                 <nz-option *ngFor="let option of refractoryEnum" [nzLabel]="option.label" [nzValue]="option.value">
@@ -431,7 +431,7 @@
             </se>
           </td>
           <td rowspan='1' colspan='1'>
-            <label>{{item.ground&&!item.upGround?item.ground:+item.upGround++item.underGround}}</label>
+            <label>{{item.ground&&!item.upGround?item.ground:(item.upGround?+item.upGround:0)+(item.underGround?+item.underGround:0)}}</label>
           </td>
           <td rowspan='1' colspan='1'>
             <se error="必填">
@@ -446,7 +446,7 @@
             </se>
           </td>
           <td rowspan='1' colspan='1'>
-            <label>{{item.builtUpArea&&!item.builtUpArea2?item.builtUpArea:+item.builtUpArea2++item.builtUnderArea}}</label>
+            <label>{{item.builtUpArea&&!item.builtUpArea2?item.builtUpArea:(item.builtUpArea2?+item.builtUpArea2:0)+(item.builtUnderArea?+item.builtUnderArea:0)}}</label>
           </td>
           <td rowspan='1' colspan='2'>
             <se error="必填">
@@ -458,7 +458,7 @@
               <!-- <input  nz-input placeholder="请输入危险性类别" [(ngModel)]="item.fireHazard" name="jbfireHazard" required /> -->
             </se>
           </td>
-          <td rowspan='1' colspan='2' [ngClass]="{pointer: type == 1}">
+          <td rowspan='1' colspan='1' [ngClass]="{pointer: type == 1}">
             <a (click)="addArray(data.basicInformation)">新增</a>
             <br>
             <a (click)="deleteArray(data.basicInformation,index)">删除</a>
@@ -841,24 +841,21 @@
         <td rowspan='1' colspan='20' class="textLeft">
           <div>
             1、建设工程消防验收申报表（纸质申报表的图片）
-            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq"
-              (click)="handleChange(0)">
+            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" (click)="handleChange(0)" [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             2、与消防验收有关的竣工图纸及隐蔽工程记录
-            <nz-upload [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq"
-              (click)="handleChange(1)">
+            <nz-upload [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)" [nzRemove]="removeFile"> 
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             3、符合要求的检测机构出具的消防设施及系统检测合格证明文件
-            <nz-upload [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq"
-              (click)="handleChange(2)">
+            <nz-upload [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)" [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>

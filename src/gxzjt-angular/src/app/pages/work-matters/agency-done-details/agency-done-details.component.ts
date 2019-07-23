@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { FlowServices, WorkFlow } from 'services/flow.services';
 import { AdoptEnum } from 'infrastructure/expression';
-import { UploadFile, NzMessageService } from 'ng-zorro-antd';
+import { UploadFile, NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { AcceptServiceServiceProxy, AcceptApplyFormDto, ApplyServiceServiceProxy, FlowFormQueryDto, FlowNodeUser } from '@shared/service-proxies/service-proxies';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { FlowProcessRejectComponent } from '@app/components/flow-process-reject/flow-process-reject.component';
@@ -99,7 +99,18 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   //使用性质
   useNatureSelect
-  constructor(private _eventEmiter: EventEmiter, public _appSessionService: AppSessionService, private _examineService: ExamineServiceServiceProxy, private reuseTabService: ReuseTabService, private ModelHelp: ModalHelper, public appSession: AppSessionService, private message: NzMessageService, private _applyService: ApplyServiceServiceProxy, private _acceptServiceServiceProxy: AcceptServiceServiceProxy, private _flowServices: FlowServices, private _activatedRoute: ActivatedRoute, private _ActivatedRoute: ActivatedRoute, ) {
+  constructor(private _eventEmiter: EventEmiter,
+    public _appSessionService: AppSessionService,
+    private _examineService: ExamineServiceServiceProxy,
+    private reuseTabService: ReuseTabService,
+    private ModelHelp: ModalHelper,
+    public appSession: AppSessionService,
+    private message: NzMessageService,
+    private _applyService: ApplyServiceServiceProxy,
+    private _acceptServiceServiceProxy: AcceptServiceServiceProxy,
+    private _flowServices: FlowServices,
+    private _activatedRoute: ActivatedRoute,
+    private _NzModalService: NzModalService) {
     this.flowNo = this._activatedRoute.snapshot.paramMap.get('flowNo')
     this.flowId = this._activatedRoute.snapshot.paramMap.get('flowId')
     this.flowPathType = this._activatedRoute.snapshot.paramMap.get('flowPathType')
@@ -214,10 +225,65 @@ export class AgencyDoneDetailsComponent implements OnInit {
     return false;
   };
 
+  checkFileList() {
+    if (!this.examineFormDto.attachment) {
+      return true;
+    }
+
+    //文件过滤
+    for (let x = 0; x < this.examineFormDto.attachment.length; ++x) {
+
+      if (this.examineFormDto.attachment[x].status != "done") {
+        return false;
+      }
+
+    }
+    return true;
+  }
+
+  filterFileList() {
+
+    if (!this.examineFormDto.attachment) {
+      return;
+    }
+
+
+
+    //文件过滤
+    var uploadList = [];
+    for (let i = 0; i < this.examineFormDto.attachment.length; ++i) {
+
+      if (this.examineFormDto.attachment[i].status == "done") {
+        uploadList.push(this.examineFormDto.attachment[i]);
+
+      }
+    }
+    this.examineFormDto.attachment = uploadList;
+
+  }
+
+
+  save(bo?: boolean) {
+    if (this.checkFileList()) {
+      this.savePost(bo);
+    } else {
+      this._NzModalService.confirm(
+        {
+          nzTitle: '提示',
+          nzContent: "存在没有成功上传的文件，提交不会保留，是否继续？",
+          nzOnOk: () => {
+            this.savePost(bo);
+
+          }
+        }
+      );
+    }
+  }
+
   /**
    * 点击提交
    */
-  save(bo?: boolean) {
+  savePost(bo?: boolean) {
     switch (this.curNodeName) {
       case '大厅受理':
         if (!this.formDto.fileCodePrefix) {
@@ -260,14 +326,16 @@ export class AgencyDoneDetailsComponent implements OnInit {
       return false;
     }
 
-    if (this.curNodeName == '业务承办人审核' && this.flowPathType != 3 && this.examineFormDto.attachment) {
-      if (this.examineFormDto.attachment.length > 0) {
-        if (checkArrayString(this.examineFormDto.attachment, 'status', 'uploading') != -1) {
-          this.message.error('要上传完文件才能提交表单')
-          return false;
-        }
-      }
-    }
+    // if (this.curNodeName == '业务承办人审核' && this.flowPathType != 3 && this.examineFormDto.attachment) {
+    //   if (this.examineFormDto.attachment.length > 0) {
+    //     if (checkArrayString(this.examineFormDto.attachment, 'status', 'uploading') != -1) {
+    //       this.message.error('要上传完文件才能提交表单')
+    //       return false;
+    //     }
+    //   }
+    // }
+    this.filterFileList();
+
 
     let num = bo ? 1 : 0;
     //判断是竣工备案  
@@ -313,6 +381,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       })
     } else {
       this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
+        // this.butNzLoading = false;
         const type = this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType == 3 ? true : false
         this.examineFormDto.isTransfer = this.formDto.isTransfer = type
         this.examineFormDto.isPass = this.formDto.isAccept = bo;
@@ -364,6 +433,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
       }, error => {
         this.isNoResult(error.error.error.message)
+        this.butNzLoading = false;
       })
     }
 

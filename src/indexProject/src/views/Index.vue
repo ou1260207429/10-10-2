@@ -131,7 +131,7 @@
         <el-tooltip placement="left" effect="light">
           <div class="propMsg call" slot="content">
             <p>电话号码：18607782223</p>
-            <p style="margin-top: 5px;">工作时间：09：00-22：00</p>
+            <p style="margin-top: 5px;">工作时间：09：00-18：00</p>
           </div>
           <div>
             <img src="../assets/images/icon_call.png" alt />
@@ -143,8 +143,7 @@
       <div class="item" style="border-top:1px solid #e7eaef">
         <el-tooltip placement="left" effect="light">
           <div class="propMsg qq" slot="content">
-            <p>QQ：49146664</p>
-            <p style="margin-top: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;96987252</p>
+            <p style="height:35px;line-height:35px;">QQ：580971049</p>
           </div>
           <div>
             <img src="../assets/images/icon_qq.png" alt />
