@@ -90,15 +90,15 @@ export class AppPreBootstrap {
 
 
             // 时区
-            abp.clock.provider = this.getCurrentClockProvider("unspecifiedClockProvider");
-            moment.locale("zh-cn");
+            // abp.clock.provider = this.getCurrentClockProvider("unspecifiedClockProvider");
+            // moment.locale("zh-cn");
 
-            (window as any).moment.locale("zh-cn");
-            if (abp.clock.provider.supportsMultipleTimezone) {
-                var moment1 = require('moment-timezone');
-                moment1.tz.setDefault("Asia/Shanghai");
-                (window as any).moment.tz.setDefault("Asia/Shanghai");
-            }
+            // (window as any).moment.locale("zh-cn");
+            // if (abp.clock.provider.supportsMultipleTimezone) {
+            //     var moment1 = require('moment-timezone');
+            //     moment1.tz.setDefault("Asia/Shanghai");
+            //     (window as any).moment.tz.setDefault("Asia/Shanghai");
+            // }
 
 
             // 注册语言,NG-Zorro的DataPicker要使用
