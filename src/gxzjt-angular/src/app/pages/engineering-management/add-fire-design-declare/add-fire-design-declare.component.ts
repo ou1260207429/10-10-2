@@ -14,6 +14,7 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 import { ReuseTabService } from '@delon/abc';
 
 import { convertToArray } from "@shared/utils/array"
+import { advanceActivatedRoute } from '@angular/router/src/router_state';
 
 
 /**
@@ -488,7 +489,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
         }],
 
     },
-
+  
     engineerinDescription: '',
 
     fileList: [
@@ -549,7 +550,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
   form: FormGroup
 
   //使用性质
-  useNatureSelect
+  useNatureSelect 
 
   constructor(private reuseTabService: ReuseTabService,
     private _eventEmiter: EventEmiter,

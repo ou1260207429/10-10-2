@@ -194,7 +194,7 @@ export class AddFireAcceptanceComponent implements OnInit {
 
   //使用性质
   useNatureSelect
-
+  
   butNzLoading: boolean = false;
   constructor(private reuseTabService: ReuseTabService,
     private _eventEmiter: EventEmiter,

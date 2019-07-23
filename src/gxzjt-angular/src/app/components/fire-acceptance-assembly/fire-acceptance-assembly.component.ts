@@ -20,6 +20,9 @@ import { URLConfig } from "@shared/config/host";
 
 })
 export class FireAcceptanceAssemblyComponent implements OnInit {
+  //搜索
+  //selectedValue:"体育场馆";
+  selectArr: Array<{ label: string; value: string }> = [];
 
   //判断是新增或者办理  0是新增 1是办理
   @Input() type: number = 0
@@ -51,8 +54,8 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
   //从父组件获取使用行性质的select
   @Input() useNatureSelect: any
-
-
+ 
+ 
   //资质等级的列表
   zzdjEnum = zzdjEnum
   zzdjEnum1 = zzdjEnum1
@@ -66,8 +69,79 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
   engineering
 
   constructor(private message: NzMessageService, public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) { }
-
+  
   ngOnInit() {
+    //使用性质数据
+  const selectChildren = [
+    { label:"体育场馆",value:"体育场馆"},
+    { label:"会堂", value:"会堂"},
+    { label: "公共展览馆", value: "公共展览馆"},
+    { label: "博物馆的展示厅", value: "博物馆的展示厅"},
+    { label: "民用机场航站楼", value: "民用机场航站楼"},
+    { label: "客运车站候车室", value: "客运车站候车室"},
+    { label: "客运码头候船厅", value: "客运码头候船厅"},
+    { label: "宾馆", value: "宾馆"},
+    { label: "饭店", value:"饭店"},
+    { label: "商场", value: "商场"},
+    { label: "市场", value: "市场"},
+    { label: "影剧院", value: "影剧院"},
+    { label: "公共图书馆的阅览室", value: "公共图书馆的阅览室"},
+    { label: "营业性室内健身场馆", value:"营业性室内健身场馆"},
+    { label: "休闲场馆", value: "休闲场馆"},
+    { label: "医院的门诊楼", value: "医院的门诊楼"},
+    { label: "大学的教学楼", value:"大学的教学楼"},
+    { label: "图书馆", value:"图书馆"},
+    { label: "食堂", value: "食堂"},
+    { label: "劳动密集型企业的生产加工车间", value: "劳动密集型企业的生产加工车间"},
+    { label: "寺庙", value: "寺庙"},
+    { label: "教堂", value: "教堂"},
+    { label: "托儿所", value:"托儿所"},
+    { label: "幼儿园的儿童用房", value:"幼儿园的儿童用房"},
+    { label: "儿童游乐厅等室内儿童活动场所", value:"儿童游乐厅等室内儿童活动场所"},
+    { label: "养老院", value:"养老院"},
+    { label: "福利院", value:"福利院"},
+    { label: "医院", value:"医院"},
+    { label: "疗养院的病房楼", value:"疗养院的病房楼"},
+    { label: "中小学校的教学楼", value:"中小学校的教学楼"},
+    { label: "图书馆", value:"图书馆"},
+    { label: "食堂", value: "食堂"},
+    { label: "学校的集体宿舍", value:"学校的集体宿舍"},
+    { label: "劳动密集型企业的员工集体宿舍", value:"劳动密集型企业的员工集体宿舍"},
+    { label: "歌舞厅", value:"歌舞厅"},
+    { label: "录像厅", value:"录像厅"},
+    { label: "放映厅", value:"放映厅"},
+    { label: "卡拉ＯＫ厅", value:"卡拉ＯＫ厅"},
+    { label: "夜总会", value: "夜总会"},
+    { label: "游艺厅",value:"游艺厅"},
+    { label: "桑拿浴室",value:"桑拿浴室"},
+    { label: "网吧", value:"网吧"},
+    { label: "酒吧", value:"酒吧"},
+    { label: "具有娱乐功能的□餐馆",value:"具有娱乐功能的□餐馆"},
+    { label: "茶馆", value:"茶馆"},
+    { label: "咖啡厅", value:"咖啡厅"},
+    { label:  "国家机关办公楼",value: "国家机关办公楼"},
+    { label: "电力调度楼", value:"电力调度楼"},
+    { label:  "电信楼", value: "电信楼"},
+    { label: "邮政楼",value:"邮政楼"},
+    { label: "防灾指挥调度楼", value:"防灾指挥调度楼"},
+    { label: "广播电视楼", value:"广播电视楼"},
+    { label: "档案楼", value:"档案楼"},
+    { label: "本条第一至七项规定以外的单体建筑面积大于四万平方米或者建筑高度超过五十米的公共建筑",value:"本条第一至七项规定以外的单体建筑面积大于四万平方米或者建筑高度超过五十米的公共建筑"},
+    { label:"国家标准规定的一类高层住宅建筑",value:"国家标准规定的一类高层住宅建筑"},
+    { label: "城市轨道交通",value:"城市轨道交通"},
+    { label: "隧道工程",value:"隧道工程"},
+    { label: "大型发电",value:"大型发电"},
+    { label: "变配电工程",value:"变配电工程"},
+    { label: "生产、储存、装卸易燃易爆危险物品的工厂",value:"生产、储存、装卸易燃易爆危险物品的工厂"},
+    { label: "仓库",value:"仓库"},
+    { label: "专用车站", value:"专用车站"},
+    { label: "码头，易燃易爆气体和液体的的充装站", value:"码头，易燃易爆气体和液体的的充装站"},
+    { label: "供应站", value:"供应站"},
+    { label:"调压站",value:"调压站"}
+  ];
+  this.selectArr =selectChildren;
+    
+
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
     this.getAreaDropdown();

@@ -63,11 +63,11 @@
           <td rowspan='1' colspan='17'>
             <se error="必填">
               <nz-spin [nzSpinning]="!useNatureSelect"></nz-spin>
-              <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="data.useNature" name="useNature" required
-                *ngIf="useNatureSelect">
-                <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.natureName"
+              <nz-select [ngClass]="{pointer: type == 1}"  [(ngModel)]="selectedValue" nzShowSearch nzAllowClear name="useNature" required>
+             <!--  <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.Name"
                   [nzValue]="option.natureCode">
-                </nz-option>
+                </nz-option>--> 
+                  <nz-option *ngFor="let option of selectArr"  [nzLabel]="option.label" [nzValue]="option.value" value="option.value" ></nz-option>
               </nz-select>
             </se>
           </td>
