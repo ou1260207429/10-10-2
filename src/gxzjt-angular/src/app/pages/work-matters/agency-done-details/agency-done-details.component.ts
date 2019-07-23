@@ -280,6 +280,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
     }
   }
 
+
+  
   /**
    * 点击提交
    */
@@ -320,6 +322,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     }
 
 
+    
 
     if (this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType == 3 && (!this.tenantWorkFlowInstanceDto.auditors || this.tenantWorkFlowInstanceDto.auditors.length < 1)) {
       this.message.error('转派必须选择审批人')
