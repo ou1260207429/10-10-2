@@ -36,8 +36,8 @@ export class EngManageService {
   // }
 
   //撤回审查
-  WithdrawCheck(model?: any): Observable<any> {
-    return this.http.post(URLConfig.getInstance().REGISTER_URL + 'api/User/GetUserDtoList', model);
+  CancelApply(model?: any): Observable<any> {
+    return this.http.post(URLConfig.getInstance().SERVER_URL + 'api/services/app/ApplyService/CancelApply', model,model);
   }
 
 }

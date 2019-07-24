@@ -36,6 +36,7 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
   param = new FireAuditCompleteQueryDto();
   formResultData = [];
   rangeTime = [];
+  record;
   isAddProducttyepe1 = false;
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
@@ -50,15 +51,16 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
             this.watchItem(record)
           },
         },
-        // {
-        //   text: '撤回申请',
-        //   type: 'modal',
-        //   iif: record => (record.status === 0) ,
-        //   click: (record: any, modal: any) => {
-        //     this.withdraw();
-        //     // this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/${record.projectId}/${record.id}`]);
-        //   },
-        // },
+        {
+          text: '撤回申请',
+          type: 'modal',
+          iif: record => (record.status === 0) ,
+          click: (record: any, modal: any) => {
+            this.record=record;
+            this.withdraw();
+            // this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/${record.projectId}/${record.id}`]);
+          },
+        },
         {
           text: '重新申请',
           type: 'modal',
@@ -263,13 +265,23 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
     this.isAddProducttyepe1 = false;
   }
   subProducttype1(): void {
-    // this.EngManageService.WithdrawCheck().subscribe(
-    //   res => {
-    //     this.message.success(res.message);
+    this.EngManageService.CancelApply({flowId:this.record.id}).subscribe(
+      res => {
+        if(res.result.status==0){
+          this.message.error(res.result.message)
+        }else if(res.result.status==1){
+          this.message.success(res.result.message)
+        }else if(res.result.status==2){
+          this.message.success(res.result.message)
+        }else{
+          this.message.error("系统发生异常！")
+        }
 
-    //   },
-    // );
 
+      },
+    );
+
+    this.st.reload();
     this.isAddProducttyepe1 = false;
   }
 }
