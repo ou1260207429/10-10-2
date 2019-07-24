@@ -66,7 +66,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
   formDto: any = new AcceptApplyFormDto();
 
   //表单json对象
-  formJson
+  formJson;
 
   workFlowData
 
@@ -177,7 +177,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
           })
         } else {
           this.type = false
-        }
+        };
+        this.filterFileList();
       })
 
     })
@@ -233,7 +234,11 @@ export class AgencyDoneDetailsComponent implements OnInit {
     //文件过滤
     for (let x = 0; x < this.examineFormDto.attachment.length; ++x) {
 
-      if (this.examineFormDto.attachment[x].status != "done") {
+
+      if (this.examineFormDto.attachment[x].status != "done"
+        || !this.examineFormDto.attachment[x].url
+        || this.examineFormDto.attachment[x].url == '') {
+
         return false;
       }
 
@@ -253,7 +258,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
     var uploadList = [];
     for (let i = 0; i < this.examineFormDto.attachment.length; ++i) {
 
-      if (this.examineFormDto.attachment[i].status == "done") {
+      if (this.examineFormDto.attachment[i].status == "done"
+        && this.examineFormDto.attachment[i].status.url
+        && this.examineFormDto.attachment[i].status.url != '') {
+
         uploadList.push(this.examineFormDto.attachment[i]);
 
       }
@@ -279,6 +287,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
       );
     }
   }
+
+
 
   /**
    * 点击提交
@@ -318,6 +328,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       default:
         break;
     }
+
 
 
 

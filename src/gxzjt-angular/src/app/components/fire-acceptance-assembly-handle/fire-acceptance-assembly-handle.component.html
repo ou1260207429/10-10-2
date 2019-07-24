@@ -77,7 +77,8 @@
         <tr>
           <td rowspan='1' colspan='20'>
 
-            <div *ngIf="examineFormDto.opinion">
+            <!-- <div *ngIf="examineFormDto.opinion"> -->
+            <div>
               <div class="table_detail">
                 <h3>{{data.companyName}}：</h3>
                 <div style="line-height: 30px;font-size: 16px;">
@@ -100,6 +101,19 @@
                   </textarea>
 
             </div>
+
+            <!-- 
+            <div class="table_detail">
+              <h3>{{data.companyName}}：</h3>
+
+              <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion"
+                name="professionalContractorsopinion" required>
+                </textarea>
+
+            </div>
+       
+            -->
+
 
 
             <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.opinion">必填</p>

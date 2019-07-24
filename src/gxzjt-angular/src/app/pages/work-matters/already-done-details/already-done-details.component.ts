@@ -129,12 +129,13 @@ export class AlreadyDoneDetailsComponent implements OnInit {
         this.formJson = json;
         this.useNatureSelect = value[0].natures
         this.tenantWorkFlowInstanceDto = this.workFlowData = value[1].result;
-        this.tenantWorkFlowInstanceDto.workFlow_InstanceId = this.formDto.workFlow_Instance_Id
+        this.tenantWorkFlowInstanceDto.workFlow_InstanceId = this.formDto.workFlow_Instance_Id;
 
         //获取当前节点 由这个判断提交的接口
-        this.curNodeName = this.workFlowData.nodeViewInfo.curNodeName
+        this.curNodeName = this.workFlowData.nodeViewInfo.curNodeName;
 
-        this.type = false
+        this.type = false;
+        this.filterFileList();
       })
 
     })
@@ -155,6 +156,33 @@ export class AlreadyDoneDetailsComponent implements OnInit {
     this._flowServices.getWorkFlow_NodeRecordAndAuditorRecords(this.flowNo).subscribe(data => {
       this.data = data.result
     })
+  }
+
+
+
+  filterFileList() {
+
+    if (!this.data.fileList) {
+      return;
+    }
+    console.log("--------------------------------------");
+    //文件过滤
+    for (let x = 0; x < this.data.fileList.length; ++x) {
+      if (this.data.fileList[x].array) {
+        var uploadList = [];
+        for (let y = 0; y < this.data.fileList[x].array.length; ++y) {
+          if (this.data.fileList[x].array[y].status == "done"
+            && this.data.fileList[x].array[y].url
+            && this.data.fileList[x].array[y].url != '') {
+            uploadList.push(this.data.fileList[x].array[y]);
+
+          }
+        }
+        this.data.fileList[x].array = uploadList;
+
+      }
+
+    }
   }
 
 

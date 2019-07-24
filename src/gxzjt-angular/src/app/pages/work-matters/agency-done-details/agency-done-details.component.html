@@ -164,14 +164,14 @@
 
     <div class="textCenter" style="margin-bottom: 40px;" *ngIf="isLoginPerson">
       <div *ngIf="curNodeName == '业务审批负责人审批'">
-        <button nz-button nzType="primary" (click)="save(true)" [nzLoading]="butNzLoading">通过</button>
-        <button nz-button nzType="primary" (click)="save(false)" [nzLoading]="butNzLoading">不通过</button>
+        <button nz-button nzType="primary" (click)="save(true)" [nzLoading]="butNzLoading" [disabled]="butNzLoading">通过</button>
+        <button nz-button nzType="primary" (click)="save(false)" [nzLoading]="butNzLoading" [disabled]="butNzLoading">不通过</button>
       </div>
 
       <div *ngIf="curNodeName != '业务审批负责人审批'">
-        <button nz-button nzType="primary" (click)="save(true)"
+        <button nz-button nzType="primary" (click)="save(true) " [disabled]="butNzLoading"
           [nzLoading]="butNzLoading">{{curNodeName=='业务承办人审核'?'合格':'受理'}}</button>
-        <button nz-button nzType="primary" (click)="save(false)"
+        <button nz-button nzType="primary" (click)="save(false)" [disabled]="butNzLoading"
           [nzLoading]="butNzLoading">{{curNodeName=='业务承办人审核'?'不合格':'不受理'}}</button>
       </div>
 

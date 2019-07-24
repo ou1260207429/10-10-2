@@ -50,10 +50,11 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
           }
         },
         {
-          text: '删除', click: (record) => {
+          text: '删除',type:"del", click: (record,modal, comp) => {
+            record.OpeateType = 'delete';
             this._applyServiceService.post_DeleteDraft(record.projectId).subscribe(data => {
-              this.message.success('删除成功')
-              this.st.reload()
+            this.message.success('删除成功')
+            this.st.reload()
             }, () => {
               this.message.error('删除失败')
             })

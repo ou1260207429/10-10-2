@@ -8,6 +8,9 @@ import { PublicServices } from 'services/public.services';
 import { ExamineFormDto, ProjectAttachment } from '@shared/service-proxies/service-proxies';
 import lodash from 'lodash';
 import { URLConfig } from "@shared/config/host";
+
+import { indexOfFileByName } from "@shared/utils/array";
+
 /**
  * 消防设计的表单模块的办理或者结果
  */
@@ -142,7 +145,7 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
 
 
   customReq = (item: UploadXHRArgs) => {
-    var file = item.file as any;
+    var filePost = item.file as any;
 
     let params = {
       sourceId: createguid(),
@@ -150,17 +153,20 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
       module: "table",
     }
     const formData = new FormData();
-    formData.append('files', file);
+    formData.append('files', filePost);
     return this._publicServices.newUpload(formData, params).subscribe(data => {
 
+     
       item.onSuccess!({}, item.file!, event);
-
       // var file = item.file;
       var list = this.examineFormDto.attachment;
 
       // var file = (list.length - 1 >= 0 ? list[list.length - 1] : list[0]) as any;
-      var file = list[list.lastIndexOf(item.file as any)] as any;
+      var file = indexOfFileByName(list, item.file.name);
 
+      if (!file) {
+        return;
+      }
 
       file.uid = data.data[0].id;
       file.name = file.name;
@@ -168,7 +174,7 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
       file.tid = file.uid;
       file.url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
       file.fileUrl = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
-
+    
 
     }, error => {
       this.message.error('上传失败，文件不能超过200M！');
