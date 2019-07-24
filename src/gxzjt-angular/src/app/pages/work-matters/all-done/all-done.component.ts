@@ -281,7 +281,9 @@ export class WorkMattersAllDoneComponent implements OnInit {
     this.router.navigate([`/app/work-matters/alreadyDoneDetailsComponent/${item.flowNo}/${item.flowId}/${item.flowPathType}`]);
   }
   change(v) {
-
+    if(this.param.page==v.pi){
+      return   //解决页面数据不能复制问题，因为change改变事件当点击的就会触发了所以当page不变的时候不执行方法
+    }
     this.param.page = v.pi;
     this.GetHandlingMatters();
   }
