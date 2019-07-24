@@ -104,8 +104,6 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     { label: "医院", value:"医院"},
     { label: "疗养院的病房楼", value:"疗养院的病房楼"},
     { label: "中小学校的教学楼", value:"中小学校的教学楼"},
-    { label: "图书馆", value:"图书馆"},
-    { label: "食堂", value: "食堂"},
     { label: "学校的集体宿舍", value:"学校的集体宿舍"},
     { label: "劳动密集型企业的员工集体宿舍", value:"劳动密集型企业的员工集体宿舍"},
     { label: "歌舞厅", value:"歌舞厅"},
