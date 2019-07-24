@@ -113,6 +113,9 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
     let url = URLConfig.getInstance().REGISTER_URL + "api/User/Register";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
 
 
+    this.model.EnterpriseName = this.model.EnterpriseName.replace(/\s+/g, '');
+
+
     this.http.post(url, this.model, this.httpOptions).subscribe((res: any) => {
 
       // console.log(res);

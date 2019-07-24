@@ -286,6 +286,86 @@ export class AppMenus {
           i18n: "已办",
           link: "/app/work-matters/alreadyDoneComponent",
         },
+
+
+      ]
+    },
+
+    {
+      text: "预警中心",
+      icon: { type: "icon", value: "warning" },// 图标
+      acl: [AppMenus.aclSys, AppMenus.aclOrg],
+      link: "/app/statistics/warning-center",
+    },
+
+    {
+      text: "",
+      i18n: "工程管理",
+      icon: { type: "icon", value: "project" },// 图标
+      acl: [AppMenus.aclCompany, AppMenus.aclSys, AppMenus.aclOrg],
+      children: [
+        {
+          text: "",
+          i18n: "工程列表",
+          link: "/app/engineering-management/engineeringListComponent",
+        },
+        {
+          text: "",
+          i18n: "消防设计审查",
+          link: "/app/engineering-management/fireDesignComponent",
+        },
+        {
+          text: "",
+          i18n: "消防验收管理",
+          link: "/app/engineering-management/fireAcceptanceComponent",
+        },
+        {
+          text: "",
+          i18n: "竣工验收备案",
+          link: "/app/engineering-management/completedAcceptanceComponent",
+        },
+        {
+          text: "",
+          i18n: "草稿箱",
+          link: "/app/work-matters/draftsComponent",
+        },
+      ]
+    },
+
+    {
+      text: "",
+      i18n: "用户中心",
+      icon: { type: "icon", value: "user" },// 图标
+      children: [
+        {
+          text: "修改密码",
+
+          link: "/app/user-center/modify-psw",
+        },
+
+      ]
+    },
+
+  ];
+
+  static MenusOrgLeader: Menu[] = [
+
+    {
+      text: "",
+      i18n: "工作事项",
+      icon: { type: "icon", value: "bars" },// 图标
+      acl: [AppMenus.aclSys, AppMenus.aclOrg],
+      children: [
+        {
+          text: "",
+          i18n: "待办",
+          link: "/app/work-matters/agencyDoneComponent",
+        },
+        {
+          text: "",
+          i18n: "已办",
+          link: "/app/work-matters/alreadyDoneComponent",
+        },
         {
           text: "",
           i18n: "经办事项",
@@ -351,6 +431,7 @@ export class AppMenus {
     },
 
   ];
+
 
 }
 

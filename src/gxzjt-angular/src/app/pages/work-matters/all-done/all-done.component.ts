@@ -92,9 +92,12 @@ export class WorkMattersAllDoneComponent implements OnInit {
     },
     {
       title: '状态', index: 'acceptStatus', width: '80px', type: 'tag', tag: {
-        0: { text: '不受理', color: 'red' },
-        1: { text: '审核中', color: '' },
-        2: { text: '已完成', color: 'green' },
+        0: { text: '未处理', color: '' },
+        1: { text: '受理中', color: 'blue' },
+        2: { text: '不受理', color: 'rgb(219, 56, 6)' },
+        3: { text: '不合格', color: 'red' },
+        4: { text: '合格', color: 'green' },
+        5: { text: '未抽中', color: 'orange' },
       }
     },
     { title: '申报时间', type: 'date', index: 'applyTime', width: '80px' },
@@ -278,7 +281,9 @@ export class WorkMattersAllDoneComponent implements OnInit {
     this.router.navigate([`/app/work-matters/alreadyDoneDetailsComponent/${item.flowNo}/${item.flowId}/${item.flowPathType}`]);
   }
   change(v) {
-
+    if(this.param.page==v.pi){
+      return   //解决页面数据不能复制问题，因为change改变事件当点击的就会触发了所以当page不变的时候不执行方法
+    }
     this.param.page = v.pi;
     this.GetHandlingMatters();
   }

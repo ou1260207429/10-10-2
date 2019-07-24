@@ -35,9 +35,12 @@
       <div style="width: 100%;height: 10px;"></div>
       <div style="width:100%;">
         <nz-select class="search_menu_input" formControlName="status" nzShowSearch nzAllowClear nzPlaceHolder="状态">
-          <nz-option nzLabel="不受理" nzValue="0"></nz-option>
-          <nz-option nzLabel="审核中" nzValue="1"></nz-option>
-          <nz-option nzLabel="已完结" nzValue="2"></nz-option>
+          <nz-option nzLabel="未处理" nzValue="0"></nz-option>
+          <nz-option nzLabel="受理中" nzValue="1"></nz-option>
+          <nz-option nzLabel="不受理" nzValue="2"></nz-option>
+          <nz-option nzLabel="不合格" nzValue="3"></nz-option>
+          <nz-option nzLabel="合格" nzValue="4"></nz-option>
+          <nz-option nzLabel="未抽中" nzValue="5"></nz-option>
         </nz-select>
 
         <span>完成时间：</span>

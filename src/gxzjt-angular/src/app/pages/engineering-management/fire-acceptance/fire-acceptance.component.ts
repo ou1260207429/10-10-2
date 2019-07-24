@@ -9,7 +9,7 @@ import { ProjectFlowServcieServiceProxy, FireAuditCompleteQueryDto } from '@shar
 
 import { PublicModel } from 'infrastructure/public-model';
 import { Router } from '@angular/router';
-
+import { EngManageService } from '../engineering-management.service';
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
@@ -33,6 +33,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
   formResultData;
   isAddProducttyepe1=false;
   companyName;
+  record;
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     {
@@ -47,15 +48,16 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
             this.watchItem(record);
           },
         },
-        // {
-        //   text: '撤回申请',
-        //   type: 'modal',
-        //   iif: record => (record.status === 0) ,
-        //   click: (record: any, modal: any) => {
-        //     this.withdraw()
-        //     // this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/${record.projectId}/${record.id}`]);
-        //   },
-        // },
+        {
+          text: '撤回申请',
+          type: 'modal',
+          iif: record => (record.status === 0) ,
+          click: (record: any, modal: any) => {
+            this.record=record;
+            this.withdraw();
+            // this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/${record.projectId}/${record.id}`]);
+          },
+        },
         {
           text: '重新申请',
           type: 'modal',
@@ -142,6 +144,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     private http: _HttpClient,
     private _eventEmiter: EventEmiter,
     private _publicModel:PublicModel,
+    private EngManageService:EngManageService,
     private xlsx: XlsxService, private message: NzMessageService) {
      super();
 
@@ -266,13 +269,23 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     this.isAddProducttyepe1 = false;
   }
   subProducttype1(): void {
-    // this.EngManageService.WithdrawCheck().subscribe(
-    //   res => {
-    //     this.message.success(res.message);
+    this.EngManageService.CancelApply({flowId:this.record.id}).subscribe(
+      res => {
+        if(res.result.status==0){
+          this.message.error(res.result.message)
+        }else if(res.result.status==1){
+          this.message.success(res.result.message)
+        }else if(res.result.status==2){
+          this.message.success(res.result.message)
+        }else{
+          this.message.error("系统发生异常！")
+        }
 
-    //   },
-    // );
 
+      },
+    );
+    this.st.reload();
     this.isAddProducttyepe1 = false;
+
   }
 }
