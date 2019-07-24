@@ -329,9 +329,9 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
 
     }, error => {
-      this.message.error('上传失败，文件不能超过200M！');
+      this.message.error('上传失败，多次尝试无效请联系系统客服（请注意文件不能超过200M）');
 
-      item.onError!('上传失败，文件不能超过200M！', item.file!);
+      item.onError!('上传失败，多次尝试无效请联系系统客服（请注意文件不能超过200M）', item.file!);
 
       // this.data.fileList[index].pop();
     },

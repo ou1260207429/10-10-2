@@ -166,11 +166,11 @@ export class AppSessionService {
               break;
             case '企业用户':
               this._ACLService.setRole([AppMenus.aclCompany]);
-              this._MenuService.add(AppMenus.MenusOrg);
+              this._MenuService.add(AppMenus.MenusCompy);
               break;
             default:
               this._ACLService.setRole([AppMenus.aclCompany]);
-              this._MenuService.add(AppMenus.MenusOrg);
+              this._MenuService.add(AppMenus.MenusCompy);
 
               break;
           }
