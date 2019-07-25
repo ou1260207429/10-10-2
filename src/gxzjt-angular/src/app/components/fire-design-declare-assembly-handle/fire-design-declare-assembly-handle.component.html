@@ -75,23 +75,42 @@
             <div *ngIf="!examineFormDto.fileCodePrefix" class="rightSpan">必填</div>
           </td>
         </tr>
+
         <tr>
           <td rowspan='1' colspan='20'>
-            <div class="table_detail">
-              <h3>{{data.companyName}}：</h3>
-              <div *ngIf="examineFormDto">
-                <p *ngIf="examineFormDto.designOrg">
-                  你单位申请的{{data.projectName}}建设工程（受理凭证：{{data.acceptFileCode}}，{{data.applyDateTime|date:'yyyy年MM月dd日'}}收）消防设计文件收悉。该工程位于{{data.address}}内。{{data.descr}}。设计单位为<span
-                    *ngIf="examineFormDto.drawingOrg">{{examineFormDto.designOrg.companyName}}</span>，设计资质为建设工程{{examineFormDto.designOrg.qualifications}}。按照图纸审查机构（<span
-                    *ngIf="examineFormDto.drawingOrg">{{examineFormDto.drawingOrg.companyName}}</span>）对该工程设计图纸的技术审查结论，我局提出以下意见：
-                </p>
+            <!-- <div *ngIf="examineFormDto.opinion&&!examineFormDto.content"> -->
+            <div>
+              <div class=" table_detail">
+                <h3>{{data.companyName}}：</h3>
+                <div *ngIf="examineFormDto">
+                  <p *ngIf="examineFormDto.designOrg">
+                    你单位申请的{{data.projectName}}建设工程（受理凭证：{{data.acceptFileCode}}，{{data.applyDateTime|date:'yyyy年MM月dd日'}}收）消防设计文件收悉。该工程位于{{data.address}}内。{{data.descr}}。设计单位为<span
+                      *ngIf="examineFormDto.drawingOrg">{{examineFormDto.designOrg.companyName}}</span>，设计资质为建设工程{{examineFormDto.designOrg.qualifications}}。按照图纸审查机构（<span
+                      *ngIf="examineFormDto.drawingOrg">{{examineFormDto.drawingOrg.companyName}}</span>）对该工程设计图纸的技术审查结论，我局提出以下意见：
+                  </p>
+                </div>
               </div>
-            </div>
-            <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion"
-              name="professionalContractorsopinion" required>
+              <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion"
+                name="professionalContractorsopinion" required>
                   </textarea>
+              <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.opinion">必填</p>
 
-            <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.opinion">必填</p>
+            </div>
+
+
+            <!-- <div *ngIf="examineFormDto.content&&!examineFormDto.opinion">
+              <div class=" table_detail">
+                <h3>{{data.companyName}}：</h3>
+              </div>
+              <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.content"
+                name="professionalContractorscontent" required cols="34">
+                    </textarea>
+              <p style="margin-top: 8px;">为保持格式一致，段落首行请输入4个空格</p>
+              <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.content">必填</p>
+
+
+            </div> -->
+            <!-- <button nz-button (click)="test()">测试</button> -->
 
             <div class="textLeft" *ngIf="examineFormDto">
               <nz-upload [(nzFileList)]="examineFormDto.attachment" [nzCustomRequest]="customReq"
@@ -105,6 +124,7 @@
 
           </td>
         </tr>
+
         <tr>
           <td class="fontweight fontLeft leftTitle">本意见书一式两份，一份交建设单位，一份存档。 </td>
         </tr>

@@ -23,7 +23,6 @@ import { indexOfFileByName } from "@shared/utils/array";
 export class FireAcceptanceAssemblyComponent implements OnInit {
   //搜索
   //selectedValue:"体育场馆";
-  selectArr: Array<{ label: string; value: string }> = [];
 
   //判断是新增或者办理  0是新增 1是办理
   @Input() type: number = 0
@@ -54,7 +53,7 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
   @Output() private childOuter = new EventEmitter();
 
   //从父组件获取使用行性质的select
-  @Input() useNatureSelect: any
+  @Input() useNatureSelect: any = [];
  
  
   //资质等级的列表
@@ -138,7 +137,7 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     { label: "供应站", value:"供应站"},
     { label:"调压站",value:"调压站"}
   ];
-  this.selectArr =selectChildren;
+  this.useNatureSelect =selectChildren;
     
 
     //向父组件发送数据   把表单对象传过去
@@ -329,9 +328,9 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
 
     }, error => {
-      this.message.error('上传失败，文件不能超过200M！');
+      this.message.error('上传失败，多次尝试无效请联系系统客服（请注意文件不能超过200M）');
 
-      item.onError!('上传失败，文件不能超过200M！', item.file!);
+      item.onError!('上传失败，多次尝试无效请联系系统客服（请注意文件不能超过200M）', item.file!);
 
       // this.data.fileList[index].pop();
     },
