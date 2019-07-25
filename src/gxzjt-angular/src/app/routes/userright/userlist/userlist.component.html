@@ -20,12 +20,17 @@
 
   <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
     <input nz-input formControlName="eName" name='eName' placeholder="请输入用户名称" class="search_menu_input">
+    <input nz-input formControlName="orgname" name='orgname' placeholder="组织机构名称" class="search_menu_input">
     <button nz-button (click)="search()" nzType="primary">搜索</button>
     <button nz-button (click)="resetForm()" class="search_menu">重置</button>
 
   </form>
 
-  <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns"></st>
+  <!-- <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns"></st> -->
+  <st #st   [data]="formResultData.data" [columns]="columns" [page]="pageConfig"
+  [total]="total" [pi]="postmodel.page"
+  [ps]="postmodel.size" (change)="change($event)">
+</st>
   <!-- <st #st *ngIf="formResultData" [data]="formResultData.data" [req]="{postmodel: postmodel}" [columns]="columns" [pi]="postmodel.page"
   [ps]="postmodel.page" [page]="pageConfig" [total]="formResultData.totalCount"></st> -->
 
