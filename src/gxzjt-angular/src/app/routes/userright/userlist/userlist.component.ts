@@ -30,8 +30,8 @@ export class UserrightUserlistComponent implements OnInit {
   postmodel = {
     eName:'',
     organizationsName:'',
-    page: 1,
-    pageSize: 10,
+    page: '1',
+    pageSize: '10',
   };
   total;
   formResultData;
@@ -212,8 +212,8 @@ pageConfig: STPage = {
       eName: [null],
       orgname:[null],
     });
-    this.postmodel.page=1;
-    this.postmodel.pageSize=10;
+    this.postmodel.page='1';
+    this.postmodel.pageSize='10';
     this.postmodel.eName=this.fliterForm.controls.eName.value;
     this.postmodel.organizationsName=this.fliterForm.controls.orgname.value;
     this.getList();
@@ -221,8 +221,8 @@ pageConfig: STPage = {
 
 
   search() {
-    this.postmodel.page=1;
-    this.postmodel.pageSize=10;
+    this.postmodel.page='1';
+    this.postmodel.pageSize='10';
     this.postmodel.eName=this.fliterForm.controls.eName.value;
     this.postmodel.organizationsName=this.fliterForm.controls.orgname.value;
     this.getList()

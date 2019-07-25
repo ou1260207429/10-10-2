@@ -29,7 +29,7 @@
   <!-- <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns"></st> -->
   <st #st   [data]="formResultData.data" [columns]="columns" [page]="pageConfig"
   [total]="total" [pi]="postmodel.page"
-  [ps]="postmodel.size" (change)="change($event)">
+  [ps]="postmodel.pageSize" (change)="change($event)">
 </st>
   <!-- <st #st *ngIf="formResultData" [data]="formResultData.data" [req]="{postmodel: postmodel}" [columns]="columns" [pi]="postmodel.page"
   [ps]="postmodel.page" [page]="pageConfig" [total]="formResultData.totalCount"></st> -->
