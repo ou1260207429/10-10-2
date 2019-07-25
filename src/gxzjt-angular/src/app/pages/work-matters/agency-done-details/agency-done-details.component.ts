@@ -303,7 +303,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
         break;
 
       case '业务承办人审核':
-        if ((!this.examineFormDto.fileCodePrefix || !this.examineFormDto.content) && this.flowPathType != 3) {
+        if ((!this.examineFormDto.fileCodePrefix || !this.examineFormDto.opinion) && this.flowPathType != 3) {
           this.message.error('请输入必填项')
           return false;
         }
@@ -319,7 +319,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
           this.message.error('请输入必填项')
           return false;
         } else {
-          if (!bo && !this.examineFormDto.content) {
+          if (!bo && !this.examineFormDto.opinion) {
             this.message.error('不合格需要填写意见')
             return false;
           }

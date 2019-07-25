@@ -56,20 +56,20 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
 
-    if (!this.examineFormDto.content && !this.examineFormDto.opinion) {
-      var date = new Date();
-      var dateStr = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + "日";
-      this.examineFormDto.content =
-        `    你单位申请的` + this.data.projectName + `建设工程（受理凭证：` + this.data.acceptFileCode + `，` + dateStr + `收）消防设计文件收悉。该工程位于` + this.data.address + `内。` + this.data.descr + `。设计单位为` + this.examineFormDto.designOrg.companyName
-        + `，设计资质为建设工程` + this.examineFormDto.designOrg.qualifications
-        + `。按照图纸审查机构（` + this.examineFormDto.drawingOrg.companyName
-        + `）对该工程设计图纸的技术审查结论，我局提出以下意见：\n` 
-        + `    一、同意该工程消防设计，请按照审查批准的消防设计文件进行施工。\n`
-        + `    二、建设单位应当依法选用具有规定资质等级的施工、监理等单位，并查验其合法身份证明和资质等级证明文件。\n`
-        + `    三、提供图纸审查的技术服务机构和人员对出具的技术审查意见负责。\n`
-        + `    四、经此次审查的建设工程消防设计图纸如需变更，应当重新报送我单位审查。该工程竣工后，应当向我单位申报消防验收，验收合格后方可投入使用。\n`;
+    // if (!this.examineFormDto.content && !this.examineFormDto.opinion) {
+    //   var date = new Date();
+    //   var dateStr = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + "日";
+    //   this.examineFormDto.content =
+    //     `    你单位申请的` + this.data.projectName + `建设工程（受理凭证：` + this.data.acceptFileCode + `，` + dateStr + `收）消防设计文件收悉。该工程位于` + this.data.address + `内。` + this.data.descr + `。设计单位为` + this.examineFormDto.designOrg.companyName
+    //     + `，设计资质为建设工程` + this.examineFormDto.designOrg.qualifications
+    //     + `。按照图纸审查机构（` + this.examineFormDto.drawingOrg.companyName
+    //     + `）对该工程设计图纸的技术审查结论，我局提出以下意见：\n` 
+    //     + `    一、同意该工程消防设计，请按照审查批准的消防设计文件进行施工。\n`
+    //     + `    二、建设单位应当依法选用具有规定资质等级的施工、监理等单位，并查验其合法身份证明和资质等级证明文件。\n`
+    //     + `    三、提供图纸审查的技术服务机构和人员对出具的技术审查意见负责。\n`
+    //     + `    四、经此次审查的建设工程消防设计图纸如需变更，应当重新报送我单位审查。该工程竣工后，应当向我单位申报消防验收，验收合格后方可投入使用。\n`;
 
-    }
+    // }
 
 
   }
