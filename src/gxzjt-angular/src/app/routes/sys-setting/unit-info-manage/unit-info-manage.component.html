@@ -35,7 +35,7 @@
 
 
 <!-- 单位信息新增 -->
-<nz-modal [(nzVisible)]="isAddProducttyepe5" nzTitle="设置部门负责人" (nzOnCancel)="handleCancel5()"
+<nz-modal [nzMaskClosable]='false' [(nzVisible)]="isAddProducttyepe5" nzTitle="设置部门负责人" (nzOnCancel)="handleCancel5()"
   (nzOnOk)="subProducttype5()">
   <div style="margin-top: 8px" nz-row>
     <div nz-col nzSpan="5">单位名称</div>

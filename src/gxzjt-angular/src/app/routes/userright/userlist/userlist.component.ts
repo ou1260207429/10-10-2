@@ -279,7 +279,8 @@ pageConfig: STPage = {
     this.isAddProducttyepe1 = false;
   }
   handleCancel2(): void {
-
+    this.Password='';
+    this.Password2='';
     this.isAddProducttyepe2 = false;
   }
   subProducttype2(): void {
@@ -293,11 +294,18 @@ pageConfig: STPage = {
 
       this.UserRightService.ResetPassword(this.restpasswordmoedl).subscribe(
         res => {
-          this.message.success(res.message);
-          this.refresh();
+          if(res.result==0){
+            this.message.success(res.message);
+            this.refresh();
+          }else{
+            this.message.error(res.message);
+            this.refresh();
+          }
+
         },
       );
-
+      this.Password='';
+      this.Password2='';
       this.isAddProducttyepe2 = false;
     }else{
       this.message.error("两次输入密码不一致");

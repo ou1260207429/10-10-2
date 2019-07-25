@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { StatisticalServiceServiceProxy, ProjectApplyQueryDto } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
 import { timeTrans } from 'infrastructure/regular-expression';
+import { StatisticsService } from '../statistics.service';
 import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 @Component({
   selector: 'app-statistics-pro-app-static',
@@ -25,7 +26,10 @@ export class StatisticsProAppStaticComponent implements OnInit {
 
   formData = {};total;
   param = new ProjectApplyQueryDto();
-  pageConfig: STPage = publicPageConfig;
+  pageConfig: STPage = {
+    front: false,
+    show: true,
+  };
 
 
   @ViewChild('st') st: STComponent;
@@ -95,6 +99,7 @@ export class StatisticsProAppStaticComponent implements OnInit {
   constructor(private http: _HttpClient,
     private modal: ModalHelper,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
+    private StatisticsService:StatisticsService,
     private formBuilder: FormBuilder,
     private xlsx: XlsxService) {
 
@@ -102,7 +107,7 @@ export class StatisticsProAppStaticComponent implements OnInit {
 
   ngOnInit() {
     this.param.page=1;
-    this.param.maxResultCount=3000;
+    this.param.maxResultCount=10;
     this.param.projectName =null
     this.param.recordNumber =null;
     this.param.status=-1;
@@ -131,6 +136,7 @@ export class StatisticsProAppStaticComponent implements OnInit {
     //   .subscribe(() => this.st.reload());
   }
   search() {
+    this.param.page=1;
     this.param.recordNumber=this.fliterForm.controls.proNo.value;
     this.param.projectName=this.fliterForm.controls.proName.value;
     this.param.status=this.fliterForm.controls.proType.value;
@@ -150,20 +156,22 @@ export class StatisticsProAppStaticComponent implements OnInit {
       this.param.endApplyTime='';
     }
 
-    this.statisticalServiceServiceProxy.post_GetProjectApplyList(this.param).subscribe((result: any) => {
-      if(result.data){
-         this.formResultData = result.data;
-         this.total=result;
-         console.log(this.total)
-      }else{
-        this.formResultData=[];
-      }
-      this.st.reload()
-    }, err => {
-      console.log(err);
-      this.st.reload()
+    // this.statisticalServiceServiceProxy.post_GetProjectApplyList(this.param).subscribe((result: any) => {
+    //   if(result.data){
+    //      this.formResultData = result.data;
+    //      this.total=result;
+    //      console.log(this.total)
+    //   }else{
+    //     this.formResultData=[];
+    //   }
+    //   this.st.reload()
+    // }, err => {
+    //   console.log(err);
+    //   this.st.reload()
 
-    });
+    // });
+    this.getList();
+
   }
 
   resetForm(): void {
@@ -174,6 +182,7 @@ export class StatisticsProAppStaticComponent implements OnInit {
       dateRange: [this.rangeTime],
 
     });
+    this.param.page=1;
     this.search();
   }
 
@@ -203,17 +212,22 @@ export class StatisticsProAppStaticComponent implements OnInit {
     this.isAddProducttyepe5 = true;
   }
   getList() {
-      // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
-      // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
-      this.param.startApplyTime=timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
-      this.param.endApplyTime =timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
-      this.statisticalServiceServiceProxy.post_GetProjectApplyList(this.param).subscribe((result: any) => {
-      this.formResultData = result;
-      this.total=result.total;
-    }, err => {
-      console.log(err);
+    this.StatisticsService.GetProjectApplyList(this.param).subscribe(
+      res => {
+        if(res.result.data){
+               this.formResultData =res.result.data;
+               this.total=res.result.total;
+               console.log(this.total)
+            }else{
+              this.formResultData=[];
+            }
+            this.st.reload()
+          }, err => {
+            console.log(err);
+            this.st.reload()
 
-    });
+      },
+    );
   }
   resetTime() {
     var startTime = new Date();
@@ -221,9 +235,10 @@ export class StatisticsProAppStaticComponent implements OnInit {
     this.rangeTime = [startTime, new Date()];
   }
   change(v) {
-    pageOnChange(v, this.param, () => {
-      this.getList();
-    })
-    this.st.reload();
+    if(this.param.page==v.pi){
+      return   //解决页面数据不能复制问题，因为change改变事件当点击的就会触发了所以当page不变的时候不执行方法
+    }
+    this.param.page = v.pi;
+    this.getList();
   }
 }

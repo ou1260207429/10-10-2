@@ -47,6 +47,6 @@
 
 
 <!-- 撤回提示  -->
-<nz-modal [(nzVisible)]="isAddProducttyepe1" nzTitle="提示" (nzOnCancel)="handleCancel1()" (nzOnOk)="subProducttype1()">
+<nz-modal [nzMaskClosable]='false' [(nzVisible)]="isAddProducttyepe1" nzTitle="提示" (nzOnCancel)="handleCancel1()" (nzOnOk)="subProducttype1()">
   <span>确定撤回申请吗?</span>
 </nz-modal>
