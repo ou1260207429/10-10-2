@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
-import { STColumn, STComponent, XlsxService } from '@delon/abc';
+import { STColumn, STComponent, XlsxService, STPage } from '@delon/abc';
 import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { StatisticalServiceServiceProxy, TimeoutQuetyDto } from '@shared/service-proxies/service-proxies';
 import { timeTrans } from 'infrastructure/regular-expression';
+import {StatisticsService} from '../statistics.service'
 
 @Component({
   selector: 'app-statistics-timeout-deal-with',
@@ -24,7 +25,10 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
   submodel = {
     Name: ""
   };
-
+  pageConfig: STPage = {
+    front: false,
+    show: true,
+  };
   formData = {};
   param = new TimeoutQuetyDto();
 
@@ -95,6 +99,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
   constructor(private http: _HttpClient,
     private modal: ModalHelper,
     private formBuilder: FormBuilder,
+    private StatisticsService:StatisticsService,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
     private xlsx: XlsxService) { this.param.init(
 
@@ -108,24 +113,11 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
         "page": 1,
         "sorting": "ProjectName",
         "skipCount": 0,
-        "maxResultCount": 3000
+        "maxResultCount": 10
       });}
 
   ngOnInit() {
-    // this.param.init(
 
-    //   {
-    //     "recordNumber": "",
-    //     "projectName": "",
-    //     "status": -1,
-    //     "startApplyTime": "",
-    //     "endApplyTime": "",
-    //     "dateTimeNow": "",
-    //     "page": 1,
-    //     "sorting": "ProjectName",
-    //     "skipCount": 0,
-    //     "maxResultCount": 10
-    //   });
     this.resetTime();
     this.fliterForm = this.formBuilder.group({
       proNo: [null],
@@ -145,19 +137,16 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
     this.getList();
   }
   search() {
+    this.param.page=1;
     this.param.recordNumber = this.fliterForm.controls.proNo.value;
     this.param.projectName = this.fliterForm.controls.proName.value;
     this.param.status = this.fliterForm.controls.proType.value;
     if (this.param.status == null) {
       this.param.status = -1;
     }
-    // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
-    // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
-    //  this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
-    // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+
     if(this.fliterForm.controls.dateRange.value.length!=0){
-      // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
-      // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+
       this.param.startApplyTime=timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
       this.param.endApplyTime =timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
     }else{
@@ -180,6 +169,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
   }
 
   resetForm(): void {
+    this.param.page=1;
     this.fliterForm = this.formBuilder.group({
       proNo: [null],
       proName: [null],
@@ -218,35 +208,43 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
   }
   getList() {
 
-      // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
-      // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
-      // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
-      // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+
       if(this.fliterForm.controls.dateRange.value.length!=0){
-        // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
-        // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
+
         this.param.startApplyTime=timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
         this.param.endApplyTime =timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
       }else{
         this.param.startApplyTime='';
         this.param.endApplyTime='';
       }
-      this.statisticalServiceServiceProxy.post_GetTimeoutList(this.param).subscribe((result: any) => {
-      this.formResultData = result.data;
-      this.total=result.total
-    }, err => {
-      console.log(err);
+    //   this.statisticalServiceServiceProxy.post_GetTimeoutList(this.param).subscribe((result: any) => {
+    //   this.formResultData = result.data;
+    //   this.total=result.total
+    // }, err => {
+    //   console.log(err);
 
-    });
+    // });
+    this.StatisticsService.GetTimeoutList(this.param).subscribe(
+      res => {
+
+               this.formResultData = res.result.data;
+               this.total=res.result.total;
+
+               console.log(this.total)
+      },
+    );
   }
   resetTime() {
     var startTime = new Date();
     startTime.setDate(startTime.getDate() - 30)
     this.rangeTime = [startTime, new Date()];
   }
-  // change(v) {
-  //   pageOnChange(v, this.param, () => {
-  //     // this.getList();
-  //   })
-  // }
+  change(v) {
+    if(this.param.page==v.pi){
+      return   //解决页面数据不能复制问题，因为change改变事件当点击的就会触发了所以当page不变的时候不执行方法
+    }
+    this.param.page = v.pi;
+    this.getList();
+  }
+
 }

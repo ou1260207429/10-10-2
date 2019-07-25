@@ -67,7 +67,7 @@
 </nz-card>
 
 <!-- 编辑 -->
-<nz-modal [(nzVisible)]="isAddProducttyepe1" nzTitle="编辑区域" (nzOnCancel)="handleCancel1()" (nzOnOk)="subProducttype1()">
+<nz-modal [nzMaskClosable]='false' [(nzVisible)]="isAddProducttyepe1" nzTitle="编辑区域" (nzOnCancel)="handleCancel1()" (nzOnOk)="subProducttype1()">
   <div nz-row>
     <div nz-col nzSpan="5">行政区域名称</div>
     <div nz-col nzSpan="19">
@@ -86,7 +86,7 @@
 </nz-modal>
 
 <!-- 添加 -->
-<nz-modal [(nzVisible)]="isAddProducttyepe2" nzTitle="添加区域" (nzOnCancel)="handleCancel2()" (nzOnOk)="subProducttype2()">
+<nz-modal [nzMaskClosable]='false' [(nzVisible)]="isAddProducttyepe2" nzTitle="添加区域" (nzOnCancel)="handleCancel2()" (nzOnOk)="subProducttype2()">
   <div nz-row>
     <div nz-col nzSpan="5">行政区域名称</div>
     <div nz-col nzSpan="19">

@@ -489,7 +489,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
         }],
 
     },
-  
+
     engineerinDescription: '',
 
     fileList: [
@@ -550,7 +550,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
   form: FormGroup
 
   //使用性质
-  useNatureSelect 
+  useNatureSelect
 
   constructor(private reuseTabService: ReuseTabService,
     private _eventEmiter: EventEmiter,
@@ -592,11 +592,16 @@ export class AddFireDesignDeclareComponent implements OnInit {
         if (json.mappingUnit.no instanceof String) {
           json.mappingUnit.no = [{ noValue: json.mappingUnit.no }];
         }
-        // if(json.mappingUnit.no instanceof Array){
-        //   if (json.mappingUnit.no[0] instanceof String){
-
-        //   }       
-        // }
+        if (json.mappingUnit.no instanceof Array) {
+          if (json.mappingUnit.no[0] instanceof String) {
+            var list = [];
+            for (var i = 0; i < json.mappingUnit.no.length; ++i) {
+              var item = { noValue: json.mappingUnit.no[i] };
+              list.push(item);
+            }
+            json.mappingUnit.no = list;
+          }
+        }
         json.mappingUnit.no = convertToArray(json.mappingUnit.no);
 
 

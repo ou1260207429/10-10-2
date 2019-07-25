@@ -20,12 +20,17 @@
 
   <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
     <input nz-input formControlName="eName" name='eName' placeholder="请输入用户名称" class="search_menu_input">
+    <input nz-input formControlName="orgname" name='orgname' placeholder="组织机构名称" class="search_menu_input">
     <button nz-button (click)="search()" nzType="primary">搜索</button>
     <button nz-button (click)="resetForm()" class="search_menu">重置</button>
 
   </form>
 
-  <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns"></st>
+  <!-- <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns"></st> -->
+  <st #st   [data]="formResultData.data" [columns]="columns" [page]="pageConfig"
+  [total]="total" [pi]="postmodel.page"
+  [ps]="postmodel.pageSize" (change)="change($event)">
+</st>
   <!-- <st #st *ngIf="formResultData" [data]="formResultData.data" [req]="{postmodel: postmodel}" [columns]="columns" [pi]="postmodel.page"
   [ps]="postmodel.page" [page]="pageConfig" [total]="formResultData.totalCount"></st> -->
 
@@ -39,19 +44,19 @@
 
 
 <!-- 锁定用户  -->
-<nz-modal [(nzVisible)]="isAddProducttyepe" nzTitle="锁定用户" (nzOnCancel)="handleCancel()" (nzOnOk)="subProducttype()">
+<nz-modal [nzMaskClosable]='false' [(nzVisible)]="isAddProducttyepe" nzTitle="锁定用户" (nzOnCancel)="handleCancel()" (nzOnOk)="subProducttype()">
 
   <nz-range-picker [(ngModel)]="rangeTime" name="rangeTime" nzFormat="yyyy/MM/dd"
     style="margin-right: 10px;margin-top: 10px;"></nz-range-picker>
 </nz-modal>
 
 <!-- 解除锁定  -->
-<nz-modal [(nzVisible)]="isAddProducttyepe1" nzTitle="解除" (nzOnCancel)="handleCancel1()" (nzOnOk)="subProducttype1()">
+<nz-modal [nzMaskClosable]='false' [(nzVisible)]="isAddProducttyepe1" nzTitle="解除" (nzOnCancel)="handleCancel1()" (nzOnOk)="subProducttype1()">
   <span>确定解除锁定吗?</span>
 </nz-modal>
 
 <!-- 重置密码  -->
-<nz-modal [(nzVisible)]="isAddProducttyepe2" nzTitle="重置密码" (nzOnCancel)="handleCancel2()" (nzOnOk)="subProducttype2()">
+<nz-modal [nzMaskClosable]='false' [(nzVisible)]="isAddProducttyepe2" nzTitle="重置密码" (nzOnCancel)="handleCancel2()" (nzOnOk)="subProducttype2()">
   <div style="margin-top: 8px" nz-row>
     <div nz-col nzSpan="5">密码</div>
     <div nz-col nzSpan="19">

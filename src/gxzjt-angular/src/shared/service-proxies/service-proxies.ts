@@ -1154,6 +1154,60 @@ export class ApplyServiceServiceProxy {
         }
         return _observableOf<void>(<any>null);
     }
+
+    /**
+     * @param flowId (optional) 
+     * @return Success
+     */
+    cancelApply(flowId: number | null | undefined): Observable<CancelApplyResult> {
+        let url_ = this.baseUrl + "/api/services/app/ApplyService/CancelApply?";
+        if (flowId !== undefined)
+            url_ += "flowId=" + encodeURIComponent("" + flowId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCancelApply(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCancelApply(<any>response_);
+                } catch (e) {
+                    return <Observable<CancelApplyResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<CancelApplyResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCancelApply(response: HttpResponseBase): Observable<CancelApplyResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? CancelApplyResult.fromJS(resultData200) : new CancelApplyResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<CancelApplyResult>(<any>null);
+    }
 }
 
 @Injectable()
@@ -1893,6 +1947,58 @@ export class ExamineServiceServiceProxy {
     }
 
     protected processSignForOpinionFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param rejectedDto (optional) 
+     * @return Success
+     */
+    rejectedExamine(rejectedDto: RejectedDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ExamineService/RejectedExamine";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(rejectedDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRejectedExamine(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRejectedExamine(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processRejectedExamine(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -8379,6 +8485,62 @@ export class WorkFlowedServiceProxy {
         }
         return _observableOf<DataSourceResult>(<any>null);
     }
+
+    /**
+     * @param pageSize (optional) 
+     * @return Success
+     */
+    handlingMatters(pageSize: PageSize | null | undefined): Observable<PageModel> {
+        let url_ = this.baseUrl + "/api/services/app/WorkFlowed/HandlingMatters";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(pageSize);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandlingMatters(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandlingMatters(<any>response_);
+                } catch (e) {
+                    return <Observable<PageModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PageModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processHandlingMatters(response: HttpResponseBase): Observable<PageModel> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PageModel.fromJS(resultData200) : new PageModel();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PageModel>(<any>null);
+    }
 }
 
 export class ProjectFlow implements IProjectFlow {
@@ -9406,6 +9568,7 @@ export class ExamineFormDto implements IExamineFormDto {
     orgCode: string | undefined;
     checkDate: moment.Moment | undefined;
     endDate: moment.Moment | undefined;
+    content: string | undefined;
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -9478,6 +9641,7 @@ export class ExamineFormDto implements IExamineFormDto {
             this.orgCode = data["orgCode"];
             this.checkDate = data["checkDate"] ? moment(data["checkDate"].toString()) : <any>undefined;
             this.endDate = data["endDate"] ? moment(data["endDate"].toString()) : <any>undefined;
+            this.content = data["content"];
         }
     }
 
@@ -9550,6 +9714,7 @@ export class ExamineFormDto implements IExamineFormDto {
         data["orgCode"] = this.orgCode;
         data["checkDate"] = this.checkDate ? this.checkDate.toISOString() : <any>undefined;
         data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
+        data["content"] = this.content;
         return data; 
     }
 
@@ -9610,6 +9775,7 @@ export interface IExamineFormDto {
     orgCode: string | undefined;
     checkDate: moment.Moment | undefined;
     endDate: moment.Moment | undefined;
+    content: string | undefined;
 }
 
 export class ProjectAttachment implements IProjectAttachment {
@@ -10579,6 +10745,53 @@ export interface IProjectFlowDto {
     id: number | undefined;
 }
 
+export class CancelApplyResult implements ICancelApplyResult {
+    status: number | undefined;
+    message: string | undefined;
+
+    constructor(data?: ICancelApplyResult) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.status = data["status"];
+            this.message = data["message"];
+        }
+    }
+
+    static fromJS(data: any): CancelApplyResult {
+        data = typeof data === 'object' ? data : {};
+        let result = new CancelApplyResult();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["status"] = this.status;
+        data["message"] = this.message;
+        return data; 
+    }
+
+    clone(): CancelApplyResult {
+        const json = this.toJSON();
+        let result = new CancelApplyResult();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICancelApplyResult {
+    status: number | undefined;
+    message: string | undefined;
+}
+
 export class UserCacheDto implements IUserCacheDto {
     merchantId: string | undefined;
     merchantName: string | undefined;
@@ -10855,7 +11068,16 @@ export class PageSize implements IPageSize {
     search: string | undefined;
     startTime: moment.Moment | undefined;
     endTime: moment.Moment | undefined;
+    cityName: string | undefined;
+    regionAndCountyName: string | undefined;
+    status: number | undefined;
+    isExpire: boolean | undefined;
+    companyName: string | undefined;
     totalCount: number | undefined;
+    projectName: string | undefined;
+    flowPathType: string | undefined;
+    startApplyTime: moment.Moment | undefined;
+    endApplyTime: moment.Moment | undefined;
 
     constructor(data?: IPageSize) {
         if (data) {
@@ -10877,7 +11099,16 @@ export class PageSize implements IPageSize {
             this.search = data["search"];
             this.startTime = data["startTime"] ? moment(data["startTime"].toString()) : <any>undefined;
             this.endTime = data["endTime"] ? moment(data["endTime"].toString()) : <any>undefined;
+            this.cityName = data["cityName"];
+            this.regionAndCountyName = data["regionAndCountyName"];
+            this.status = data["status"];
+            this.isExpire = data["isExpire"];
+            this.companyName = data["companyName"];
             this.totalCount = data["totalCount"];
+            this.projectName = data["projectName"];
+            this.flowPathType = data["flowPathType"];
+            this.startApplyTime = data["startApplyTime"] ? moment(data["startApplyTime"].toString()) : <any>undefined;
+            this.endApplyTime = data["endApplyTime"] ? moment(data["endApplyTime"].toString()) : <any>undefined;
         }
     }
 
@@ -10899,7 +11130,16 @@ export class PageSize implements IPageSize {
         data["search"] = this.search;
         data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
         data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
+        data["cityName"] = this.cityName;
+        data["regionAndCountyName"] = this.regionAndCountyName;
+        data["status"] = this.status;
+        data["isExpire"] = this.isExpire;
+        data["companyName"] = this.companyName;
         data["totalCount"] = this.totalCount;
+        data["projectName"] = this.projectName;
+        data["flowPathType"] = this.flowPathType;
+        data["startApplyTime"] = this.startApplyTime ? this.startApplyTime.toISOString() : <any>undefined;
+        data["endApplyTime"] = this.endApplyTime ? this.endApplyTime.toISOString() : <any>undefined;
         return data; 
     }
 
@@ -10921,7 +11161,16 @@ export interface IPageSize {
     search: string | undefined;
     startTime: moment.Moment | undefined;
     endTime: moment.Moment | undefined;
+    cityName: string | undefined;
+    regionAndCountyName: string | undefined;
+    status: number | undefined;
+    isExpire: boolean | undefined;
+    companyName: string | undefined;
     totalCount: number | undefined;
+    projectName: string | undefined;
+    flowPathType: string | undefined;
+    startApplyTime: moment.Moment | undefined;
+    endApplyTime: moment.Moment | undefined;
 }
 
 export class PageModel implements IPageModel {
@@ -11178,6 +11427,105 @@ export interface ISignForDto {
     name: string | undefined;
     phoneNumber: string | undefined;
     flowId: number | undefined;
+}
+
+export class RejectedDto implements IRejectedDto {
+    flowId: number | undefined;
+    currentHandleUserName: string | undefined;
+    currentHandleUserCode: string | undefined;
+    handleUserList: FlowNodeUser[] | undefined;
+    currentNodeId: string | undefined;
+    currentNodeName: string | undefined;
+    currentHandleOrgName: string | undefined;
+    currentHandleOrgCode: string | undefined;
+    nodeAuditorRecordId: number | undefined;
+    workFlow_NodeRecord_Id: number | undefined;
+    workFlow_Instance_Id: number | undefined;
+    workFlow_TemplateInfo_Id: number | undefined;
+    opinion: string | undefined;
+
+    constructor(data?: IRejectedDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.flowId = data["flowId"];
+            this.currentHandleUserName = data["currentHandleUserName"];
+            this.currentHandleUserCode = data["currentHandleUserCode"];
+            if (data["handleUserList"] && data["handleUserList"].constructor === Array) {
+                this.handleUserList = [];
+                for (let item of data["handleUserList"])
+                    this.handleUserList.push(FlowNodeUser.fromJS(item));
+            }
+            this.currentNodeId = data["currentNodeId"];
+            this.currentNodeName = data["currentNodeName"];
+            this.currentHandleOrgName = data["currentHandleOrgName"];
+            this.currentHandleOrgCode = data["currentHandleOrgCode"];
+            this.nodeAuditorRecordId = data["nodeAuditorRecordId"];
+            this.workFlow_NodeRecord_Id = data["workFlow_NodeRecord_Id"];
+            this.workFlow_Instance_Id = data["workFlow_Instance_Id"];
+            this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
+            this.opinion = data["opinion"];
+        }
+    }
+
+    static fromJS(data: any): RejectedDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RejectedDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["flowId"] = this.flowId;
+        data["currentHandleUserName"] = this.currentHandleUserName;
+        data["currentHandleUserCode"] = this.currentHandleUserCode;
+        if (this.handleUserList && this.handleUserList.constructor === Array) {
+            data["handleUserList"] = [];
+            for (let item of this.handleUserList)
+                data["handleUserList"].push(item.toJSON());
+        }
+        data["currentNodeId"] = this.currentNodeId;
+        data["currentNodeName"] = this.currentNodeName;
+        data["currentHandleOrgName"] = this.currentHandleOrgName;
+        data["currentHandleOrgCode"] = this.currentHandleOrgCode;
+        data["nodeAuditorRecordId"] = this.nodeAuditorRecordId;
+        data["workFlow_NodeRecord_Id"] = this.workFlow_NodeRecord_Id;
+        data["workFlow_Instance_Id"] = this.workFlow_Instance_Id;
+        data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
+        data["opinion"] = this.opinion;
+        return data; 
+    }
+
+    clone(): RejectedDto {
+        const json = this.toJSON();
+        let result = new RejectedDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IRejectedDto {
+    flowId: number | undefined;
+    currentHandleUserName: string | undefined;
+    currentHandleUserCode: string | undefined;
+    handleUserList: FlowNodeUser[] | undefined;
+    currentNodeId: string | undefined;
+    currentNodeName: string | undefined;
+    currentHandleOrgName: string | undefined;
+    currentHandleOrgCode: string | undefined;
+    nodeAuditorRecordId: number | undefined;
+    workFlow_NodeRecord_Id: number | undefined;
+    workFlow_Instance_Id: number | undefined;
+    workFlow_TemplateInfo_Id: number | undefined;
+    opinion: string | undefined;
 }
 
 export class RegulationDetailsViewModel implements IRegulationDetailsViewModel {

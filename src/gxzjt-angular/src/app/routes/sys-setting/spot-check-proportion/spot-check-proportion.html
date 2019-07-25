@@ -17,7 +17,7 @@
 
   <st #st [data]="formResultData" [columns]="columns" [loading]="isSearchForm"></st>
   <br>
-  <nz-modal [(nzVisible)]="isVisibleModal" nzTitle="{{needModifyItem.natureName+'比例修改'}}" (nzOnCancel)="handleCancel()"
+  <nz-modal  [nzMaskClosable]='false' [(nzVisible)]="isVisibleModal" nzTitle="{{needModifyItem.natureName+'比例修改'}}" (nzOnCancel)="handleCancel()"
     (nzOnOk)="handleOk()" [nzOkLoading]="isOkLoading">
     <!-- <input type="text" nz-input [ngModel]="needModifyItem.ratio" /> -->
     <nz-input-number [(ngModel)]="needModifyItem.ratio" [nzMin]="0" [nzMax]="100" [nzStep]="1"

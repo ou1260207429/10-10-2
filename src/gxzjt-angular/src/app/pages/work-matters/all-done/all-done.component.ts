@@ -27,7 +27,7 @@ export class WorkMattersAllDoneComponent implements OnInit {
     startTime: null,
     endTime: null,
     projectName: null,
-    FlowPathType: null,
+    flowPathType: null,
     size: 10,
     page: 1,
     regionAndCountyName: null,
@@ -82,7 +82,7 @@ export class WorkMattersAllDoneComponent implements OnInit {
     { title: '建设单位', index: 'companyName' },
     { title: '工程类型', index: 'flowTypeName', width: '120px' },
     { title: '当前环节', index: 'curNodeName', width: '120px' },
-    { title: '节点审核人', index: 'cur_NodeAuditorName', width: '120px' },
+    // { title: '节点审核人', index: 'cur_NodeAuditorName', width: '120px' },
     // { title: '是否超时', index: 'isExpire',width:'120px'  },
     {
       title: '是否超时', index: 'isExpire', width: '80px', type: 'tag', tag: {
@@ -141,6 +141,7 @@ export class WorkMattersAllDoneComponent implements OnInit {
     //   .subscribe(() => this.st.reload());
   }
   resetForm(): void {
+    this.param.page=1;
     this.fliterForm = this.formBuilder.group({
       city: [null],
       count: [null],
@@ -187,6 +188,7 @@ export class WorkMattersAllDoneComponent implements OnInit {
   }
 
   search() {
+    this.param.page=1;
     if (this.fliterForm.controls.city.value) {
       this.param.cityName = this.fliterForm.controls.city.value;
     } else {
@@ -203,9 +205,9 @@ export class WorkMattersAllDoneComponent implements OnInit {
       this.param.projectName = null
     }
     if (this.fliterForm.controls.proType.value) {
-      this.param.FlowPathType = this.fliterForm.controls.proType.value;
+      this.param.flowPathType = this.fliterForm.controls.proType.value;
     } else {
-      this.param.FlowPathType == null
+      this.param.flowPathType = null
     }
 
     if (this.fliterForm.controls.buildname.value) {

@@ -53,7 +53,7 @@
   <br>
 </nz-card>
 
-<nz-modal [(nzVisible)]="isVisibleSelectModal" nzTitle="意见书签收" (nzOnCancel)="closeSignFor()" (nzOnOk)="signForOrg()"
+<nz-modal [nzMaskClosable]='false'  [(nzVisible)]="isVisibleSelectModal" nzTitle="意见书签收" (nzOnCancel)="closeSignFor()" (nzOnOk)="signForOrg()"
   [nzOkLoading]="isSelectModalOkLoading" nzWidth="500">
   <form nz-form #f="ngForm" se-container="1" labelWidth="100">
     <se label="签收人姓名" error="请填写">

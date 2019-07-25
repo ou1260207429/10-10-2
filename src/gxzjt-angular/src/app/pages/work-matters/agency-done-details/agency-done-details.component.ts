@@ -63,7 +63,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
 
   //提交表单的对象
-  formDto: any = new AcceptApplyFormDto();
+  formDto: any = new AcceptApplyFormDto(); //流程路径
 
   //表单json对象
   formJson;
@@ -126,7 +126,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.getWorkFlow_NodeRecordAndAuditorRecords()
 
     Promise.all([this.getAcceptApplyForm()]).then((data: any) => {
-      this.formDto = data[0]
+      this.formDto = data[0];
       console.log(this.formDto)
       const flowFormQueryDto = new FlowFormQueryDto();
       flowFormQueryDto.flowType = this.flowPathType
@@ -360,7 +360,13 @@ export class AgencyDoneDetailsComponent implements OnInit {
     }
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptFullPath = this.appSession.user.organizationsName
-    this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.curNodeName == '大厅受理' ? this.formDto.opinion : this.examineFormDto.opinion
+
+    this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.curNodeName == '大厅受理' ? this.formDto.opinion : this.examineFormDto.opinion;
+    // this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.curNodeName == '大厅受理' ? this.formDto.opinion : this.examineFormDto.content;
+
+ 
+
+
     this.butNzLoading = true
     if (!bo && this.curNodeName == '业务审批负责人审批') {
       // this.noResult((data) => { 
