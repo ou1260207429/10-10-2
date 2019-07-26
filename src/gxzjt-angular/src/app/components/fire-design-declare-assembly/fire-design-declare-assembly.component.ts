@@ -89,10 +89,10 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
-
+    this.getOrganizationTree();
     this.getAreaDropdown();
 
-    this.getOrganizationTree();
+  
 
 
     if (this.type == 1) {

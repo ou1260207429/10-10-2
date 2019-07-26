@@ -13,7 +13,8 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle">
-            <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="data.fileCodePrefix" name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
+            <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="data.fileCodePrefix"
+                name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
             </div>
             <div *ngIf="!data.fileCodePrefix" class="rightSpan">必填</div>
           </td>
@@ -67,7 +68,8 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle">
-            <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="data.fileCodePrefix" name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
+            <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="data.fileCodePrefix"
+                name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
             </div>
             <div *ngIf="!data.fileCodePrefix" class="rightSpan">必填</div>
           </td>
@@ -113,17 +115,17 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle">
-            <div><input class="table_input" [(ngModel)]="examineFormDto.fileCodePrefix"
-                name="fileCodePrefix"  placeholder="请输入区域简称" />住建消审字〔后台生成〕第后台生成号</div>
+            <div><input class="table_input" [(ngModel)]="examineFormDto.fileCodePrefix" name="fileCodePrefix"
+                placeholder="请输入区域简称" />住建消审字〔后台生成〕第后台生成号</div>
             <div *ngIf="!examineFormDto.fileCodePrefix" class="rightSpan">必填</div>
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="examineFormDto.opinion&&!examineFormDto.content">
           <td rowspan='1' colspan='20'>
             <div class="table_detail">
               <h3>{{data.companyName}}：</h3>
               <p>
-                  经随机抽查，你单位{{data.address}}{{examineFormDto.projectName}}工程(备案凭证文号：{{examineFormDto.acceptFileCode}}，工程备案号为{{examineFormDto.recordNumber}})),被确定为检查对象。{{data.descr}}
+                经随机抽查，你单位{{data.address}}{{examineFormDto.projectName}}工程(备案凭证文号：{{examineFormDto.acceptFileCode}}，工程备案号为{{examineFormDto.recordNumber}}),被确定为检查对象。{{data.descr}}
               </p>
               <p>我局按照建设工程消防验收评定标准进行了检查。经审查资料及现场检查测试，综合评定该工程为不合格。主要存在下列问题：</p>
             </div>
@@ -133,11 +135,29 @@
                   </textarea>
           </td>
         </tr>
+
+
+        <tr *ngIf="!examineFormDto.opinion&&examineFormDto.content">
+          <td rowspan='1' colspan='20'>
+            <div class="table_detail">
+              <h3>{{data.companyName}}：</h3>
+
+            </div>
+
+            <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.content"
+              name="professionalContractorsopinion" required >
+                  </textarea>
+            <p style="margin-top: 8px;">提示：为保持格式一致，段落首行请输入4个空格</p>
+          </td>
+        </tr>
+
         <tr>
           <td class="fontweight fontLeft leftTitle">本通知书一式两份，一份交建设单位，一份存档。 </td>
         </tr>
       </tbody>
     </table>
+
+
   </div>
 
   <div *ngSwitchCase="7">
@@ -145,8 +165,8 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20'>
-            <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion" name="professionalContractorsopinion"
-              required>
+            <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion"
+              name="professionalContractorsopinion" required>
                     </textarea>
           </td>
         </tr>

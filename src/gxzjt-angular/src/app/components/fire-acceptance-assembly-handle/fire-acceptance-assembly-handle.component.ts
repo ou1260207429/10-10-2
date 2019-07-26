@@ -9,6 +9,7 @@ import { ExamineFormDto, ProjectAttachment } from '@shared/service-proxies/servi
 import lodash from 'lodash';
 import { URLConfig } from "@shared/config/host";
 import { indexOfFileByName } from "@shared/utils/array";
+import * as moment from 'moment';
 
 /**
  * 消防验收的表单模块的办理或者结果
@@ -53,11 +54,41 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
     this.childOuter.emit(this.f);
     this.data.attachment = this.data.attachment ? this.data.attachment : [];
 
-    // if(this.examineFormDto.buildFileAdise){
 
-    // }
+    if (!this.examineFormDto.content && !this.examineFormDto.opinion) {
+      var date = new Date();
+      var dateStr = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + "日";
+      // this.examineFormDto.checkDate = moment(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
+      // this.examineFormDto.checkDate = moment(date.toDateString());
+      this.examineFormDto.content =
+        `    你单位报来`
+        + this.data.projectName + `建设工程消防验收资料收悉（受理凭证：`
+        + this.examineFormDto.acceptFileCode + `）。该工程位于`
+        + this.data.address + `，`
+        + this.examineFormDto.descr + `。`
+        + dateStr + `,`
+        + this.data.cityName + `住房和城乡建设局组织你单位及设计、施工、监理、检测等单位有关人员对该工程进行了消防验收。`
+        + `经对验收资料、消防设施技术检测报告进行审查，`
+        + `对总平面布置和平面布置中涉及消防安全的防火间距、消防车道、消防水源，建设防火防烟分区和建设构造，`
+        + `安全疏散和消防电梯，消防给水和自动灭火系统，防烟、排烟和通风系统的防火设计，`
+        + `消防电源及其配电，火灾应急照明、应急广播和疏散指示标志，`
+        + `火灾自动报警系统和消防控制室，建筑灭火器等项目情况和性能进行抽查，现提出以下意见： \r\n`
+        + `    `
+        // + `    一、综合评定该工程消防验收不合格。\r\n`
+        // + `    二、问题1，×××（存在问题），不符合《××》第×条第×款（规范名称及条文号）的规定。\r\n`
+        // + `    三、问题2，同上。\r\n`
+        // + `    四、问题3，同上。\r\n`
+        // + `    五、提供消防检测的技术服务机构和人员对出具的检测意见负责。\r\n`
+        // + `    以上问题请建设、施工单位落实整改，整改完毕后再申请复验。\r\n`
+        // + `    如不服本决定，可以在收到本意见书之日起六十日内向××市人民政府申请行政复议或者三个月内依法向××人民法院提起行政诉讼。\r\n;`
+        ;
+    }
   }
 
+  onChangeCheckDate(date: Date) {
+    var dateStr = "。" + date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + "日";
+    this.examineFormDto.content = this.examineFormDto.content.replace(/。\d{4}年\d{1,2}月\d{2}日?/g, dateStr);
+  }
 
   beforeUpload = (file: any): boolean => {
     if (this.examineFormDto) {
