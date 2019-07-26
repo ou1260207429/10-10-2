@@ -141,6 +141,7 @@ export class WorkMattersAllDoneComponent implements OnInit {
     //   .subscribe(() => this.st.reload());
   }
   resetForm(): void {
+    this.param.page=1;
     this.fliterForm = this.formBuilder.group({
       city: [null],
       count: [null],
@@ -187,6 +188,7 @@ export class WorkMattersAllDoneComponent implements OnInit {
   }
 
   search() {
+    this.param.page=1;
     if (this.fliterForm.controls.city.value) {
       this.param.cityName = this.fliterForm.controls.city.value;
     } else {

@@ -6,7 +6,7 @@ import { FireAcceptanceComponent } from './fire-acceptance/fire-acceptance.compo
 import { AddFireDesignDeclareComponent } from './add-fire-design-declare/add-fire-design-declare.component';
 import { AddFireAcceptanceComponent } from './add-fire-acceptance/add-fire-acceptance.component';
 import { AddCompletedAcceptanceComponent } from './add-completed-acceptance/add-completed-acceptance.component';
-import { FireDesignComponent } from './fire-design/fire-design.component'; 
+import { FireDesignComponent } from './fire-design/fire-design.component';
 
 const routes: Routes = [
   {
@@ -30,19 +30,19 @@ const routes: Routes = [
 
   {
     path: 'addFireDesignDeclareComponent/:type/:projectId/:flowId',
-    data: { title: '新增申报' ,reuse:true},
+    data: { title: '新增设计申报' ,reuse:true},
     component: AddFireDesignDeclareComponent
   },
 
   {
     path: 'addCompletedAcceptanceComponent/:type/:projectId/:flowId',
-    data: { title: '新增申报',reuse:true },
+    data: { title: '新增验收申报',reuse:true },
     component: AddCompletedAcceptanceComponent
   },
 
   {
     path: 'addFireAcceptanceComponent/:type/:projectId/:flowId',
-    data: { title: '新增申报',reuse:true },
+    data: { title: '新增备案申报',reuse:true },
     component: AddFireAcceptanceComponent
   },
 

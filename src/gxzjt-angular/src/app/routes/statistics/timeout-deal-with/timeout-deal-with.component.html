@@ -48,16 +48,16 @@
 
   </div>
   <nz-spin [nzSpinning]="!formResultData"></nz-spin>
-  <st #st [data]="formResultData" [columns]="columns"></st>
-  <!-- <st #st *ngIf="formResultData" [data]="formResultData" [columns]="columns"
-  [total]="total" [pi]="param.page" [ps]="10" (change)="change($event)">
-</st> -->
+  <!-- <st #st [data]="formResultData" [columns]="columns"></st> -->
+  <st #st  [data]="formResultData" [columns]="columns" [page]="pageConfig"
+  [total]="total" [pi]="param.page" [ps]="param.maxResultCount" (change)="change($event)">
+</st>
   <!-- <br>
   <nz-pagination [nzPageIndex]="2" [nzTotal]="500" nzShowQuickJumper></nz-pagination> -->
 </nz-card>
 
 <!-- 新增申报 -->
-<nz-modal [(nzVisible)]="isAddProducttyepe5" nzTitle="设置部门负责人" (nzOnCancel)="handleCancel5()"
+<nz-modal [nzMaskClosable]='false' [(nzVisible)]="isAddProducttyepe5" nzTitle="设置部门负责人" (nzOnCancel)="handleCancel5()"
   (nzOnOk)="subProducttype5()">
   <div style="margin-top: 8px" nz-row>
     <div nz-col nzSpan="5">竣工验收申报编号</div>

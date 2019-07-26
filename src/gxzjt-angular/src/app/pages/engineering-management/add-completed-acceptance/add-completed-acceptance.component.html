@@ -12,7 +12,7 @@
 
 
 
-<nz-modal [(nzVisible)]="isVisibleSelectModal" [ngClass]="{hide: isVisibleSelectModal==false}" nzTitle="请选择抽选号码"
+<nz-modal [nzMaskClosable]='false' [(nzVisible)]="isVisibleSelectModal" [ngClass]="{hide: isVisibleSelectModal==false}" nzTitle="请选择抽选号码"
   (nzOnCancel)="handleSelectModalCancel()" (nzOnOk)="handleSelectModalOk()" [nzOkLoading]="isSelectModalOkLoading"
   nzWidth="700">
   <nz-radio-group [(ngModel)]="selectModalValue" nzButtonStyle="solid" nzJustify="center" nzType="flex" style="width:100%">

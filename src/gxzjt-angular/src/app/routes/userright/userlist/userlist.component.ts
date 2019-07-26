@@ -29,9 +29,11 @@ export class UserrightUserlistComponent implements OnInit {
   getdomainuser = [];
   postmodel = {
     eName:'',
-    page: 1,
-    pageSize: 2000,
+    organizationsName:'',
+    page: '1',
+    pageSize: '10',
   };
+  total;
   formResultData;
 //锁定用户相关
  isAddProducttyepe=false
@@ -51,8 +53,11 @@ restpasswordmoedl={
   id:'',
   newPassword:'',
   confirmPassword:'',
-}
-pageConfig: STPage = publicPageConfig;
+};
+pageConfig: STPage = {
+  front: false,
+  show: true,
+};
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     {
@@ -168,6 +173,7 @@ pageConfig: STPage = publicPageConfig;
   ngOnInit() {
     this.fliterForm = this.formBuilder.group({
       eName: [null],
+      orgname:[null],
     });
     this.getList();
   }
@@ -190,6 +196,7 @@ pageConfig: STPage = publicPageConfig;
       res => {
         this.getdomainuser = res;
         this.fz(this.getdomainuser);
+        this.total=res.totalCount;
 
       },
     );
@@ -203,27 +210,22 @@ pageConfig: STPage = publicPageConfig;
   resetForm(){
     this.fliterForm = this.formBuilder.group({
       eName: [null],
+      orgname:[null],
     });
+    this.postmodel.page='1';
+    this.postmodel.pageSize='10';
     this.postmodel.eName=this.fliterForm.controls.eName.value;
-    this.UserRightService.GetUserDtoList(this.postmodel).subscribe(
-      res => {
-        this.getdomainuser = res;
-        this.fz(this.getdomainuser);
-
-      },
-    );
+    this.postmodel.organizationsName=this.fliterForm.controls.orgname.value;
+    this.getList();
   }
 
 
   search() {
+    this.postmodel.page='1';
+    this.postmodel.pageSize='10';
     this.postmodel.eName=this.fliterForm.controls.eName.value;
-    this.UserRightService.GetUserDtoList(this.postmodel).subscribe(
-      res => {
-        this.getdomainuser = res;
-        this.fz(this.getdomainuser);
-
-      },
-    );
+    this.postmodel.organizationsName=this.fliterForm.controls.orgname.value;
+    this.getList()
   }
 
 
@@ -277,7 +279,8 @@ pageConfig: STPage = publicPageConfig;
     this.isAddProducttyepe1 = false;
   }
   handleCancel2(): void {
-
+    this.Password='';
+    this.Password2='';
     this.isAddProducttyepe2 = false;
   }
   subProducttype2(): void {
@@ -291,11 +294,18 @@ pageConfig: STPage = publicPageConfig;
 
       this.UserRightService.ResetPassword(this.restpasswordmoedl).subscribe(
         res => {
-          this.message.success(res.message);
-          this.refresh();
+          if(res.result==0){
+            this.message.success(res.message);
+            this.refresh();
+          }else{
+            this.message.error(res.message);
+            this.refresh();
+          }
+
         },
       );
-
+      this.Password='';
+      this.Password2='';
       this.isAddProducttyepe2 = false;
     }else{
       this.message.error("两次输入密码不一致");
@@ -314,10 +324,12 @@ pageConfig: STPage = publicPageConfig;
     );
   }
 
-  // change(v) {
-  //   pageOnChange(v, this.pagedAndFilteredInputDto, () => {
-  //     this.getList();
-  //   })
-  // }
+  change(v) {
+    if(this.postmodel.page==v.pi){
+      return   //解决页面数据不能复制问题，因为change改变事件当点击的就会触发了所以当page不变的时候不执行方法
+    }
+    this.postmodel.page = v.pi;
+    this.getList();
+  }
 
 }

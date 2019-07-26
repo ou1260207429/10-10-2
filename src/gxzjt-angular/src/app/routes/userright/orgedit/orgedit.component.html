@@ -85,7 +85,7 @@
 </nz-card>
 
 <!-- 编辑部门 -->
-<nz-modal [(nzVisible)]="isAddProducttyepe1" nzTitle="编辑组织机构" (nzOnCancel)="handleCancel1()"
+<nz-modal [nzMaskClosable]='false' [(nzVisible)]="isAddProducttyepe1" nzTitle="编辑组织机构" (nzOnCancel)="handleCancel1()"
   (nzOnOk)="subProducttype1()">
   <div style="margin-top: 8px" nz-row>
     <div nz-col nzSpan="5">机构名称</div>
@@ -112,7 +112,7 @@
 </nz-modal>
 
 <!-- 添加 -->
-<nz-modal [(nzVisible)]="isAddProducttyepe2" nzTitle="添加区域" (nzOnCancel)="handleCancel2()" (nzOnOk)="subProducttype2()">
+<nz-modal [nzMaskClosable]='false' [(nzVisible)]="isAddProducttyepe2" nzTitle="添加区域" (nzOnCancel)="handleCancel2()" (nzOnOk)="subProducttype2()">
   <div nz-row>
 
     <div nz-col nzSpan="5">上级机构</div>

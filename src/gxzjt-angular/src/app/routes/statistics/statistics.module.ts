@@ -14,6 +14,7 @@ import { StatisticsWarningCenterDetailComponent } from './warning-center-detail/
 import { StatisticsAcceptCredentialsComponent } from './accept-credentials/accept-credentials.component';
 import { StatisticsPositionPaperComponent } from './position-paper/position-paper.component';
 import { UserRightService } from '../userright/userright.service';
+import { StatisticsService } from './statistics.service';
 
 const COMPONENTS = [
   StatisticsWarningCenterComponent,
@@ -43,7 +44,7 @@ const COMPONENTS_NOROUNT = [
   ],
   entryComponents: COMPONENTS_NOROUNT,
   providers:[
-    UserRightService,
+    UserRightService,StatisticsService
   ]
 })
 export class StatisticsModule { }

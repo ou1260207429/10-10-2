@@ -224,6 +224,7 @@ export class UserrightOrgeditComponent implements OnInit {
       if(data.result==0){
         this.message.success("操作成功")
         this.getTreeData();
+        this.getAreaTreeData();
         this.isAddProducttyepe1 = false;
       }else{
         this.message.error(data.message)
@@ -267,6 +268,7 @@ export class UserrightOrgeditComponent implements OnInit {
     this.UserRightService.OrgaAdd(this.addOrgModel).subscribe(data => {
       if(data.result==0){
         this.getTreeData();
+        this.getAreaTreeData();
         this.message.success("操作成功")
         this.addOrgModel={
           name:'',
@@ -285,6 +287,8 @@ export class UserrightOrgeditComponent implements OnInit {
       }
 
     })
+    this.getTreeData();
+    this.getAreaTreeData();
 
 
   }

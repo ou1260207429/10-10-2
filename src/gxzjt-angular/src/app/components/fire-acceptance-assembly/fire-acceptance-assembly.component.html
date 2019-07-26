@@ -65,8 +65,8 @@
               <nz-spin [nzSpinning]="!useNatureSelect"></nz-spin>
               <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="data.useNature" name="useNature" required
               *ngIf="useNatureSelect"  nzShowSearch>
-              <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.label"
-                [nzValue]="option.value">
+              <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.natureName"
+                [nzValue]="option.natureCode">
               </nz-option>
             </nz-select>
             </se>
