@@ -27,7 +27,7 @@
   </form>
 
   <!-- <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns"></st> -->
-  <st #st   [data]="formResultData.data" [columns]="columns" [page]="pageConfig"
+  <st #st *ngIf="formResultData"  [data]="formResultData.data" [columns]="columns" [page]="pageConfig"
   [total]="total" [pi]="postmodel.page"
   [ps]="postmodel.pageSize" (change)="change($event)">
 </st>
