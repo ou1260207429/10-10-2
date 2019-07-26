@@ -86,7 +86,7 @@
                   <div class="flexBox">
                     验收日期:
                     <div class="flex1">
-                      <nz-date-picker [(ngModel)]="examineFormDto.checkDate" name="checkDate"></nz-date-picker>
+                      <nz-date-picker [(ngModel)]="examineFormDto.checkDate" name="checkDate" [nzFormat]="'yyyy/MM/dd'"></nz-date-picker>
                     </div>
                   </div>
                   <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.checkDate">必填
@@ -113,7 +113,7 @@
                 <div style="display: block;margin-top: 8px;margin-bottom: 8px;">
                   <div style="display: flex;align-items: center;">
                     <div> 验收日期: </div>
-                    <nz-date-picker [(ngModel)]="examineFormDto.checkDate" name="checkDate" style="width: 200px;" (ngModelChange)="onChangeCheckDate($event)">
+                    <nz-date-picker [(ngModel)]="examineFormDto.checkDate" name="checkDate" style="width: 200px;" (ngModelChange)="onChangeCheckDate($event)" [nzFormat]="'yyyy/MM/dd'">
                     </nz-date-picker>
                   </div>
                   <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.checkDate">此处验收日期必填，需和意见一致
