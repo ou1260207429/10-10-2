@@ -383,7 +383,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
 
     this.butNzLoading = true
-    if (!bo && this.curNodeName == '业务审批负责人审批') {
+    if (!bo && this.curNodeName == '业务审批负责人审批') { 
       // this.noResult((data) => { 
       this.tenantWorkFlowInstanceDto.backAuditedNode = {
         nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
@@ -412,6 +412,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
         this.butNzLoading = false;
       })
     } else {
+      //业务承办人审核 节点点击合格和不合格都是  走通过接口。要传参给后台用于区分
+      if (this.curNodeName == '业务承办人审核') { 
+        this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.result = bo ? 5 : 6
+      }
       this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
         // this.butNzLoading = false;
         const type = this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType == 3 ? true : false
