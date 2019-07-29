@@ -27,7 +27,13 @@ export class WorkMattersService {
   //获取市县级联
   GetHandlingMatters(model?: any): Observable<any> {
     // api/User/Delete?id=
-    return this.http.post(URLConfig.getInstance().SERVER_URL + 'api/services/app/WorkFlowed/HandlingMatters',model);
+    return this.http.post(URLConfig.getInstance().SERVER_URL + 'api/services/app/WorkFlowed/HandlingMatters', model);
+  }
+
+  //获取市县级联
+  RejectedExamine(model?: any): Observable<any> {
+    // api/User/Delete?id=
+    return this.http.post(URLConfig.getInstance().SERVER_URL + 'api/services/app/ExamineService/RejectedExamine', model);
   }
 
 

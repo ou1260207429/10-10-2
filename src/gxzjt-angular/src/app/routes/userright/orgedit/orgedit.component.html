@@ -10,7 +10,7 @@
     <div class="org"><span>组织机构</span></div>
     <div nz-col [nzSpan]="2">
       <div style="margin-top: 35px;">
-        <nz-tree #treeCom [nzData]="nodes" nzMultiple="false"   nzDefaultExpandAll="true" (nzClick)="nzEvent($event)">
+        <nz-tree #treeCom [nzData]="nodes" nzMultiple="false" [nzDefaultExpandAll]="true"   (nzClick)="nzEvent($event)">
 
           <div *ngIf="this.addOrgModel.parentId != '39B6CADE-DC11-4BA4-972E-3818276C9CDF'">
             <ng-template #nzTreeTemplate let-node>
@@ -37,7 +37,7 @@
 
 
   <div class="content">
-    <div class="org"><span>所辖机构</span></div>
+    <div class="org"><span>{{tietlename}}所辖机构</span></div>
 
     <div *ngIf="orgarray!='' && orgarray!=null">
       <div> <a nz-button (click)="deleteData()" nzType="primary"
@@ -57,7 +57,7 @@
     </div>
 
     <div *ngIf="defaultCheckedKeys2 !=null">
-      <div class="org" style="margin-top: 5px"><span>所属区域</span>
+      <div class="org" style="margin-top: 5px"><span>{{tietlename}}所属区域</span>
       </div>
 
       <nz-tree #treeCom [nzData]="Areanodes" nzCheckable="true" nzMultiple="true" ref="tree"

@@ -14,6 +14,7 @@ import * as moment from 'moment';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { InitiationProcessAddAuditorComponent } from '@app/components/initiation-process-add-auditor/initiation-process-add-auditor.component';
 import { checkArrayString, timeTrans } from 'infrastructure/regular-expression';
+import { WorkMattersService} from '../work-matters.service'
 /**
  * 待办详情->办理页面
  */
@@ -52,14 +53,14 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   textData = { projectNumber: "", opinion: "", projectName: "" }
 
-  //路径的ID 
-  flowNo: any;
+  //路径的ID
+  flowNo
 
-  //判断类型 消防设计1   消防验收2   消防竣工3 
-  flowPathType: any;
+  //判断类型 消防设计1   消防验收2   消防竣工3
+  flowPathType
 
-  //获取表单详情的ID 
-  flowId: any;
+  //获取表单详情的ID
+  flowId
 
 
   //提交表单的对象
@@ -94,8 +95,11 @@ export class AgencyDoneDetailsComponent implements OnInit {
   //判断当前登录人是否是审核人
   isLoginPerson: boolean = true;
 
-  // 的select 多选框只显示单对象 
-  selectMultiple = [];
+  // 的select 多选框只显示单对象
+  selectMultiple = []
+
+  isAddProducttyepe1 = false;//控制驳回弹窗界面
+  rejectadvices=null;//驳回意见
 
   //使用性质
   useNatureSelect
@@ -108,6 +112,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     private message: NzMessageService,
     private _applyService: ApplyServiceServiceProxy,
     private _acceptServiceServiceProxy: AcceptServiceServiceProxy,
+    private WorkMattersService: WorkMattersService,
     private _flowServices: FlowServices,
     private _activatedRoute: ActivatedRoute,
     private _NzModalService: NzModalService) {
@@ -127,13 +132,13 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
     Promise.all([this.getAcceptApplyForm()]).then((data: any) => {
       this.formDto = data[0];
-      console.log(this.formDto)
+      // console.log(this.formDto)
       const flowFormQueryDto = new FlowFormQueryDto();
       flowFormQueryDto.flowType = this.flowPathType
       flowFormQueryDto.projectId = this.formDto.projectId;
       flowFormQueryDto.flowId = this.flowId
 
-      //判断当前登录人是否是审核人  
+      //判断当前登录人是否是审核人
       this.isLoginPerson = this.formDto.flowNodeUserInfo.userCode == this._appSessionService.user.id ? true : false
       const workFlow: WorkFlow = {
         workFlow_InstanceId: this.formDto.workFlow_Instance_Id,
@@ -358,7 +363,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
 
     let num = bo ? 1 : 0;
-    //判断是竣工备案  
+    //判断是竣工备案
     if (this.flowPathType == 3 && !this.formDto.isSelect) {
       //竣工备案判断抽中或者不抽中
       num = 0
@@ -478,7 +483,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
 
   /**
-   * 获取业务审批负责人审批详情的接口 
+   * 获取业务审批负责人审批详情的接口
    */
   getPrimaryExamine(then?: Function) {
     this._examineService.getPrimaryExamine(this.flowId).subscribe(data => {
@@ -513,7 +518,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   /**
    * 签收
-   * @param examineFormDto 
+   * @param examineFormDto
    */
   signForOpinionFile() {
     this._examineService.signForOpinionFile(this.signForDto).subscribe(data => {
@@ -560,7 +565,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   //不通过选择返回指定的节点
   noResult(then?: Function) {
-    //选择不通过 
+    //选择不通过
     this.ModelHelp.static(
       FlowProcessRejectComponent,
       {
@@ -619,7 +624,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
         }
         this.tenantWorkFlowInstanceDto.auditors.push(auditors)
 
-        // ng-zorro 的select 多选框只显示单对象 
+        // ng-zorro 的select 多选框只显示单对象
         this.selectMultiple = []
         this.tenantWorkFlowInstanceDto.auditors.forEach(item => {
           this.selectMultiple.push(item.eName);
@@ -629,6 +634,171 @@ export class AgencyDoneDetailsComponent implements OnInit {
         // this.input.selectMultiplee = res.copyControlSourceDatas
       }
     })
+  }
+
+  //控制驳回界面显示
+  reject(){
+    this.isAddProducttyepe1 = true;
+  }
+  //驳回界面取消
+  handleCancel1(): void {
+
+    this.isAddProducttyepe1 = false;
+  }
+  //驳回界面确定
+  subProducttype1(bo): void {
+    if(this.rejectadvices==null||this.rejectadvices==''){
+      this.message.error("驳回意见必须填写！")
+      return
+    }
+
+
+
+    // if (this.curNodeName == '业务承办人审核' && this.flowPathType != 3 && this.examineFormDto.attachment) {
+    //   if (this.examineFormDto.attachment.length > 0) {
+    //     if (checkArrayString(this.examineFormDto.attachment, 'status', 'uploading') != -1) {
+    //       this.message.error('要上传完文件才能提交表单')
+    //       return false;
+    //     }
+    //   }
+    // }
+    this.filterFileList();
+
+
+    let num = bo ? 1 : 0;
+    //判断是竣工备案
+    if (this.flowPathType == 3 && !this.formDto.isSelect) {
+      //竣工备案判断抽中或者不抽中
+      num = 0
+    }
+    this.tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
+      Area: this.formJson.engineeringNo[this.formJson.engineeringNo.length - 1],
+      IsChoose: num,
+    }
+    this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId
+    this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptFullPath = this.appSession.user.organizationsName
+
+    this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.curNodeName == '大厅受理' ? this.formDto.opinion : this.examineFormDto.opinion;
+    // this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.curNodeName == '大厅受理' ? this.formDto.opinion : this.examineFormDto.content;
+
+
+
+
+    this.butNzLoading = true
+    if (!bo && this.curNodeName == '业务审批负责人审批') {
+      // this.noResult((data) => {
+      this.tenantWorkFlowInstanceDto.backAuditedNode = {
+        nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
+        nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName
+      }
+      this._flowServices.tenant_NodeToNextNodeByNoPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
+        this.butNzLoading = false;
+        this.examineFormDto.isTransfer = this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType == 3 ? true : false
+        this.examineFormDto.isPass = bo;
+        this.examineFormDto.handleUserList = [];
+        this.examineFormDto.currentNodeId = data.result.cur_Node_Id
+        this.examineFormDto.currentNodeName = data.result.cur_NodeName
+        this.examineFormDto.workFlow_Instance_Id = data.result.workFlow_Instance_Id
+        this.examineFormDto.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
+        data.result.auditorRecords.forEach(element => {
+          const flowNodeUser = new FlowNodeUser()
+          flowNodeUser.userFlowId = element.id
+          flowNodeUser.userCode = element.applyEID
+          flowNodeUser.userName = element.applyEName
+          this.examineFormDto.handleUserList.push(flowNodeUser)
+        });
+
+        this.RejectedExamine(this.examineFormDto);
+      }, error => {
+        this.message.info(error.error.error.message)
+        this.butNzLoading = false;
+      })
+    } else {
+      this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
+        // this.butNzLoading = false;
+        const type = this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType == 3 ? true : false
+        this.examineFormDto.isTransfer = this.formDto.isTransfer = type
+        this.examineFormDto.isPass = this.formDto.isAccept = bo;
+        let form: any = this.curNodeName == '大厅受理' ? this.formDto : this.examineFormDto;
+        this.formDto.handleUserList = [];
+        this.formDto.currentNodeId = data.result.cur_Node_Id
+        this.formDto.currentNodeName = data.result.cur_NodeName
+        this.formDto.workFlow_Instance_Id = data.result.workFlow_Instance_Id
+        this.formDto.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
+        data.result.auditorRecords.forEach(element => {
+          const flowNodeUser = new FlowNodeUser()
+          flowNodeUser.userFlowId = element.id
+          flowNodeUser.userCode = element.applyEID
+          flowNodeUser.userName = element.applyEName
+          this.formDto.handleUserList.push(flowNodeUser)
+        });
+        this.examineFormDto.handleUserList = [];
+        this.examineFormDto.currentNodeId = data.result.cur_Node_Id
+        this.examineFormDto.currentNodeName = data.result.cur_NodeName
+        this.examineFormDto.workFlow_Instance_Id = data.result.workFlow_Instance_Id
+        this.examineFormDto.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
+        data.result.auditorRecords.forEach(element => {
+          const flowNodeUser = new FlowNodeUser()
+          flowNodeUser.userFlowId = element.id
+          flowNodeUser.userCode = element.applyEID
+          flowNodeUser.userName = element.applyEName
+          this.examineFormDto.handleUserList.push(flowNodeUser)
+        });
+
+
+        switch (this.curNodeName) {
+          case '大厅受理':
+            this.RejectedExamine(form);
+            break;
+
+          case '业务承办人审核':
+            this.RejectedExamine(form);
+            break;
+
+
+          //按钮名字是通过 或者不通过
+          case '业务审批负责人审批':
+            this.RejectedExamine(this.examineFormDto);
+            break;
+
+          default:
+            break;
+        }
+
+      }, error => {
+        this.isNoResult(error.error.error.message)
+        this.butNzLoading = false;
+      })
+    }
+
+
+    this.isAddProducttyepe1 = false;
+  }
+
+  //驳回提交
+  RejectedExamine(model){
+    let submodel :any={};
+    submodel.flowId=model.flowId;
+    submodel.currentHandleUserName=model.currentHandleUserName;
+    submodel.currentHandleUserCode=model.currentHandleUserCode;
+    submodel.handleUserList=model.handleUserList;
+    submodel.currentNodeId=model.currentNodeId;
+    submodel.currentNodeName=model.currentNodeName;
+    submodel.currentHandleOrgName=model.currentHandleOrgName;
+    submodel.currentHandleOrgCode=model.currentHandleOrgCode;
+    submodel.nodeAuditorRecordId=model.nodeAuditorRecordId;
+    submodel.workFlow_NodeRecord_Id=model.workFlow_NodeRecord_Id;
+    submodel.workFlow_Instance_Id=model.workFlow_Instance_Id;
+    submodel.workFlow_TemplateInfo_Id=model.workFlow_TemplateInfo_Id;
+    submodel.opinion=this.rejectadvices;
+    this.WorkMattersService.RejectedExamine(submodel).subscribe(
+      res => {
+
+
+      },
+    );
+    this.rejectadvices=null;
+    this.butNzLoading = false;
   }
 
 
