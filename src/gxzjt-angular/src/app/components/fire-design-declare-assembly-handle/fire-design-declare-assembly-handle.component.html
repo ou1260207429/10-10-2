@@ -79,7 +79,7 @@
         <tr>
           <td rowspan='1' colspan='20'>
             <div *ngIf="examineFormDto.opinion&&!examineFormDto.content">
-              <!-- <div> -->
+
               <div class=" table_detail">
                 <h3>{{data.companyName}}：</h3>
                 <div *ngIf="examineFormDto">
@@ -98,12 +98,12 @@
             </div>
 
 
-            <div *ngIf="examineFormDto.content&&!examineFormDto.opinion">
+            <div *ngIf="examineFormDto.content">
               <div class=" table_detail">
                 <h3>{{data.companyName}}：</h3>
               </div>
               <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.content"
-                name="professionalContractorscontent" required >
+                name="professionalContractorscontent" required>
                     </textarea>
               <p style="margin-top: 8px;">提示：为保持格式一致，段落首行请输入4个空格</p>
               <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.content">必填</p>
