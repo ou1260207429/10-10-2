@@ -67,7 +67,7 @@
                     size="small"
                     style="background-color:#bd1127;border-color:#bd1127;"
                     type="primary"
-                    @click="initTable"
+                    @click="searchTable"
                   >查询</el-button>
                 </el-form-item>
                 <el-form-item>
@@ -114,6 +114,7 @@
               <el-pagination
                 style="float:right;"
                 :page-size="pageSize.size"
+                :current-page="pageSize.page"
                 layout="prev, pager, next"
                 :total="total"
                 @current-change="changeCurrent"
@@ -268,6 +269,11 @@ export default {
       this.searchForm.startTime = "";
       this.searchForm.endTime = "";
       this.xianList = [];
+      this.pageSize.page = 1;
+      this.initTable();
+    },
+    searchTable() {
+      this.pageSize.page = 1;
       this.initTable();
     },
     /**
