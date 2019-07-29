@@ -37,15 +37,15 @@ export class AgencyDoneDetailsComponent implements OnInit {
     specialEngineering: false,
     fireFightingFacilities: false
   }
-  selectedIndex = 0
+  selectedIndex = 0;
 
   //路径的对象
-  data
+  data: any;
 
   type: boolean = true;
 
   //通过和不通过
-  adoptEnum = AdoptEnum
+  adoptEnum = AdoptEnum;
 
   uploading = false;
   fileList: UploadFile[] = [];
@@ -98,7 +98,12 @@ export class AgencyDoneDetailsComponent implements OnInit {
   selectMultiple = [];
 
   //使用性质
-  useNatureSelect
+  useNatureSelect: any;
+
+
+  //节点审批意见
+  nodeAddise: String;
+
   constructor(private _eventEmiter: EventEmiter,
     public _appSessionService: AppSessionService,
     private _examineService: ExamineServiceServiceProxy,
@@ -376,7 +381,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.formDto.opinion;
     } else {
       this.examineFormDto.content = this.examineFormDto.content.replace(/\n/g, "\r\n");
-      this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.examineFormDto.content;
+      // this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.examineFormDto.content;
 
     }
 
