@@ -172,8 +172,8 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if(this.rangeTime.length!=0){
-    this.searchParam.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
-    this.searchParam.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
+    this.searchParam.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
+    this.searchParam.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
    }else{
     this.searchParam.startApplyTime='';
     this.searchParam.endApplyTime ='';
@@ -191,8 +191,8 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if(this.rangeTime.length!=0){
-      this.searchParam.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
-      this.searchParam.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
+      this.searchParam.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
+      this.searchParam.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
      }else{
       this.searchParam.startApplyTime='';
       this.searchParam.endApplyTime ='';
@@ -219,8 +219,8 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if(this.rangeTime.length!=0){
-      this.searchParam.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
-      this.searchParam.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
+      this.searchParam.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
+      this.searchParam.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
      }else{
       this.searchParam.startApplyTime='';
       this.searchParam.endApplyTime ='';
@@ -243,8 +243,8 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
 
   okRangeTime(v){
     console.log(v);
-    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')
-    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')
+    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy/MM/dd', '/')
+    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy/MM/dd', '/')
     // this.searchParam.applyTimeStart = applyTimeStart;
     // this.searchParam.applyTimeEnd = applyTimeEnd;
     // console.log(applyTimeEnd);

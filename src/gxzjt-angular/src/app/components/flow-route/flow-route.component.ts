@@ -19,4 +19,6 @@ export class FlowRouteComponent implements OnInit {
   ngOnInit() {
   }
   extraTemplate = "";
+
+  newNumType = ['不合格','合格','撤销','转派','待审核'];
 }

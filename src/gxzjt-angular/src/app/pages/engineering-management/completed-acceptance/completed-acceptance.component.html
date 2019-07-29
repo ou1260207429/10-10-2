@@ -30,7 +30,7 @@
       <nz-option nzLabel="未抽中" nzValue="5"></nz-option>
     </nz-select>
 
-    <nz-range-picker class="search_menu_input" [(ngModel)]="rangeTime" name="rangeTime" nzFormat="yyyy/MM/dd"
+    <nz-range-picker class="search_menu_input" [(ngModel)]="rangeTime" name="rangeTime" [nzFormat]="'yyyy/MM/dd'"
       style="margin-right: 10px;margin-top: 10px;width: 350px"></nz-range-picker>
     <button nz-button (click)="query()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>
     <button nz-button (click)="reststart()" style="margin-right: 10px;margin-top: 10px;">重置</button>

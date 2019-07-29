@@ -194,7 +194,7 @@ export class AddFireAcceptanceComponent implements OnInit {
 
   //使用性质
   useNatureSelect
-  
+
   butNzLoading: boolean = false;
   constructor(private reuseTabService: ReuseTabService,
     private _eventEmiter: EventEmiter,
@@ -224,8 +224,14 @@ export class AddFireAcceptanceComponent implements OnInit {
   post_GetFlowFormData() {
     this._applyService.post_GetFlowFormData(this.flowFormQueryDto).subscribe(data => {
       if (data.formJson != null && data.formJson != "") {
-        this.data = JSON.parse(data.formJson);
+        var jsonData = JSON.parse(data.formJson);
 
+        if (jsonData.dateOfReview) {
+          jsonData.dateOfReview = timeTrans(Date.parse(jsonData.dateOfReview) / 1000, 'yyyy/MM/dd HH:mm:ss', '/');
+
+        }
+
+        this.data = jsonData;
 
         if (this.data.detectionUnit == null) {
           this.data.detectionUnit = {};
@@ -239,7 +245,6 @@ export class AddFireAcceptanceComponent implements OnInit {
         }
         this.data.constructionSituation = convertToArray(this.data.constructionSituation);
         this.data.implementation = convertToArray(this.data.implementation);
-
 
 
         if (this.data.supervision == null) {
@@ -334,7 +339,7 @@ export class AddFireAcceptanceComponent implements OnInit {
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 2;
     this.flowFormDto.projectTypeStatu = 1;
-    this.data.dateOfReview = !this.data.dateOfReview ? '' : timeTrans(Date.parse(this.data.dateOfReview) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
+    this.data.dateOfReview = !this.data.dateOfReview ? '' : timeTrans(Date.parse(this.data.dateOfReview) / 1000, 'yyyy/MM/dd HH:mm:ss', '/')
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.savingDraft = false;
       this.flowFormDto.projectId = data;
@@ -368,7 +373,7 @@ export class AddFireAcceptanceComponent implements OnInit {
   }
 
   save() {
-    
+
     this.filterFileList();
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();

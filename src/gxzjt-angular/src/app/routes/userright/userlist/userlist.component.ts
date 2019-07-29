@@ -248,8 +248,8 @@ pageConfig: STPage = {
     this.isAddProducttyepe = false;
   }
   subProducttype(): void {
-    this.lockmodel.LockBeginTime= timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
-    this.lockmodel.LockEndTime=timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
+    this.lockmodel.LockBeginTime= timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
+    this.lockmodel.LockEndTime=timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
     console.log(this.lockmodel)
     this.UserRightService.Lock(this.lockmodel).subscribe(
       res => {

@@ -77,8 +77,8 @@
         <tr>
           <td rowspan='1' colspan='20'>
 
-            <!-- <div *ngIf="examineFormDto.opinion"> -->
-            <div>
+            <div *ngIf="examineFormDto.opinion&&!examineFormDto.content">
+
               <div class="table_detail">
                 <h3>{{data.companyName}}：</h3>
                 <div style="line-height: 30px;font-size: 16px;">
@@ -86,7 +86,8 @@
                   <div class="flexBox">
                     验收日期:
                     <div class="flex1">
-                      <nz-date-picker [(ngModel)]="examineFormDto.checkDate" name="checkDate"></nz-date-picker>
+                      <nz-date-picker [(ngModel)]="examineFormDto.checkDate" name="checkDate" [nzFormat]="'yyyy/MM/dd'">
+                      </nz-date-picker>
                     </div>
                   </div>
                   <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.checkDate">必填
@@ -99,24 +100,35 @@
               <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.opinion"
                 name="professionalContractorsopinion" required>
                   </textarea>
+              <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.opinion">必填</p>
+
+            </div>
+
+            <div *ngIf="examineFormDto.content">
+              <div class="table_detail">
+                <h3>{{data.companyName}}：</h3>
+
+                <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.content"
+                  name="professionalContractorsopinion" required>
+                    </textarea>
+                <div style="display: block;margin-top: 8px;margin-bottom: 8px;">
+                  <div style="display: flex;align-items: center;">
+                    <div> 验收日期: </div>
+                    <nz-date-picker [(ngModel)]="examineFormDto.checkDate" name="checkDate" style="width: 200px;"
+                      (ngModelChange)="onChangeCheckDate($event)" [nzFormat]="'yyyy/MM/dd'">
+                    </nz-date-picker>
+                  </div>
+                  <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.checkDate">
+                    此处验收日期必填，需和意见一致
+                  </p>
+                </div>
+              </div>
+              <p style="margin-top: 8px;">提示：为保持格式一致，段落首行请输入4个空格</p>
+              <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.content">必填</p>
 
             </div>
 
 
-            <!-- <div class="table_detail">
-              <h3>{{data.companyName}}：</h3>
-
-              <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.Content"
-                name="professionalContractorsopinion" required>
-                </textarea>
-
-            </div> -->
-
-
-
-
-
-            <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.opinion">必填</p>
 
             <div class="textLeft" *ngIf="examineFormDto">
               <nz-upload [(nzFileList)]="examineFormDto.attachment" [nzCustomRequest]="customReq"

@@ -95,7 +95,7 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>验收合格日期:</td>
           <td rowspan='1' colspan='7'>
             <se error="必填">
-              <nz-date-picker name="t2" required [(ngModel)]="data.planEndTime" name="planEndTime"></nz-date-picker>
+              <nz-date-picker name="t2" required [(ngModel)]="data.planEndTime" name="planEndTime" [nzFormat]="'yyyy/MM/dd'"></nz-date-picker>
             </se>
           </td>
 
@@ -818,7 +818,7 @@
         </td> -->
         <td colspan='20' rowspan='1' style="text-align: right">
           备案时间：<nz-date-picker style="width: 160px;margin-right: 20px" [(ngModel)]="data.acceptanceOpinions.filingTime"
-            name="filingTime"></nz-date-picker>
+            name="filingTime" [nzFormat]="'yyyy/MM/dd'"></nz-date-picker>
         </td>
       </tr>
 

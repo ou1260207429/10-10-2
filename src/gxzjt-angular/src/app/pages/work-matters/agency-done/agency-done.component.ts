@@ -185,8 +185,8 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
    * 点击查询
    */
   query() {  
-    this.searchParam.applyTimeStart = this.rangeTime[0] ? timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-') + " 00:00:00":this.searchParam.applyTimeStart
-    this.searchParam.applyTimeEnd  = this.rangeTime[1] ?timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-') + " 23:59:59":this.searchParam.applyTimeEnd
+    this.searchParam.applyTimeStart = this.rangeTime[0] ? timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00":this.searchParam.applyTimeStart
+    this.searchParam.applyTimeEnd  = this.rangeTime[1] ?timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59":this.searchParam.applyTimeEnd
     this.searchParam.pagedAndFilteredInputDto.page = 1;
     this.getList();
   }
@@ -216,8 +216,8 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
   okRangeTime(v) {
     console.log(v);
-    //const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')
-    //const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')
+    //const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy/MM/dd', '/')
+    //const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy/MM/dd', '/')
     this.searchParam.applyTimeStart = v[0];
     this.searchParam.applyTimeEnd = v[1];
     // console.log(applyTimeEnd);
