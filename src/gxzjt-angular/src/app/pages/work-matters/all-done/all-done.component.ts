@@ -116,8 +116,8 @@ export class WorkMattersAllDoneComponent implements OnInit {
 
   ngOnInit() {
     this.resetTime();
-    this.param.startApplyTime = timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-') + " 00:00:00";
-    this.param.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-') + " 23:59:59";
+    this.param.startApplyTime = timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00";
+    this.param.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59";
     this.param.startTime = null;
     this.param.endTime = null;
     this.fliterForm = this.formBuilder.group({
@@ -157,8 +157,8 @@ export class WorkMattersAllDoneComponent implements OnInit {
     });
     if (this.fliterForm.controls.sbdateRange.value) {
 
-      this.param.startTime = timeTrans(Date.parse(this.fliterForm.controls.sbdateRange.value[0]) / 1000, 'yyyy-MM-dd', '-') + " 00:00:00";
-      this.param.endTime = timeTrans(Date.parse(this.fliterForm.controls.sbdateRange.value[1]) / 1000, 'yyyy-MM-dd', '-') + " 23:59:59";
+      this.param.startTime = timeTrans(Date.parse(this.fliterForm.controls.sbdateRange.value[0]) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00";
+      this.param.endTime = timeTrans(Date.parse(this.fliterForm.controls.sbdateRange.value[1]) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59";
     } else {
       this.param.startTime = null;
       this.param.endTime = null;
@@ -232,16 +232,16 @@ export class WorkMattersAllDoneComponent implements OnInit {
 
     if (this.fliterForm.controls.dateRange.value.length != 0) {
 
-      this.param.startApplyTime = timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy-MM-dd', '-') + " 00:00:00";
-      this.param.endApplyTime = timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy-MM-dd', '-') + " 23:59:59";
+      this.param.startApplyTime = timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00";
+      this.param.endApplyTime = timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59";
     } else {
       this.param.startApplyTime = '';
       this.param.endApplyTime = '';
     }
     if (this.fliterForm.controls.sbdateRange.value) {
 
-      this.param.startTime = timeTrans(Date.parse(this.fliterForm.controls.sbdateRange.value[0]) / 1000, 'yyyy-MM-dd', '-') + " 00:00:00";
-      this.param.endTime = timeTrans(Date.parse(this.fliterForm.controls.sbdateRange.value[1]) / 1000, 'yyyy-MM-dd', '-') + " 23:59:59";
+      this.param.startTime = timeTrans(Date.parse(this.fliterForm.controls.sbdateRange.value[0]) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00";
+      this.param.endTime = timeTrans(Date.parse(this.fliterForm.controls.sbdateRange.value[1]) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59";
     } else {
       this.param.startTime = null;
       this.param.endTime = null;

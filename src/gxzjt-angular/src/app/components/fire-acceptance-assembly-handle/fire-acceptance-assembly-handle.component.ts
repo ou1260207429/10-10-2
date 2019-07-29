@@ -58,8 +58,7 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
     if (!this.examineFormDto.content && !this.examineFormDto.opinion) {
       var date = new Date();
       var dateStr = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + "日";
-      // this.examineFormDto.checkDate = moment(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
-      // this.examineFormDto.checkDate = moment(date.toDateString());
+
       this.examineFormDto.content =
         `    你单位报来`
         + this.data.projectName + `建设工程消防验收资料收悉（受理凭证：`

@@ -170,8 +170,8 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
     // this.param.endApplyTime = moment(this.rangeTime[1]).add(28800000);
 
     if(this.rangeTime.length!=0){
-      this.param.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
-      this.param.endApplyTime =timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
+      this.param.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
+      this.param.endApplyTime =timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
     }else{
       this.param.startApplyTime='';
       this.param.endApplyTime ='';
@@ -187,8 +187,8 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
     this.param.sorting = 'projectId desc';
     this.resetTime();
     if(this.rangeTime.length!=0){
-      this.param.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
-      this.param.endApplyTime =timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
+      this.param.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
+      this.param.endApplyTime =timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
     }else{
       this.param.startApplyTime='';
       this.param.endApplyTime ='';
@@ -206,8 +206,8 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
   query() {
     this.param.page = 1;
     if(this.rangeTime.length!=0){
-      this.param.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
-      this.param.endApplyTime =timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
+      this.param.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
+      this.param.endApplyTime =timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
     }else{
       this.param.startApplyTime='';
       this.param.endApplyTime ='';

@@ -177,12 +177,7 @@ export class DraftsComponent extends PublicFormComponent implements OnInit {
   }
 
   okRangeTime(v) {
-    // console.log(v);
-    // const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy-MM-dd', '-')
-    // const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy-MM-dd', '-')
-    // this.searchParam.applyTimeStart = applyTimeStart;
-    // this.searchParam.applyTimeEnd = applyTimeEnd;
-    // console.log(applyTimeEnd);
+
   }
 
   resetTime() {

@@ -25,16 +25,16 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
   @Input() type = 0
 
   //从父页面传来的数据
-  @Input() data: any
+  @Input() data: any;
 
   //市县区
-  position = OptionsEnum
+  position = OptionsEnum;
 
   //结构类型
-  typeSelect = ArchitectureTypeEnum
+  typeSelect = ArchitectureTypeEnum;
 
   //耐火结构
-  refractoryEnum = RefractoryEnum
+  refractoryEnum = RefractoryEnum;
 
   //获取表单对象
   @ViewChild('f') f: FormGroup;
@@ -43,7 +43,7 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
   @Output() private childOuter = new EventEmitter();
 
 
-  @Input() examineFormDto: ExamineFormDto
+  @Input() examineFormDto: ExamineFormDto;
 
 
   constructor(private message: NzMessageService, public _publicServices: PublicServices, public publicModel: PublicModel, ) {
@@ -59,7 +59,7 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
       var date = new Date();
       var dateStr = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + "日";
       this.examineFormDto.content =
-        `    你单位申请的` + this.data.projectName + `建设工程（受理凭证：` + this.data.acceptFileCode + `，` + dateStr + `收）消防设计文件收悉。该工程位于` + this.data.address + `内。` + this.data.descr + `。设计单位为` + this.examineFormDto.designOrg.companyName
+        `    你单位申请的` + this.data.projectName + `建设工程（受理凭证：` + this.data.acceptFileCode + `，` + dateStr + `收）消防设计文件收悉。该工程位于` + this.data.address + `。` + this.data.descr + `。设计单位为` + this.examineFormDto.designOrg.companyName
         + `，设计资质为建设工程` + this.examineFormDto.designOrg.qualifications
         + `。按照图纸审查机构（` + this.examineFormDto.drawingOrg.companyName
         + `）对该工程设计图纸的技术审查结论，我局提出以下意见：\r\n`
