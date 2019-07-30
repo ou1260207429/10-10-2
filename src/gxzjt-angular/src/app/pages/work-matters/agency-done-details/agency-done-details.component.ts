@@ -390,6 +390,9 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
 
 
+    this.formDto.opinion = this.nodeAdvise;
+
+
 
     this.butNzLoading = true
     if (!bo && this.curNodeName == '业务审批负责人审批') {
