@@ -393,7 +393,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
     this.butNzLoading = true
     if (!bo && this.curNodeName == '业务审批负责人审批') {
-      // this.noResult((data) => { 
+      // this.noResult((data) => {
       this.tenantWorkFlowInstanceDto.backAuditedNode = {
         nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
         nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName
@@ -774,7 +774,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     }
 
 
-    this.isAddProducttyepe1 = false;
+
   }
 
   //驳回提交
@@ -795,12 +795,13 @@ export class AgencyDoneDetailsComponent implements OnInit {
     submodel.opinion = this.rejectadvices;
     this.WorkMattersService.RejectedExamine(submodel).subscribe(
       res => {
-
+        this.serveResult();
 
       },
     );
     this.rejectadvices = null;
     this.butNzLoading = false;
+    this.isAddProducttyepe1 = false;
   }
 
 
