@@ -768,7 +768,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     }
 
 
-    this.isAddProducttyepe1 = false;
+
   }
 
   //驳回提交
@@ -787,14 +787,17 @@ export class AgencyDoneDetailsComponent implements OnInit {
     submodel.workFlow_Instance_Id=model.workFlow_Instance_Id;
     submodel.workFlow_TemplateInfo_Id=model.workFlow_TemplateInfo_Id;
     submodel.opinion=this.rejectadvices;
+    // console.log(submodel);
+    debugger
     this.WorkMattersService.RejectedExamine(submodel).subscribe(
       res => {
-
+        this.serveResult();
 
       },
     );
     this.rejectadvices=null;
     this.butNzLoading = false;
+    this.isAddProducttyepe1 = false;
   }
 
 
