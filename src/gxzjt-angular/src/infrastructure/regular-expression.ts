@@ -98,10 +98,10 @@ export function comopareDate(date1: any, date2: any): number {
   }
 }
 
-/** 
- * 日期解析，字符串转日期 
- * @param dateString 可以为2017-02-16，2017/02/16，2017.02.16 
- * @returns {Date} 返回对应的日期对象 
+/**
+ * 日期解析，字符串转日期
+ * @param dateString 可以为2017-02-16，2017/02/16，2017.02.16
+ * @returns {Date} 返回对应的日期对象
  */
 function dateParse(dateString: string): Date {
   var SEPARATOR_BAR = "-";
@@ -323,7 +323,7 @@ export function updateEngineeringNo(array: Array<any>, length, id, no) {
  * 数组中单独判断
  * @param array 数组
  * @param checkAttribute  判断的属性
- * @param 例子 arr = [{name:'1',isChecked:true},{name:'2',isChecked:false,}]  
+ * @param 例子 arr = [{name:'1',isChecked:true},{name:'2',isChecked:false,}]
  * @param return  boolean
  */
 export function checkArray(array: any, checkAttribute: string): boolean {
@@ -389,7 +389,7 @@ export function arrayChecked(array: any): number {
 /**
    * 单个删除
    * @param arrar 列表
-   * @param subordinateattribute 对比的属性 
+   * @param subordinateattribute 对比的属性
    * @param record 对比的参数
    * @param st 刷新st
    */
@@ -646,9 +646,9 @@ export function genID(length) {
 }
 
 /**
- * 单选框 
+ * 单选框
  * 根据对象删除子数组
- * @param v 
+ * @param v
  * @param item 对象
  * @param itemName 对象的属性值
  * @param itemChecked 对象的是否选中的属性值
@@ -680,5 +680,12 @@ export function radioCheckChooseArrar(v: boolean, item: any, itemName: string, i
     }
   }
 }
+
+
+// //去除字符串两端空格
+// export function removeSpace(str:String){
+//   //  return str.replace(/\s*/g,"");
+//   return str.replace(/^\s*|\s*$/g,"");
+// }
 
 
