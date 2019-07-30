@@ -393,7 +393,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
     this.butNzLoading = true
     if (!bo && this.curNodeName == '业务审批负责人审批') {
-      // this.noResult((data) => { 
+      // this.noResult((data) => {
       this.tenantWorkFlowInstanceDto.backAuditedNode = {
         nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
         nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName
@@ -778,25 +778,6 @@ export class AgencyDoneDetailsComponent implements OnInit {
   }
 
   //驳回提交
-<<<<<<< HEAD
-  RejectedExamine(model){
-    let submodel :any={};
-    submodel.flowId=model.flowId;
-    submodel.currentHandleUserName=model.currentHandleUserName;
-    submodel.currentHandleUserCode=model.currentHandleUserCode;
-    submodel.handleUserList=model.handleUserList;
-    submodel.currentNodeId=model.currentNodeId;
-    submodel.currentNodeName=model.currentNodeName;
-    submodel.currentHandleOrgName=model.currentHandleOrgName;
-    submodel.currentHandleOrgCode=model.currentHandleOrgCode;
-    submodel.nodeAuditorRecordId=model.nodeAuditorRecordId;
-    submodel.workFlow_NodeRecord_Id=model.workFlow_NodeRecord_Id;
-    submodel.workFlow_Instance_Id=model.workFlow_Instance_Id;
-    submodel.workFlow_TemplateInfo_Id=model.workFlow_TemplateInfo_Id;
-    submodel.opinion=this.rejectadvices;
-    // console.log(submodel);
-    debugger
-=======
   RejectedExamine(model) {
     let submodel: any = {};
     submodel.flowId = model.flowId;
@@ -812,7 +793,6 @@ export class AgencyDoneDetailsComponent implements OnInit {
     submodel.workFlow_Instance_Id = model.workFlow_Instance_Id;
     submodel.workFlow_TemplateInfo_Id = model.workFlow_TemplateInfo_Id;
     submodel.opinion = this.rejectadvices;
->>>>>>> dd76db1d92c6457fbd412fd6caf6d6dfc43d8526
     this.WorkMattersService.RejectedExamine(submodel).subscribe(
       res => {
         this.serveResult();
