@@ -66,7 +66,7 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
         + this.data.address + `，`
         + this.examineFormDto.descr + `。`
         + dateStr + `,`
-        + this.data.cityName + `住房和城乡建设局组织你单位及设计、施工、监理、检测等单位有关人员对该工程进行了消防验收。`
+        + this.data.orgName + `组织你单位及设计、施工、监理、检测等单位有关人员对该工程进行了消防验收。`
         + `经对验收资料、消防设施技术检测报告进行审查，`
         + `对总平面布置和平面布置中涉及消防安全的防火间距、消防车道、消防水源，建设防火防烟分区和建设构造，`
         + `安全疏散和消防电梯，消防给水和自动灭火系统，防烟、排烟和通风系统的防火设计，`

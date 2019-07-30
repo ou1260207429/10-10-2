@@ -16,6 +16,7 @@ import { AddPostworkComponent } from './add-postwork/add-postwork.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 
 import { TinyEditorComponent } from './tiny-editor/tiny-editor.component';
+// import { DelonACLModule } from '@delon/acl';
 @NgModule({
 	declarations: [
 		FlowRouteComponent,
@@ -31,6 +32,7 @@ import { TinyEditorComponent } from './tiny-editor/tiny-editor.component';
 		SharedModule,
 		EditorModule,
 		FormsModule,
+		// DelonACLModule.forRoot(),
 	],
 	exports: [
 		FlowRouteComponent,

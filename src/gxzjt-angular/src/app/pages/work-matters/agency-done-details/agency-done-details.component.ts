@@ -14,7 +14,7 @@ import * as moment from 'moment';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { InitiationProcessAddAuditorComponent } from '@app/components/initiation-process-add-auditor/initiation-process-add-auditor.component';
 import { checkArrayString, timeTrans } from 'infrastructure/regular-expression';
-import { WorkMattersService} from '../work-matters.service'
+import { WorkMattersService } from '../work-matters.service'
 /**
  * 待办详情->办理页面
  */
@@ -38,15 +38,15 @@ export class AgencyDoneDetailsComponent implements OnInit {
     specialEngineering: false,
     fireFightingFacilities: false
   }
-  selectedIndex = 0
+  selectedIndex = 0;
 
   //路径的对象
-  data
+  data: any;
 
   type: boolean = true;
 
   //通过和不通过
-  adoptEnum = AdoptEnum
+  adoptEnum = AdoptEnum;
 
   uploading = false;
   fileList: UploadFile[] = [];
@@ -99,10 +99,15 @@ export class AgencyDoneDetailsComponent implements OnInit {
   selectMultiple = []
 
   isAddProducttyepe1 = false;//控制驳回弹窗界面
-  rejectadvices=null;//驳回意见
+  rejectadvices = null;//驳回意见
 
   //使用性质
-  useNatureSelect
+  useNatureSelect: any;
+
+
+  //节点审批意见
+  nodeAdvise: String;
+
   constructor(private _eventEmiter: EventEmiter,
     public _appSessionService: AppSessionService,
     private _examineService: ExamineServiceServiceProxy,
@@ -377,19 +382,18 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
     // this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.curNodeName == '大厅受理' ? this.formDto.opinion : this.examineFormDto.opinion;
 
-    if (this.curNodeName == '大厅受理') {
-      this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.formDto.opinion;
-    } else {
-      this.examineFormDto.content = this.examineFormDto.content.replace(/\n/g, "\r\n");
-      this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.examineFormDto.content;
 
+    if (this.examineFormDto.content) {
+      this.examineFormDto.content = this.examineFormDto.content.replace(/\n/g, "\r\n");
     }
+    this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.nodeAdvise;
+
 
 
 
     this.butNzLoading = true
     if (!bo && this.curNodeName == '业务审批负责人审批') {
-      // this.noResult((data) => {
+      // this.noResult((data) => { 
       this.tenantWorkFlowInstanceDto.backAuditedNode = {
         nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
         nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName
@@ -417,6 +421,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
         this.butNzLoading = false;
       })
     } else {
+      //业务承办人审核 节点点击合格和不合格都是  走通过接口。要传参给后台用于区分
+      if (this.curNodeName == '业务承办人审核') {
+        this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.result = bo ? 5 : 6
+      }
       this._flowServices.tenant_NodeToNextNodeByPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
         // this.butNzLoading = false;
         const type = this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType == 3 ? true : false
@@ -633,7 +641,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
   }
 
   //控制驳回界面显示
-  reject(){
+  reject() {
     this.isAddProducttyepe1 = true;
   }
   //驳回界面取消
@@ -643,7 +651,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
   }
   //驳回界面确定
   subProducttype1(bo): void {
-    if(this.rejectadvices==null||this.rejectadvices==''){
+    if (this.rejectadvices == null || this.rejectadvices == '') {
       this.message.error("驳回意见必须填写！")
       return
     }
@@ -674,9 +682,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptId = this.appSession.user.organizationsId
     this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.deptFullPath = this.appSession.user.organizationsName
 
-    this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.curNodeName == '大厅受理' ? this.formDto.opinion : this.examineFormDto.opinion;
-    // this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.curNodeName == '大厅受理' ? this.formDto.opinion : this.examineFormDto.content;
-
+    this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.details = this.nodeAdvise;
 
 
 
@@ -772,6 +778,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
   }
 
   //驳回提交
+<<<<<<< HEAD
   RejectedExamine(model){
     let submodel :any={};
     submodel.flowId=model.flowId;
@@ -789,13 +796,30 @@ export class AgencyDoneDetailsComponent implements OnInit {
     submodel.opinion=this.rejectadvices;
     // console.log(submodel);
     debugger
+=======
+  RejectedExamine(model) {
+    let submodel: any = {};
+    submodel.flowId = model.flowId;
+    submodel.currentHandleUserName = model.currentHandleUserName;
+    submodel.currentHandleUserCode = model.currentHandleUserCode;
+    submodel.handleUserList = model.handleUserList;
+    submodel.currentNodeId = model.currentNodeId;
+    submodel.currentNodeName = model.currentNodeName;
+    submodel.currentHandleOrgName = model.currentHandleOrgName;
+    submodel.currentHandleOrgCode = model.currentHandleOrgCode;
+    submodel.nodeAuditorRecordId = model.nodeAuditorRecordId;
+    submodel.workFlow_NodeRecord_Id = model.workFlow_NodeRecord_Id;
+    submodel.workFlow_Instance_Id = model.workFlow_Instance_Id;
+    submodel.workFlow_TemplateInfo_Id = model.workFlow_TemplateInfo_Id;
+    submodel.opinion = this.rejectadvices;
+>>>>>>> dd76db1d92c6457fbd412fd6caf6d6dfc43d8526
     this.WorkMattersService.RejectedExamine(submodel).subscribe(
       res => {
         this.serveResult();
 
       },
     );
-    this.rejectadvices=null;
+    this.rejectadvices = null;
     this.butNzLoading = false;
     this.isAddProducttyepe1 = false;
   }
