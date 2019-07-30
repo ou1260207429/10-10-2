@@ -11,7 +11,7 @@
               <p class="time" *ngIf="!box.completionTime">到达时间：{{box.creationTime|timeNewString}}</p>
               <p class="time" *ngIf="box.completionTime">处理时间：{{box.completionTime|timeNewString}}</p>
               <div class="flowCard">
-                <p>处理人：{{box.applyEName}}</p> 
+                <p *ngIf="showProcessor" >处理人：{{box.applyEName}}</p> 
                 <p>动作：{{box.result|numType}}</p>
                 <p *ngIf="box.details">意见：{{box.details}}</p>
               </div>

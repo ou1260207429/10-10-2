@@ -58,8 +58,8 @@
         <table class="tables" style="box-sizing: border-box;" *ngIf="formDto">
           <tr>
             <td style="width: 37px;background-color: #ffedcc;color: #ff9c35;font-weight: 600;border-right: 0"
-              rowspan='4'>
-              流程审批
+              rowspan='2'>
+              文书审查意见内容
             </td>
           </tr>
           <tr style="text-align: left;">
@@ -129,30 +129,21 @@
                 </div>
               </div>
 
-
-
-
-
             </td>
           </tr>
 
-
-
-          <!-- <tr>
+          <tr>
             <td style="width: 37px;background-color: #ffedcc;color: #ff9c35;font-weight: 600;border-right: 0"
-              rowspan='4'>
-              审批备注
+              rowspan='2'>
+              流程审批意见
             </td>
           </tr>
           <tr>
-            <td>
-              <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.content"
-                name="professionalContractorsopinion" required>
-
-
+            <td colspan="20">
+              <textarea nz-input placeholder="请输入文书审查意见内容，此信息将会在流程节点显示(字数限制100以内)" [(ngModel)]="nodeAdvise" name="inputnodeAdvise" maxlength="200" required>
+                </textarea>
             </td>
-
-          </tr> -->
+          </tr>
 
         </table>
       </div>
@@ -193,8 +184,8 @@
           [nzLoading]="butNzLoading">{{curNodeName=='业务承办人审核'?'合格':'受理'}}</button>
         <button nz-button nzType="primary" (click)="save(false)" [disabled]="butNzLoading"
           [nzLoading]="butNzLoading">{{curNodeName=='业务承办人审核'?'不合格':'不受理'}}</button>
-        <button *ngIf="curNodeName == '业务承办人审核'" nz-button nzType="primary" (click)="reject(false)"
-          [disabled]="butNzLoading" [nzLoading]="butNzLoading">驳回</button>
+        <!-- <button *ngIf="curNodeName == '业务承办人审核'" nz-button nzType="primary" (click)="reject(false)"
+          [disabled]="butNzLoading" [nzLoading]="butNzLoading">驳回</button> -->
       </div>
 
       <!-- <button nz-button nzType="primary" (click)="revoke()" *ngIf="curNodeName!='业务承办人审核'"
@@ -218,5 +209,5 @@
     <textarea nz-input placeholder="请输入驳回意见" [(ngModel)]="rejectadvices" style="height: 200px;"></textarea>
 
 
-      </div>
-      </nz-modal>
+  </div>
+</nz-modal>
