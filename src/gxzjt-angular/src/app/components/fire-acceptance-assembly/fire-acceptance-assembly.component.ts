@@ -307,13 +307,22 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
 
     return this._publicServices.newUpload(formData, params).subscribe(data => {
 
-      // item.onError!(data, item.file!);
+
       item.onSuccess!({}, item.file!, event);
-      var list = this.data.fileList[index].array;
+      // var list = this.data.fileList[index].array;
 
-      // var file = list.length - 1 >= 0 ? list[list.length - 1] : list[0];
+      // var file = indexOfFileByName(list, item.file.name);
 
-      var file = indexOfFileByName(list, item.file.name);
+      var file = null;
+      for (var i = this.data.fileList.length - 1; i >= 0; --i) {
+        var list = this.data.fileList[i].array;
+        file = indexOfFileByName(list, item.file.name);
+      }
+
+      if (file == null) {
+        item.onError!('无法找到文件', item.file!);
+        return;
+      }
 
       file.uid = data.data[0].id;
       file.name = file.name;

@@ -18,7 +18,7 @@
             </div> -->
             <div>
               <input class="table_input" placeholder="请输入字号" [(ngModel)]="data.fileCodeName"
-                name="fileCodeName" />第[后台生成]号
+                name="fileCodeName" style="width: 200px;"/>第[后台生成]号
             </div>
             <div *ngIf="!data.fileCodeName" class="rightSpan">必填</div>
           </td>
@@ -80,7 +80,7 @@
 
             <div>
               <input class="table_input" placeholder="请输入字号" [(ngModel)]="examineFormDto.fileCodeName"
-                name="fileCodeName" />第[后台生成]号
+                name="fileCodeName" style="width: 200px;"/>第[后台生成]号
             </div>
             <div *ngIf="!examineFormDto.fileCodeName" class="rightSpan">必填</div>
           </td>
@@ -122,7 +122,7 @@
             <!-- <button nz-button (click)="test()">测试</button> -->
 
             <div class="textLeft" *ngIf="examineFormDto">
-              <nz-upload [(nzFileList)]="examineFormDto.attachment" [nzCustomRequest]="customReq"
+              <nz-upload  [(nzFileList)]="examineFormDto.attachment" [nzCustomRequest]="customReq"
                 [nzRemove]="removeFile">
                 <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
               </nz-upload>

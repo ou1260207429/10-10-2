@@ -207,7 +207,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   }
 
   handleChange(index) {
-    this.uploadIndex = index
+    this.uploadIndex = index;
   }
 
 
@@ -234,15 +234,24 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     formData.append('files', file);
 
 
-    const index = this.uploadIndex;
+
 
     return this._publicServices.newUpload(formData, params).subscribe(data => {
 
       item.onSuccess!({}, item.file!, event);
 
-      var list = this.data.fileList[index].array;
 
-      var file = indexOfFileByName(list, item.file.name);
+      var file = null;
+      for (var i = this.data.fileList.length - 1; i >= 0; --i) {
+        var list = this.data.fileList[i].array;
+        file = indexOfFileByName(list, item.file.name);
+      }
+
+      if (file == null) {
+        item.onError!('无法找到文件', item.file!);
+        return;
+      }
+
       // var file = list.length - 1 >= 0 ? list[list.length - 1] : list[0];
       // var file = list.in
       file.uid = data.data[0].id;
