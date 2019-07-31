@@ -245,6 +245,9 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
       for (var i = this.data.fileList.length - 1; i >= 0; --i) {
         var list = this.data.fileList[i].array;
         file = indexOfFileByName(list, item.file.name);
+        if (file) {
+          break;
+        }
       }
 
       if (file == null) {

@@ -200,19 +200,19 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     formData.append('files', filePost);
 
 
-    const index = this.uploadIndex;
 
     return this._publicServices.newUpload(formData, params).subscribe(data => {
 
 
       item.onSuccess!({}, item.file!, event);
-      // var list = this.data.fileList[index].array;
-      // var file = indexOfFileByName(list, item.file.name);
 
       var file = null;
       for (var i = this.data.fileList.length - 1; i >= 0; --i) {
         var list = this.data.fileList[i].array;
         file = indexOfFileByName(list, item.file.name);
+        if (file) {
+          break;
+        }
       }
 
       if (file == null) {
