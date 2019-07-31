@@ -17,11 +17,11 @@
                 name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
             </div> -->
             <div>
-              <input class="table_input" placeholder="请输入字号" [(ngModel)]="data.FileCodeName"
-                name="FileCodeName" />第[后台生成]号
+              <input class="table_input" placeholder="请输入字号" [(ngModel)]="data.fileCodeName"
+                name="fileCodeName" />第[后台生成]号
             </div>
 
-            <div *ngIf="!data.FileCodeName" class="rightSpan">必填</div>
+            <div *ngIf="!data.fileCodeName" class="rightSpan">必填</div>
           </td>
         </tr>
         <tr>
@@ -77,10 +77,10 @@
                 name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
             </div> -->
             <div>
-              <input class="table_input" placeholder="请输入字号" [(ngModel)]="data.FileCodeName"
-                name="FileCodeName" />第[后台生成]号
+              <input class="table_input" placeholder="请输入字号" [(ngModel)]="data.fileCodeName"
+                name="fileCodeName" />第[后台生成]号
             </div>
-            <div *ngIf="!data.FileCodeName" class="rightSpan">必填</div>
+            <div *ngIf="!data.fileCodeName" class="rightSpan">必填</div>
           </td>
         </tr>
         <tr>
@@ -127,11 +127,11 @@
             <!-- <div><input class="table_input" [(ngModel)]="examineFormDto.fileCodePrefix" name="fileCodePrefix"
                 placeholder="请输入区域简称" />住建消审字〔后台生成〕第后台生成号</div> -->
             <div>
-              <input class="table_input" placeholder="请输入字号" [(ngModel)]="examineFormDto.FileCodeName"
-                name="FileCodeName" />第[后台生成]号
+              <input class="table_input" placeholder="请输入字号" [(ngModel)]="examineFormDto.fileCodeName"
+                name="fileCodeName" />第[后台生成]号
             </div>
 
-            <div *ngIf="!examineFormDto.FileCodeName" class="rightSpan">必填</div>
+            <div *ngIf="!examineFormDto.fileCodeName" class="rightSpan">必填</div>
           </td>
         </tr>
         <tr *ngIf="examineFormDto.opinion&&!examineFormDto.content">

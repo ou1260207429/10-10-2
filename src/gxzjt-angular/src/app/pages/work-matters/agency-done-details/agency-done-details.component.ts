@@ -308,7 +308,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
   savePost(bo?: boolean) {
     switch (this.curNodeName) {
       case '大厅受理':
-        if (!this.formDto.FileCodeName) {
+        if (!this.formDto.fileCodeName) {
           this.message.error('请输入必填项')
           return false;
         }
@@ -316,7 +316,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
       case '业务承办人审核':
 
-        if ((!this.examineFormDto.FileCodeName || !this.examineFormDto.content) && this.flowPathType != 3) {
+        if ((!this.examineFormDto.fileCodeName || !this.examineFormDto.content) && this.flowPathType != 3) {
           this.message.error('请输入必填项')
           return false;
         }
@@ -327,7 +327,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
           this.examineFormDto.checkDate = moment(timeTrans(Date.parse(this.examineFormDto.checkDate) / 1000, 'yyyy/MM/dd HH:mm:ss', '/'))
         }
 
-        if (!this.examineFormDto.FileCodeName && this.flowPathType == 3) {
+        if (!this.examineFormDto.fileCodeName && this.flowPathType == 3) {
           this.message.error('请输入必填项')
           return false;
         } else {
