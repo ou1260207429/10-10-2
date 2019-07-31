@@ -213,7 +213,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
    */
   query() {
     this.searchParam.page = 1;
-
+    this.searchParam.projectName= this.searchParam.projectName.trim();
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if(this.rangeTime.length!=0){
