@@ -75,13 +75,8 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     },
     { title: '当前处理人', index: 'currentHandleUserName',width:'150px' },
     { title: '申报时间', index: 'applyTime',type:'date',width:'120px' },
-<<<<<<< HEAD
     { title: '流程结束时间', index: 'endTime',width:'120px',format:(item:any)=>`${item.endTime=='0001-01-01T00:00:00'?'':datePipe.transform(item.endTime, 'YYYY-MM-DD HH:mm:ss')}`,type:'date'},
     { title: '超时时长', index: 'approvalRemainingTime',width:'100px' },
-=======
-    { title: '流程结束时间', index: 'endTime',width:'120px',format:(item:any)=>`${item.endTime=='0001-01-01T00:00:00'?'':datePipe.transform(item.endTime, 'yyyy/MM/dd HH:mm:ss')}`,type:'date'},
-    { title: '超时时长', index: 'approvalRemainingTime',width:'120px' },
->>>>>>> d19737e1f9a767e401da0f1206fd44f3af7e55de
   ];
 
   constructor(private http: _HttpClient,
