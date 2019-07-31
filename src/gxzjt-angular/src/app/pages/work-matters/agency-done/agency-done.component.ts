@@ -98,7 +98,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   rangeTime
 
   //获取表单对象
-  @ViewChild('f') ngForm: FormGroup; 
+  @ViewChild('f') ngForm: FormGroup;
   constructor(private workFlowedServiceProxy: WorkFlowedServiceProxy,
     private eventEmiter: EventEmiter,
     private _flowServices: FlowServices,
@@ -118,7 +118,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   ngOnInit() {
     this.init()
     this.resetTime();
-    let _self = this; 
+    let _self = this;
     this.eventEmiter.on('fireAcceptanceComponentInit', () => {
       _self.init();
     });
@@ -148,7 +148,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.searchParam.projectTypeStatu = null;
     this.searchParam.isAlreadyDone = true
     if (this.rangeTime != null) {
-      
+
       this.searchParam.applyTimeStart = this.rangeTime[0];
       this.searchParam.applyTimeEnd = this.rangeTime[1];
     }
@@ -184,7 +184,10 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   /**
    * 点击查询
    */
-  query() {  
+  query() {
+
+    this.searchParam.projectName= this.searchParam.projectName.trim();
+
     this.searchParam.applyTimeStart = this.rangeTime[0] ? timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00":this.searchParam.applyTimeStart
     this.searchParam.applyTimeEnd  = this.rangeTime[1] ?timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59":this.searchParam.applyTimeEnd
     this.searchParam.pagedAndFilteredInputDto.page = 1;
@@ -256,11 +259,11 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
       this.message.error("请填写签收人信息");
       return;
     }
- 
+
     if (!this.ngForm.valid) {
       this.message.error("请填写正确的信息");
       return;
-    } 
+    }
 
 
     const workFlow: WorkFlow = {

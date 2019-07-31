@@ -143,6 +143,8 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
    */
   query() {
     this.searchParam.page = 1;
+    this.searchParam.projectName= this.searchParam.projectName.trim();
+    this.searchParam.companyName= this.searchParam.companyName.trim();
      this.getList();
   }
 
@@ -158,7 +160,7 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
   }
 
   okRangeTime(v) {
- 
+
   }
 
   /**
