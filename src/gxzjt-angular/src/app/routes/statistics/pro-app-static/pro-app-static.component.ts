@@ -149,8 +149,8 @@ export class StatisticsProAppStaticComponent implements OnInit {
     if(this.fliterForm.controls.dateRange.value.length!=0){
       // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
       // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
-      this.param.startApplyTime=timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
-      this.param.endApplyTime =timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
+      this.param.startApplyTime=timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
+      this.param.endApplyTime =timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
     }else{
       this.param.startApplyTime='';
       this.param.endApplyTime='';

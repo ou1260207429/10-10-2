@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class NumTypePipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    const arr = ['不通过','通过','撤销','转派','待审核'];
+    const arr = ['不通过','通过','撤销','转派','待审核','合格','不合格'];
     return arr[value];
   }
 

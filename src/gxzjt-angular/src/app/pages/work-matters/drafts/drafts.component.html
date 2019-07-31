@@ -19,18 +19,18 @@
 
   <form nz-form class="mb-md" [hidden]="hiddenFliter">
 
-    <input nz-input [(ngModel)]="searchParam.number" name="number" placeholder="流程流水号"
+    <!-- <input nz-input [(ngModel)]="searchParam.number" name="number" placeholder="流程流水号"
+      style="margin-right: 10px;margin-top: 10px;width: 200px;"> -->
+
+
+
+    <input nz-input [(ngModel)]="searchParam.projectName" name="companyName" placeholder="工程名称"
       style="margin-right: 10px;margin-top: 10px;width: 200px;">
 
 
 
-    <input nz-input [(ngModel)]="searchParam.projectName" name="companyName" placeholder="建设单位"
-      style="margin-right: 10px;margin-top: 10px;width: 200px;">
 
-
-
-
-    <!-- <nz-range-picker [(ngModel)]="rangeTime" name="rangeTime" nzFormat="yyyy/MM/dd"
+    <!-- <nz-range-picker [(ngModel)]="rangeTime" name="rangeTime" [nzFormat]="'yyyy/MM/dd'"
       style="margin-right: 10px;margin-top: 10px;" (ngModelChange)="okRangeTime($event)"></nz-range-picker> -->
 
     <button nz-button (click)="query()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>

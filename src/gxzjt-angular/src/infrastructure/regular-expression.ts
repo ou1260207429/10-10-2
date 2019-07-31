@@ -98,10 +98,10 @@ export function comopareDate(date1: any, date2: any): number {
   }
 }
 
-/** 
- * 日期解析，字符串转日期 
- * @param dateString 可以为2017-02-16，2017/02/16，2017.02.16 
- * @returns {Date} 返回对应的日期对象 
+/**
+ * 日期解析，字符串转日期
+ * @param dateString 可以为2017-02-16，2017/02/16，2017.02.16
+ * @returns {Date} 返回对应的日期对象
  */
 function dateParse(dateString: string): Date {
   var SEPARATOR_BAR = "-";
@@ -120,12 +120,12 @@ function dateParse(dateString: string): Date {
 
 
 /**
- * 根据时间辍返回对应的时间 如 yyyy-MM-dd HH:mm:ss  yyyy-MM-dd
+ * 根据时间辍返回对应的时间 如 yyyy/MM/dd HH:mm:ss  yyyy/MM/dd
  * @param date 时间 辍
- * @param format 时间格式 默认返回年月日时分秒 按照的格式化是 yyyy-MM-dd HH:mm:ss
+ * @param format 时间格式 默认返回年月日时分秒 按照的格式化是 yyyy/MM/dd HH:mm:ss
  * @param timeWord 默认返回2018年01月15日 16:26:30  这种  如填写 - 的。则返回 2018-01-15 16:26:30
  */
-export function timeTrans(date: number, format: string = 'yyyy-MM-dd HH:mm:ss', timeWord: string = '') {
+export function timeTrans(date: number, format: string = 'yyyy/MM/dd HH:mm:ss', timeWord: string = '') {
   date = date.toString().length === 13 ? date : date * 1000;
   const time = new Date(date); /*如果date为13位不需要乘1000 */
   const YType = timeWord === '' ? '年' : timeWord;
@@ -139,7 +139,7 @@ export function timeTrans(date: number, format: string = 'yyyy-MM-dd HH:mm:ss', 
   const m = (time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes()) + ':';
   const s = (time.getSeconds() < 10 ? '0' + time.getSeconds() : time.getSeconds());
   switch (format) {
-    case 'yyyy-MM-dd HH:mm:ss':
+    case 'yyyy/MM/dd HH:mm:ss':
       dataValue = Y + M + D + h + m + s;
       break;
     case 'yyyy':
@@ -154,7 +154,7 @@ export function timeTrans(date: number, format: string = 'yyyy-MM-dd HH:mm:ss', 
     case 'yyyy-MM':
       dataValue = Y + M.substring(0, M.length - 1);
       break;
-    case 'yyyy-MM-dd':
+    case 'yyyy/MM/dd':
       dataValue = Y + M + D.substring(0, D.length - 1);
       break;
     case 'MM-dd':
@@ -323,7 +323,7 @@ export function updateEngineeringNo(array: Array<any>, length, id, no) {
  * 数组中单独判断
  * @param array 数组
  * @param checkAttribute  判断的属性
- * @param 例子 arr = [{name:'1',isChecked:true},{name:'2',isChecked:false,}]  
+ * @param 例子 arr = [{name:'1',isChecked:true},{name:'2',isChecked:false,}]
  * @param return  boolean
  */
 export function checkArray(array: any, checkAttribute: string): boolean {
@@ -389,7 +389,7 @@ export function arrayChecked(array: any): number {
 /**
    * 单个删除
    * @param arrar 列表
-   * @param subordinateattribute 对比的属性 
+   * @param subordinateattribute 对比的属性
    * @param record 对比的参数
    * @param st 刷新st
    */
@@ -646,9 +646,9 @@ export function genID(length) {
 }
 
 /**
- * 单选框 
+ * 单选框
  * 根据对象删除子数组
- * @param v 
+ * @param v
  * @param item 对象
  * @param itemName 对象的属性值
  * @param itemChecked 对象的是否选中的属性值
@@ -680,5 +680,12 @@ export function radioCheckChooseArrar(v: boolean, item: any, itemName: string, i
     }
   }
 }
+
+
+// //去除字符串两端空格
+// export function removeSpace(str:String){
+//   //  return str.replace(/\s*/g,"");
+//   return str.replace(/^\s*|\s*$/g,"");
+// }
 
 

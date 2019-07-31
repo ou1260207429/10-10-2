@@ -27,7 +27,7 @@
   </form>
 
   <!-- <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns"></st> -->
-  <st #st   [data]="formResultData.data" [columns]="columns" [page]="pageConfig"
+  <st #st *ngIf="formResultData"  [data]="formResultData.data" [columns]="columns" [page]="pageConfig"
   [total]="total" [pi]="postmodel.page"
   [ps]="postmodel.pageSize" (change)="change($event)">
 </st>
@@ -46,7 +46,7 @@
 <!-- 锁定用户  -->
 <nz-modal [nzMaskClosable]='false' [(nzVisible)]="isAddProducttyepe" nzTitle="锁定用户" (nzOnCancel)="handleCancel()" (nzOnOk)="subProducttype()">
 
-  <nz-range-picker [(ngModel)]="rangeTime" name="rangeTime" nzFormat="yyyy/MM/dd"
+  <nz-range-picker [(ngModel)]="rangeTime" name="rangeTime" [nzFormat]="'yyyy/MM/dd'"
     style="margin-right: 10px;margin-top: 10px;"></nz-range-picker>
 </nz-modal>
 

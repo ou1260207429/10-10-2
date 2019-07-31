@@ -34,7 +34,7 @@
       <nz-option nzLabel="未抽中" nzValue="5"></nz-option>
     </nz-select> -->
     <!-- <span>申报时间：</span> -->
-    <nz-range-picker nzFormat="yyyy/MM/dd" formControlName="dateRange" class="search_menu"></nz-range-picker>
+    <nz-range-picker [nzFormat]="'yyyy/MM/dd'" formControlName="dateRange" class="search_menu"></nz-range-picker>
 
 
     <button nz-button (click)="search()" nzType="primary" autofocus="autofocus">搜索</button>

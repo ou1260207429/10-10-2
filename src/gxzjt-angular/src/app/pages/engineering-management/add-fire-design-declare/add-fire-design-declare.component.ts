@@ -2,7 +2,7 @@ import { ApplyServiceServiceProxy, FlowFormQueryDto, FlowFormDto, FlowDataDto, P
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { ActivatedRoute } from '@angular/router';
-import { timeTrans, checkArrayString } from 'infrastructure/regular-expression';
+import { timeTrans, checkArrayString, dateGetDay } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { GXZJT_From, FlowServices } from 'services/flow.services';
 import { FormGroup } from '@angular/forms';
@@ -15,6 +15,7 @@ import { ReuseTabService } from '@delon/abc';
 
 import { convertToArray } from "@shared/utils/array"
 import { advanceActivatedRoute } from '@angular/router/src/router_state';
+import { debug } from 'util';
 
 
 /**
@@ -37,7 +38,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
     projectCategoryId: false,
     specialEngineering: false,
     fireFightingFacilities: false
-  }
+  };
 
   data: any = {
     jsconstructionUnit: '',
@@ -547,10 +548,10 @@ export class AddFireDesignDeclareComponent implements OnInit {
 
   butNzLoading: boolean = false;
   //子组件的表单对象
-  form: FormGroup
+  form: FormGroup;
 
   //使用性质
-  useNatureSelect
+  useNatureSelect: any;
 
   constructor(private reuseTabService: ReuseTabService,
     private _eventEmiter: EventEmiter,
@@ -588,6 +589,20 @@ export class AddFireDesignDeclareComponent implements OnInit {
       if (data != null && data.formJson != null && data.formJson != "") {
 
         var json = JSON.parse(data.formJson);
+
+
+        if (json.planStartTime) {
+          json.planStartTime = timeTrans(Date.parse(json.planStartTime) / 1000, 'yyyy/MM/dd', '/');
+        }else{
+          json.planStartTime = timeTrans(Date.now() / 1000, 'yyyy/MM/dd', '/');
+        }
+        if (json.planEndTime) {
+          json.planEndTime = timeTrans(Date.parse(json.planEndTime) / 1000, 'yyyy/MM/dd', '/');
+        }else{
+          json.planStartTime = timeTrans(Date.now() / 1000, 'yyyy/MM/dd', '/');
+        }
+        
+        
 
         if (json.mappingUnit.no instanceof String) {
           json.mappingUnit.no = [{ noValue: json.mappingUnit.no }];
@@ -832,8 +847,8 @@ export class AddFireDesignDeclareComponent implements OnInit {
 
     this.filterFileList();
 
-    this.data.planStartTime = !this.data.planStartTime ? '' : timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
-    this.data.planEndTime = !this.data.planEndTime ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
+    this.data.planStartTime = !this.data.planStartTime ? '' : timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy/MM/dd HH:mm:ss', '/');
+    this.data.planEndTime = !this.data.planEndTime ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy/MM/dd HH:mm:ss', '/');
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 1;
     this.flowFormDto.projectTypeStatu = 0;

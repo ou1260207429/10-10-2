@@ -19,26 +19,28 @@ export class UserrightOrgeditComponent implements OnInit {
   isAddProducttyepe2 = false;//添加
   parentorgname;
 
-  defaultCheckedKeysArea=["450300"];//所属区域数组
-  defaultCheckedKeys2=null;
-  defaultCheckedKeys3=[];//添加默认节点
+  defaultCheckedKeysArea = ["450300"];//所属区域数组
+  defaultCheckedKeys2 = null;
+  defaultCheckedKeys3 = [];//添加默认节点
 
-  defaultCheckedKeys=[];
-  addOrgModel={
-    name:'',
-    parentId:'',
-    AreaIds:[],//所属区域id数组
-    typenumberPrefix:''
+  defaultCheckedKeys = [];
+  addOrgModel = {
+    name: '',
+    parentId: '',
+    AreaIds: [],//所属区域id数组
+    typenumberPrefix: ''
   }
-  editOrgModel={
-    id:'',
-    name:'',
-    AreaIds:[],
-    typenumberPrefix:'',
-    parentId:'',
+  editOrgModel = {
+    id: '',
+    name: '',
+    AreaIds: [],
+    typenumberPrefix: '',
+    parentId: '',
   }
 
-  deletearray=[];//删除数组
+  tietlename;//标题
+
+  deletearray = [];//删除数组
 
   constructor(private http: _HttpClient,
     private nzDropdownService: NzDropdownService,
@@ -60,36 +62,36 @@ export class UserrightOrgeditComponent implements OnInit {
     this.UserRightService.GetTreeData().subscribe(
       res => {
         this.nodes = res.data;
-    this.nodes.forEach(element => {
-      if (element.key == this.editOrgModel.id) {
-        this.orgarray = element.children;
-
-      } else {
-        element.children.forEach(city => {
-          if (city.key == this.editOrgModel.id) {
-            this.orgarray = city.children;
+        this.nodes.forEach(element => {
+          if (element.key == this.editOrgModel.id) {
+            this.orgarray = element.children;
 
           } else {
-            city.children.forEach(conuty => {
-              if (conuty.key == this.editOrgModel.id) {
-                this.orgarray = conuty.children;
+            element.children.forEach(city => {
+              if (city.key == this.editOrgModel.id) {
+                this.orgarray = city.children;
 
               } else {
-                conuty.children.forEach(xz => {
-                  if (xz.key == this.editOrgModel.id) {
-                    this.orgarray = null;
+                city.children.forEach(conuty => {
+                  if (conuty.key == this.editOrgModel.id) {
+                    this.orgarray = conuty.children;
+
+                  } else {
+                    conuty.children.forEach(xz => {
+                      if (xz.key == this.editOrgModel.id) {
+                        this.orgarray = null;
+                      }
+
+                    });
+
                   }
-
                 });
-
               }
+
             });
           }
 
         });
-      }
-
-    });
       },
     );
   }
@@ -105,25 +107,25 @@ export class UserrightOrgeditComponent implements OnInit {
   }
 
   nzEvent(event: NzFormatEmitEvent): void {
+    this.tietlename=event.node.title;
+    this.addOrgModel.parentId = event.keys[0];//点击获取ID作为添加父ID
+    //根据点击的ID获取详细
+    let getdetailmodel = {
+      id: this.addOrgModel.parentId + ''
+    }
+    this.getorgdetail(getdetailmodel);
 
-     this.addOrgModel.parentId=event.keys[0];//点击获取ID作为添加父ID
-     //根据点击的ID获取详细
-     let getdetailmodel={
-       id:this.addOrgModel.parentId+''
-     }
-     this.getorgdetail(getdetailmodel);
+    //点击获取编辑模型数据作为ID
+    this.editOrgModel.id = event.keys[0];
+    this.editOrgModel.name = event.node.title;
+    if (event.node.parentNode) {
+      this.editOrgModel.parentId = event.node.parentNode.key;
 
-     //点击获取编辑模型数据作为ID
-     this.editOrgModel.id=event.keys[0];
-     this.editOrgModel.name=event.node.title;
-     if(event.node.parentNode){
-      this.editOrgModel.parentId=event.node.parentNode.key;
-
-     }
+    }
 
     //  this.editOrgModel.orgChargeUid=e
 
-     this.parentorgname=event.node.title;
+    this.parentorgname = event.node.title;
 
     this.nodes.forEach(element => {
       if (element.key == event.keys[0]) {
@@ -158,17 +160,17 @@ export class UserrightOrgeditComponent implements OnInit {
 
   }
   //获取组织详情
-  getorgdetail(id){
-    if(id.id!=null&&id.id!=''){
+  getorgdetail(id) {
+    if (id.id != null && id.id != '') {
       this.UserRightService.GetOrgDetail(id).subscribe(
         res => {
           this.orgdetail = res.data;
-          if(res.data!=null && res.data.areaIds && res.data.areaIds!=null && res.data.areaIds!=''){
-            this.defaultCheckedKeys2= res.data.areaIds;
-            this.editOrgModel.AreaIds=res.data.areaIds;
-          }else{
-            this.defaultCheckedKeys2=[];
-            this.editOrgModel.AreaIds=[];
+          if (res.data != null && res.data.areaIds && res.data.areaIds != null && res.data.areaIds != '') {
+            this.defaultCheckedKeys2 = res.data.areaIds;
+            this.editOrgModel.AreaIds = res.data.areaIds;
+          } else {
+            this.defaultCheckedKeys2 = [];
+            this.editOrgModel.AreaIds = [];
           }
 
         },
@@ -180,7 +182,7 @@ export class UserrightOrgeditComponent implements OnInit {
 
 
   log(value: string[]): void {
-    this.deletearray=value;
+    this.deletearray = value;
   }
 
 
@@ -191,26 +193,27 @@ export class UserrightOrgeditComponent implements OnInit {
       // })
     });
   }
-  deleteData(){
-    if(this.deletearray.length==0){
+  deleteData() {
+    if (this.deletearray.length == 0) {
       this.message.error("请先选择需要删除的数据！");
       return
     }
     this._publicModel.isDeleteModal(() => {
-      this.UserRightService.OrganizationsDelete({ids: this.deletearray }).subscribe(data => {
-       if(data.result==0){
-        this.getTreeData();
-        this.message.success("删除成功");
+      this.UserRightService.OrganizationsDelete({ ids: this.deletearray }).subscribe(data => {
+        if (data.result == 0) {
+          this.getTreeData();
+          this.message.success("删除成功");
+          this.deletearray = []
 
-      }else{
-        this.message.error(data.message);
-        return
-      }
+        } else {
+          this.message.error(data.message);
+          return
+        }
       })
     });
   }
 
-  edit(){
+  edit() {
     // this.defaultCheckedKeys2=["450200", "450300"] 进入编辑页面加载所属区域
     this.isAddProducttyepe1 = true;
   }
@@ -221,16 +224,16 @@ export class UserrightOrgeditComponent implements OnInit {
   }
   subProducttype1(): void {
     this.UserRightService.OrgaUpdate(this.editOrgModel).subscribe(data => {
-      if(data.result==0){
+      if (data.result == 0) {
         this.message.success("操作成功")
         this.getTreeData();
         this.isAddProducttyepe1 = false;
-      }else{
+      } else {
         this.message.error(data.message)
         return
       }
 
-     })
+    })
 
 
   }
@@ -247,46 +250,45 @@ export class UserrightOrgeditComponent implements OnInit {
   }
 
   nzAreaEvent(event: NzFormatEmitEvent): void {
-     this.addOrgModel.AreaIds=event.keys;//点击获取区域ID放入添加模型
+    this.addOrgModel.AreaIds = event.keys;//点击获取区域ID放入添加模型
 
-     this.editOrgModel.AreaIds=event.keys;//点击获取区域ID放入编辑模型
+    this.editOrgModel.AreaIds = event.keys;//点击获取区域ID放入编辑模型
 
 
   }
   handleCancel2(): void {
-    this.addOrgModel={
-      name:'',
-      parentId:'',
-      AreaIds:[],//所属区域id数组
-      typenumberPrefix:'',
+    this.addOrgModel = {
+      name: '',
+      parentId: '',
+      AreaIds: [],//所属区域id数组
+      typenumberPrefix: '',
     }
-    this.defaultCheckedKeys3=[];
+    this.defaultCheckedKeys3 = [];
     this.isAddProducttyepe2 = false;
   }
   subProducttype2(): void {
     this.UserRightService.OrgaAdd(this.addOrgModel).subscribe(data => {
-      if(data.result==0){
+      if (data.result == 0) {
         this.getTreeData();
         this.message.success("操作成功")
-        this.addOrgModel={
-          name:'',
-          parentId:'',
-          AreaIds:[],//所属区域id数组
-          typenumberPrefix:'',
-        }
-        this.defaultCheckedKeys3=[];
-        this.isAddProducttyepe2 = false;
 
-      }else{
+        this.addOrgModel.name = '';
+        this.addOrgModel.AreaIds = [];
+        this, this.addOrgModel.typenumberPrefix = ''
+        this.defaultCheckedKeys3 = [];
+
+
+      } else {
         this.message.error(data.message)
-
 
         return
       }
 
     })
-
+    this.getTreeData();
+    this.isAddProducttyepe2 = false;
 
   }
+
 
 }

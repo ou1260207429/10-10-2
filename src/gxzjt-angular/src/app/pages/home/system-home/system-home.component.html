@@ -269,7 +269,7 @@
               {{data?.flowPathType == 1 ?'消防设计审查': data?.flowPathType == 2 ?'消防验收':data?.flowPathType == 3 ?'竣工验收消防备案':''}}
             </td>
             <td nz-td>{{data?.projectName}}</td>
-            <td nz-td>{{data?.applyTime | _date:'YYYY-MM-DD'}}</td>
+            <td nz-td>{{data?.applyTime }}</td>
             <td nz-td>{{data?.timeout}}</td>
           </tr>
         </tbody>

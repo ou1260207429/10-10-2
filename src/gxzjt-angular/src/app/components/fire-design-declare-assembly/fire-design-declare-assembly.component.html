@@ -92,7 +92,7 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">计划开工日期:</td>
           <td rowspan='1' colspan='15'>
             <nz-date-picker [ngClass]="{pointer: type == 1}" [nzDisabledDate]="disabledStartDate" name="planStartTime"
-              [(ngModel)]="data.planStartTime"></nz-date-picker>
+              [(ngModel)]="data.planStartTime" [nzFormat]="'yyyy/MM/dd'"></nz-date-picker>
           </td>
 
         </tr>
@@ -101,7 +101,7 @@
           <td rowspan='1' colspan='3' class="fontweight fontLeft">计划竣工日期:</td>
           <td rowspan='1' colspan='15'>
             <nz-date-picker [ngClass]="{pointer: type == 1}" [nzDisabledDate]="disabledEndDate"
-              [(ngModel)]="data.planEndTime" name="planEndTime"></nz-date-picker>
+              [(ngModel)]="data.planEndTime" name="planEndTime" [nzFormat]="'yyyy/MM/dd'"></nz-date-picker>
           </td>
         </tr>
 
@@ -611,7 +611,7 @@
         <td rowspan='1' colspan='14' class="textLeft">
           <div>
             1、建设工程消防设计审查申报表（纸质申报表的图片）
-            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" [nzRemove]="removeFile"
+            <nz-upload  [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" [nzRemove]="removeFile"
               (click)="handleChange(0)">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -619,7 +619,7 @@
 
           <div>
             2、消防设计文件
-            <nz-upload [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)"
+            <nz-upload  [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)"
               [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -627,7 +627,7 @@
 
           <div>
             3、专家评审申报材料
-            <nz-upload [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)"
+            <nz-upload  [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)"
               [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -635,7 +635,7 @@
 
           <div>
             4、建设工程规划许可证明文件
-            <nz-upload [(nzFileList)]="data.fileList[3].array" [nzCustomRequest]="customReq" (click)="handleChange(3)"
+            <nz-upload  [(nzFileList)]="data.fileList[3].array" [nzCustomRequest]="customReq" (click)="handleChange(3)"
               [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -643,7 +643,7 @@
 
           <div>
             5、城乡规划主管部门批准的临时性建筑证明文件
-            <nz-upload [(nzFileList)]="data.fileList[4].array" [nzCustomRequest]="customReq" (click)="handleChange(4)"
+            <nz-upload  [(nzFileList)]="data.fileList[4].array" [nzCustomRequest]="customReq" (click)="handleChange(4)"
               [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -651,20 +651,20 @@
 
           <div>
             6、生产工艺和物品有特殊灭火要求的消防设计说明材料
-            <nz-upload [(nzFileList)]="data.fileList[5].array" [nzCustomRequest]="customReq" (click)="handleChange(5)"
+            <nz-upload  [(nzFileList)]="data.fileList[5].array" [nzCustomRequest]="customReq" (click)="handleChange(5)"
               [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
         </td>
       </tr>
-      <tr>
+      <tr >
         <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
-          style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>工程简要说明</td>
-        <td rowspan='1' colspan='14' class="textLeft">
+          style="width: 36px;height: 200px;background-color: #f8f8f8;text-align: center;" required=true>工程简要说明</td>
+        <td rowspan='1' colspan='14' class="textLeft" style="min-height: 200px;">
           <se error="必填">
             <textarea nz-input placeholder="请输入工程简要说明" [(ngModel)]="data.engineerinDescription"
-              name="engineerinDescription" required>
+              name="engineerinDescription" required style="min-height: 200px;">
                   </textarea>
           </se>
 

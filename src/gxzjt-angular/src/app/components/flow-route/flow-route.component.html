@@ -5,12 +5,14 @@
       <div *ngFor="let item of data">
         <nz-timeline-item nzColor="red">
           <p class="title">{{item.name}}</p>
+          
           <div *ngIf="item.editWorkFlow_NodeAuditorRecordDtos">
             <div *ngFor="let box of item.editWorkFlow_NodeAuditorRecordDtos" class="examineDiv">
               <p class="time" *ngIf="!box.completionTime">到达时间：{{box.creationTime|timeNewString}}</p>
               <p class="time" *ngIf="box.completionTime">处理时间：{{box.completionTime|timeNewString}}</p>
               <div class="flowCard">
-                <p>处理人：{{box.applyEName}}</p>
+                <!-- <p *ngIf="showProcessor" >处理人：{{box.applyEName}}</p>  -->
+                <p >处理人：{{box.applyEName}}</p> 
                 <p>动作：{{box.result|numType}}</p>
                 <p *ngIf="box.details">意见：{{box.details}}</p>
               </div>

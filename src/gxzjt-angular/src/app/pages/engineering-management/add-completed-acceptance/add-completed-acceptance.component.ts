@@ -390,7 +390,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         ,
 
       },
-      filingTime: timeTrans(getTimestamp(), 'yyyy-MM-dd', '-'),
+      filingTime: timeTrans(getTimestamp(), 'yyyy/MM/dd', '/'),
       luckNo: '',
     },
     engineerinDescription: '',
@@ -482,6 +482,10 @@ export class AddCompletedAcceptanceComponent implements OnInit {
           json.acceptanceOpinions.contractingUnit = convertToArray(json.acceptanceOpinions.contractingUnit);
           json.acceptanceOpinions.designUnit = convertToArray(json.acceptanceOpinions.designUnit);
 
+
+          json.planEndTime = timeTrans(Date.parse(json.planEndTime) / 1000, 'yyyy/MM/dd HH:mm:ss', '/');
+
+          json.acceptanceOpinions.filingTime = timeTrans(Date.parse(json.acceptanceOpinions.filingTime) / 1000, 'yyyy/MM/dd HH:mm:ss', '/');
 
           json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
           json.applyName = json.applyName ? json.applyName : ''
@@ -588,9 +592,9 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
     this.filterFileList();
 
-    this.data.planEndTime = !this.data.planEndTime ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
+    this.data.planEndTime = !this.data.planEndTime ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy/MM/dd HH:mm:ss', '/');
 
-    this.data.acceptanceOpinions.filingTime = !this.data.acceptanceOpinions.filingTime ? '' : timeTrans(Date.parse(this.data.acceptanceOpinions.filingTime) / 1000, 'yyyy-MM-dd HH:mm:ss', '-')
+    this.data.acceptanceOpinions.filingTime = !this.data.acceptanceOpinions.filingTime ? '' : timeTrans(Date.parse(this.data.acceptanceOpinions.filingTime) / 1000, 'yyyy/MM/dd HH:mm:ss', '/');
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 3;
     this.flowFormDto.projectTypeStatu = 2;

@@ -107,10 +107,10 @@ export class FormDownloadComponent extends PublicFormComponent implements OnInit
     this.isSearchForm = true;
     this.formResultData = []
     if (params.startTime) {
-      params.startTime = timeTrans(Date.parse(params.startTime) / 1000, 'yyyy-MM-dd', '-') + " 00:00:00"
+      params.startTime = timeTrans(Date.parse(params.startTime) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00"
     }
     if (params.endTime) {
-      params.endTime = timeTrans(Date.parse(params.endTime) / 1000, 'yyyy-MM-dd', '-') + " 23:59:59"
+      params.endTime = timeTrans(Date.parse(params.endTime) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59"
     }
     this._attachmentServiceProxy.attachmentListAsync(params).subscribe(data => {
       this.isSearchForm = false;
