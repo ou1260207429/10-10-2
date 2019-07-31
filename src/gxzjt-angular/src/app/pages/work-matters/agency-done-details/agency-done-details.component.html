@@ -56,13 +56,13 @@
 
       <div *ngIf="!type&& curNodeName!='大厅发放结果'&&curNodeName!='建设单位申报'" class="agencyDoneDetails">
         <table class="tables" style="box-sizing: border-box;" *ngIf="formDto">
-          <tr>
+          <tr *ngIf="this.curNodeName!='业务审批负责人审批'">
             <td style="width: 37px;background-color: #ffedcc;color: #ff9c35;font-weight: 600;border-right: 0"
               rowspan='2'>
               文书审查意见内容
             </td>
           </tr>
-          <tr style="text-align: left;">
+          <tr style="text-align: left;" *ngIf="this.curNodeName!='业务审批负责人审批'">
             <td colspan="20">
 
               <div [ngSwitch]="flowPathType">
@@ -140,7 +140,8 @@
           </tr>
           <tr>
             <td colspan="20">
-              <textarea nz-input placeholder="请输入文书审查意见内容，此信息将会在流程节点显示(字数限制100以内)" [(ngModel)]="nodeAdvise" name="inputnodeAdvise" maxlength="200" required>
+              <textarea nz-input placeholder="请输入流程审批意见内容，此信息将会在流程节点显示(字数限制100以内)" [(ngModel)]="nodeAdvise"
+                name="inputnodeAdvise" maxlength="200" required>
                 </textarea>
             </td>
           </tr>

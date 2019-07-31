@@ -87,7 +87,7 @@
             </se>
           </td>
         </tr>
-  
+
         <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">计划开工日期:</td>
           <td rowspan='1' colspan='15'>
@@ -658,13 +658,13 @@
           </div>
         </td>
       </tr>
-      <tr>
+      <tr >
         <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
-          style="width: 36px;background-color: #f8f8f8;text-align: center;" required=true>工程简要说明</td>
-        <td rowspan='1' colspan='14' class="textLeft">
+          style="width: 36px;height: 200px;background-color: #f8f8f8;text-align: center;" required=true>工程简要说明</td>
+        <td rowspan='1' colspan='14' class="textLeft" style="min-height: 200px;">
           <se error="必填">
             <textarea nz-input placeholder="请输入工程简要说明" [(ngModel)]="data.engineerinDescription"
-              name="engineerinDescription" required>
+              name="engineerinDescription" required style="min-height: 200px;">
                   </textarea>
           </se>
 

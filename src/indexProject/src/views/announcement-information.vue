@@ -20,6 +20,14 @@
             <div ref="searchForm">
               <el-form id="search" :inline="true" status-icon>
                 <el-form-item>
+                  <el-input
+                    v-model.trim="searchForm.projectName"
+                    style="width:250px"
+                    size="small"
+                    placeholder="请输入工程名称"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item>
                   <el-select
                     clearable
                     size="small"
@@ -61,7 +69,7 @@
                     end-placeholder="办结结束日期"
                   ></el-date-picker>
                 </el-form-item>
-
+                <br />
                 <el-form-item>
                   <el-button
                     size="small"
@@ -161,7 +169,8 @@ export default {
         regionname: "",
         startTime: "",
         endTime: "",
-        flowType: ""
+        flowType: "",
+        projectName: ""
       },
       //省份列表
       cityList: [],
@@ -268,6 +277,7 @@ export default {
       this.searchForm.regionname = "";
       this.searchForm.startTime = "";
       this.searchForm.endTime = "";
+      this.searchForm.projectName = "";
       this.xianList = [];
       this.pageSize.page = 1;
       this.initTable();
@@ -319,6 +329,9 @@ export default {
       this.searchForm = {
         cityname: "",
         regionname: "",
+        startTime: "",
+        endTime: "",
+        projectName: "",
         flowType: type
       };
 
