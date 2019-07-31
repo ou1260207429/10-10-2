@@ -33,16 +33,56 @@ import { EngManageService } from '../engineering-management.service';
   styleUrls: ['./fire-design.component.less'],
 })
 export class FireDesignComponent extends PublicFormComponent implements OnInit {
-  param = new FireAuditCompleteQueryDto();
+  // param = new FireAuditCompleteQueryDto();
+param={
+  endApplyTime: "2019-07-31 23:59:59",
+  flowPathType: 1,
+  maxResultCount: 10,
+  orgType: '',
+  page: 1,
+  sorting: "projectId desc",
+  startApplyTime: "2019-07-24 00:00:00",
+  status:-1,
+  recordNumber: '',
+  projectName:'',
+  companyName:'',
+  currentNodeName: "",
+  isExpire: false,
+  isSelected: false,
+  skipCount: 0,
+  proType:null,
+  natureName: '',
+}
+  // param={
+  //   recordNumber:null,
+  //   projectName:null,
+  //   buildName: null,
+  //   workName: null,
+  //   designName: null,
+  //   supervisorName: null,
+  //   drawName: null,
+  //   companyName: null,
+  //   proType: null,
+  //   status:null,
+  //   flowPathType: null,
+  //   orgType: null,
+  //   startApplyTime:null,
+  //   endApplyTime: null,
+  //   page: null,
+  //   sorting: null,
+  //   skipCount: null,
+  //   maxResultCount: null,
+  // }
   formResultData = [];
   rangeTime = [];
+
   record;
   isAddProducttyepe1 = false;
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     {
       title: '操作',
-      width:'270px',
+      width:'230px',
       buttons: [
         {
           text: '查看',
@@ -111,19 +151,20 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
         },
       ]
     },
-    { title: '设计审查申报编号', index: 'investigateNumber' },
-    { title: '工程名称', index: 'projectName' },
-    { title: '建设单位', index: 'companyName' },
-    { title: '联系人', index: 'contactPerson',width:'120px' },
+
+    { title: '设计审查申报编号', index: 'investigateNumber',width:'200px' },
+    { title: '工程名称', index: 'projectName', width:'120px' },
+    { title: '建设单位', index: 'companyName', width:'120px' },
+    { title: '联系人', index: 'contactPerson',width:'100px' },
     { title: '当前处理环节', index: 'currentNodeName',width:'120px' },
     {
-      title: '流程是否超时', index: 'isExpireTime',width:'120px', format: (item: any) => `${item.isExpireTime == true ? "是" : "否"}`, type: 'tag', tag: {
+      title: '流程是否超时', index: 'isExpireTime',width:'100px', format: (item: any) => `${item.isExpireTime == true ? "是" : "否"}`, type: 'tag', tag: {
         "是": { text: '是', color: 'red' },
         "否": { text: '否', color: '' },
       }
     },
     {
-      title: '结果', index: 'status',width:'120px', format: (item: any) => `${item.status == 0 ? "未处理" : (item.status == 1 ? "受理" : (item.status == 2 ? "不受理" : (item.status == 3 ? "不合格" : (item.status == 4 ? "合格" : (item.status == 5 ? "未抽中" : "未处理")))))}`, type: 'tag', tag: {
+      title: '结果', index: 'status',width:'60px', format: (item: any) => `${item.status == 0 ? "未处理" : (item.status == 1 ? "受理" : (item.status == 2 ? "不受理" : (item.status == 3 ? "不合格" : (item.status == 4 ? "合格" : (item.status == 5 ? "未抽中" : "未处理")))))}`, type: 'tag', tag: {
         "未处理": { text: '未处理', color: '' },
         "受理": { text: '受理', color: 'green' },
         "不受理": { text: '不受理', color: 'red' },
@@ -150,7 +191,6 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.param.orgType = 1;
     this.resetTime();
     this.init();
     const _slef = this;
@@ -161,10 +201,10 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
 
 
   init() {
-    this.param.page = 1;
     this.param.maxResultCount = 10;
     this.param.flowPathType = 1
     this.param.sorting = 'projectId desc';
+
     this.resetTime();
     // this.param.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.param.endApplyTime = moment(this.rangeTime[1]).add(28800000);
@@ -179,13 +219,21 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
     this.getList();
   }
   reststart() {
-    this.param.projectName = '';
-    this.param.status = -1;
-    this.param.page = 1;
-    this.param.maxResultCount = 10;
-    this.param.flowPathType = 1
-    this.param.sorting = 'projectId desc';
-    this.resetTime();
+     this.param.natureName = '',
+     this.param.projectName = '';
+     this.param.companyName='',
+     this.param.currentNodeName= "",
+     this.param.isExpire = false,
+     this.param.isSelected = false,
+     this.param.skipCount = 0,
+     this.param.recordNumber = '';
+     this.param.status = -1,
+     this.param.orgType = null;
+     this.param.page = 1;
+     this.param.maxResultCount = 10;
+     this.param.flowPathType = 1
+     this.param.sorting = 'projectId desc';
+     this.resetTime();
     if(this.rangeTime.length!=0){
       this.param.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
       this.param.endApplyTime =timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy-MM-dd', '-')+" 23:59:59";
@@ -204,6 +252,8 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
    * 点击查询
    */
   query() {
+
+
     this.param.page = 1;
     if(this.rangeTime.length!=0){
       this.param.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy-MM-dd', '-')+" 00:00:00";
@@ -235,10 +285,17 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
     // });
   }
   getList() {
-    this._projectFlowServcieServiceProxy.post_GetFireAuditCompleteList(this.param).subscribe((data: any) => {
-      this.formResultData = data
-      console.log(this.formResultData)
-    })
+    // this._projectFlowServcieServiceProxy.post_GetFireAuditCompleteList(this.param).subscribe((data: any) => {
+    //   this.formResultData = data
+    //   console.log(this.formResultData)
+    // })
+
+    this.EngManageService.GetFireAuditCompleteList(this.param).subscribe(
+      res => {        
+        this.formResultData = res.result
+      },
+    );
+
   }
 
   watchItem(item) {

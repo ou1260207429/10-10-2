@@ -21,6 +21,11 @@ export class WorkMattersAllDoneComponent implements OnInit {
   countyarray;//存县数组
   data;
   param = {
+    drawName:null,
+    detectionName:null,
+    supervisorName:null,
+    designName:null,
+    workName:null,
     cityName: null,
     startApplyTime: null,
     endApplyTime: null,
@@ -75,23 +80,23 @@ export class WorkMattersAllDoneComponent implements OnInit {
         },
       ]
     },
-    { title: '地市', index: 'city', width: '80px' },
-    { title: '区域', index: 'regionAndCountyName', width: '80px' },
-    { title: '工程名称', index: 'projectName' },
-    { title: '工程编号', index: 'projectCode' },
-    { title: '建设单位', index: 'companyName' },
-    { title: '工程类型', index: 'flowTypeName', width: '120px' },
-    { title: '当前环节', index: 'curNodeName', width: '120px' },
+    { title: '地市', index: 'city',width:'60px' },
+    { title: '区域', index: 'regionAndCountyName',width:'60px' },
+    { title: '工程名称', index: 'projectName',width:'120px' },
+    { title: '工程编号', index: 'projectCode',width:'120px' },
+    { title: '建设单位', index: 'companyName',width:'120px' },
+    { title: '工程类型', index: 'flowTypeName', width: '100px' },
+    { title: '当前环节', index: 'curNodeName', width: '100px' },
     // { title: '节点审核人', index: 'cur_NodeAuditorName', width: '120px' },
     // { title: '是否超时', index: 'isExpire',width:'120px'  },
     {
-      title: '是否超时', index: 'isExpire', width: '80px', type: 'tag', tag: {
+      title: '是否超时', index: 'isExpire', width: '60px', type: 'tag', tag: {
         true: { text: '是', color: 'red' },
         false: { text: '否', color: 'green' },
       }
     },
     {
-      title: '状态', index: 'acceptStatus', width: '80px', type: 'tag', tag: {
+      title: '状态', index: 'acceptStatus', width: '40px', type: 'tag', tag: {
         0: { text: '未处理', color: '' },
         1: { text: '受理中', color: 'blue' },
         2: { text: '不受理', color: 'rgb(219, 56, 6)' },
@@ -131,6 +136,11 @@ export class WorkMattersAllDoneComponent implements OnInit {
       dateRange: [this.rangeTime],
       sbdateRange: [null],
       status: [null],
+      workName:[null],
+      designName:[null],
+      supervisorName:[null],
+      detectionName:[null],
+      drawName:[null],
     });
     this.GetHandlingMatters()
   }
@@ -153,6 +163,11 @@ export class WorkMattersAllDoneComponent implements OnInit {
       dateRange: [this.rangeTime],
       sbdateRange: [null],
       status: [null],
+      workName:[null],
+      designName:[null],
+      supervisorName:[null],
+      detectionName:[null],
+      drawName:[null],
 
     });
     if (this.fliterForm.controls.sbdateRange.value) {
@@ -193,6 +208,31 @@ export class WorkMattersAllDoneComponent implements OnInit {
       this.param.cityName = this.fliterForm.controls.city.value;
     } else {
       this.param.cityName = null
+    }
+    if (this.fliterForm.controls.workName.value) {
+      this.param.workName = this.fliterForm.controls.workName.value;
+    } else {
+      this.param.workName = null
+    }
+    if (this.fliterForm.controls.designName.value) {
+      this.param.designName = this.fliterForm.controls.designName.value;
+    } else {
+      this.param.designName = null
+    }
+    if (this.fliterForm.controls.supervisorName.value) {
+      this.param.supervisorName = this.fliterForm.controls.supervisorName.value;
+    } else {
+      this.param.supervisorName = null
+    }
+    if (this.fliterForm.controls.detectionName.value) {
+      this.param.detectionName = this.fliterForm.controls.detectionName.value;
+    } else {
+      this.param.detectionName = null
+    }
+    if (this.fliterForm.controls.drawName.value) {
+      this.param.drawName = this.fliterForm.controls.drawName.value;
+    } else {
+      this.param.drawName = null
     }
     if (this.fliterForm.controls.count.value) {
       this.param.regionAndCountyName = this.fliterForm.controls.count.value;

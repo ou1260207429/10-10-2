@@ -29,7 +29,24 @@ import { timeTrans } from 'infrastructure/regular-expression';
 })
 export class FireAcceptanceComponent  extends PublicFormComponent implements OnInit {
 
-
+  param={
+    natureName:'',
+    endApplyTime: "2019-07-31 23:59:59",
+    flowPathType: 1,
+    maxResultCount: 10,
+    orgType: null,
+    page: 1,
+    sorting: "projectId desc",
+    startApplyTime: "2019-07-24 00:00:00",
+    status:-1,
+    recordNumber: '',
+    projectName:'',
+    companyName:'',
+    currentNodeName: "",
+    isExpire: false,
+    isSelected: false,
+    skipCount: 0,
+  }
   formResultData;
   isAddProducttyepe1=false;
   companyName;
@@ -38,7 +55,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
   columns: STColumn[] = [
     {
       title: '操作',
-      width:'270px',
+      width:'230px',
       buttons: [
         {
           text: '查看',
@@ -109,16 +126,16 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
         },
       ]
     },
-    { title: '消防验收申报编号', index: 'acceptanceNumber' },
+    { title: '消防验收申报编号', index: 'acceptanceNumber',width:'150px'},
     { title: '工程名称', index: 'projectName' },
     { title: '建设单位', index: 'companyName' },
-    { title: '联系人', index: 'contactPerson' ,width:'120px'},
+    { title: '联系人', index: 'contactPerson' ,width:'100px'},
     { title: '当前处理环节', index: 'currentNodeName',width:'120px' },
-    { title: '流程是否超时', index: 'isExpireTime',width:'120px',format:(item:any)=>`${item.isExpireTime==true?"是":"否"}`, type: 'tag', tag: {
+    { title: '流程是否超时', index: 'isExpireTime',width:'100px',format:(item:any)=>`${item.isExpireTime==true?"是":"否"}`, type: 'tag', tag: {
       "是": { text: '是', color: 'red' },
       "否": { text: '否', color: '' },
     }},
-    { title: '结果', index: 'status',width:'120px',format: (item: any) => `${item.status==0?"未处理":(item.status==1?"受理":(item.status==2?"不受理":(item.status==3?"不合格":(item.status==4?"合格":(item.status==5?"未抽中":"未处理")))))}`,type: 'tag', tag: {
+    { title: '结果', index: 'status',width:'100px',format: (item: any) => `${item.status==0?"未处理":(item.status==1?"受理":(item.status==2?"不受理":(item.status==3?"不合格":(item.status==4?"合格":(item.status==5?"未抽中":"未处理")))))}`,type: 'tag', tag: {
       "未处理": { text: '未处理', color: '' },
       "受理": { text: '受理', color: 'green' },
       "不受理":{ text: '不受理', color: 'red' },
@@ -126,7 +143,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
       "合格":{ text: '合格', color: '' },
       "未抽中":{ text: '未抽中', color: '' },
     }},
-    { title: '操作时间', index: 'applyTime',type:'date',width:'120px' },
+    { title: '操作时间', index: 'applyTime',type:'date',width:'100px' },
   ];
 
   searchParam = new FireAuditCompleteQueryDto();
@@ -151,7 +168,6 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
   }
 
   ngOnInit() {
-    this.searchParam.orgType=1;
     this.resetTime();
     this.init()
     const _slef = this;
@@ -161,11 +177,11 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
   }
 
   init() {
+    this.param.page = 1;
+    this.param.maxResultCount = 10;
+    this.param.flowPathType = 1
+    this.param.sorting = 'projectId desc';
     this.resetTime();
-    this.searchParam.page = 1;
-    this.searchParam.maxResultCount = 10;
-    this.searchParam.flowPathType = 2
-    this.searchParam.sorting = 'projectId desc';
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if(this.rangeTime.length!=0){
@@ -178,13 +194,21 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     this.getList();
   }
   reststart(){
-    this.resetTime();
-    this.searchParam.projectName='';
-    this.searchParam.status=-1;
-    this.searchParam.page = 1;
-    this.searchParam.maxResultCount = 10;
-    this.searchParam.flowPathType = 2
-    this.searchParam.sorting = 'projectId desc';
+     this.param.natureName = '',
+    this.param.projectName = '';
+     this.param.companyName='',
+     this.param.currentNodeName= "",
+     this.param.isExpire = false,
+     this.param.isSelected = false,
+     this.param.skipCount = 0,
+     this.param.recordNumber = '';
+     this.param.status = -1,
+     this.param.orgType = null;
+     this.param.page = 1;
+     this.param.maxResultCount = 10;
+     this.param.flowPathType = 1
+     this.param.sorting = 'projectId desc';
+     this.resetTime();
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if(this.rangeTime.length!=0){
@@ -202,10 +226,15 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
    * @param TemplateInfoListByClassIdEntity 参数
    */
   getList() {
-    this._projectFlowServcieServiceProxy.post_GetFireAuditCompleteList(this.searchParam).subscribe((data: any) => {
+    /*this._projectFlowServcieServiceProxy.post_GetFireAuditCompleteList(this.searchParam).subscribe((data: any) => {
       this.formResultData = data
       console.log(this.formResultData)
-    })
+    })*/
+    this.EngManageService.GetFireAuditCompleteList(this.param).subscribe(
+      res => {        
+        this.formResultData = res.result
+      },
+    );
   }
 
   /**

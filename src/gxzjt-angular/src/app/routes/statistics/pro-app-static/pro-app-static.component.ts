@@ -76,9 +76,9 @@ export class StatisticsProAppStaticComponent implements OnInit {
     //   ]
     // },
     // { title: '竣工验收申报编号', index: 'acceptanceNumber'},
-    { title: '工程名称', index: 'projectName', },
-    { title: '建设单位', index: 'companyName',},
-    { title: '联系人', index: 'contactPerson',width:'120px'  },
+    { title: '工程名称', index: 'projectName',width:'150px'},
+    { title: '建设单位', index: 'companyName',width:'150px'},
+    { title: '联系人', index: 'contactPerson',width:'100px'  },
     { title: '联系电话', index: 'contactNumber',width:'120px'  },
     { title: '流程是否超时', index: 'isExpireTime',width:'120px',format:(item:any)=>`${item.isExpireTime==true?"是":"否"}`,type: 'tag', tag: {
       "是": { text: '是', color: 'red' },

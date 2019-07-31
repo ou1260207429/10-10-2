@@ -61,22 +61,22 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     //     // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
     //   ]
     // },
-    { title: '地市', index: 'cityName',width:'120px' },
+    { title: '地市', index: 'cityName',width:'100px' },
     // { title: '区域', index: 'area' },
-    { title: '工程名称', index: 'projectName' },
-    { title: '工程编号', index: 'projectCode' },
-    { title: '建设单位', index: 'companyName' },
-    { title: '工程类型', index: 'flowPathType',width:'120px',format:(item:any)=>`${item.flowPathType==1?"消防设计审查":(item.flowPathType==2?"消防验收":"竣工验收消防备案")}`, type: 'tag', tag: {
+    { title: '工程名称', index: 'projectName',width:'150px' },
+    { title: '工程编号', index: 'projectCode',width:'150px' },
+    { title: '建设单位', index: 'companyName',width:'150px' },
+    { title: '工程类型', index: 'flowPathType',width:'100px',format:(item:any)=>`${item.flowPathType==1?"消防设计审查":(item.flowPathType==2?"消防验收":"竣工验收消防备案")}`, type: 'tag', tag: {
         "消防设计审查": { text: '消防设计审查', color: '' },
         "消防验收": { text: '消防验收', color: '' },
         "竣工验收消防备案": { text: '竣工验收消防备案', color: '' },
 
       }
     },
-    { title: '当前处理人', index: 'currentHandleUserName',width:'120px' },
+    { title: '当前处理人', index: 'currentHandleUserName',width:'150px' },
     { title: '申报时间', index: 'applyTime',type:'date',width:'120px' },
     { title: '流程结束时间', index: 'endTime',width:'120px',format:(item:any)=>`${item.endTime=='0001-01-01T00:00:00'?'':datePipe.transform(item.endTime, 'YYYY-MM-DD HH:mm:ss')}`,type:'date'},
-    { title: '超时时长', index: 'approvalRemainingTime',width:'120px' },
+    { title: '超时时长', index: 'approvalRemainingTime',width:'100px' },
   ];
 
   constructor(private http: _HttpClient,
