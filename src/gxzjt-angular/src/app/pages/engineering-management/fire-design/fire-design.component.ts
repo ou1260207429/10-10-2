@@ -34,25 +34,25 @@ import { EngManageService } from '../engineering-management.service';
 })
 export class FireDesignComponent extends PublicFormComponent implements OnInit {
   // param = new FireAuditCompleteQueryDto();
-  param = {
-    endApplyTime: "2019-07-31 23:59:59",
-    flowPathType: 1,
-    maxResultCount: 10,
-    orgType: '-1',
-    page: 1,
-    sorting: "projectId desc",
-    startApplyTime: "2019-07-24 00:00:00",
-    status: '-1',
-    recordNumber: '',
-    projectName: '',
-    companyName: '',
-    currentNodeName: "-1",
-    isExpire: false,
-    isSelected: false,
-    skipCount: 0,
-    proType: '-1',
-    natureName: '',
-  }
+param={
+  endApplyTime: "2019-07-31 23:59:59",
+  flowPathType: 1,
+  maxResultCount: 10,
+  orgType: '-1',
+  page: 1,
+  sorting: "projectId desc",
+  startApplyTime: "2019-07-24 00:00:00",
+  status:'-1',
+  recordNumber: '',
+  projectName:'',
+  companyName:'',
+  currentNodeName: '',
+  isExpire: null,
+  isSelected: null,
+  skipCount: 0,
+  proType:'-1',
+  natureName: '',
+}
   // param={
   //   recordNumber:null,
   //   projectName:null,
