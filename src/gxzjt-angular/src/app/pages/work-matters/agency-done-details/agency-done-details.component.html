@@ -5,11 +5,11 @@
       </nz-tab>
     </div>
   </nz-tabset>
-
+  <!-- <p (click)="printFormData()">打印</p> -->
   <div [ngClass]="{hide: selectedIndex != 0}">
 
     <!-- 表单JSON -->
-    <app-fire-design-declare-assembly [useNatureSelect]="useNatureSelect" [errorData]="showError"
+    <app-fire-design-declare-assembly (printOuter)="setAddress($event)" [useNatureSelect]="useNatureSelect" [errorData]="showError"
       *ngIf="formJson && flowPathType ==1" [data]="formJson" type=1>
     </app-fire-design-declare-assembly>
 

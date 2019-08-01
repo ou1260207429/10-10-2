@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { LayoutDefaultComponent } from '../layout/default/layout-default.component';
-// import { LayoutFullScreenComponent } from '@layout/fullscreen/fullscreen.component';
+import { LayoutFullScreenComponent } from '@layout/fullscreen/fullscreen.component';
 // import { IndexDefaultComponent } from '@layout/index-default/index-default.component';
 
 // import { ACLGuard, ACLType } from '@delon/acl';
@@ -12,14 +12,20 @@ import { AppMenus } from "@shared/AppMenus";
 
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   component: LayoutFullScreenComponent,
-  //   data: { title: '首页' },
-  //   children: [
-  //     { path: '', loadChildren: './home/home.module#HomeModule' }
-  //   ],
-  // },
+  {
+    path: 'print-pages',
+    component: LayoutFullScreenComponent,
+    canActivateChild: [AppRouteGuard],
+    data: { title: '打印', reuse: false },
+    children: [
+      {
+        path: '', loadChildren: './pages/print-pages/print-pages.module#PrintPagesModule', data: {
+          
+          role: [AppMenus.aclOrg, AppMenus.aclCompany, AppMenus.aclSys]
+        },
+      }
+    ],
+  },
   {
     path: '',
     component: LayoutDefaultComponent,
@@ -41,7 +47,7 @@ const routes: Routes = [
       {
         path: 'statistics', loadChildren: './routes/statistics/statistics.module#StatisticsModule',
         data: {
-          role: [AppMenus.aclOrg,AppMenus.aclSys]
+          role: [AppMenus.aclOrg, AppMenus.aclSys]
         },
 
       },
@@ -61,13 +67,13 @@ const routes: Routes = [
       },
       {
         path: 'home', loadChildren: './pages/home/home.module#HomeModule',
-       
+
 
       },
       {
         path: 'work-matters', loadChildren: './pages/work-matters/work-matters.module#WorkMattersModule',
         data: {
-          role: [AppMenus.aclOrg,AppMenus.aclCompany,AppMenus.aclSys] 
+          role: [AppMenus.aclOrg, AppMenus.aclCompany, AppMenus.aclSys]
         },
 
       },

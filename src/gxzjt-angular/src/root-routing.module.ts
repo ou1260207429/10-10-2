@@ -12,6 +12,7 @@ const routes: Routes = [
     loadChildren: 'account/account.module#AccountModule', // Lazy load account module
     data: { preload: true },
   },
+  
   // {
   //   path: '',
   //   loadChildren: 'account/account.module#AccountModule', // Lazy load account module

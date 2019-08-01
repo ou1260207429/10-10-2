@@ -132,7 +132,6 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
   }
   goBack() {
     history.go(-1);
-
   }
   /**
    * 提交

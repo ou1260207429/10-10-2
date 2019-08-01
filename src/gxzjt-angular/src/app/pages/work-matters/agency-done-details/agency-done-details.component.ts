@@ -1,6 +1,6 @@
 import { ExamineServiceServiceProxy, ExamineFormDto, SignForDto } from './../../../../shared/service-proxies/service-proxies';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 //import * as BpmnModeler from "bpmn-js/dist/bpmn-modeler.production.min.js";
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { FlowServices, WorkFlow } from 'services/flow.services';
@@ -108,7 +108,9 @@ export class AgencyDoneDetailsComponent implements OnInit {
   //节点审批意见
   nodeAdvise: String;
 
-  constructor(private _eventEmiter: EventEmiter,
+  constructor(
+    private router: Router,
+    private _eventEmiter: EventEmiter,
     public _appSessionService: AppSessionService,
     private _examineService: ExamineServiceServiceProxy,
     private reuseTabService: ReuseTabService,
@@ -127,11 +129,35 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.operationType = this._activatedRoute.snapshot.paramMap.get('operationType')
 
   }
-
+  printAddress: Object
   ngOnInit() {
-    this.init()
+    this.init();
   }
 
+  setAddress(e) {
+    this.printAddress = e;
+  }
+  /**
+   * 清除表单数据
+   * */
+  clearForm(fieldForm, isClear) {
+    for (let item in fieldForm) {
+      if (typeof (fieldForm[item]) == "string" || typeof (fieldForm[item]) == "number") {
+        fieldForm[item] = "";
+      } else if (typeof (fieldForm[item]) == "object") {
+        fieldForm[item] = [];
+      }
+    }
+  }
+  /**
+   * 跳转打印页面并将打印信息放置在localStorage，以便打印页面获取打印信息
+   */
+  printFormData() {
+    let params = Object.assign(this.printAddress, this.formJson)
+    let result = JSON.stringify(params)
+    localStorage.setItem('jsonPrintForm', result);
+    this.router.navigate([`/app/print-pages/FiewDesignDeclarePrintComponent`]);
+  }
   init() {
     this.getWorkFlow_NodeRecordAndAuditorRecords()
 
