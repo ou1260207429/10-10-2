@@ -34,25 +34,25 @@ import { EngManageService } from '../engineering-management.service';
 })
 export class FireDesignComponent extends PublicFormComponent implements OnInit {
   // param = new FireAuditCompleteQueryDto();
-param={
-  endApplyTime: "2019-07-31 23:59:59",
-  flowPathType: 1,
-  maxResultCount: 10,
-  orgType: -1,
-  page: 1,
-  sorting: "projectId desc",
-  startApplyTime: "2019-07-24 00:00:00",
-  status:-1,
-  recordNumber: '',
-  projectName:'',
-  companyName:'',
-  currentNodeName: "",
-  isExpire: false,
-  isSelected: false,
-  skipCount: 0,
-  proType:'',
-  natureName: '',
-}
+  param = {
+    endApplyTime: "2019-07-31 23:59:59",
+    flowPathType: 1,
+    maxResultCount: 10,
+    orgType: -1,
+    page: 1,
+    sorting: "projectId desc",
+    startApplyTime: "2019-07-24 00:00:00",
+    status: -1,
+    recordNumber: '',
+    projectName: '',
+    companyName: '',
+    currentNodeName: "",
+    isExpire: false,
+    isSelected: false,
+    skipCount: 0,
+    proType: '',
+    natureName: '',
+  }
   // param={
   //   recordNumber:null,
   //   projectName:null,
@@ -82,7 +82,7 @@ param={
   columns: STColumn[] = [
     {
       title: '操作',
-      width:'230px',
+      width: '230px',
       buttons: [
         {
           text: '查看',
@@ -94,9 +94,9 @@ param={
         {
           text: '撤回申请',
           type: 'modal',
-          iif: record => (record.status === 0) ,
+          iif: record => (record.status === 0),
           click: (record: any, modal: any) => {
-            this.record=record;
+            this.record = record;
             this.withdraw();
             // this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/${record.projectId}/${record.id}`]);
           },
@@ -152,19 +152,19 @@ param={
       ]
     },
 
-    { title: '设计审查申报编号', index: 'investigateNumber',width:'200px' },
-    { title: '工程名称', index: 'projectName', width:'120px' },
-    { title: '建设单位', index: 'companyName', width:'120px' },
-    { title: '联系人', index: 'contactPerson',width:'100px' },
-    { title: '当前处理环节', index: 'currentNodeName',width:'120px' },
+    { title: '设计审查申报编号', index: 'investigateNumber', width: '200px' },
+    { title: '工程名称', index: 'projectName', width: '120px' },
+    { title: '建设单位', index: 'companyName', width: '120px' },
+    { title: '联系人', index: 'contactPerson', width: '100px' },
+    { title: '当前处理环节', index: 'currentNodeName', width: '120px' },
     {
-      title: '流程是否超时', index: 'isExpireTime',width:'100px', format: (item: any) => `${item.isExpireTime == true ? "是" : "否"}`, type: 'tag', tag: {
+      title: '流程是否超时', index: 'isExpireTime', width: '100px', format: (item: any) => `${item.isExpireTime == true ? "是" : "否"}`, type: 'tag', tag: {
         "是": { text: '是', color: 'red' },
         "否": { text: '否', color: '' },
       }
     },
     {
-      title: '结果', index: 'status',width:'60px', format: (item: any) => `${item.status == 0 ? "未处理" : (item.status == 1 ? "受理" : (item.status == 2 ? "不受理" : (item.status == 3 ? "不合格" : (item.status == 4 ? "合格" : (item.status == 5 ? "未抽中" : "未处理")))))}`, type: 'tag', tag: {
+      title: '结果', index: 'status', width: '60px', format: (item: any) => `${item.status == 0 ? "未处理" : (item.status == 1 ? "受理" : (item.status == 2 ? "不受理" : (item.status == 3 ? "不合格" : (item.status == 4 ? "合格" : (item.status == 5 ? "未抽中" : "未处理")))))}`, type: 'tag', tag: {
         "未处理": { text: '未处理', color: '' },
         "受理": { text: '受理', color: 'green' },
         "不受理": { text: '不受理', color: 'red' },
@@ -173,7 +173,7 @@ param={
         "未抽中": { text: '未抽中', color: '' },
       }
     },
-    { title: '操作时间', index: 'applyTime',width:'120px', type: 'date' },
+    { title: '操作时间', index: 'applyTime', width: '120px', type: 'date' },
   ];
 
   pageConfig: STPage = publicPageConfig;
@@ -181,7 +181,7 @@ param={
     private _projectFlowServcieServiceProxy: ProjectFlowServcieServiceProxy,
     private modal: ModalHelper,
     private router: Router,
-    private EngManageService:EngManageService,
+    private EngManageService: EngManageService,
     private publicModel: PublicModel,
     private _eventEmiter: EventEmiter,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
@@ -209,38 +209,38 @@ param={
     // this.param.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.param.endApplyTime = moment(this.rangeTime[1]).add(28800000);
 
-    if(this.rangeTime.length!=0){
-      this.param.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
-      this.param.endApplyTime =timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
-    }else{
-      this.param.startApplyTime='';
-      this.param.endApplyTime ='';
+    if (this.rangeTime.length != 0) {
+      this.param.startApplyTime = timeTrans(this.rangeTime[0]) + " 00:00:00";
+      this.param.endApplyTime = timeTrans(this.rangeTime[1]) + " 23:59:59";
+    } else {
+      this.param.startApplyTime = '';
+      this.param.endApplyTime = '';
     }
     this.getList();
   }
   reststart() {
-     this.param.proType='';
-     this.param.natureName = '';
-     this.param.projectName = '';
-     this.param.companyName='';
-     this.param.currentNodeName= "";
-     this.param.isExpire = false;
-     this.param.isSelected = false;
-     this.param.skipCount = 0;
-     this.param.recordNumber = '';
-     this.param.status = -1;
-     this.param.orgType =-1;
-     this.param.page = 1;
-     this.param.maxResultCount = 10;
-     this.param.flowPathType = 1;
-     this.param.sorting = 'projectId desc';
-     this.resetTime();
-    if(this.rangeTime.length!=0){
-      this.param.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
-      this.param.endApplyTime =timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
-    }else{
-      this.param.startApplyTime='';
-      this.param.endApplyTime ='';
+    this.param.proType = '';
+    this.param.natureName = '';
+    this.param.projectName = '';
+    this.param.companyName = '';
+    this.param.currentNodeName = "";
+    this.param.isExpire = false;
+    this.param.isSelected = false;
+    this.param.skipCount = 0;
+    this.param.recordNumber = '';
+    this.param.status = -1;
+    this.param.orgType = -1;
+    this.param.page = 1;
+    this.param.maxResultCount = 10;
+    this.param.flowPathType = 1;
+    this.param.sorting = 'projectId desc';
+    this.resetTime();
+    if (this.rangeTime.length != 0) {
+      this.param.startApplyTime = timeTrans(this.rangeTime[0]) + " 00:00:00";
+      this.param.endApplyTime = timeTrans(this.rangeTime[1]) + " 23:59:59";
+    } else {
+      this.param.startApplyTime = '';
+      this.param.endApplyTime = '';
     }
 
     this.getList();
@@ -256,13 +256,13 @@ param={
 
 
     this.param.page = 1;
-    this.param.projectName= this.param.projectName.trim();
-    if(this.rangeTime.length!=0){
-      this.param.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
-      this.param.endApplyTime =timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
-    }else{
-      this.param.startApplyTime='';
-      this.param.endApplyTime ='';
+    this.param.projectName = this.param.projectName.trim();
+    if (this.rangeTime.length != 0) {
+      this.param.startApplyTime = timeTrans(this.rangeTime[0]) + " 00:00:00";
+      this.param.endApplyTime = timeTrans(this.rangeTime[1]) + " 23:59:59";
+    } else {
+      this.param.startApplyTime = '';
+      this.param.endApplyTime = '';
     }
     this.getList();
   }
@@ -293,7 +293,7 @@ param={
     // })
 
     this.EngManageService.GetFireAuditCompleteList(this.param).subscribe(
-      res => {        
+      res => {
         this.formResultData = res.result
       },
     );
@@ -314,8 +314,8 @@ param={
       this.getList();
     })
   }
-  withdraw(){
-    this.isAddProducttyepe1=true;
+  withdraw() {
+    this.isAddProducttyepe1 = true;
 
   }
 
@@ -324,15 +324,15 @@ param={
     this.isAddProducttyepe1 = false;
   }
   subProducttype1(): void {
-    this.EngManageService.CancelApply({flowId:this.record.id}).subscribe(
+    this.EngManageService.CancelApply({ flowId: this.record.id }).subscribe(
       res => {
-        if(res.result.status==0){
+        if (res.result.status == 0) {
           this.message.error(res.result.message)
-        }else if(res.result.status==1){
+        } else if (res.result.status == 1) {
           this.message.success(res.result.message)
-        }else if(res.result.status==2){
+        } else if (res.result.status == 2) {
           this.message.success(res.result.message)
-        }else{
+        } else {
           this.message.error("系统发生异常！")
         }
 

@@ -10,7 +10,7 @@ import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, DataSourc
 import { PublicFormComponent } from '../public/public-form.component';
 
 import { Router, ActivatedRoute } from '@angular/router';
-import {WorkMattersService} from '../work-matters.service'
+import { WorkMattersService } from '../work-matters.service'
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 import { FlowServices, WorkFlow } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum, Engtype, Timetype } from 'infrastructure/expression';
@@ -30,7 +30,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   index;
-  selectedValue=null;
+  selectedValue = null;
   signForDto = new SignForDto();
   examineFormDto = new ExamineFormDto();
   workFlowData;
@@ -43,7 +43,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   columns: STColumn[] = [
     {
       title: '操作',
-      width:'120px',
+      width: '120px',
       buttons: [
         {
           text: '执行',
@@ -64,13 +64,13 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
         },
       ]
     },
-    { title: '工程名称', index: 'projectName',width:'150px'},
-    { title: '工程编号', index: 'projectCode',width:'150px'},
-    { title: '建设单位', index: 'companyName', width:'150px'},
-    { title: '工程类型', index: 'flowTypeName',width:'150px' },
+    { title: '工程名称', index: 'projectName', width: '150px' },
+    { title: '工程编号', index: 'projectCode', width: '150px' },
+    { title: '建设单位', index: 'companyName', width: '150px' },
+    { title: '工程类型', index: 'flowTypeName', width: '150px' },
     // { title: '提交人', index: 'cur_NodeAuditorName' },
-    { title: '申报时间', index: 'applyTime', type: 'date',width:'150px' },
-    { title: '到达时间', index: 'acceptTime', type: 'date',width:'150px' },
+    { title: '申报时间', index: 'applyTime', type: 'date', width: '150px' },
+    { title: '到达时间', index: 'acceptTime', type: 'date', width: '150px' },
     // {
     //   title: '流程是否超时', index: 'isExpire', type: 'tag', tag: {
     //     true: { text: '超时', color: 'red' },
@@ -78,7 +78,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     //   }
     // },
     {
-      title: '流程是否超时', index: 'isExpire',width:'100px', format: (item: any) => `${item.isExpire == true ? "是" : "否"}`, type: 'tag', tag: {
+      title: '流程是否超时', index: 'isExpire', width: '100px', format: (item: any) => `${item.isExpire == true ? "是" : "否"}`, type: 'tag', tag: {
         "是": { text: '是', color: 'red' },
         "否": { text: '否', color: '' },
       }
@@ -86,7 +86,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   ];
 
   searchParam: any = {
-    pagedAndFilteredInputDto:{}
+    pagedAndFilteredInputDto: {}
   };
 
   pageConfig: STPage = publicPageConfig;
@@ -96,7 +96,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
   engtype = Engtype;
 
-  timetype=Timetype;
+  timetype = Timetype;
 
   //时间
   rangeTime
@@ -110,7 +110,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     private _publicModel: PublicModel,
     private http: _HttpClient,
     private xlsx: XlsxService,
-    private WorkMattersService:WorkMattersService,
+    private WorkMattersService: WorkMattersService,
     private _activatedRoute: ActivatedRoute,
     private _examineService: ExamineServiceServiceProxy,
     public appSession: AppSessionService,
@@ -156,8 +156,8 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
       // this.searchParam.applyTimeStart = this.rangeTime[0];
       // this.searchParam.applyTimeEnd = this.rangeTime[1];
-      this.searchParam.applyTimeStart = this.rangeTime[0] ? timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00":this.searchParam.applyTimeStart
-      this.searchParam.applyTimeEnd  = this.rangeTime[1] ?timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59":this.searchParam.applyTimeEnd
+      this.searchParam.applyTimeStart = this.rangeTime[0] ? timeTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
+      this.searchParam.applyTimeEnd = this.rangeTime[1] ? timeTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
     }
     this.getList();
   }
@@ -172,10 +172,10 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.searchParam.companyName = '';
     this.searchParam.pagedAndFilteredInputDto.sorting = 'projectId desc'
     this.searchParam.projectTypeStatu = null;
-    this.searchParam.applyTimeStart = this.rangeTime[0] ? timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00":this.searchParam.applyTimeStart
-      this.searchParam.applyTimeEnd  = this.rangeTime[1] ?timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59":this.searchParam.applyTimeEnd
-    this.searchParam.isExpire=null;
-    this.searchParam.orgType=null;
+    this.searchParam.applyTimeStart = this.rangeTime[0] ? timeTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
+    this.searchParam.applyTimeEnd = this.rangeTime[1] ? timeTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
+    this.searchParam.isExpire = null;
+    this.searchParam.orgType = null;
     this.getList();
   }
 
@@ -188,11 +188,11 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     //   this.formResultData = data
     //   console.log(this.formResultData)
     // })
-      this.WorkMattersService.PendingWorkFlow_NodeAuditorRecord(this.searchParam).subscribe(
-        res => {
-          this.formResultData = res.result;
-        },
-      );
+    this.WorkMattersService.PendingWorkFlow_NodeAuditorRecord(this.searchParam).subscribe(
+      res => {
+        this.formResultData = res.result;
+      },
+    );
   }
 
   /**
@@ -200,10 +200,10 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
    */
   query() {
 
-    this.searchParam.projectName= this.searchParam.projectName.trim();
+    this.searchParam.projectName = this.searchParam.projectName.trim();
 
-    this.searchParam.applyTimeStart = this.rangeTime[0] ? timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00":this.searchParam.applyTimeStart
-    this.searchParam.applyTimeEnd  = this.rangeTime[1] ?timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59":this.searchParam.applyTimeEnd
+    this.searchParam.applyTimeStart = this.rangeTime[0] ? timeTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
+    this.searchParam.applyTimeEnd = this.rangeTime[1] ? timeTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
     this.searchParam.pagedAndFilteredInputDto.page = 1;
     this.getList();
   }
@@ -233,8 +233,8 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
   okRangeTime(v) {
     console.log(v);
-    //const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy/MM/dd', '/')
-    //const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy/MM/dd', '/')
+    //const applyTimeStart:any = timeTrans(v[0]) 
+    //const applyTimeEnd:any = timeTrans(v[1]) 
     this.searchParam.applyTimeStart = v[0];
     this.searchParam.applyTimeEnd = v[1];
     // console.log(applyTimeEnd);

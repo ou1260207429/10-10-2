@@ -119,13 +119,100 @@ function dateParse(dateString: string): Date {
 }
 
 
+export function timeTrans(src: any): string {
+
+  if ("string" == typeof src) {
+    if (src == "") {
+      return formateDate(new Date());
+    }
+    try {
+      var d = new Date(src);
+      return formateTime(d);
+    } catch (e) {
+      return formateTime(new Date());
+    }
+
+  }
+  if ("number" == typeof src) {
+    try {
+      return formateTime(new Date(src));
+    } catch (e) {
+      return formateTime(new Date());
+    }
+
+  }
+  if (src instanceof Date) {
+
+    return formateTime(src);
+  }
+
+  return formateTime(new Date());
+}
+
+
+
+
+export function formateTime(src: Date): string {
+  var result = src.getFullYear() + '/'
+    + (src.getMonth() + 1)
+    + '/' + src.getDate()
+    + " "
+    + src.getHours()
+    + ':' + src.getMinutes()
+    + ':' + src.getSeconds();
+
+  return result;
+}
+
+
+
+export function dateTrans(src: any): string {
+
+  if ("string" == typeof src) {
+    if (src == "") {
+      return formateDate(new Date());
+    }
+    try {
+      var d = new Date(src);
+      return formateTime(d);
+    } catch (e) {
+      return formateDate(new Date());
+    }
+
+  }
+  if ("number" == typeof src) {
+    try {
+      return formateDate(new Date(src));
+    } catch (e) {
+      return formateDate(new Date());
+    }
+
+  }
+  if (src instanceof Date) {
+
+    return formateDate(src);
+  }
+
+  return formateDate(new Date());
+}
+
+
+
+export function formateDate(src: Date): string {
+  var result = src.getFullYear() + '/'
+    + (src.getMonth() + 1)
+    + '/' + src.getDate();
+
+  return result;
+}
+
 /**
  * 根据时间辍返回对应的时间 如 yyyy/MM/dd HH:mm:ss  yyyy/MM/dd
  * @param date 时间 辍
  * @param format 时间格式 默认返回年月日时分秒 按照的格式化是 yyyy/MM/dd HH:mm:ss
  * @param timeWord 默认返回2018年01月15日 16:26:30  这种  如填写 - 的。则返回 2018-01-15 16:26:30
  */
-export function timeTrans(date: number, format: string = 'yyyy/MM/dd HH:mm:ss', timeWord: string = '') {
+export function timeTransOld(date: number, format: string = 'yyyy/MM/dd HH:mm:ss', timeWord: string = '') {
   date = date.toString().length === 13 ? date : date * 1000;
   const time = new Date(date); /*如果date为13位不需要乘1000 */
   const YType = timeWord === '' ? '年' : timeWord;

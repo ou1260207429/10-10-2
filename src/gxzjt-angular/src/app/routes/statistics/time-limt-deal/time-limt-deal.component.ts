@@ -8,10 +8,10 @@ import { UserRightService } from '../../userright/userright.service';
 import * as moment from 'moment';
 import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 import { timeTrans } from 'infrastructure/regular-expression';
-import {StatisticsService} from '../statistics.service'
+import { StatisticsService } from '../statistics.service'
 
 
-var  datePipe=new  DatePipe();
+var datePipe = new DatePipe();
 @Component({
   selector: 'app-statistics-time-limt-deal',
   templateUrl: './time-limt-deal.component.html',
@@ -25,13 +25,13 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
   formData = {};
   formResultData = [];
   rangeTime = [];
-  total=100;
+  total = 100;
   param = new HandleLimitQueryDto();
   pageConfig: STPage = {
     front: false,
     show: true,
   };
-  cityarray =[] ;
+  cityarray = [];
   selectedcity;//存市
   countyarray;//存县数组
   @ViewChild('st') st: STComponent;
@@ -61,22 +61,23 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     //     // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
     //   ]
     // },
-    { title: '地市', index: 'cityName',width:'100px' },
+    { title: '地市', index: 'cityName', width: '100px' },
     // { title: '区域', index: 'area' },
-    { title: '工程名称', index: 'projectName',width:'150px' },
-    { title: '工程编号', index: 'projectCode',width:'150px' },
-    { title: '建设单位', index: 'companyName',width:'150px' },
-    { title: '工程类型', index: 'flowPathType',width:'100px',format:(item:any)=>`${item.flowPathType==1?"消防设计审查":(item.flowPathType==2?"消防验收":"竣工验收消防备案")}`, type: 'tag', tag: {
+    { title: '工程名称', index: 'projectName', width: '150px' },
+    { title: '工程编号', index: 'projectCode', width: '150px' },
+    { title: '建设单位', index: 'companyName', width: '150px' },
+    {
+      title: '工程类型', index: 'flowPathType', width: '100px', format: (item: any) => `${item.flowPathType == 1 ? "消防设计审查" : (item.flowPathType == 2 ? "消防验收" : "竣工验收消防备案")}`, type: 'tag', tag: {
         "消防设计审查": { text: '消防设计审查', color: '' },
         "消防验收": { text: '消防验收', color: '' },
         "竣工验收消防备案": { text: '竣工验收消防备案', color: '' },
 
       }
     },
-    { title: '当前处理人', index: 'currentHandleUserName',width:'150px' },
-    { title: '申报时间', index: 'applyTime',type:'date',width:'120px' },
-    { title: '流程结束时间', index: 'endTime',width:'120px',format:(item:any)=>`${item.endTime=='0001-01-01T00:00:00'?'':datePipe.transform(item.endTime, 'YYYY-MM-DD HH:mm:ss')}`,type:'date'},
-    { title: '超时时长', index: 'approvalRemainingTime',width:'100px' },
+    { title: '当前处理人', index: 'currentHandleUserName', width: '150px' },
+    { title: '申报时间', index: 'applyTime', type: 'date', width: '120px' },
+    { title: '流程结束时间', index: 'endTime', width: '120px', format: (item: any) => `${item.endTime == '0001-01-01T00:00:00' ? '' : datePipe.transform(item.endTime, 'YYYY-MM-DD HH:mm:ss')}`, type: 'date' },
+    { title: '超时时长', index: 'approvalRemainingTime', width: '100px' },
   ];
 
   constructor(private http: _HttpClient,
@@ -84,14 +85,14 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     private UserRightService: UserRightService,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
     private formBuilder: FormBuilder,
-   private StatisticsService:StatisticsService,
+    private StatisticsService: StatisticsService,
     private xlsx: XlsxService) {
-      this.getCityList();
-     }
+    this.getCityList();
+  }
 
   ngOnInit() {
-    this.param.page=1;
-    this.param.maxResultCount=10;
+    this.param.page = 1;
+    this.param.maxResultCount = 10;
 
     this.resetTime();
     this.fliterForm = this.formBuilder.group({
@@ -115,35 +116,35 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     this.getList();
   }
   search() {
-    this.param.page=1;
-    this.param.maxResultCount=10;
-    if(this.fliterForm.controls.city.value){
+    this.param.page = 1;
+    this.param.maxResultCount = 10;
+    if (this.fliterForm.controls.city.value) {
       this.param.cityName = this.fliterForm.controls.city.value;
-    }else{
-      this.param.cityName='';
+    } else {
+      this.param.cityName = '';
     }
-    if(this.fliterForm.controls.count.value){
+    if (this.fliterForm.controls.count.value) {
       this.param.area = this.fliterForm.controls.count.value;
-    }else{
-      this.param.area=''
+    } else {
+      this.param.area = ''
     }
 
     this.param.flowPathType = Number(this.fliterForm.controls.proType.value);
-      if (this.param.flowPathType == 0) {
-        this.param.flowPathType = -1;
-      }
+    if (this.param.flowPathType == 0) {
+      this.param.flowPathType = -1;
+    }
     // this.param.startApplyTime = (this.fliterForm.controls.dateRange.value)[0];
     // this.param.endApplyTime = (this.fliterForm.controls.dateRange.value)[1];
     // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
     // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
-    if(this.fliterForm.controls.dateRange.value.length!=0){
+    if (this.fliterForm.controls.dateRange.value.length != 0) {
       // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
       // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
-      this.param.startApplyTime=timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
-      this.param.endApplyTime =timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
-    }else{
-      this.param.startApplyTime='';
-      this.param.endApplyTime='';
+      this.param.startApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[0]) + " 00:00:00";
+      this.param.endApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[1]) + " 23:59:59";
+    } else {
+      this.param.startApplyTime = '';
+      this.param.endApplyTime = '';
     }
     this.getList();
   }
@@ -153,8 +154,8 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
 
 
   resetForm(): void {
-    this.param.page=1;
-    this.param.maxResultCount=10;
+    this.param.page = 1;
+    this.param.maxResultCount = 10;
     this.fliterForm = this.formBuilder.group({
       city: [null],
       count: [null],
@@ -187,31 +188,31 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
   // }
 
   getList() {
-    if(this.fliterForm.controls.dateRange.value.length!=0){
+    if (this.fliterForm.controls.dateRange.value.length != 0) {
       // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
       // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
-      this.param.startApplyTime=timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
-      this.param.endApplyTime =timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
-    }else{
-      this.param.startApplyTime='';
-      this.param.endApplyTime='';
+      this.param.startApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[0]) + " 00:00:00";
+      this.param.endApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[1]) + " 23:59:59";
+    } else {
+      this.param.startApplyTime = '';
+      this.param.endApplyTime = '';
     }
 
-  this.StatisticsService.GetHandleLimitList(this.param).subscribe(
-    res => {
+    this.StatisticsService.GetHandleLimitList(this.param).subscribe(
+      res => {
 
-             this.formResultData = res.result.data;
-             this.total=res.result.total;
+        this.formResultData = res.result.data;
+        this.total = res.result.total;
 
-             console.log(this.total)
-    },
-  );
-}
+        console.log(this.total)
+      },
+    );
+  }
   getCityList() {
     this.UserRightService.GetAreaDropdown().subscribe(
       res => {
 
-        this.cityarray=JSON.parse(res.result).Children
+        this.cityarray = JSON.parse(res.result).Children
       },
     );
 
@@ -234,7 +235,7 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
 
   }
   change(v) {
-    if(this.param.page==v.pi){
+    if (this.param.page == v.pi) {
       return   //解决页面数据不能复制问题，因为change改变事件当点击的就会触发了所以当page不变的时候不执行方法
     }
     this.param.page = v.pi;

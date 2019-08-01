@@ -21,11 +21,11 @@ export class WorkMattersAllDoneComponent implements OnInit {
   countyarray;//存县数组
   data;
   param = {
-    drawName:null,
-    detectionName:null,
-    supervisorName:null,
-    designName:null,
-    workName:null,
+    drawName: null,
+    detectionName: null,
+    supervisorName: null,
+    designName: null,
+    workName: null,
     cityName: null,
     startApplyTime: null,
     endApplyTime: null,
@@ -80,11 +80,11 @@ export class WorkMattersAllDoneComponent implements OnInit {
         },
       ]
     },
-    { title: '地市', index: 'city',width:'60px' },
-    { title: '区域', index: 'regionAndCountyName',width:'60px' },
-    { title: '工程名称', index: 'projectName',width:'120px' },
-    { title: '工程编号', index: 'projectCode',width:'120px' },
-    { title: '建设单位', index: 'companyName',width:'120px' },
+    { title: '地市', index: 'city', width: '60px' },
+    { title: '区域', index: 'regionAndCountyName', width: '60px' },
+    { title: '工程名称', index: 'projectName', width: '120px' },
+    { title: '工程编号', index: 'projectCode', width: '120px' },
+    { title: '建设单位', index: 'companyName', width: '120px' },
     { title: '工程类型', index: 'flowTypeName', width: '100px' },
     { title: '当前环节', index: 'curNodeName', width: '100px' },
     // { title: '节点审核人', index: 'cur_NodeAuditorName', width: '120px' },
@@ -121,8 +121,8 @@ export class WorkMattersAllDoneComponent implements OnInit {
 
   ngOnInit() {
     this.resetTime();
-    this.param.startApplyTime = timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00";
-    this.param.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59";
+    this.param.startApplyTime = timeTrans(this.rangeTime[0]) + " 00:00:00";
+    this.param.endApplyTime = timeTrans(this.rangeTime[1]) + " 23:59:59";
     this.param.startTime = null;
     this.param.endTime = null;
     this.fliterForm = this.formBuilder.group({
@@ -136,11 +136,11 @@ export class WorkMattersAllDoneComponent implements OnInit {
       dateRange: [this.rangeTime],
       sbdateRange: [null],
       status: [null],
-      workName:[null],
-      designName:[null],
-      supervisorName:[null],
-      detectionName:[null],
-      drawName:[null],
+      workName: [null],
+      designName: [null],
+      supervisorName: [null],
+      detectionName: [null],
+      drawName: [null],
     });
     this.GetHandlingMatters()
   }
@@ -151,7 +151,7 @@ export class WorkMattersAllDoneComponent implements OnInit {
     //   .subscribe(() => this.st.reload());
   }
   resetForm(): void {
-    this.param.page=1;
+    this.param.page = 1;
     this.fliterForm = this.formBuilder.group({
       city: [null],
       count: [null],
@@ -163,17 +163,17 @@ export class WorkMattersAllDoneComponent implements OnInit {
       dateRange: [this.rangeTime],
       sbdateRange: [null],
       status: [null],
-      workName:[null],
-      designName:[null],
-      supervisorName:[null],
-      detectionName:[null],
-      drawName:[null],
+      workName: [null],
+      designName: [null],
+      supervisorName: [null],
+      detectionName: [null],
+      drawName: [null],
 
     });
     if (this.fliterForm.controls.sbdateRange.value) {
 
-      this.param.startTime = timeTrans(Date.parse(this.fliterForm.controls.sbdateRange.value[0]) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00";
-      this.param.endTime = timeTrans(Date.parse(this.fliterForm.controls.sbdateRange.value[1]) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59";
+      this.param.startTime = timeTrans(this.fliterForm.controls.sbdateRange.value[0]) + " 00:00:00";
+      this.param.endTime = timeTrans(this.fliterForm.controls.sbdateRange.value[1]) + " 23:59:59";
     } else {
       this.param.startTime = null;
       this.param.endTime = null;
@@ -203,7 +203,7 @@ export class WorkMattersAllDoneComponent implements OnInit {
   }
 
   search() {
-    this.param.page=1;
+    this.param.page = 1;
     if (this.fliterForm.controls.city.value) {
       this.param.cityName = this.fliterForm.controls.city.value;
     } else {
@@ -272,16 +272,16 @@ export class WorkMattersAllDoneComponent implements OnInit {
 
     if (this.fliterForm.controls.dateRange.value.length != 0) {
 
-      this.param.startApplyTime = timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00";
-      this.param.endApplyTime = timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59";
+      this.param.startApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[0]) + " 00:00:00";
+      this.param.endApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[1]) + " 23:59:59";
     } else {
       this.param.startApplyTime = '';
       this.param.endApplyTime = '';
     }
     if (this.fliterForm.controls.sbdateRange.value) {
 
-      this.param.startTime = timeTrans(Date.parse(this.fliterForm.controls.sbdateRange.value[0]) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00";
-      this.param.endTime = timeTrans(Date.parse(this.fliterForm.controls.sbdateRange.value[1]) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59";
+      this.param.startTime = timeTrans(this.fliterForm.controls.sbdateRange.value[0]) + " 00:00:00";
+      this.param.endTime = timeTrans(this.fliterForm.controls.sbdateRange.value[1]) + " 23:59:59";
     } else {
       this.param.startTime = null;
       this.param.endTime = null;
@@ -323,7 +323,7 @@ export class WorkMattersAllDoneComponent implements OnInit {
     this.router.navigate([`/app/work-matters/alreadyDoneDetailsComponent/${item.flowNo}/${item.flowId}/${item.flowPathType}`]);
   }
   change(v) {
-    if(this.param.page==v.pi){
+    if (this.param.page == v.pi) {
       return   //解决页面数据不能复制问题，因为change改变事件当点击的就会触发了所以当page不变的时候不执行方法
     }
     this.param.page = v.pi;

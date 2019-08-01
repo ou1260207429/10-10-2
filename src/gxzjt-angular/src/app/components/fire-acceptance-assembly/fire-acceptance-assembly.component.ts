@@ -176,15 +176,9 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     if (list.length > 0) {
       list.forEach(item => {
         this.data.engineeringNo.push(item.value);
-        if (item.AreaIds) {
-          for (var i = 0; i < item.AreaIds.length; ++i) {
-            if (item.AreaIds[i] == v) {
-              this.data.FlowTemplateSuffix = item.FlowTemplateSuffix;
-            }
-          }
-        }
-      });
 
+      });
+      this.data.FlowTemplateSuffix = list[list.length - 1].FlowTemplateSuffix;
     }
   }
 
