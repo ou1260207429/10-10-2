@@ -45,7 +45,8 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     isExpire: false,
     isSelected: false,
     skipCount: 0,
-    natureName:''
+    natureName:'',
+    proType:'',
   }
 
   formResultData;
@@ -236,7 +237,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
       console.log(this.formResultData)
     })*/
     this.EngManageService.GetFireAuditCompleteList(this.param).subscribe(
-      res => {        
+      res => {
         this.formResultData = res.result
       },
     );
