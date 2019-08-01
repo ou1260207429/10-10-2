@@ -4,7 +4,7 @@ import { STColumn, STComponent, XlsxService, STPage } from '@delon/abc';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { StatisticalServiceServiceProxy, ProjectApplyQueryDto } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
-import { timeTrans } from 'infrastructure/regular-expression';
+import { dateTrans } from 'infrastructure/regular-expression';
 import { StatisticsService } from '../statistics.service';
 import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 @Component({
@@ -153,8 +153,8 @@ export class StatisticsProAppStaticComponent implements OnInit {
     if (this.fliterForm.controls.dateRange.value.length != 0) {
       // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
       // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
-      this.param.startApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[0]) + " 00:00:00";
-      this.param.endApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[1]) + " 23:59:59";
+      this.param.startApplyTime = dateTrans(this.fliterForm.controls.dateRange.value[0]) + " 00:00:00";
+      this.param.endApplyTime = dateTrans(this.fliterForm.controls.dateRange.value[1]) + " 23:59:59";
     } else {
       this.param.startApplyTime = '';
       this.param.endApplyTime = '';

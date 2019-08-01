@@ -7,7 +7,7 @@ import { StatisticsTimeLimtDealDetailComponent } from '../time-limt-deal-detail/
 import { UserRightService } from '../../userright/userright.service';
 import * as moment from 'moment';
 import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
-import { timeTrans } from 'infrastructure/regular-expression';
+import { dateTrans } from 'infrastructure/regular-expression';
 import { StatisticsService } from '../statistics.service'
 
 
@@ -140,8 +140,8 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     if (this.fliterForm.controls.dateRange.value.length != 0) {
       // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
       // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
-      this.param.startApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[0]) + " 00:00:00";
-      this.param.endApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[1]) + " 23:59:59";
+      this.param.startApplyTime = dateTrans(this.fliterForm.controls.dateRange.value[0]) + " 00:00:00";
+      this.param.endApplyTime = dateTrans(this.fliterForm.controls.dateRange.value[1]) + " 23:59:59";
     } else {
       this.param.startApplyTime = '';
       this.param.endApplyTime = '';
@@ -191,8 +191,8 @@ export class StatisticsTimeLimtDealComponent implements OnInit {
     if (this.fliterForm.controls.dateRange.value.length != 0) {
       // this.param.startApplyTime = moment((this.fliterForm.controls.dateRange.value)[0]).add(28800000);
       // this.param.endApplyTime =  moment((this.fliterForm.controls.dateRange.value)[1]).add(28800000);
-      this.param.startApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[0]) + " 00:00:00";
-      this.param.endApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[1]) + " 23:59:59";
+      this.param.startApplyTime = dateTrans(this.fliterForm.controls.dateRange.value[0]) + " 00:00:00";
+      this.param.endApplyTime = dateTrans(this.fliterForm.controls.dateRange.value[1]) + " 23:59:59";
     } else {
       this.param.startApplyTime = '';
       this.param.endApplyTime = '';

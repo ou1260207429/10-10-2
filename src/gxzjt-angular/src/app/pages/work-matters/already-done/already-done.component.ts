@@ -14,7 +14,7 @@ import { WorkMattersService } from '../work-matters.service'
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum, Engtype, Timetype } from 'infrastructure/expression';
-import { timeTrans } from 'infrastructure/regular-expression';
+import { dateTrans } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { NzMessageService } from 'ng-zorro-antd';
 /**
@@ -125,8 +125,8 @@ export class AlreadyDoneComponent
     this.searchParam.projectTypeStatu = null;
     // this.searchParam.applyTimeStart = this.rangeTime[0];
     // this.searchParam.applyTimeEnd = this.rangeTime[1];
-    this.searchParam.applyTimeStart = this.rangeTime[0] ? timeTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
-    this.searchParam.applyTimeEnd = this.rangeTime[1] ? timeTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
+    this.searchParam.applyTimeStart = this.rangeTime[0] ? dateTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
+    this.searchParam.applyTimeEnd = this.rangeTime[1] ? dateTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
     this.searchParam.isExpire = null;
     this.searchParam.orgType = null;
     this.getList();
@@ -156,8 +156,8 @@ export class AlreadyDoneComponent
     if (this.rangeTime != null) {
       // this.searchParam.applyTimeStart = this.rangeTime[0];
       // this.searchParam.applyTimeEnd = this.rangeTime[1];
-      this.searchParam.applyTimeStart = this.rangeTime[0] ? timeTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
-      this.searchParam.applyTimeEnd = this.rangeTime[1] ? timeTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
+      this.searchParam.applyTimeStart = this.rangeTime[0] ? dateTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
+      this.searchParam.applyTimeEnd = this.rangeTime[1] ? dateTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
     } else {
       this.searchParam.applyTimeStart = null;
       this.searchParam.applyTimeEnd = null;

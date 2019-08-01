@@ -17,7 +17,7 @@ import { PublicFormComponent } from '../public/public-form.component';
 import * as moment from 'moment';
 import { NzMessageService } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
-import { timeTrans } from 'infrastructure/regular-expression';
+import { dateTrans } from 'infrastructure/regular-expression';
 
 /**
  * 消防验收
@@ -190,8 +190,8 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if (this.rangeTime.length != 0) {
-      this.searchParam.startApplyTime = timeTrans(this.rangeTime[0]) + " 00:00:00";
-      this.searchParam.endApplyTime = timeTrans(this.rangeTime[1]) + " 23:59:59";
+      this.searchParam.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
+      this.searchParam.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
     } else {
       this.searchParam.startApplyTime = '';
       this.searchParam.endApplyTime = '';
@@ -218,8 +218,8 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if (this.rangeTime.length != 0) {
-      this.searchParam.startApplyTime = timeTrans(this.rangeTime[0]) + " 00:00:00";
-      this.searchParam.endApplyTime = timeTrans(this.rangeTime[1]) + " 23:59:59";
+      this.searchParam.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
+      this.searchParam.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
     } else {
       this.searchParam.startApplyTime = '';
       this.searchParam.endApplyTime = '';
@@ -254,8 +254,8 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if (this.rangeTime.length != 0) {
-      this.searchParam.startApplyTime = timeTrans(this.rangeTime[0]) + " 00:00:00";
-      this.searchParam.endApplyTime = timeTrans(this.rangeTime[1]) + " 23:59:59";
+      this.searchParam.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
+      this.searchParam.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
     } else {
       this.searchParam.startApplyTime = '';
       this.searchParam.endApplyTime = '';

@@ -4,7 +4,7 @@ import { STColumn, STComponent, STPage } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { WorkMattersService } from '../../work-matters/work-matters.service';
-import { timeTrans } from 'infrastructure/regular-expression';
+import { dateTrans } from 'infrastructure/regular-expression';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 import { publicPageConfig } from 'infrastructure/expression';
@@ -23,15 +23,6 @@ export class WorkMattersAllDoneComponent implements OnInit {
   url;//导出地址
 
   param = {
-<<<<<<< HEAD
-    drawName: null,
-    detectionName: null,
-    supervisorName: null,
-    designName: null,
-    workName: null,
-=======
-
->>>>>>> 9d06ffa4a976f2014c20223f2165ae2a0bde96d4
     cityName: null,
     startApplyTime: null,
     endApplyTime: null,
@@ -127,8 +118,8 @@ export class WorkMattersAllDoneComponent implements OnInit {
 
   ngOnInit() {
     this.resetTime();
-    this.param.startApplyTime = timeTrans(this.rangeTime[0]) + " 00:00:00";
-    this.param.endApplyTime = timeTrans(this.rangeTime[1]) + " 23:59:59";
+    this.param.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
+    this.param.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
     this.param.startTime = null;
     this.param.endTime = null;
     this.fliterForm = this.formBuilder.group({
@@ -142,14 +133,6 @@ export class WorkMattersAllDoneComponent implements OnInit {
       dateRange: [this.rangeTime],
       sbdateRange: [null],
       status: [null],
-<<<<<<< HEAD
-      workName: [null],
-      designName: [null],
-      supervisorName: [null],
-      detectionName: [null],
-      drawName: [null],
-=======
->>>>>>> 9d06ffa4a976f2014c20223f2165ae2a0bde96d4
     });
     this.GetHandlingMatters()
   }
@@ -181,8 +164,8 @@ export class WorkMattersAllDoneComponent implements OnInit {
     });
     if (this.fliterForm.controls.sbdateRange.value) {
 
-      this.param.startTime = timeTrans(this.fliterForm.controls.sbdateRange.value[0]) + " 00:00:00";
-      this.param.endTime = timeTrans(this.fliterForm.controls.sbdateRange.value[1]) + " 23:59:59";
+      this.param.startTime = dateTrans(this.fliterForm.controls.sbdateRange.value[0]) + " 00:00:00";
+      this.param.endTime = dateTrans(this.fliterForm.controls.sbdateRange.value[1]) + " 23:59:59";
     } else {
       this.param.startTime = null;
       this.param.endTime = null;
@@ -281,16 +264,16 @@ export class WorkMattersAllDoneComponent implements OnInit {
 
     if (this.fliterForm.controls.dateRange.value.length != 0) {
 
-      this.param.startApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[0]) + " 00:00:00";
-      this.param.endApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[1]) + " 23:59:59";
+      this.param.startApplyTime = dateTrans(this.fliterForm.controls.dateRange.value[0]) + " 00:00:00";
+      this.param.endApplyTime = dateTrans(this.fliterForm.controls.dateRange.value[1]) + " 23:59:59";
     } else {
       this.param.startApplyTime = '';
       this.param.endApplyTime = '';
     }
     if (this.fliterForm.controls.sbdateRange.value) {
 
-      this.param.startTime = timeTrans(this.fliterForm.controls.sbdateRange.value[0]) + " 00:00:00";
-      this.param.endTime = timeTrans(this.fliterForm.controls.sbdateRange.value[1]) + " 23:59:59";
+      this.param.startTime = dateTrans(this.fliterForm.controls.sbdateRange.value[0]) + " 00:00:00";
+      this.param.endTime = dateTrans(this.fliterForm.controls.sbdateRange.value[1]) + " 23:59:59";
     } else {
       this.param.startTime = null;
       this.param.endTime = null;
@@ -403,16 +386,16 @@ export class WorkMattersAllDoneComponent implements OnInit {
     }
     if (this.fliterForm.controls.dateRange.value.length != 0) {
 
-      this.param.startApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[0]) + " 00:00:00";
-      this.param.endApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[1]) + " 23:59:59";
+      this.param.startApplyTime = dateTrans(this.fliterForm.controls.dateRange.value[0]) + " 00:00:00";
+      this.param.endApplyTime = dateTrans(this.fliterForm.controls.dateRange.value[1]) + " 23:59:59";
     } else {
       this.param.startApplyTime = '';
       this.param.endApplyTime = '';
     }
     if (this.fliterForm.controls.sbdateRange.value) {
 
-      this.param.startTime = timeTrans(this.fliterForm.controls.sbdateRange.value[0]) + " 00:00:00";
-      this.param.endTime = timeTrans(this.fliterForm.controls.sbdateRange.value[1]) + " 23:59:59";
+      this.param.startTime = dateTrans(this.fliterForm.controls.sbdateRange.value[0]) + " 00:00:00";
+      this.param.endTime = dateTrans(this.fliterForm.controls.sbdateRange.value[1]) + " 23:59:59";
     } else {
       this.param.startTime = null;
       this.param.endTime = null;
