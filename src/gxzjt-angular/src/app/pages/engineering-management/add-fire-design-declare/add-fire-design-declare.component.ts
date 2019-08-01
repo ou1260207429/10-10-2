@@ -703,7 +703,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
           Area: this.data.engineeringNo[this.data.engineeringNo.length - 1]
         },
         //'xfsj,''xfys,'jgys  流程分类  英文简写(消防设计,消防验收,竣工验收)
-        identify: 'xfsj' + this.data.FlowTemplateSuffix ? this.data.FlowTemplateSuffix : "",
+        identify: 'xfsj' + (this.data.FlowTemplateSuffix ? this.data.FlowTemplateSuffix : ""),
 
         //登录的用户的id  名字  部门id  部门路径
         editWorkFlow_NodeAuditorRecordDto: {
