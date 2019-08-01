@@ -79,20 +79,20 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
       "未申请":{text:'未申请',color: '' },
       "不合格": { text: '不合格', color: 'red' },
       "合格": { text: '合格', color: 'green' },
-      "受理中": {text: '受理中', color: 'black' }
+      "受理中": {text: '受理中', color: 'pink' }
     }},
     { title: '消防验收管理', index: 'acceptanceStatus',width:'120px',format: (item: any) => `${item.acceptanceStatus==0?"不合格":(item.acceptanceStatus==1?"合格":(item.investigateStatus==-100?"受理中":"未申请"))}`,type: 'tag', tag: {
       "未申请":{text:'未申请',color: '' },
       "不合格": { text: '不合格', color: 'red' },
       "合格": { text: '合格', color: 'green' },
-      "受理中": {text: '受理中', color: 'black' }
+      "受理中": {text: '受理中', color: 'pink' }
     }},
     { title: '竣工验收备案', index: 'putOnRecordStatus',width:'120px',format: (item: any) => `${item.putOnRecordStatus==0?"不合格":(item.putOnRecordStatus==1?"合格":(item.putOnRecordStatus==2?"未抽中":(item.investigateStatus==-100?"受理中":"未申请")))}`,type: 'tag', tag: {
       "未申请":{text:'未申请',color: '' },
       "不合格": { text: '不合格', color: 'red' },
       "合格": { text: '合格', color: 'green' },
       "未抽中": { text: '未抽中', color: '' },
-      "受理中": {text: '受理中', color: 'black' }
+      "受理中": {text: '受理中', color: 'pink' }
     }},
   ];
 
