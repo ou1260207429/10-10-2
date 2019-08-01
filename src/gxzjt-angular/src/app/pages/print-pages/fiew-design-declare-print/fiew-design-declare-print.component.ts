@@ -11,14 +11,11 @@ export class FiewDesignDeclarePrintComponent implements OnInit {
     this.data = JSON.parse(this.getToken());
     // this.data.planStartTime = this.data.planStartTime ? moment(this.data.planStartTime).format("YYYY-MM-DD") : '';
     // this.data.planEndTime = this.data.planEndTime ? moment(this.data.planEndTime).format("YYYY-MM-DD") : "";
-    console.log(JSON.parse(this.getToken()))
 
   }
   data: any;
 
   ngOnInit() {
-
-    console.log(this.data.projectCategoryId)
   }
   goback() {
     window.print();
@@ -29,8 +26,7 @@ export class FiewDesignDeclarePrintComponent implements OnInit {
     window.print();
   }
   ngOnDestroy(): void {
-    localStorage.removeItem('jsonPrintForm')
-
+    localStorage.removeItem('jsonPrintForm');
   }
   /**
    * 获取token的值
@@ -39,12 +35,7 @@ export class FiewDesignDeclarePrintComponent implements OnInit {
     return localStorage.getItem('jsonPrintForm');
   }
 
-  /**
-   * 移除token的值
-   * */
-  removeToken() {
 
-  }
   ngAfterViewInit() {
     // window.print();
     // history.go(-1);
