@@ -79,7 +79,7 @@
 </nz-card>
 
 
-<nz-modal [nzOkText]='null' [(nzVisible)]="isAddProducttyepe2" nzTitle="下载"  (nzOnCancel)="handleCancel2()" (nzOnOk)="subProducttype1()">
+<nz-modal [nzOkText]='null' [(nzVisible)]="isAddProducttyepe2" nzTitle="下载"  (nzOnCancel)="handleCancel2()" >
   <span *ngIf="url==null">连接加载中.....请稍后！</span>
     <nz-spin *ngIf="url==null" nzSimple></nz-spin>
   <a *ngIf="url" [href]="url"   >点击下载</a>
