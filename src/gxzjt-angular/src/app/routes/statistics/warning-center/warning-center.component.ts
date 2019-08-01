@@ -50,7 +50,7 @@ export class StatisticsWarningCenterComponent implements OnInit {
     //   ]
     // },
     { title: '流程流水号',default:'', index: 'flowNo' },
-    { title: '工程类型', index: 'flowPathType',width:'160px',
+    { title: '工程类型', index: 'flowPathType',width:'100px',
     format: (item: any) => `${item.flowPathType==0?"数据不存在":(item.flowPathType==1?"消防设计审查":(item.flowPathType==2?"消防验收":(item.flowPathType==3?"竣工验收消防备案":"数据不存在")))}`,
     type: 'tag', tag: {
       "数据不存在":{text: '数据不存在', color: 'red'},
@@ -58,10 +58,10 @@ export class StatisticsWarningCenterComponent implements OnInit {
       "消防验收": { text: '消防验收', color: '' },
       "竣工验收消防备案":{ text: '竣工验收消防备案', color: '' },
     }},
-    { title: '工程名称',default:'', index: 'projectName' },
-    { title: '工程编号',default:'',  index: 'projectCode' },
-    { title: '建设单位',default:'',  index: 'companyName' },
-    { title: '节点名称',default:'',  index: 'currentNodeName',width:'120px' },
+    { title: '工程名称',default:'', index: 'projectName',width:'120px' },
+    { title: '工程编号',default:'',  index: 'projectCode',width:'150px' },
+    { title: '建设单位',default:'',  index: 'companyName',width:'150px'},
+    { title: '节点名称',default:'',  index: 'currentNodeName',width:'60px' },
     // {
     //   title: '节点名称', index: 'flowPathType',
     //   sort: {
@@ -80,9 +80,9 @@ export class StatisticsWarningCenterComponent implements OnInit {
     // },
     { title: '流程发起人', index: 'applyName',width:'120px' },
 
-    { title: '申报时间', type: 'date', index: 'applyTime',width:'120px' },
+    { title: '申报时间', type: 'date', index: 'applyTime',width:'150px' },
     // { title: '流程结束时间', type: 'date', index: 'endTime' },
-    { title: '剩余审批时间',index: 'approvalRemainingTime',width:'120px' },
+    { title: '剩余审批时间',index: 'approvalRemainingTime',width:'60px' },
 
   ];
 

@@ -268,6 +268,27 @@ export const AdoptEnum = [
 ]
 
 /**
+ * 类别
+ */
+export const  Engtype =[
+  { label: '建设单位', value: '1' },
+  { label: '设计单位', value: '2' },
+  { label: '施工单位', value: '3' },
+  { label: '监理单位', value: '4' },
+  { label: '审图单位', value: '5' },
+  { label: '检测单位', value: '6' },
+  { label: '分包单位', value: '7' },
+]
+/**
+ * 是否超时
+ */
+export const  Timetype =[
+  { label: '是', value: true },
+  { label: '否', value: false },
+]
+
+
+/**
  * 单位类型
  */
 export const FlowPathTypeEnum = [
@@ -277,7 +298,7 @@ export const FlowPathTypeEnum = [
 ]
 
 /**
- * 市县区的json 
+ * 市县区的json
  */
 export const OptionsEnum = [
   {

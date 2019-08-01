@@ -18,26 +18,40 @@
 <nz-card>
 
   <form nz-form class="mb-md" [hidden]="hiddenFliter">
-
-    <!-- <input nz-input [(ngModel)]="searchParam.number" name="number" placeholder="流程流水号"
-      style="margin-right: 10px;margin-top: 10px;width: 200px;"> -->
-
-    <input nz-input [(ngModel)]="searchParam.projectName" name="projectName" placeholder="工程名称"
+    <div style="float: left;width: 100%"> <input nz-input [(ngModel)]="searchParam.projectName" name="projectName" placeholder="工程名称"
       style="margin-right: 10px;margin-top: 10px;width: 200px;">
 
-    <!-- <input nz-input [(ngModel)]="searchParam.companyName" name="companyName"  placeholder="建设单位"
-      style="margin-right: 10px;margin-top: 10px;width: 200px;"> -->
+    <input nz-input [(ngModel)]="searchParam.companyName" name="companyName"  placeholder="建设单位"
+      style="margin-right: 10px;margin-top: 10px;width: 200px;">
+      <span>是否超时：</span>
+      <nz-select [(ngModel)]="searchParam.isExpire" name="jbgrade{{index}}" required
+        style="margin-right: 10px;margin-top: 10px;width: 200px;">
+        <nz-option *ngFor="let option of timetype" [nzLabel]="option.label" [nzValue]="option.value">
+        </nz-option>
+      </nz-select>
+
+
+      <span>类别：</span>
+      <nz-select [(ngModel)]="searchParam.orgType" name="jbgrade{{index}}" required
+        style="margin-right: 10px;margin-top: 10px;width: 200px;">
+        <nz-option *ngFor="let option of engtype" [nzLabel]="option.label" [nzValue]="option.value">
+        </nz-option>
+      </nz-select>
+
+
     <span>工程类型：</span>
     <nz-select [(ngModel)]="searchParam.projectTypeStatu" name="jbgrade{{index}}" required
       style="margin-right: 10px;margin-top: 10px;width: 200px;">
       <nz-option *ngFor="let option of flowPathTypeEnum" [nzLabel]="option.label" [nzValue]="option.value">
       </nz-option>
     </nz-select>
-
-
-
     <nz-range-picker [(ngModel)]="rangeTime" name="rangeTime" [nzFormat]="'yyyy/MM/dd'"
       style="margin-right: 10px;margin-top: 10px;" (ngModelChange)="okRangeTime($event)"></nz-range-picker>
+
+
+    </div>
+
+
     <button nz-button (click)="query()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>
 
     <button nz-button (click)="reststart()" style="margin-right: 10px;margin-top: 10px;">重置</button>

@@ -29,6 +29,25 @@ import { timeTrans } from 'infrastructure/regular-expression';
 })
 export class CompletedAcceptanceComponent extends PublicFormComponent implements OnInit {
 
+  param={
+    endApplyTime: "2019-07-31 23:59:59",
+    flowPathType: 1,
+    maxResultCount: 10,
+    orgType: 1,
+    page: 1,
+    sorting: "projectId desc",
+    startApplyTime: "2019-07-24 00:00:00",
+    status:-1,
+    recordNumber: '',
+    projectName:'',
+    companyName:'',
+    currentNodeName: "",
+    isExpire: false,
+    isSelected: false,
+    skipCount: 0,
+    natureName:''
+  }
+
   formResultData;
   isAddProducttyepe1=false;
   record;
@@ -37,7 +56,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   columns: STColumn[] = [
     {
       title: '操作',
-      width:'270px',
+      width:'230px',
       buttons: [
         {
           text: '查看',
@@ -109,20 +128,20 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
         },
       ]
     },
-    { title: '竣工验收备案申报编号', index: 'recordNumber' },
-    { title: '工程名称', index: 'projectName' },
-    { title: '建设单位', index: 'companyName' },
-    { title: '是否被抽中', index: 'isSelected',width:'120px',format: (item: any) => `${item.isSelected==true?"是":(item.isSelected==false?"否":"是")}`,type: 'tag', tag: {
+    { title: '竣工验收备案申报编号', index: 'recordNumber',width:'200px' },
+    { title: '工程名称', index: 'projectName',width:'120px' },
+    { title: '建设单位', index: 'companyName',width:'120px' },
+    { title: '是否被抽中', index: 'isSelected',width:'100px',format: (item: any) => `${item.isSelected==true?"是":(item.isSelected==false?"否":"是")}`,type: 'tag', tag: {
       "是":{text:'是',color: 'green' },
       "否": { text: '否',color: 'red' },
     }},
     // { title: '验证码', index: '无此字段返回' },
-    { title: '当前处理环节', index: 'currentNodeName',width:'120px' },
-    { title: '流程是否超时', index: 'isExpireTime',width:'120px',format: (item: any) => `${item.isExpireTime==true?"是":(item.isExpireTime==false?"否":"是")}`,type: 'tag', tag: {
+    { title: '当前处理环节', index: 'currentNodeName',width:'100px' },
+    { title: '流程是否超时', index: 'isExpireTime',width:'80px',format: (item: any) => `${item.isExpireTime==true?"是":(item.isExpireTime==false?"否":"是")}`,type: 'tag', tag: {
       "是":{text:'是',color: 'red' },
       "否": { text: '否',color: 'green' },
     }},
-    { title: '结果', index: 'status',width:'120px',format: (item: any) => `${item.status==0?"未处理":(item.status==1?"受理":(item.status==2?"不受理":(item.status==3?"不合格":(item.status==4?"合格":(item.status==5?"未抽中":"未处理")))))}`,type: 'tag', tag: {
+    { title: '结果', index: 'status',width:'60px',format: (item: any) => `${item.status==0?"未处理":(item.status==1?"受理":(item.status==2?"不受理":(item.status==3?"不合格":(item.status==4?"合格":(item.status==5?"未抽中":"未处理")))))}`,type: 'tag', tag: {
       "未处理": { text: '未处理', color: '' },
       "受理": { text: '受理', color: 'green' },
       "不受理":{ text: '不受理', color: 'red' },
@@ -154,7 +173,6 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   }
 
   ngOnInit() {
-    this.searchParam.orgType=1;
     this.resetTime();
     this.init()
     const _slef = this;
@@ -181,13 +199,21 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.getList();
   }
   reststart(){
-    this.resetTime();
-    this.searchParam.projectName='';
-    this.searchParam.status=-1;
-    this.searchParam.page = 1;
-    this.searchParam.maxResultCount = 10;
-    this.searchParam.flowPathType = 3
-    this.searchParam.sorting = 'projectId desc';
+    this.param.natureName = '',
+    this.param.projectName = '';
+     this.param.companyName='',
+     this.param.currentNodeName= '',
+     this.param.isExpire = false,
+     this.param.isSelected = false,
+     this.param.skipCount = 0,
+     this.param.recordNumber = '';
+     this.param.status = -1,
+     this.param.orgType = 1;
+     this.param.page = 1;
+     this.param.maxResultCount = 10;
+     this.param.flowPathType = 1
+     this.param.sorting = 'projectId desc';
+     this.resetTime();
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if(this.rangeTime.length!=0){
@@ -205,10 +231,15 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
    * @param TemplateInfoListByClassIdEntity 参数
    */
   getList() {
-    this._projectFlowServcieServiceProxy.post_GetFireAuditCompleteList(this.searchParam).subscribe((data: any) => {
+    /*this._projectFlowServcieServiceProxy.post_GetFireAuditCompleteList(this.searchParam).subscribe((data: any) => {
       this.formResultData = data
       console.log(this.formResultData)
-    })
+    })*/
+    this.EngManageService.GetFireAuditCompleteList(this.param).subscribe(
+      res => {        
+        this.formResultData = res.result
+      },
+    );
   }
 
   /**

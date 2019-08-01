@@ -35,7 +35,17 @@ export class WorkMattersService {
     // api/User/Delete?id=
     return this.http.post(URLConfig.getInstance().SERVER_URL + 'api/services/app/ExamineService/RejectedExamine', model);
   }
+  //代办
+  PendingWorkFlow_NodeAuditorRecord(model?: any): Observable<any> {
+  // api/User/Delete?id=
+  return this.http.post(URLConfig.getInstance().SERVER_URL + '/api/services/app/WorkFlowed/PendingWorkFlow_NodeAuditorRecord', model);
+}
 
+  //代办
+  ProcessedWorkFlow_NodeAuditorRecord(model?: any): Observable<any> {
+    // api/User/Delete?id=
+    return this.http.post(URLConfig.getInstance().SERVER_URL + '/api/services/app/WorkFlowed/ProcessedWorkFlow_NodeAuditorRecord', model);
+  }
 
 }
 
