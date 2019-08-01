@@ -50,7 +50,7 @@ param={
   isExpire: false,
   isSelected: false,
   skipCount: 0,
-  proType:null,
+  proType:'',
   natureName: '',
 }
   // param={
@@ -219,7 +219,7 @@ param={
     this.getList();
   }
   reststart() {
-     this.param.proType=null;
+     this.param.proType='';
      this.param.natureName = '';
      this.param.projectName = '';
      this.param.companyName='';
