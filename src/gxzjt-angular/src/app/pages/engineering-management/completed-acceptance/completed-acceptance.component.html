@@ -43,7 +43,7 @@
          <div class="fd">
             <span>当前环节：</span>
           <nz-select class="search_menu_input" [(ngModel)]="param.currentNodeName" name="currentNodeName" nzPlaceHolder="当前环节" nzShowSearch nzAllowClear>
-            <nz-option nzLabel="全部当前环节" nzValue="0"></nz-option>
+            <nz-option nzLabel="全部当前环节" nzValue="-1"></nz-option>
             <nz-option nzLabel="大厅发放结果" nzValue="0"></nz-option>
             <nz-option nzLabel="大厅受理" nzValue="1"></nz-option>
             <nz-option nzLabel="完结" nzValue="2"></nz-option>
@@ -53,14 +53,14 @@
          </div>
          <div class="fd">
             <span>是否超时：</span>
-          <nz-select class="search_menu_input"[(ngModel)]="param.isExpire" name="isExpire"  nzShowSearch nzAllowClear nzPlaceHolder="是否超时" nzShowSearch nzAllowClear>
+          <nz-select class="search_menu_input"[(ngModel)]="param.isExpire" name="isExpire"  nzShowSearch nzAllowClear nzPlaceHolder="是否超时" >
             <nz-option nzLabel="是" nzValue="true"></nz-option>
             <nz-option nzLabel="否" nzValue="false"></nz-option>
           </nz-select>
          </div>
          <div class="fd">
             <span>是否抽中：</span>
-          <nz-select class="search_menu_input"[(ngModel)]="param.isSelected" name="isSelected"  nzShowSearch nzAllowClear nzPlaceHolder="是否抽中" nzShowSearch nzAllowClear>
+          <nz-select class="search_menu_input"[(ngModel)]="param.isSelected" name="isSelected"  nzShowSearch nzAllowClear nzPlaceHolder="是否抽中">
             <nz-option nzLabel="是" nzValue="true"></nz-option>
             <nz-option nzLabel="否" nzValue="false"></nz-option>
           </nz-select>
@@ -68,7 +68,7 @@
          <div class="fd">
             <span>审查结果：</span>
           <nz-select class="search_menu_input" [(ngModel)]="param.status" name="status" nzPlaceHolder="审查结果" nzShowSearch nzAllowClear>
-          <nz-option nzLabel="全部审查结果" nzValue="0"></nz-option>
+          <nz-option nzLabel="全部审查结果" nzValue="-1"></nz-option>
           <nz-option nzLabel="未处理" nzValue="0"></nz-option>
           <nz-option nzLabel="受理" nzValue="1"></nz-option>
           <nz-option nzLabel="不受理" nzValue="2"></nz-option>
@@ -77,17 +77,23 @@
         </nz-select>
          </div>
   </div>
+          <div style="width: 100%;float:left;">
+              <div style="width: 100%;height: 10px;"></div>
+              <span>申报时间：</span>
+            <nz-range-picker class="search_menu_input" [(ngModel)]="rangeTime" name="rangeTime" [nzFormat]="'yyyy/MM/dd'"
+            style="margin-right: 10px;width: 350px"></nz-range-picker>
+           </div>
+           <div style="width: 100%;height: 10px;"></div>
+       
+    
+        <div style="width: 100%;">
+          <div>
+              <button nz-button (click)="query()" nzType="primary" style="margin-right: 10px;">搜索</button>
+              <button nz-button (click)="reststart()" style="margin-right: 10px;">重置</button>
+          </div>
+           
+         </div>
 
-  <div style="width: 100%;margin-bottom: 10px;float: left;margin-top: 10px">
-      <span>申报时间：</span>
-      <nz-range-picker class="search_menu_input" [(ngModel)]="rangeTime" name="rangeTime" [nzFormat]="'yyyy/MM/dd'"
-      style="margin-right: 10px;width: 350px"></nz-range-picker>
-    </div>
-   <div style="width: 100%">
-      <button nz-button (click)="query()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>
-      <button nz-button (click)="reststart()" style="margin-right: 10px;margin-top: 10px;">重置</button>
-   </div>
-  
 
   </form>
   <nz-spin [nzSpinning]="!formResultData"></nz-spin>
