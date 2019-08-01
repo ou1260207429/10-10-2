@@ -38,7 +38,7 @@ param={
   endApplyTime: "2019-07-31 23:59:59",
   flowPathType: 1,
   maxResultCount: 10,
-  orgType: '',
+  orgType: -1,
   page: 1,
   sorting: "projectId desc",
   startApplyTime: "2019-07-24 00:00:00",
@@ -50,7 +50,7 @@ param={
   isExpire: false,
   isSelected: false,
   skipCount: 0,
-  proType:null,
+  proType:'',
   natureName: '',
 }
   // param={
@@ -219,19 +219,20 @@ param={
     this.getList();
   }
   reststart() {
-     this.param.natureName = '',
+     this.param.proType='';
+     this.param.natureName = '';
      this.param.projectName = '';
-     this.param.companyName='',
-     this.param.currentNodeName= "",
-     this.param.isExpire = false,
-     this.param.isSelected = false,
-     this.param.skipCount = 0,
+     this.param.companyName='';
+     this.param.currentNodeName= "";
+     this.param.isExpire = false;
+     this.param.isSelected = false;
+     this.param.skipCount = 0;
      this.param.recordNumber = '';
-     this.param.status = -1,
-     this.param.orgType = null;
+     this.param.status = -1;
+     this.param.orgType =-1;
      this.param.page = 1;
      this.param.maxResultCount = 10;
-     this.param.flowPathType = 1
+     this.param.flowPathType = 1;
      this.param.sorting = 'projectId desc';
      this.resetTime();
     if(this.rangeTime.length!=0){
