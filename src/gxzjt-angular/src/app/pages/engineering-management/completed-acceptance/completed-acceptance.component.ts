@@ -51,6 +51,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
 
   formResultData;
   isAddProducttyepe1 = false;
+  isAddProducttyepe2=false;//控制下载界面
   record;
   url;
 
@@ -360,8 +361,17 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     );
 
 
-
+    this.isAddProducttyepe2 = true;
   }
+
+  handleCancel2(): void {
+
+    this.isAddProducttyepe2 = false;
+  }
+  subProducttype2(): void {
+    this.isAddProducttyepe2 = false;
+  }
+
 
 }
 

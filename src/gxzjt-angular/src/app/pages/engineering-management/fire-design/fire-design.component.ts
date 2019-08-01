@@ -22,6 +22,7 @@ import * as moment from 'moment';
 import { NzMessageService } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { EngManageService } from '../engineering-management.service';
+import { NzModalService } from 'ng-zorro-antd';
 
 
 /**
@@ -79,6 +80,7 @@ url;//导出地址
 
   record;
   isAddProducttyepe1 = false;
+  isAddProducttyepe2 = false;
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     {
@@ -187,6 +189,7 @@ url;//导出地址
     private _eventEmiter: EventEmiter,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
     private formBuilder: FormBuilder,
+    private modalService: NzModalService,
     private xlsx: XlsxService, private message: NzMessageService) {
     super();
   }
@@ -224,7 +227,7 @@ url;//导出地址
     this.param.natureName = '';
     this.param.projectName = '';
     this.param.companyName = '';
-    this.param.currentNodeName = "-1";
+    this.param.currentNodeName = '';
     this.param.isExpire = false;
     this.param.isSelected = false;
     this.param.skipCount = 0;
@@ -357,12 +360,21 @@ url;//导出地址
     this.EngManageService.Post_ExportFireAuditCompleteList(this.param).subscribe(
       res => {
         this.url = res.result;
-        window.open(this.url)
+        // window.open(this.url)
 
       },
     );
 
-
+    this.isAddProducttyepe2 = true;
 
   }
+
+  handleCancel2(): void {
+
+    this.isAddProducttyepe2 = false;
+  }
+  subProducttype2(): void {
+    this.isAddProducttyepe2 = false;
+  }
+
 }

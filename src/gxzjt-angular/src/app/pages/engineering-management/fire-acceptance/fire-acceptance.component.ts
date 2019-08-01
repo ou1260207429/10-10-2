@@ -51,6 +51,7 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
   formResultData;
   url;
   isAddProducttyepe1 = false;
+  isAddProducttyepe2=false;
   companyName;
   record;
   @ViewChild('st') st: STComponent;
@@ -340,13 +341,20 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
     this.EngManageService.Post_ExportFireAuditCompleteList(this.param).subscribe(
       res => {
         this.url = res.result;
-        window.open(this.url)
+
 
       },
     );
 
 
+    this.isAddProducttyepe2 = true;
+  }
+  handleCancel2(): void {
 
+    this.isAddProducttyepe2 = false;
+  }
+  subProducttype2(): void {
+    this.isAddProducttyepe2 = false;
   }
 
 }
