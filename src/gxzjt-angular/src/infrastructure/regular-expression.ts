@@ -199,8 +199,8 @@ export function dateTrans(src: any): string {
 
 
 export function formateDate(src: Date): string {
-  var result = src.getFullYear() + '/'
-    + (src.getMonth() + 1)
+  var result = src.getFullYear()
+    + '/' + (src.getMonth() + 1)
     + '/' + src.getDate();
 
   return result;
