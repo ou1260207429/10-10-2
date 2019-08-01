@@ -33,7 +33,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     endApplyTime: "2019-07-31 23:59:59",
     flowPathType: 1,
     maxResultCount: 10,
-    orgType: 1,
+    orgType: -1,
     page: 1,
     sorting: "projectId desc",
     startApplyTime: "2019-07-24 00:00:00",
@@ -45,7 +45,8 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     isExpire: false,
     isSelected: false,
     skipCount: 0,
-    natureName:''
+    natureName:'',
+    proType:null
   }
 
   formResultData;
@@ -199,21 +200,22 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.getList();
   }
   reststart(){
-    this.param.natureName = '',
+    this.param.proType = null;
+    this.param.natureName = '';
     this.param.projectName = '';
-     this.param.companyName='',
-     this.param.currentNodeName= '',
-     this.param.isExpire = false,
-     this.param.isSelected = false,
-     this.param.skipCount = 0,
-     this.param.recordNumber = '';
-     this.param.status = -1,
-     this.param.orgType = 1;
-     this.param.page = 1;
-     this.param.maxResultCount = 10;
-     this.param.flowPathType = 1
-     this.param.sorting = 'projectId desc';
-     this.resetTime();
+    this.param.companyName='';
+    this.param.currentNodeName= '';
+    this.param.isExpire = false;
+    this.param.isSelected = false;
+    this.param.skipCount = 0;
+    this.param.recordNumber = '';
+    this.param.status = -1;
+    this.param.orgType = 1;
+    this.param.page = 1;
+    this.param.maxResultCount = 10;
+    this.param.flowPathType = 1;
+    this.param.sorting = 'projectId desc';
+    this.resetTime();
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if(this.rangeTime.length!=0){
@@ -246,8 +248,10 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
    * 点击查询
    */
   query() {
-    this.searchParam.page = 1;
-    this.searchParam.projectName= this.searchParam.projectName.trim();
+    this.param.page = 1;
+    this.param.projectName= this.param.projectName.trim();
+    //this.searchParam.page = 1;
+    //this.searchParam.projectName= this.searchParam.projectName.trim();
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if(this.rangeTime.length!=0){

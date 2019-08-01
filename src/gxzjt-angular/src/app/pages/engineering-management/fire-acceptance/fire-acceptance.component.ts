@@ -34,7 +34,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     endApplyTime: "2019-07-31 23:59:59",
     flowPathType: 1,
     maxResultCount: 10,
-    orgType: null,
+    orgType: -1,
     page: 1,
     sorting: "projectId desc",
     startApplyTime: "2019-07-24 00:00:00",
@@ -46,6 +46,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     isExpire: false,
     isSelected: false,
     skipCount: 0,
+    proType:null,
   }
   formResultData;
   isAddProducttyepe1=false;
@@ -127,8 +128,8 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
       ]
     },
     { title: '消防验收申报编号', index: 'acceptanceNumber',width:'150px'},
-    { title: '工程名称', index: 'projectName' },
-    { title: '建设单位', index: 'companyName' },
+    { title: '工程名称', index: 'projectName',width:'150px' },
+    { title: '建设单位', index: 'companyName',width:'150px' },
     { title: '联系人', index: 'contactPerson' ,width:'100px'},
     { title: '当前处理环节', index: 'currentNodeName',width:'120px' },
     { title: '流程是否超时', index: 'isExpireTime',width:'100px',format:(item:any)=>`${item.isExpireTime==true?"是":"否"}`, type: 'tag', tag: {
@@ -194,19 +195,20 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     this.getList();
   }
   reststart(){
-     this.param.natureName = '',
-    this.param.projectName = '';
-     this.param.companyName='',
-     this.param.currentNodeName= "",
-     this.param.isExpire = false,
-     this.param.isSelected = false,
-     this.param.skipCount = 0,
+     this.param.proType = null;
+     this.param.natureName = '';
+     this.param.projectName = '';
+     this.param.companyName='';
+     this.param.currentNodeName= "";
+     this.param.isExpire = false;
+     this.param.isSelected = false;
+     this.param.skipCount = 0;
      this.param.recordNumber = '';
      this.param.status = -1,
-     this.param.orgType = null;
+     this.param.orgType = -1;
      this.param.page = 1;
      this.param.maxResultCount = 10;
-     this.param.flowPathType = 1
+     this.param.flowPathType = 1;
      this.param.sorting = 'projectId desc';
      this.resetTime();
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
@@ -241,8 +243,10 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
    * 点击查询
    */
   query() {
-    this.searchParam.page = 1;
-    this.searchParam.projectName= this.searchParam.projectName.trim();
+    this.param.page = 1;
+    this.param.projectName= this.param.projectName.trim();
+    //this.searchParam.page = 1;
+    //this.searchParam.projectName= this.searchParam.projectName.trim();
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if(this.rangeTime.length!=0){
