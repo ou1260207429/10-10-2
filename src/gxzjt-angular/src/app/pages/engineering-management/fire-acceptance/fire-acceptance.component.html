@@ -47,7 +47,7 @@
           <nz-option nzLabel="分包单位" nzValue="7"></nz-option>
         </nz-select>
        </div>
-      
+
         <div  class="fd">
             <span>当前环节：</span>
           <nz-select class="search_menu_input" [(ngModel)]="param.currentNodeName" name="currentNodeName" nzPlaceHolder="当前环节">
@@ -76,24 +76,24 @@
         </nz-select>
         </div>
     </div>
-   
+
 
     <div  style="width: 100%;margin-bottom: 10px">
         <nz-range-picker class="search_menu_input" [(ngModel)]="rangeTime" name="rangeTime" nzFormat="yyyy/MM/dd"
         style="margin-right: 10px;margin-top: 10px;width: 350px"></nz-range-picker>
-  
+
       <button nz-button (click)="query()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>
       <button nz-button (click)="reststart()" style="margin-right: 10px;">重置</button>
     </div>
 
-    
+
 
 
   </form>
   <nz-spin [nzSpinning]="!formResultData"></nz-spin>
 
   <st #st *ngIf="formResultData" [data]="formResultData.data" [columns]="columns" [page]="pageConfig"
-    [total]="formResultData.total" [pi]="searchParam.page" [ps]="searchParam.maxResultCount" (change)="change($event)">
+    [total]="formResultData.total" [pi]="param.page" [ps]="param.maxResultCount" (change)="change($event)">
   </st>
   <br>
 </nz-card>
