@@ -13,10 +13,15 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle">
-            <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="data.fileCodePrefix"
+            <!-- <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="data.fileCodePrefix"
                 name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
+            </div> -->
+            <div>
+              <input class="table_input"  placeholder="请输入字号" [(ngModel)]="data.fileCodeName"
+                name="fileCodeName" style="width: 200px;"/>第[后台生成]号
             </div>
-            <div *ngIf="!data.fileCodePrefix" class="rightSpan">必填</div>
+
+            <div *ngIf="!data.fileCodeName" class="rightSpan">必填</div>
           </td>
         </tr>
         <tr>
@@ -68,10 +73,14 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle">
-            <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="data.fileCodePrefix"
+            <!-- <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="data.fileCodePrefix"
                 name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
+            </div> -->
+            <div>
+              <input class="table_input" placeholder="请输入字号" [(ngModel)]="data.fileCodeName"
+                name="fileCodeName" style="width: 200px;"/>第[后台生成]号
             </div>
-            <div *ngIf="!data.fileCodePrefix" class="rightSpan">必填</div>
+            <div *ngIf="!data.fileCodeName" class="rightSpan">必填</div>
           </td>
         </tr>
         <tr>
@@ -115,9 +124,14 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle">
-            <div><input class="table_input" [(ngModel)]="examineFormDto.fileCodePrefix" name="fileCodePrefix"
-                placeholder="请输入区域简称" />住建消审字〔后台生成〕第后台生成号</div>
-            <div *ngIf="!examineFormDto.fileCodePrefix" class="rightSpan">必填</div>
+            <!-- <div><input class="table_input" [(ngModel)]="examineFormDto.fileCodePrefix" name="fileCodePrefix"
+                placeholder="请输入区域简称" />住建消审字〔后台生成〕第后台生成号</div> -->
+            <div>
+              <input class="table_input" placeholder="请输入字号" [(ngModel)]="examineFormDto.fileCodeName"
+                name="fileCodeName" style="width: 200px;"/>第[后台生成]号
+            </div>
+
+            <div *ngIf="!examineFormDto.fileCodeName" class="rightSpan">必填</div>
           </td>
         </tr>
         <tr *ngIf="examineFormDto.opinion&&!examineFormDto.content">

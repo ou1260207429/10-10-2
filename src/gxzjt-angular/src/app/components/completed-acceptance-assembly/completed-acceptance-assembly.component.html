@@ -841,21 +841,21 @@
         <td rowspan='1' colspan='20' class="textLeft">
           <div>
             1、建设工程竣工验收消防备案表（纸质申报表的图片）
-            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" (click)="handleChange(0)" [nzRemove]="removeFile">
+            <nz-upload  [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" (click)="handleChange(0)" [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             2、与消防验收有关的竣工图纸及隐蔽工程记录
-            <nz-upload [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)" [nzRemove]="removeFile"> 
+            <nz-upload  [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)" [nzRemove]="removeFile"> 
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             3、符合要求的检测机构出具的消防设施及系统检测合格证明文件
-            <nz-upload [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)" [nzRemove]="removeFile">
+            <nz-upload  [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)" [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>

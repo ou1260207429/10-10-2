@@ -45,11 +45,16 @@
       <nz-option *ngFor="let option of flowPathTypeEnum" [nzLabel]="option.label" [nzValue]="option.value">
       </nz-option>
     </nz-select>
+<<<<<<< HEAD
     <nz-range-picker [(ngModel)]="rangeTime" name="rangeTime" [nzFormat]="'yyyy/MM/dd'"
       style="margin-right: 10px;margin-top: 10px;" (ngModelChange)="okRangeTime($event)"></nz-range-picker>
 
 
     </div>
+=======
+    
+    
+>>>>>>> 9d4bbd8fd02c033c644162e1761a6d5deb734a8a
 
 
     <button nz-button (click)="query()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>

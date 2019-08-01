@@ -43,7 +43,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   columns: STColumn[] = [
     {
       title: '操作',
-      width:'200px',
+      width:'120px',
       buttons: [
         {
           text: '执行',
@@ -64,13 +64,13 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
         },
       ]
     },
-    { title: '工程名称', index: 'projectName' },
-    { title: '工程编号', index: 'projectCode' },
-    { title: '建设单位', index: 'companyName' },
-    { title: '工程类型', index: 'flowTypeName' },
+    { title: '工程名称', index: 'projectName',width:'150px'},
+    { title: '工程编号', index: 'projectCode',width:'150px'},
+    { title: '建设单位', index: 'companyName', width:'150px'},
+    { title: '工程类型', index: 'flowTypeName',width:'150px' },
     // { title: '提交人', index: 'cur_NodeAuditorName' },
-    { title: '申报时间', index: 'applyTime', type: 'date' },
-    { title: '到达时间', index: 'acceptTime', type: 'date' },
+    { title: '申报时间', index: 'applyTime', type: 'date',width:'150px' },
+    { title: '到达时间', index: 'acceptTime', type: 'date',width:'150px' },
     // {
     //   title: '流程是否超时', index: 'isExpire', type: 'tag', tag: {
     //     true: { text: '超时', color: 'red' },
@@ -78,7 +78,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     //   }
     // },
     {
-      title: '流程是否超时', index: 'isExpire', format: (item: any) => `${item.isExpire == true ? "是" : "否"}`, type: 'tag', tag: {
+      title: '流程是否超时', index: 'isExpire',width:'100px', format: (item: any) => `${item.isExpire == true ? "是" : "否"}`, type: 'tag', tag: {
         "是": { text: '是', color: 'red' },
         "否": { text: '否', color: '' },
       }

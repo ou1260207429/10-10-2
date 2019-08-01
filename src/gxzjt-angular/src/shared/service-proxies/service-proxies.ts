@@ -8756,6 +8756,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     isTransfer: boolean | undefined;
     orgName: string | undefined;
     orgCode: string | undefined;
+    fileCodeName: string | undefined;
 
     constructor(data?: IAcceptApplyFormDto) {
         if (data) {
@@ -8825,6 +8826,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
             this.isTransfer = data["isTransfer"];
             this.orgName = data["orgName"];
             this.orgCode = data["orgCode"];
+            this.fileCodeName = data["fileCodeName"];
         }
     }
 
@@ -8894,6 +8896,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
         data["isTransfer"] = this.isTransfer;
         data["orgName"] = this.orgName;
         data["orgCode"] = this.orgCode;
+        data["fileCodeName"] = this.fileCodeName;
         return data; 
     }
 
@@ -8947,6 +8950,7 @@ export interface IAcceptApplyFormDto {
     isTransfer: boolean | undefined;
     orgName: string | undefined;
     orgCode: string | undefined;
+    fileCodeName: string | undefined;
 }
 
 export class FlowNodeUser implements IFlowNodeUser {
@@ -9569,6 +9573,7 @@ export class ExamineFormDto implements IExamineFormDto {
     checkDate: moment.Moment | undefined;
     endDate: moment.Moment | undefined;
     content: string | undefined;
+    fileCodeName: string | undefined;
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -9642,6 +9647,7 @@ export class ExamineFormDto implements IExamineFormDto {
             this.checkDate = data["checkDate"] ? moment(data["checkDate"].toString()) : <any>undefined;
             this.endDate = data["endDate"] ? moment(data["endDate"].toString()) : <any>undefined;
             this.content = data["content"];
+            this.fileCodeName = data["fileCodeName"];
         }
     }
 
@@ -9715,6 +9721,7 @@ export class ExamineFormDto implements IExamineFormDto {
         data["checkDate"] = this.checkDate ? this.checkDate.toISOString() : <any>undefined;
         data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
         data["content"] = this.content;
+        data["fileCodeName"] = this.fileCodeName;
         return data; 
     }
 
@@ -9776,6 +9783,7 @@ export interface IExamineFormDto {
     checkDate: moment.Moment | undefined;
     endDate: moment.Moment | undefined;
     content: string | undefined;
+    fileCodeName: string | undefined;
 }
 
 export class ProjectAttachment implements IProjectAttachment {
@@ -11746,6 +11754,7 @@ export class Condition implements ICondition {
     flowType: number | undefined;
     cityId: number | undefined;
     cityname: string | undefined;
+    projectName: string | undefined;
     regionId: number | undefined;
     regionname: string | undefined;
     startTime: moment.Moment | undefined;
@@ -11768,6 +11777,7 @@ export class Condition implements ICondition {
             this.flowType = data["flowType"];
             this.cityId = data["cityId"];
             this.cityname = data["cityname"];
+            this.projectName = data["projectName"];
             this.regionId = data["regionId"];
             this.regionname = data["regionname"];
             this.startTime = data["startTime"] ? moment(data["startTime"].toString()) : <any>undefined;
@@ -11790,6 +11800,7 @@ export class Condition implements ICondition {
         data["flowType"] = this.flowType;
         data["cityId"] = this.cityId;
         data["cityname"] = this.cityname;
+        data["projectName"] = this.projectName;
         data["regionId"] = this.regionId;
         data["regionname"] = this.regionname;
         data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
@@ -11812,6 +11823,7 @@ export interface ICondition {
     flowType: number | undefined;
     cityId: number | undefined;
     cityname: string | undefined;
+    projectName: string | undefined;
     regionId: number | undefined;
     regionname: string | undefined;
     startTime: moment.Moment | undefined;

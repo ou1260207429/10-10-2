@@ -12,10 +12,15 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-            <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="data.fileCodePrefix"
+            <!-- <div>
+              <input class="table_input" placeholder="请输入区域简称" [(ngModel)]="data.fileCodePrefix"
                 name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
+            </div> -->
+            <div>
+              <input class="table_input" placeholder="请输入字号" [(ngModel)]="data.fileCodeName"
+                name="fileCodeName" style="width: 200px;"/>第[后台生成]号
             </div>
-            <div *ngIf="!data.fileCodePrefix" class="rightSpan">必填</div>
+            <div *ngIf="!data.fileCodeName" class="rightSpan">必填</div>
           </td>
         </tr>
         <tr>
@@ -69,10 +74,15 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-            <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="examineFormDto.fileCodePrefix"
+            <!-- <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="examineFormDto.fileCodePrefix"
                 name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
+            </div> -->
+
+            <div>
+              <input class="table_input" placeholder="请输入字号" [(ngModel)]="examineFormDto.fileCodeName"
+                name="fileCodeName" style="width: 200px;"/>第[后台生成]号
             </div>
-            <div *ngIf="!examineFormDto.fileCodePrefix" class="rightSpan">必填</div>
+            <div *ngIf="!examineFormDto.fileCodeName" class="rightSpan">必填</div>
           </td>
         </tr>
 
@@ -112,7 +122,7 @@
             <!-- <button nz-button (click)="test()">测试</button> -->
 
             <div class="textLeft" *ngIf="examineFormDto">
-              <nz-upload [(nzFileList)]="examineFormDto.attachment" [nzCustomRequest]="customReq"
+              <nz-upload  [(nzFileList)]="examineFormDto.attachment" [nzCustomRequest]="customReq"
                 [nzRemove]="removeFile">
                 <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
               </nz-upload>

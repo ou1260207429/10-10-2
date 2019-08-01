@@ -54,13 +54,13 @@ export class AgencyDoneDetailsComponent implements OnInit {
   textData = { projectNumber: "", opinion: "", projectName: "" }
 
   //路径的ID
-  flowNo
+  flowNo: any;
 
   //判断类型 消防设计1   消防验收2   消防竣工3
-  flowPathType
+  flowPathType: any;
 
   //获取表单详情的ID
-  flowId
+  flowId: any;
 
 
   //提交表单的对象
@@ -308,18 +308,15 @@ export class AgencyDoneDetailsComponent implements OnInit {
   savePost(bo?: boolean) {
     switch (this.curNodeName) {
       case '大厅受理':
-        if (!this.formDto.fileCodePrefix) {
+        if (!this.formDto.fileCodeName) {
           this.message.error('请输入必填项')
           return false;
         }
         break;
 
       case '业务承办人审核':
-        // if ((!this.examineFormDto.fileCodePrefix || !this.examineFormDto.opinion) && this.flowPathType != 3) {
-        //   this.message.error('请输入必填项')
-        //   return false;
-        // }
-        if ((!this.examineFormDto.fileCodePrefix || !this.examineFormDto.content) && this.flowPathType != 3) {
+
+        if ((!this.examineFormDto.fileCodeName || !this.examineFormDto.content) && this.flowPathType != 3) {
           this.message.error('请输入必填项')
           return false;
         }
@@ -330,7 +327,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
           this.examineFormDto.checkDate = moment(timeTrans(Date.parse(this.examineFormDto.checkDate) / 1000, 'yyyy/MM/dd HH:mm:ss', '/'))
         }
 
-        if (!this.examineFormDto.fileCodePrefix && this.flowPathType == 3) {
+        if (!this.examineFormDto.fileCodeName && this.flowPathType == 3) {
           this.message.error('请输入必填项')
           return false;
         } else {
