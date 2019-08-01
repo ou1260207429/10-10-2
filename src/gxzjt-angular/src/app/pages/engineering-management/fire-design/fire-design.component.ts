@@ -370,10 +370,11 @@ url;//导出地址
   }
 
   handleCancel2(): void {
-
+    this.url=null;
     this.isAddProducttyepe2 = false;
   }
   subProducttype2(): void {
+    this.url=null;
     this.isAddProducttyepe2 = false;
   }
 

@@ -197,8 +197,8 @@
   <span>确定撤回申请吗?</span>
 </nz-modal>
 
-<nz-modal [nzOkText]='null' [(nzVisible)]="isAddProducttyepe2" nzTitle="下载"  (nzOnCancel)="handleCancel2()" >
+<nz-modal [nzMaskClosable]='false' [nzOkText]='null' [(nzVisible)]="isAddProducttyepe2" nzTitle="下载"  (nzOnCancel)="handleCancel2()" (nzOnOk)="subProducttype2()"  >
   <span *ngIf="url==null">连接加载中.....请稍后！</span>
     <nz-spin *ngIf="url==null" nzSimple></nz-spin>
-  <a *ngIf="url" [href]="url"   >点击下载</a>
+  <a *ngIf="url" [href]="url" >点击下载</a>
 </nz-modal>

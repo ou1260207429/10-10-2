@@ -355,7 +355,6 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.EngManageService.Post_ExportFireAuditCompleteList(this.param).subscribe(
       res => {
         this.url = res.result;
-        window.open(this.url)
 
       },
     );
@@ -365,10 +364,11 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   }
 
   handleCancel2(): void {
-
+    this.url=null;
     this.isAddProducttyepe2 = false;
   }
   subProducttype2(): void {
+    this.url=null;
     this.isAddProducttyepe2 = false;
   }
 

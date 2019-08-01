@@ -413,7 +413,7 @@ export class WorkMattersAllDoneComponent implements OnInit {
 
   }
   handleCancel2(): void {
-
+    this.url=null;
     this.isAddProducttyepe2 = false;
   }
   subProducttype2(): void {
