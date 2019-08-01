@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
-import { timeTrans } from 'infrastructure/regular-expression';
+import { dateTrans } from 'infrastructure/regular-expression';
 import { PublicFormComponent } from '../public/public-form.component';
 import { FormBuilder } from '@angular/forms';
 import * as moment from 'moment';
@@ -210,8 +210,8 @@ param={
     // this.param.endApplyTime = moment(this.rangeTime[1]).add(28800000);
 
     if (this.rangeTime.length != 0) {
-      this.param.startApplyTime = timeTrans(this.rangeTime[0]) + " 00:00:00";
-      this.param.endApplyTime = timeTrans(this.rangeTime[1]) + " 23:59:59";
+      this.param.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
+      this.param.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
     } else {
       this.param.startApplyTime = '';
       this.param.endApplyTime = '';
@@ -236,8 +236,8 @@ param={
     this.param.sorting = 'projectId desc';
     this.resetTime();
     if (this.rangeTime.length != 0) {
-      this.param.startApplyTime = timeTrans(this.rangeTime[0]) + " 00:00:00";
-      this.param.endApplyTime = timeTrans(this.rangeTime[1]) + " 23:59:59";
+      this.param.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
+      this.param.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
     } else {
       this.param.startApplyTime = '';
       this.param.endApplyTime = '';
@@ -258,8 +258,8 @@ param={
     this.param.page = 1;
     this.param.projectName = this.param.projectName.trim();
     if (this.rangeTime.length != 0) {
-      this.param.startApplyTime = timeTrans(this.rangeTime[0]) + " 00:00:00";
-      this.param.endApplyTime = timeTrans(this.rangeTime[1]) + " 23:59:59";
+      this.param.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
+      this.param.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
     } else {
       this.param.startApplyTime = '';
       this.param.endApplyTime = '';
