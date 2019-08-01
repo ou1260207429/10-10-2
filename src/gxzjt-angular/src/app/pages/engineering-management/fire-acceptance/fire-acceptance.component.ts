@@ -49,6 +49,7 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
     proType:'-1',
   }
   formResultData;
+  url;
   isAddProducttyepe1 = false;
   companyName;
   record;
@@ -326,4 +327,26 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
     this.isAddProducttyepe1 = false;
 
   }
+  export(){
+    this.param.page = 1;
+    this.param.projectName = this.param.projectName.trim();
+    if (this.rangeTime.length != 0) {
+      this.searchParam.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
+      this.searchParam.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
+    } else {
+      this.searchParam.startApplyTime = '';
+      this.searchParam.endApplyTime = '';
+    }
+    this.EngManageService.Post_ExportFireAuditCompleteList(this.param).subscribe(
+      res => {
+        this.url = res.result;
+        window.open(this.url)
+
+      },
+    );
+
+
+
+  }
+
 }

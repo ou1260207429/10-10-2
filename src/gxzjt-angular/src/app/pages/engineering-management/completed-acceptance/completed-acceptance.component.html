@@ -33,14 +33,14 @@
          <div  class="fd">
           <span>工程类型：</span>
           <nz-select class="search_menu_input"  [(ngModel)]="param.proType" name="proType" nzShowSearch nzAllowClear nzPlaceHolder="工程类型">
-            <nz-option nzLabel="全部工程类型" nzValue="-1"></nz-option> 
+            <nz-option nzLabel="全部工程类型" nzValue="-1"></nz-option>
             <nz-option nzLabel="消防设计审查" nzValue="1"></nz-option>
               <nz-option nzLabel="消防验收" nzValue="2"></nz-option>
               <nz-option nzLabel="竣工验收消防备案" nzValue="3"></nz-option>
             </nz-select>
        </div>
       -->
-         
+
          <div class="fd">
             <div style="width: 100%;height: 10px;"></div>
             <span>当前环节：</span>
@@ -81,7 +81,7 @@
           <nz-option nzLabel="合格" nzValue="4"></nz-option>
         </nz-select>
          </div>
-        
+
     </div>
           <div style="width: 100%;float:left;">
               <div style="width: 100%;height: 10px;"></div>
@@ -90,11 +90,12 @@
             style="margin-right: 10px;width: 350px"></nz-range-picker>
             <div style="width: 100%;height: 10px;"></div>
           </div>
-          
+
         <div style="width: 100%;">
             <div style="width: 100%;height: 10px;"></div>
               <button nz-button (click)="query()" nzType="primary" style="margin-right: 10px;">搜索</button>
               <button nz-button (click)="reststart()" style="margin-right: 10px;">重置</button>
+              <button nz-button (click)="export()" style="margin-right: 10px;">导出</button>
               <div style="width: 100%;height: 10px;"></div>
          </div>
   </form>

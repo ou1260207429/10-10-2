@@ -52,6 +52,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   formResultData;
   isAddProducttyepe1 = false;
   record;
+  url;
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
@@ -286,8 +287,8 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
 
   okRangeTime(v) {
     console.log(v);
-    // const applyTimeStart:any = timeTrans(v[0]) 
-    // const applyTimeEnd:any = timeTrans(v[1]) 
+    // const applyTimeStart:any = timeTrans(v[0])
+    // const applyTimeEnd:any = timeTrans(v[1])
     // this.searchParam.applyTimeStart = applyTimeStart;
     // this.searchParam.applyTimeEnd = applyTimeEnd;
     // console.log(applyTimeEnd);
@@ -338,6 +339,27 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     );
     this.st.reload();
     this.isAddProducttyepe1 = false;
+
+  }
+  export(){
+    this.param.page = 1;
+    this.param.projectName = this.param.projectName.trim();
+    if (this.rangeTime.length != 0) {
+      this.searchParam.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
+      this.searchParam.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
+    } else {
+      this.searchParam.startApplyTime = '';
+      this.searchParam.endApplyTime = '';
+    }
+    this.EngManageService.Post_ExportFireAuditCompleteList(this.param).subscribe(
+      res => {
+        this.url = res.result;
+        window.open(this.url)
+
+      },
+    );
+
+
 
   }
 

@@ -53,6 +53,7 @@ param={
   proType:'-1',
   natureName: '',
 }
+url;//导出地址
   // param={
   //   recordNumber:null,
   //   projectName:null,
@@ -342,5 +343,26 @@ param={
 
     this.st.reload();
     this.isAddProducttyepe1 = false;
+  }
+  export(){
+    this.param.page = 1;
+    this.param.projectName = this.param.projectName.trim();
+    if (this.rangeTime.length != 0) {
+      this.param.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
+      this.param.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
+    } else {
+      this.param.startApplyTime = '';
+      this.param.endApplyTime = '';
+    }
+    this.EngManageService.Post_ExportFireAuditCompleteList(this.param).subscribe(
+      res => {
+        this.url = res.result;
+        window.open(this.url)
+
+      },
+    );
+
+
+
   }
 }

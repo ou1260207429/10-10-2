@@ -34,13 +34,16 @@ export class EngManageService {
   // Edit(model?: any): Observable<any> {
   //   return this.http.post(URLConfig.getInstance().REGISTER_URL + 'api/User/Edit', model);
   // }
- 
+
   //撤回审查
   CancelApply(model?: any): Observable<any> {
     return this.http.post(URLConfig.getInstance().SERVER_URL + 'api/services/app/ApplyService/CancelApply', model,model);
   }
-  GetFireAuditCompleteList(model?: any): Observable<any> {      
+  GetFireAuditCompleteList(model?: any): Observable<any> {
     return this.http.post(URLConfig.getInstance().SERVER_URL + '/api/services/app/ProjectFlowServcie/Post_GetFireAuditCompleteList', model);
+  }
+  Post_ExportFireAuditCompleteList(model?: any): Observable<any> {
+    return this.http.post(URLConfig.getInstance().SERVER_URL + '/api/services/app/ProjectFlowServcie/Post_ExportFireAuditCompleteList', model);
   }
 
 }
