@@ -50,7 +50,7 @@
           <nz-option nzLabel="分包单位" nzValue="7"></nz-option>
         </nz-select>
        </div>
-      
+
         <div  class="fd">
             <span>当前环节：</span>
           <nz-select class="search_menu_input" [(ngModel)]="param.currentNodeName" nzShowSearch nzAllowClear name="currentNodeName" nzPlaceHolder="当前环节">
@@ -80,6 +80,7 @@
           <nz-option nzLabel="合格" nzValue="4"></nz-option>
         </nz-select>
         </div>
+<<<<<<< HEAD
       </div>
         <div style="width: 100%;margin-bottom: 10px;float: left;margin-top: 10px">
             <span>申报时间：</span>
@@ -93,6 +94,20 @@
         <button nz-button (click)="reststart()" style="margin-right: 10px;">重置</button>
     </div>
   
+=======
+    </div>
+
+
+    <div  style="width: 100%;margin-bottom: 10px">
+        <nz-range-picker class="search_menu_input" [(ngModel)]="rangeTime" name="rangeTime" nzFormat="yyyy/MM/dd"
+        style="margin-right: 10px;margin-top: 10px;width: 350px"></nz-range-picker>
+
+      <button nz-button (click)="query()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">搜索</button>
+      <button nz-button (click)="reststart()" style="margin-right: 10px;">重置</button>
+    </div>
+
+
+>>>>>>> e49cf042673f9f1b7091d4bef8fef43ab75f1adb
 
 
   </form>
