@@ -55,7 +55,8 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   @ViewChild('f') f: FormGroup;
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
-
+  @Output() private printOuter = new EventEmitter();
+  printData = { address: '', examination: '' };
   //判断上传的焦点
   uploadIndex: number = -1;
 
@@ -92,7 +93,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     this.getOrganizationTree();
     this.getAreaDropdown();
 
-  
+
 
 
     if (this.type == 1) {
@@ -105,6 +106,10 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
       }, 500);
     }
+
+  }
+  ngAfterViewInit(): void {
+    this.printOuter.emit(this.printData);
   }
 
 
@@ -125,13 +130,31 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     }
 
   }
+  /**
+   * 获取工程地址中文
+   */
+  getAddress(data, value, arr, i, str, valueName) {
+    if (i < data.length) {
+      arr.forEach(element => {
+        if (element[valueName] == value) {
+          this.printData[str] += i < (data.length - 1) ? element.Name + '/' : element.Name;
+          i = i + 1;
+          this.getAddress(data, data[i], element.Children, i, str, valueName);
+        }
+      });
+    }
 
+  }
   /**
    * 获取市县区的接口
    */
   getAreaDropdown() {
+    let addressData = this.data.engineeringCitycountyAndDistrict;
     this._homeServiceProxy.getAreaDropdown().subscribe(data => {
       this.position = classTreeChildrenArray([JSON.parse(data)]);
+      if (addressData.length > 0) {
+        this.getAddress(addressData, addressData[0], this.position, 0, 'address', 'AreaId');
+      }
     })
   }
 
@@ -141,6 +164,10 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   getOrganizationTree() {
     this._publicServices.getOrganizationTree().subscribe((data: any) => {
       this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]);
+      let engineeringNo = this.data.engineeringNo;
+      if (engineeringNo.length > 0) {
+        this.getAddress(engineeringNo, engineeringNo[0], this.engineeringList, 0, 'examination', 'ID');
+      }
     })
   }
 
@@ -204,7 +231,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
 
     return this._publicServices.newUpload(formData, params).subscribe(data => {
 
-    
+
       item.onSuccess!({}, item.file!, event);
       var list = this.data.fileList[index].array;
 
@@ -215,7 +242,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
         item.onError!('上传失败，多次尝试无效请联系系统客服（请注意文件不能超过200M）', item.file!);
         return;
       }
-  
+
       file.uid = data.data[0].id;
       file.name = file.name;
       file.status = 'done';
@@ -223,7 +250,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
       file.url = URLConfig.getInstance().REGISTER_URL + 'api/Attachment/Download?appId=' + AppId + '&id=' + data.data[0].id;
       file.hadUpLoad = 1;
       // item.onSuccess!(data, item.file!, HttpEventType.Response);
-   
+
 
     }, error => {
       this.message.error('上传失败，多次尝试无效请联系系统客服（请注意文件不能超过200M）');

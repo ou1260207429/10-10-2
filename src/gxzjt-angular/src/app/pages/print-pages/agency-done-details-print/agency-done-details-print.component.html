@@ -1,15 +1,8 @@
-<nz-card>
-  <nz-tabset [(nzSelectedIndex)]="selectedIndex" [nzType]="'card'">
-    <div *ngFor="let tab of tabs">
-      <nz-tab [nzTitle]="tab.name">
-      </nz-tab>
-    </div>
-  </nz-tabset>
-  <!-- <p (click)="printFormData()">打印</p> -->
+<div style="width: 500px;">
   <div [ngClass]="{hide: selectedIndex != 0}">
 
     <!-- 表单JSON -->
-    <app-fire-design-declare-assembly (printOuter)="setAddress($event)" [useNatureSelect]="useNatureSelect" [errorData]="showError"
+    <app-fire-design-declare-assembly [useNatureSelect]="useNatureSelect" [errorData]="showError"
       *ngIf="formJson && flowPathType ==1" [data]="formJson" type=1>
     </app-fire-design-declare-assembly>
 
@@ -199,16 +192,4 @@
       <app-flow-route *ngIf="data" [data]="data" flowPathType="flowPathType"></app-flow-route>
     </nz-spin>
   </div>
-</nz-card>
-
-
-<!-- 驳回  -->
-<nz-modal [nzMaskClosable]='false' [(nzVisible)]="isAddProducttyepe1" nzTitle="驳回" (nzOnCancel)="handleCancel1()"
-  (nzOnOk)="subProducttype1(false)">
-  <div>
-    <Span>驳回意见(必须填写)：</Span>
-    <textarea nz-input placeholder="请输入驳回意见" [(ngModel)]="rejectadvices" style="height: 200px;"></textarea>
-
-
-  </div>
-</nz-modal>
+</div>

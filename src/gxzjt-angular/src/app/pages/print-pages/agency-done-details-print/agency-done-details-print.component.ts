@@ -15,15 +15,13 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 import { InitiationProcessAddAuditorComponent } from '@app/components/initiation-process-add-auditor/initiation-process-add-auditor.component';
 import { checkArrayString, timeTrans } from 'infrastructure/regular-expression';
 import { WorkMattersService } from '../work-matters.service'
-/**
- * 待办详情->办理页面
- */
-@Component({
-  selector: 'app-agency-done-details',
-  templateUrl: './agency-done-details.component.html',
 
+@Component({
+  selector: 'app-agency-done-details-print',
+  templateUrl: './agency-done-details-print.component.html',
+  styles: []
 })
-export class AgencyDoneDetailsComponent implements OnInit {
+export class AgencyDoneDetailsPrintComponent implements OnInit {
 
   tabs = [
     {
@@ -82,9 +80,6 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   examineFormDto: any = {};
 
-  //走流程或者查看  0是走流程  1是查看
-  operationType: any;
-
   //签收的对象
   signForDto: SignForDto = new SignForDto();
 
@@ -126,38 +121,13 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.flowNo = this._activatedRoute.snapshot.paramMap.get('flowNo')
     this.flowId = this._activatedRoute.snapshot.paramMap.get('flowId')
     this.flowPathType = this._activatedRoute.snapshot.paramMap.get('flowPathType')
-    this.operationType = this._activatedRoute.snapshot.paramMap.get('operationType')
 
   }
-  printAddress: Object
+
   ngOnInit() {
     this.init();
   }
-
-  setAddress(e) {
-    this.printAddress = e;
-  }
-  /**
-   * 清除表单数据
-   * */
-  clearForm(fieldForm, isClear) {
-    for (let item in fieldForm) {
-      if (typeof (fieldForm[item]) == "string" || typeof (fieldForm[item]) == "number") {
-        fieldForm[item] = "";
-      } else if (typeof (fieldForm[item]) == "object") {
-        fieldForm[item] = [];
-      }
-    }
-  }
-  /**
-   * 跳转打印页面并将打印信息放置在localStorage，以便打印页面获取打印信息
-   */
-  printFormData() {
-    let params = Object.assign(this.printAddress, this.formJson)
-    let result = JSON.stringify(params)
-    localStorage.setItem('jsonPrintForm', result);
-    this.router.navigate([`/app/print-pages/FiewDesignDeclarePrintComponent`]);
-  }
+  
   init() {
     this.getWorkFlow_NodeRecordAndAuditorRecords()
 
@@ -829,6 +799,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.butNzLoading = false;
     this.isAddProducttyepe1 = false;
   }
+
 
 
 }
