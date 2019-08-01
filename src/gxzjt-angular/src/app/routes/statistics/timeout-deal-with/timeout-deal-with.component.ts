@@ -5,8 +5,8 @@ import { publicPageConfig, pageOnChange } from 'infrastructure/expression';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { StatisticalServiceServiceProxy, TimeoutQuetyDto } from '@shared/service-proxies/service-proxies';
-import { timeTrans } from 'infrastructure/regular-expression';
-import {StatisticsService} from '../statistics.service'
+import { dateTrans } from 'infrastructure/regular-expression';
+import { StatisticsService } from '../statistics.service'
 
 @Component({
   selector: 'app-statistics-timeout-deal-with',
@@ -75,33 +75,36 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
     //   ]
     // },
     // { title: '竣工验收申报编号',default:'0', index: 'acceptanceNumber' , },
-    { title: '工程名称', index: 'projectName',width:'150px' },
-    { title: '建设单位', index: 'companyName',width:'150px' },
-    { title: '联系人', index: 'contactPerson',width:'120px' },
-    { title: '联系电话', index: 'contactNumber',width:'120px' },
+    { title: '工程名称', index: 'projectName', width: '150px' },
+    { title: '建设单位', index: 'companyName', width: '150px' },
+    { title: '联系人', index: 'contactPerson', width: '120px' },
+    { title: '联系电话', index: 'contactNumber', width: '120px' },
     // { title: '流程是否超时', index: 'isExpireTime',width:'120px',format:(item:any)=>`${item.isExpireTime==true?"是":"否"}`,type: 'tag', tag: {
     //   "是": { text: '是', color: 'red' },
     //   "否": { text: '否', color: '' },
     // }},
-    { title: '超时时长', index: 'approvalRemainingTime',width:'120px' },
-    { title: '审核结果', index: 'status',width:'120px',format: (item: any) => `${item.status==0?"未处理":(item.status==1?"受理":(item.status==2?"不受理":(item.status==3?"不合格":(item.status==4?"合格":(item.status==5?"未抽中":"未处理")))))}`,type: 'tag', tag: {
-      "未处理": { text: '未处理', color: '' },
-      "受理": { text: '受理', color: 'green' },
-      "不受理":{ text: '不受理', color: 'red' },
-      "不合格":{ text: '不合格', color: 'red' },
-      "合格":{ text: '合格', color: '' },
-      "未抽中":{ text: '未抽中', color: '' },
-    }},
-    { title: '操作人', index: 'currentHandleUserName',width:'120px' },
-    { title: '申报时间', index: 'acceptTime',width:'120px',type:'date' },//这个实际是申请时间操作时间暂时无数据
+    { title: '超时时长', index: 'approvalRemainingTime', width: '120px' },
+    {
+      title: '审核结果', index: 'status', width: '120px', format: (item: any) => `${item.status == 0 ? "未处理" : (item.status == 1 ? "受理" : (item.status == 2 ? "不受理" : (item.status == 3 ? "不合格" : (item.status == 4 ? "合格" : (item.status == 5 ? "未抽中" : "未处理")))))}`, type: 'tag', tag: {
+        "未处理": { text: '未处理', color: '' },
+        "受理": { text: '受理', color: 'green' },
+        "不受理": { text: '不受理', color: 'red' },
+        "不合格": { text: '不合格', color: 'red' },
+        "合格": { text: '合格', color: '' },
+        "未抽中": { text: '未抽中', color: '' },
+      }
+    },
+    { title: '操作人', index: 'currentHandleUserName', width: '120px' },
+    { title: '申报时间', index: 'acceptTime', width: '120px', type: 'date' },//这个实际是申请时间操作时间暂时无数据
   ];
 
   constructor(private http: _HttpClient,
     private modal: ModalHelper,
     private formBuilder: FormBuilder,
-    private StatisticsService:StatisticsService,
+    private StatisticsService: StatisticsService,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
-    private xlsx: XlsxService) { this.param.init(
+    private xlsx: XlsxService) {
+    this.param.init(
 
       {
         "recordNumber": "",
@@ -114,7 +117,8 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
         "sorting": "ProjectName",
         "skipCount": 0,
         "maxResultCount": 10
-      });}
+      });
+  }
 
   ngOnInit() {
 
@@ -137,7 +141,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
     this.getList();
   }
   search() {
-    this.param.page=1;
+    this.param.page = 1;
     this.param.recordNumber = this.fliterForm.controls.proNo.value;
     this.param.projectName = this.fliterForm.controls.proName.value;
     this.param.status = this.fliterForm.controls.proType.value;
@@ -145,18 +149,18 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
       this.param.status = -1;
     }
 
-    if(this.fliterForm.controls.dateRange.value.length!=0){
+    if (this.fliterForm.controls.dateRange.value.length != 0) {
 
-      this.param.startApplyTime=timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
-      this.param.endApplyTime =timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
-    }else{
-      this.param.startApplyTime='';
-      this.param.endApplyTime='';
+      this.param.startApplyTime = dateTrans(this.fliterForm.controls.dateRange.value[0]) + " 00:00:00";
+      this.param.endApplyTime = dateTrans(this.fliterForm.controls.dateRange.value[1]) + " 23:59:59";
+    } else {
+      this.param.startApplyTime = '';
+      this.param.endApplyTime = '';
     }
     this.statisticalServiceServiceProxy.post_GetTimeoutList(this.param).subscribe((result: any) => {
       if (result.data) {
         this.formResultData = result.data;
-        this.total=result.total;
+        this.total = result.total;
       } else {
         this.formResultData = [];
       }
@@ -169,7 +173,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
   }
 
   resetForm(): void {
-    this.param.page=1;
+    this.param.page = 1;
     this.fliterForm = this.formBuilder.group({
       proNo: [null],
       proName: [null],
@@ -209,14 +213,14 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
   getList() {
 
 
-      if(this.fliterForm.controls.dateRange.value.length!=0){
+    if (this.fliterForm.controls.dateRange.value.length != 0) {
 
-        this.param.startApplyTime=timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
-        this.param.endApplyTime =timeTrans(Date.parse(this.fliterForm.controls.dateRange.value[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
-      }else{
-        this.param.startApplyTime='';
-        this.param.endApplyTime='';
-      }
+      this.param.startApplyTime = dateTrans(this.fliterForm.controls.dateRange.value[0]) + " 00:00:00";
+      this.param.endApplyTime = dateTrans(this.fliterForm.controls.dateRange.value[1]) + " 23:59:59";
+    } else {
+      this.param.startApplyTime = '';
+      this.param.endApplyTime = '';
+    }
     //   this.statisticalServiceServiceProxy.post_GetTimeoutList(this.param).subscribe((result: any) => {
     //   this.formResultData = result.data;
     //   this.total=result.total
@@ -227,10 +231,10 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
     this.StatisticsService.GetTimeoutList(this.param).subscribe(
       res => {
 
-               this.formResultData = res.result.data;
-               this.total=res.result.total;
+        this.formResultData = res.result.data;
+        this.total = res.result.total;
 
-               console.log(this.total)
+        console.log(this.total)
       },
     );
   }
@@ -240,7 +244,7 @@ export class StatisticsTimeoutDealWithComponent implements OnInit {
     this.rangeTime = [startTime, new Date()];
   }
   change(v) {
-    if(this.param.page==v.pi){
+    if (this.param.page == v.pi) {
       return   //解决页面数据不能复制问题，因为change改变事件当点击的就会触发了所以当page不变的时候不执行方法
     }
     this.param.page = v.pi;

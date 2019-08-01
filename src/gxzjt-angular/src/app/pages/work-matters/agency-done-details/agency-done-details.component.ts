@@ -324,7 +324,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
           this.message.error('请输入必填项')
           return false;
         } else {
-          this.examineFormDto.checkDate = moment(timeTrans(Date.parse(this.examineFormDto.checkDate) / 1000, 'yyyy/MM/dd HH:mm:ss', '/'))
+          this.examineFormDto.checkDate = moment(timeTrans(this.examineFormDto.checkDate));
         }
 
         if (!this.examineFormDto.fileCodeName && this.flowPathType == 3) {

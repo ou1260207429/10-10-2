@@ -9,8 +9,8 @@ import { timeTrans } from 'infrastructure/regular-expression';
 })
 export class TimeNewStringPipe implements PipeTransform {
 
-  transform(value: any, args?: any): any { 
-    return timeTrans(Date.parse(value),'yyyy/MM/dd HH:mm:ss','/');
+  transform(value: any, args?: any): any {
+    return timeTrans(value);
   }
 
 }

@@ -592,14 +592,14 @@ export class AddFireDesignDeclareComponent implements OnInit {
 
 
         if (json.planStartTime) {
-          json.planStartTime = timeTrans(Date.parse(json.planStartTime) / 1000, 'yyyy/MM/dd', '/');
+          json.planStartTime = timeTrans(json.planStartTime);
         } else {
-          json.planStartTime = timeTrans(Date.now() / 1000, 'yyyy/MM/dd', '/');
+          json.planStartTime = timeTrans(Date.now());
         }
         if (json.planEndTime) {
-          json.planEndTime = timeTrans(Date.parse(json.planEndTime) / 1000, 'yyyy/MM/dd', '/');
+          json.planEndTime = timeTrans(json.planEndTime);
         } else {
-          json.planStartTime = timeTrans(Date.now() / 1000, 'yyyy/MM/dd', '/');
+          json.planStartTime = timeTrans(Date.now());
         }
 
 
@@ -847,8 +847,8 @@ export class AddFireDesignDeclareComponent implements OnInit {
 
     this.filterFileList();
 
-    this.data.planStartTime = !this.data.planStartTime ? '' : timeTrans(Date.parse(this.data.planStartTime) / 1000, 'yyyy/MM/dd HH:mm:ss', '/');
-    this.data.planEndTime = !this.data.planEndTime ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy/MM/dd HH:mm:ss', '/');
+    this.data.planStartTime = !this.data.planStartTime ? '' : timeTrans(this.data.planStartTime);
+    this.data.planEndTime = !this.data.planEndTime ? '' : timeTrans(this.data.planEndTime);
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 1;
     this.flowFormDto.projectTypeStatu = 0;

@@ -25,12 +25,12 @@ import { timeTrans } from 'infrastructure/regular-expression';
 @Component({
   selector: 'app-fire-acceptance',
   templateUrl: './fire-acceptance.component.html',
-  styleUrls:['./fire-acceptance.component.less']
+  styleUrls: ['./fire-acceptance.component.less']
 })
-export class FireAcceptanceComponent  extends PublicFormComponent implements OnInit {
+export class FireAcceptanceComponent extends PublicFormComponent implements OnInit {
 
-  param={
-    natureName:'',
+  param = {
+    natureName: '',
     endApplyTime: "2019-07-31 23:59:59",
     flowPathType: 2,
     maxResultCount: 10,
@@ -49,14 +49,14 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     proType:'-1',
   }
   formResultData;
-  isAddProducttyepe1=false;
+  isAddProducttyepe1 = false;
   companyName;
   record;
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     {
       title: '操作',
-      width:'230px',
+      width: '230px',
       buttons: [
         {
           text: '查看',
@@ -69,9 +69,9 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
         {
           text: '撤回申请',
           type: 'modal',
-          iif: record => (record.status === 0) ,
+          iif: record => (record.status === 0),
           click: (record: any, modal: any) => {
-            this.record=record;
+            this.record = record;
             this.withdraw();
             // this.router.navigate([`/app/engineering-management/addFireDesignDeclareComponent/0/${record.projectId}/${record.id}`]);
           },
@@ -79,7 +79,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
         {
           text: '重新申请',
           type: 'modal',
-          iif: record => record.status  === 2 && record.isResubmitted!=true,
+          iif: record => record.status === 2 && record.isResubmitted != true,
           click: (record: any, modal: any) => {
             this.router.navigate([`/app/engineering-management/addFireAcceptanceComponent/0/${record.projectId}/${record.id}`]);
           },
@@ -87,7 +87,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
         {
           text: '复查申请',
           type: 'modal',
-          iif: record => (record.status  === 3 && record.isResubmitted!=true),//当状态是3即为不合格的时候显示此按钮，若需要方便调试可自己更改status的值改变按钮显示
+          iif: record => (record.status === 3 && record.isResubmitted != true),//当状态是3即为不合格的时候显示此按钮，若需要方便调试可自己更改status的值改变按钮显示
           click: (record: any, modal: any) => {
 
             this.toreapply(record);
@@ -96,15 +96,15 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
         {
           text: '受理凭证',
           type: 'link',
-          iif: record => record.acceptAttachmentUrl!=null,
+          iif: record => record.acceptAttachmentUrl != null,
           // modal: {
           //   component: StatisticsAcceptCredentialsComponent,
           //   paramsName: 'record',
           // },
           click: (record: any, modal: any) => {
-            if(record.acceptAttachmentUrl){
+            if (record.acceptAttachmentUrl) {
               window.open(record.acceptAttachmentUrl)
-            }else{
+            } else {
               this.message.info('暂无受理凭证');
             }
           },
@@ -112,39 +112,43 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
         {
           text: '意见书',
           type: 'link',
-          iif: record => record.opinionAttachmentUrl!=null,
+          iif: record => record.opinionAttachmentUrl != null,
           // modal: {
           //   component: StatisticsPositionPaperComponent,
           //   paramsName: 'record',
           // },
           click: (record: any, modal: any) => {
-            if(record.opinionAttachmentUrl){
+            if (record.opinionAttachmentUrl) {
               window.open(record.opinionAttachmentUrl)
-            }else{
+            } else {
               this.message.info('暂无意见书');
             }
           },
         },
       ]
     },
-    { title: '消防验收申报编号', index: 'acceptanceNumber',width:'150px'},
-    { title: '工程名称', index: 'projectName',width:'150px' },
-    { title: '建设单位', index: 'companyName',width:'150px' },
-    { title: '联系人', index: 'contactPerson' ,width:'100px'},
-    { title: '当前处理环节', index: 'currentNodeName',width:'120px' },
-    { title: '流程是否超时', index: 'isExpireTime',width:'100px',format:(item:any)=>`${item.isExpireTime==true?"是":"否"}`, type: 'tag', tag: {
-      "是": { text: '是', color: 'red' },
-      "否": { text: '否', color: '' },
-    }},
-    { title: '结果', index: 'status',width:'100px',format: (item: any) => `${item.status==0?"未处理":(item.status==1?"受理":(item.status==2?"不受理":(item.status==3?"不合格":(item.status==4?"合格":(item.status==5?"未抽中":"未处理")))))}`,type: 'tag', tag: {
-      "未处理": { text: '未处理', color: '' },
-      "受理": { text: '受理', color: 'green' },
-      "不受理":{ text: '不受理', color: 'red' },
-      "不合格":{ text: '不合格', color: 'red' },
-      "合格":{ text: '合格', color: '' },
-      "未抽中":{ text: '未抽中', color: '' },
-    }},
-    { title: '操作时间', index: 'applyTime',type:'date',width:'100px' },
+    { title: '消防验收申报编号', index: 'acceptanceNumber', width: '150px' },
+    { title: '工程名称', index: 'projectName', width: '150px' },
+    { title: '建设单位', index: 'companyName', width: '150px' },
+    { title: '联系人', index: 'contactPerson', width: '100px' },
+    { title: '当前处理环节', index: 'currentNodeName', width: '120px' },
+    {
+      title: '流程是否超时', index: 'isExpireTime', width: '100px', format: (item: any) => `${item.isExpireTime == true ? "是" : "否"}`, type: 'tag', tag: {
+        "是": { text: '是', color: 'red' },
+        "否": { text: '否', color: '' },
+      }
+    },
+    {
+      title: '结果', index: 'status', width: '100px', format: (item: any) => `${item.status == 0 ? "未处理" : (item.status == 1 ? "受理" : (item.status == 2 ? "不受理" : (item.status == 3 ? "不合格" : (item.status == 4 ? "合格" : (item.status == 5 ? "未抽中" : "未处理")))))}`, type: 'tag', tag: {
+        "未处理": { text: '未处理', color: '' },
+        "受理": { text: '受理', color: 'green' },
+        "不受理": { text: '不受理', color: 'red' },
+        "不合格": { text: '不合格', color: 'red' },
+        "合格": { text: '合格', color: '' },
+        "未抽中": { text: '未抽中', color: '' },
+      }
+    },
+    { title: '操作时间', index: 'applyTime', type: 'date', width: '100px' },
   ];
 
   searchParam = new FireAuditCompleteQueryDto();
@@ -161,10 +165,10 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     private router: Router,
     private http: _HttpClient,
     private _eventEmiter: EventEmiter,
-    private _publicModel:PublicModel,
-    private EngManageService:EngManageService,
+    private _publicModel: PublicModel,
+    private EngManageService: EngManageService,
     private xlsx: XlsxService, private message: NzMessageService) {
-     super();
+    super();
 
   }
 
@@ -172,7 +176,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     this.resetTime();
     this.init()
     const _slef = this;
-    this._eventEmiter.on('fireAcceptanceComponentInit',()=>{
+    this._eventEmiter.on('fireAcceptanceComponentInit', () => {
       _slef.init();
     });
   }
@@ -185,12 +189,12 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     this.resetTime();
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
-    if(this.rangeTime.length!=0){
-    this.searchParam.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
-    this.searchParam.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
-    }else{
-      this.searchParam.startApplyTime='';
-      this.searchParam.endApplyTime ='';
+    if (this.rangeTime.length != 0) {
+      this.searchParam.startApplyTime = timeTrans(this.rangeTime[0]) + " 00:00:00";
+      this.searchParam.endApplyTime = timeTrans(this.rangeTime[1]) + " 23:59:59";
+    } else {
+      this.searchParam.startApplyTime = '';
+      this.searchParam.endApplyTime = '';
     }
     this.getList();
   }
@@ -213,13 +217,13 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
      this.resetTime();
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
-    if(this.rangeTime.length!=0){
-      this.searchParam.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
-      this.searchParam.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
-      }else{
-        this.searchParam.startApplyTime='';
-        this.searchParam.endApplyTime ='';
-      }
+    if (this.rangeTime.length != 0) {
+      this.searchParam.startApplyTime = timeTrans(this.rangeTime[0]) + " 00:00:00";
+      this.searchParam.endApplyTime = timeTrans(this.rangeTime[1]) + " 23:59:59";
+    } else {
+      this.searchParam.startApplyTime = '';
+      this.searchParam.endApplyTime = '';
+    }
     this.getList();
   }
 
@@ -244,18 +248,18 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
    */
   query() {
     this.param.page = 1;
-    this.param.projectName= this.param.projectName.trim();
+    this.param.projectName = this.param.projectName.trim();
     //this.searchParam.page = 1;
     //this.searchParam.projectName= this.searchParam.projectName.trim();
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
-    if(this.rangeTime.length!=0){
-      this.searchParam.startApplyTime=timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/')+" 00:00:00";
-      this.searchParam.endApplyTime = timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/')+" 23:59:59";
-      }else{
-        this.searchParam.startApplyTime='';
-        this.searchParam.endApplyTime ='';
-      }
+    if (this.rangeTime.length != 0) {
+      this.searchParam.startApplyTime = timeTrans(this.rangeTime[0]) + " 00:00:00";
+      this.searchParam.endApplyTime = timeTrans(this.rangeTime[1]) + " 23:59:59";
+    } else {
+      this.searchParam.startApplyTime = '';
+      this.searchParam.endApplyTime = '';
+    }
     this.getList();
   }
 
@@ -263,7 +267,8 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
   watchItem(item) {
     this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`]);
   }
-  toreapply(item) {console.log(item);
+  toreapply(item) {
+    console.log(item);
     this.router.navigate([`/app/work-matters/review-apply/${item.id}/2`]);
   }
 
@@ -283,8 +288,8 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
   /**
    * 导出
    */
-  exportXlsx(){
-    this._publicModel.exportXlsx(this.columns,this.formResultData.data);
+  exportXlsx() {
+    this._publicModel.exportXlsx(this.columns, this.formResultData.data);
   }
 
   resetTime() {
@@ -292,8 +297,8 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     startTime.setDate(startTime.getDate() - 7)
     this.rangeTime = [startTime, new Date()];
   }
-  withdraw(){
-    this.isAddProducttyepe1=true;
+  withdraw() {
+    this.isAddProducttyepe1 = true;
 
   }
 
@@ -302,15 +307,15 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     this.isAddProducttyepe1 = false;
   }
   subProducttype1(): void {
-    this.EngManageService.CancelApply({flowId:this.record.id}).subscribe(
+    this.EngManageService.CancelApply({ flowId: this.record.id }).subscribe(
       res => {
-        if(res.result.status==0){
+        if (res.result.status == 0) {
           this.message.error(res.result.message)
-        }else if(res.result.status==1){
+        } else if (res.result.status == 1) {
           this.message.success(res.result.message)
-        }else if(res.result.status==2){
+        } else if (res.result.status == 2) {
           this.message.success(res.result.message)
-        }else{
+        } else {
           this.message.error("系统发生异常！")
         }
 

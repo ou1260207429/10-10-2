@@ -78,7 +78,7 @@ export class PoliciesAndRegulationsComponent extends PublicFormComponent impleme
           text: '<font class="stButton">删除</font>', click: (record: any) => {
             this._publicModel.isDeleteModal(() => {
               this._regulationServiceProxy.post_DeleteRegulationByIdAsync(record.id).subscribe(data => {
-               this.init();
+                this.init();
               })
             });
           }
@@ -127,10 +127,10 @@ export class PoliciesAndRegulationsComponent extends PublicFormComponent impleme
     this.formResultData = [];
     this.isSearchForm = true;
     if (params.startTime) {
-      params.startTime = timeTrans(Date.parse(params.startTime) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00"
+      params.startTime = timeTrans(params.startTime) + " 00:00:00"
     }
     if (params.endTime) {
-      params.endTime = timeTrans(Date.parse(params.endTime) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59"
+      params.endTime = timeTrans(params.endTime) + " 23:59:59"
     }
     this._regulationServiceProxy.regulationListAsync(params).subscribe(data => {
       this.isSearchForm = false;

@@ -99,7 +99,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   getAreaDropdown() {
     this._homeServiceProxy.getAreaDropdown().subscribe(data => {
       this.position = classTreeChildrenArray([JSON.parse(data)]);
-      // console.log(this.position)
+
     })
   }
 
@@ -144,15 +144,12 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
       list.forEach(item => {
         this.data.engineeringNo.push(item.value);
-        if (item.AreaIds) {
-          for (var i = 0; i < item.AreaIds.length; ++i) {
-            if (item.AreaIds[i] == v) {
-              this.data.FlowTemplateSuffix = item.FlowTemplateSuffix;
-            }
-          }
-        }
 
+       
       })
+
+      this.data.FlowTemplateSuffix = list[list.length - 1].FlowTemplateSuffix;
+
     }
   }
 

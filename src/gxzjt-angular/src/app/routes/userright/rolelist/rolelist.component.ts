@@ -75,7 +75,7 @@ export class UserrightRolelistComponent implements OnInit {
       if (data.data) {
         data.data.forEach(element => {
           if (element.creationTime) {
-            element.creationTime = timeTrans(Date.parse(element.creationTime) / 1000, 'yyyy/MM/dd', '/')
+            element.creationTime = timeTrans(element.creationTime);
           }
         });
       }
@@ -144,7 +144,7 @@ export class UserrightRolelistComponent implements OnInit {
     this._userServices.getRolesName().subscribe(data => {
       if (data.result == 0) {
         this.roleList = data.data;
-        console.log(data)
+
       }
     })
   }
@@ -162,7 +162,7 @@ export class UserrightRolelistComponent implements OnInit {
     if (e.checkbox) {
       this.deleteList = [];
       e.checkbox.forEach(element => {
-        this.deleteList.push(element.id)
+        this.deleteList.push(element.id);
       });
     }
   }
