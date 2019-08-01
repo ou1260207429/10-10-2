@@ -10,11 +10,11 @@ import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, DataSourc
 import { PublicFormComponent } from '../public/public-form.component';
 
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { WorkMattersService } from '../work-matters.service'
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 import { FlowServices, WorkFlow } from 'services/flow.services';
-import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
-import { timeTrans } from 'infrastructure/regular-expression';
+import { publicPageConfig, pageOnChange, FlowPathTypeEnum, Engtype, Timetype } from 'infrastructure/expression';
+import { dateTrans } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { AppSessionService } from '@shared/session/app-session.service';
@@ -30,7 +30,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   index;
-
+  selectedValue = null;
   signForDto = new SignForDto();
   examineFormDto = new ExamineFormDto();
   workFlowData;
@@ -43,7 +43,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   columns: STColumn[] = [
     {
       title: '操作',
-      width:'200px',
+      width: '120px',
       buttons: [
         {
           text: '执行',
@@ -64,13 +64,13 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
         },
       ]
     },
-    { title: '工程名称', index: 'projectName' },
-    { title: '工程编号', index: 'projectCode' },
-    { title: '建设单位', index: 'companyName' },
-    { title: '工程类型', index: 'flowTypeName' },
+    { title: '工程名称', index: 'projectName', width: '150px' },
+    { title: '工程编号', index: 'projectCode', width: '150px' },
+    { title: '建设单位', index: 'companyName', width: '150px' },
+    { title: '工程类型', index: 'flowTypeName', width: '150px' },
     // { title: '提交人', index: 'cur_NodeAuditorName' },
-    { title: '申报时间', index: 'applyTime', type: 'date' },
-    { title: '到达时间', index: 'acceptTime', type: 'date' },
+    { title: '申报时间', index: 'applyTime', type: 'date', width: '150px' },
+    { title: '到达时间', index: 'acceptTime', type: 'date', width: '150px' },
     // {
     //   title: '流程是否超时', index: 'isExpire', type: 'tag', tag: {
     //     true: { text: '超时', color: 'red' },
@@ -78,7 +78,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     //   }
     // },
     {
-      title: '流程是否超时', index: 'isExpire', format: (item: any) => `${item.isExpire == true ? "是" : "否"}`, type: 'tag', tag: {
+      title: '流程是否超时', index: 'isExpire', width: '100px', format: (item: any) => `${item.isExpire == true ? "是" : "否"}`, type: 'tag', tag: {
         "是": { text: '是', color: 'red' },
         "否": { text: '否', color: '' },
       }
@@ -86,7 +86,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   ];
 
   searchParam: any = {
-    pagedAndFilteredInputDto:{}
+    pagedAndFilteredInputDto: {}
   };
 
   pageConfig: STPage = publicPageConfig;
@@ -94,11 +94,15 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   //类型
   flowPathTypeEnum = FlowPathTypeEnum
 
+  engtype = Engtype;
+
+  timetype = Timetype;
+
   //时间
   rangeTime
 
   //获取表单对象
-  @ViewChild('f') ngForm: FormGroup; 
+  @ViewChild('f') ngForm: FormGroup;
   constructor(private workFlowedServiceProxy: WorkFlowedServiceProxy,
     private eventEmiter: EventEmiter,
     private _flowServices: FlowServices,
@@ -106,6 +110,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     private _publicModel: PublicModel,
     private http: _HttpClient,
     private xlsx: XlsxService,
+    private WorkMattersService: WorkMattersService,
     private _activatedRoute: ActivatedRoute,
     private _examineService: ExamineServiceServiceProxy,
     public appSession: AppSessionService,
@@ -118,7 +123,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   ngOnInit() {
     this.init()
     this.resetTime();
-    let _self = this; 
+    let _self = this;
     this.eventEmiter.on('fireAcceptanceComponentInit', () => {
       _self.init();
     });
@@ -148,9 +153,11 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.searchParam.projectTypeStatu = null;
     this.searchParam.isAlreadyDone = true
     if (this.rangeTime != null) {
-      
-      this.searchParam.applyTimeStart = this.rangeTime[0];
-      this.searchParam.applyTimeEnd = this.rangeTime[1];
+
+      // this.searchParam.applyTimeStart = this.rangeTime[0];
+      // this.searchParam.applyTimeEnd = this.rangeTime[1];
+      this.searchParam.applyTimeStart = this.rangeTime[0] ? dateTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
+      this.searchParam.applyTimeEnd = this.rangeTime[1] ? dateTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
     }
     this.getList();
   }
@@ -165,8 +172,10 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.searchParam.companyName = '';
     this.searchParam.pagedAndFilteredInputDto.sorting = 'projectId desc'
     this.searchParam.projectTypeStatu = null;
-    this.searchParam.applyTimeStart = this.rangeTime[0];
-    this.searchParam.applyTimeEnd = this.rangeTime[1];
+    this.searchParam.applyTimeStart = this.rangeTime[0] ? dateTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
+    this.searchParam.applyTimeEnd = this.rangeTime[1] ? dateTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
+    this.searchParam.isExpire = null;
+    this.searchParam.orgType = null;
     this.getList();
   }
 
@@ -175,18 +184,26 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
    * @param TemplateInfoListByClassIdEntity 参数
    */
   getList() {
-    this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(this.searchParam).subscribe((data: any) => {
-      this.formResultData = data
-      console.log(this.formResultData)
-    })
+    // this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(this.searchParam).subscribe((data: any) => {
+    //   this.formResultData = data
+    //   console.log(this.formResultData)
+    // })
+    this.WorkMattersService.PendingWorkFlow_NodeAuditorRecord(this.searchParam).subscribe(
+      res => {
+        this.formResultData = res.result;
+      },
+    );
   }
 
   /**
    * 点击查询
    */
-  query() {  
-    this.searchParam.applyTimeStart = this.rangeTime[0] ? timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00":this.searchParam.applyTimeStart
-    this.searchParam.applyTimeEnd  = this.rangeTime[1] ?timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59":this.searchParam.applyTimeEnd
+  query() {
+
+    this.searchParam.projectName = this.searchParam.projectName.trim();
+
+    this.searchParam.applyTimeStart = this.rangeTime[0] ? dateTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
+    this.searchParam.applyTimeEnd = this.rangeTime[1] ? dateTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
     this.searchParam.pagedAndFilteredInputDto.page = 1;
     this.getList();
   }
@@ -216,8 +233,8 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
 
   okRangeTime(v) {
     console.log(v);
-    //const applyTimeStart:any = timeTrans(Date.parse(v[0]) / 1000, 'yyyy/MM/dd', '/')
-    //const applyTimeEnd:any = timeTrans(Date.parse(v[1]) / 1000, 'yyyy/MM/dd', '/')
+    //const applyTimeStart:any = timeTrans(v[0]) 
+    //const applyTimeEnd:any = timeTrans(v[1]) 
     this.searchParam.applyTimeStart = v[0];
     this.searchParam.applyTimeEnd = v[1];
     // console.log(applyTimeEnd);
@@ -256,11 +273,11 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
       this.message.error("请填写签收人信息");
       return;
     }
- 
+
     if (!this.ngForm.valid) {
       this.message.error("请填写正确的信息");
       return;
-    } 
+    }
 
 
     const workFlow: WorkFlow = {

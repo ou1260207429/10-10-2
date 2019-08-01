@@ -10,11 +10,11 @@ import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, DataSourc
 import { PublicFormComponent } from '../public/public-form.component';
 
 import { Router } from '@angular/router';
-
+import { WorkMattersService } from '../work-matters.service'
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 import { FlowServices } from 'services/flow.services';
-import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
-import { timeTrans } from 'infrastructure/regular-expression';
+import { publicPageConfig, pageOnChange, FlowPathTypeEnum, Engtype, Timetype } from 'infrastructure/expression';
+import { dateTrans } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { NzMessageService } from 'ng-zorro-antd';
 /**
@@ -28,60 +28,64 @@ export class AlreadyDoneComponent
   extends PublicFormComponent implements OnInit {
 
 
-    index;
+  index;
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     {
       title: '操作',
-      width:'200px',
+      width: '200px',
       buttons: [
         {
           text: '详情',
-          
+
           click: (item: any) => {
             this.watchItem(item);
           }
         },
         {
-          text: '受理凭证', iif: record => record.acceptAttachmentUrl!=null,click: (record: any) => {
-            if(record.acceptAttachmentUrl){
+          text: '受理凭证', iif: record => record.acceptAttachmentUrl != null, click: (record: any) => {
+            if (record.acceptAttachmentUrl) {
               window.open(record.acceptAttachmentUrl)
-            }else{
+            } else {
               this.message.error('暂无受理凭证');
             }
           }
         },
         {
-          text: '意见书', iif: record => record.opinionAttachmentUrl!=null,click: (record: any) => {
-            if(record.opinionAttachmentUrl){
+          text: '意见书', iif: record => record.opinionAttachmentUrl != null, click: (record: any) => {
+            if (record.opinionAttachmentUrl) {
               window.open(record.opinionAttachmentUrl)
-            }else{
+            } else {
               this.message.error('暂无意见书');
             }
           }
         },
       ]
     },
-    { title: '工程名称', index: 'projectName' },
-    { title: '工程编号', index: 'projectCode' },
-    { title: '建设单位', index: 'companyName' },
-    { title: '工程类型', index: 'flowTypeName' },
-    { title: '节点处理人', index: 'cur_NodeAuditorName' },
-    { title: '申报时间', index: 'applyTime', type: 'date' },
-    { title: '处理时间', index: 'acceptTime',type:'date'},
+    { title: '工程名称', index: 'projectName', width: '150px' },
+    { title: '工程编号', index: 'projectCode', width: '150px' },
+    { title: '建设单位', index: 'companyName', width: '150px' },
+    { title: '工程类型', index: 'flowTypeName', width: '150px' },
+    { title: '节点处理人', index: 'cur_NodeAuditorName', width: '150px' },
+    { title: '申报时间', index: 'applyTime', type: 'date', width: '150px' },
+    { title: '处理时间', index: 'acceptTime', type: 'date', width: '150px' },
     // { title: '流程是否超时', index: 'isExpire',type: 'tag', tag: {
     //   true: { text: '超时', color: 'red' },
     //   false: { text: '未超时', color: 'green' },
     // }},
-    { title: '流程是否超时', index: 'isExpire',format:(item:any)=>`${item.isExpire==true?"是":"否"}`,type: 'tag', tag: {
-      "是": { text: '是', color: 'red' },
-      "否": { text: '否', color: '' },
-    }},
+    {
+      title: '流程是否超时', index: 'isExpire', width: '120px', format: (item: any) => `${item.isExpire == true ? "是" : "否"}`, type: 'tag', tag: {
+        "是": { text: '是', color: 'red' },
+        "否": { text: '否', color: '' },
+      }
+    },
 
   ];
 
-  searchParam = new PendingWorkFlow_NodeAuditorRecordDto();
+  searchParam: any = {
+    pagedAndFilteredInputDto: {}
+  };
 
   pageConfig: STPage = publicPageConfig;
 
@@ -89,14 +93,19 @@ export class AlreadyDoneComponent
 
 
   //类型
-  flowPathTypeEnum = FlowPathTypeEnum
+  flowPathTypeEnum = FlowPathTypeEnum;
+
+  engtype = Engtype;
+
+  timetype = Timetype;
 
   //时间
   rangeTime
-  constructor(private _publicModel:PublicModel,private workFlowedServiceProxy: WorkFlowedServiceProxy,
+  constructor(private _publicModel: PublicModel, private workFlowedServiceProxy: WorkFlowedServiceProxy,
     private _flowServices: FlowServices,
     private router: Router,
     private http: _HttpClient,
+    private WorkMattersService: WorkMattersService,
     private xlsx: XlsxService, private message: NzMessageService) {
     super();
   }
@@ -109,11 +118,17 @@ export class AlreadyDoneComponent
     this.searchParam.pagedAndFilteredInputDto = new PagedAndFilteredInputDto();
     this.searchParam.pagedAndFilteredInputDto.page = 1;
     this.searchParam.pagedAndFilteredInputDto.maxResultCount = 10;
-    this.searchParam.number='';
-    this.searchParam.projectName='';
-    this.searchParam.companyName='';
-    this.searchParam.pagedAndFilteredInputDto.sorting = 'projectName desc'
-    this.searchParam.projectTypeStatu=null;
+    this.searchParam.number = '';
+    this.searchParam.projectName = '';
+    this.searchParam.companyName = '';
+    this.searchParam.pagedAndFilteredInputDto.sorting = 'projectId desc'
+    this.searchParam.projectTypeStatu = null;
+    // this.searchParam.applyTimeStart = this.rangeTime[0];
+    // this.searchParam.applyTimeEnd = this.rangeTime[1];
+    this.searchParam.applyTimeStart = this.rangeTime[0] ? dateTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
+    this.searchParam.applyTimeEnd = this.rangeTime[1] ? dateTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
+    this.searchParam.isExpire = null;
+    this.searchParam.orgType = null;
     this.getList();
   }
   reststart() {
@@ -128,6 +143,8 @@ export class AlreadyDoneComponent
     this.searchParam.projectTypeStatu = null;
     this.searchParam.applyTimeStart = this.rangeTime[0];
     this.searchParam.applyTimeEnd = this.rangeTime[1];
+    this.searchParam.isExpire = null;
+    this.searchParam.orgType = null;
     this.getList();
   }
 
@@ -136,16 +153,23 @@ export class AlreadyDoneComponent
    * @param TemplateInfoListByClassIdEntity 参数
    */
   getList() {
-    if(this.rangeTime!=null){
-      this.searchParam.applyTimeStart = this.rangeTime[0];
-      this.searchParam.applyTimeEnd = this.rangeTime[1];
-    }else{
+    if (this.rangeTime != null) {
+      // this.searchParam.applyTimeStart = this.rangeTime[0];
+      // this.searchParam.applyTimeEnd = this.rangeTime[1];
+      this.searchParam.applyTimeStart = this.rangeTime[0] ? dateTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
+      this.searchParam.applyTimeEnd = this.rangeTime[1] ? dateTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
+    } else {
       this.searchParam.applyTimeStart = null;
       this.searchParam.applyTimeEnd = null;
     }
-    this.workFlowedServiceProxy.processedWorkFlow_NodeAuditorRecord(this.searchParam).subscribe((data: any) => {
-      this.formResultData = data
-    })
+    // this.workFlowedServiceProxy.processedWorkFlow_NodeAuditorRecord(this.searchParam).subscribe((data: any) => {
+    //   this.formResultData = data
+    // })
+    this.WorkMattersService.ProcessedWorkFlow_NodeAuditorRecord(this.searchParam).subscribe(
+      res => {
+        this.formResultData = res.result;
+      },
+    );
   }
 
   /**
@@ -168,14 +192,14 @@ export class AlreadyDoneComponent
   }
 
   okRangeTime(v) {
-  
+
   }
 
   /**
    * 导出
    */
-  exportXlsx(){
-    this._publicModel.exportXlsx(this.columns,this.formResultData.data);
+  exportXlsx() {
+    this._publicModel.exportXlsx(this.columns, this.formResultData.data);
   }
 
 }

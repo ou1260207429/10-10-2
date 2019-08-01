@@ -72,7 +72,7 @@ export class UserrightPostworkComponent implements OnInit {
       if (data.data) {
         data.data.forEach(element => {
           if (element.creationTime) {
-            element.creationTime = timeTrans(Date.parse(element.creationTime) / 1000, 'yyyy/MM/dd', '/')
+            element.creationTime = timeTrans(element.creationTime);
           }
         });
       }

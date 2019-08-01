@@ -39,6 +39,12 @@ export class EngManageService {
   CancelApply(model?: any): Observable<any> {
     return this.http.post(URLConfig.getInstance().SERVER_URL + 'api/services/app/ApplyService/CancelApply', model,model);
   }
+  GetFireAuditCompleteList(model?: any): Observable<any> {
+    return this.http.post(URLConfig.getInstance().SERVER_URL + '/api/services/app/ProjectFlowServcie/Post_GetFireAuditCompleteList', model);
+  }
+  Post_ExportFireAuditCompleteList(model?: any): Observable<any> {
+    return this.http.post(URLConfig.getInstance().SERVER_URL + '/api/services/app/ProjectFlowServcie/Post_ExportFireAuditCompleteList', model);
+  }
 
 }
 

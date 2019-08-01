@@ -227,7 +227,7 @@ export class AddFireAcceptanceComponent implements OnInit {
         var jsonData = JSON.parse(data.formJson);
 
         if (jsonData.dateOfReview) {
-          jsonData.dateOfReview = timeTrans(Date.parse(jsonData.dateOfReview) / 1000, 'yyyy/MM/dd HH:mm:ss', '/');
+          jsonData.dateOfReview = timeTrans(jsonData.dateOfReview);
 
         }
 
@@ -339,7 +339,7 @@ export class AddFireAcceptanceComponent implements OnInit {
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 2;
     this.flowFormDto.projectTypeStatu = 1;
-    this.data.dateOfReview = !this.data.dateOfReview ? '' : timeTrans(Date.parse(this.data.dateOfReview) / 1000, 'yyyy/MM/dd HH:mm:ss', '/')
+    this.data.dateOfReview = !this.data.dateOfReview ? '' : timeTrans(this.data.dateOfReview);
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.savingDraft = false;
       this.flowFormDto.projectId = data;
@@ -399,7 +399,7 @@ export class AddFireAcceptanceComponent implements OnInit {
           frow_TemplateInfo_Data: {
             Area: this.data.engineeringNo[this.data.engineeringNo.length - 1]
           },
-          identify: 'xfsj',
+          identify: 'xfsj' + (this.data.FlowTemplateSuffix ? this.data.FlowTemplateSuffix : ""),
           editWorkFlow_NodeAuditorRecordDto: {
             applyEID: this._appSessionService.user.id,
             applyEName: this._appSessionService.user.eName,

@@ -25,7 +25,7 @@
         </nz-date-picker>
       </se>
       <se label="附件上传" *ngIf="operate!='1'">
-        <nz-upload style="width: 100%;" [nzFileList]="fileList" nzMultiple nzLimit="1" [nzAction]="uploadUrl"
+        <nz-upload style="width: 100%;" [nzFileList]="fileList" nzMultiple   [nzAction]="uploadUrl"
           [nzBeforeUpload]="beforeUpload" [nzRemove]="removeFile">
           <button style="width: 100%;" nz-button><i nz-icon type="upload" nzTheme="outline"></i><span>上传</span></button>
         </nz-upload>

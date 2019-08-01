@@ -111,7 +111,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
         id: data.id,
         content: data.content,
         guid: data.guid,
-        issueDate: this.data.issueDate ? timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy/MM/dd HH:mm:ss', '/') : '',
+        issueDate: this.data.issueDate ? timeTrans(this.data.issueDate) : '',
         issueOrg: data.issueOrg,
         regulationCode: data.regulationCode,
         regulationTypeId: data.regulationTypeId,
@@ -143,7 +143,7 @@ export class PoliciesAndRegulationsDetailsComponent implements OnInit {
       this.data.regulationId = this.id;
     }
     if (this.data.issueDate) {
-      this.data.issueDate = new Date(timeTrans(Date.parse(this.data.issueDate) / 1000, 'yyyy/MM/dd HH:mm:ss', '/'))
+      this.data.issueDate = new Date(timeTrans(this.data.issueDate));
     }
     this.data.content = new Buffer(this.editContent).toString('base64');
     const src = this.operate == 0 ? this._regulationServiceProxy.addRegulationAsync(this.data) : this._regulationServiceProxy.editRegulationAsync(this.data)

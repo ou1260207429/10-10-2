@@ -390,7 +390,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         ,
 
       },
-      filingTime: timeTrans(getTimestamp(), 'yyyy/MM/dd', '/'),
+      filingTime: timeTrans(getTimestamp()),
       luckNo: '',
     },
     engineerinDescription: '',
@@ -483,9 +483,10 @@ export class AddCompletedAcceptanceComponent implements OnInit {
           json.acceptanceOpinions.designUnit = convertToArray(json.acceptanceOpinions.designUnit);
 
 
-          json.planEndTime = timeTrans(Date.parse(json.planEndTime) / 1000, 'yyyy/MM/dd HH:mm:ss', '/');
+          json.planEndTime = timeTrans(json.planEndTime);
 
-          json.acceptanceOpinions.filingTime = timeTrans(Date.parse(json.acceptanceOpinions.filingTime) / 1000, 'yyyy/MM/dd HH:mm:ss', '/');
+          json.acceptanceOpinions.filingTime = timeTrans(json.acceptanceOpinions.filingTime);
+
 
           json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
           json.applyName = json.applyName ? json.applyName : ''
@@ -592,9 +593,9 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
     this.filterFileList();
 
-    this.data.planEndTime = !this.data.planEndTime ? '' : timeTrans(Date.parse(this.data.planEndTime) / 1000, 'yyyy/MM/dd HH:mm:ss', '/');
+    this.data.planEndTime = !this.data.planEndTime ? '' : timeTrans(this.data.planEndTime);
 
-    this.data.acceptanceOpinions.filingTime = !this.data.acceptanceOpinions.filingTime ? '' : timeTrans(Date.parse(this.data.acceptanceOpinions.filingTime) / 1000, 'yyyy/MM/dd HH:mm:ss', '/');
+    this.data.acceptanceOpinions.filingTime = !this.data.acceptanceOpinions.filingTime ? '' : timeTrans(this.data.acceptanceOpinions.filingTime);
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 3;
     this.flowFormDto.projectTypeStatu = 2;
@@ -641,7 +642,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       frow_TemplateInfo_Data: {
         Area: this.data.engineeringNo[this.data.engineeringNo.length - 1]
       },
-      identify: 'xfsj',
+      identify: 'xfsj' + (this.data.FlowTemplateSuffix ? this.data.FlowTemplateSuffix : ""),
       editWorkFlow_NodeAuditorRecordDto: {
         applyEID: this._appSessionService.user.id,
         applyEName: this._appSessionService.user.eName,

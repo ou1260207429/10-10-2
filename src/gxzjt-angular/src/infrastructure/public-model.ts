@@ -44,14 +44,20 @@ export class PublicModel {
    * @param positionValue 选中的值 ：数组
    * @param list 返回的值
    */
-  positionTreeArray(arr: Array<any>, arrType: string, positionValue: Array<any>, list: Array<any>): Array<any> { 
+  positionTreeArray(arr: Array<any>, arrType: string, positionValue: Array<any>, list: Array<any>): Array<any> {
     for (let index = 0; index < positionValue.length; index++) {
       this.positionIndex = checkArrayString(arr, arrType, positionValue[index])
       if (this.positionIndex == -1) {
         this.positionIndex = 0
         break
       } else {
-        list.push({ label: arr[this.positionIndex].label, value: arr[this.positionIndex].value, id: arr[this.positionIndex].ID })
+        list.push({
+          label: arr[this.positionIndex].label,
+          value: arr[this.positionIndex].value,
+          id: arr[this.positionIndex].ID,
+          AreaIds: arr[this.positionIndex].AreaIds,
+          FlowTemplateSuffix: arr[this.positionIndex].FlowTemplateSuffix
+        });
         if (arr[this.positionIndex].children && arr[this.positionIndex].children.length > 0) {
           positionValue.splice(index, 1)
           this.positionTreeArray(arr[this.positionIndex].children, arrType, positionValue, list)

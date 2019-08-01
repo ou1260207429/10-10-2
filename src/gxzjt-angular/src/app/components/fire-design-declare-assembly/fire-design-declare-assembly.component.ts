@@ -125,8 +125,10 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     this.data.engineeringNo = []
     if (list.length > 0) {
       list.forEach(item => {
-        this.data.engineeringNo.push(item.value)
-      })
+        this.data.engineeringNo.push(item.value);
+
+      });
+      this.data.FlowTemplateSuffix = list[list.length - 1].FlowTemplateSuffix;
     }
 
   }
@@ -227,19 +229,23 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     formData.append('files', filePost);
 
 
-    const index = this.uploadIndex;
 
     return this._publicServices.newUpload(formData, params).subscribe(data => {
 
 
       item.onSuccess!({}, item.file!, event);
-      var list = this.data.fileList[index].array;
 
-      // var file = list.length - 1 >= 0 ? list[list.length - 1] : list[0];
-      var file = indexOfFileByName(list, item.file.name);
+      var file = null;
+      for (var i = this.data.fileList.length - 1; i >= 0; --i) {
+        var list = this.data.fileList[i].array;
+        file = indexOfFileByName(list, item.file.name);
+        if (file) {
+          break;
+        }
+      }
 
-      if (!file) {
-        item.onError!('上传失败，多次尝试无效请联系系统客服（请注意文件不能超过200M）', item.file!);
+      if (file == null) {
+        item.onError!('无法找到文件', item.file!);
         return;
       }
 
