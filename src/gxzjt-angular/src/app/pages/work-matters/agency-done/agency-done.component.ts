@@ -10,10 +10,10 @@ import { WorkFlowedServiceProxy, PendingWorkFlow_NodeAuditorRecordDto, DataSourc
 import { PublicFormComponent } from '../public/public-form.component';
 
 import { Router, ActivatedRoute } from '@angular/router';
-
+import {WorkMattersService} from '../work-matters.service'
 import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
 import { FlowServices, WorkFlow } from 'services/flow.services';
-import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
+import { publicPageConfig, pageOnChange, FlowPathTypeEnum, Engtype, Timetype } from 'infrastructure/expression';
 import { timeTrans } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { EventEmiter } from 'infrastructure/eventEmiter';
@@ -30,7 +30,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   index;
-
+  selectedValue=null;
   signForDto = new SignForDto();
   examineFormDto = new ExamineFormDto();
   workFlowData;
@@ -94,6 +94,10 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   //类型
   flowPathTypeEnum = FlowPathTypeEnum
 
+  engtype = Engtype;
+
+  timetype=Timetype;
+
   //时间
   rangeTime
 
@@ -106,6 +110,7 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     private _publicModel: PublicModel,
     private http: _HttpClient,
     private xlsx: XlsxService,
+    private WorkMattersService:WorkMattersService,
     private _activatedRoute: ActivatedRoute,
     private _examineService: ExamineServiceServiceProxy,
     public appSession: AppSessionService,
@@ -149,8 +154,10 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.searchParam.isAlreadyDone = true
     if (this.rangeTime != null) {
 
-      this.searchParam.applyTimeStart = this.rangeTime[0];
-      this.searchParam.applyTimeEnd = this.rangeTime[1];
+      // this.searchParam.applyTimeStart = this.rangeTime[0];
+      // this.searchParam.applyTimeEnd = this.rangeTime[1];
+      this.searchParam.applyTimeStart = this.rangeTime[0] ? timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00":this.searchParam.applyTimeStart
+      this.searchParam.applyTimeEnd  = this.rangeTime[1] ?timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59":this.searchParam.applyTimeEnd
     }
     this.getList();
   }
@@ -165,8 +172,10 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.searchParam.companyName = '';
     this.searchParam.pagedAndFilteredInputDto.sorting = 'projectId desc'
     this.searchParam.projectTypeStatu = null;
-    this.searchParam.applyTimeStart = this.rangeTime[0];
-    this.searchParam.applyTimeEnd = this.rangeTime[1];
+    this.searchParam.applyTimeStart = this.rangeTime[0] ? timeTrans(Date.parse(this.rangeTime[0]) / 1000, 'yyyy/MM/dd', '/') + " 00:00:00":this.searchParam.applyTimeStart
+      this.searchParam.applyTimeEnd  = this.rangeTime[1] ?timeTrans(Date.parse(this.rangeTime[1]) / 1000, 'yyyy/MM/dd', '/') + " 23:59:59":this.searchParam.applyTimeEnd
+    this.searchParam.isExpire=null;
+    this.searchParam.orgType=null;
     this.getList();
   }
 
@@ -175,10 +184,15 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
    * @param TemplateInfoListByClassIdEntity 参数
    */
   getList() {
-    this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(this.searchParam).subscribe((data: any) => {
-      this.formResultData = data
-      console.log(this.formResultData)
-    })
+    // this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(this.searchParam).subscribe((data: any) => {
+    //   this.formResultData = data
+    //   console.log(this.formResultData)
+    // })
+      this.WorkMattersService.PendingWorkFlow_NodeAuditorRecord(this.searchParam).subscribe(
+        res => {
+          this.formResultData = res.result;
+        },
+      );
   }
 
   /**
