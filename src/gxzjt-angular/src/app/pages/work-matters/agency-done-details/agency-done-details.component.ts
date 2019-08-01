@@ -418,7 +418,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
 
     this.butNzLoading = true
-    if (!bo && this.curNodeName == '业务审批负责人审批') {
+    //if (!bo && this.curNodeName == '业务审批负责人审批') {
+      if (!bo && this.curNodeName != '大厅受理' && this.curNodeName!='业务承办人审核') {
       // this.noResult((data) => {
       this.tenantWorkFlowInstanceDto.backAuditedNode = {
         nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
@@ -494,11 +495,12 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
 
           //按钮名字是通过 或者不通过
-          case '业务审批负责人审批':
-            this.finalExamine(this.examineFormDto);
-            break;
+          // case '业务审批负责人审批':
+          //   this.finalExamine(this.examineFormDto);
+          //   break;
 
           default:
+            this.finalExamine(this.examineFormDto);
             break;
         }
 
