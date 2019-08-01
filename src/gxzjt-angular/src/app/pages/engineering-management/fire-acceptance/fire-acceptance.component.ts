@@ -42,9 +42,9 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     recordNumber: '',
     projectName:'',
     companyName:'',
-    currentNodeName: '-1',
-    isExpire: false,
-    isSelected: false,
+    currentNodeName: '',
+    isExpire: null,
+    isSelected: null,
     skipCount: 0,
     proType:'-1',
   }
@@ -199,9 +199,9 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
      this.param.natureName = '';
      this.param.projectName = '';
      this.param.companyName='';
-     this.param.currentNodeName= "";
-     this.param.isExpire = false;
-     this.param.isSelected = false;
+     this.param.currentNodeName= '';
+     this.param.isExpire = null;
+     this.param.isSelected = null;
      this.param.skipCount = 0;
      this.param.recordNumber = '';
      this.param.status = '-1',
