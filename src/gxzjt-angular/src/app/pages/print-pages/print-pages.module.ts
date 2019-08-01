@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 
 
 import { PrintPagesRoutingModule } from './print-pages-routing.module';
-import { AgencyDoneDetailsPrintComponent } from './agency-done-details-print/agency-done-details-print.component';
 import { ComponentsModule } from '@app/components/components.module';
 import { SharedModule } from '@shared/shared.module';
 import { WorkMattersService } from './work-matters.service';
@@ -11,7 +10,6 @@ import { PipesModule } from 'pipes/pipes.module';
 import { DelonCacheModule } from '@delon/cache';
 
 const COMPONENTS_NOROUNT = [
-  AgencyDoneDetailsPrintComponent,
   FiewDesignDeclarePrintComponent
 ];
 @NgModule({
