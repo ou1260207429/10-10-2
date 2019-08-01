@@ -539,6 +539,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this._examineService.finalExamine(examineFormDto).subscribe(data => {
       this.serveResult();
     }, error => {
+      this.butNzLoading = false;
       this.isNoResult(error.error.error.message)
     })
   }

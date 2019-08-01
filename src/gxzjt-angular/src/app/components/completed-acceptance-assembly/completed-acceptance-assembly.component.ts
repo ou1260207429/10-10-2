@@ -134,12 +134,24 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   changeCitycountyAndDistrict(v) {
 
     this.data.engineeringCitycountyAndDistrict = v;
-    const t = lodash.cloneDeep(v)
-    const list = this.publicModel.positionTreeArray(this.engineeringList, 'areaIds', t, [])
-    this.data.engineeringNo = []
+    const t = lodash.cloneDeep(v);
+    const list = this.publicModel.positionTreeArray(this.engineeringList, 'areaIds', t, []);
+
+
+
+    this.data.engineeringNo = [];
     if (list.length > 0) {
+
       list.forEach(item => {
-        this.data.engineeringNo.push(item.value)
+        this.data.engineeringNo.push(item.value);
+        if (item.AreaIds) {
+          for (var i = 0; i < item.AreaIds.length; ++i) {
+            if (item.AreaIds[i] == v) {
+              this.data.FlowTemplateSuffix = item.FlowTemplateSuffix;
+            }
+          }
+        }
+
       })
     }
   }

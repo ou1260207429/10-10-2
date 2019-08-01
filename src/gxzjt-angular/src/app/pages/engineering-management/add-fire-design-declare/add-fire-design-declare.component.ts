@@ -593,16 +593,16 @@ export class AddFireDesignDeclareComponent implements OnInit {
 
         if (json.planStartTime) {
           json.planStartTime = timeTrans(Date.parse(json.planStartTime) / 1000, 'yyyy/MM/dd', '/');
-        }else{
+        } else {
           json.planStartTime = timeTrans(Date.now() / 1000, 'yyyy/MM/dd', '/');
         }
         if (json.planEndTime) {
           json.planEndTime = timeTrans(Date.parse(json.planEndTime) / 1000, 'yyyy/MM/dd', '/');
-        }else{
+        } else {
           json.planStartTime = timeTrans(Date.now() / 1000, 'yyyy/MM/dd', '/');
         }
-        
-        
+
+
 
         if (json.mappingUnit.no instanceof String) {
           json.mappingUnit.no = [{ noValue: json.mappingUnit.no }];
@@ -703,7 +703,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
           Area: this.data.engineeringNo[this.data.engineeringNo.length - 1]
         },
         //'xfsj,''xfys,'jgys  流程分类  英文简写(消防设计,消防验收,竣工验收)
-        identify: 'xfsj',
+        identify: 'xfsj' + this.data.FlowTemplateSuffix ? this.data.FlowTemplateSuffix : "",
 
         //登录的用户的id  名字  部门id  部门路径
         editWorkFlow_NodeAuditorRecordDto: {
