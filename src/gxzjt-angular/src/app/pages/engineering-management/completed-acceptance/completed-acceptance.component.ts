@@ -46,7 +46,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     isSelected: false,
     skipCount: 0,
     natureName:'',
-    proType:null
+    proType:'',
   }
 
   formResultData;
@@ -200,7 +200,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.getList();
   }
   reststart(){
-    this.param.proType = null;
+    this.param.proType = '';
     this.param.natureName = '';
     this.param.projectName = '';
     this.param.companyName='';
@@ -238,7 +238,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
       console.log(this.formResultData)
     })*/
     this.EngManageService.GetFireAuditCompleteList(this.param).subscribe(
-      res => {        
+      res => {
         this.formResultData = res.result
       },
     );

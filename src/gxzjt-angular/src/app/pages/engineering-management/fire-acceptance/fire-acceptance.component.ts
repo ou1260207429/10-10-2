@@ -46,7 +46,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     isExpire: false,
     isSelected: false,
     skipCount: 0,
-    proType:null,
+    proType:'',
   }
   formResultData;
   isAddProducttyepe1=false;
@@ -195,7 +195,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
     this.getList();
   }
   reststart(){
-     this.param.proType = null;
+     this.param.proType = '';
      this.param.natureName = '';
      this.param.projectName = '';
      this.param.companyName='';
@@ -233,7 +233,7 @@ export class FireAcceptanceComponent  extends PublicFormComponent implements OnI
       console.log(this.formResultData)
     })*/
     this.EngManageService.GetFireAuditCompleteList(this.param).subscribe(
-      res => {        
+      res => {
         this.formResultData = res.result
       },
     );

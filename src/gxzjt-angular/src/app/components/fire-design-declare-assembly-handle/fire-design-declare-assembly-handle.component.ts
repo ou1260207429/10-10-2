@@ -76,9 +76,7 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
   }
 
 
-  // test(){
-  //   console.log(this.examineFormDto.content);
-  // }
+
   /**
    * 选择市县区
    * @param v 

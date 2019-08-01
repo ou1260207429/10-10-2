@@ -40,7 +40,7 @@ export class CompletedAcceptanceAssemblyHandleComponent implements OnInit {
   @Output() private childOuter = new EventEmitter();
 
 
-  @Input() examineFormDto: ExamineFormDto
+  @Input() examineFormDto: ExamineFormDto;
 
 
   constructor(public _publicServices: PublicServices, public publicModel: PublicModel, ) { }
