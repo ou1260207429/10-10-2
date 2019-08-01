@@ -32,21 +32,21 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
   param = {
     natureName: '',
     endApplyTime: "2019-07-31 23:59:59",
-    flowPathType: 1,
+    flowPathType: 2,
     maxResultCount: 10,
-    orgType: -1,
+    orgType: '-1',
     page: 1,
     sorting: "projectId desc",
     startApplyTime: "2019-07-24 00:00:00",
-    status: -1,
+    status:'-1',
     recordNumber: '',
-    projectName: '',
-    companyName: '',
-    currentNodeName: "",
+    projectName:'',
+    companyName:'',
+    currentNodeName: '-1',
     isExpire: false,
     isSelected: false,
     skipCount: 0,
-    proType: '',
+    proType:'-1',
   }
   formResultData;
   isAddProducttyepe1 = false;
@@ -198,23 +198,23 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
     }
     this.getList();
   }
-  reststart() {
-    this.param.proType = '';
-    this.param.natureName = '';
-    this.param.projectName = '';
-    this.param.companyName = '';
-    this.param.currentNodeName = "";
-    this.param.isExpire = false;
-    this.param.isSelected = false;
-    this.param.skipCount = 0;
-    this.param.recordNumber = '';
-    this.param.status = -1,
-      this.param.orgType = -1;
-    this.param.page = 1;
-    this.param.maxResultCount = 10;
-    this.param.flowPathType = 1;
-    this.param.sorting = 'projectId desc';
-    this.resetTime();
+  reststart(){
+     this.param.proType = '-1';
+     this.param.natureName = '';
+     this.param.projectName = '';
+     this.param.companyName='';
+     this.param.currentNodeName= "";
+     this.param.isExpire = false;
+     this.param.isSelected = false;
+     this.param.skipCount = 0;
+     this.param.recordNumber = '';
+     this.param.status = '-1',
+     this.param.orgType = '-1';
+     this.param.page = 1;
+     this.param.maxResultCount = 10;
+     this.param.flowPathType = 2;
+     this.param.sorting = 'projectId desc';
+     this.resetTime();
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if (this.rangeTime.length != 0) {

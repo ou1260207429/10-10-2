@@ -20,12 +20,18 @@ export class WorkMattersAllDoneComponent implements OnInit {
   selectedcity;//存市
   countyarray;//存县数组
   data;
+  url;//导出地址
+
   param = {
+<<<<<<< HEAD
     drawName: null,
     detectionName: null,
     supervisorName: null,
     designName: null,
     workName: null,
+=======
+
+>>>>>>> 9d06ffa4a976f2014c20223f2165ae2a0bde96d4
     cityName: null,
     startApplyTime: null,
     endApplyTime: null,
@@ -136,11 +142,14 @@ export class WorkMattersAllDoneComponent implements OnInit {
       dateRange: [this.rangeTime],
       sbdateRange: [null],
       status: [null],
+<<<<<<< HEAD
       workName: [null],
       designName: [null],
       supervisorName: [null],
       detectionName: [null],
       drawName: [null],
+=======
+>>>>>>> 9d06ffa4a976f2014c20223f2165ae2a0bde96d4
     });
     this.GetHandlingMatters()
   }
@@ -209,31 +218,31 @@ export class WorkMattersAllDoneComponent implements OnInit {
     } else {
       this.param.cityName = null
     }
-    if (this.fliterForm.controls.workName.value) {
-      this.param.workName = this.fliterForm.controls.workName.value;
-    } else {
-      this.param.workName = null
-    }
-    if (this.fliterForm.controls.designName.value) {
-      this.param.designName = this.fliterForm.controls.designName.value;
-    } else {
-      this.param.designName = null
-    }
-    if (this.fliterForm.controls.supervisorName.value) {
-      this.param.supervisorName = this.fliterForm.controls.supervisorName.value;
-    } else {
-      this.param.supervisorName = null
-    }
-    if (this.fliterForm.controls.detectionName.value) {
-      this.param.detectionName = this.fliterForm.controls.detectionName.value;
-    } else {
-      this.param.detectionName = null
-    }
-    if (this.fliterForm.controls.drawName.value) {
-      this.param.drawName = this.fliterForm.controls.drawName.value;
-    } else {
-      this.param.drawName = null
-    }
+    // if (this.fliterForm.controls.workName.value) {
+    //   this.param.workName = this.fliterForm.controls.workName.value;
+    // } else {
+    //   this.param.workName = null
+    // }
+    // if (this.fliterForm.controls.designName.value) {
+    //   this.param.designName = this.fliterForm.controls.designName.value;
+    // } else {
+    //   this.param.designName = null
+    // }
+    // if (this.fliterForm.controls.supervisorName.value) {
+    //   this.param.supervisorName = this.fliterForm.controls.supervisorName.value;
+    // } else {
+    //   this.param.supervisorName = null
+    // }
+    // if (this.fliterForm.controls.detectionName.value) {
+    //   this.param.detectionName = this.fliterForm.controls.detectionName.value;
+    // } else {
+    //   this.param.detectionName = null
+    // }
+    // if (this.fliterForm.controls.drawName.value) {
+    //   this.param.drawName = this.fliterForm.controls.drawName.value;
+    // } else {
+    //   this.param.drawName = null
+    // }
     if (this.fliterForm.controls.count.value) {
       this.param.regionAndCountyName = this.fliterForm.controls.count.value;
     } else {
@@ -328,6 +337,96 @@ export class WorkMattersAllDoneComponent implements OnInit {
     }
     this.param.page = v.pi;
     this.GetHandlingMatters();
+  }
+  export() {
+    this.param.page = 1;
+    if (this.fliterForm.controls.city.value) {
+      this.param.cityName = this.fliterForm.controls.city.value;
+    } else {
+      this.param.cityName = null
+    }
+    // if (this.fliterForm.controls.workName.value) {
+    //   this.param.workName = this.fliterForm.controls.workName.value;
+    // } else {
+    //   this.param.workName = null
+    // }
+    // if (this.fliterForm.controls.designName.value) {
+    //   this.param.designName = this.fliterForm.controls.designName.value;
+    // } else {
+    //   this.param.designName = null
+    // }
+    // if (this.fliterForm.controls.supervisorName.value) {
+    //   this.param.supervisorName = this.fliterForm.controls.supervisorName.value;
+    // } else {
+    //   this.param.supervisorName = null
+    // }
+    // if (this.fliterForm.controls.detectionName.value) {
+    //   this.param.detectionName = this.fliterForm.controls.detectionName.value;
+    // } else {
+    //   this.param.detectionName = null
+    // }
+    // if (this.fliterForm.controls.drawName.value) {
+    //   this.param.drawName = this.fliterForm.controls.drawName.value;
+    // } else {
+    //   this.param.drawName = null
+    // }
+    if (this.fliterForm.controls.count.value) {
+      this.param.regionAndCountyName = this.fliterForm.controls.count.value;
+    } else {
+      this.param.regionAndCountyName = null
+    }
+    if (this.fliterForm.controls.proName.value) {
+      this.param.projectName = this.fliterForm.controls.proName.value;
+    } else {
+      this.param.projectName = null
+    }
+    if (this.fliterForm.controls.proType.value) {
+      this.param.flowPathType = this.fliterForm.controls.proType.value;
+    } else {
+      this.param.flowPathType = null
+    }
+
+    if (this.fliterForm.controls.buildname.value) {
+      this.param.companyName = this.fliterForm.controls.buildname.value;
+    } else {
+      this.param.companyName = null
+    }
+    if (this.fliterForm.controls.timetype.value) {
+      this.param.isExpire = this.fliterForm.controls.timetype.value;
+    } else {
+      this.param.isExpire = null
+    }
+    if (this.fliterForm.controls.status.value) {
+      this.param.status = this.fliterForm.controls.status.value;
+    } else {
+      this.param.status = null
+    }
+    if (this.fliterForm.controls.dateRange.value.length != 0) {
+
+      this.param.startApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[0]) + " 00:00:00";
+      this.param.endApplyTime = timeTrans(this.fliterForm.controls.dateRange.value[1]) + " 23:59:59";
+    } else {
+      this.param.startApplyTime = '';
+      this.param.endApplyTime = '';
+    }
+    if (this.fliterForm.controls.sbdateRange.value) {
+
+      this.param.startTime = timeTrans(this.fliterForm.controls.sbdateRange.value[0]) + " 00:00:00";
+      this.param.endTime = timeTrans(this.fliterForm.controls.sbdateRange.value[1]) + " 23:59:59";
+    } else {
+      this.param.startTime = null;
+      this.param.endTime = null;
+    }
+    this.WorkMattersService.ExportHandlingMatters(this.param).subscribe(
+      res => {
+        this.url = res.result;
+        window.open(this.url)
+
+      },
+    );
+
+
+
   }
 
 }
