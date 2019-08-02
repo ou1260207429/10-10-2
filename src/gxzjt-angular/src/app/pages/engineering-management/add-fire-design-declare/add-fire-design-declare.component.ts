@@ -591,17 +591,12 @@ export class AddFireDesignDeclareComponent implements OnInit {
         var json = JSON.parse(data.formJson);
 
 
-        if (json.planStartTime) {
+        if (json.planStartTime && json.planStartTime != "") {
           json.planStartTime = timeTrans(json.planStartTime);
-        } else {
-          json.planStartTime = timeTrans(Date.now());
         }
-        if (json.planEndTime) {
+        if (json.planEndTime && json.planEndTime != "") {
           json.planEndTime = timeTrans(json.planEndTime);
-        } else {
-          json.planStartTime = timeTrans(Date.now());
         }
-
 
 
         if (json.mappingUnit.no instanceof String) {
