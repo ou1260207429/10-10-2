@@ -40,11 +40,11 @@ export class CompletedAcceptancePrintComponent implements OnInit {
 
   ngAfterViewInit() {
 
-    // setTimeout(() => {
-    //   window.print();
-    //   history.go(-1);
+    setTimeout(() => {
+      window.print();
+      history.go(-1);
 
-    // }, 100)
+    }, 100)
 
   }
 }

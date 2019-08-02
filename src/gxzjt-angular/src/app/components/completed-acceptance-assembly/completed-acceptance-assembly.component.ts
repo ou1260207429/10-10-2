@@ -94,6 +94,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     }
   }
   ngAfterViewInit(): void {
+    console.log(this.data)
     this.printOuter.emit(this.printData);
   }
    /**
