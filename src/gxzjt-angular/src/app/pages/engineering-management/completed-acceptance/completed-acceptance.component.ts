@@ -196,7 +196,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.resetTime();
     this.param.page = 1;
     this.param.maxResultCount = 10;
-    this.param.flowPathType = 3
+    //this.param.flowPathType = 3
     this.param.sorting = 'projectId desc';
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
