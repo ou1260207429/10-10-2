@@ -59,12 +59,18 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
       var date = new Date();
       var dateStr = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + "日";
 
+
+      var descr = this.examineFormDto.descr;
+      if (descr && descr.substring(descr.length - 1, descr.length) == "。") {
+        descr = descr.substring(0, descr.length - 1);
+      }
+
       this.examineFormDto.content =
         `    你单位报来`
         + this.data.projectName + `建设工程消防验收资料收悉（受理凭证：`
         + this.examineFormDto.acceptFileCode + `）。该工程位于`
         + this.data.address + `，`
-        + this.examineFormDto.descr + `。`
+        + descr + `。`
         + dateStr + `,`
         + this.data.orgName + `组织你单位及设计、施工、监理、检测等单位有关人员对该工程进行了消防验收。`
         + `经对验收资料、消防设施技术检测报告进行审查，`
