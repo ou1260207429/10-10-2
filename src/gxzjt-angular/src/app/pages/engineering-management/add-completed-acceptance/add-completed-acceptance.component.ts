@@ -390,7 +390,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         ,
 
       },
-      filingTime: timeTrans(getTimestamp()),
+      filingTime: "",
       luckNo: '',
     },
     engineerinDescription: '',
