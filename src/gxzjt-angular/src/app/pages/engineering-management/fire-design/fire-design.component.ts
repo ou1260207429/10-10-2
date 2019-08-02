@@ -206,7 +206,7 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
 
   init() {
     this.param.maxResultCount = 10;
-    this.param.flowPathType = 1
+    //this.param.flowPathType = 1
     this.param.sorting = 'projectId desc';
 
     this.resetTime();
