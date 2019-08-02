@@ -423,7 +423,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
       // this.noResult((data) => {
       this.tenantWorkFlowInstanceDto.backAuditedNode = {
         nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
-        nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName
+        nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName,
+
       }
       this._flowServices.tenant_NodeToNextNodeByNoPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
         this.butNzLoading = false;
@@ -687,7 +688,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
     this.tenantWorkFlowInstanceDto.backAuditedNode = {
       nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
-      nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName
+      nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName,
+      details : this.nodeAdvise,
     }
     this._flowServices.tenant_NodeToNextNodeByNoPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
       this.butNzLoading = false;
