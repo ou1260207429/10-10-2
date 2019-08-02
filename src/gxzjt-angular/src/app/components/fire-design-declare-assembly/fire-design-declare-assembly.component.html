@@ -1,4 +1,4 @@
-<form nz-form #f="ngForm" class="formTables" se-container="1" labelWidth="0"
+<form nz-form #f="ngForm" class="formTables" se-container="1" labelWidth="0" firstVisual
   style="padding: 0 20px;box-sizing: border-box;">
   <div nz-row *ngIf="data">
     <table class="tables" style="box-sizing: border-box;">
@@ -85,6 +85,10 @@
                 required>
               </nz-cascader>
             </se>
+            <p style="color: #f5222d;text-align: center;;"
+              *ngIf="!data.engineeringNo||data.engineeringNo.length==0">
+              必填
+            </p>
           </td>
         </tr>
 
@@ -121,7 +125,8 @@
               <label nz-radio nzValue="4">建筑保温</label>
               <label nz-radio nzValue="5">改变用途</label>
             </nz-radio-group>)
-            <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="errorData.projectCategoryId">
+            <p style="color: #f5222d;text-align: center;;"
+              *ngIf="errorData.projectCategoryId||data.projectCategoryId==''">
               必填
             </p>
           </td>
@@ -336,7 +341,8 @@
           </td>
           <td colspan='2' class="fontweight fontLeft leftTitle" style="width: 110px;">特殊建设工程:</td>
           <td colspan="15" style="text-align: left;">
-            <span style="color: #f5222d;text-align: center;font-weight: bold" *ngIf="errorData.specialEngineering">
+            <span style="color: #f5222d;text-align: center;"
+              *ngIf="errorData.specialEngineering||data.specialEngineering.value==''">
               必填
             </span>
             <div *ngFor="let item of data.specialEngineering.listArr let index=index"
@@ -599,7 +605,8 @@
             (ngModelChange)="changeValue($event,'fireFightingFacilities')"
             *ngFor="let box of data.fireFightingFacilities;let i = index" required
             [(ngModel)]="box.value">{{box.label}}</label>
-          <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="errorData.fireFightingFacilities">
+          <p style="color: #f5222d;text-align: center;;"
+            *ngIf="errorData.fireFightingFacilities||errorData.fireFightingFacilities==''">
             必填
           </p>
         </td>
@@ -611,7 +618,7 @@
         <td rowspan='1' colspan='14' class="textLeft">
           <div>
             1、建设工程消防设计审查申报表（纸质申报表的图片）
-            <nz-upload  [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" [nzRemove]="removeFile"
+            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" [nzRemove]="removeFile"
               (click)="handleChange(0)">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -619,7 +626,7 @@
 
           <div>
             2、消防设计文件
-            <nz-upload  [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)"
+            <nz-upload [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)"
               [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -627,7 +634,7 @@
 
           <div>
             3、专家评审申报材料
-            <nz-upload  [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)"
+            <nz-upload [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)"
               [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -635,7 +642,7 @@
 
           <div>
             4、建设工程规划许可证明文件
-            <nz-upload  [(nzFileList)]="data.fileList[3].array" [nzCustomRequest]="customReq" (click)="handleChange(3)"
+            <nz-upload [(nzFileList)]="data.fileList[3].array" [nzCustomRequest]="customReq" (click)="handleChange(3)"
               [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -643,7 +650,7 @@
 
           <div>
             5、城乡规划主管部门批准的临时性建筑证明文件
-            <nz-upload  [(nzFileList)]="data.fileList[4].array" [nzCustomRequest]="customReq" (click)="handleChange(4)"
+            <nz-upload [(nzFileList)]="data.fileList[4].array" [nzCustomRequest]="customReq" (click)="handleChange(4)"
               [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -651,14 +658,14 @@
 
           <div>
             6、生产工艺和物品有特殊灭火要求的消防设计说明材料
-            <nz-upload  [(nzFileList)]="data.fileList[5].array" [nzCustomRequest]="customReq" (click)="handleChange(5)"
+            <nz-upload [(nzFileList)]="data.fileList[5].array" [nzCustomRequest]="customReq" (click)="handleChange(5)"
               [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
         </td>
       </tr>
-      <tr >
+      <tr>
         <td colspan='3' rowspan="1" class="fontweight fontLeft leftTitle"
           style="width: 36px;height: 200px;background-color: #f8f8f8;text-align: center;" required=true>工程简要说明</td>
         <td rowspan='1' colspan='14' class="textLeft" style="min-height: 200px;">
