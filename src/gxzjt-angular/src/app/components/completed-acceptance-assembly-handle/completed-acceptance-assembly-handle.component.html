@@ -137,7 +137,7 @@
         <tr *ngIf="examineFormDto.opinion&&!examineFormDto.content">
           <td rowspan='1' colspan='20'>
             <div class="table_detail">
-              <h3>{{data.companyName}}：</h3>
+              <h3>{{examineFormDto.companyName}}：</h3>
               <p>
                 经随机抽查，你单位{{data.address}}{{examineFormDto.projectName}}工程(备案凭证文号：{{examineFormDto.acceptFileCode}}，工程备案号为{{examineFormDto.recordNumber}}),被确定为检查对象。{{data.descr}}
               </p>
@@ -154,7 +154,7 @@
         <tr *ngIf="examineFormDto.content">
           <td rowspan='1' colspan='20'>
             <div class="table_detail">
-              <h3>{{data.companyName}}：</h3>
+              <h3>{{examineFormDto.companyName}}：</h3>
 
             </div>
 
