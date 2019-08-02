@@ -186,11 +186,7 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
   init() {
     this.param.page = 1;
     this.param.maxResultCount = 10;
-<<<<<<< HEAD
-    this.param.flowPathType = 2
-=======
     //this.param.flowPathType = 1
->>>>>>> f46064ad1ad4abb0afa6cd4cf1d229d8852a52fd
     this.param.sorting = 'projectId desc';
     this.resetTime();
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
