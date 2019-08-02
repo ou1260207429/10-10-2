@@ -15,6 +15,9 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 import { InitiationProcessAddAuditorComponent } from '@app/components/initiation-process-add-auditor/initiation-process-add-auditor.component';
 import { checkArrayString, timeTrans } from 'infrastructure/regular-expression';
 import { WorkMattersService } from '../work-matters.service'
+
+import { convertToArray } from '@shared/utils/array';
+import { dateTrans } from 'infrastructure/regular-expression';
 /**
  * 待办详情->办理页面
  */
@@ -166,6 +169,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
       this.router.navigate([`/app/print-pages/CompletedAcceptancePrintComponent`]);
     }
   }
+
+  //这是个很鬼畜的公用获取方法，兼容旧数据大部分在这里
   init() {
     this.getWorkFlow_NodeRecordAndAuditorRecords()
 
@@ -188,6 +193,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
       //获取JSON和节点信息
       Promise.all([this.post_GetFlowFormData(flowFormQueryDto), this.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow)]).then((value: any) => {
         const json = JSON.parse(value[0].formJson);
+
         json.constructionUnit = json.constructionUnit instanceof Array ? json.constructionUnit : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }]
         json.design = json.design ? json.design : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }],
           json.engineeringId = json.engineeringId ? json.engineeringId : ''
@@ -208,6 +214,67 @@ export class AgencyDoneDetailsComponent implements OnInit {
           useNature: '',
           originallyUsed: ''
         }
+
+
+        if (json.detectionUnit == null) {
+          json.detectionUnit = {};
+        }
+        if (json.implementation == null) {
+          json.implementation = [];
+        }
+
+        if (json.constructionSituation == null) {
+          json.constructionSituation = [];
+        }
+        json.constructionSituation = convertToArray(json.constructionSituation);
+        
+        json.implementation = convertToArray(json.implementation);
+
+
+
+
+        if (json.implementation == null) {
+          json.implementation = [];
+        }
+
+        if (json.constructionSituation == null) {
+          json.constructionSituation = [];
+        }
+        json.constructionSituation = convertToArray(json.constructionSituation);
+
+        json.implementation = convertToArray(json.implementation);
+
+
+        if (json.planStartTime && json.planStartTime != "") {
+          json.planStartTime = dateTrans(json.planStartTime);
+        }
+        if (json.planEndTime && json.planEndTime != "") {
+          json.planEndTime = dateTrans(json.planEndTime);
+        }
+
+
+
+        if (json.mappingUnit) {
+          if (json.mappingUnit.no instanceof String) {
+            json.mappingUnit.no = [{ noValue: json.mappingUnit.no }];
+          }
+          if (json.mappingUnit.no instanceof Array) {
+            if (json.mappingUnit.no[0] instanceof String) {
+              var list = [];
+              for (var i = 0; i < json.mappingUnit.no.length; ++i) {
+                var item = { noValue: json.mappingUnit.no[i] };
+                list.push(item);
+              }
+              json.mappingUnit.no = list;
+            }
+          }
+          json.mappingUnit.no = convertToArray(json.mappingUnit.no);
+
+
+        }
+
+
+
         this.formJson = json;
         this.useNatureSelect = value[0].natures
         this.tenantWorkFlowInstanceDto = this.workFlowData = value[1].result;

@@ -231,20 +231,23 @@ export class AddFireAcceptanceComponent implements OnInit {
 
         }
 
+        if (jsonData.detectionUnit == null) {
+          jsonData.detectionUnit = {};
+        }
+        if (jsonData.implementation == null) {
+          jsonData.implementation = [];
+        }
+
+        if (jsonData.constructionSituation == null) {
+          jsonData.constructionSituation = [];
+        }
+        jsonData.constructionSituation = convertToArray(jsonData.constructionSituation);
+        console.log(jsonData.implementation)
+        jsonData.implementation = convertToArray(jsonData.implementation);
+
+
         this.data = jsonData;
 
-        if (this.data.detectionUnit == null) {
-          this.data.detectionUnit = {};
-        }
-        if (this.data.implementation == null) {
-          this.data.implementation = {};
-        }
-
-        if (this.data.constructionSituation == null) {
-          this.data.constructionSituation = {};
-        }
-        this.data.constructionSituation = convertToArray(this.data.constructionSituation);
-        this.data.implementation = convertToArray(this.data.implementation);
 
 
         if (this.data.supervision == null) {

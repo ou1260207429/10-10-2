@@ -1,6 +1,6 @@
 //兼容性转化
 export function convertToArray(src): any {
-    if ((src instanceof Array)) {
+    if (src instanceof Array) {
         return src;
     }
 

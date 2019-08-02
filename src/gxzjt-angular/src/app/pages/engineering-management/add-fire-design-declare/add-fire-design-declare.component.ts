@@ -589,6 +589,16 @@ export class AddFireDesignDeclareComponent implements OnInit {
       if (data != null && data.formJson != null && data.formJson != "") {
 
         var json = JSON.parse(data.formJson);
+        if (json.implementation == null) {
+          json.implementation = [];
+        }
+
+        if (json.constructionSituation == null) {
+          json.constructionSituation = [];
+        }
+        json.constructionSituation = convertToArray(json.constructionSituation);
+
+        json.implementation = convertToArray(json.implementation);
 
 
         if (json.planStartTime && json.planStartTime != "") {
@@ -599,20 +609,24 @@ export class AddFireDesignDeclareComponent implements OnInit {
         }
 
 
-        if (json.mappingUnit.no instanceof String) {
-          json.mappingUnit.no = [{ noValue: json.mappingUnit.no }];
-        }
-        if (json.mappingUnit.no instanceof Array) {
-          if (json.mappingUnit.no[0] instanceof String) {
-            var list = [];
-            for (var i = 0; i < json.mappingUnit.no.length; ++i) {
-              var item = { noValue: json.mappingUnit.no[i] };
-              list.push(item);
-            }
-            json.mappingUnit.no = list;
+        if(json.mappingUnit){
+          if (json.mappingUnit.no instanceof String) {
+            json.mappingUnit.no = [{ noValue: json.mappingUnit.no }];
           }
+          if (json.mappingUnit.no instanceof Array) {
+            if (json.mappingUnit.no[0] instanceof String) {
+              var list = [];
+              for (var i = 0; i < json.mappingUnit.no.length; ++i) {
+                var item = { noValue: json.mappingUnit.no[i] };
+                list.push(item);
+              }
+              json.mappingUnit.no = list;
+            }
+          }
+          json.mappingUnit.no = convertToArray(json.mappingUnit.no);
+  
+  
         }
-        json.mappingUnit.no = convertToArray(json.mappingUnit.no);
 
 
         this.data = json;
