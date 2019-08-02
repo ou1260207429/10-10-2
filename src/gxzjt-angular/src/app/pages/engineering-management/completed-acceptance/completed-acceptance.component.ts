@@ -35,7 +35,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     endApplyTime: "2019-07-31 23:59:59",
     flowPathType: 3,
     maxResultCount: 10,
-    orgType: -1,
+    orgType: '-1',
     page: 1,
     sorting: "projectId desc",
     startApplyTime: "2019-07-24 00:00:00",
@@ -220,7 +220,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.param.skipCount = 0;
     this.param.recordNumber = '';
     this.param.status = '-1';
-    this.param.orgType = 1;
+    this.param.orgType = '-1';
     this.param.page = 1;
     this.param.maxResultCount = 10;
     this.param.flowPathType = 3;
