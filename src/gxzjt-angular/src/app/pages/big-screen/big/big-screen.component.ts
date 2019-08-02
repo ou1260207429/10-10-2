@@ -366,7 +366,7 @@ export class BigScreenComponent {
                     name: e.cityName,
                     value: e.completeNumber,
                     aTimeByCountNumber: e.aTimeByNumber,
-                    avgCompleteTimeCountNumber: e.aTimeByNumber,
+                    avgCompleteTimeCountNumber: e.avgCompleteTimeNumber,
                     timeoutCountNumber: e.timeoutNumber
                 });
             });
@@ -1470,7 +1470,7 @@ export class BigScreenComponent {
                         <span style='color:#F6FF00;margin-left:60px;display: block;'> 平均办理时长：`+ params.data.avgCompleteTimeCountNumber + `</span>
                     </div>
                         `
-                        //     let retStr = `<div style="background-image:url('./assets/images/big2/img_bg_tk.png');background-size: 100% 100%;height:180px;width:250px;position:absolute;top:-100px">
+                        // let retStr = `<div style="background-image:url('./assets/images/big2/img_bg_tk.png');background-size: 100% 100%;height:180px;width:250px;position:absolute;top:-100px">
                         //     <span style='font-size: 18px;margin-left:50px;margin-top: 40px; display: block;'> 一次性通过率：`+ params.data.passrate + ` </span>
                         //     <span style='color:#F6FF00;display: block;margin-left:50px;'>`+ params.data.name + `</span>
                         //     <span style='color:#F6FF00;display: block;margin-left:50px;'>排名：第`+ params.data.ranking + `</span>

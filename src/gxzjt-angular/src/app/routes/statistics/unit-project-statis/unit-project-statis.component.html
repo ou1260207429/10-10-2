@@ -17,12 +17,11 @@
 
     <button nz-button (click)="search()" nzType="primary">搜索</button>
 
-    <button nz-button (click)="resetForm()" class="search_menu">重置</button>
-    <!-- <button nz-button (click)="export()" class="search_menu">导出</button> -->
+    <button nz-button (click)="resetForm()">重置</button>
+    <button nz-button (click)="export()" class="search_menu" [nzLoading]="exportLoading">导出</button>
   </form>
-  <nz-table *ngIf="formResultData" #groupingTable [nzData]="formResultData" nzBordered [nzLoading]="formResultData.length==0"
-    [nzSize]="'default'"[nzShowTotal]="totalTemplate" [nzTotal]="total"
-    (nzCurrentPageDataChange)="change($event)">
+  <nz-table *ngIf="formResultData" #groupingTable [nzData]="formResultData" nzBordered nzShowPagination [nzFrontPagination]="FrontPagination" [nzPageIndex]="param.page" [nzPageSize]="param.maxResultCount"
+    [nzLoading]="tableLoading" [nzSize]="'default'" [nzShowTotal]="totalTemplate" [nzTotal]="total2" (nzPageIndexChange)="change($event)">
     <thead>
       <tr>
         <th rowspan="2" style="width: 90px">地市</th>
@@ -30,7 +29,7 @@
         <th colspan="5">消防设计审查</th>
         <th colspan="5">消防验收</th>
         <th colspan="7">竣工验收备案</th>
-        <th rowspan="2" style="width: 100px" >时创建间</th>
+        <th rowspan="2" style="width: 100px">创建时间</th>
       </tr>
       <tr>
         <!-- 消防设计审查 -->
@@ -91,5 +90,5 @@
     </tbody>
   </nz-table>
   <!-- <nz-pagination [(nzPageIndex)]="param.page" [nzTotal]="total" [nzSize]="'default'"  [nzShowTotal]="totalTemplate"></nz-pagination> -->
-  <ng-template #totalTemplate let-total> 共 {{ total }} 条 </ng-template>
+  <ng-template #totalTemplate let-total> 共 {{ total2 }} 条 </ng-template>
 </nz-card>

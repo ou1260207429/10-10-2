@@ -9,9 +9,12 @@ import { FiewDesignDeclarePrintComponent } from './fiew-design-declare-print/fie
 import { PipesModule } from 'pipes/pipes.module';
 import { DelonCacheModule } from '@delon/cache';
 import { AcceptanceManagementPrintComponent } from './acceptance-management-print/acceptance-management-print.component';
+import { CompletedAcceptancePrintComponent } from './completed-acceptance-print/completed-acceptance-print.component';
 
 const COMPONENTS_NOROUNT = [
-  FiewDesignDeclarePrintComponent
+  FiewDesignDeclarePrintComponent,
+  AcceptanceManagementPrintComponent,
+  CompletedAcceptancePrintComponent
 ];
 @NgModule({
   imports: [
@@ -22,7 +25,7 @@ const COMPONENTS_NOROUNT = [
     PrintPagesRoutingModule,
   ],
   providers: [WorkMattersService],
-  declarations: [...COMPONENTS_NOROUNT, AcceptanceManagementPrintComponent],
+  declarations: [...COMPONENTS_NOROUNT],
   // entryComponents: COMPONENTS_NOROUNT
 })
 export class PrintPagesModule { }
