@@ -31,6 +31,10 @@ export class StatisticsService {
   GetTimeoutList(model?: any): Observable<any> {
     return this.http.post(URLConfig.getInstance().SERVER_URL + 'api/services/app/StatisticalService/Post_GetTimeoutList', model);
   }
+  //单位项目办理统计列表
+  GetUnitProjectStisticList(model?: any): Observable<any> {
+    return this.http.post(URLConfig.getInstance().SERVER_URL + 'api/services/app/StatisticalService/Post_GetStatisticalList', model);
+  }
 }
 
 /**

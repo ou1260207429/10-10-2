@@ -120,7 +120,10 @@ export class AppMenus {
           text: "办理时限统计",
           link: "/app/statistics/time-limt-deal",
         },
-
+        {
+          text: "单位项目办理统计",
+          link: "/app/statistics/unit-project-statis",
+        },
       ]
     },
     {

@@ -423,7 +423,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
       // this.noResult((data) => {
       this.tenantWorkFlowInstanceDto.backAuditedNode = {
         nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
-        nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName
+        nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName,
+
       }
       this._flowServices.tenant_NodeToNextNodeByNoPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
         this.butNzLoading = false;
@@ -669,25 +670,26 @@ export class AgencyDoneDetailsComponent implements OnInit {
     })
   }
 
-  //控制驳回界面显示
-  reject() {
-    this.isAddProducttyepe1 = true;
-  }
+  // //控制驳回界面显示
+  // reject() {
+  //   this.isAddProducttyepe1 = true;
+  // }
   //驳回界面取消
-  handleCancel1(): void {
+  // handleCancel1(): void {
 
-    this.isAddProducttyepe1 = false;
-  }
-  //驳回界面确定
+  //   this.isAddProducttyepe1 = false;
+  // }
+  //驳回界面确定nodeAdvise
   subProducttype1(bo): void {
-    if (this.rejectadvices == null || this.rejectadvices == '') {
+    if (this.nodeAdvise == null || this.nodeAdvise == '') {
       this.message.error("驳回意见必须填写！")
       return
     }
 
     this.tenantWorkFlowInstanceDto.backAuditedNode = {
       nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
-      nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName
+      nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName,
+      details : this.nodeAdvise,
     }
     this._flowServices.tenant_NodeToNextNodeByNoPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
       this.butNzLoading = false;
@@ -718,11 +720,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
   //驳回提交
   RejectedExamine(model) {
     let submodel: any = {};
-    submodel.flowId = model.flowId;
+    submodel.flowId = this.flowId;
     submodel.currentHandleUserName = model.currentHandleUserName;
     submodel.currentHandleUserCode = model.currentHandleUserCode;
     submodel.handleUserList = model.handleUserList;
-    debugger
     submodel.currentNodeId = model.currentNodeId;
     submodel.currentNodeName = model.currentNodeName;
     submodel.currentHandleOrgName = model.currentHandleOrgName;
@@ -731,14 +732,14 @@ export class AgencyDoneDetailsComponent implements OnInit {
     submodel.workFlow_NodeRecord_Id = model.workFlow_NodeRecord_Id;
     submodel.workFlow_Instance_Id = model.workFlow_Instance_Id;
     submodel.workFlow_TemplateInfo_Id = model.workFlow_TemplateInfo_Id;
-    submodel.opinion = this.rejectadvices;
+    submodel.opinion = this.nodeAdvise;
     this.WorkMattersService.RejectedExamine(submodel).subscribe(
       res => {
         this.serveResult();
 
       },
     );
-    this.rejectadvices = null;
+    this.nodeAdvise = null;
     this.butNzLoading = false;
     this.isAddProducttyepe1 = false;
   }

@@ -45,7 +45,7 @@ export class TinyEditorComponent implements OnInit {
     // imagetools_toolbar: 'rotateleft rotateright | flipv fliph | editimage imageoptions',
     image_caption: true,
     image_advtab: true,
-    // images_upload_url: "http://222.84.250.158:8111/api/services/app/Attachment/EditorUploadFile",
+    // images_upload_url: "http://192.168.10.48:21022/api/services/app/Attachment/EditorUploadFile",
     images_upload_url: URLConfig.getInstance().REGISTER_URL,
     images_upload_base_path: URLConfig.getInstance().REGISTER_URL,
     setup: editor => {

@@ -89,7 +89,7 @@
             <div *ngIf="examineFormDto.opinion&&!examineFormDto.content">
 
               <div class="table_detail">
-                <h3>{{data.companyName}}：</h3>
+                <h3>{{examineFormDto.companyName}}：</h3>
                 <div style="line-height: 30px;font-size: 16px;">
                   你单位报来{{data.projectName}}建设工程消防验收资料收悉（受理凭证：{{examineFormDto.acceptFileCode}}）。该工程位于{{data.address}}，{{examineFormDto.descr}}。
                   <div class="flexBox">
@@ -115,7 +115,7 @@
 
             <div *ngIf="examineFormDto.content">
               <div class="table_detail">
-                <h3>{{data.companyName}}：</h3>
+                <h3>{{examineFormDto.companyName}}：</h3>
 
                 <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.content"
                   name="professionalContractorsopinion" required>
