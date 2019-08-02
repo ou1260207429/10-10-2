@@ -233,7 +233,7 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
     this.param.skipCount = 0;
     this.param.recordNumber = '';
     this.param.status = '-1',
-      this.param.orgType = '-1';
+    this.param.orgType = '-1';
     this.param.page = 1;
     this.param.maxResultCount = 10;
     this.param.flowPathType = 1;
@@ -257,6 +257,7 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
    * 点击查询
    */
   query() {
+    
 
 
     this.param.page = 1;
