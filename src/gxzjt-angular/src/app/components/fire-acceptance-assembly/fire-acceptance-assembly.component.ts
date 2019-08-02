@@ -230,7 +230,12 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
     // this.data.engineeringId = lodash.cloneDeep(v); 
 
     // const list = this.publicModel.positionTreeArray(this.engineeringList, 'value', v, [])
-    // this.data.engineeringNo = list[list.length - 1].id  
+    // this.data.engineeringNo = list[list.length - 1].id 
+    if (v.length > 0) {
+      var lastId = v[v.length - 1];
+      this.data.FlowTemplateSuffix = this.publicModel.findFlowTemplateSuffix(this.engineeringList, lastId);
+    }
+
   }
 
   /**

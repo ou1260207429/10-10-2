@@ -96,9 +96,9 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   ngAfterViewInit(): void {
     this.printOuter.emit(this.printData);
   }
-   /**
-   * 获取工程地址中文
-   */
+  /**
+  * 获取工程地址中文
+  */
   getAddress(data, value, arr, i, str, valueName) {
     if (i < data.length) {
       arr.forEach(element => {
@@ -148,6 +148,11 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     // const list = this.publicModel.positionTreeArray(this.engineeringList, 'value', v, []) 
     // this.data.engineeringNo = list[list.length - 1].id 
     // console.log(list) 
+
+    if (v.length > 0) {
+      var lastId = v[v.length - 1];
+      this.data.FlowTemplateSuffix = this.publicModel.findFlowTemplateSuffix(this.engineeringList, lastId);
+    }
   }
 
 
@@ -171,7 +176,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
       list.forEach(item => {
         this.data.engineeringNo.push(item.value);
 
-       
+
       })
 
       this.data.FlowTemplateSuffix = list[list.length - 1].FlowTemplateSuffix;

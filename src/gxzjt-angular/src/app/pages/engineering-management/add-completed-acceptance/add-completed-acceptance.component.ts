@@ -1,7 +1,7 @@
 import { PublicModel } from './../../../../infrastructure/public-model';
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { timeTrans, getTimestamp, checkArrayString } from 'infrastructure/regular-expression';
+import { dateTrans, getTimestamp, checkArrayString } from 'infrastructure/regular-expression';
 import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto, FlowDataDto, ProjectFlowDto, FlowNodeUser } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute } from '@angular/router';
 import { FlowServices, GXZJT_From } from 'services/flow.services';
@@ -483,11 +483,11 @@ export class AddCompletedAcceptanceComponent implements OnInit {
           json.acceptanceOpinions.designUnit = convertToArray(json.acceptanceOpinions.designUnit);
 
           if (json.planEndTime && json.planEndTime != "") {
-            json.planEndTime = timeTrans(json.planEndTime);
+            json.planEndTime = dateTrans(json.planEndTime);
           }
 
           if (json.acceptanceOpinions.filingTime && json.acceptanceOpinions.filingTime != "") {
-            json.acceptanceOpinions.filingTime = timeTrans(json.acceptanceOpinions.filingTime);
+            json.acceptanceOpinions.filingTime = dateTrans(json.acceptanceOpinions.filingTime);
           }
 
           json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
@@ -595,9 +595,9 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
     this.filterFileList();
 
-    this.data.planEndTime = !this.data.planEndTime ? '' : timeTrans(this.data.planEndTime);
+    this.data.planEndTime = !this.data.planEndTime ? '' : dateTrans(this.data.planEndTime);
 
-    this.data.acceptanceOpinions.filingTime = !this.data.acceptanceOpinions.filingTime ? '' : timeTrans(this.data.acceptanceOpinions.filingTime);
+    this.data.acceptanceOpinions.filingTime = !this.data.acceptanceOpinions.filingTime ? '' : dateTrans(this.data.acceptanceOpinions.filingTime);
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 3;
     this.flowFormDto.projectTypeStatu = 2;

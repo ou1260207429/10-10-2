@@ -117,7 +117,7 @@
                 [nzValue]="option.natureCode">
               </nz-option>
             </nz-select>
-            <p style="color: #f5222d;text-align: center;" *ngIf="!data.useNature||data.useNature==''">
+            <p style="color: #f5222d;text-align: center;" *ngIf="!data.useNature||data.useNature==''&&type!=1">
               必填
             </p>
           </td>
@@ -181,7 +181,8 @@
               required>
             </nz-cascader>
 
-            <p style="color: #f5222d;text-align: center;" *ngIf="!data.engineeringNo||data.engineeringNo.length==0">
+            <p style="color: #f5222d;text-align: center;"
+              *ngIf="!data.engineeringNo||data.engineeringNo.length==0&&type!=1">
               必填
             </p>
           </td>

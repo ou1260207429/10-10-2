@@ -1,11 +1,13 @@
 //兼容性转化
 export function convertToArray(src): any {
-    if (!(src instanceof Array)) {
-        var arr = [];
-        arr.push(src);
-        return arr;
+    if ((src instanceof Array)) {
+        return src;
     }
-    return src;
+
+    var arr = [];
+    arr.push(src);
+    return arr;
+
 }
 
 
