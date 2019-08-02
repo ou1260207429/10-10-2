@@ -47,7 +47,7 @@ import { UserServices } from 'services/user.services';
     // }),
   ],
   declarations: [
-    BigScreenComponent
+    BigScreenComponent,
   ],
   entryComponents: [
   ],

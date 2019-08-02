@@ -15,13 +15,14 @@ import { StatisticsAcceptCredentialsComponent } from './accept-credentials/accep
 import { StatisticsPositionPaperComponent } from './position-paper/position-paper.component';
 import { UserRightService } from '../userright/userright.service';
 import { StatisticsService } from './statistics.service';
+import { UnitProjectStatisComponent } from './unit-project-statis/unit-project-statis.component';
 
 const COMPONENTS = [
   StatisticsWarningCenterComponent,
   StatisticsProAppStaticComponent,
   StatisticsTimeoutDealWithComponent,
   StatisticsTimeLimtDealComponent,
-
+  UnitProjectStatisComponent,
   StatisticsAcceptCredentialsComponent,
   StatisticsPositionPaperComponent];
 const COMPONENTS_NOROUNT = [
@@ -40,11 +41,11 @@ const COMPONENTS_NOROUNT = [
   ],
   declarations: [
     ...COMPONENTS,
-    ...COMPONENTS_NOROUNT
+    ...COMPONENTS_NOROUNT,
   ],
   entryComponents: COMPONENTS_NOROUNT,
-  providers:[
-    UserRightService,StatisticsService
+  providers: [
+    UserRightService, StatisticsService
   ]
 })
 export class StatisticsModule { }
