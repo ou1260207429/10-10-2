@@ -482,11 +482,13 @@ export class AddCompletedAcceptanceComponent implements OnInit {
           json.acceptanceOpinions.contractingUnit = convertToArray(json.acceptanceOpinions.contractingUnit);
           json.acceptanceOpinions.designUnit = convertToArray(json.acceptanceOpinions.designUnit);
 
+          if (json.planEndTime && json.planEndTime != "") {
+            json.planEndTime = timeTrans(json.planEndTime);
+          }
 
-          json.planEndTime = timeTrans(json.planEndTime);
-
-          json.acceptanceOpinions.filingTime = timeTrans(json.acceptanceOpinions.filingTime);
-
+          if (json.acceptanceOpinions.filingTime && json.acceptanceOpinions.filingTime != "") {
+            json.acceptanceOpinions.filingTime = timeTrans(json.acceptanceOpinions.filingTime);
+          }
 
           json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
           json.applyName = json.applyName ? json.applyName : ''
