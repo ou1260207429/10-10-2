@@ -19,6 +19,8 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { dateTrans } from 'infrastructure/regular-expression';
 
+import { WindowsFill } from '@ant-design/icons-angular/icons/public_api';
+
 /**
  * 竣工验收
  */
@@ -51,7 +53,7 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
 
   formResultData;
   isAddProducttyepe1 = false;
-  isAddProducttyepe2=false;//控制下载界面
+  showExportModal=false;//控制下载界面
   record;
   url;
 
@@ -352,24 +354,31 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
       this.param.startApplyTime = '';
       this.param.endApplyTime = '';
     }
+    this.showExportModal = true;
     this.EngManageService.Post_ExportFireAuditCompleteList(this.param).subscribe(
       res => {
-        this.url = res.result;
-
+        if( this.showExportModal){
+          this.showExportModal = false;
+   
+          // this.url = res.result;
+          window.open(res.result);
+          
+        }
+     
       },
     );
 
 
-    this.isAddProducttyepe2 = true;
+   
   }
 
   handleCancel2(): void {
     this.url=null;
-    this.isAddProducttyepe2 = false;
+    this.showExportModal = false;
   }
   subProducttype2(): void {
     this.url=null;
-    this.isAddProducttyepe2 = false;
+    this.showExportModal = false;
   }
 
 
