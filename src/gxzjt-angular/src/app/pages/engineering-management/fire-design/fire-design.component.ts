@@ -223,22 +223,22 @@ url;//导出地址
     this.getList();
   }
   reststart() {
-    this.param.proType = '-1';
-    this.param.natureName = '';
-    this.param.projectName = '';
-    this.param.companyName = '';
-    this.param.currentNodeName = '';
-    this.param.isExpire = false;
-    this.param.isSelected = false;
-    this.param.skipCount = 0;
-    this.param.recordNumber = '';
-    this.param.status = '-1';
-    this.param.orgType = '-1';
-    this.param.page = 1;
-    this.param.maxResultCount = 10;
-    this.param.flowPathType = 1;
-    this.param.sorting = 'projectId desc';
-    this.resetTime();
+     this.param.proType = '-1';
+     this.param.natureName = '';
+     this.param.projectName = '';
+     this.param.companyName='';
+     this.param.currentNodeName= '';
+     this.param.isExpire = null;
+     this.param.isSelected = null;
+     this.param.skipCount = 0;
+     this.param.recordNumber = '';
+     this.param.status = '-1',
+     this.param.orgType = '-1';
+     this.param.page = 1;
+     this.param.maxResultCount = 10;
+     this.param.flowPathType = 1;
+     this.param.sorting = 'projectId desc';
+     this.resetTime();
     if (this.rangeTime.length != 0) {
       this.param.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
       this.param.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";

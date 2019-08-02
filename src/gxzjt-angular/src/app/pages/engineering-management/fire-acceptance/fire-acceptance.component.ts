@@ -210,7 +210,7 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
      this.param.isSelected = null;
      this.param.skipCount = 0;
      this.param.recordNumber = '';
-     this.param.status = '-1',
+     this.param.status = '-1';
      this.param.orgType = '-1';
      this.param.page = 1;
      this.param.maxResultCount = 10;
