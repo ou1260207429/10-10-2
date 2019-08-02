@@ -9,16 +9,16 @@
   <div [ngClass]="{hide: selectedIndex != 0}">
 
     <!-- 表单JSON -->
-    <app-fire-design-declare-assembly (printOuter)="setAddress($event)" [useNatureSelect]="useNatureSelect" [errorData]="showError"
-      *ngIf="formJson && flowPathType ==1" [data]="formJson" type=1>
+    <app-fire-design-declare-assembly (printOuter)="setAddress($event)" [useNatureSelect]="useNatureSelect"
+      [errorData]="showError" *ngIf="formJson && flowPathType ==1" [data]="formJson" type=1>
     </app-fire-design-declare-assembly>
 
-    <app-fire-acceptance-assembly [useNatureSelect]="useNatureSelect" [errorData]="showError" [data]="formJson" type=1
-      *ngIf="formJson && flowPathType ==2">
+    <app-fire-acceptance-assembly (printOuter)="setAddress($event)" [useNatureSelect]="useNatureSelect"
+      [errorData]="showError" [data]="formJson" type=1 *ngIf="formJson && flowPathType ==2">
     </app-fire-acceptance-assembly>
 
-    <app-completed-acceptance-assembly [useNatureSelect]="useNatureSelect" [data]="formJson" type=1
-      *ngIf="formJson && flowPathType ==3">
+    <app-completed-acceptance-assembly (printOuter)="setAddress($event)" [useNatureSelect]="useNatureSelect"
+      [data]="formJson" type=1 *ngIf="formJson && flowPathType ==3">
     </app-completed-acceptance-assembly>
 
     <table class="tables" style="box-sizing: border-box;"

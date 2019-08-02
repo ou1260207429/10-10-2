@@ -3,20 +3,21 @@ import { ActivatedRoute } from '@angular/router';
 import { dateTrans } from 'infrastructure/regular-expression';
 
 @Component({
-  selector: 'app-fiew-design-declare-print',
-  templateUrl: './fiew-design-declare-print.component.html',
+  selector: 'app-completed-acceptance-print',
+  templateUrl: './completed-acceptance-print.component.html',
   styleUrls: ['../print.less']
 })
-export class FiewDesignDeclarePrintComponent implements OnInit {
+export class CompletedAcceptancePrintComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute) {
     this.data = JSON.parse(this.getToken());
-    this.data.planStartTime = this.data.planStartTime ? dateTrans(this.data.planStartTime) : '';
-    this.data.planEndTime = this.data.planEndTime ? dateTrans(this.data.planEndTime) : "";
+    // this.data.planStartTime = this.data.planStartTime ? dateTrans(this.data.planStartTime) : '';
+    // this.data.planEndTime = this.data.planEndTime ? dateTrans(this.data.planEndTime) : "";
 
   }
   data: any;
 
   ngOnInit() {
+    console.log(this.data)
   }
   goback() {
     window.print();
