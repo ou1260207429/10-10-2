@@ -1,5 +1,5 @@
 {
-  "SERVER_URL":"http://222.84.250.158:8111/",
+  "SERVER_URL":"http://192.168.10.48:21022/",
   "XIEFENG_SERVICES_URL":"http://222.84.250.158:8113/",
   "REGISTER_URL":"http://222.84.250.158:8000/"
 }  

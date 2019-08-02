@@ -1,0 +1,95 @@
+<nz-card>
+
+
+  <button nz-button nzType="default" (click)="switchFilter()"><i nz-icon
+      type="{{ hiddenFliter?'down':'up'}}"></i>{{ hiddenFliter?'展开条件':'收起条件'}}</button>
+  <button (click)="refresh()" nz-button nzType="default"><i nz-icon type="reload"></i>刷新</button>
+
+</nz-card>
+<nz-card>
+
+  <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
+    <input nz-input formControlName="cityName" placeholder="请输入地市名称" style="width: 200px;margin-right: 10px;">
+
+    <nz-range-picker [nzFormat]="'yyyy/MM/dd'" formControlName="dateRange" style="margin-right: 10px;"
+      [nzPlaceHolder]="['创建开始时间','创建结束时间']">
+    </nz-range-picker>
+
+    <button nz-button (click)="search()" nzType="primary">搜索</button>
+
+    <button nz-button (click)="resetForm()" class="search_menu">重置</button>
+    <!-- <button nz-button (click)="export()" class="search_menu">导出</button> -->
+  </form>
+  <nz-table *ngIf="formResultData" #groupingTable [nzData]="formResultData" nzBordered [nzLoading]="formResultData.length==0"
+    [nzSize]="'default'"[nzShowTotal]="totalTemplate" [nzTotal]="total"
+    (nzCurrentPageDataChange)="change($event)">
+    <thead>
+      <tr>
+        <th rowspan="2" style="width: 90px">地市</th>
+        <th rowspan="2">单位</th>
+        <th colspan="5">消防设计审查</th>
+        <th colspan="5">消防验收</th>
+        <th colspan="7">竣工验收备案</th>
+        <th rowspan="2" style="width: 100px" >时创建间</th>
+      </tr>
+      <tr>
+        <!-- 消防设计审查 -->
+        <th>申报数</th>
+        <th>准予受理单数</th>
+        <th>不予受理单数</th>
+        <th>已办结单数</th>
+        <th>合格单数</th>
+        <!-- 消防验收 -->
+        <th>申报数</th>
+        <th>准予受理单数</th>
+        <th>不予受理单数</th>
+        <th>已办结单数</th>
+        <th>合格单数</th>
+        <!-- 竣工验收备案 -->
+        <th>申报数</th>
+        <th>受理单数</th>
+        <th>抽中数</th>
+        <th>抽中准予受理单数</th>
+        <th>抽中已办结单数</th>
+        <!-- <th>抽查一次性合格数</th> -->
+        <!-- <th>抽中已办结数不包括复查申请的数量</th> -->
+        <th>一次性合格数</th>
+        <th>一次性通过率</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of groupingTable.data">
+
+        <td>{{ data.cityName }}</td>
+        <td>{{ data.address }}</td>
+        <!-- 设计 -->
+        <td>{{ data.declareNumDesign }}</td>
+        <td>{{ data.acceptNumDesign }}</td>
+        <td>{{ data.noAcceptNumDesign }}</td>
+        <td>{{ data.hasCompletedNumDesign }}</td>
+        <td>{{ data.qualifiedNumDesign }}</td>
+
+        <!-- 验收 -->
+        <td>{{ data.declareNumAcceptance }}</td>
+        <td>{{ data.acceptNumAcceptance }}</td>
+        <td>{{ data.noAcceptNumAcceptance }}</td>
+        <td>{{ data.hasCompletedNumAcceptance }}</td>
+        <td>{{ data.qualifiedNumAcceptance }}</td>
+        <!-- 竣工 -->
+        <td>{{ data.declareNumCompletion }}</td>
+        <td>{{ data.acceptNumCompletion }}</td>
+        <td>{{ data.theWinningCompletion }}</td>
+        <td>{{ data.theWinningAcceptNumCompletion }}</td>
+        <td>{{ data.isSelectedQualifiedNumCompletion }}</td>
+        <!-- <td>{{ data.isSelectedOneQualifiedNum }}</td> -->
+        <!-- <td>{{ data.isSelectedQualifiedNum }}</td> -->
+        <td>{{ data.oneQualifiedNum }}</td>
+        <td>{{ data.oneQualifiedRate }}</td>
+
+        <td>{{ data.createTime }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <!-- <nz-pagination [(nzPageIndex)]="param.page" [nzTotal]="total" [nzSize]="'default'"  [nzShowTotal]="totalTemplate"></nz-pagination> -->
+  <ng-template #totalTemplate let-total> 共 {{ total }} 条 </ng-template>
+</nz-card>

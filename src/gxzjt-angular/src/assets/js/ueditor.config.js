@@ -30,7 +30,7 @@
 
       // 服务器统一请求接口路径
       ,
-    serverUrl: "http://222.84.250.158:8111/api/services/app/Attachment/EditorUploadFile"
+    serverUrl: "http://192.168.10.48:21022/api/services/app/Attachment/EditorUploadFile"
 
       //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的从新定义
       ,

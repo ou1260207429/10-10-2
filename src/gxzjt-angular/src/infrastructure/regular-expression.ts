@@ -165,7 +165,7 @@ export function formateTime(src: Date): string {
 
   var result = src.getFullYear() + '/'
     + (src.getMonth() + 1)
-    + '/' + src.getDate()
+    + '-' + src.getDate()
     + " "
     + src.getHours()
     + ':' + src.getMinutes()
