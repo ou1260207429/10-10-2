@@ -718,11 +718,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
   //驳回提交
   RejectedExamine(model) {
     let submodel: any = {};
-    submodel.flowId = model.flowId;
+    submodel.flowId = this.flowId;
     submodel.currentHandleUserName = model.currentHandleUserName;
     submodel.currentHandleUserCode = model.currentHandleUserCode;
     submodel.handleUserList = model.handleUserList;
-    debugger
     submodel.currentNodeId = model.currentNodeId;
     submodel.currentNodeName = model.currentNodeName;
     submodel.currentHandleOrgName = model.currentHandleOrgName;
