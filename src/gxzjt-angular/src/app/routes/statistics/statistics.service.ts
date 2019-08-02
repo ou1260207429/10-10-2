@@ -35,6 +35,10 @@ export class StatisticsService {
   GetUnitProjectStisticList(model?: any): Observable<any> {
     return this.http.post(URLConfig.getInstance().SERVER_URL + 'api/services/app/StatisticalService/Post_GetStatisticalList', model);
   }
+  //单位项目办理统计列表导出
+  GetUnitProjectStisticListExport(model?: any): Observable<any> {
+    return this.http.post(URLConfig.getInstance().SERVER_URL + 'api/services/app/StatisticalService/Post_ExportGetStatistical', model);
+  }
 }
 
 /**

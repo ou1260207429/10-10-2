@@ -14,8 +14,10 @@ export class UnitProjectStatisComponent implements OnInit {
   hiddenFliter = false;
   formResultData = [];
   rangeTime = [];
-
-  total = 0;
+  FrontPagination=false
+  exportLoading = false
+  tableLoading=false;
+  total2 = 0;
   param = {
     page: 1,
     maxResultCount: 10,
@@ -35,8 +37,29 @@ export class UnitProjectStatisComponent implements OnInit {
       cityName: [null],
       dateRange: [this.rangeTime],
     });
+    this.search();
   }
+  export() {
+    this.exportLoading = true;
+    this.param.page = 1;
+    this.param.cityName = this.fliterForm.controls.cityName.value;
+    let time = this.fliterForm.controls.dateRange.value
+    if (time && time.length != 0) {
+      this.param.startApplyTime = dateTrans(time[0]) + " 00:00:00";
+      this.param.endApplyTime = dateTrans(time[1]) + " 23:59:59";
+    } else {
+      this.param.startApplyTime = '';
+      this.param.endApplyTime = '';
+    }
+    this.StatisticsService.GetUnitProjectStisticListExport(this.param).subscribe(
+      res => {
+        window.open(res.result);
+        this.exportLoading = false;
+      }, err => {
+      },
+    );
 
+  }
   switchFilter() {
     this.hiddenFliter = !this.hiddenFliter;
   }
@@ -55,7 +78,6 @@ export class UnitProjectStatisComponent implements OnInit {
       this.param.endApplyTime = '';
     }
     this.getList();
-
   }
   resetForm(): void {
     this.fliterForm = this.formBuilder.group({
@@ -68,23 +90,20 @@ export class UnitProjectStatisComponent implements OnInit {
 
   getList() {
     let _this = this;
+    this.tableLoading = true;
     this.StatisticsService.GetUnitProjectStisticList(this.param).subscribe(
       res => {
+    this.tableLoading = false;
         if (res.result.data) {
           this.formResultData = res.result.data;
-          _this.total = res.result.total;
-          console.log(_this.total);
-
+          _this.total2 = res.result.total;
+          
         } else {
           this.formResultData = [];
         }
       }, err => {
-        console.log(err);
-
       },
     );
-    console.log(_this.total);
-
   }
   resetTime() {
     var startTime = new Date();
@@ -92,10 +111,10 @@ export class UnitProjectStatisComponent implements OnInit {
     this.rangeTime = [startTime, new Date()];
   }
   change(v) {
-    if (this.param.page == v.pi) {
+    if (this.param.page == v) {
       return   //解决页面数据不能复制问题，因为change改变事件当点击的就会触发了所以当page不变的时候不执行方法
     }
-    this.param.page = v.pi;
+    this.param.page = v;
     this.getList();
   }
 }
