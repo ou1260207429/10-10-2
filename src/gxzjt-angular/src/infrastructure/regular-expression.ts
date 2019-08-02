@@ -153,14 +153,23 @@ export function timeTrans(src: any): string {
 
 
 export function formateTime(src: Date): string {
-  var result = src.getFullYear() + '-'
+
+  let targetTimezone = -8;
+  // 当前时区与中时区时差，以min为维度
+  let _dif = src.getTimezoneOffset();
+  // 本地时区时间 + 时差  = 中时区时间
+  // 目标时区时间 + 时差 = 中时区时间
+  // 目标时区时间 = 本地时区时间 + 本地时区时差 - 目标时区时差
+  let east9time = src.getTime() + _dif * 60 * 1000 - (targetTimezone * 60 * 60 * 1000);
+  src = new Date(east9time);
+
+  var result = src.getFullYear() + '/'
     + (src.getMonth() + 1)
     + '-' + src.getDate()
     + " "
     + src.getHours()
     + ':' + src.getMinutes()
     + ':' + src.getSeconds();
-
   return result;
 }
 
@@ -199,6 +208,14 @@ export function dateTrans(src: any): string {
 
 
 export function formateDate(src: Date): string {
+  let targetTimezone = -8;
+  // 当前时区与中时区时差，以min为维度
+  let _dif = src.getTimezoneOffset();
+  // 本地时区时间 + 时差  = 中时区时间
+  // 目标时区时间 + 时差 = 中时区时间
+  // 目标时区时间 = 本地时区时间 + 本地时区时差 - 目标时区时差
+  let east9time = src.getTime() + _dif * 60 * 1000 - (targetTimezone * 60 * 60 * 1000);
+  src = new Date(east9time);
   var result = src.getFullYear()
     + '/' + (src.getMonth() + 1)
     + '/' + src.getDate();

@@ -38,19 +38,20 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
     page: 1,
     sorting: "projectId desc",
     startApplyTime: "2019-07-24 00:00:00",
-    status:'-1',
+    status: '-1',
     recordNumber: '',
-    projectName:'',
-    companyName:'',
+    projectName: '',
+    companyName: '',
     currentNodeName: '',
     isExpire: null,
     isSelected: null,
     skipCount: 0,
-    proType:'-1',
+    proType: '-1',
   }
   formResultData;
   url;
   isAddProducttyepe1 = false;
+  showExportModal = false;
   companyName;
   record;
   @ViewChild('st') st: STComponent;
@@ -152,7 +153,7 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
     { title: '操作时间', index: 'applyTime', type: 'date', width: '100px' },
   ];
 
-  searchParam = new FireAuditCompleteQueryDto();
+  // searchParam = new FireAuditCompleteQueryDto();
 
   pageConfig: STPage = publicPageConfig;
 
@@ -191,39 +192,39 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if (this.rangeTime.length != 0) {
-      this.searchParam.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
-      this.searchParam.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
+      this.param.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
+      this.param.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
     } else {
-      this.searchParam.startApplyTime = '';
-      this.searchParam.endApplyTime = '';
+      this.param.startApplyTime = '';
+      this.param.endApplyTime = '';
     }
     this.getList();
   }
-  reststart(){
-     this.param.proType = '-1';
-     this.param.natureName = '';
-     this.param.projectName = '';
-     this.param.companyName='';
-     this.param.currentNodeName= '';
-     this.param.isExpire = null;
-     this.param.isSelected = null;
-     this.param.skipCount = 0;
-     this.param.recordNumber = '';
-     this.param.status = '-1',
-     this.param.orgType = '-1';
-     this.param.page = 1;
-     this.param.maxResultCount = 10;
-     this.param.flowPathType = 2;
-     this.param.sorting = 'projectId desc';
-     this.resetTime();
+  reststart() {
+    this.param.proType = '-1';
+    this.param.natureName = '';
+    this.param.projectName = '';
+    this.param.companyName = '';
+    this.param.currentNodeName = '';
+    this.param.isExpire = null;
+    this.param.isSelected = null;
+    this.param.skipCount = 0;
+    this.param.recordNumber = '';
+    this.param.status = '-1';
+    this.param.orgType = '-1';
+    this.param.page = 1;
+    this.param.maxResultCount = 10;
+    this.param.flowPathType = 2;
+    this.param.sorting = 'projectId desc';
+    this.resetTime();
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if (this.rangeTime.length != 0) {
-      this.searchParam.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
-      this.searchParam.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
+      this.param.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
+      this.param.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
     } else {
-      this.searchParam.startApplyTime = '';
-      this.searchParam.endApplyTime = '';
+      this.param.startApplyTime = '';
+      this.param.endApplyTime = '';
     }
     this.getList();
   }
@@ -255,11 +256,11 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
     // this.searchParam.startApplyTime = moment(this.rangeTime[0]).add(28800000);
     // this.searchParam.endApplyTime =moment(this.rangeTime[1]).add(28800000);
     if (this.rangeTime.length != 0) {
-      this.searchParam.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
-      this.searchParam.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
+      this.param.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
+      this.param.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
     } else {
-      this.searchParam.startApplyTime = '';
-      this.searchParam.endApplyTime = '';
+      this.param.startApplyTime = '';
+      this.param.endApplyTime = '';
     }
     this.getList();
   }
@@ -274,7 +275,7 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
   }
 
   change(v) {
-    pageOnChange(v, this.searchParam, () => {
+    pageOnChange(v, this.param, () => {
       this.getList();
     })
   }
@@ -327,26 +328,40 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
     this.isAddProducttyepe1 = false;
 
   }
-  export(){
+  export() {
     this.param.page = 1;
     this.param.projectName = this.param.projectName.trim();
     if (this.rangeTime.length != 0) {
-      this.searchParam.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
-      this.searchParam.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
+      this.param.startApplyTime = dateTrans(this.rangeTime[0]) + " 00:00:00";
+      this.param.endApplyTime = dateTrans(this.rangeTime[1]) + " 23:59:59";
     } else {
-      this.searchParam.startApplyTime = '';
-      this.searchParam.endApplyTime = '';
+      this.param.startApplyTime = '';
+      this.param.endApplyTime = '';
     }
+
+    this.showExportModal = true;
     this.EngManageService.Post_ExportFireAuditCompleteList(this.param).subscribe(
       res => {
-        this.url = res.result;
-        window.open(this.url)
+        // this.url = res.result;
+        if (this.showExportModal) {
+          this.showExportModal = false;
+          window.open(res.result);
+
+        }
 
       },
     );
 
 
 
+  }
+  handleCancel2(): void {
+    this.url = null;
+    this.showExportModal = false;
+  }
+  subProducttype2(): void {
+    this.url = null;
+    this.showExportModal = false;
   }
 
 }

@@ -91,7 +91,7 @@
             <div *ngIf="examineFormDto.opinion&&!examineFormDto.content">
 
               <div class=" table_detail">
-                <h3>{{data.companyName}}：</h3>
+                <h3>{{examineFormDto.companyName}}：</h3>
                 <div *ngIf="examineFormDto">
                   <p *ngIf="examineFormDto.designOrg">
                     你单位申请的{{data.projectName}}建设工程（受理凭证：{{data.acceptFileCode}}，{{data.applyDateTime|date:'yyyy年MM月dd日'}}收）消防设计文件收悉。该工程位于{{data.address}}内。{{data.descr}}。设计单位为<span
@@ -110,7 +110,7 @@
 
             <div *ngIf="examineFormDto.content">
               <div class=" table_detail">
-                <h3>{{data.companyName}}：</h3>
+                <h3>{{examineFormDto.companyName}}：</h3>
               </div>
               <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.content"
                 name="professionalContractorscontent" required>

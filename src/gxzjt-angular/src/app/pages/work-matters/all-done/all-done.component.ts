@@ -21,6 +21,7 @@ export class WorkMattersAllDoneComponent implements OnInit {
   countyarray;//存县数组
   data;
   url;//导出地址
+  showExportModal;
 
   param = {
     cityName: null,
@@ -400,16 +401,29 @@ export class WorkMattersAllDoneComponent implements OnInit {
       this.param.startTime = null;
       this.param.endTime = null;
     }
+    this.showExportModal = true;
     this.WorkMattersService.ExportHandlingMatters(this.param).subscribe(
       res => {
-        this.url = res.result;
-        window.open(this.url)
+        // this.url = res.result;
+        // window.open(this.url)
 
+        // this.url = res.result;
+        if (this.showExportModal) {
+          this.showExportModal = false;
+          window.open(res.result);
+
+        }
       },
     );
 
 
-
+  }
+  handleCancel2(): void {
+    this.url = null;
+    this.showExportModal = false;
+  }
+  subProducttype2(): void {
+    this.showExportModal = false;
   }
 
 }

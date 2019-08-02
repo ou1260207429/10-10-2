@@ -22,6 +22,7 @@ import * as moment from 'moment';
 import { NzMessageService } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { EngManageService } from '../engineering-management.service';
+import { NzModalService } from 'ng-zorro-antd';
 
 
 /**
@@ -34,26 +35,26 @@ import { EngManageService } from '../engineering-management.service';
 })
 export class FireDesignComponent extends PublicFormComponent implements OnInit {
   // param = new FireAuditCompleteQueryDto();
-param={
-  endApplyTime: "2019-07-31 23:59:59",
-  flowPathType: 1,
-  maxResultCount: 10,
-  orgType: '-1',
-  page: 1,
-  sorting: "projectId desc",
-  startApplyTime: "2019-07-24 00:00:00",
-  status:'-1',
-  recordNumber: '',
-  projectName:'',
-  companyName:'',
-  currentNodeName: '',
-  isExpire: null,
-  isSelected: null,
-  skipCount: 0,
-  proType:'-1',
-  natureName: '',
-}
-url;//导出地址
+  param = {
+    endApplyTime: "2019-07-31 23:59:59",
+    flowPathType: 1,
+    maxResultCount: 10,
+    orgType: '-1',
+    page: 1,
+    sorting: "projectId desc",
+    startApplyTime: "2019-07-24 00:00:00",
+    status: '-1',
+    recordNumber: '',
+    projectName: '',
+    companyName: '',
+    currentNodeName: '',
+    isExpire: null,
+    isSelected: null,
+    skipCount: 0,
+    proType: '-1',
+    natureName: '',
+  }
+  url;//导出地址
   // param={
   //   recordNumber:null,
   //   projectName:null,
@@ -79,6 +80,7 @@ url;//导出地址
 
   record;
   isAddProducttyepe1 = false;
+  showExportModal = false;
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     {
@@ -187,6 +189,7 @@ url;//导出地址
     private _eventEmiter: EventEmiter,
     private statisticalServiceServiceProxy: StatisticalServiceServiceProxy,
     private formBuilder: FormBuilder,
+    private modalService: NzModalService,
     private xlsx: XlsxService, private message: NzMessageService) {
     super();
   }
@@ -224,13 +227,13 @@ url;//导出地址
     this.param.natureName = '';
     this.param.projectName = '';
     this.param.companyName = '';
-    this.param.currentNodeName = "-1";
-    this.param.isExpire = false;
-    this.param.isSelected = false;
+    this.param.currentNodeName = '';
+    this.param.isExpire = null;
+    this.param.isSelected = null;
     this.param.skipCount = 0;
     this.param.recordNumber = '';
-    this.param.status = '-1';
-    this.param.orgType = '-1';
+    this.param.status = '-1',
+      this.param.orgType = '-1';
     this.param.page = 1;
     this.param.maxResultCount = 10;
     this.param.flowPathType = 1;
@@ -344,7 +347,7 @@ url;//导出地址
     this.st.reload();
     this.isAddProducttyepe1 = false;
   }
-  export(){
+  export() {
     this.param.page = 1;
     this.param.projectName = this.param.projectName.trim();
     if (this.rangeTime.length != 0) {
@@ -354,15 +357,30 @@ url;//导出地址
       this.param.startApplyTime = '';
       this.param.endApplyTime = '';
     }
+    this.showExportModal = true;
     this.EngManageService.Post_ExportFireAuditCompleteList(this.param).subscribe(
       res => {
-        this.url = res.result;
-        window.open(this.url)
 
+
+        // this.url = res.result;
+        if (this.showExportModal) {
+          this.showExportModal = false;
+          window.open(res.result);
+
+        }
       },
     );
 
 
-
   }
+
+  handleCancel2(): void {
+    this.url = null;
+    this.showExportModal = false;
+  }
+  subProducttype2(): void {
+    this.url = null;
+    this.showExportModal = false;
+  }
+
 }

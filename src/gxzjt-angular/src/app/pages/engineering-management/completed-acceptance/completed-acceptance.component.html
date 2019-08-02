@@ -18,7 +18,7 @@
 <nz-card>
 
   <form nz-form class="mb-md" [hidden]="hiddenFliter">
-    <div  style="width: 100%; margin-bottom: 10px">
+    <!-- <div  style="width: 100%; margin-bottom: 10px">
         <a nz-button (click)="addDeclare()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">+新增竣工备案申报</a>
     </div>
 
@@ -29,18 +29,6 @@
           <input nz-input [(ngModel)]="param.projectName" name="projectName" placeholder="工程名称"
           style="margin-right: 10px;width: 200px;">
        </div>
-      <!--
-         <div  class="fd">
-          <span>工程类型：</span>
-          <nz-select class="search_menu_input"  [(ngModel)]="param.proType" name="proType" nzShowSearch nzAllowClear nzPlaceHolder="工程类型">
-            <nz-option nzLabel="全部工程类型" nzValue="-1"></nz-option>
-            <nz-option nzLabel="消防设计审查" nzValue="1"></nz-option>
-              <nz-option nzLabel="消防验收" nzValue="2"></nz-option>
-              <nz-option nzLabel="竣工验收消防备案" nzValue="3"></nz-option>
-            </nz-select>
-       </div>
-      -->
-
          <div class="fd">
             <div style="width: 100%;height: 10px;"></div>
             <span>当前环节：</span>
@@ -97,7 +85,88 @@
               <button nz-button (click)="reststart()" style="margin-right: 10px;">重置</button>
               <button nz-button (click)="export()" style="margin-right: 10px;">导出</button>
               <div style="width: 100%;height: 10px;"></div>
-         </div>
+         </div> -->
+
+    <div><a nz-button (click)="addDeclare()" nzType="primary" style="margin-right: 10px;margin-top: 10px;">+新增设计申报</a>
+    </div>
+
+
+    <div nz-row>
+      <div style="float: left">
+        <div style="width: 100%;height: 10px;"></div>
+        <span>工程名称：</span>
+        <input nz-input [(ngModel)]="param.projectName" name="projectName" placeholder="工程名称"
+          style="margin-right: 10px;width: 200px;">
+      </div>
+      <div style="float: left">
+        <div style="width: 100%;height: 10px;"></div>
+        <span>申报类别： </span>
+        <nz-select class="search_menu_input" [(ngModel)]="param.orgType" name="orgType" nzPlaceHolder="申报类别"
+          nzShowSearch nzAllowClear>
+          <nz-option nzLabel="全部申报类别" nzValue="-1"></nz-option>
+          <nz-option nzLabel="建设单位" nzValue="1"></nz-option>
+          <nz-option nzLabel="设计单位" nzValue="2"></nz-option>
+          <nz-option nzLabel="施工单位" nzValue="3"></nz-option>
+          <nz-option nzLabel="监理单位" nzValue="4"></nz-option>
+          <nz-option nzLabel="审图单位" nzValue="5"></nz-option>
+          <nz-option nzLabel="检测单位" nzValue="6"></nz-option>
+          <nz-option nzLabel="分包单位" nzValue="7"></nz-option>
+        </nz-select>
+      </div>
+      <div style="float: left">
+        <div style="width: 100%;height: 10px;"></div>
+        <span>当前环节：</span>
+        <nz-select class="search_menu_input" [(ngModel)]="param.currentNodeName" nzPlaceHolder="当前环节"
+          name="currentNodeName" nzShowSearch nzAllowClear>
+          <nz-option nzLabel="全部当前环节" nzValue="-1"></nz-option>
+          <nz-option nzLabel="大厅发放结果" nzValue="0"></nz-option>
+          <nz-option nzLabel="大厅受理" nzValue="1"></nz-option>
+          <nz-option nzLabel="完结" nzValue="2"></nz-option>
+          <nz-option nzLabel="业务承办人审核" nzValue="3"></nz-option>
+          <nz-option nzLabel="业务审批负责人审批" nzValue="4"></nz-option>
+        </nz-select>
+      </div>
+      <div style="float: left">
+        <div style="width: 100%;height: 10px;"></div>
+        <span>是否超时：</span>
+        <nz-select class="search_menu_input" [(ngModel)]="param.isExpire" name="isExpire" nzPlaceHolder="是否超时"
+          nzShowSearch nzAllowClear>
+          <nz-option nzLabel="是" nzValue="true"></nz-option>
+          <nz-option nzLabel="否" nzValue="false"></nz-option>
+        </nz-select>
+      </div>
+
+      <div style="float: left">
+        <div style="width: 100%;height: 10px;"></div>
+        <span>审查结果：</span>
+        <nz-select class="search_menu_input" [(ngModel)]="param.status" name="status" nzPlaceHolder="审查结果" name="status"
+          nzShowSearch nzAllowClear>
+          <nz-option nzLabel="全部审查结果" nzValue="-1"></nz-option>
+          <nz-option nzLabel="未处理" nzValue="0"></nz-option>
+          <nz-option nzLabel="受理" nzValue="1"></nz-option>
+          <nz-option nzLabel="不受理" nzValue="2"></nz-option>
+          <nz-option nzLabel="不合格" nzValue="3"></nz-option>
+          <nz-option nzLabel="合格" nzValue="4"></nz-option>
+        </nz-select>
+      </div>
+
+      <div style="float: left">
+        <div style="width: 100%;height: 10px;"></div>
+        <span>申报时间：</span>
+        <nz-range-picker [(ngModel)]="rangeTime" name="rangeTime" nzFormat="yyyy/MM/dd" style="margin-right: 10px;">
+        </nz-range-picker>
+      </div>
+
+      <div style="float: left">
+        <div style="width: 100%;height: 10px;"></div>
+        <button nz-button (click)="query()" nzType="primary" style="margin-right: 10px;" autofocus="autofocus"
+          default>搜索</button>
+        <button nz-button (click)="reststart()" style="margin-right: 10px;">重置</button>
+        <button nz-button (click)="export()" style="margin-right: 10px;">导出</button>
+      </div>
+
+
+    </div>
   </form>
   <nz-spin [nzSpinning]="!formResultData"></nz-spin>
 
@@ -109,6 +178,13 @@
 
 
 <!-- 撤回提示  -->
-<nz-modal [nzMaskClosable]='false' [(nzVisible)]="isAddProducttyepe1" nzTitle="提示" (nzOnCancel)="handleCancel1()" (nzOnOk)="subProducttype1()">
+<nz-modal [nzMaskClosable]='false' [(nzVisible)]="isAddProducttyepe1" nzTitle="提示" (nzOnCancel)="handleCancel1()"
+  (nzOnOk)="subProducttype1()">
   <span>确定撤回申请吗?</span>
+</nz-modal>
+
+<nz-modal [nzMaskClosable]='false' [nzOkText]='null' [(nzVisible)]="showExportModal" nzTitle="提示"
+  (nzOnCancel)="handleCancel2()" (nzOnOk)="subProducttype2()">
+  <nz-spin nzSimplespan>正在导出文件，请稍后</nz-spin>
+
 </nz-modal>
