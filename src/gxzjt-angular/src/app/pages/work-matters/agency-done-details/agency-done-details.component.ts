@@ -156,7 +156,15 @@ export class AgencyDoneDetailsComponent implements OnInit {
     let params = Object.assign(this.printAddress, this.formJson)
     let result = JSON.stringify(params)
     localStorage.setItem('jsonPrintForm', result);
-    this.router.navigate([`/app/print-pages/FiewDesignDeclarePrintComponent`]);
+
+    if (this.formJson && this.flowPathType == 1) {
+      this.router.navigate([`/app/print-pages/FiewDesignDeclarePrintComponent`]);
+
+    } else if (this.formJson && this.flowPathType == 2) {
+      this.router.navigate([`/app/print-pages/AcceptanceManagementPrintComponent`]);
+    } else if (this.formJson && this.flowPathType == 3) {
+      this.router.navigate([`/app/print-pages/CompletedAcceptancePrintComponent`]);
+    }
   }
   init() {
     this.getWorkFlow_NodeRecordAndAuditorRecords()
@@ -419,7 +427,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
     this.butNzLoading = true
     //if (!bo && this.curNodeName == '业务审批负责人审批') {
-      if (!bo && this.curNodeName != '大厅受理' && this.curNodeName!='业务承办人审核') {
+    if (!bo && this.curNodeName != '大厅受理' && this.curNodeName != '业务承办人审核') {
       // this.noResult((data) => {
       this.tenantWorkFlowInstanceDto.backAuditedNode = {
         nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
@@ -689,7 +697,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.tenantWorkFlowInstanceDto.backAuditedNode = {
       nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
       nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName,
-      details : this.nodeAdvise,
+      details: this.nodeAdvise,
     }
     this._flowServices.tenant_NodeToNextNodeByNoPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
       this.butNzLoading = false;
