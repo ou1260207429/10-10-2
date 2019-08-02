@@ -186,7 +186,7 @@
           [nzLoading]="butNzLoading">{{curNodeName=='业务承办人审核'?'合格':'受理'}}</button>
         <button nz-button nzType="primary" (click)="save(false)" [disabled]="butNzLoading"
           [nzLoading]="butNzLoading">{{curNodeName=='业务承办人审核'?'不合格':'不受理'}}</button>
-        <button *ngIf="curNodeName == '大厅受理'" nz-button nzType="primary" (click)="reject(false)"
+        <button *ngIf="curNodeName == '大厅受理'" nz-button nzType="primary" (click)="subProducttype1(false)"
           [disabled]="butNzLoading" [nzLoading]="butNzLoading">驳回</button>
       </div>
 
