@@ -359,17 +359,17 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
       res => {
         if( this.showExportModal){
           this.showExportModal = false;
-   
+
           // this.url = res.result;
           window.open(res.result);
-          
+
         }
-     
+
       },
     );
 
 
-   
+
   }
 
   handleCancel2(): void {
