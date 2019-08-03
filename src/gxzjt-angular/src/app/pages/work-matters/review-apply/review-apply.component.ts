@@ -48,9 +48,9 @@ export class WorkMattersReviewApplyComponent implements OnInit {
     this.saving = true;
     var flowTypeFlag;
     if (this.flowType == 2) {
-      flowTypeFlag = "xfys";
+      flowTypeFlag = "xfys"+this.reviewFormDto.flowTemplateSuffix;
     } else {
-      flowTypeFlag = "jgys";
+      flowTypeFlag = "jgys"+this.reviewFormDto.flowTemplateSuffix;
     }
     const from: GXZJT_From = {
       frow_TemplateInfo_Data: {
