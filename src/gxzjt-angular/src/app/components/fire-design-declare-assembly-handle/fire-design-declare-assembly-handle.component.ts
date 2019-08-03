@@ -58,8 +58,17 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
     if (!this.examineFormDto.content && !this.examineFormDto.opinion) {
       var date = new Date();
       var dateStr = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + "日";
+
+      var descr = this.data.descr;
+      if (descr && descr.substring(descr.length - 1, descr.length) == "。") {
+        descr = descr.substring(0, descr.length - 1);
+      }
+
+
       this.examineFormDto.content =
-        `    你单位申请的` + this.data.projectName + `建设工程（受理凭证：` + this.data.acceptFileCode + `，` + dateStr + `收）消防设计文件收悉。该工程位于` + this.data.address + `。` + this.data.descr + `。设计单位为` + this.examineFormDto.designOrg.companyName
+        `    你单位申请的` + this.data.projectName + `建设工程（受理凭证：` + this.data.acceptFileCode + `，`
+        + dateStr + `收）消防设计文件收悉。该工程位于` + this.data.address + `。`
+        + this.data.descr + `。设计单位为` + this.examineFormDto.designOrg.companyName
         + `，设计资质为建设工程` + this.examineFormDto.designOrg.qualifications
         + `。按照图纸审查机构（` + this.examineFormDto.drawingOrg.companyName
         + `）对该工程设计图纸的技术审查结论，我局提出以下意见：\r\n`
