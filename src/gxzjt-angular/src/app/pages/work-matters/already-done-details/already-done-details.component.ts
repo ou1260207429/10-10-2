@@ -10,7 +10,8 @@ import { AppSessionService } from '@shared/session/app-session.service';
 import { FlowProcessRejectComponent } from '@app/components/flow-process-reject/flow-process-reject.component';
 import { ReuseTabService } from '@delon/abc';
 
-import { dateTrans } from 'infrastructure/regular-expression';
+
+import { formatOldJson } from '@shared/utils/array';
 
 /**
  * 已办流程的详情
@@ -108,20 +109,14 @@ export class AlreadyDoneDetailsComponent implements OnInit {
       }
       //获取JSON和节点信息
       Promise.all([this.post_GetFlowFormData(flowFormQueryDto), this.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow)]).then((value: any) => {
-        const json = JSON.parse(value[0].formJson);
+        var json = JSON.parse(value[0].formJson);
         json.constructionUnit = json.constructionUnit instanceof Array ? json.constructionUnit : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }]
         json.design = json.design ? json.design : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }],
           json.engineeringId = json.engineeringId ? json.engineeringId : ''
         json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
         json.applyName = json.applyName ? json.applyName : '';
 
-        if (json.planStartTime && json.planStartTime != "") {
-          json.planStartTime = dateTrans(json.planStartTime);
-        }
-        if (json.planEndTime && json.planEndTime != "") {
-          json.planEndTime = dateTrans(json.planEndTime);
-        }
-
+        json = formatOldJson(json);
 
         json.constructionProject = json.constructionProject ? json.constructionProject : {
           arr: [

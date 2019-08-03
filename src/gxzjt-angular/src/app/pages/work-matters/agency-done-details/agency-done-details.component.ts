@@ -16,8 +16,8 @@ import { InitiationProcessAddAuditorComponent } from '@app/components/initiation
 import { checkArrayString, timeTrans } from 'infrastructure/regular-expression';
 import { WorkMattersService } from '../work-matters.service'
 
-import { convertToArray } from '@shared/utils/array';
-import { dateTrans } from 'infrastructure/regular-expression';
+import { formatOldJson } from '@shared/utils/array';
+
 /**
  * 待办详情->办理页面
  */
@@ -73,7 +73,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
   formJson: any;
 
   //表单状态
-  formStatus:number=1;
+  formStatus: number = 1;
 
   workFlowData: any;
 
@@ -196,11 +196,11 @@ export class AgencyDoneDetailsComponent implements OnInit {
       //获取JSON和节点信息
       Promise.all([this.post_GetFlowFormData(flowFormQueryDto), this.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow)]).then((value: any) => {
         //驳回后重新提交可编辑表单
-        if(value[0].acceptOrderId!=null && value[0].acceptOrderId>0 && value[1].result.nodeViewInfo!=null && value[1].result.nodeViewInfo.curNodeName=="建设单位申报"){
-          this.formStatus=2;
+        if (value[0].acceptOrderId != null && value[0].acceptOrderId > 0 && value[1].result.nodeViewInfo != null && value[1].result.nodeViewInfo.curNodeName == "建设单位申报") {
+          this.formStatus = 2;
         }
 
-        const json = JSON.parse(value[0].formJson);
+        var json = JSON.parse(value[0].formJson);
 
         json.constructionUnit = json.constructionUnit instanceof Array ? json.constructionUnit : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }]
         json.design = json.design ? json.design : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }],
@@ -223,65 +223,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
           originallyUsed: ''
         }
 
-
-        if (json.detectionUnit == null) {
-          json.detectionUnit = {};
-        }
-        if (json.implementation == null) {
-          json.implementation = [];
-        }
-
-        if (json.constructionSituation == null) {
-          json.constructionSituation = [];
-        }
-        json.constructionSituation = convertToArray(json.constructionSituation);
-        
-        json.implementation = convertToArray(json.implementation);
-
-
-
-
-        if (json.implementation == null) {
-          json.implementation = [];
-        }
-
-        if (json.constructionSituation == null) {
-          json.constructionSituation = [];
-        }
-        json.constructionSituation = convertToArray(json.constructionSituation);
-
-        json.implementation = convertToArray(json.implementation);
-
-
-        if (json.planStartTime && json.planStartTime != "") {
-          json.planStartTime = dateTrans(json.planStartTime);
-        }
-        if (json.planEndTime && json.planEndTime != "") {
-          json.planEndTime = dateTrans(json.planEndTime);
-        }
-
-
-
-        if (json.mappingUnit) {
-          if (json.mappingUnit.no instanceof String) {
-            json.mappingUnit.no = [{ noValue: json.mappingUnit.no }];
-          }
-          if (json.mappingUnit.no instanceof Array) {
-            if (json.mappingUnit.no[0] instanceof String) {
-              var list = [];
-              for (var i = 0; i < json.mappingUnit.no.length; ++i) {
-                var item = { noValue: json.mappingUnit.no[i] };
-                list.push(item);
-              }
-              json.mappingUnit.no = list;
-            }
-          }
-          json.mappingUnit.no = convertToArray(json.mappingUnit.no);
-
-
-        }
-
-
+        json = formatOldJson(json);
 
         this.formJson = json;
         this.useNatureSelect = value[0].natures
@@ -829,7 +771,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
 
   //驳回后重新提交申报
-  savePreCheckFile(){
+  savePreCheckFile() {
 
   }
 

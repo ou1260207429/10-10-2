@@ -94,18 +94,25 @@
 
         <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">计划开工日期:</td>
-          <td rowspan='1' colspan='15'>
+          <td rowspan='1' colspan='15' *ngIf="type != 1">
             <nz-date-picker [ngClass]="{pointer: type == 1}" [nzDisabledDate]="disabledStartDate" name="planStartTime"
               [(ngModel)]="data.planStartTime" [nzFormat]="'yyyy/MM/dd'"></nz-date-picker>
           </td>
+          <td rowspan='1' colspan='15' *ngIf="type == 1">
+            {{data.planStartTime}}
 
+          </td>
         </tr>
 
         <tr>
           <td rowspan='1' colspan='3' class="fontweight fontLeft">计划竣工日期:</td>
-          <td rowspan='1' colspan='15'>
+          <td rowspan='1' colspan='15' *ngIf="type != 1">
             <nz-date-picker [ngClass]="{pointer: type == 1}" [nzDisabledDate]="disabledEndDate"
               [(ngModel)]="data.planEndTime" name="planEndTime" [nzFormat]="'yyyy/MM/dd'"></nz-date-picker>
+          </td>
+          <td rowspan='1' colspan='15' *ngIf="type == 1">
+            {{data.planEndTime}}
+
           </td>
         </tr>
 

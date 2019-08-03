@@ -93,13 +93,17 @@
         <tr>
 
           <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>验收合格日期:</td>
-          <td rowspan='1' colspan='7'>
+          <td rowspan='1' colspan='7' *ngIf="type != 1">
             <se error="必填">
               <nz-date-picker name="t2" required [(ngModel)]="data.planEndTime" name="planEndTime"
                 [nzFormat]="'yyyy/MM/dd'"></nz-date-picker>
             </se>
           </td>
-
+          <td rowspan='1' colspan='7' *ngIf="type == 1">
+         
+              {{data.planEndTime}}
+           
+          </td>
           <!-- <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>申报人姓名:</td>
           <td rowspan='1' colspan='7'>
             <se error="必填" style="float: left;">

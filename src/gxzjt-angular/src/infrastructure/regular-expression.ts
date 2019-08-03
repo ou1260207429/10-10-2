@@ -127,9 +127,9 @@ export function timeTrans(src: any): string {
 
     try {
       src = src.replace(/\-/g, '/');
-      // return src;
-      var d = new Date(src);
-      return formateTime(d);
+      return src;
+      // var d = new Date(src);
+      // return formateTime(d);
     } catch (e) {
       return formateTime(new Date());
     }
@@ -185,9 +185,9 @@ export function dateTrans(src: any): string {
 
     try {
       src = src.replace(/\-/g, '/');
-      // return src;
-      var d = new Date(src);
-      return formateDate(d);
+      return src;
+      // var d = new Date(src);
+      // return formateDate(d);
     } catch (e) {
       return formateDate(new Date());
     }

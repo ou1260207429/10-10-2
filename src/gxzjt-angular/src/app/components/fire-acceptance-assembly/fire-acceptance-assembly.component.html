@@ -137,10 +137,12 @@
             </se>
           </td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">审查日期:</td>
-          <td rowspan='1' colspan='6'>
-            <nz-date-picker [ngClass]="{pointer: type == 1}" [(ngModel)]="data.dateOfReview" name="dateOfReview"
-              [nzFormat]="'yyyy/MM/dd'">
+          <td rowspan='1' colspan='6' *ngIf="type!=1">
+            <nz-date-picker [(ngModel)]="data.dateOfReview" name="dateOfReview" [nzFormat]="'yyyy/MM/dd'">
             </nz-date-picker>
+          </td>
+          <td rowspan='1' colspan='6' *ngIf="type==1">
+            {{data.dateOfReview}}
           </td>
         </tr>
         <!-- 6 -->

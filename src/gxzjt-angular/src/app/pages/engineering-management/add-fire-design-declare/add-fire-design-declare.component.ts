@@ -13,7 +13,7 @@ import { AppSessionService } from '@shared/session/app-session.service';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { ReuseTabService } from '@delon/abc';
 
-import { convertToArray } from "@shared/utils/array"
+import { formatOldJson } from "@shared/utils/array"
 import { advanceActivatedRoute } from '@angular/router/src/router_state';
 import { debug } from 'util';
 
@@ -589,44 +589,12 @@ export class AddFireDesignDeclareComponent implements OnInit {
       if (data != null && data.formJson != null && data.formJson != "") {
 
         var json = JSON.parse(data.formJson);
-        if (json.implementation == null) {
-          json.implementation = [];
-        }
-
-        if (json.constructionSituation == null) {
-          json.constructionSituation = [];
-        }
-        json.constructionSituation = convertToArray(json.constructionSituation);
-
-        json.implementation = convertToArray(json.implementation);
 
 
-        if (json.planStartTime && json.planStartTime != "") {
-          json.planStartTime = dateTrans(json.planStartTime);
-        }
-        if (json.planEndTime && json.planEndTime != "") {
-          json.planEndTime = dateTrans(json.planEndTime);
-        }
 
 
-        if(json.mappingUnit){
-          if (json.mappingUnit.no instanceof String) {
-            json.mappingUnit.no = [{ noValue: json.mappingUnit.no }];
-          }
-          if (json.mappingUnit.no instanceof Array) {
-            if (json.mappingUnit.no[0] instanceof String) {
-              var list = [];
-              for (var i = 0; i < json.mappingUnit.no.length; ++i) {
-                var item = { noValue: json.mappingUnit.no[i] };
-                list.push(item);
-              }
-              json.mappingUnit.no = list;
-            }
-          }
-          json.mappingUnit.no = convertToArray(json.mappingUnit.no);
-  
-  
-        }
+
+        json = formatOldJson(json);
 
 
         this.data = json;

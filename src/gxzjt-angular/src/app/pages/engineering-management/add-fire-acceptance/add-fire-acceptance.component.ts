@@ -11,7 +11,7 @@ import { AppSessionService } from '@shared/session/app-session.service';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { ReuseTabService } from '@delon/abc';
 import { NzModalService, UploadXHRArgs } from 'ng-zorro-antd';
-import { convertToArray } from '@shared/utils/array'
+import { formatOldJson } from '@shared/utils/array'
 
 /**
  * 工程管理->消防验收->新增申报
@@ -226,24 +226,16 @@ export class AddFireAcceptanceComponent implements OnInit {
       if (data.formJson != null && data.formJson != "") {
         var jsonData = JSON.parse(data.formJson);
 
-        if (jsonData.dateOfReview && jsonData.dateOfReview != '') {
-          jsonData.dateOfReview = dateTrans(jsonData.dateOfReview);
+     
 
-        }
+        jsonData = formatOldJson(jsonData);
 
         if (jsonData.detectionUnit == null) {
           jsonData.detectionUnit = {};
         }
-        if (jsonData.implementation == null) {
-          jsonData.implementation = [];
-        }
 
-        if (jsonData.constructionSituation == null) {
-          jsonData.constructionSituation = [];
-        }
-        jsonData.constructionSituation = convertToArray(jsonData.constructionSituation);
-        // console.log(jsonData.implementation)
-        jsonData.implementation = convertToArray(jsonData.implementation);
+
+       
 
 
         this.data = jsonData;

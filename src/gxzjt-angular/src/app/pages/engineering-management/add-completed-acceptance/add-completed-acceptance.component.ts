@@ -12,7 +12,7 @@ import { NzModalService } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { ReuseTabService } from '@delon/abc';
 
-import { convertToArray } from '@shared/utils/array';
+import { convertToArray ,formatOldJson} from '@shared/utils/array';
 
 
 
@@ -479,16 +479,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
             json.engineeringId = json.engineeringId ? json.engineeringId : ''
 
 
-          json.acceptanceOpinions.contractingUnit = convertToArray(json.acceptanceOpinions.contractingUnit);
-          json.acceptanceOpinions.designUnit = convertToArray(json.acceptanceOpinions.designUnit);
 
-          if (json.planEndTime && json.planEndTime != "") {
-            json.planEndTime = dateTrans(json.planEndTime);
-          }
 
-          if (json.acceptanceOpinions.filingTime && json.acceptanceOpinions.filingTime != "") {
-            json.acceptanceOpinions.filingTime = dateTrans(json.acceptanceOpinions.filingTime);
-          }
 
           json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
           json.applyName = json.applyName ? json.applyName : ''
@@ -509,46 +501,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
           };
 
 
-
-          if (json.implementation == null) {
-            json.implementation = [];
-          }
-
-          if (json.constructionSituation == null) {
-            json.constructionSituation = [];
-          }
-          json.constructionSituation = convertToArray(json.constructionSituation);
-
-          json.implementation = convertToArray(json.implementation);
-
-
-          if (json.planStartTime && json.planStartTime != "") {
-            json.planStartTime = dateTrans(json.planStartTime);
-          }
-          if (json.planEndTime && json.planEndTime != "") {
-            json.planEndTime = dateTrans(json.planEndTime);
-          }
-
-
-          if (json.mappingUnit) {
-            if (json.mappingUnit.no instanceof String) {
-              json.mappingUnit.no = [{ noValue: json.mappingUnit.no }];
-            }
-            if (json.mappingUnit.no instanceof Array) {
-              if (json.mappingUnit.no[0] instanceof String) {
-                var list = [];
-                for (var i = 0; i < json.mappingUnit.no.length; ++i) {
-                  var item = { noValue: json.mappingUnit.no[i] };
-                  list.push(item);
-                }
-                json.mappingUnit.no = list;
-              }
-            }
-            json.mappingUnit.no = convertToArray(json.mappingUnit.no);
-
-
-          }
-
+          json = formatOldJson(json);
+         
           this.data = json;
 
           this.filterFileList();
