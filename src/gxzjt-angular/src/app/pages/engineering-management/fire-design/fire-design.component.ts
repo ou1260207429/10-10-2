@@ -257,7 +257,7 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
    * 点击查询
    */
   query() {
-    
+
 
 
     this.param.page = 1;
