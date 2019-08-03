@@ -151,12 +151,12 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
    * 获取市县区的接口
    */
   getAreaDropdown() {
-    let addressData = this.data.engineeringCitycountyAndDistrict;
     this._homeServiceProxy.getAreaDropdown().subscribe(data => {
       this.position = classTreeChildrenArray([JSON.parse(data)]);
+      let addressData = this.data.engineeringCitycountyAndDistrict;
       if (addressData.length > 0) {
         this.getAddress(addressData, addressData[0], this.position, 0, 'address', 'AreaId');
-      }
+      };
     })
   }
 
@@ -169,7 +169,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
       let engineeringNo = this.data.engineeringNo;
       if (engineeringNo.length > 0) {
         this.getAddress(engineeringNo, engineeringNo[0], this.engineeringList, 0, 'examination', 'ID');
-      }
+      };
     })
   }
 
@@ -182,6 +182,10 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     // this.data.engineeringId = lodash.cloneDeep(v); 
     // const list = this.publicModel.positionTreeArray(this.engineeringList, 'value', v, []) 
     // this.data.engineeringNo = list[list.length - 1].id  
+    if (v.length > 0) {
+      var lastId = v[v.length - 1];
+      this.data.FlowTemplateSuffix = this.publicModel.findFlowTemplateSuffix(this.engineeringList, lastId);
+    }
   }
 
 

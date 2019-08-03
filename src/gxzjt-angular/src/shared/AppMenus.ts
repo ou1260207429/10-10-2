@@ -204,25 +204,7 @@ export class AppMenus {
 
       ]
     },
-    // {
-    //   text: "权限管理",
-    //   icon: { type: "icon", value: "team" },// 图标
-    //   alc:[AppMenus.aclCompany,AppMenus.aclSys],
-    //   children: [
-    //     {
-    //       text: "组织架构管理",
-    //       link: "/app/permission/org-manager",
-    //     },
-    //     {
-    //       text: "用户管理",
-    //       link: "/app/permission/user-manager",
-    //     },
-    //     {
-    //       text: "角色管理",
-    //       link: "/app/permission/role-manager",
-    //     },
-    //   ]
-    // },
+
     {
       text: "",
       i18n: "用户中心",
@@ -437,7 +419,25 @@ export class AppMenus {
 
   static MenusCompy: Menu[] = [
 
+    {
+      text: "",
+      i18n: "工作事项",
+      icon: { type: "icon", value: "bars" },// 图标
+      acl: [AppMenus.aclSys, AppMenus.aclOrg],
+      children: [
+        {
+          text: "",
+          i18n: "待办",
+          link: "/app/work-matters/agencyDoneComponent",
+        },
+        {
+          text: "",
+          i18n: "已办",
+          link: "/app/work-matters/alreadyDoneComponent",
+        }
 
+      ]
+    },
 
     {
       text: "",

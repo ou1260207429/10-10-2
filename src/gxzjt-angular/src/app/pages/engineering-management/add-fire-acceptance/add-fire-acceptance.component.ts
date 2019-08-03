@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { objDeleteType, timeTrans, checkArrayString } from 'infrastructure/regular-expression';
+import { objDeleteType, dateTrans, checkArrayString } from 'infrastructure/regular-expression';
 import { NzMessageService } from 'ng-zorro-antd';
 import { OptionsEnum, ArchitectureTypeEnum } from 'infrastructure/expression';
 import { PublicModel } from 'infrastructure/public-model';
@@ -226,25 +226,28 @@ export class AddFireAcceptanceComponent implements OnInit {
       if (data.formJson != null && data.formJson != "") {
         var jsonData = JSON.parse(data.formJson);
 
-        if (jsonData.dateOfReview) {
-          jsonData.dateOfReview = timeTrans(jsonData.dateOfReview);
+        if (jsonData.dateOfReview && jsonData.dateOfReview != '') {
+          jsonData.dateOfReview = dateTrans(jsonData.dateOfReview);
 
         }
+
+        if (jsonData.detectionUnit == null) {
+          jsonData.detectionUnit = {};
+        }
+        if (jsonData.implementation == null) {
+          jsonData.implementation = [];
+        }
+
+        if (jsonData.constructionSituation == null) {
+          jsonData.constructionSituation = [];
+        }
+        jsonData.constructionSituation = convertToArray(jsonData.constructionSituation);
+        console.log(jsonData.implementation)
+        jsonData.implementation = convertToArray(jsonData.implementation);
+
 
         this.data = jsonData;
 
-        if (this.data.detectionUnit == null) {
-          this.data.detectionUnit = {};
-        }
-        if (this.data.implementation == null) {
-          this.data.implementation = {};
-        }
-
-        if (this.data.constructionSituation == null) {
-          this.data.constructionSituation = {};
-        }
-        this.data.constructionSituation = convertToArray(this.data.constructionSituation);
-        this.data.implementation = convertToArray(this.data.implementation);
 
 
         if (this.data.supervision == null) {
@@ -339,7 +342,7 @@ export class AddFireAcceptanceComponent implements OnInit {
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 2;
     this.flowFormDto.projectTypeStatu = 1;
-    this.data.dateOfReview = !this.data.dateOfReview ? '' : timeTrans(this.data.dateOfReview);
+    this.data.dateOfReview = !this.data.dateOfReview ? '' : dateTrans(this.data.dateOfReview);
     this._applyService.temporarySava(this.flowFormDto).subscribe(data => {
       this.savingDraft = false;
       this.flowFormDto.projectId = data;

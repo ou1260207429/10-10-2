@@ -1,3 +1,561 @@
-<p>
-  acceptance-management-print works!
-</p>
+<div class="printWrap" style="width:774px; margin: 0 auto;padding: 0 20px; ">
+    <div *ngIf="data" class="formPrint" style="display: flex;">
+        <div class="title">
+            建设工程消防设计审查申报表
+        </div>
+        <div class="row">
+            <div class="minTitle">建设单位:</div>
+            <div class="unit borderRight">
+                {{data.jsconstructionUnit}}
+            </div>
+            <div class="minTitle">法定代表人/主要负责人:</div>
+            <div class="value borderRight">
+                {{data.legalRepresentative}}
+            </div>
+            <div class="minTitle" style="width: 110px;">联系电话:</div>
+            <div clas="value" style="width: 125px;">
+                {{data.legalRepresentativeNo}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="minTitle">工程名称:</div>
+            <div class="unit borderRight">
+                {{data.projectName}}
+            </div>
+            <div class="minTitle">联系人:</div>
+            <div class="value borderRight">
+                {{data.contacts}}
+            </div>
+            <div class="minTitle" style="width: 110px;">联系电话:</div>
+            <div clas="value" style="width: 125px;">
+                {{data.contactsNumber}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="minTitle">使用性质:</div>
+            <div style="width: 512px;">{{data.useNature}}</div>
+        </div>
+        <div class="row">
+            <div class="minTitle">工程地址:</div>
+            <div style="width: 512px;">{{data.address}}{{data.engineeringAddress}}</div>
+        </div>
+        <div class="row">
+            <div class="minTitle">审批单位:</div>
+            <div style="width: 512px;">{{data.examination}}</div>
+        </div>
+
+        <div class="row">
+            <div class="minTitle">类别:</div>
+            <div style="flex-grow: 1">
+                <span>
+                    <img class="radioChecked" *ngIf="data.projectCategoryId=='新建'"
+                        src="../../../assets/images/radiochecked.png" alt="">
+                    <img class="radioChecked" *ngIf="data.projectCategoryId!='新建'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>新建</span>
+                </span>
+                <span>
+                    <img class="radioChecked" *ngIf="data.projectCategoryId=='扩建'"
+                        src="../../../assets/images/radiochecked.png" alt="">
+                    <img class="radioChecked" *ngIf="data.projectCategoryId!='扩建'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>扩建</span>
+                </span>
+                改建(
+                <span>
+                    <img class="radioChecked" *ngIf="data.projectCategoryId=='装修'"
+                        src="../../../assets/images/radiochecked.png" alt="">
+                    <img class="radioChecked" *ngIf="data.projectCategoryId!='装修'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>装修</span>
+                </span>
+                <span>
+                    <img class="radioChecked" *ngIf="data.projectCategoryId=='建筑保温'"
+                        src="../../../assets/images/radiochecked.png" alt="">
+                    <img class="radioChecked" *ngIf="data.projectCategoryId!='建筑保温'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>建筑保温</span>
+                </span>
+                <span>
+                    <img class="radioChecked" *ngIf="data.projectCategoryId=='改变用途'"
+                        src="../../../assets/images/radiochecked.png" alt="">
+                    <img class="radioChecked" *ngIf="data.projectCategoryId!='改变用途'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>改变用途</span>
+                </span>
+                )
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="minTitle">《建设工程消防设计审查意见书》文号:</div>
+            <div style="width: 248px; border-right: 1px solid #e2e2e2;
+          box-sizing: border-box;">{{data.symbol}}</div>
+            <div class="minTitle">审查日期:</div>
+            <div style="width: 248px;">{{data.dateOfReview}}</div>
+        </div>
+
+        <div class="row">
+            <div class="minTitle">施工许可证编号:</div>
+            <div style="width: 512px;">{{data.constructionPermitNumber}}</div>
+        </div>
+        <div class="row">
+            <div class="minTitle">主体消防验收意见书编号:</div>
+            <div style="width: 512px;">{{data.mainAdiseNo}}</div>
+        </div>
+        <div class="row">
+            <div class="minTitle">检测报告编号:</div>
+            <div style="width: 512px;">{{data.testReportNumber}}</div>
+        </div>
+
+
+        <div class="row">
+            <div class="minTitle">单位类别</div>
+            <div class="minTitle" style="width: 128px;">单位名称</div>
+            <div class="minTitle">资质等级</div>
+            <div class="minTitle">法定代表人/主要负责人</div>
+            <div class="minTitle">联系人</div>
+            <div class="minTitle">联系电话</div>
+        </div>
+        <div class="row" *ngFor="let item of data.design;">
+            <div class="minTitle">设计单位</div>
+            <div class="minTitleFlow" style="width: 128px;">{{item.designUnit}}</div>
+            <div class="minTitleFlow">{{item.qualificationLevel}}</div>
+            <div class="minTitleFlow">{{item.legalRepresentative}}</div>
+            <div class="minTitleFlow">{{item.contacts}}</div>
+            <div class="minTitleFlow">{{item.contactsNumber}}</div>
+        </div>
+
+        <div class="row" *ngFor="let item of data.constructionUnit;">
+            <div class="minTitle">施工单位</div>
+            <div class="minTitleFlow" style="width: 128px;">{{item.designUnit}}</div>
+            <div class="minTitleFlow">{{item.qualificationLevel}}</div>
+            <div class="minTitleFlow">{{item.legalRepresentative}}</div>
+            <div class="minTitleFlow">{{item.contacts}}</div>
+            <div class="minTitleFlow">{{item.contactsNumber}}</div>
+        </div>
+
+        <div class="row">
+            <div class="minTitle">监理单位</div>
+            <div class="minTitleFlow" style="width: 128px;">{{data.constructionControlUnit.designUnit}}</div>
+            <div class="minTitleFlow">{{data.constructionControlUnit.qualificationLevel}}</div>
+            <div class="minTitleFlow">{{data.constructionControlUnit.legalRepresentative}}</div>
+            <div class="minTitleFlow">{{data.constructionControlUnit.contacts}}</div>
+            <div class="minTitleFlow">{{data.constructionControlUnit.contactsNumber}}</div>
+        </div>
+
+        <div class="row">
+            <div class="minTitle">检测单位</div>
+            <div class="minTitleFlow" style="width: 128px;">{{data.detectionUnit.designUnit}}</div>
+            <div class="minTitleFlow">{{data.detectionUnit.qualificationLevel}}</div>
+            <div class="minTitleFlow">{{data.detectionUnit.legalRepresentative}}</div>
+            <div class="minTitleFlow">{{data.detectionUnit.contacts}}</div>
+            <div class="minTitleFlow">{{data.detectionUnit.contactsNumber}}</div>
+        </div>
+
+        <div class="tableTopTitle">
+            工程基本情况
+        </div>
+        <div class="row">
+            <div class="minTitle">单体建筑名称</div>
+            <div class="minTitle" style="width: 105px;">结构类型</div>
+            <div class="minTitle" style="width:90px;">耐火等级</div>
+            <div class="minTitle"
+                style="display: flex;flex-direction: column;padding: 0;text-align: center;width: 100px;">
+                <div style="border-bottom: 1px solid #e2e2e2;padding: 13px 0;box-sizing: border-box;width: 100%;">层数
+                </div>
+                <div style="display: flex;">
+                    <div style="border-right: 1px solid #e2e2e2;padding: 11px 5px;width: 50px;box-sizing: border-box;">
+                        地上
+                    </div>
+
+                    <div style="text-align: center;padding: 11px 5px;width: 50px;box-sizing: border-box;width: 50px;">
+                        地下
+                    </div>
+                </div>
+            </div>
+            <div class="minTitle borderRight" style="text-align: center;width: 98px;">建筑高度（m）</div>
+
+            <div class="minTitle borderRight" style="text-align: center;width: 98px;">占地面积<br />（m<sup>2</sup>）</div>
+
+            <div class="minTitle" style="display: flex;flex-direction: column;padding: 0;text-align: center">
+                <div style="border-bottom: 1px solid #e2e2e2;padding: 13px 0;box-sizing: border-box;width: 100%;">
+                    建筑面积（m<sup>2</sup>）</div>
+                <div style="display: flex;">
+                    <div style="border-right: 1px solid #e2e2e2;padding: 11px 5px;width: 50px;box-sizing: border-box;">
+                        地上
+                    </div>
+
+                    <div style="width: 50px;text-align: center;padding: 11px 5px;flex-grow: 1;">
+                        地下
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row" *ngFor="let item of data.basicInformation;">
+            <div class="borderRight" style="width:121px;">{{item.name}}</div>
+            <div class="borderRight" style="width:105px;">{{item.type}}</div>
+            <div class="borderRight" style="width: 90px;">{{item.grade}}</div>
+            <div class="borderRight" style="width: 50px;">{{item.aboveGround}}</div>
+            <div class="borderRight" style="width: 50px;">{{item.underground}}</div>
+            <div class="borderRight" style="width: 98px;">{{item.height}}</div>
+            <div class="borderRight" style="width: 98px;">{{item.areaCovered}}</div>
+            <div class="borderRight" style="width: 60px;">{{item.jzmjaboveGround}}</div>
+            <div style="width: 60px;">{{item.jzmjunderground}}</div>
+        </div>
+        <div class="tableTopTitle">
+            储 罐
+        </div>
+
+        <div class="row">
+            <div class="fontWeight borderRight" style="width: 121px;">储存物质名称</div>
+            <div class="fontWeight borderRight" style="width: 95px;">总容量（m3）</div>
+            <div class="fontWeight borderRight" style="width: 133px;">设置位置</div>
+            <div class="fontWeight borderRight" style="width: 150px;">储存形式</div>
+            <div class="fontWeight" style="width: 240px;">设置型式</div>
+        </div>
+        <div class="row" *ngFor="let item of data.storageTank;">
+            <div class="borderRight" style="width: 121px;">{{item.name}}</div>
+            <div class="borderRight" style="width: 95px;">{{item.totalCapacity}}</div>
+            <div class="borderRight" style="width: 133px;">{{item.position}}</div>
+            <div class="borderRight" style="width: 150px;">
+                <span>
+                    <img class="radioChecked" *ngIf="item.storageForm=='地上'"
+                        src="../../../assets/images/radiochecked.png" alt="">
+                    <img class="radioChecked" *ngIf="item.storageForm!='地上'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>地上</span>
+                </span>
+
+
+                <span>
+                    <img class="radioChecked" *ngIf="item.storageForm=='半地下'"
+                        src="../../../assets/images/radiochecked.png" alt="">
+                    <img class="radioChecked" *ngIf="item.storageForm!='半地下'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>半地下</span>
+                </span>
+
+
+                <span>
+                    <img class="radioChecked" *ngIf="item.storageForm=='地下'"
+                        src="../../../assets/images/radiochecked.png" alt="">
+                    <img class="radioChecked" *ngIf="item.storageForm!='地下'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>地下</span>
+                </span>
+            </div>
+            <div style="width: 240px;">
+                浮顶罐(
+                <span>
+                    <img class="radioChecked" *ngIf="item.setupType=='外'" src="../../../assets/images/radiochecked.png"
+                        alt="">
+                    <img class="radioChecked" *ngIf="item.setupType!='外'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>外</span>
+                </span>
+
+                <span>
+                    <img class="radioChecked" *ngIf="item.setupType=='内'" src="../../../assets/images/radiochecked.png"
+                        alt="">
+                    <img class="radioChecked" *ngIf="item.setupType!='内'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>内</span>
+                </span>
+                <span>
+                    <img class="radioChecked" *ngIf="item.setupType=='固定顶罐'"
+                        src="../../../assets/images/radiochecked.png" alt="">
+                    <img class="radioChecked" *ngIf="item.setupType!='固定顶罐'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>固定顶罐</span>
+                </span>
+                <span>
+                    <img class="radioChecked" *ngIf="item.setupType=='卧式罐'"
+                        src="../../../assets/images/radiochecked.png" alt="">
+                    <img class="radioChecked" *ngIf="item.setupType!='卧式罐'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>卧式罐</span>
+                </span>
+
+
+
+
+
+
+                <br />
+                球形罐(
+
+                <span>
+                    <img class="radioChecked" *ngIf="item.setupType=='液体'" src="../../../assets/images/radiochecked.png"
+                        alt="">
+                    <img class="radioChecked" *ngIf="item.setupType!='液体'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>液体</span>
+                </span>
+                <span>
+                    <img class="radioChecked" *ngIf="item.setupType=='气体'" src="../../../assets/images/radiochecked.png"
+                        alt="">
+                    <img class="radioChecked" *ngIf="item.setupType!='气体'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>气体</span>
+                </span>
+
+
+
+                <br>
+                可燃气体储罐(
+                <span>
+                    <img class="radioChecked" *ngIf="item.setupType=='干式'" src="../../../assets/images/radiochecked.png"
+                        alt="">
+                    <img class="radioChecked" *ngIf="item.setupType!='干式'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>干式</span>
+                </span>
+                <span>
+                    <img class="radioChecked" *ngIf="item.setupType=='湿式'" src="../../../assets/images/radiochecked.png"
+                        alt="">
+                    <img class="radioChecked" *ngIf="item.setupType!='湿式'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>湿式</span>
+                </span>
+                <span>
+                    <img class="radioChecked" *ngIf="item.setupType=='其他'" src="../../../assets/images/radiochecked.png"
+                        alt="">
+                    <img class="radioChecked" *ngIf="item.setupType!='其他'"
+                        src="../../../assets/images/radioUnchecked.png" alt="">
+                    <span>其他</span>
+                </span>)
+
+
+
+
+
+            </div>
+        </div>
+        <div class="tableTopTitle">
+            堆 场
+        </div>
+        <div class="row">
+            <div class="fontWeight borderRight" style="text-align: center;width: 368px;">储 量</div>
+            <div class="fontWeight borderRight" style="text-align: center;width: 365px;">储存物质名称</div>
+        </div>
+        <div class="row" *ngFor="let item of data.yard;">
+            <div class="borderRight" style="text-align: center;width: 368px;">{{item.reserves}}</div>
+            <div class="borderRight" style="text-align: center;width: 365px;">{{item.name}}</div>
+        </div>
+        <div class="row">
+            <div class="minTitle">建筑保温</div>
+            <div style="display: flex;padding: 0;flex-direction: column;">
+                <div style="display: flex;padding: 0;">
+                    <div class="fontWeight"
+                        style="width: 100px;border-right: 1px solid #e2e2e2;padding: 10px;box-sizing: border-box;">
+                        材料类别
+                    </div>
+                    <div style="width: 245px;border-right: 1px solid #e2e2e2;padding: 10px;box-sizing: border-box;">
+                        <span>
+                            <img class="radioChecked" *ngIf="data.buildingThermalInsulation.type=='A'"
+                                src="../../../assets/images/radiochecked.png" alt="">
+                            <img class="radioChecked" *ngIf="data.buildingThermalInsulation.type!='A'"
+                                src="../../../assets/images/radioUnchecked.png" alt="">
+                            <span>A</span>
+                        </span>
+                        <span>
+                            <img class="radioChecked" *ngIf="data.buildingThermalInsulation.type=='B1'"
+                                src="../../../assets/images/radiochecked.png" alt="">
+                            <img class="radioChecked" *ngIf="data.buildingThermalInsulation.type!='B1'"
+                                src="../../../assets/images/radioUnchecked.png" alt="">
+                            <span>B1</span>
+                        </span>
+                        <span>
+                            <img class="radioChecked" *ngIf="data.buildingThermalInsulation.type=='B2'"
+                                src="../../../assets/images/radiochecked.png" alt="">
+                            <img class="radioChecked" *ngIf="data.buildingThermalInsulation.type!='B2'"
+                                src="../../../assets/images/radioUnchecked.png" alt="">
+                            <span>B2</span>
+                        </span>
+
+                    </div>
+                    <div class="fontWeight"
+                        style="width: 100px;border-right: 1px solid #e2e2e2;padding: 10px;box-sizing: border-box;">
+                        保温层数
+                    </div>
+                    <div style="width: 168px;">{{data.buildingThermalInsulation.layerNumber}}</div>
+                </div>
+                <div style="display: flex;padding: 0;">
+                    <div class="fontWeight"
+                        style="width: 100px;border-right: 1px solid #e2e2e2;padding: 10px;border-top: 1px solid #e2e2e2;box-sizing: border-box;">
+                        使用性质
+                    </div>
+                    <div
+                        style="width: 245px;border-right: 1px solid #e2e2e2;padding: 10px;border-top: 1px solid #e2e2e2;box-sizing: border-box;">
+                        {{data.buildingThermalInsulation.useNature}}</div>
+                    <div class="fontWeight"
+                        style="width: 100px;border-right: 1px solid #e2e2e2;padding: 10px;border-top: 1px solid #e2e2e2;box-sizing: border-box;">
+                        原有用途
+                    </div>
+                    <div style="width: 168px;padding: 10px;border-top: 1px solid #e2e2e2;box-sizing: border-box;">
+                        {{data.buildingThermalInsulation.originallyUsed}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="minTitle">装修工程</div>
+            <div style="display: flex;padding: 0;flex-direction: column;">
+                <div style="display: flex;padding: 0;">
+                    <div class="fontWeight"
+                        style="width: 100px;border-right: 1px solid #e2e2e2;padding: 10px;border-bottom: 1px solid #e2e2e2;box-sizing: border-box;">
+                        装修部位
+                    </div>
+                    <div style="padding: 15px;width: 512px;border-bottom: 1px solid #e2e2e2;box-sizing: border-box;">
+
+                        <span *ngFor="let box of data.decorationProject.decorationSite">
+                            <img class="radioChecked" *ngIf="box.value" src="../../../../assets/images/radiochecked.png"
+                                alt="">
+                            <img class="radioChecked" *ngIf="!box.value"
+                                src="../../../../assets/images/radioUnchecked.png" alt="">
+                            <span>
+                                {{box.label}}
+                            </span>
+                        </span>
+
+                    </div>
+                </div>
+                <div style="display: flex;padding: 0;">
+                    <div class="fontWeight"
+                        style="width: 100px;border-right: 1px solid #e2e2e2;padding: 10px;box-sizing: border-box;">
+                        装修面积（㎡）
+                    </div>
+                    <div style="width: 245px;border-right: 1px solid #e2e2e2;padding: 10px;box-sizing: border-box;">
+                        {{data.decorationProject.decorationArea}}</div>
+                    <div class="fontWeight"
+                        style="width: 100px;border-right: 1px solid #e2e2e2;padding: 10px;box-sizing: border-box;">
+                        装修层数
+                    </div>
+                    <div style="width: 168px;">{{data.decorationProject.decorationFloorNumber}}</div>
+                </div>
+                <div style="display: flex;padding: 0;">
+                    <div class="fontWeight"
+                        style="width: 100px;border-right: 1px solid #e2e2e2;padding: 10px;border-top: 1px solid #e2e2e2;box-sizing: border-box;">
+                        使用性质
+                    </div>
+                    <div
+                        style="width: 245px;border-right: 1px solid #e2e2e2;padding: 10px;border-top: 1px solid #e2e2e2;box-sizing: border-box;">
+                        {{data.decorationProject.useNature}}</div>
+                    <div class="fontWeight"
+                        style="width: 100px;border-right: 1px solid #e2e2e2;padding: 10px;border-top: 1px solid #e2e2e2;box-sizing: border-box;">
+                        原有用途
+                    </div>
+                    <div style="width: 168px;padding: 10px;border-top: 1px solid #e2e2e2;box-sizing: border-box;">
+                        {{data.decorationProject.originallyUsed}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="minTitle">消防设施</div>
+            <div style="width: 560px;">
+                <span *ngFor="let box of data.fireFightingFacilities;">
+                    <img *ngIf="box.value" src="../../../../assets/images/checked.png" alt="">
+                    <img *ngIf="!box.value" src="../../../../assets/images/unchecked.png" alt="">
+                    <span>
+                        {{box.label}}
+                    </span>
+                </span>
+
+            </div>
+        </div>
+        <div class="row" style="flex-direction: column;">
+            <div class="fontWeight">一、 经审查合格的消防设计文件实施情况</div>
+            <div *ngFor="let item of data.implementation;" style="display: flex;flex-direction: column;">
+                <div>{{item.opinion}}</div>
+                <div style="margin: 5px 0;
+                text-align: right;">
+                    <span>设计单位: </span><span
+                        style="display: inline-block;min-width: 100px;text-align: left;">{{item.designUnit}}</span>
+                </div>
+                <div style=" text-align: right;">
+                    <span>设计单位项目负责人签名：</span><span
+                        style="display: inline-block;min-width: 100px;text-align: left;">{{item.personInChargeName}}</span>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row" style="flex-direction: column;">
+            <div class="fontWeight"> 二、消防施工情况</div>
+            <div *ngFor="let item of data.constructionSituation;" style="display: flex;flex-direction: column;">
+                <div>{{item.opinion}}</div>
+                <div style="margin: 5px 0;
+                text-align: right;">
+                    <span>施工单位: </span><span
+                        style="display: inline-block;min-width: 100px;text-align: left;">{{item.contractingUnit}}</span>
+                </div>
+                <div style=" text-align: right;">
+                    <span>项目经理签名：</span><span
+                        style="display: inline-block;min-width: 100px;text-align: left;">{{item.projectManagerName}}</span>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row" style="flex-direction: column;">
+            <div class="fontWeight"> 三、工程监理情况</div>
+            <div>{{data.supervision.opinion}}</div>
+            <div style="display: flex;flex-direction: column;">
+                <div style="margin: 5px 0;
+            text-align: right;">
+                    <span>监理单位: </span><span
+                        style="display: inline-block;min-width: 100px;text-align: left;">{{data.supervision.constructionControlUnit}}</span>
+                </div>
+                <div style=" text-align: right;">
+                    <span>项目总监理工程师签名：</span><span
+                        style="display: inline-block;min-width: 100px;text-align: left;">{{data.supervision.signatureOfChiefEngineer}}</span>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row" style="flex-direction: column;">
+            <div class="fontWeight"> 四、建筑消防设施检测情况</div>
+            <div>{{data.detection.opinion}}</div>
+            <div style="display: flex;flex-direction: column;">
+                <div style="margin: 5px 0;
+                text-align: right;">
+                    <span>检测单位： </span><span
+                        style="display: inline-block;min-width: 100px;text-align: left;">{{data.detection.detectionUnit}}</span>
+                </div>
+                <div style=" text-align: right;">
+                    <span>项目负责人签名：</span><span
+                        style="display: inline-block;min-width: 100px;text-align: left;">{{data.detection.personInChargeName}}</span>
+                </div>
+            </div>
+
+        </div>
+        <div class="row" style="flex-direction: column;">
+            <div class="fontWeight"> 五、竣工验收情况</div>
+            <div>{{data.acceptance.opinion}}</div>
+            <div style="display: flex;flex-direction: column;">
+                <div style="margin: 5px 0;
+                text-align: right;">
+                    <span>建设单位： </span><span
+                        style="display: inline-block;min-width: 100px;text-align: left;">{{data.acceptance.constructionUnit}}</span>
+                </div>
+                <div style=" text-align: right;">
+                    <span>项目负责人签名：</span><span
+                        style="display: inline-block;min-width: 100px;text-align: left;">{{data.acceptance.personInChargeName}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="minTitle"> 工程简要说明</div>
+            <div style="width: 580px;">{{data.engineerinDescription}}</div>
+        </div>
+        <div class="row" style="flex-direction: column;">
+            <div> 其他需要说明的情况：</div>
+            <div>{{data.remarks}}</div>
+        </div>
+    </div>
+</div>

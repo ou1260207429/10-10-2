@@ -6,7 +6,7 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 
 import { RegulationServiceProxy } from '@shared/service-proxies/service-proxies';
 import { PublicModel } from 'infrastructure/public-model';
-import { timeTrans } from 'infrastructure/regular-expression';
+import { dateTrans } from 'infrastructure/regular-expression';
 
 import { PublicFormComponent } from '../public/public-form.component';
 
@@ -127,10 +127,10 @@ export class PoliciesAndRegulationsComponent extends PublicFormComponent impleme
     this.formResultData = [];
     this.isSearchForm = true;
     if (params.startTime) {
-      params.startTime = timeTrans(params.startTime) + " 00:00:00"
+      params.startTime = dateTrans(params.startTime) + " 00:00:00"
     }
     if (params.endTime) {
-      params.endTime = timeTrans(params.endTime) + " 23:59:59"
+      params.endTime = dateTrans(params.endTime) + " 23:59:59"
     }
     this._regulationServiceProxy.regulationListAsync(params).subscribe(data => {
       this.isSearchForm = false;
