@@ -174,7 +174,9 @@ export function formateTime(src: Date): string {
     + ':' + format2Num(src.getMinutes())
     + ':' + format2Num(src.getSeconds());
 
-
+  if (result == "NaN/NaN/NaN NaN:NaN:NaN") {
+    return "";
+  }
 
 
   return result;
@@ -232,6 +234,9 @@ export function formateDate(src: Date): string {
     + '/' + format2Num(src.getMonth() + 1)
     + '/' + format2Num(src.getDate());
 
+  if (result == "NaN/NaN/NaN") {
+    return "";
+  }
   return result;
 }
 
