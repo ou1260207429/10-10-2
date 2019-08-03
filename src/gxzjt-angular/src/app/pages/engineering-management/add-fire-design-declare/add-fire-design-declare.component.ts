@@ -2,7 +2,7 @@ import { ApplyServiceServiceProxy, FlowFormQueryDto, FlowFormDto, FlowDataDto, P
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { ActivatedRoute } from '@angular/router';
-import { timeTrans, checkArrayString, dateGetDay } from 'infrastructure/regular-expression';
+import { dateTrans, checkArrayString, dateGetDay } from 'infrastructure/regular-expression';
 import { PublicModel } from 'infrastructure/public-model';
 import { GXZJT_From, FlowServices } from 'services/flow.services';
 import { FormGroup } from '@angular/forms';
@@ -13,7 +13,7 @@ import { AppSessionService } from '@shared/session/app-session.service';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { ReuseTabService } from '@delon/abc';
 
-import { convertToArray } from "@shared/utils/array"
+import { formatOldJson } from "@shared/utils/array"
 import { advanceActivatedRoute } from '@angular/router/src/router_state';
 import { debug } from 'util';
 
@@ -591,28 +591,10 @@ export class AddFireDesignDeclareComponent implements OnInit {
         var json = JSON.parse(data.formJson);
 
 
-        if (json.planStartTime && json.planStartTime != "") {
-          json.planStartTime = timeTrans(json.planStartTime);
-        }
-        if (json.planEndTime && json.planEndTime != "") {
-          json.planEndTime = timeTrans(json.planEndTime);
-        }
 
 
-        if (json.mappingUnit.no instanceof String) {
-          json.mappingUnit.no = [{ noValue: json.mappingUnit.no }];
-        }
-        if (json.mappingUnit.no instanceof Array) {
-          if (json.mappingUnit.no[0] instanceof String) {
-            var list = [];
-            for (var i = 0; i < json.mappingUnit.no.length; ++i) {
-              var item = { noValue: json.mappingUnit.no[i] };
-              list.push(item);
-            }
-            json.mappingUnit.no = list;
-          }
-        }
-        json.mappingUnit.no = convertToArray(json.mappingUnit.no);
+
+        json = formatOldJson(json);
 
 
         this.data = json;
@@ -842,8 +824,8 @@ export class AddFireDesignDeclareComponent implements OnInit {
 
     this.filterFileList();
 
-    this.data.planStartTime = !this.data.planStartTime ? '' : timeTrans(this.data.planStartTime);
-    this.data.planEndTime = !this.data.planEndTime ? '' : timeTrans(this.data.planEndTime);
+    this.data.planStartTime = !this.data.planStartTime ? '' : dateTrans(this.data.planStartTime);
+    this.data.planEndTime = !this.data.planEndTime ? '' : dateTrans(this.data.planEndTime);
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 1;
     this.flowFormDto.projectTypeStatu = 0;

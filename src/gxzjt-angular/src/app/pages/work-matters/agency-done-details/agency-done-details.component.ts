@@ -15,6 +15,9 @@ import { EventEmiter } from 'infrastructure/eventEmiter';
 import { InitiationProcessAddAuditorComponent } from '@app/components/initiation-process-add-auditor/initiation-process-add-auditor.component';
 import { checkArrayString, timeTrans } from 'infrastructure/regular-expression';
 import { WorkMattersService } from '../work-matters.service'
+
+import { formatOldJson } from '@shared/utils/array';
+
 /**
  * 待办详情->办理页面
  */
@@ -68,6 +71,9 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
   //表单json对象
   formJson: any;
+
+  //表单状态
+  formStatus: number = 1;
 
   workFlowData: any;
 
@@ -156,8 +162,18 @@ export class AgencyDoneDetailsComponent implements OnInit {
     let params = Object.assign(this.printAddress, this.formJson)
     let result = JSON.stringify(params)
     localStorage.setItem('jsonPrintForm', result);
-    this.router.navigate([`/app/print-pages/FiewDesignDeclarePrintComponent`]);
+
+    if (this.formJson && this.flowPathType == 1) {
+      this.router.navigate([`/app/print-pages/FiewDesignDeclarePrintComponent`]);
+
+    } else if (this.formJson && this.flowPathType == 2) {
+      this.router.navigate([`/app/print-pages/AcceptanceManagementPrintComponent`]);
+    } else if (this.formJson && this.flowPathType == 3) {
+      this.router.navigate([`/app/print-pages/CompletedAcceptancePrintComponent`]);
+    }
   }
+
+  //这是个很鬼畜的公用获取方法，兼容旧数据大部分在这里
   init() {
     this.getWorkFlow_NodeRecordAndAuditorRecords()
 
@@ -179,7 +195,13 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
       //获取JSON和节点信息
       Promise.all([this.post_GetFlowFormData(flowFormQueryDto), this.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow)]).then((value: any) => {
-        const json = JSON.parse(value[0].formJson);
+        //驳回后重新提交可编辑表单
+        if (value[0].acceptOrderId != null && value[0].acceptOrderId > 0 && value[1].result.nodeViewInfo != null && value[1].result.nodeViewInfo.curNodeName == "建设单位申报") {
+          this.formStatus = 2;
+        }
+
+        var json = JSON.parse(value[0].formJson);
+
         json.constructionUnit = json.constructionUnit instanceof Array ? json.constructionUnit : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }]
         json.design = json.design ? json.design : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }],
           json.engineeringId = json.engineeringId ? json.engineeringId : ''
@@ -200,6 +222,9 @@ export class AgencyDoneDetailsComponent implements OnInit {
           useNature: '',
           originallyUsed: ''
         }
+
+        json = formatOldJson(json);
+
         this.formJson = json;
         this.useNatureSelect = value[0].natures
         this.tenantWorkFlowInstanceDto = this.workFlowData = value[1].result;
@@ -419,7 +444,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
     this.butNzLoading = true
     //if (!bo && this.curNodeName == '业务审批负责人审批') {
-      if (!bo && this.curNodeName != '大厅受理' && this.curNodeName!='业务承办人审核') {
+    if (!bo && this.curNodeName != '大厅受理' && this.curNodeName != '业务承办人审核') {
       // this.noResult((data) => {
       this.tenantWorkFlowInstanceDto.backAuditedNode = {
         nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
@@ -689,7 +714,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.tenantWorkFlowInstanceDto.backAuditedNode = {
       nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
       nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName,
-      details : this.nodeAdvise,
+      details: this.nodeAdvise,
     }
     this._flowServices.tenant_NodeToNextNodeByNoPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
       this.butNzLoading = false;
@@ -742,6 +767,12 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.nodeAdvise = null;
     this.butNzLoading = false;
     this.isAddProducttyepe1 = false;
+  }
+
+
+  //驳回后重新提交申报
+  savePreCheckFile() {
+
   }
 
 

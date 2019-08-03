@@ -109,17 +109,14 @@
 
       <div style="float: left">
         <div style="width: 100%;height: 10px;"></div>
-        <span>建设单位：</span>
-        <input nz-input [(ngModel)]="param.companyName" name="companyName" placeholder="建设单位"
-          style="margin-right: 10px;width: 200px;">
-      </div>
-
-      <div style="float: left">
-        <div style="width: 100%;height: 10px;"></div>
-        <span>申报类别：</span>
-        <nz-select class="search_menu_input" [(ngModel)]="param.orgType" name="orgType" nzPlaceHolder="申报类别"
+        <span>单位类别：</span>
+        <nz-select class="search_menu_input" [(ngModel)]="param.orgType" name="orgType" nzPlaceHolder="全部单位类别"
           nzShowSearch nzAllowClear>
+<<<<<<< HEAD
           <nz-option nzLabel="全部" nzValue="-1"></nz-option>
+=======
+          <nz-option nzLabel="全部单位类别" nzValue="-1"></nz-option>
+>>>>>>> 00b4456f34e9bb3e3fb423968d9c843aab6b9bcd
           <nz-option nzLabel="建设单位" nzValue="1"></nz-option>
           <nz-option nzLabel="设计单位" nzValue="2"></nz-option>
           <nz-option nzLabel="施工单位" nzValue="3"></nz-option>
@@ -129,18 +126,35 @@
           <nz-option nzLabel="分包单位" nzValue="7"></nz-option>
         </nz-select>
       </div>
+      <div style="float: left">
+        <div style="width: 100%;height: 10px;"></div>
+        <span>单位名称：</span>
+        <input nz-input [(ngModel)]="param.companyName" name="companyName" placeholder="单位名称"
+          style="margin-right: 10px;width: 200px;">
+      </div>
+
+     
 
       <div style="float: left">
         <div style="width: 100%;height: 10px;"></div>
         <span>当前环节：</span>
         <nz-select class="search_menu_input" [(ngModel)]="param.currentNodeName" nzPlaceHolder="当前环节"
           name="currentNodeName" nzShowSearch nzAllowClear>
+<<<<<<< HEAD
           <nz-option nzLabel="全部" nzValue="-1"></nz-option>
           <nz-option nzLabel="大厅发放结果" nzValue="0"></nz-option>
           <nz-option nzLabel="大厅受理" nzValue="1"></nz-option>
           <nz-option nzLabel="完结" nzValue="2"></nz-option>
           <nz-option nzLabel="业务承办人审核" nzValue="3"></nz-option>
           <nz-option nzLabel="业务审批负责人审批" nzValue="4"></nz-option>
+=======
+          <nz-option nzLabel="全部当前环节" nzValue=""></nz-option>
+          <nz-option nzLabel="大厅发放结果" nzValue="大厅发放结果"></nz-option>
+          <nz-option nzLabel="大厅受理" nzValue="大厅受理"></nz-option>
+          <nz-option nzLabel="完结" nzValue="完结"></nz-option>
+          <nz-option nzLabel="业务承办人审核" nzValue="业务承办人审核"></nz-option>
+          <nz-option nzLabel="业务审批负责人审批" nzValue="业务审批负责人审批"></nz-option>
+>>>>>>> 00b4456f34e9bb3e3fb423968d9c843aab6b9bcd
         </nz-select>
       </div>
 
@@ -165,6 +179,7 @@
           <nz-option nzLabel="不受理" nzValue="2"></nz-option>
           <nz-option nzLabel="不合格" nzValue="3"></nz-option>
           <nz-option nzLabel="合格" nzValue="4"></nz-option>
+          <nz-option nzLabel="未抽中" nzValue="5"></nz-option>
         </nz-select>
       </div>
 

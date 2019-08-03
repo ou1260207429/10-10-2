@@ -39,7 +39,8 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
-
+  @Output() private printOuter = new EventEmitter();
+  printData = { address: '', examination: '' };
   //抽取号
   // decimationnumber: any;
 
@@ -92,13 +93,35 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
       }, 500)
     }
   }
+  ngAfterViewInit(): void {
+    console.log(this.data)
+    this.printOuter.emit(this.printData);
+  }
+  /**
+  * 获取工程地址中文
+  */
+  getAddress(data, value, arr, i, str, valueName) {
+    if (i < data.length) {
+      arr.forEach(element => {
+        if (element[valueName] == value) {
+          this.printData[str] += i < (data.length - 1) ? element.Name + '/' : element.Name;
+          i = i + 1;
+          this.getAddress(data, data[i], element.Children, i, str, valueName);
+        }
+      });
+    }
 
+  }
   /**
   * 获取市县区的接口
   */
   getAreaDropdown() {
     this._homeServiceProxy.getAreaDropdown().subscribe(data => {
       this.position = classTreeChildrenArray([JSON.parse(data)]);
+      let addressData = this.data.engineeringCitycountyAndDistrict;
+      if (addressData.length > 0) {
+        this.getAddress(addressData, addressData[0], this.position, 0, 'address', 'AreaId');
+      };
 
     })
   }
@@ -109,6 +132,10 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   getOrganizationTree() {
     this._publicServices.getOrganizationTree().subscribe((data: any) => {
       this.engineeringList = newClassTreeChildrenArray([JSON.parse(data.result)]);
+      let engineeringNo = this.data.engineeringNo;
+      if (engineeringNo.length > 0) {
+        this.getAddress(engineeringNo, engineeringNo[0], this.engineeringList, 0, 'examination', 'ID');
+      };
     })
   }
 
@@ -122,6 +149,11 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     // const list = this.publicModel.positionTreeArray(this.engineeringList, 'value', v, []) 
     // this.data.engineeringNo = list[list.length - 1].id 
     // console.log(list) 
+
+    if (v.length > 0) {
+      var lastId = v[v.length - 1];
+      this.data.FlowTemplateSuffix = this.publicModel.findFlowTemplateSuffix(this.engineeringList, lastId);
+    }
   }
 
 
@@ -145,7 +177,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
       list.forEach(item => {
         this.data.engineeringNo.push(item.value);
 
-       
+
       })
 
       this.data.FlowTemplateSuffix = list[list.length - 1].FlowTemplateSuffix;

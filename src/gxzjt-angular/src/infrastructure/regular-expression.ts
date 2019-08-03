@@ -120,16 +120,19 @@ function dateParse(dateString: string): Date {
 
 
 export function timeTrans(src: any): string {
-
+  if (src == "") {
+    return "";
+  }
   if ("string" == typeof src) {
-    if (src == "") {
-      return formateDate(new Date());
-    }
+
     try {
+      // src = src.replace(/\-/g, '/');
+      // return src;
       var d = new Date(src);
       return formateTime(d);
     } catch (e) {
-      return formateTime(new Date());
+      return src;
+      // return formateTime(new Date());
     }
 
   }
@@ -176,16 +179,19 @@ export function formateTime(src: Date): string {
 
 
 export function dateTrans(src: any): string {
-
+  if (src == "") {
+    return "";
+  }
   if ("string" == typeof src) {
-    if (src == "") {
-      return formateDate(new Date());
-    }
+
     try {
+      // src = src.replace(/\-/g, '/');
+      // return src;
       var d = new Date(src);
-      return formateTime(d);
+      return formateDate(d);
     } catch (e) {
-      return formateDate(new Date());
+      return src;
+      // return formateDate(new Date());
     }
 
   }

@@ -104,4 +104,24 @@ export class PublicModel {
     );
   }
 
+
+
+  findFlowTemplateSuffix(list, targetID) {
+
+
+    for (var i = 0; i < list.length; ++i) {
+      if (targetID == list[i].ID) {
+
+        return list[i].FlowTemplateSuffix;
+      } else if (list[i].Children && list[i].Children.length) {
+        var resId = this.findFlowTemplateSuffix(list[i].Children, targetID);
+        if (resId != null) {
+          return resId;
+        }
+      }
+
+    }
+    return null;
+
+  }
 }

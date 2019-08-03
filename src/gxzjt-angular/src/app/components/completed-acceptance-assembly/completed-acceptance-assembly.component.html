@@ -1,4 +1,4 @@
-<form nz-form #f="ngForm" class="formTables" se-container="1" labelWidth="0"
+<form nz-form #f="ngForm" class="formTables" se-container="1" labelWidth="0" firstVisual
   style="padding: 0 20px;box-sizing: border-box">
   <div nz-row *ngIf="data">
     <table class="tables" style="box-sizing: border-box;">
@@ -93,12 +93,17 @@
         <tr>
 
           <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>验收合格日期:</td>
-          <td rowspan='1' colspan='7'>
+          <td rowspan='1' colspan='7' *ngIf="type != 1">
             <se error="必填">
-              <nz-date-picker name="t2" required [(ngModel)]="data.planEndTime" name="planEndTime" [nzFormat]="'yyyy/MM/dd'"></nz-date-picker>
+              <nz-date-picker name="t2" required [(ngModel)]="data.planEndTime" name="planEndTime"
+                [nzFormat]="'yyyy/MM/dd'"></nz-date-picker>
             </se>
           </td>
-
+          <td rowspan='1' colspan='7' *ngIf="type == 1">
+         
+              {{data.planEndTime}}
+           
+          </td>
           <!-- <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>申报人姓名:</td>
           <td rowspan='1' colspan='7'>
             <se error="必填" style="float: left;">
@@ -108,15 +113,17 @@
           </td> -->
           <td rowspan='1' colspan='3' class="fontweight fontLeft" required=true>使用性质:</td>
           <td rowspan='1' colspan='7'>
-            <se error="必填">
-              <nz-spin [nzSpinning]="!useNatureSelect"></nz-spin>
-              <nz-select nzPlaceHolder='请选择使用性质' [(ngModel)]="data.useNature" name="useNature" required
-                *ngIf="useNatureSelect">
-                <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.natureName"
-                  [nzValue]="option.natureCode">
-                </nz-option>
-              </nz-select>
-            </se>
+
+            <nz-spin [nzSpinning]="!useNatureSelect"></nz-spin>
+            <nz-select nzPlaceHolder='请选择使用性质' [(ngModel)]="data.useNature" name="useNature" required
+              *ngIf="useNatureSelect">
+              <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.natureName"
+                [nzValue]="option.natureCode">
+              </nz-option>
+            </nz-select>
+            <p style="color: #f5222d;text-align: center;" *ngIf="!data.useNature||data.useNature==''&&type!=1">
+              必填
+            </p>
           </td>
         </tr>
 
@@ -170,14 +177,18 @@
 
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle" required=true>审批单位:</td>
           <td rowspan='1' colspan='17'>
-            <se error="必填" style="float: left;">
-              <nz-spin [nzSpinning]="!engineeringList"></nz-spin>
-              <nz-cascader *ngIf="engineeringList" [ngClass]="{pointer: type == 1}" [nzLoadData]="position"
-                [nzPlaceHolder]="'请设置审批单位'" [nzChangeOnSelect]="true" [nzOptions]="engineeringList"
-                (nzChange)="changeGetOrganizationTree($event)" [(ngModel)]="data.engineeringNo" name="engineeringNo"
-                required>
-              </nz-cascader>
-            </se>
+
+            <nz-spin [nzSpinning]="!engineeringList"></nz-spin>
+            <nz-cascader *ngIf="engineeringList" [ngClass]="{pointer: type == 1}" [nzLoadData]="position"
+              [nzPlaceHolder]="'请设置审批单位'" [nzChangeOnSelect]="true" [nzOptions]="engineeringList"
+              (nzChange)="changeGetOrganizationTree($event)" [(ngModel)]="data.engineeringNo" name="engineeringNo"
+              required>
+            </nz-cascader>
+
+            <p style="color: #f5222d;text-align: center;"
+              *ngIf="!data.engineeringNo||data.engineeringNo.length==0&&type!=1">
+              必填
+            </p>
           </td>
         </tr>
 
@@ -391,12 +402,12 @@
           <td colspan='1' rowspan="1" class="fontweight">总计</td>
         </tr>
         <tr *ngFor="let item of data.basicInformation;let index = index">
-          <td rowspan='1' colspan='5' class="fontweight fontLeft leftTitle">
+          <td rowspan='1' colspan='5' class=" fontLeft leftTitle">
             <se error="必填">
               <input nz-input placeholder="请输入建筑物名称" [(ngModel)]="item.name" name="jbname{{index}}" required />
             </se>
           </td>
-          <td rowspan='1' colspan='2' class="fontweight fontLeft">
+          <td rowspan='1' colspan='2' class=" fontLeft">
             <se error="必填">
               <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="item.type" name="jbtype{{index}}" required>
                 <nz-option *ngFor="let option of typeSelect" [nzLabel]="option.label" [nzValue]="option.value">
@@ -404,7 +415,7 @@
               </nz-select>
             </se>
           </td>
-          <td rowspan='1' colspan='1' class="fontweight fontLeft">
+          <td rowspan='1' colspan='1' class=" fontLeft">
             <se error="必填">
               <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="item.grade" name="jbgrade{{index}}" required>
                 <nz-option *ngFor="let option of refractoryEnum" [nzLabel]="option.label" [nzValue]="option.value">
@@ -413,7 +424,7 @@
               <!-- <input  nz-input placeholder="请输入耐火等级" [(ngModel)]="item.grade" name="jbgrade{{index}}" required /> -->
             </se>
           </td>
-          <td rowspan='1' colspan='2' class="fontweight fontLeft">
+          <td rowspan='1' colspan='2' class=" fontLeft">
             <se error="必填">
               <input nz-input placeholder="请输入高度" [(ngModel)]="item.height" name="jbheight{{index}}" required />
             </se>
@@ -841,21 +852,24 @@
         <td rowspan='1' colspan='20' class="textLeft">
           <div>
             1、建设工程竣工验收消防备案表（纸质申报表的图片）
-            <nz-upload  [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" (click)="handleChange(0)" [nzRemove]="removeFile">
+            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" (click)="handleChange(0)"
+              [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             2、与消防验收有关的竣工图纸及隐蔽工程记录
-            <nz-upload  [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)" [nzRemove]="removeFile"> 
+            <nz-upload [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)"
+              [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>
 
           <div>
             3、符合要求的检测机构出具的消防设施及系统检测合格证明文件
-            <nz-upload  [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)" [nzRemove]="removeFile">
+            <nz-upload [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)"
+              [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
           </div>

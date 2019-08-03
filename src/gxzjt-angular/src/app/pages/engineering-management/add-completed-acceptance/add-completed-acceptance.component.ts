@@ -1,7 +1,7 @@
 import { PublicModel } from './../../../../infrastructure/public-model';
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { timeTrans, getTimestamp, checkArrayString } from 'infrastructure/regular-expression';
+import { dateTrans } from 'infrastructure/regular-expression';
 import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto, FlowDataDto, ProjectFlowDto, FlowNodeUser } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute } from '@angular/router';
 import { FlowServices, GXZJT_From } from 'services/flow.services';
@@ -12,7 +12,7 @@ import { NzModalService } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { ReuseTabService } from '@delon/abc';
 
-import { convertToArray } from '@shared/utils/array';
+import { convertToArray ,formatOldJson} from '@shared/utils/array';
 
 
 
@@ -479,16 +479,8 @@ export class AddCompletedAcceptanceComponent implements OnInit {
             json.engineeringId = json.engineeringId ? json.engineeringId : ''
 
 
-          json.acceptanceOpinions.contractingUnit = convertToArray(json.acceptanceOpinions.contractingUnit);
-          json.acceptanceOpinions.designUnit = convertToArray(json.acceptanceOpinions.designUnit);
 
-          if (json.planEndTime && json.planEndTime != "") {
-            json.planEndTime = timeTrans(json.planEndTime);
-          }
 
-          if (json.acceptanceOpinions.filingTime && json.acceptanceOpinions.filingTime != "") {
-            json.acceptanceOpinions.filingTime = timeTrans(json.acceptanceOpinions.filingTime);
-          }
 
           json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
           json.applyName = json.applyName ? json.applyName : ''
@@ -506,8 +498,11 @@ export class AddCompletedAcceptanceComponent implements OnInit {
             ground: '',
             useNature: '',
             originallyUsed: ''
-          }
+          };
 
+
+          json = formatOldJson(json);
+         
           this.data = json;
 
           this.filterFileList();
@@ -595,9 +590,9 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
     this.filterFileList();
 
-    this.data.planEndTime = !this.data.planEndTime ? '' : timeTrans(this.data.planEndTime);
+    this.data.planEndTime = !this.data.planEndTime ? '' : dateTrans(this.data.planEndTime);
 
-    this.data.acceptanceOpinions.filingTime = !this.data.acceptanceOpinions.filingTime ? '' : timeTrans(this.data.acceptanceOpinions.filingTime);
+    this.data.acceptanceOpinions.filingTime = !this.data.acceptanceOpinions.filingTime ? '' : dateTrans(this.data.acceptanceOpinions.filingTime);
     this.flowFormDto.formJson = JSON.stringify(this.data);
     this.flowFormDto['flowPathType'] = 3;
     this.flowFormDto.projectTypeStatu = 2;

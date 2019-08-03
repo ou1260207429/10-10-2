@@ -1,4 +1,4 @@
-<form nz-form #f="ngForm" class="formTables" se-container="1" labelWidth="0"
+<form nz-form #f="ngForm" class="formTables" se-container="1" labelWidth="0" firstVisual
   style="padding: 0 20px;box-sizing: border-box">
   <div nz-row *ngIf="data!=''">
     <table class="tables" style="box-sizing: border-box;">
@@ -64,11 +64,11 @@
             <se error="必填">
               <nz-spin [nzSpinning]="!useNatureSelect"></nz-spin>
               <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="data.useNature" name="useNature" required
-              *ngIf="useNatureSelect"  nzShowSearch>
-              <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.natureName"
-                [nzValue]="option.natureCode">
-              </nz-option>
-            </nz-select>
+                *ngIf="useNatureSelect" nzShowSearch>
+                <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.natureName"
+                  [nzValue]="option.natureCode">
+                </nz-option>
+              </nz-select>
             </se>
           </td>
         </tr>
@@ -100,6 +100,10 @@
                 (nzChange)="changeGetOrganizationTree($event)" [(ngModel)]="data.engineeringNo" name="engineeringNo"
                 required>
               </nz-cascader>
+              <p style="color: #f5222d;text-align: center;"
+                *ngIf="!data.engineeringNo||data.engineeringNo.length==0&&type!=1">
+                必填
+              </p>
             </se>
           </td>
         </tr>
@@ -119,7 +123,8 @@
               <label nz-radio nzValue="建筑保温">建筑保温</label>
               <label nz-radio nzValue="改变用途">改变用途</label>
             </nz-radio-group>)
-            <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="errorData.projectCategoryId">
+            <p style="color: #f5222d;text-align: center;"
+              *ngIf="errorData.projectCategoryId||data.projectCategoryId==''&&type!=1">
               必填
             </p>
         </tr>
@@ -132,9 +137,12 @@
             </se>
           </td>
           <td rowspan='1' colspan='3' class="fontweight fontLeft leftTitle">审查日期:</td>
-          <td rowspan='1' colspan='6'>
-            <nz-date-picker [ngClass]="{pointer: type == 1}" [(ngModel)]="data.dateOfReview" name="dateOfReview" [nzFormat]="'yyyy/MM/dd'">
+          <td rowspan='1' colspan='6' *ngIf="type!=1">
+            <nz-date-picker [(ngModel)]="data.dateOfReview" name="dateOfReview" [nzFormat]="'yyyy/MM/dd'">
             </nz-date-picker>
+          </td>
+          <td rowspan='1' colspan='6' *ngIf="type==1">
+            {{data.dateOfReview}}
           </td>
         </tr>
         <!-- 6 -->
@@ -778,7 +786,7 @@
         <td rowspan='1' colspan='14' class="textLeft">
           <div>
             1、建设工程消防验收申报表（纸质申报表的图片）
-            <nz-upload  [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" (click)="handleChange(0)"
+            <nz-upload [(nzFileList)]="data.fileList[0].array" [nzCustomRequest]="customReq" (click)="handleChange(0)"
               [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -786,7 +794,7 @@
 
           <div>
             2、与消防验收有关的竣工图纸及隐蔽工程记录
-            <nz-upload  [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)"
+            <nz-upload [(nzFileList)]="data.fileList[1].array" [nzCustomRequest]="customReq" (click)="handleChange(1)"
               [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
@@ -794,7 +802,7 @@
 
           <div>
             3、符合要求的检测机构出具的消防设施及系统检测合格证明文件
-            <nz-upload  [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)"
+            <nz-upload [(nzFileList)]="data.fileList[2].array" [nzCustomRequest]="customReq" (click)="handleChange(2)"
               [nzRemove]="removeFile">
               <button nz-button *ngIf="type!=1"><i nz-icon nzType="upload"></i><span>上传</span></button>
             </nz-upload>
