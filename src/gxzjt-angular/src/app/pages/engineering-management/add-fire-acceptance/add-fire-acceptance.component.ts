@@ -242,7 +242,7 @@ export class AddFireAcceptanceComponent implements OnInit {
           jsonData.constructionSituation = [];
         }
         jsonData.constructionSituation = convertToArray(jsonData.constructionSituation);
-        console.log(jsonData.implementation)
+        // console.log(jsonData.implementation)
         jsonData.implementation = convertToArray(jsonData.implementation);
 
 

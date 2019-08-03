@@ -9,6 +9,9 @@ import { AcceptServiceServiceProxy, AcceptApplyFormDto, ApplyServiceServiceProxy
 import { AppSessionService } from '@shared/session/app-session.service';
 import { FlowProcessRejectComponent } from '@app/components/flow-process-reject/flow-process-reject.component';
 import { ReuseTabService } from '@delon/abc';
+
+import { dateTrans } from 'infrastructure/regular-expression';
+
 /**
  * 已办流程的详情
  */
@@ -110,7 +113,16 @@ export class AlreadyDoneDetailsComponent implements OnInit {
         json.design = json.design ? json.design : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }],
           json.engineeringId = json.engineeringId ? json.engineeringId : ''
         json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
-        json.applyName = json.applyName ? json.applyName : ''
+        json.applyName = json.applyName ? json.applyName : '';
+
+        if (json.planStartTime && json.planStartTime != "") {
+          json.planStartTime = dateTrans(json.planStartTime);
+        }
+        if (json.planEndTime && json.planEndTime != "") {
+          json.planEndTime = dateTrans(json.planEndTime);
+        }
+
+
         json.constructionProject = json.constructionProject ? json.constructionProject : {
           arr: [
             { label: '顶棚', value: false, checked: false },

@@ -1,7 +1,7 @@
 import { PublicModel } from './../../../../infrastructure/public-model';
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { dateTrans, getTimestamp, checkArrayString } from 'infrastructure/regular-expression';
+import { dateTrans } from 'infrastructure/regular-expression';
 import { ApplyServiceServiceProxy, FlowFormDto, FlowFormQueryDto, FlowDataDto, ProjectFlowDto, FlowNodeUser } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute } from '@angular/router';
 import { FlowServices, GXZJT_From } from 'services/flow.services';
@@ -506,6 +506,47 @@ export class AddCompletedAcceptanceComponent implements OnInit {
             ground: '',
             useNature: '',
             originallyUsed: ''
+          };
+
+
+
+          if (json.implementation == null) {
+            json.implementation = [];
+          }
+
+          if (json.constructionSituation == null) {
+            json.constructionSituation = [];
+          }
+          json.constructionSituation = convertToArray(json.constructionSituation);
+
+          json.implementation = convertToArray(json.implementation);
+
+
+          if (json.planStartTime && json.planStartTime != "") {
+            json.planStartTime = dateTrans(json.planStartTime);
+          }
+          if (json.planEndTime && json.planEndTime != "") {
+            json.planEndTime = dateTrans(json.planEndTime);
+          }
+
+
+          if (json.mappingUnit) {
+            if (json.mappingUnit.no instanceof String) {
+              json.mappingUnit.no = [{ noValue: json.mappingUnit.no }];
+            }
+            if (json.mappingUnit.no instanceof Array) {
+              if (json.mappingUnit.no[0] instanceof String) {
+                var list = [];
+                for (var i = 0; i < json.mappingUnit.no.length; ++i) {
+                  var item = { noValue: json.mappingUnit.no[i] };
+                  list.push(item);
+                }
+                json.mappingUnit.no = list;
+              }
+            }
+            json.mappingUnit.no = convertToArray(json.mappingUnit.no);
+
+
           }
 
           this.data = json;
