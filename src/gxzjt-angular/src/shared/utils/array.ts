@@ -30,10 +30,12 @@ export function indexOfFileByName(arr: any, fileName): any {
 }
 
 export function formatOldJson(json): any {
+    console.log(json)
     if (json.acceptanceOpinions) {
         json.acceptanceOpinions.contractingUnit = convertToArray(json.acceptanceOpinions.contractingUnit);
 
         json.acceptanceOpinions.designUnit = convertToArray(json.acceptanceOpinions.designUnit);
+
         if (json.acceptanceOpinions.filingTime && json.acceptanceOpinions.filingTime != "") {
             json.acceptanceOpinions.filingTime = dateTrans(json.acceptanceOpinions.filingTime);
         }
@@ -41,18 +43,29 @@ export function formatOldJson(json): any {
 
 
 
-    if (json.implementation == null) {
-        json.implementation = [];
+    if (json.implementation == null || json.implementation.length == 0) {
+        json.implementation = [{
+            designUnit: '',
+            personInChargeName: '',
+            opinion: ''
+        }];
     }
-    json.implementation = convertToArray(json.implementation);
-    if (json.constructionSituation == null) {
-        json.constructionSituation = [];
+
+
+    if (json.constructionSituation == null || json.constructionSituation.length == 0) {
+        json.constructionSituation = [{
+            contractingUnit: '',
+            projectManagerName: '',
+            subcontractors: '',
+            personInChargeName: '',
+            opinion: ''
+        }];
     }
+
+
+
     json.constructionSituation = convertToArray(json.constructionSituation);
-
-
-
-
+    json.implementation = convertToArray(json.implementation);
 
     if (json.dateOfReview && json.dateOfReview != '') {
         json.dateOfReview = dateTrans(json.dateOfReview);
@@ -87,7 +100,7 @@ export function formatOldJson(json): any {
 
     }
 
-
+    console.log(json)
     return json;
 }
 
