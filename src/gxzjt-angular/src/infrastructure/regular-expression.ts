@@ -126,12 +126,13 @@ export function timeTrans(src: any): string {
   if ("string" == typeof src) {
 
     try {
-      src = src.replace(/\-/g, '/');
-      return src;
-      // var d = new Date(src);
-      // return formateTime(d);
+      // src = src.replace(/\-/g, '/');
+      // return src;
+      var d = new Date(src);
+      return formateTime(d);
     } catch (e) {
-      return formateTime(new Date());
+      return src;
+      // return formateTime(new Date());
     }
 
   }
@@ -184,12 +185,13 @@ export function dateTrans(src: any): string {
   if ("string" == typeof src) {
 
     try {
-      src = src.replace(/\-/g, '/');
-      return src;
-      // var d = new Date(src);
-      // return formateDate(d);
+      // src = src.replace(/\-/g, '/');
+      // return src;
+      var d = new Date(src);
+      return formateDate(d);
     } catch (e) {
-      return formateDate(new Date());
+      return src;
+      // return formateDate(new Date());
     }
 
   }
