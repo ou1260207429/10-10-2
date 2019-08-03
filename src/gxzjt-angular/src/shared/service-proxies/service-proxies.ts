@@ -9502,6 +9502,7 @@ export class ReviewFormDto implements IReviewFormDto {
     regionAndCountyName: string | undefined;
     orgName: string | undefined;
     orgCode: string | undefined;
+    flowTemplateSuffix: string | undefined;
 
     constructor(data?: IReviewFormDto) {
         if (data) {
@@ -9550,6 +9551,7 @@ export class ReviewFormDto implements IReviewFormDto {
             this.regionAndCountyName = data["regionAndCountyName"];
             this.orgName = data["orgName"];
             this.orgCode = data["orgCode"];
+            this.flowTemplateSuffix = data["flowTemplateSuffix"];
         }
     }
 
@@ -9598,6 +9600,7 @@ export class ReviewFormDto implements IReviewFormDto {
         data["regionAndCountyName"] = this.regionAndCountyName;
         data["orgName"] = this.orgName;
         data["orgCode"] = this.orgCode;
+        data["flowTemplateSuffix"] = this.flowTemplateSuffix;
         return data; 
     }
 
@@ -9642,6 +9645,7 @@ export interface IReviewFormDto {
     regionAndCountyName: string | undefined;
     orgName: string | undefined;
     orgCode: string | undefined;
+    flowTemplateSuffix: string | undefined;
 }
 
 export class ProjectCompany implements IProjectCompany {
