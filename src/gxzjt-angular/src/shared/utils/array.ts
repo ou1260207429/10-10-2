@@ -30,7 +30,7 @@ export function indexOfFileByName(arr: any, fileName): any {
 }
 
 export function formatOldJson(json): any {
-    console.log(json)
+    
     if (json.acceptanceOpinions) {
         json.acceptanceOpinions.contractingUnit = convertToArray(json.acceptanceOpinions.contractingUnit);
 
@@ -100,7 +100,7 @@ export function formatOldJson(json): any {
 
     }
 
-    console.log(json)
+
     return json;
 }
 
