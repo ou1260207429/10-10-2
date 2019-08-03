@@ -195,10 +195,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
       //获取JSON和节点信息
       Promise.all([this.post_GetFlowFormData(flowFormQueryDto), this.tenant_GetWorkFlowInstanceFrowTemplateInfoById(workFlow)]).then((value: any) => {
-        //驳回后重新提交可编辑表单
-        if (value[0].acceptOrderId != null && value[0].acceptOrderId > 0 && value[1].result.nodeViewInfo != null && value[1].result.nodeViewInfo.curNodeName == "建设单位申报") {
-          this.formStatus = 2;
-        }
+        // //驳回后重新提交可编辑表单
+        // if (value[0].acceptOrderId != null && value[0].acceptOrderId > 0 && value[1].result.nodeViewInfo != null && value[1].result.nodeViewInfo.curNodeName == "建设单位申报") {
+        //   this.formStatus = 2;
+        // }
 
         var json = JSON.parse(value[0].formJson);
 

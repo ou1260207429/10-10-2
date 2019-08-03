@@ -1,6 +1,7 @@
 import { ValidatorFn, AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { STComponent } from '@delon/abc';
 import lodash from 'lodash'
+import { format } from 'path';
 
 // 常用正则表达式
 
@@ -166,13 +167,16 @@ export function formateTime(src: Date): string {
   let east9time = src.getTime() + _dif * 60 * 1000 - (targetTimezone * 60 * 60 * 1000);
   src = new Date(east9time);
 
-  var result = src.getFullYear() + '/'
-    + (src.getMonth() + 1)
-    + '-' + src.getDate()
-    + " "
-    + src.getHours()
-    + ':' + src.getMinutes()
-    + ':' + src.getSeconds();
+  var result = src.getFullYear()
+    + '/' + format2Num(src.getMonth() + 1)
+    + '/' + format2Num(src.getDate())
+    + " " + format2Num(src.getHours())
+    + ':' + format2Num(src.getMinutes())
+    + ':' + format2Num(src.getSeconds());
+
+
+
+
   return result;
 }
 
@@ -222,12 +226,20 @@ export function formateDate(src: Date): string {
   // 目标时区时间 = 本地时区时间 + 本地时区时差 - 目标时区时差
   let east9time = src.getTime() + _dif * 60 * 1000 - (targetTimezone * 60 * 60 * 1000);
   src = new Date(east9time);
+
+
   var result = src.getFullYear()
-    + '/' + (src.getMonth() + 1)
-    + '/' + src.getDate();
+    + '/' + format2Num(src.getMonth() + 1)
+    + '/' + format2Num(src.getDate());
 
   return result;
 }
+
+export function format2Num(num: number): string {
+
+  return num < 10 ? "0" + num : "" + num;
+}
+
 
 /**
  * 根据时间辍返回对应的时间 如 yyyy/MM/dd HH:mm:ss  yyyy/MM/dd
