@@ -337,14 +337,24 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     if (!startValue || !this.data.planEndTime) {
       return false;
     }
-    return startValue.getTime() > this.data.planEndTime.getTime();
+    // return startValue.getTime() > this.data.planEndTime.getTime();
+    if (this.data.planEndTime instanceof Date) {
+      return startValue.getTime() <= this.data.planStartTime.getTime();
+    }else{
+      return startValue.getTime() <= new Date(this.data.planEndTime).getTime();
+    }
   };
 
   disabledEndDate = (endValue: Date): boolean => {
     if (!endValue || !this.data.planStartTime) {
       return false;
     }
-    return endValue.getTime() <= this.data.planStartTime.getTime();
+    if (this.data.planStartTime instanceof Date) {
+      return endValue.getTime() <= this.data.planStartTime.getTime();
+    }else{
+      return endValue.getTime() <= new Date(this.data.planStartTime).getTime();
+    }
+  
   };
 
 
