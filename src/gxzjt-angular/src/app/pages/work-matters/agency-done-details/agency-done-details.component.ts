@@ -189,7 +189,8 @@ export class AgencyDoneDetailsComponent implements OnInit {
       this.isLoginPerson = this.formDto.flowNodeUserInfo.userCode == this._appSessionService.user.id ? true : false
       const workFlow: WorkFlow = {
         workFlow_InstanceId: this.formDto.workFlow_Instance_Id,
-        workFlow_TemplateInfoId: 10171,
+        //workFlow_TemplateInfoId: 10171,
+        workFlow_TemplateInfoId: this.formDto.workFlow_TemplateInfo_Id,
         workFlow_NodeAuditorRecordId: this.formDto.flowNodeUserInfo.userFlowId,
       }
 
