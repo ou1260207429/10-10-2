@@ -4542,6 +4542,62 @@ export class ProjectFlowServcieServiceProxy {
     }
 
     /**
+     * @param fireAuditCompleteQueryDto (optional) 
+     * @return Success
+     */
+    post_ExportFireAuditCompleteList(fireAuditCompleteQueryDto: FireAuditCompleteQueryDto | null | undefined): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/ProjectFlowServcie/Post_ExportFireAuditCompleteList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(fireAuditCompleteQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_ExportFireAuditCompleteList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_ExportFireAuditCompleteList(<any>response_);
+                } catch (e) {
+                    return <Observable<string>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_ExportFireAuditCompleteList(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(<any>null);
+    }
+
+    /**
      * @param statisticsQueryDto (optional) 
      * @return Success
      */
@@ -7200,6 +7256,118 @@ export class StatisticalServiceServiceProxy {
         }
         return _observableOf<DataSourceResult>(<any>null);
     }
+
+    /**
+     * @param statisticalQueryDto (optional) 
+     * @return Success
+     */
+    post_GetStatisticalList(statisticalQueryDto: StatisticalQueryDto | null | undefined): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/StatisticalService/Post_GetStatisticalList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(statisticalQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetStatisticalList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetStatisticalList(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetStatisticalList(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
+
+    /**
+     * @param statisticalQueryDto (optional) 
+     * @return Success
+     */
+    post_ExportGetStatistical(statisticalQueryDto: StatisticalQueryDto | null | undefined): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/StatisticalService/Post_ExportGetStatistical";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(statisticalQueryDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_ExportGetStatistical(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_ExportGetStatistical(<any>response_);
+                } catch (e) {
+                    return <Observable<string>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_ExportGetStatistical(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(<any>null);
+    }
 }
 
 @Injectable()
@@ -8540,6 +8708,62 @@ export class WorkFlowedServiceProxy {
             }));
         }
         return _observableOf<PageModel>(<any>null);
+    }
+
+    /**
+     * @param pageSize (optional) 
+     * @return Success
+     */
+    exportHandlingMatters(pageSize: PageSize | null | undefined): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/WorkFlowed/ExportHandlingMatters";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(pageSize);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processExportHandlingMatters(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processExportHandlingMatters(<any>response_);
+                } catch (e) {
+                    return <Observable<string>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processExportHandlingMatters(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(<any>null);
     }
 }
 
@@ -10170,6 +10394,12 @@ export class FlowFormAllDataDto implements IFlowFormAllDataDto {
     formJson: string | undefined;
     projectId: number | undefined;
     projectTypeStatu: number | undefined;
+    acceptOrderId: number | undefined;
+    nodeAuditorRecordId: number | undefined;
+    workFlow_NodeRecord_Id: number | undefined;
+    workFlow_Instance_Id: number | undefined;
+    workFlow_TemplateInfo_Id: number | undefined;
+    flowNodeUserInfo: FlowNodeUser | undefined;
 
     constructor(data?: IFlowFormAllDataDto) {
         if (data) {
@@ -10195,6 +10425,12 @@ export class FlowFormAllDataDto implements IFlowFormAllDataDto {
             this.formJson = data["formJson"];
             this.projectId = data["projectId"];
             this.projectTypeStatu = data["projectTypeStatu"];
+            this.acceptOrderId = data["acceptOrderId"];
+            this.nodeAuditorRecordId = data["nodeAuditorRecordId"];
+            this.workFlow_NodeRecord_Id = data["workFlow_NodeRecord_Id"];
+            this.workFlow_Instance_Id = data["workFlow_Instance_Id"];
+            this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
+            this.flowNodeUserInfo = data["flowNodeUserInfo"] ? FlowNodeUser.fromJS(data["flowNodeUserInfo"]) : <any>undefined;
         }
     }
 
@@ -10220,6 +10456,12 @@ export class FlowFormAllDataDto implements IFlowFormAllDataDto {
         data["formJson"] = this.formJson;
         data["projectId"] = this.projectId;
         data["projectTypeStatu"] = this.projectTypeStatu;
+        data["acceptOrderId"] = this.acceptOrderId;
+        data["nodeAuditorRecordId"] = this.nodeAuditorRecordId;
+        data["workFlow_NodeRecord_Id"] = this.workFlow_NodeRecord_Id;
+        data["workFlow_Instance_Id"] = this.workFlow_Instance_Id;
+        data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
+        data["flowNodeUserInfo"] = this.flowNodeUserInfo ? this.flowNodeUserInfo.toJSON() : <any>undefined;
         return data; 
     }
 
@@ -10237,6 +10479,12 @@ export interface IFlowFormAllDataDto {
     formJson: string | undefined;
     projectId: number | undefined;
     projectTypeStatu: number | undefined;
+    acceptOrderId: number | undefined;
+    nodeAuditorRecordId: number | undefined;
+    workFlow_NodeRecord_Id: number | undefined;
+    workFlow_Instance_Id: number | undefined;
+    workFlow_TemplateInfo_Id: number | undefined;
+    flowNodeUserInfo: FlowNodeUser | undefined;
 }
 
 export class SpecialNatureItem implements ISpecialNatureItem {
@@ -10460,6 +10708,12 @@ export class FlowFormDto implements IFlowFormDto {
     formJson: string | undefined;
     projectId: number | undefined;
     projectTypeStatu: number | undefined;
+    acceptOrderId: number | undefined;
+    nodeAuditorRecordId: number | undefined;
+    workFlow_NodeRecord_Id: number | undefined;
+    workFlow_Instance_Id: number | undefined;
+    workFlow_TemplateInfo_Id: number | undefined;
+    flowNodeUserInfo: FlowNodeUser | undefined;
 
     constructor(data?: IFlowFormDto) {
         if (data) {
@@ -10475,6 +10729,12 @@ export class FlowFormDto implements IFlowFormDto {
             this.formJson = data["formJson"];
             this.projectId = data["projectId"];
             this.projectTypeStatu = data["projectTypeStatu"];
+            this.acceptOrderId = data["acceptOrderId"];
+            this.nodeAuditorRecordId = data["nodeAuditorRecordId"];
+            this.workFlow_NodeRecord_Id = data["workFlow_NodeRecord_Id"];
+            this.workFlow_Instance_Id = data["workFlow_Instance_Id"];
+            this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
+            this.flowNodeUserInfo = data["flowNodeUserInfo"] ? FlowNodeUser.fromJS(data["flowNodeUserInfo"]) : <any>undefined;
         }
     }
 
@@ -10490,6 +10750,12 @@ export class FlowFormDto implements IFlowFormDto {
         data["formJson"] = this.formJson;
         data["projectId"] = this.projectId;
         data["projectTypeStatu"] = this.projectTypeStatu;
+        data["acceptOrderId"] = this.acceptOrderId;
+        data["nodeAuditorRecordId"] = this.nodeAuditorRecordId;
+        data["workFlow_NodeRecord_Id"] = this.workFlow_NodeRecord_Id;
+        data["workFlow_Instance_Id"] = this.workFlow_Instance_Id;
+        data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
+        data["flowNodeUserInfo"] = this.flowNodeUserInfo ? this.flowNodeUserInfo.toJSON() : <any>undefined;
         return data; 
     }
 
@@ -10505,11 +10771,18 @@ export interface IFlowFormDto {
     formJson: string | undefined;
     projectId: number | undefined;
     projectTypeStatu: number | undefined;
+    acceptOrderId: number | undefined;
+    nodeAuditorRecordId: number | undefined;
+    workFlow_NodeRecord_Id: number | undefined;
+    workFlow_Instance_Id: number | undefined;
+    workFlow_TemplateInfo_Id: number | undefined;
+    flowNodeUserInfo: FlowNodeUser | undefined;
 }
 
 export class FlowDataDto implements IFlowDataDto {
     projectId: number | undefined;
     flowId: number | undefined;
+    acceptOrderId: number | undefined;
     formJson: string | undefined;
     projectFlowInfo: ProjectFlowDto | undefined;
     luckNo: number | undefined;
@@ -10529,6 +10802,7 @@ export class FlowDataDto implements IFlowDataDto {
         if (data) {
             this.projectId = data["projectId"];
             this.flowId = data["flowId"];
+            this.acceptOrderId = data["acceptOrderId"];
             this.formJson = data["formJson"];
             this.projectFlowInfo = data["projectFlowInfo"] ? ProjectFlowDto.fromJS(data["projectFlowInfo"]) : <any>undefined;
             this.luckNo = data["luckNo"];
@@ -10552,6 +10826,7 @@ export class FlowDataDto implements IFlowDataDto {
         data = typeof data === 'object' ? data : {};
         data["projectId"] = this.projectId;
         data["flowId"] = this.flowId;
+        data["acceptOrderId"] = this.acceptOrderId;
         data["formJson"] = this.formJson;
         data["projectFlowInfo"] = this.projectFlowInfo ? this.projectFlowInfo.toJSON() : <any>undefined;
         data["luckNo"] = this.luckNo;
@@ -10575,6 +10850,7 @@ export class FlowDataDto implements IFlowDataDto {
 export interface IFlowDataDto {
     projectId: number | undefined;
     flowId: number | undefined;
+    acceptOrderId: number | undefined;
     formJson: string | undefined;
     projectFlowInfo: ProjectFlowDto | undefined;
     luckNo: number | undefined;
@@ -11451,6 +11727,7 @@ export class RejectedDto implements IRejectedDto {
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
     opinion: string | undefined;
+    timeLimit: number | undefined;
 
     constructor(data?: IRejectedDto) {
         if (data) {
@@ -11480,6 +11757,7 @@ export class RejectedDto implements IRejectedDto {
             this.workFlow_Instance_Id = data["workFlow_Instance_Id"];
             this.workFlow_TemplateInfo_Id = data["workFlow_TemplateInfo_Id"];
             this.opinion = data["opinion"];
+            this.timeLimit = data["timeLimit"];
         }
     }
 
@@ -11509,6 +11787,7 @@ export class RejectedDto implements IRejectedDto {
         data["workFlow_Instance_Id"] = this.workFlow_Instance_Id;
         data["workFlow_TemplateInfo_Id"] = this.workFlow_TemplateInfo_Id;
         data["opinion"] = this.opinion;
+        data["timeLimit"] = this.timeLimit;
         return data; 
     }
 
@@ -11534,6 +11813,7 @@ export interface IRejectedDto {
     workFlow_Instance_Id: number | undefined;
     workFlow_TemplateInfo_Id: number | undefined;
     opinion: string | undefined;
+    timeLimit: number | undefined;
 }
 
 export class RegulationDetailsViewModel implements IRegulationDetailsViewModel {
@@ -14231,8 +14511,12 @@ export class FireAuditCompleteQueryDto implements IFireAuditCompleteQueryDto {
     status: number | undefined;
     flowPathType: number | undefined;
     orgType: number | undefined;
+    currentNodeName: string | undefined;
+    isExpire: boolean | undefined;
+    isSelected: boolean | undefined;
     startApplyTime: string | undefined;
     endApplyTime: string | undefined;
+    natureName: string | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
@@ -14255,8 +14539,12 @@ export class FireAuditCompleteQueryDto implements IFireAuditCompleteQueryDto {
             this.status = data["status"];
             this.flowPathType = data["flowPathType"];
             this.orgType = data["orgType"];
+            this.currentNodeName = data["currentNodeName"];
+            this.isExpire = data["isExpire"];
+            this.isSelected = data["isSelected"];
             this.startApplyTime = data["startApplyTime"];
             this.endApplyTime = data["endApplyTime"];
+            this.natureName = data["natureName"];
             this.page = data["page"];
             this.sorting = data["sorting"];
             this.skipCount = data["skipCount"];
@@ -14279,8 +14567,12 @@ export class FireAuditCompleteQueryDto implements IFireAuditCompleteQueryDto {
         data["status"] = this.status;
         data["flowPathType"] = this.flowPathType;
         data["orgType"] = this.orgType;
+        data["currentNodeName"] = this.currentNodeName;
+        data["isExpire"] = this.isExpire;
+        data["isSelected"] = this.isSelected;
         data["startApplyTime"] = this.startApplyTime;
         data["endApplyTime"] = this.endApplyTime;
+        data["natureName"] = this.natureName;
         data["page"] = this.page;
         data["sorting"] = this.sorting;
         data["skipCount"] = this.skipCount;
@@ -14303,8 +14595,12 @@ export interface IFireAuditCompleteQueryDto {
     status: number | undefined;
     flowPathType: number | undefined;
     orgType: number | undefined;
+    currentNodeName: string | undefined;
+    isExpire: boolean | undefined;
+    isSelected: boolean | undefined;
     startApplyTime: string | undefined;
     endApplyTime: string | undefined;
+    natureName: string | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
@@ -15920,6 +16216,73 @@ export interface IHandleLimitQueryDto {
     maxResultCount: number | undefined;
 }
 
+export class StatisticalQueryDto implements IStatisticalQueryDto {
+    cityName: string | undefined;
+    startApplyTime: string | undefined;
+    endApplyTime: string | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+
+    constructor(data?: IStatisticalQueryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.cityName = data["cityName"];
+            this.startApplyTime = data["startApplyTime"];
+            this.endApplyTime = data["endApplyTime"];
+            this.page = data["page"];
+            this.sorting = data["sorting"];
+            this.skipCount = data["skipCount"];
+            this.maxResultCount = data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): StatisticalQueryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new StatisticalQueryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["cityName"] = this.cityName;
+        data["startApplyTime"] = this.startApplyTime;
+        data["endApplyTime"] = this.endApplyTime;
+        data["page"] = this.page;
+        data["sorting"] = this.sorting;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+
+    clone(): StatisticalQueryDto {
+        const json = this.toJSON();
+        let result = new StatisticalQueryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IStatisticalQueryDto {
+    cityName: string | undefined;
+    startApplyTime: string | undefined;
+    endApplyTime: string | undefined;
+    page: number | undefined;
+    sorting: string | undefined;
+    skipCount: number | undefined;
+    maxResultCount: number | undefined;
+}
+
 export class CreateTenantDto implements ICreateTenantDto {
     tenancyName: string;
     name: string;
@@ -16723,6 +17086,8 @@ export class PendingWorkFlow_NodeAuditorRecordDto implements IPendingWorkFlow_No
     applyTimeEnd: moment.Moment | undefined;
     projectTypeStatu: number | undefined;
     isAlreadyDone: boolean | undefined;
+    orgType: number | undefined;
+    isExpire: boolean | undefined;
 
     constructor(data?: IPendingWorkFlow_NodeAuditorRecordDto) {
         if (data) {
@@ -16743,6 +17108,8 @@ export class PendingWorkFlow_NodeAuditorRecordDto implements IPendingWorkFlow_No
             this.applyTimeEnd = data["applyTimeEnd"] ? moment(data["applyTimeEnd"].toString()) : <any>undefined;
             this.projectTypeStatu = data["projectTypeStatu"];
             this.isAlreadyDone = data["isAlreadyDone"];
+            this.orgType = data["orgType"];
+            this.isExpire = data["isExpire"];
         }
     }
 
@@ -16763,6 +17130,8 @@ export class PendingWorkFlow_NodeAuditorRecordDto implements IPendingWorkFlow_No
         data["applyTimeEnd"] = this.applyTimeEnd ? this.applyTimeEnd.toISOString() : <any>undefined;
         data["projectTypeStatu"] = this.projectTypeStatu;
         data["isAlreadyDone"] = this.isAlreadyDone;
+        data["orgType"] = this.orgType;
+        data["isExpire"] = this.isExpire;
         return data; 
     }
 
@@ -16783,6 +17152,8 @@ export interface IPendingWorkFlow_NodeAuditorRecordDto {
     applyTimeEnd: moment.Moment | undefined;
     projectTypeStatu: number | undefined;
     isAlreadyDone: boolean | undefined;
+    orgType: number | undefined;
+    isExpire: boolean | undefined;
 }
 
 export enum IsTenantAvailableOutputState {
