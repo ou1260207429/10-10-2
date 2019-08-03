@@ -53,7 +53,7 @@ export class SignForComponent implements OnInit {
     signForOrg() {
         const workFlow: WorkFlow = {
             workFlow_InstanceId: this.examineFormDto.workFlow_Instance_Id,
-            workFlow_TemplateInfoId: 10171,
+            workFlow_TemplateInfoId: this.examineFormDto.workFlow_TemplateInfo_Id,
             workFlow_NodeAuditorRecordId: this.examineFormDto.flowNodeUserInfo.userFlowId,
         }
 
