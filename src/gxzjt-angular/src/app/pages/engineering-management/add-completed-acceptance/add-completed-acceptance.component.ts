@@ -472,7 +472,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         if (data.formJson != null && data.formJson != "") {
 
           var json = JSON.parse(data.formJson);
-          json.constructionUnit = json.constructionUnit instanceof Array ? json.constructionUnit : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }]
+          
 
           json.design = json.design ? json.design : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }],
 
