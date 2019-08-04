@@ -104,7 +104,7 @@ export class AlreadyDoneDetailsComponent implements OnInit {
       flowFormQueryDto.flowId = this.flowId
       const workFlow: WorkFlow = {
         workFlow_InstanceId: this.formDto.workFlow_Instance_Id,
-        workFlow_TemplateInfoId: 10171,
+        workFlow_TemplateInfoId: this.formDto.workFlow_TemplateInfo_Id,
         workFlow_NodeAuditorRecordId: this.formDto.flowNodeUserInfo.userFlowId,
       }
       //获取JSON和节点信息

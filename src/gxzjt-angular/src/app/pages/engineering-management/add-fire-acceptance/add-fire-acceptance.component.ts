@@ -228,14 +228,14 @@ export class AddFireAcceptanceComponent implements OnInit {
 
      
 
-        jsonData = formatOldJson(jsonData);
-
+      
         if (jsonData.detectionUnit == null) {
           jsonData.detectionUnit = {};
         }
 
 
        
+        jsonData = formatOldJson(jsonData);
 
 
         this.data = jsonData;
