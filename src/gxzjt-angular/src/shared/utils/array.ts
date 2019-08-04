@@ -30,7 +30,7 @@ export function indexOfFileByName(arr: any, fileName): any {
 }
 
 export function formatOldJson(json): any {
-    
+
     if (json.acceptanceOpinions) {
         json.acceptanceOpinions.contractingUnit = convertToArray(json.acceptanceOpinions.contractingUnit);
 
@@ -40,6 +40,21 @@ export function formatOldJson(json): any {
             json.acceptanceOpinions.filingTime = dateTrans(json.acceptanceOpinions.filingTime);
         }
     }
+
+    console.log(json)
+    if (json.constructionUnit instanceof Array && json.constructionUnit.length == 0) {
+        json.constructionUnit = [
+            {
+                designUnit: '',
+                qualificationLevel: '',
+                legalRepresentative: '',
+                contacts: '',
+                contactsNumber: ''
+            }];
+
+    }
+    
+    json.constructionUnit = convertToArray(json.constructionUnit);
 
 
 

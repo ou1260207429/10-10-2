@@ -203,7 +203,7 @@ export class AgencyDoneDetailsComponent implements OnInit {
 
         var json = JSON.parse(value[0].formJson);
 
-        json.constructionUnit = json.constructionUnit instanceof Array ? json.constructionUnit : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }]
+       
         json.design = json.design ? json.design : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }],
           json.engineeringId = json.engineeringId ? json.engineeringId : ''
         json.engineeringNo = json.engineeringNo ? json.engineeringNo : ''
