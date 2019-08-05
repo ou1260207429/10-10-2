@@ -1,0 +1,19 @@
+
+
+.table{
+    width: 100%;
+    display: flex;
+   
+}
+
+.tr {
+    width: 100%;
+}
+.td {
+
+}
+
+.title{
+    font-size:32px;
+    font-weight: bolder; 
+}
