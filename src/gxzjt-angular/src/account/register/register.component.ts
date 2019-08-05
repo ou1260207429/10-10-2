@@ -113,7 +113,11 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
     let url = URLConfig.getInstance().REGISTER_URL + "api/User/Register";//?MerchantId=C8793952-540E-414C-98FF-9C65D6";
 
 
-    this.model.EnterpriseName = this.model.EnterpriseName.replace(/\s+/g, '');
+    this.model.EnterpriseName = this.trim(this.model.EnterpriseName);
+    this.model.EName = this.trim(this.model.EName);
+    this.model.Leader = this.trim(this.model.Leader);
+    this.model.EnterpriseCode = this.trim(this.model.EnterpriseCode);
+    this.model.Contact = this.trim(this.model.Contact);
 
 
     this.http.post(url, this.model, this.httpOptions).subscribe((res: any) => {
@@ -145,6 +149,8 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
     this.getServerCaptcha(this.model.EId, 1);
   }
 
-
+  trim(src) {
+    return src.replace(/\s+/g, '');
+  }
 
 }

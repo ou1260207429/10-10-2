@@ -4,6 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { LayoutDefaultComponent } from '../layout/default/layout-default.component';
 import { LayoutFullScreenComponent } from '@layout/fullscreen/fullscreen.component';
+
+
+
 // import { IndexDefaultComponent } from '@layout/index-default/index-default.component';
 
 // import { ACLGuard, ACLType } from '@delon/acl';
@@ -20,7 +23,7 @@ const routes: Routes = [
     children: [
       {
         path: '', loadChildren: './pages/print-pages/print-pages.module#PrintPagesModule', data: {
-          
+
           role: [AppMenus.aclOrg, AppMenus.aclCompany, AppMenus.aclSys]
         },
       }
@@ -101,6 +104,11 @@ const routes: Routes = [
 
       },
 
+
+      {
+        path: 'project-manage', loadChildren: './routes/project-manage/project-manage.module#ProjectManageModule',
+
+      },
     ],
   },
   {

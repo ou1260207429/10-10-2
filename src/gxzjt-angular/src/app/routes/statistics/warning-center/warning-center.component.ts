@@ -49,7 +49,7 @@ export class StatisticsWarningCenterComponent implements OnInit {
     //     // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
     //   ]
     // },
-    { title: '流程流水号', default: '', index: 'flowNo' },
+    { title: '流程流水号', default: '', index: 'flowNo', width: '200px'},
     {
       title: '工程类型', index: 'flowPathType', width: '100px',
       format: (item: any) => `${item.flowPathType == 0 ? "数据不存在" : (item.flowPathType == 1 ? "消防设计审查" : (item.flowPathType == 2 ? "消防验收" : (item.flowPathType == 3 ? "竣工验收消防备案" : "数据不存在")))}`,
