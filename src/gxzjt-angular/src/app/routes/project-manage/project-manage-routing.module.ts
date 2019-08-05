@@ -4,7 +4,12 @@ import { ProjectManageAddDesignComponent } from './add-design/add-design.compone
 
 const routes: Routes = [
 
-  { path: 'add-design', component: ProjectManageAddDesignComponent }];
+  {
+    path: 'add-design',
+    component: ProjectManageAddDesignComponent,
+    data: { title: "新增消防设计审查" }
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

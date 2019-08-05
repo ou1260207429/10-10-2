@@ -3,12 +3,13 @@
 .table{
     width: 100%;
     display: flex;
-   
 }
 
 .tr {
     width: 100%;
+    flex-wrap: fasle;
 }
+
 .td {
 
 }
