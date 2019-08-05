@@ -16,7 +16,6 @@ export class AddPostworkComponent implements OnInit {
   constructor(public subject: NzModalRef) { }
 
   ngOnInit() {
-    console.log(this.editName);
   }
 
   close(res) {

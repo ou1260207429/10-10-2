@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { dateTrans } from 'infrastructure/regular-expression';
 
 @Component({
   selector: 'app-completed-acceptance-print',
@@ -8,24 +6,12 @@ import { dateTrans } from 'infrastructure/regular-expression';
   styleUrls: ['../print.less']
 })
 export class CompletedAcceptancePrintComponent implements OnInit {
-  constructor(private _activatedRoute: ActivatedRoute) {
-    this.data = JSON.parse(this.getToken());
-    // this.data.planStartTime = this.data.planStartTime ? dateTrans(this.data.planStartTime) : '';
-    // this.data.planEndTime = this.data.planEndTime ? dateTrans(this.data.planEndTime) : "";
-
+  constructor() {
   }
   data: any;
 
   ngOnInit() {
-    console.log(this.data)
-  }
-  goback() {
-    window.print();
-    history.go(-1);
-  }
-
-  print() {
-    window.print();
+    this.data = JSON.parse(this.getToken());
   }
   ngOnDestroy(): void {
     localStorage.removeItem('jsonPrintForm');
@@ -37,14 +23,10 @@ export class CompletedAcceptancePrintComponent implements OnInit {
     return localStorage.getItem('jsonPrintForm');
   }
 
-
   ngAfterViewInit() {
-
-    setTimeout(() => {
+    setTimeout(function () {
       window.print();
       history.go(-1);
-
-    }, 100)
-
+    },120)
   }
 }

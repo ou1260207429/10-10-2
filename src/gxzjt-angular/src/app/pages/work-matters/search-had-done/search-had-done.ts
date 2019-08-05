@@ -105,7 +105,6 @@ export class SearchHadDoneComponent extends PublicFormComponent implements OnIni
   getList() {
     this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(this.searchParam).subscribe((data: any) => {
       this.formResultData = data
-      console.log(this.formResultData)
     })
   }
 
@@ -148,7 +147,6 @@ export class SearchHadDoneComponent extends PublicFormComponent implements OnIni
   }
 
   okRangeTime(v) {
-    console.log(v);
 
   }
 

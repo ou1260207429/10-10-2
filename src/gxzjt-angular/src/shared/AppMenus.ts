@@ -101,7 +101,7 @@ export class AppMenus {
     {
       text: "统计分析",
       icon: { type: "icon", value: "area-chart" },// 图标
-      acl: [AppMenus.aclSys, AppMenus.orgManager],
+      acl: [AppMenus.aclOrg, AppMenus.orgManager],
       children: [
         // {
         //   text: "预警中心",

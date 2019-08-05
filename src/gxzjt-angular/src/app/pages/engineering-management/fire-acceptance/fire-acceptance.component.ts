@@ -270,7 +270,6 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
     this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`]);
   }
   toreapply(item) {
-    console.log(item);
     this.router.navigate([`/app/work-matters/review-apply/${item.id}/2`]);
   }
 
