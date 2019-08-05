@@ -120,7 +120,7 @@
                 <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.content"
                   name="professionalContractorsopinion" required>
                     </textarea>
-                <p style="color: #f5222d;margin-top: 8px;font-weight:bold">↑审批人需编辑此段（提示：若要保持段落首行空2格，请在每个段落首行请输入4个空格符）
+                <p style="color: #f5222d;margin-top: 8px;font-weight:bold">↑审批人需编辑此段输入意见（提示：若要保持段落首行空2格，请在每个段落首行请输入4个空格符）
                 </p>
                 <div style="display: block;margin-top: 8px;margin-bottom: 8px;">
                   <div style="display: flex;align-items: center;">
@@ -129,7 +129,7 @@
                       (ngModelChange)="onChangeCheckDate($event)" [nzFormat]="'yyyy/MM/dd'">
                     </nz-date-picker>
                   </div>
-                  <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.checkDate">
+                  <p style="color: #f5222d;text-align: left;" *ngIf="!examineFormDto.checkDate">
                     此处验收日期必填，需和意见一致
                   </p>
                 </div>
