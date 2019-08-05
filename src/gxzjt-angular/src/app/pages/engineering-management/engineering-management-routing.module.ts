@@ -36,13 +36,13 @@ const routes: Routes = [
 
   {
     path: 'addCompletedAcceptanceComponent/:type/:projectId/:flowId',
-    data: { title: '新增验收申报',reuse:true },
+    data: { title: '新增备案申报',reuse:true },
     component: AddCompletedAcceptanceComponent
   },
 
   {
     path: 'addFireAcceptanceComponent/:type/:projectId/:flowId',
-    data: { title: '新增备案申报',reuse:true },
+    data: { title: '新增验收审查申报',reuse:true },
     component: AddFireAcceptanceComponent
   },
 
