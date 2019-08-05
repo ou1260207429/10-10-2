@@ -120,6 +120,8 @@
                 <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.content"
                   name="professionalContractorsopinion" required>
                     </textarea>
+                <p style="color: #f5222d;margin-top: 8px;font-weight:bold">↑审批人需编辑此段（提示：若要保持段落首行空2格，请在每个段落首行请输入4个空格符）
+                </p>
                 <div style="display: block;margin-top: 8px;margin-bottom: 8px;">
                   <div style="display: flex;align-items: center;">
                     <div> 验收日期: </div>
@@ -132,7 +134,7 @@
                   </p>
                 </div>
               </div>
-              <p style="color: #f5222d;margin-top: 8px;font-weight:bold">提示：若要保持段落首行空2格，请在每个段落首行请输入4个空格符</p>
+
               <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.content">必填</p>
 
             </div>

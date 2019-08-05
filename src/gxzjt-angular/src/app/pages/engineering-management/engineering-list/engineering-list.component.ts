@@ -15,7 +15,7 @@ import { FlowServices } from 'services/flow.services';
 import { publicPageConfig, pageOnChange, FlowPathTypeEnum } from 'infrastructure/expression';
 import { PublicFormComponent } from '../public/public-form.component';
 import * as moment from 'moment';
-import { timeTrans } from 'infrastructure/regular-expression';
+
 /**
  * 工程列表
  */
