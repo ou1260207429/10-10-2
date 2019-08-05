@@ -274,7 +274,6 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     this.getList();
   }
   toreapply(item) {
-    console.log(item);
     this.router.navigate([`/app/work-matters/review-apply/${item.id}/3`]);
   }
 
@@ -289,7 +288,6 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
   }
 
   okRangeTime(v) {
-    console.log(v);
     // const applyTimeStart:any = timeTrans(v[0])
     // const applyTimeEnd:any = timeTrans(v[1])
     // this.searchParam.applyTimeStart = applyTimeStart;

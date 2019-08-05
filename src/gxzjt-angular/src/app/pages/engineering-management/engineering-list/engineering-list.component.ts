@@ -137,7 +137,6 @@ export class EngineeringListComponent extends PublicFormComponent implements OnI
   getList() {
     this._projectFlowServcieServiceProxy.post_GetStatisticsList(this.searchParam).subscribe((data: any) => {
       this.formResultData = data
-      console.log(this.formResultData)
     })
   }
 

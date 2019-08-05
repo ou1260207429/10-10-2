@@ -210,7 +210,6 @@ export class HandlingGuidDetailComponent implements OnInit {
   //编辑器change事件
   keyupHandler(value) {
     this.editContent = value
-    console.log(value)
     ///this.data.content = value;
   }
   removeFile = (file: UploadFile): boolean => {

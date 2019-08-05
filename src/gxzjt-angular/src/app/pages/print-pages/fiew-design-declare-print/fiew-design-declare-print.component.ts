@@ -10,8 +10,8 @@ import { dateTrans } from 'infrastructure/regular-expression';
 export class FiewDesignDeclarePrintComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute) {
     this.data = JSON.parse(this.getToken());
-    this.data.planStartTime = this.data.planStartTime ? dateTrans(this.data.planStartTime) : '';
-    this.data.planEndTime = this.data.planEndTime ? dateTrans(this.data.planEndTime) : "";
+    // this.data.planStartTime = this.data.planStartTime ? dateTrans(this.data.planStartTime) : '';
+    // this.data.planEndTime = this.data.planEndTime ? dateTrans(this.data.planEndTime) : "";
 
   }
   data: any;
@@ -38,12 +38,11 @@ export class FiewDesignDeclarePrintComponent implements OnInit {
 
 
   ngAfterViewInit() {
+    setTimeout(() => {
+      window.print();
+      history.go(-1);
 
-    // setTimeout(() => {
-    //   window.print();
-    //   history.go(-1);
-
-    // }, 100)
+    }, 150)
 
   }
 }

@@ -53,7 +53,6 @@ export class IndexHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     var pathArr = this.location.pathname.split('/');
-    console.log(pathArr)
   }
 
 
@@ -64,7 +63,6 @@ export class IndexHeaderComponent implements OnInit {
 
   }
   gotoMenu(item) {
-    console.log(item)
     this.router.navigate(item.path);
   }
 

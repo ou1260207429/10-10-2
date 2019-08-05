@@ -16,7 +16,6 @@ export class SysSettingUnitInfoEditComponent implements OnInit {
   ngOnInit() {
     if (this.record)
       this.i = this.record;
-    console.log(this.i.IsDiretor);
   }
 
   add() {

@@ -41,7 +41,6 @@ export function formatOldJson(json): any {
         }
     }
 
-    console.log(json)
     if (json.constructionUnit instanceof Array && json.constructionUnit.length == 0) {
         json.constructionUnit = [
             {

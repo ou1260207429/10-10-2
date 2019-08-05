@@ -279,7 +279,6 @@ export class WorkMattersAllDoneComponent implements OnInit {
       this.param.startTime = null;
       this.param.endTime = null;
     }
-    console.log(this.param)
     this.GetHandlingMatters();
 
   }

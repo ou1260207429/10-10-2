@@ -509,7 +509,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         }
         this.useNatureSelect = data.natures;
       } catch (e) {
-        console.log(e);
+        .log(e);
       }
 
 

@@ -108,7 +108,6 @@ export class RoleManagerComponent extends PublicFormComponent implements OnInit 
 
     this.isSearchForm = true;
     this.workFlowedServiceProxy.pendingWorkFlow_NodeAuditorRecord(searchParam).subscribe((res: DataSourceResult) => {
-      console.log(JSON.stringify(res));
       this.formResultData = res.data;
       this.isSearchForm = false;
     }, err => {
