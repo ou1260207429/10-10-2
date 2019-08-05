@@ -91,8 +91,8 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
   }
 
   onChangeCheckDate(date: Date) {
-    var dateStr = "。" + date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + "日";
-    this.examineFormDto.content = this.examineFormDto.content.replace(/。\d{4}年\d{1,2}月\d{2}日?/g, dateStr);
+    var dateStr = "。" + date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + "日,";
+    this.examineFormDto.content = this.examineFormDto.content.replace(/。\d{4}年\d{1,2}月\d{1,2}日,?/g, dateStr);
   }
 
   beforeUpload = (file: any): boolean => {
