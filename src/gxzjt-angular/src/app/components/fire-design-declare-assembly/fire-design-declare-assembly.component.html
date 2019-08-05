@@ -612,9 +612,8 @@
           <label [ngClass]="{pointer: type == 1}" nz-checkbox name="fireFightingFacilities{{i}}"
             (ngModelChange)="changeValue($event,'fireFightingFacilities')"
             *ngFor="let box of data.fireFightingFacilities;let i = index" required
-            [(ngModel)]="box.value">{{box.label}}</label>
-          <p style="color: #f5222d;text-align: center;;"
-            *ngIf="errorData.fireFightingFacilities||errorData.fireFightingFacilities==''&&type != 1">
+            [(ngModel)]="box.value" >{{box.label}}</label>
+          <p style="color: #f5222d;text-align: center;" *ngIf="errorData.fireFightingFacilities&&type != 1">
             必填
           </p>
         </td>

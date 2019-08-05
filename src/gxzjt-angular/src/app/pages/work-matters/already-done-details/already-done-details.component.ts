@@ -38,7 +38,7 @@ export class AlreadyDoneDetailsComponent implements OnInit {
   showError = {
     projectCategoryId: false,
     specialEngineering: false,
-    fireFightingFacilities: false
+    fireFightingFacilities: true
   }
   type: boolean = true;
 
@@ -92,6 +92,11 @@ export class AlreadyDoneDetailsComponent implements OnInit {
     this.type = false
     this.init()
   }
+
+
+  
+
+
 
   init() {
     this.getWorkFlow_NodeRecordAndAuditorRecords()

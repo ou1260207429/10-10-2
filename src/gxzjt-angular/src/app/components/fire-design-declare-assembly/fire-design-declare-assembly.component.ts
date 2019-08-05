@@ -37,7 +37,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   @Input() errorData = {
     projectCategoryId: false,
     specialEngineering: false,
-    fireFightingFacilities: false
+    fireFightingFacilities: true
   }
   //市县区
   // position = OptionsEnum
@@ -83,6 +83,8 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     private fb: FormBuilder) {
 
   }
+
+
 
 
 
@@ -201,7 +203,41 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     } else {
       this.errorData[type] = false;
     }
+
+    if (value) {
+      this.errorData.fireFightingFacilities = false;
+    } else {
+      this.checkfireFightingFacilities(value);
+    }
+
+
   }
+
+
+  checkfireFightingFacilities(selectValue) {
+
+    var checkCount = 0;
+    for (var i = 0; i < this.data.fireFightingFacilities.length; ++i) {
+
+      var element = this.data.fireFightingFacilities[i];
+
+      if (element.value) {
+        ++checkCount;
+      }
+
+    }
+
+    this.errorData.fireFightingFacilities = checkCount == 0;
+
+    if (checkCount == 1 && !selectValue) {
+      this.errorData.fireFightingFacilities = true;
+
+    }
+
+
+  }
+
+
   /**
    * 添加数组
    * @param arr 数组
@@ -340,7 +376,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     // return startValue.getTime() > this.data.planEndTime.getTime();
     if (this.data.planEndTime instanceof Date) {
       return startValue.getTime() <= this.data.planStartTime.getTime();
-    }else{
+    } else {
       return startValue.getTime() <= new Date(this.data.planEndTime).getTime();
     }
   };
@@ -351,10 +387,10 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     }
     if (this.data.planStartTime instanceof Date) {
       return endValue.getTime() <= this.data.planStartTime.getTime();
-    }else{
+    } else {
       return endValue.getTime() <= new Date(this.data.planStartTime).getTime();
     }
-  
+
   };
 
 

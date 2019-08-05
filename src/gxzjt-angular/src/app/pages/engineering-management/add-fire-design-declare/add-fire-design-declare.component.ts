@@ -37,7 +37,7 @@ export class AddFireDesignDeclareComponent implements OnInit {
   showError = {
     projectCategoryId: false,
     specialEngineering: false,
-    fireFightingFacilities: false
+    fireFightingFacilities: true
   };
 
   data: any = {
@@ -621,6 +621,8 @@ export class AddFireDesignDeclareComponent implements OnInit {
       );
     }
   }
+
+
 
   /**
    * 申请提交
