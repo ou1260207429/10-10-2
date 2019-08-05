@@ -11,9 +11,9 @@
   <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
     <input nz-input formControlName="cityName" placeholder="请输入地市名称" style="width: 200px;margin-right: 10px;">
 
-    <nz-range-picker [nzFormat]="'yyyy/MM/dd'" formControlName="dateRange" style="margin-right: 10px;"
+    <!-- <nz-range-picker [nzFormat]="'yyyy/MM/dd'" formControlName="dateRange" style="margin-right: 10px;"
       [nzPlaceHolder]="['创建开始时间','创建结束时间']">
-    </nz-range-picker>
+    </nz-range-picker> -->
 
     <button nz-button (click)="search()" nzType="primary">搜索</button>
 
