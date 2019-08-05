@@ -12,7 +12,7 @@ import { NzModalService } from 'ng-zorro-antd';
 import { EventEmiter } from 'infrastructure/eventEmiter';
 import { ReuseTabService } from '@delon/abc';
 
-import { convertToArray ,formatOldJson} from '@shared/utils/array';
+import { convertToArray, formatOldJson } from '@shared/utils/array';
 
 
 
@@ -472,7 +472,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         if (data.formJson != null && data.formJson != "") {
 
           var json = JSON.parse(data.formJson);
-          
+
 
           json.design = json.design ? json.design : [{ designUnit: '', qualificationLevel: '', legalRepresentative: '', contacts: '', contactsNumber: '' }],
 
@@ -502,14 +502,14 @@ export class AddCompletedAcceptanceComponent implements OnInit {
 
 
           json = formatOldJson(json);
-         
+
           this.data = json;
 
           this.filterFileList();
         }
         this.useNatureSelect = data.natures;
       } catch (e) {
-        .log(e);
+        console.log(e);
       }
 
 
