@@ -287,6 +287,13 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
     this.router.navigate([`/app/engineering-management/addFireAcceptanceComponent/0/null/null`]);
   }
 
+    /**
+   * 新增申报
+   */
+  newaddDeclare() {
+    this.router.navigate([`/app/project-manage/add-acceptance/0/null/null`]);
+  }
+
   /**
    * 导出
    */

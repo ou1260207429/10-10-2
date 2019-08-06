@@ -109,17 +109,17 @@ export class AppMenus {
         //   link: "/app/statistics/warning-center",
         // },
         {
-          text: "项目申报情况统计",
+          text: "项目申报情况",
           link: "/app/statistics/pro-app-static",
         },
         {
-          text: "超时办理情况分析",
+          text: "超时办理项目",
           link: "/app/statistics/timeout-deal-with",
         },
-        {
-          text: "办理时限统计",
-          link: "/app/statistics/time-limt-deal",
-        },
+        // {
+        //   text: "办理时限统计",
+        //   link: "/app/statistics/time-limt-deal",
+        // },
         {
           text: "单位项目办理统计",
           link: "/app/statistics/unit-project-statis",
