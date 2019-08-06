@@ -50,7 +50,7 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
   @Output() private printOuter = new EventEmitter();
-  printData = { address: '', examination: '' };
+  printData = { address: '', examination: '', useNatureName: "" };
   //从父组件获取使用行性质的select
   @Input() useNatureSelect: any;
 
@@ -136,7 +136,11 @@ export class FireAcceptanceAssemblyComponent implements OnInit {
       { natureName: "供应站", natureCode: "63" },
     ];
     this.useNatureSelect = selectChildren;
-
+    this.useNatureSelect.forEach(element => {
+      if (this.data.useNature == element.natureCode) {
+        this.printData.useNatureName = element.natureName;
+      }
+    });
 
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);

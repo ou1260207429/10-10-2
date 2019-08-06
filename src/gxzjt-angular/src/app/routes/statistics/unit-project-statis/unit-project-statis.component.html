@@ -10,6 +10,7 @@
 
   <form nz-form class="mb-md" [hidden]="hiddenFliter" [formGroup]="fliterForm">
     <input nz-input formControlName="cityName" placeholder="请输入地市名称" style="width: 200px;margin-right: 10px;">
+    <input nz-input formControlName="unitName" placeholder="请输入单位名称" style="width: 200px;margin-right: 10px;">
 
     <!-- <nz-range-picker [nzFormat]="'yyyy/MM/dd'" formControlName="dateRange" style="margin-right: 10px;"
       [nzPlaceHolder]="['创建开始时间','创建结束时间']">
@@ -20,8 +21,10 @@
     <button nz-button (click)="resetForm()">重置</button>
     <button nz-button (click)="export()" class="search_menu" [nzLoading]="exportLoading">导出</button>
   </form>
-  <nz-table *ngIf="formResultData" #groupingTable [nzData]="formResultData" nzBordered nzShowPagination [nzFrontPagination]="FrontPagination" [nzPageIndex]="param.page" [nzPageSize]="param.maxResultCount"
-    [nzLoading]="tableLoading" [nzSize]="'default'" [nzShowTotal]="totalTemplate" [nzTotal]="total2" (nzPageIndexChange)="change($event)">
+  <nz-table *ngIf="formResultData" #groupingTable [nzData]="formResultData" nzBordered nzShowPagination
+    [nzFrontPagination]="FrontPagination" [nzPageIndex]="param.page" [nzPageSize]="param.maxResultCount"
+    [nzLoading]="tableLoading" [nzSize]="'default'" [nzShowTotal]="totalTemplate" [nzTotal]="total2"
+    (nzPageIndexChange)="change($event)">
     <thead>
       <tr>
         <th rowspan="2" style="width: 90px">地市</th>

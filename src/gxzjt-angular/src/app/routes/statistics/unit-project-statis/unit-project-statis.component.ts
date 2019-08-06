@@ -14,9 +14,9 @@ export class UnitProjectStatisComponent implements OnInit {
   hiddenFliter = false;
   formResultData = [];
   rangeTime = [];
-  FrontPagination=false
+  FrontPagination = false
   exportLoading = false
-  tableLoading=false;
+  tableLoading = false;
   total2 = 0;
   param = {
     page: 1,
@@ -35,6 +35,7 @@ export class UnitProjectStatisComponent implements OnInit {
     this.resetTime();
     this.fliterForm = this.formBuilder.group({
       cityName: [null],
+      unitName: [null],
       dateRange: [this.rangeTime],
     });
     this.search();
@@ -82,6 +83,7 @@ export class UnitProjectStatisComponent implements OnInit {
   resetForm(): void {
     this.fliterForm = this.formBuilder.group({
       cityName: [null],
+      unitName: [null],
       dateRange: [this.rangeTime],
     });
     this.param.page = 1;
@@ -93,11 +95,11 @@ export class UnitProjectStatisComponent implements OnInit {
     this.tableLoading = true;
     this.StatisticsService.GetUnitProjectStisticList(this.param).subscribe(
       res => {
-    this.tableLoading = false;
+        this.tableLoading = false;
         if (res.result.data) {
           this.formResultData = res.result.data;
           _this.total2 = res.result.total;
-          
+
         } else {
           this.formResultData = [];
         }

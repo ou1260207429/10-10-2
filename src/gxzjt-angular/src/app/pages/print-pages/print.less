@@ -22,7 +22,7 @@
 .title {
   text-align: center;
   font-size: 27px;
-  padding: 15px;
+  padding: 10px;
   border-top: 1px solid #e2e2e2;
   border-left: 1px solid #e2e2e2;
   border-right: 1px solid #e2e2e2;
@@ -36,19 +36,19 @@
 }
 
 .padding2 {
-  padding: 15px;
+  padding: 10px;
   box-sizing: border-box;
 }
 
 .onceWidth {
   width: 50px;
-  padding: 15px;
+  padding: 10px;
   box-sizing: border-box;
 }
 
 .secondWidth {
   width: 682px;
-  padding: 15px;
+  padding: 10px;
   box-sizing: border-box;
 }
 
@@ -60,12 +60,30 @@
 .tableTopTitle {
   text-align: center;
   font-size: 17px;
-  padding: 15px;
+  padding: 10px;
   border-top: 1px solid #e2e2e2;
   border-left: 1px solid #e2e2e2;
   border-right: 1px solid #e2e2e2;
   font: 600 14px Arial;
   box-sizing: border-box;
+}
+
+.radio {
+  display: inline-block;
+  margin-top: 5px;
+}
+
+input[type='radio'],
+input[type='checked'] {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+}
+
+label {
+  overflow: hidden;
+  display: inline-block;
+  margin: -1px 5px;
 }
 
 .row {
@@ -77,11 +95,19 @@
   box-sizing: border-box;
 }
 
+.contantleft {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+  word-break: break-all;
+}
+
 .contantCenter {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 15px;
+  padding: 10px;
   box-sizing: border-box;
   word-break: break-all;
 }
@@ -97,11 +123,11 @@
 }
 
 .unit {
-  width: 181px;
+  width: 134px;
 }
 
 .value {
-  width: 75px;
+  width: 121px;
 }
 
 .formPrint .row>div {
@@ -109,7 +135,7 @@
   box-sizing: border-box;
   //   border-right: 1px solid #e2e2e2;
   box-sizing: border-box;
-  padding: 15px;
+  padding: 10px;
   word-wrap: break-word;
   //   margin-top: -1px;
   //   margin-left: -1px;
@@ -130,7 +156,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 15px;
+  padding: 10px;
   box-sizing: border-box;
   word-break: break-all;
 }
@@ -149,7 +175,7 @@
 
 .bottomContent {
   width: 512px;
-  padding: 15px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
 }
@@ -157,7 +183,7 @@
 .bottom {
   display: flex;
   flex-direction: column;
-  padding-top: 0!important;
+  padding-top: 0 !important;
 }
 
 .bottomContent,
@@ -184,6 +210,6 @@
 }
 
 .files {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   text-indent: 20px;
 }
