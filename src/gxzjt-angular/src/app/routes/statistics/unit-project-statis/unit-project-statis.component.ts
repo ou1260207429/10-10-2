@@ -22,6 +22,7 @@ export class UnitProjectStatisComponent implements OnInit {
     page: 1,
     maxResultCount: 10,
     cityName: "",
+    unitName:"",
     startApplyTime: "",
     endApplyTime: "",
   };
@@ -44,6 +45,7 @@ export class UnitProjectStatisComponent implements OnInit {
     this.exportLoading = true;
     this.param.page = 1;
     this.param.cityName = this.fliterForm.controls.cityName.value;
+    this.param.unitName = this.fliterForm.controls.unitName.value;
     let time = this.fliterForm.controls.dateRange.value
     if (time && time.length != 0) {
       this.param.startApplyTime = dateTrans(time[0]) + " 00:00:00";
@@ -70,6 +72,7 @@ export class UnitProjectStatisComponent implements OnInit {
   search() {
     this.param.page = 1;
     this.param.cityName = this.fliterForm.controls.cityName.value;
+    this.param.unitName = this.fliterForm.controls.unitName.value;
     let time = this.fliterForm.controls.dateRange.value
     if (time && time.length != 0) {
       this.param.startApplyTime = dateTrans(time[0]) + " 00:00:00";
