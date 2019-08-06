@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { getAddDeisnRepData } from '../public/add-design-data';
+import { getAddDeisnRepData } from '../../public/add-design-data';
 @Component({
   selector: 'app-project-manage-add-design',
   templateUrl: './add-design.component.html',
-  styleUrls: ['../public/public.less'],
+  styleUrls: ['../../public/public.less'],
 })
 export class ProjectManageAddDesignComponent implements OnInit {
 

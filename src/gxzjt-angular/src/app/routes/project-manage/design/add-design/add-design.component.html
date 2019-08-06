@@ -18,7 +18,7 @@
 
         <nz-form-control nzHasFeedback>
           <input nz-input type="text" formControlName="jsconstructionUnit" [(ngModel)]="postData.jsconstructionUnit"
-            placeholder="请输入建设单位" nzHasFeedback required>
+            placeholder="请输入建设单位"  required>
 
           <div class="vali_err" *ngIf="validateForm.get('jsconstructionUnit').hasError('required')">
             必填
@@ -38,7 +38,7 @@
 
         <nz-form-control nzHasFeedback>
           <input nz-input type="text" formControlName="projectName" [(ngModel)]="postData.projectName"
-            placeholder="请输入工程名称" nzHasFeedback required>
+            placeholder="请输入工程名称"  required>
 
           <div class="vali_err" *ngIf="validateForm.get('projectName').hasError('required')">
             必填
@@ -57,7 +57,7 @@
       <div class="td">
         <nz-form-control nzHasFeedback>
           <input nz-input type="text" formControlName="legalRepresentative" [(ngModel)]="postData.legalRepresentative"
-            placeholder="请输入法定代表人/主要负责人" nzHasFeedback required>
+            placeholder="请输入法定代表人/主要负责人"  required>
           <div class="vali_err" *ngIf="validateForm.get('legalRepresentative').hasError('required')">
             必填
           </div>
@@ -69,12 +69,51 @@
       </div>
 
       <div class="td_r_li">
-        <nz-form-control>
-          <input nz-input name="email" nzHasFeedback>
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" formControlName="legalRepresentative" [(ngModel)]="postData.legalRepresentative"
+            placeholder="请输入法定代表人/主要负责人的联系电话"  required>
+          <div class="vali_err" *ngIf="validateForm.get('legalRepresentative').hasError('required')">
+            必填
+          </div>
         </nz-form-control>
       </div>
 
     </div>
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large" nzRequired nzNoColon>联系人</nz-form-label>
+      </div>
+
+      <div class="td">
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" formControlName="legalRepresentative" [(ngModel)]="postData.contacts"
+            placeholder="请输入法定代表人/主要负责人"  required>
+          <div class="vali_err" *ngIf="validateForm.get('legalRepresentative').hasError('required')">
+            必填
+          </div>
+        </nz-form-control>
+      </div>
+
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large" nzRequired nzNoColon>联系电话</nz-form-label>
+      </div>
+
+      <div class="td_r_li">
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" formControlName="legalRepresentative" [(ngModel)]="postData.contactsNumber"
+            placeholder="请输入联系电话"  required>
+          <div class="vali_err" *ngIf="validateForm.get('legalRepresentative').hasError('required')">
+            必填
+          </div>
+        </nz-form-control>
+      </div>
+
+    </div>
+
+
+
 
     <div class="tr_btm_li">
       <div class="td_label_fixed">

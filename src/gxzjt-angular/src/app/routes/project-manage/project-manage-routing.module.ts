@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ProjectManageAddDesignComponent } from './add-design/add-design.component';
+import { ProjectManageAddDesignComponent } from './design/add-design/add-design.component';
 import { ProjectManageAddAcceptanceComponent } from './add-acceptance/add-acceptance.component';
 
 const routes: Routes = [
