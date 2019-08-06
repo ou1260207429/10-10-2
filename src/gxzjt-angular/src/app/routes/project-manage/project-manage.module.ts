@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { ProjectManageRoutingModule } from './project-manage-routing.module';
 import { ProjectManageAddDesignComponent } from './add-design/add-design.component';
+import { ProjectManageAddAcceptanceComponent } from './add-acceptance/add-acceptance.component';
 
 const COMPONENTS = [
-  ProjectManageAddDesignComponent];
+  ProjectManageAddDesignComponent,
+  ProjectManageAddAcceptanceComponent];
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({
