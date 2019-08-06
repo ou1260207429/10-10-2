@@ -82,7 +82,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     this.getOrganizationTree()
     const a: any = this.f;
 
-
+console.log(this.data)
     if (this.type == 1) {
       setTimeout(() => {
         const a: any = this.f;
@@ -94,7 +94,6 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     }
   }
   ngAfterViewInit(): void {
-    console.log(this.data)
     this.printOuter.emit(this.printData);
   }
   /**

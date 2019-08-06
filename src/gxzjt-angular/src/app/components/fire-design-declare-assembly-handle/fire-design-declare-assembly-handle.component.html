@@ -12,15 +12,16 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-            <!-- <div>
-              <input class="table_input" placeholder="请输入区域简称" [(ngModel)]="data.fileCodePrefix"
-                name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
-            </div> -->
             <div>
+              <input class="table_input" placeholder="请输入区域简称" [(ngModel)]="data.fileCodePrefix"
+                name="fileCodePrefix" />住建消审字〔后台生成〕第〔后台生成〕号
+            </div>
+            <div *ngIf="!data.fileCodePrefix" class="rightSpan">必填</div>
+            <!-- <div>
               <input class="table_input" placeholder="请输入字号" [(ngModel)]="data.fileCodeName" name="fileCodeName"
                 style="width: 200px;" />第[后台生成]号
             </div>
-            <div *ngIf="!data.fileCodeName" class="rightSpan">必填</div>
+            <div *ngIf="!data.fileCodeName" class="rightSpan">必填</div> -->
           </td>
         </tr>
         <tr>
@@ -74,15 +75,15 @@
       <tbody>
         <tr>
           <td rowspan='1' colspan='20' class="fontweight fontLeft leftTitle" required=true>
-            <!-- <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="examineFormDto.fileCodePrefix"
-                name="fileCodePrefix" />住建消审字〔后台生成〕第后台生成号
-            </div> -->
-
-            <div>
+            <div><input class="table_input" placeholder="请输入区域简称" [(ngModel)]="examineFormDto.fileCodePrefix"
+                name="fileCodePrefix" />住建消审字〔后台生成〕第〔后台生成〕号
+            </div>
+            <div *ngIf="!examineFormDto.fileCodePrefix" class="rightSpan">必填</div>
+            <!-- <div>
               <input class="table_input" placeholder="请输入字号" [(ngModel)]="examineFormDto.fileCodeName"
                 name="fileCodeName" style="width: 200px;" />第[后台生成]号
             </div>
-            <div *ngIf="!examineFormDto.fileCodeName" class="rightSpan">必填</div>
+            <div *ngIf="!examineFormDto.fileCodeName" class="rightSpan">必填</div> -->
           </td>
         </tr>
 
@@ -115,7 +116,8 @@
               <textarea nz-input placeholder="请输入意见" [(ngModel)]="examineFormDto.content"
                 name="professionalContractorscontent" required>
                     </textarea>
-              <p style="color: #f5222d;margin-top: 8px;font-weight:bold">↑审批人需编辑此段输入意见（提示：若要保持段落首行空2格，请在每个段落首行请输入4个空格符）</p>
+              <p style="color: #f5222d;margin-top: 8px;font-weight:bold">
+                ↑审批人需编辑此段输入文书意见（提示：若要保持段落首行空2格，请在每个段落首行请输入4个空格符）</p>
               <p style="color: #f5222d;text-align: center;font-weight: bold;" *ngIf="!examineFormDto.content">必填</p>
 
             </div>

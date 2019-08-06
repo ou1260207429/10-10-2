@@ -58,7 +58,6 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
           type: 'modal',
           iif: record => record.endTime != null,
           click: (record: any, modal: any) => {
-            console.debug(record);
             this.signFor(record);
           },
         },
@@ -232,7 +231,6 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
   }
 
   okRangeTime(v) {
-    console.log(v);
     //const applyTimeStart:any = timeTrans(v[0]) 
     //const applyTimeEnd:any = timeTrans(v[1]) 
     this.searchParam.applyTimeStart = v[0];
@@ -291,7 +289,6 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
       var tenantWorkFlowInstanceDto;
       tenantWorkFlowInstanceDto = data.result;
       tenantWorkFlowInstanceDto.workFlow_InstanceId = this.examineFormDto.workFlow_Instance_Id;
-      console.log(this.examineFormDto);
       tenantWorkFlowInstanceDto.frow_TemplateInfo_Data = {
         Area: this.examineFormDto.orgCode,
         IsChoose: 0,

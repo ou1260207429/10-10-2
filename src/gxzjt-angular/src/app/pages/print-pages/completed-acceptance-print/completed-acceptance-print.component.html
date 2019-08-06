@@ -13,15 +13,15 @@
         </div>
         <div class="row">
             <div class="minTitle">联系电话:</div>
-            <div class="borderRight" style="width:250px;">{{data.legalRepresentativeNo}}</div>
-            <div class="minTitle" style="width:180px;">联系人:</div>
+            <div class="borderRight contantCenter" style="width:250px;">{{data.legalRepresentativeNo}}</div>
+            <div class="minTitle contantCenter" style="width:180px;">联系人:</div>
             <div class="value" style="width:190px;">
                 {{data.contacts}}
             </div>
         </div>
         <div class="row">
             <div class="minTitle">联系电话:</div>
-            <div class="borderRight" style="width:250px;">{{data.contactsNumber}}</div>
+            <div class="borderRight contantCenter" style="width:250px;">{{data.contactsNumber}}</div>
             <div class="minTitle" style="width:180px;">工程名称:</div>
             <div class="value" style="width:190px;">
                 {{data.projectName}}
@@ -54,46 +54,46 @@
 
         <div class="row">
             <div class="minTitle">工程地址:</div>
-            <div style="width: 512px;">{{data.address}}{{data.engineeringAddress}}</div>
+            <div style="width: 612px;">{{data.address}}{{data.engineeringAddress}}</div>
         </div>
         <div class="row">
             <div class="minTitle">审批单位:</div>
-            <div style="width: 512px;">{{data.engineeringNo}}</div>
+            <div style="width: 612px;">{{data.examination}}</div>
         </div>
         <div class="row">
             <div class="minTitle">单位类别</div>
-            <div class="minTitle" style="width: 128px;">单位名称</div>
+            <div class="minTitle" style="width: 249px;">单位名称</div>
             <div class="minTitle">资质等级</div>
             <div class="minTitle">联系人</div>
             <div class="minTitle">联系电话</div>
         </div>
         <div class="row" *ngFor="let item of data.design;">
             <div class="minTitle">设计单位</div>
-            <div class="minTitleFlow" style="width: 128px;">{{item.designUnit}}</div>
-            <div class="minTitleFlow">{{item.qualificationLevel}}</div>
-            <div class="minTitleFlow">{{item.contacts}}</div>
-            <div class="minTitleFlow">{{item.contactsNumber}}</div>
+            <div class="minTitleFlow contantCenter" style="width: 249px;">{{item.designUnit}}</div>
+            <div class="minTitleFlow contantCenter">{{item.qualificationLevel}}</div>
+            <div class="minTitleFlow contantCenter">{{item.contacts}}</div>
+            <div class="minTitleFlow contantCenter">{{item.contactsNumber}}</div>
         </div>
         <div class="row" *ngFor="let item of data.constructionUnit;">
             <div class="minTitle">施工单位</div>
-            <div class="minTitleFlow" style="width: 128px;">{{item.designUnit}}</div>
-            <div class="minTitleFlow">{{item.qualificationLevel}}</div>
-            <div class="minTitleFlow">{{item.contacts}}</div>
-            <div class="minTitleFlow">{{item.contactsNumber}}</div>
+            <div class="minTitleFlow contantCenter" style="width: 249px;">{{item.designUnit}}</div>
+            <div class="minTitleFlow contantCenter">{{item.qualificationLevel}}</div>
+            <div class="minTitleFlow contantCenter">{{item.contacts}}</div>
+            <div class="minTitleFlow contantCenter">{{item.contactsNumber}}</div>
         </div>
         <div class="row">
             <div class="minTitle">监理单位</div>
-            <div class="minTitleFlow" style="width: 128px;">{{data.constructionControlUnit.designUnit}}</div>
-            <div class="minTitleFlow">{{data.constructionControlUnit.qualificationLevel}}</div>
-            <div class="minTitleFlow">{{data.constructionControlUnit.contacts}}</div>
-            <div class="minTitleFlow">{{data.constructionControlUnit.contactsNumber}}</div>
+            <div class="minTitleFlow contantCenter" style="width: 249px;">{{data.supervisoryUnit.name}}</div>
+            <div class="minTitleFlow contantCenter">{{data.supervisoryUnit.qualificationLevel}}</div>
+            <div class="minTitleFlow contantCenter">{{data.supervisoryUnit.contacts}}</div>
+            <div class="minTitleFlow contantCenter">{{data.supervisoryUnit.contactsNumber}}</div>
         </div>
         <div class="row">
             <div class="minTitle">检测单位</div>
-            <div class="minTitleFlow" style="width: 128px;">{{data.detectionUnit.name}}</div>
-            <div class="minTitleFlow">{{data.detectionUnit.qualificationLevel}}</div>
-            <div class="minTitleFlow">{{data.detectionUnit.contacts}}</div>
-            <div class="minTitleFlow">{{data.detectionUnit.contactsNumber}}</div>
+            <div class="minTitleFlow contantCenter" style="width: 249px;">{{data.detectionUnit.name}}</div>
+            <div class="minTitleFlow contantCenter">{{data.detectionUnit.qualificationLevel}}</div>
+            <div class="minTitleFlow contantCenter">{{data.detectionUnit.contacts}}</div>
+            <div class="minTitleFlow contantCenter">{{data.detectionUnit.contactsNumber}}</div>
         </div>
 
 
@@ -104,17 +104,16 @@
             <div style="width: 682px;display: flex;flex-direction: column;padding: 0;">
                 <div style="width: 682px;display: flex;">
                     <div class="minTitle">建筑物名称</div>
-                    <div class="minTitle" style="width: 59px;
+                    <div class="minTitle" style="width: 60px;
                     padding: 0 15px;
-                    box-sizing: border-box;
-                }">结构类型</div>
-                    <div class="minTitle contantCenter" style="width: 67px;
+                    box-sizing: border-box;">结构类型</div>
+                    <div class="minTitle contantCenter" style="width: 60px;
                     padding: 15px;
                     box-sizing: border-box;">耐火等级</div>
-                    <div class="minTitle borderRight" style="text-align: center;width: 71px;padding: 15px;">高度（m）</div>
+                    <div class="minTitle borderRight" style="text-align: center;width: 60px;padding: 15px;">高度（m）</div>
 
                     <div class="minTitle"
-                        style="display: flex;flex-direction: column;padding: 0;text-align: center;width: 148px;">
+                        style="display: flex;flex-direction: column;padding: 0;text-align: center;width: 160px;">
                         <div
                             style="border-bottom: 1px solid #e2e2e2;padding: 13px 0;box-sizing: border-box;width: 100%;">
                             层数
@@ -136,7 +135,7 @@
                         </div>
                     </div>
                     <div class="minTitle"
-                        style="display: flex;flex-direction: column;padding: 0;text-align: center;width: 148px;">
+                        style="display: flex;flex-direction: column;padding: 0;text-align: center;width: 162px;">
                         <div
                             style="border-bottom: 1px solid #e2e2e2;padding: 13px 0;box-sizing: border-box;width: 100%;">
                             建筑面积（m<sup>2</sup>）</div>
@@ -155,25 +154,25 @@
                             </div>
                         </div>
                     </div>
-                    <div class="minTitle" style="width: 69px;padding: 15px;">火灾危险性类别</div>
+                    <div class="minTitle" style="width: 60px;padding: 15px;">火灾危险性类别</div>
                 </div>
                 <div class="specialLow" style="display: flex;border-top: 1px solid #e2e2e2;"
                     *ngFor="let item of data.basicInformation;">
-                    <div class="borderRight" style="width:121px;">{{item.name}}</div>
-                    <div class="borderRight" style="width:59px;">{{item.type}}</div>
-                    <div class="borderRight" style="width: 67px;">{{item.grade}}</div>
-                    <div class="borderRight" style="width: 71px;">{{item.height}}</div>
-                    <div class="borderRight" style="width: 48px;">{{item.upGround}}</div>
-                    <div class="borderRight" style="width: 50px;">{{item.underGround}}</div>
-                    <div class="borderRight" style="width: 50px;">
+                    <div class="borderRight contantCenter" style="width:121px;">{{item.name}}</div>
+                    <div class="borderRight contantCenter" style="width:60px;">{{item.type}}</div>
+                    <div class="borderRight contantCenter" style="width: 60px;">{{item.grade}}</div>
+                    <div class="borderRight contantCenter" style="width: 60px;">{{item.height}}</div>
+                    <div class="borderRight contantCenter" style="width: 55px;">{{item.upGround}}</div>
+                    <div class="borderRight contantCenter" style="width: 50px;">{{item.underGround}}</div>
+                    <div class="borderRight contantCenter" style="width: 55px;">
                         {{item.ground&&!item.upGround?item.ground:(item.upGround?+item.upGround:0)+(item.underGround?+item.underGround:0)}}
                     </div>
-                    <div class="borderRight" style="width: 48px;">{{item.builtUpArea2}}</div>
-                    <div class="borderRight" style="width: 50px;">{{item.builtUnderArea}}</div>
-                    <div class="borderRight" style="width:  50px;">
+                    <div class="borderRight contantCenter" style="width: 56px;">{{item.builtUpArea2}}</div>
+                    <div class="borderRight contantCenter" style="width: 50px;">{{item.builtUnderArea}}</div>
+                    <div class="borderRight contantCenter" style="width:  56px;">
                         {{item.builtUpArea&&!item.builtUpArea2?item.builtUpArea:(item.builtUpArea2?+item.builtUpArea2:0)+(item.builtUnderArea?+item.builtUnderArea:0)}}
                     </div>
-                    <div style="width: 69px;">{{item.fireHazard}}</div>
+                    <div class="contantCenter" style="width: 60px;">{{item.fireHazard}}</div>
                 </div>
             </div>
         </div>
@@ -187,7 +186,7 @@
                     <div class="fontWeight minTitle" style="padding: 15px;">
                         设置位置
                     </div>
-                    <div style="width: 300px;">
+                    <div style="width: 561px;">
                         {{item.position}}
                     </div>
                 </div>
@@ -195,7 +194,7 @@
                     <div class="fontWeight minTitle" style="padding: 15px;">
                         设置形式
                     </div>
-                    <div style="width: 300px;">
+                    <div class="contantCenter" style="width: 561px;">
                         <span>
                             <img class="radioChecked" *ngIf="item.settingForm=='内浮顶罐'"
                                 src="../../../assets/images/radiochecked.png" alt="">
@@ -244,7 +243,7 @@
                     <div class="fontWeight minTitle" style="padding: 15px;">
                         储物类别
                     </div>
-                    <div style="width: 300px;">
+                    <div class="contantCenter" style="width: 561px;">
                         <span>
                             <img class="radioChecked" *ngIf="item.type=='可燃液体'"
                                 src="../../../assets/images/radiochecked.png" alt="">
@@ -307,19 +306,19 @@
                     </div>
                 </div>
                 <div style="display: flex;width: 100%;border-top:  1px solid #e2e2e2;">
-                    <div class="fontWeight minTitle" style="padding: 15px;">
+                    <div class="fontWeight minTitle contantCenter">
                         {{item.name}}
                     </div>
-                    <div class="fontWeight minTitle" style="padding: 15px;width: 142px;">
+                    <div class="fontWeight minTitle contantCenter" style="width: 142px;">
                         {{item.materialQuality}}
                     </div>
-                    <div class="fontWeight minTitle" style="padding: 15px;width: 140px;">
+                    <div class="fontWeight minTitle contantCenter" style="width: 140px;">
                         {{item.pressure}}
                     </div>
-                    <div class="fontWeight minTitle" style="padding: 15px;width: 140px;">
+                    <div class="fontWeight minTitle contantCenter" style="width: 140px;">
                         {{item.temperature}}
                     </div>
-                    <div class="fontWeight minTitle" style="padding: 15px;width: 140px;">
+                    <div class="fontWeight minTitle contantCenter" style="width: 140px;">
                         {{item.form}}
                     </div>
                 </div>
@@ -329,16 +328,16 @@
             <div class="fontWeight borderRight minTitle">
                 堆 场
             </div>
-            <div class="fontWeight borderRight minTitle" style="text-align: center;">储 量</div>
+            <div class="borderRight minTitle" style="text-align: center;font-weight: 500;">储 量</div>
             <div class="borderRight" style="text-align: center;width: 170px;">{{item.reserves}}</div>
-            <div class="fontWeight borderRight minTitle" style="text-align: center;">储存物质名称</div>
+            <div class="borderRight minTitle" style="text-align: center;font-weight: 500;">储存物质名称</div>
             <div class="borderRight" style="text-align: center;width: 200px;">{{item.name}}</div>
         </div>
         <div class="row" *ngFor="let item of data.newcheckboxEngineering;">
             <div class="fontWeight borderRight minTitle">
                 {{item.label}}
             </div>
-            <div style="width: 512px;padding: 5px;">
+            <div class="padding2" style="width: 612px;">
                 <span *ngFor="let box of item.arr;">
                     <img class="radioChecked" *ngIf="box.value" src="../../../../assets/images/radiochecked.png" alt="">
                     <img class="radioChecked" *ngIf="!box.value" src="../../../../assets/images/radioUnchecked.png"
@@ -356,12 +355,11 @@
             <div class="minTitle">室内装修工程</div>
             <div style="display: flex;padding: 0;flex-direction: column;">
                 <div style="display: flex;padding: 0;">
-                    <div class="fontWeight"
-                        style="width: 100px;border-right: 1px solid #e2e2e2;padding: 10px;border-bottom: 1px solid #e2e2e2;box-sizing: border-box;">
+                    <div class="fontWeight contantCenter"
+                        style="width: 100px;border-right: 1px solid #e2e2e2;border-bottom: 1px solid #e2e2e2;">
                         装修部位
                     </div>
                     <div style="padding: 15px;width: 512px;border-bottom: 1px solid #e2e2e2;box-sizing: border-box;">
-
                         <span *ngFor="let box of data.constructionProject.arr">
                             <img class="radioChecked" *ngIf="box.value" src="../../../../assets/images/radiochecked.png"
                                 alt="">
@@ -375,31 +373,29 @@
                     </div>
                 </div>
                 <div style="display: flex;padding: 0;">
-                    <div class="fontWeight"
-                        style="width: 100px;border-right: 1px solid #e2e2e2;padding: 10px;box-sizing: border-box;">
+                    <div class="fontWeight contantCenter"
+                        style="width: 100px;border-right: 1px solid #e2e2e2;border-bottom: 1px solid #e2e2e2;">
                         装修面积（㎡）
                     </div>
                     <div style="width: 245px;border-right: 1px solid #e2e2e2;padding: 10px;box-sizing: border-box;">
                         {{data.constructionProject.decorationArea}}</div>
-                    <div class="fontWeight"
-                        style="width: 100px;border-right: 1px solid #e2e2e2;padding: 10px;box-sizing: border-box;">
+                    <div class="fontWeight contantCenter" style="width: 100px;border-right: 1px solid #e2e2e2;">
                         装修层数
                     </div>
-                    <div style="width: 168px;">{{data.constructionProject.ground}}</div>
+                    <div class="padding2" style="width: 168px;">{{data.constructionProject.ground}}</div>
                 </div>
                 <div style="display: flex;padding: 0;">
-                    <div class="fontWeight"
-                        style="width: 100px;border-right: 1px solid #e2e2e2;padding: 10px;border-top: 1px solid #e2e2e2;box-sizing: border-box;">
+                    <div class="fontWeight contantCenter" style="width: 100px;border-right: 1px solid #e2e2e2;">
                         使用性质
                     </div>
-                    <div
-                        style="width: 245px;border-right: 1px solid #e2e2e2;padding: 10px;border-top: 1px solid #e2e2e2;box-sizing: border-box;">
+                    <div class="padding2"
+                        style="width: 245px;border-right: 1px solid #e2e2e2;border-top: 1px solid #e2e2e2;">
                         {{data.constructionProject.useNature}}</div>
-                    <div class="fontWeight"
-                        style="width: 100px;border-right: 1px solid #e2e2e2;padding: 10px;border-top: 1px solid #e2e2e2;box-sizing: border-box;">
+                    <div class="fontWeight contantCenter"
+                        style="width: 100px;border-right: 1px solid #e2e2e2;border-top: 1px solid #e2e2e2;">
                         原有用途
                     </div>
-                    <div style="width: 168px;padding: 10px;border-top: 1px solid #e2e2e2;box-sizing: border-box;">
+                    <div class="padding2" style="width: 168px;border-top: 1px solid #e2e2e2;">
                         {{data.constructionProject.originallyUsed}}
                     </div>
                 </div>
@@ -411,8 +407,8 @@
             <div class="minTitle" style="width: 512px;">类型</div>
         </div>
         <div class="row" *ngFor="let item of data.fireControlLinkageEngineering;">
-            <div class="borderRight" style="width: 121px;">{{item.label}}</div>
-            <div class="borderRight" style="width: 100px;">{{item.input}}</div>
+            <div class="borderRight contantCenter" style="width: 121px;">{{item.label}}</div>
+            <div class="borderRight contantCenter" style="width: 100px;">{{item.input}}</div>
             <div style="width: 512px;">
                 <span *ngFor="let box of item.arr;">
                     <p style="margin-top: 5px;"> {{box.label}}</p>
@@ -447,18 +443,16 @@
                 <div style="border-bottom:1px solid #e2e2e2;display: flex;">
                     <div class="minTitle" style="width: 171px;"> 建设单位</div>
                     <div class="bottomContent">
-                        <div>
+                        <div class="cont">
                             {{data.acceptanceOpinions.constructionUnit.opinion}}
                         </div>
-                        <div style="flex: 1;margin: 5px 0;
-                              text-align: right;">
-                            <span>（建设单位公章）： </span><span
-                                style="display: inline-block;min-width: 100px;text-align: left;">{{data.acceptanceOpinions.constructionUnit.officialSeal}}</span>
+                        <div>
+                            <span class="name">（建设单位公章）： </span><span
+                                class="value">{{data.acceptanceOpinions.constructionUnit.officialSeal}}</span>
                         </div>
-                        <div style="flex: 1;
-                              text-align: right;">
-                            <span>项目负责人签名：</span><span
-                                style="display: inline-block;min-width: 100px;text-align: left;">{{data.acceptanceOpinions.constructionUnit.autograph}}</span>
+                        <div>
+                            <span class="name">项目负责人签名：</span><span
+                                class="value">{{data.acceptanceOpinions.constructionUnit.autograph}}</span>
                         </div>
                     </div>
                 </div>
@@ -466,17 +460,14 @@
                     style="border-bottom:1px solid #e2e2e2;display: flex;">
                     <div class="minTitle" style="width: 171px;"> 设计单位</div>
                     <div class="bottomContent">
-                        <div>
+                        <div class="cont">
                             {{item.opinion}}
                         </div>
-                        <div style="flex: 1;margin: 5px 0;
-                                  text-align: right;">
-                            <span>（设计单位公章）： </span><span
-                                style="display: inline-block;min-width: 100px;text-align: left;">{{item.officialSeal}}</span>
+                        <div>
+                            <span class="name">（设计单位公章）： </span><span class="value">{{item.officialSeal}}</span>
                         </div>
-                        <div style="text-align: right;">
-                            <span>项目负责人签名：</span><span
-                                style="display: inline-block;min-width: 100px;text-align: left;">{{item.autograph}}</span>
+                        <div>
+                            <span class="name">项目负责人签名：</span><span class="value">{{item.autograph}}</span>
                         </div>
                     </div>
                 </div>
@@ -484,91 +475,102 @@
                     style="border-bottom:1px solid #e2e2e2;display: flex;">
                     <div class="minTitle" style="width: 171px;"> 施工单位</div>
                     <div class="bottomContent">
-                        <div>
+                        <div class="cont">
                             {{item.opinion}}
                         </div>
-                        <div style="flex: 1;margin: 5px 0;
-                                      text-align: right;">
-                            <span>（施工单位）： </span><span
-                                style="display: inline-block;min-width: 100px;text-align: left;">{{item.officialSeal}}</span>
+                        <div>
+                            <span class="name">（施工单位）： </span><span class="value">{{item.officialSeal}}</span>
                         </div>
-                        <div style="flex: 1;
-                                      text-align: right;">
-                            <span>项目经理签名：</span><span
-                                style="display: inline-block;min-width: 100px;text-align: left;">{{item.autograph}}</span>
+                        <div>
+                            <span class="name">项目经理签名：</span><span class="value">{{item.autograph}}</span>
                         </div>
                     </div>
                 </div>
                 <div style="border-bottom:1px solid #e2e2e2;display: flex;">
                     <div class="minTitle" style="width: 171px;"> 专业承包单位（如有）</div>
                     <div class="bottomContent">
-                        <div>
+                        <div class="cont">
                             {{data.acceptanceOpinions.professionalContractors.opinion}}
                         </div>
-                        <div style="flex: 1;margin: 5px 0;
-                                  text-align: right;">
-                            <span>（专业承包单位公章）： </span><span
-                                style="display: inline-block;min-width: 100px;text-align: left;">{{data.acceptanceOpinions.professionalContractors.officialSeal}}</span>
+                        <div>
+                            <span class="name">（专业承包单位公章）： </span><span
+                                class="value">{{data.acceptanceOpinions.professionalContractors.officialSeal}}</span>
                         </div>
-                        <div style="flex: 1;
-                                  text-align: right;">
-                            <span>项目负责人签名：</span><span
-                                style="display: inline-block;min-width: 100px;text-align: left;">{{data.acceptanceOpinions.professionalContractors.autograph}}</span>
+                        <div>
+                            <span class="name">项目负责人签名：</span><span
+                                class="value">{{data.acceptanceOpinions.professionalContractors.autograph}}</span>
                         </div>
                     </div>
                 </div>
                 <div style="border-bottom:1px solid #e2e2e2;display: flex;">
                     <div class="minTitle" style="width: 171px;"> 工程监理单位</div>
                     <div class="bottomContent">
-                        <div>
+                        <div class="cont">
                             {{data.acceptanceOpinions.engineeringSupervisionUnit.opinion}}
                         </div>
-                        <div style="flex: 1;margin: 5px 0;
-                                      text-align: right;">
-                            <span>（监理单位公章）： </span><span
-                                style="display: inline-block;min-width: 100px;text-align: left;">{{data.acceptanceOpinions.engineeringSupervisionUnit.officialSeal}}</span>
+                        <div>
+                            <span class="name">（监理单位公章）： </span><span
+                                class="value">{{data.acceptanceOpinions.engineeringSupervisionUnit.officialSeal}}</span>
                         </div>
-                        <div style="flex: 1;
-                                      text-align: right;">
-                            <span>项目总监理工程师签名：</span><span
-                                style="display: inline-block;min-width: 100px;text-align: left;">{{data.acceptanceOpinions.engineeringSupervisionUnit.autograph}}</span>
+                        <div>
+                            <span class="name">项目总监理工程师签名：</span><span
+                                class="value">{{data.acceptanceOpinions.engineeringSupervisionUnit.autograph}}</span>
                         </div>
                     </div>
                 </div>
                 <div style="border-bottom:1px solid #e2e2e2;display: flex;">
                     <div class="minTitle" style="width: 171px;"> 消防设施检测单位</div>
                     <div class="bottomContent">
-                        <div>
+                        <div class="cont">
                             {{data.acceptanceOpinions.fireInspectionUnit.opinion}}
                         </div>
-                        <div style="flex: 1;margin: 5px 0;
-                                          text-align: right;">
-                            <span>检测单位： </span><span
-                                style="display: inline-block;min-width: 100px;text-align: left;">{{data.acceptanceOpinions.fireInspectionUnit.officialSeal}}</span>
+                        <div>
+                            <span class="name">检测单位： </span><span
+                                class="value">{{data.acceptanceOpinions.fireInspectionUnit.officialSeal}}</span>
                         </div>
-                        <div style="flex: 1;
-                                          text-align: right;">
-                            <span>项目负责人签名：</span><span
-                                style="display: inline-block;min-width: 100px;text-align: left;">{{data.acceptanceOpinions.fireInspectionUnit.autograph}}</span>
+                        <div>
+                            <span class="name">项目负责人签名：</span><span
+                                class="value">{{data.acceptanceOpinions.fireInspectionUnit.autograph}}</span>
                         </div>
                     </div>
                 </div>
                 <div style="padding: 15px;text-align: right;">
-                    <span>备案时间： </span><span
-                        style="display: inline-block;min-width: 100px;text-align: left;">{{data.acceptanceOpinions.filingTime}}</span>
+                    <span>备案时间： </span><span class="unit">{{data.acceptanceOpinions.filingTime}}</span>
                 </div>
 
             </div>
 
         </div>
         <div class="row">
-            <div style="width: 50px;" class="contantCenter fontWeight borderRight">
+            <div style="width: 50px;" class="contantCenter fontWeight borderRight onceWidth">
                 工程简要说明
             </div>
-            <div style="width: 682px;display: flex;flex-direction: column;padding: 0;">
+            <div class="secondWidth">
                 {{data.engineerinDescription}}
             </div>
-
-
+        </div>
+        <div class="row" style="border-bottom: 1px solid #e2e2e2;">
+            <div class="minTitle">同时提交材料</div>
+            <div style="width: 612px;">
+                <div>
+                    <p> 1、建设工程竣工验收消防备案表（纸质申报表的图片）</p>
+                    <div *ngFor="let item of data.fileList[0].array" class="files">
+                        <a [href]="item.url">{{item.name}}</a>
+                    </div>
+                </div>
+                <div>
+                    <p> 2、与消防验收有关的竣工图纸及隐蔽工程记录</p>
+                    <div *ngFor="let item of data.fileList[1].array" class="files">
+                        <a [href]="item.url">{{item.name}}</a>
+                    </div>
+                </div>
+                <div>
+                    <p> 3、符合要求的检测机构出具的消防设施及系统检测合格证明文件</p>
+                    <div *ngFor="let item of data.fileList[2].array" class="files">
+                        <a [href]="item.url">{{item.name}}</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>

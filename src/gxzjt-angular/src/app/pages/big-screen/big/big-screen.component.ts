@@ -183,7 +183,6 @@ export class BigScreenComponent {
         let Month3 = 0;
 
         this.screenService.post_GetApplyRate().subscribe((res: any) => {
-            console.log(res);
 
             res.data.forEach(e => {
                 switch (e.flowPathType) {

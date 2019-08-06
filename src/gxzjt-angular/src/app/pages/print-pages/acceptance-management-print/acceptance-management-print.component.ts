@@ -9,21 +9,14 @@ import { dateTrans } from 'infrastructure/regular-expression';
 export class AcceptanceManagementPrintComponent implements OnInit {
 
   constructor() {
-    this.data = JSON.parse(this.getToken());
   }
   data: any;
 
   ngOnInit() {
-    console.log(this.data)
-  }
-  goback() {
-    window.print();
-    history.go(-1);
+    this.data = JSON.parse(this.getToken());
   }
 
-  print() {
-    window.print();
-  }
+
   ngOnDestroy(): void {
     localStorage.removeItem('jsonPrintForm');
   }
@@ -36,12 +29,10 @@ export class AcceptanceManagementPrintComponent implements OnInit {
 
 
   ngAfterViewInit() {
-
-    // setTimeout(() => {
-    //   window.print();
-    //   history.go(-1);
-
-    // }, 100)
+    setTimeout(() => {
+      window.print();
+      history.go(-1);
+    }, 150)
 
   }
 }

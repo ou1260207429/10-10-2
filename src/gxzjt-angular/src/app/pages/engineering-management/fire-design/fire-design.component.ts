@@ -275,7 +275,6 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
 
 
   exportXlsx() {
-    console.log(this.formResultData);
 
     // this.publicModel.exportXlsx(this.columns,)
     // const expData = [this.columns.map(i => i.title)];
