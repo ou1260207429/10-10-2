@@ -40,7 +40,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
   @Output() private printOuter = new EventEmitter();
-  printData = { address: '', examination: '' };
+  printData = { address: '', examination: '', useNatureName: "" };
   //抽取号
   // decimationnumber: any;
 
@@ -81,8 +81,11 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
     this.getAreaDropdown();
     this.getOrganizationTree()
     const a: any = this.f;
-
-console.log(this.data)
+    this.useNatureSelect.forEach(element => {
+      if (this.data.useNature == element.natureCode) {
+        this.printData.useNatureName = element.natureName;
+      }
+    });
     if (this.type == 1) {
       setTimeout(() => {
         const a: any = this.f;

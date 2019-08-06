@@ -29,10 +29,7 @@ export class AcceptanceManagementPrintComponent implements OnInit {
 
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      window.print();
-      history.go(-1);
-    }, 150)
-
+    window.print();
+    history.go(-1);
   }
 }

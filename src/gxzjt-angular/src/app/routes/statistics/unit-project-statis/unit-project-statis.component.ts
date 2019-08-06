@@ -14,14 +14,15 @@ export class UnitProjectStatisComponent implements OnInit {
   hiddenFliter = false;
   formResultData = [];
   rangeTime = [];
-  FrontPagination=false
+  FrontPagination = false
   exportLoading = false
-  tableLoading=false;
+  tableLoading = false;
   total2 = 0;
   param = {
     page: 1,
     maxResultCount: 10,
     cityName: "",
+    unitName:"",
     startApplyTime: "",
     endApplyTime: "",
   };
@@ -35,6 +36,7 @@ export class UnitProjectStatisComponent implements OnInit {
     this.resetTime();
     this.fliterForm = this.formBuilder.group({
       cityName: [null],
+      unitName: [null],
       dateRange: [this.rangeTime],
     });
     this.search();
@@ -43,6 +45,7 @@ export class UnitProjectStatisComponent implements OnInit {
     this.exportLoading = true;
     this.param.page = 1;
     this.param.cityName = this.fliterForm.controls.cityName.value;
+    this.param.unitName = this.fliterForm.controls.unitName.value;
     let time = this.fliterForm.controls.dateRange.value
     if (time && time.length != 0) {
       this.param.startApplyTime = dateTrans(time[0]) + " 00:00:00";
@@ -69,6 +72,7 @@ export class UnitProjectStatisComponent implements OnInit {
   search() {
     this.param.page = 1;
     this.param.cityName = this.fliterForm.controls.cityName.value;
+    this.param.unitName = this.fliterForm.controls.unitName.value;
     let time = this.fliterForm.controls.dateRange.value
     if (time && time.length != 0) {
       this.param.startApplyTime = dateTrans(time[0]) + " 00:00:00";
@@ -82,6 +86,7 @@ export class UnitProjectStatisComponent implements OnInit {
   resetForm(): void {
     this.fliterForm = this.formBuilder.group({
       cityName: [null],
+      unitName: [null],
       dateRange: [this.rangeTime],
     });
     this.param.page = 1;
@@ -93,11 +98,11 @@ export class UnitProjectStatisComponent implements OnInit {
     this.tableLoading = true;
     this.StatisticsService.GetUnitProjectStisticList(this.param).subscribe(
       res => {
-    this.tableLoading = false;
+        this.tableLoading = false;
         if (res.result.data) {
           this.formResultData = res.result.data;
           _this.total2 = res.result.total;
-          
+
         } else {
           this.formResultData = [];
         }
