@@ -5,29 +5,29 @@
         </div>
         <div class="row">
             <div class="minTitle">建设单位:</div>
-            <div class="unit borderRight contantCenter">
+            <div class="unit borderRight contantleft">
                 {{data.jsconstructionUnit}}
             </div>
             <div class="minTitle">法定代表人/主要负责人:</div>
-            <div class="value borderRight contantCenter">
+            <div class="value borderRight contantleft">
                 {{data.legalRepresentative}}
             </div>
             <div class="minTitle" style="width: 110px;">联系电话:</div>
-            <div class="contantCenter" style="width: 125px;">
+            <div class="contantleft" style="width: 125px;">
                 {{data.legalRepresentativeNo}}
             </div>
         </div>
         <div class="row">
             <div class="minTitle">工程名称:</div>
-            <div class="unit borderRight contantCenter">
+            <div class="unit borderRight contantleft">
                 {{data.projectName}}
             </div>
             <div class="minTitle">联系人:</div>
-            <div class="borderRight contantCenter value">
+            <div class="borderRight contantleft value">
                 {{data.contacts}}
             </div>
             <div class="minTitle" style="width: 110px;">联系电话:</div>
-            <div class="contantCenter" style="width: 125px;">
+            <div class="contantleft" style="width: 125px;">
                 {{data.contactsNumber}}
             </div>
         </div>
@@ -48,44 +48,29 @@
         </div>
         <div class="row">
             <div class="minTitle">类别:</div>
-            <div style="flex-grow: 1">
-                <span>
-                    <img class="radioChecked" *ngIf="data.projectCategoryId==1"
-                        src="../../../assets/images/radiochecked.png" alt="">
-                    <img class="radioChecked" *ngIf="data.projectCategoryId!=1"
-                        src="../../../assets/images/radioUnchecked.png" alt="">
-                    <span>新建</span>
+            <div style="width: 611px;">
+                <span class="radio">
+                    <input id="radio1" type="radio" name="Category" value="1" [checked]="data.projectCategoryId==1"
+                        disabled>
+                    <label for="radio1">新建</label>
                 </span>
-                <span>
-                    <img class="radioChecked" *ngIf="data.projectCategoryId==2"
-                        src="../../../assets/images/radiochecked.png" alt="">
-                    <img class="radioChecked" *ngIf="data.projectCategoryId!=2"
-                        src="../../../assets/images/radioUnchecked.png" alt="">
-                    <span>扩建&nbsp;</span>
+                <span class="radio">
+                    <input id="radio2" type="radio" name="Category" [checked]="data.projectCategoryId==2" disabled>
+                    <label for="radio2">扩建</label>
                 </span>
-                改建(
-                <span>
-                    <img class="radioChecked" *ngIf="data.projectCategoryId==3"
-                        src="../../../assets/images/radiochecked.png" alt="">
-                    <img class="radioChecked" *ngIf="data.projectCategoryId!=3"
-                        src="../../../assets/images/radioUnchecked.png" alt="">
-                    <span>装修</span>
+                <label> 改建(</label>
+                <span class="radio">
+                    <input id="radio3" name="Category" type="radio" [checked]="data.projectCategoryId==3" disabled>
+                    <label for="radio3">装修</label>
                 </span>
-                <span>
-                    <img class="radioChecked" *ngIf="data.projectCategoryId==4"
-                        src="../../../assets/images/radiochecked.png" alt="">
-                    <img class="radioChecked" *ngIf="data.projectCategoryId!=4"
-                        src="../../../assets/images/radioUnchecked.png" alt="">
-                    <span>建筑保温</span>
+                <span class="radio">
+                    <input id="radio4" name="Category" type="radio" [checked]="data.projectCategoryId==4" disabled>
+                    <label for="radio4">建筑保温</label>
                 </span>
-                <span>
-                    <img class="radioChecked" *ngIf="data.projectCategoryId==5"
-                        src="../../../assets/images/radiochecked.png" alt="">
-                    <img class="radioChecked" *ngIf="data.projectCategoryId!=5"
-                        src="../../../assets/images/radioUnchecked.png" alt="">
-                    <span>改变用途</span>
-                </span>
-                )
+                <span class="radio">
+                    <input id="radio5" name="Category" type="radio" [checked]="data.projectCategoryId==5" disabled>
+                    <label for="radio5">改变用途</label>
+                </span><label>)</label>
 
             </div>
         </div>
@@ -130,16 +115,16 @@
             <div class="minTitleFlow">{{data.mappingUnit.contactsNumber}}</div>
         </div>
         <div class="row" *ngFor="let strItem of data.mappingUnit.no;">
-            <div class="minTitle">审图编号</div>
-            <div style="flex-grow: 1">{{strItem.noValue}}</div>
+            <div class="minTitle" style="width: 249px;">审图编号</div>
+            <div style="width: 483px;">{{strItem.noValue}}</div>
         </div>
         <div class="row">
-            <div class="minTitle">主体消防验收意见书编号</div>
-            <div style="flex-grow: 1">{{data.mappingUnit.mainAdiseNo}}</div>
+            <div class="minTitle" style="width: 249px;">主体消防验收意见书编号</div>
+            <div style="width: 483px;">{{data.mappingUnit.mainAdiseNo}}</div>
         </div>
         <div class="row">
-            <div class="minTitle">建设工程规划许可证号</div>
-            <div style="flex-grow: 1">{{data.licenseNumber}}</div>
+            <div class="minTitle" style="width: 249px;">建设工程规划许可证号</div>
+            <div style="width: 483px;">{{data.licenseNumber}}</div>
         </div>
 
         <div class="row">
@@ -148,18 +133,13 @@
                 style="width: 61px; border-right: 1px solid #e2e2e2;box-sizing:border-box;padding:17px;">
                 特殊建设工程</div>
             <div style="display: flex;flex-direction: column;">
-
                 <div *ngFor="let item of data.specialEngineering.listArr let index=index"
-                    style="overflow: hidden;width: 580px;padding: 10px 0;">
-
+                    style="overflow: hidden;width: 580px;padding: 5px 0;">
                     <p class="specialTitle" style="text-align: left;">{{index+1}}、{{item.title}}</p>
-
-                    <span *ngFor="let o of item.arr">
-                        <img class="radioChecked" *ngIf="o.value==data.specialEngineering.value"
-                            src="../../../assets/images/radiochecked.png" alt="">
-                        <img class="radioChecked" *ngIf="o.value!=data.specialEngineering.value"
-                            src="../../../assets/images/radioUnchecked.png" alt="">
-                        <span> {{ o.name }}</span>
+                    <span class="radio" *ngFor="let o of item.arr;let index =index;">
+                        <input [id]="index" name="arr" type="radio" [checked]="data.specialEngineering.value==o.value"
+                            disabled>
+                        <label [for]="index">{{ o.name }}</label>
                     </span>
                 </div>
             </div>
@@ -172,47 +152,47 @@
                 <div style="width: 682px;display: flex;">
                     <div class="minTitle">单体建筑名称</div>
                     <div class="minTitle" style="width: 65px;
-                    padding: 0 15px;
+                    padding: 0 10px;
                     box-sizing: border-box;">结构类型</div>
                     <div class="minTitle contantCenter" style="width: 65px;
-                    padding: 15px;
+                    padding: 10px;
                     box-sizing: border-box;">耐火等级</div>
                     <div class="minTitle"
                         style="display: flex;flex-direction: column;padding: 0;text-align: center;width: 129px;">
                         <div
-                            style="border-bottom: 1px solid #e2e2e2;padding: 13px 0;box-sizing: border-box;width: 100%;">
+                            style="border-bottom: 1px solid #e2e2e2;padding: 5px 0;box-sizing: border-box;width: 100%;">
                             层数
                         </div>
                         <div style="display: flex;">
                             <div
-                                style="border-right: 1px solid #e2e2e2;padding: 20px 5px;width: 65px;box-sizing: border-box;">
+                                style="border-right: 1px solid #e2e2e2;padding: 8px 5px;width: 65px;box-sizing: border-box;">
                                 地上
                             </div>
 
                             <div
-                                style="border-right: 1px solid #e2e2e2;text-align: center;padding: 20px 5px;width: 65px;box-sizing: border-box;">
+                                style="border-right: 1px solid #e2e2e2;text-align: center;padding: 8px 5px;width: 65px;box-sizing: border-box;">
                                 地下
                             </div>
                         </div>
                     </div>
-                    <div class="minTitle borderRight" style="text-align: center;width: 87px;padding: 15px;">建筑高度（m）
+                    <div class="minTitle borderRight" style="text-align: center;width: 87px;padding: 10px;">建筑高度（m）
                     </div>
                     <div class="minTitle borderRight"
-                        style="text-align: center;width: 87px;padding: 15px;flex-direction: column;">
+                        style="text-align: center;width: 87px;padding: 10px;flex-direction: column;">
                         <div>占地面积 （m<sup>2</sup>）</div>
                     </div>
                     <div class="minTitle"
                         style="display: flex;flex-direction: column;padding: 0;text-align: center;width: 129px;">
                         <div
-                            style="border-bottom: 1px solid #e2e2e2;padding: 13px 0;box-sizing: border-box;width: 100%;">
+                            style="border-bottom: 1px solid #e2e2e2;padding: 5px 0;box-sizing: border-box;width: 100%;">
                             建筑面积（m<sup>2</sup>）</div>
                         <div style="display: flex;">
                             <div
-                                style="border-right: 1px solid #e2e2e2;padding: 20px 5px;width: 65px;box-sizing: border-box;">
+                                style="border-right: 1px solid #e2e2e2;padding: 8px 5px;width: 65px;box-sizing: border-box;">
                                 地上
                             </div>
                             <div
-                                style="border-right: 1px solid #e2e2e2;padding: 20px 5px;width: 65px;box-sizing: border-box;">
+                                style="border-right: 1px solid #e2e2e2;padding: 8px 5px;width: 65px;box-sizing: border-box;">
                                 地下
                             </div>
                         </div>
@@ -241,13 +221,13 @@
             <div style="width: 682px;display: flex;flex-direction: column;padding: 0;">
 
                 <div style="display: flex;width: 100%;">
-                    <div class="minTitle" style="padding: 15px;">
+                    <div class="minTitle" style="padding: 10px;">
                         储存物质名称
                     </div>
                     <div class="borderRight" style="width: 220px;">
                         {{item.name}}
                     </div>
-                    <div class="minTitle" style="padding: 15px;">
+                    <div class="minTitle" style="padding: 10px;">
                         总容量（m3）
                     </div>
                     <div style="width: 220px;">
@@ -255,120 +235,85 @@
                     </div>
                 </div>
                 <div style="display: flex;width: 100%;border-top: 1px solid #e2e2e2;">
-                    <div class="fontWeight minTitle" style="padding: 15px;">
+                    <div class="fontWeight minTitle" style="padding: 10px;">
                         设置位置
                     </div>
-                    <div style="width: 561px;padding: 15px;">
+                    <div style="width: 561px;padding: 10px;">
                         {{item.position}}
                     </div>
                 </div>
                 <div style="display: flex;width: 100%;border-top: 1px solid #e2e2e2;">
-                    <div class="fontWeight minTitle" style="padding: 15px;">
+                    <div class="fontWeight minTitle" style="padding: 10px;">
                         储存形式
                     </div>
-                    <div style="width: 561px;padding: 15px;">
-                        <span>
-                            <img class="radioChecked" *ngIf="item.storageForm=='地上'"
-                                src="../../../assets/images/radiochecked.png" alt="">
-                            <img class="radioChecked" *ngIf="item.storageForm!='地上'"
-                                src="../../../assets/images/radioUnchecked.png" alt="">
-                            <span>地上</span>
+                    <div style="width: 561px;padding: 10px;">
+                        <span class="radio">
+                            <input id="storageForm1" type="radio" name="storageForm" [checked]="item.storageForm=='地上'"
+                                disabled>
+                            <label for="storageForm1">地上</label>
                         </span>
-
-
-                        <span>
-                            <img class="radioChecked" *ngIf="item.storageForm=='半地下'"
-                                src="../../../assets/images/radiochecked.png" alt="">
-                            <img class="radioChecked" *ngIf="item.storageForm!='半地下'"
-                                src="../../../assets/images/radioUnchecked.png" alt="">
-                            <span>半地下</span>
+                        <span class="radio">
+                            <input id="storageForm2" type="radio" name="storageForm" [checked]="item.storageForm=='半地下'"
+                                disabled>
+                            <label for="storageForm2">半地下</label>
                         </span>
-
-
-                        <span>
-                            <img class="radioChecked" *ngIf="item.storageForm=='地下'"
-                                src="../../../assets/images/radiochecked.png" alt="">
-                            <img class="radioChecked" *ngIf="item.storageForm!='地下'"
-                                src="../../../assets/images/radioUnchecked.png" alt="">
-                            <span>地下</span>
+                        <span class="radio">
+                            <input id="storageForm3" type="radio" name="storageForm" [checked]="item.storageForm=='地下'"
+                                disabled>
+                            <label for="storageForm3">地下</label>
                         </span>
                     </div>
                 </div>
                 <div style="display: flex;width: 100%;border-top: 1px solid #e2e2e2;">
-                    <div class="fontWeight minTitle" style="padding: 15px;">
+                    <div class="fontWeight minTitle" style="padding: 10px;">
                         设置型式
                     </div>
-                    <div style="width: 561px;padding: 15px;">
-                        浮顶罐(
-                        <span>
-                            <img class="radioChecked" *ngIf="item.setupType=='外'"
-                                src="../../../assets/images/radiochecked.png" alt="">
-                            <img class="radioChecked" *ngIf="item.setupType!='外'"
-                                src="../../../assets/images/radioUnchecked.png" alt="">
-                            <span>外</span>
+                    <div style="width: 561px;padding: 10px;">
+                        <label>浮顶罐(</label>
+                        <span class="radio">
+                            <input id="index1" name="setupType" type="radio" [checked]="item.setupType=='外'" disabled>
+                            <label for="index1">外</label>
                         </span>
-
-                        <span>
-                            <img class="radioChecked" *ngIf="item.setupType=='内'"
-                                src="../../../assets/images/radiochecked.png" alt="">
-                            <img class="radioChecked" *ngIf="item.setupType!='内'"
-                                src="../../../assets/images/radioUnchecked.png" alt="">
-                            <span>内</span>
+                        <span class="radio">
+                            <input id="index2" name="setupType" type="radio" [checked]="item.setupType=='内'" disabled>
+                            <label for="index2">内</label>
                         </span>
-                        <span>
-                            <img class="radioChecked" *ngIf="item.setupType=='固定顶罐'"
-                                src="../../../assets/images/radiochecked.png" alt="">
-                            <img class="radioChecked" *ngIf="item.setupType!='固定顶罐'"
-                                src="../../../assets/images/radioUnchecked.png" alt="">
-                            <span>固定顶罐</span>
+                        <label> ) </label>
+                        <span class="radio">
+                            <input id="index3" name="setupType" type="radio" [checked]="item.setupType=='固定顶罐'"
+                                disabled>
+                            <label for="index3">固定顶罐</label>
                         </span>
-                        <span>
-                            <img class="radioChecked" *ngIf="item.setupType=='卧式罐'"
-                                src="../../../assets/images/radiochecked.png" alt="">
-                            <img class="radioChecked" *ngIf="item.setupType!='卧式罐'"
-                                src="../../../assets/images/radioUnchecked.png" alt="">
-                            <span>卧式罐</span>
-                        </span> )
+                        <span class="radio">
+                            <input id="index3" name="setupType" type="radio" [checked]="item.setupType=='卧式罐'" disabled>
+                            <label for="index3">卧式罐</label>
+                        </span>
                         <br />
-                        球形罐(
-
-                        <span>
-                            <img class="radioChecked" *ngIf="item.setupType=='液体'"
-                                src="../../../assets/images/radiochecked.png" alt="">
-                            <img class="radioChecked" *ngIf="item.setupType!='液体'"
-                                src="../../../assets/images/radioUnchecked.png" alt="">
-                            <span>液体</span>
+                        <label>球形罐(</label>
+                        <span class="radio">
+                            <input id="index4" name="setupType" type="radio" [checked]="item.setupType=='液体'" disabled>
+                            <label for="index4">液体</label>
                         </span>
-                        <span>
-                            <img class="radioChecked" *ngIf="item.setupType=='气体'"
-                                src="../../../assets/images/radiochecked.png" alt="">
-                            <img class="radioChecked" *ngIf="item.setupType!='气体'"
-                                src="../../../assets/images/radioUnchecked.png" alt="">
-                            <span>气体</span>
-                        </span> )
+                        <span class="radio">
+                            <input id="index5" name="setupType" type="radio" [checked]="item.setupType=='气体'" disabled>
+                            <label for="index5">气体</label>
+                        </span><label> )</label>
                         <br>
-                        可燃气体储罐(
-                        <span>
-                            <img class="radioChecked" *ngIf="item.setupType=='干式'"
-                                src="../../../assets/images/radiochecked.png" alt="">
-                            <img class="radioChecked" *ngIf="item.setupType!='干式'"
-                                src="../../../assets/images/radioUnchecked.png" alt="">
-                            <span>干式</span>
+                        <label> 可燃气体储罐(</label>
+                        <span class="radio">
+                            <input id="index6" name="setupType" type="radio" [checked]="item.setupType=='干式'" disabled>
+                            <label for="index6">干式</label>
                         </span>
-                        <span>
-                            <img class="radioChecked" *ngIf="item.setupType=='湿式'"
-                                src="../../../assets/images/radiochecked.png" alt="">
-                            <img class="radioChecked" *ngIf="item.setupType!='湿式'"
-                                src="../../../assets/images/radioUnchecked.png" alt="">
-                            <span>湿式</span>
+                        <span class="radio">
+                            <input id="index7" name="setupType" type="radio" [checked]="item.setupType=='湿式'" disabled>
+                            <label for="index7">湿式</label>
                         </span>
-                        <span>
-                            <img class="radioChecked" *ngIf="item.setupType=='其他'"
-                                src="../../../assets/images/radiochecked.png" alt="">
-                            <img class="radioChecked" *ngIf="item.setupType!='其他'"
-                                src="../../../assets/images/radioUnchecked.png" alt="">
-                            <span>其他</span>
-                        </span> )
+                        <span class="radio">
+                            <input id="index8" name="setupType" type="radio" [checked]="item.setupType=='其他'" disabled>
+                            <label for="index8">其他</label>
+                        </span>
+                        <label> )</label>
+
 
                     </div>
                 </div>
@@ -378,13 +323,13 @@
             <div style="width: 50px;" class="contantCenter fontWeight borderRight">
                 堆 场
             </div>
-            <div class="minTitle" style="padding: 15px;">
+            <div class="minTitle" style="padding: 10px;">
                 储存物质名称
             </div>
             <div class="borderRight" style="width: 220px;">
                 {{item.name}}
             </div>
-            <div class="minTitle" style="padding: 15px;">
+            <div class="minTitle" style="padding: 10px;">
                 储 量
             </div>
             <div style="width: 220px;">
@@ -400,26 +345,20 @@
                         材料类别
                     </div>
                     <div style="width: 245px;border-right: 1px solid #e2e2e2;padding: 10px;box-sizing: border-box;">
-                        <span>
-                            <img class="radioChecked" *ngIf="data.buildingThermalInsulation.type=='A'"
-                                src="../../../assets/images/radiochecked.png" alt="">
-                            <img class="radioChecked" *ngIf="data.buildingThermalInsulation.type!='A'"
-                                src="../../../assets/images/radioUnchecked.png" alt="">
-                            <span>A</span>
+                        <span class="radio">
+                            <input id="A" type="radio" name="type" [checked]="data.buildingThermalInsulation.type=='A'"
+                                disabled>
+                            <label for="A">A</label>
                         </span>
-                        <span>
-                            <img class="radioChecked" *ngIf="data.buildingThermalInsulation.type=='B1'"
-                                src="../../../assets/images/radiochecked.png" alt="">
-                            <img class="radioChecked" *ngIf="data.buildingThermalInsulation.type!='B1'"
-                                src="../../../assets/images/radioUnchecked.png" alt="">
-                            <span>B1</span>
+                        <span class="radio">
+                            <input id="B1" type="radio" name="type"
+                                [checked]="data.buildingThermalInsulation.type=='B1'" disabled>
+                            <label for="B1">B1</label>
                         </span>
-                        <span>
-                            <img class="radioChecked" *ngIf="data.buildingThermalInsulation.type=='B2'"
-                                src="../../../assets/images/radiochecked.png" alt="">
-                            <img class="radioChecked" *ngIf="data.buildingThermalInsulation.type!='B2'"
-                                src="../../../assets/images/radioUnchecked.png" alt="">
-                            <span>B2</span>
+                        <span class="radio">
+                            <input id="B2" type="radio" name="type"
+                                [checked]="data.buildingThermalInsulation.type=='B2'" disabled>
+                            <label for="B2">B2</label>
                         </span>
 
                     </div>
@@ -455,18 +394,11 @@
                         style="width: 100px;border-right: 1px solid #e2e2e2;padding: 10px;border-bottom: 1px solid #e2e2e2;box-sizing: border-box;">
                         装修部位
                     </div>
-                    <div style="padding: 15px;width: 512px;border-bottom: 1px solid #e2e2e2;box-sizing: border-box;">
-
-                        <span *ngFor="let box of data.decorationProject.decorationSite">
-                            <img class="radioChecked" *ngIf="box.value" src="../../../../assets/images/radiochecked.png"
-                                alt="">
-                            <img class="radioChecked" *ngIf="!box.value"
-                                src="../../../../assets/images/radioUnchecked.png" alt="">
-                            <span>
-                                {{box.label}}
-                            </span>
+                    <div style="padding: 10px;width: 512px;border-bottom: 1px solid #e2e2e2;box-sizing: border-box;">
+                        <span class="radio" *ngFor="let box of data.decorationProject.decorationSite;let index = index">
+                            <input [id]="20+index" name="decorationSite" type="checkbox" [checked]="box.value" disabled>
+                            <label [for]="20+index"> {{box.label}}</label>
                         </span>
-
                     </div>
                 </div>
                 <div style="display: flex;padding: 0;">
@@ -498,6 +430,15 @@
                         {{data.decorationProject.originallyUsed}}
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="minTitle">消防设施</div>
+            <div style="width: 560px;">
+                <span class="radio" *ngFor="let box of data.fireFightingFacilities;let index = index;">
+                    <input [id]="index+100" type="checkbox" [checked]="box.value" disabled>
+                    <label [for]="index+100"> {{box.label}}</label>
+                </span>
             </div>
         </div>
         <div class="row">
@@ -541,27 +482,14 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="minTitle">消防设施</div>
-            <div style="width: 560px;">
-                <span *ngFor="let box of data.fireFightingFacilities;">
-                    <img *ngIf="box.value" src="../../../../assets/images/checked.png" alt="">
-                    <img *ngIf="!box.value" src="../../../../assets/images/unchecked.png" alt="">
-                    <span>
-                        {{box.label}}
-                    </span>
-                </span>
-
-            </div>
-        </div>
-        <div class="row">
+        <div class="row" *ngIf="data.engineerinDescription">
             <div class="minTitle">工程简要说明</div>
             <div style="width: 612px;">{{data.engineerinDescription}}
             </div>
         </div>
         <div class="row" style="border-bottom:1px solid #e2e2e2;">
             <div class="minTitle">审图公司意见</div>
-            <div class="bottom" style="width: 612px;display: flex;flex-direction: column;">
+            <div class="bottom" style="width: 612px;display: flex;flex-direction: column;padding-bottom: 10px;">
                 <div class="cont">
                     {{data.corporateOpinion.opinion}}
                 </div>

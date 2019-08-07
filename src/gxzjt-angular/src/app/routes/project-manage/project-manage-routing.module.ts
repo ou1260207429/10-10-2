@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ProjectManageAddDesignComponent } from './add-design/add-design.component';
-import { ProjectManageAddAcceptanceComponent } from './add-acceptance/add-acceptance.component';
+import { ProjectManageAddDesignComponent } from './design/add-design/add-design.component';
+import { ProjectManageAddAcceptanceComponent } from './acceptance/add-acceptance/add-acceptance.component';
 
 const routes: Routes = [
   { path: 'add-acceptance/:type/:projectId/:flowId', component: ProjectManageAddAcceptanceComponent,data: {  title: 'NEW新增验收审查申报',reuse:true }},

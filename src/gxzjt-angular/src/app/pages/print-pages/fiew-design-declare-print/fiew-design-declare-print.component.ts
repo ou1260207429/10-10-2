@@ -12,7 +12,7 @@ export class FiewDesignDeclarePrintComponent implements OnInit {
 
   ngOnInit() {
     this.data = JSON.parse(this.getToken());
-
+console.log(this.data)
   }
   ngOnDestroy(): void {
     localStorage.removeItem('jsonPrintForm');
@@ -26,10 +26,7 @@ export class FiewDesignDeclarePrintComponent implements OnInit {
 
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      window.print();
-      history.go(-1);
-    }, 150)
-
+    // window.print();
+    // history.go(-1);
   }
 }
