@@ -184,7 +184,7 @@ export function formateTime(src: Date): string {
 
 
 
-export function dateTrans(src: any): string {
+export function dateTrans(src: any, yearSpace = "/", monthSpace = "/", daySpace = ""): string {
   if (src == "") {
     return "";
   }
@@ -194,7 +194,7 @@ export function dateTrans(src: any): string {
       // src = src.replace(/\-/g, '/');
       // return src;
       var d = new Date(src);
-      return formateDate(d);
+      return formateDate(d, yearSpace, monthSpace, daySpace);
     } catch (e) {
       return src;
       // return formateDate(new Date());
@@ -203,23 +203,29 @@ export function dateTrans(src: any): string {
   }
   if ("number" == typeof src) {
     try {
-      return formateDate(new Date(src));
+      return formateDate(new Date(src), yearSpace, monthSpace, daySpace);
     } catch (e) {
-      return formateDate(new Date());
+      return formateDate(new Date(), yearSpace, monthSpace, daySpace);
     }
 
   }
   if (src instanceof Date) {
 
-    return formateDate(src);
+    return formateDate(src, yearSpace, monthSpace, daySpace);
   }
 
-  return formateDate(new Date());
+  return formateDate(new Date(), yearSpace, monthSpace, daySpace);
 }
 
 
 
-export function formateDate(src: Date): string {
+
+
+
+
+
+
+export function formateDate(src: Date, yearSpace = "/", monthSpace = "/", daySpace = ""): string {
   let targetTimezone = -8;
   // 当前时区与中时区时差，以min为维度
   let _dif = src.getTimezoneOffset();
@@ -231,10 +237,11 @@ export function formateDate(src: Date): string {
 
 
   var result = src.getFullYear()
-    + '/' + format2Num(src.getMonth() + 1)
-    + '/' + format2Num(src.getDate());
+    + yearSpace + format2Num(src.getMonth() + 1)
+    + monthSpace + format2Num(src.getDate())
+    + daySpace;
 
-  if (result == "NaN/NaN/NaN") {
+  if (result == "NaN" + monthSpace + "NaN" + monthSpace + "NaN") {
     return "";
   }
   return result;

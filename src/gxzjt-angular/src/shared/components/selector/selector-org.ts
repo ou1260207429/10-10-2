@@ -6,12 +6,12 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { HomeServiceProxy, EnterpriseDto } from '@shared/service-proxies/service-proxies'
 
 
-import { ControlContainer, NgForm } from '@angular/forms';
+// import { ControlContainer, NgForm, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'nz-rj-selector-org',
   encapsulation: ViewEncapsulation.None,
-  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+  // viewProviders: [{ provide: ControlContainer, useExisting: NgForm}],
   template: `
 
 
@@ -62,8 +62,8 @@ export class SelectorOrgComponent {
 
 
   orgList: EnterpriseDto[];
-  
-  @Input()  ngModel: any;
+
+  @Input() ngModel: any;
 
   @Output() ngModelChange = new EventEmitter();
 
@@ -72,9 +72,9 @@ export class SelectorOrgComponent {
 
   @Input()
   required: boolean;
-  
+
   @Input()
-  readonly:boolean = false
+  readonly: boolean = false
 
   @Input()
   placeHolder = "请输入单位名称";

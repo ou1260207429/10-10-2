@@ -1,0 +1,68 @@
+*{ margin:0; padding:0; }
+.floatleft{
+  float: left;
+}
+
+.zt{
+  //对页面总体宽度设置最小值
+  min-width: 800px;
+  border: 1px solid #e2e2e2;
+  // background-color: #fff;
+  margin: 0 auto;
+}
+.main{
+  //显示表单最外围边框线
+  border-bottom: 1px solid  #e2e2e2;
+}
+
+.tietle{
+  //对标题进行各属性设置
+  text-align: center;
+  border-bottom: 1px solid #e2e2e2;
+  height: 44px;
+  line-height: 44px;
+}
+.tietle span{
+  //对标题字大小值进行设置
+  font-size: 17px;
+  font-weight: 900;
+}
+.col{
+  // flex-grow: 1; //设置等比缩放
+  // flex-shrink: 1;
+  flex:1;//设置表各个区域等比缩放
+  border-right: 1px solid  #e2e2e2;
+  border-top: none;
+  // border-right: none;
+  box-sizing: border-box;
+  align-items: center;
+  position: relative;
+
+
+
+}
+.colpadding{
+  //设置表单内各个区域的内边距
+  padding-bottom: 15px;
+  padding-top: 15px;
+  padding-right: 10px;
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+.col p{
+  //设置各级标题在其对应区域内的位置，字体大小
+  position: absolute;
+  font-weight: 600;
+  top:50%;   //50%并不是居中的，因为它是以元素的上border为标准移动50%的
+  right: 0%;
+  transform:translateY(-50%)  //所以我们需要像上移动元素自身高度一半儿的距离
+}
+
+
+
+.section{
+  //每大行设置等比缩放以及显示底部边框线
+  display: flex;
+  border-bottom: 1px solid #e2e2e2;
+  // margin: 4px 2px 4px 2px;
+}

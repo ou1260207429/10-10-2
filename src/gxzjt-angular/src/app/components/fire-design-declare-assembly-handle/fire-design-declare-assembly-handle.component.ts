@@ -10,7 +10,7 @@ import lodash from 'lodash';
 import { URLConfig } from "@shared/config/host";
 
 import { indexOfFileByName } from "@shared/utils/array";
-
+import { dateTrans } from 'infrastructure/regular-expression';
 /**
  * 消防设计的表单模块的办理或者结果
  */
@@ -56,8 +56,10 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
     this.childOuter.emit(this.f);
 
     if (!this.examineFormDto.content && !this.examineFormDto.opinion) {
-      var date = new Date();
-      var dateStr = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + "日";
+
+
+      var dateStr = dateTrans(this.data.applyDateTime, '年', '月', '日');
+      // var dateStr = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + "日";
 
       var descr = this.data.descr;
       if (descr && descr.substring(descr.length - 1, descr.length) == "。") {
