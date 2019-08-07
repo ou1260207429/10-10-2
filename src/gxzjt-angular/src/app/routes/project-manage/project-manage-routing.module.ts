@@ -4,7 +4,7 @@ import { ProjectManageAddDesignComponent } from './design/add-design/add-design.
 import { ProjectManageAddAcceptanceComponent } from './acceptance/add-acceptance/add-acceptance.component';
 
 const routes: Routes = [
-  { path: 'add-acceptance/:type/:projectId/:flowId', component: ProjectManageAddAcceptanceComponent,data: {  title: '新增验收审查申报',reuse:true }},
+  { path: 'add-acceptance/:type/:projectId/:flowId', component: ProjectManageAddAcceptanceComponent,data: {  title: 'NEW新增验收审查申报',reuse:true }},
   {
     path: '',
     component: ProjectManageAddDesignComponent,

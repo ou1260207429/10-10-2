@@ -1,39 +1,71 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
-import { STColumn, STComponent } from '@delon/abc';
-import { SFSchema } from '@delon/form';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { getAddDeisnRepData } from '../../public/add-design-data';
+import { getArea } from '../../public/area-json';
+import { getForsItemFormStatus, resetFormControlStatus } from '../../public/project-util';
 
 @Component({
   selector: 'app-project-manage-add-acceptance',
   templateUrl: './add-acceptance.component.html',
   styleUrls:['./add-acceptance.component.less']
+  // styleUrls: ['../../public/public.less'],
 })
 export class ProjectManageAddAcceptanceComponent implements OnInit {
-  url = `/user`;
 
-  @ViewChild('st') st: STComponent;
-  columns: STColumn[] = [
-    { title: '编号', index: 'no' },
-    { title: '调用次数', type: 'number', index: 'callNo' },
-    { title: '头像', type: 'img', width: '50px', index: 'avatar' },
-    { title: '时间', type: 'date', index: 'updatedAt' },
-    {
-      title: '',
-      buttons: [
-        // { text: '查看', click: (item: any) => `/form/${item.id}` },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
-      ]
-    }
-  ];
+  noValidateForm = { standalone: true };//不校验数据需要加
 
-  constructor(private http: _HttpClient, private modal: ModalHelper) { }
+  @ViewChild('validateForm') validateForm: FormGroup;
 
-  ngOnInit() { }
+  areaData: any;
+  // validateForm: FormGroup;
+
+  // get jsconstructionUnit(): any { return this.validateForm.get('jsconstructionUnit'); }
+
+
+  postData: any;//提交数据
+
+
+  constructor(
+    private http: _HttpClient,
+    private modal: ModalHelper,
+    private fb: FormBuilder) { }
+
+  ngOnInit() {
+    this.postData = getAddDeisnRepData();
+
+    this.areaData = getArea();
+
+    resetFormControlStatus(this.validateForm);
+    // this.validateForm = this.fb.group({
+    //   jsconstructionUnit: [null, [Validators.required]],//建设单位
+    //   legalRepresentative: [null, [Validators.required]],//法定代表人/主要负责人
+    //   legalRepresentativeNo: [null, [Validators.required]],//法定代表人/主要负责人 联系电话
+    //   projectName: [null, [Validators.required]],//工程名称
+    //   contacts: [null, [Validators.required]],//联系人
+    //   contactsNumber: [null, [Validators.required]],//联系电话
+    //   engineeringCitycountyAndDistrict: [null, [Validators.required]],
+    //   engineeringId: [null, [Validators.required]],
+    //   engineeringNo: [null, [Validators.required]],
+    //   engineeringAddress: [null, [Validators.required]],
+    //   // planStartTime: [null, [Validators.required]],
+    //   // planEndTime: [null, [Validators.required]],
+    // });
+  }
 
   add() {
-    // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+
+  }
+
+  onChangeCitycountyAndDistrict(e) {
+  }
+  onSelectOrgItem(a, b) { }
+
+
+
+
+  checkFormForsItemData(form: any, controlName: String, index) {
+    return getForsItemFormStatus(form, controlName, index);
   }
 
 }
