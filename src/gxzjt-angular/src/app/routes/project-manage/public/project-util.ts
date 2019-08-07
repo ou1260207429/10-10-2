@@ -20,24 +20,24 @@ export function getForsItemFormStatus(form: any, controlName: String, index) {
  * 初始化表单 状态
  * @param form 
  */
-export function resetFormControlStatus(form: any) {
-    console.log(form.controls)
-    Object.keys(form.controls).forEach(function (key) {
-        console.log(form.controls[key])
-        form.controls[key].dirty = true;
-        form.controls[key].errors = true;
+export function resetFormControlStatus(controls: any) {
+    console.log(controls)
+    controls.forEach(key => {
+        console.log(controls[key])
+        controls[key].dirty(true);
+        controls[key].errors(true);
     });
     // if (form.controls != null) {
-        // for (var i = 0; i < form.controls.length; ++i) {
-        //     form.controls[i].dirty = true;
-        //     form.controls[i].errors = true;
-        // }  Object.keys(obj).forEach(function (key) {
-     
-        // for (var item in form.controls) {
-        //     console.log(form.controls[item])
-        //     form.controls[item].dirty = true;
-        //     form.controls[item].errors = true;
-        // }
+    // for (var i = 0; i < form.controls.length; ++i) {
+    //     form.controls[i].dirty = true;
+    //     form.controls[i].errors = true;
+    // }  Object.keys(obj).forEach(function (key) {
+
+    // for (var item in form.controls) {
+    //     console.log(form.controls[item])
+    //     form.controls[item].dirty = true;
+    //     form.controls[item].errors = true;
+    // }
     // }
 
 }
