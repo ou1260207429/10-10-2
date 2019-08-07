@@ -8,7 +8,7 @@ import { getForsItemFormStatus, resetFormControlStatus } from '../../public/proj
 @Component({
   selector: 'app-project-manage-add-acceptance',
   templateUrl: './add-acceptance.component.html',
-  styleUrls:['./add-acceptance.component.less']
+  styleUrls:['../../public/public.less','./add-acceptance.component.less'],
   // styleUrls: ['../../public/public.less'],
 })
 export class ProjectManageAddAcceptanceComponent implements OnInit {
@@ -25,6 +25,10 @@ export class ProjectManageAddAcceptanceComponent implements OnInit {
 
   postData: any;//提交数据
 
+  useNatureSelect: any;//获取使用性质数组
+
+
+
 
   constructor(
     private http: _HttpClient,
@@ -33,6 +37,9 @@ export class ProjectManageAddAcceptanceComponent implements OnInit {
 
   ngOnInit() {
     this.postData = getAddDeisnRepData();
+
+    this.useNatureSelect=this.postData.specialEngineering;
+    debugger
 
     this.areaData = getArea();
 

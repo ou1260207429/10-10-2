@@ -4,7 +4,8 @@
     <table class="tables" style="box-sizing: border-box;">
       <thead>
         <tr>
-          <td colspan='20' rowspan='1'>建设工程消防设计审查申报表 </td>
+          <td colspan='20' rowspan='1'>建设工程消防设计审查申报表<i style="cursor: pointer;;margin-left: 5px;" (click)="printFormData()" nz-icon
+              type="printer" nzTheme="outline"></i> </td>
         </tr>
       </thead>
       <tbody>
@@ -612,7 +613,7 @@
           <label [ngClass]="{pointer: type == 1}" nz-checkbox name="fireFightingFacilities{{i}}"
             (ngModelChange)="changeValue($event,'fireFightingFacilities')"
             *ngFor="let box of data.fireFightingFacilities;let i = index" required
-            [(ngModel)]="box.value" >{{box.label}}</label>
+            [(ngModel)]="box.value">{{box.label}}</label>
           <p style="color: #f5222d;text-align: center;" *ngIf="errorData.fireFightingFacilities&&type != 1">
             必填
           </p>
