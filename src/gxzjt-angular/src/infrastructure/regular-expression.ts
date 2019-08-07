@@ -2,7 +2,7 @@ import { ValidatorFn, AbstractControl, FormControl, FormGroup } from '@angular/f
 import { STComponent } from '@delon/abc';
 import lodash from 'lodash'
 import { format } from 'path';
-
+import * as moment from 'moment';
 // 常用正则表达式
 
 
@@ -145,6 +145,14 @@ export function timeTrans(src: any): string {
     }
 
   }
+
+
+  if (moment.isMoment(src)) {
+
+    return formateTime(src.toDate());
+  }
+
+
   if (src instanceof Date) {
 
     return formateTime(src);
@@ -158,14 +166,11 @@ export function timeTrans(src: any): string {
 
 export function formateTime(src: Date): string {
 
-  let targetTimezone = -8;
-  // 当前时区与中时区时差，以min为维度
-  let _dif = src.getTimezoneOffset();
-  // 本地时区时间 + 时差  = 中时区时间
-  // 目标时区时间 + 时差 = 中时区时间
-  // 目标时区时间 = 本地时区时间 + 本地时区时差 - 目标时区时差
-  let east9time = src.getTime() + _dif * 60 * 1000 - (targetTimezone * 60 * 60 * 1000);
-  src = new Date(east9time);
+  let _dif = src.getTimezoneOffset();//东八区-480
+
+  let time = src.getTime() - _dif * 60 * 1000;
+
+  src = new Date(time);
 
   var result = src.getFullYear()
     + '/' + format2Num(src.getMonth() + 1)
@@ -209,6 +214,12 @@ export function dateTrans(src: any, yearSpace = "/", monthSpace = "/", daySpace 
     }
 
   }
+
+  if (moment.isMoment(src)) {
+
+    return formateDate(src.toDate(), yearSpace, monthSpace, daySpace);
+  }
+
   if (src instanceof Date) {
 
     return formateDate(src, yearSpace, monthSpace, daySpace);
@@ -226,14 +237,12 @@ export function dateTrans(src: any, yearSpace = "/", monthSpace = "/", daySpace 
 
 
 export function formateDate(src: Date, yearSpace = "/", monthSpace = "/", daySpace = ""): string {
-  let targetTimezone = -8;
-  // 当前时区与中时区时差，以min为维度
-  let _dif = src.getTimezoneOffset();
-  // 本地时区时间 + 时差  = 中时区时间
-  // 目标时区时间 + 时差 = 中时区时间
-  // 目标时区时间 = 本地时区时间 + 本地时区时差 - 目标时区时差
-  let east9time = src.getTime() + _dif * 60 * 1000 - (targetTimezone * 60 * 60 * 1000);
-  src = new Date(east9time);
+  // let targetTimezone = -8;
+
+  let _dif = src.getTimezoneOffset();//东八区-480
+
+  let time = src.getTime() - _dif * 60 * 1000;
+  src = new Date(time);
 
 
   var result = src.getFullYear()
