@@ -12,95 +12,116 @@
         </span>
         <!-- <span class='BigTitle'>广西建设工程消防设计审查验收备案管理平台</span> -->
     </div>
-    <div style="position: relative;height:65%;float: left;margin-top: -4%;width:75%">
-        <div style='float: left;width:30%;height:100%'>
+    <div style="position: relative;height:65%;float: left;margin-top: -4%;width:100%">
+        <div style='width:25%;float: left;height: 100%;'>
             <div
-                style='width:100%;height:45%;background-image:url("./assets/images/big2/img_bg_bjqk.png");background-size: 100% 100%;'>
-                <div style='width:100%;height:10%;margin-left: 15%;'>
-                    <div style='float: left;width:25%;height:100%;margin-top: 2%;text-align: center;'>
+                style='width:100%;height: 43%;margin-top: -6%;background-image:url("./assets/images/big2/img_bg_bjqk.png");background-size: 100% 100%;'>
+                <div style='width:100%;height:10%;margin-left: 15%;padding-top: 1%;'>
+                    <div style='float: left;width:25%;height:100%;text-align: center;'>
                         <span style='color:#26BEFE;display: block;'>设计审查总数</span>
-                        <span style='color:#0EF9B3;font-size:18px;display: block;'>{{statisticsNumberCount}}</span>
+                        <span style='color:#0EF9B3;font-size:16px;display: block;'>{{statisticsNumberCount}}</span>
                     </div>
-                    <div style='float: left;width:25%;height:100%;margin-top: 2%;text-align: center;'>
+                    <div style='float: left;width:25%;height:100%;text-align: center;'>
                         <span style='color:#26BEFE;display: block;'>消防验收总数</span>
-                        <span style='color:#0EF9B3;font-size:18px;display: block;'>{{fireCompleteNumberCount}}</span>
+                        <span style='color:#0EF9B3;font-size:16px;display: block;'>{{fireCompleteNumberCount}}</span>
                     </div>
-                    <div style='float: left;width:30%;height:100%;margin-top: 2%;text-align: center;'>
+                    <div style='float: left;width:30%;height:100%;text-align: center;'>
                         <span style='color:#26BEFE;display: block;'>验收消防备案总数</span>
-                        <span style='color:#0EF9B3;font-size:18px;display: block;'>{{completeNumberCount}}</span>
+                        <span style='color:#0EF9B3;font-size:16px;display: block;'>{{completeNumberCount}}</span>
                     </div>
                 </div>
-                <div style='width:100%;height:90%;position: relative;top: 20%;left: 5%;'>
+                <div style='width:100%;height:90%;position: relative;top: 26%;left: 5%;'>
                     <div style='float:left;width:30%;height:100%'>
-                        <g2-gauge [title]="'办结占比'" height="164" [percent]="ApplyStatistics1" color="#FF7197"></g2-gauge>
-                        <span style='color: #B8E6FF;font-size: 18px;position: relative;
-                        top: -5%;display: block;text-align: center;'>消防设计审查</span>
+                        <g2-gauge [title]="'办结占比'" height="130" [percent]="ApplyStatistics1" color="#FF7197">
+                        </g2-gauge>
+                        <span style='color: #B8E6FF;font-size: 16px;position: relative;
+                            top: -5%;display: block;text-align: center;'>消防设计审查</span>
                     </div>
                     <div style='float:left;width:30%;height:100%'>
-                        <g2-gauge [title]="'办结占比'" height="164" [percent]="ApplyStatistics2" color="#FFA303"></g2-gauge>
-                        <span style='color: #B8E6FF;font-size: 18px;position: relative;
-                        top: -5%;display: block;text-align: center;'>消防验收</span>
+                        <g2-gauge [title]="'办结占比'" height="130" [percent]="ApplyStatistics2" color="#FFA303">
+                        </g2-gauge>
+                        <span style='color: #B8E6FF;font-size: 16px;position: relative;
+                            top: -5%;display: block;text-align: center;'>消防验收</span>
                     </div>
                     <div style='float:left;width:30%;height:100%'>
-                        <g2-gauge [title]="'办结占比'" height="164" [percent]="ApplyStatistics3" color="#01B4FF"></g2-gauge>
-                        <span style='color: #B8E6FF;font-size: 18px;position: relative;
-                        top: -5%;display: block;text-align: center;'>验收消防备案</span>
+                        <g2-gauge [title]="'办结占比'" height="130" [percent]="ApplyStatistics3" color="#01B4FF">
+                        </g2-gauge>
+                        <span style='color: #B8E6FF;font-size: 16px;position: relative;
+                            top: -5%;display: block;text-align: center;'>验收消防备案</span>
                     </div>
                 </div>
             </div>
             <div
-                style='width:100%;height:28%;background-image:url("./assets/images/big2/img_bg_sbtj.png");background-size: 100% 100%;'>
-                <span style='color: #00EDF8;font-size: 18px; position: relative;width: 200px;
-                display: block;height: 10px;left: 5%;top: 5%;'>各地市申报统计</span>
-                <div style="width:100%;height:90%;padding: 3%;" *ngIf='OverTimeTitle === "消防设计审查"'>
-                    <div echarts [options]="OverTimebar1" class="echartsStyle" style="height:100%;width:100%">
-                    </div>
-                </div>
-                <div style="width:100%;height:90%;padding: 3%;" *ngIf='OverTimeTitle === "消防验收"'>
-                    <div echarts [options]="OverTimebar2" class="echartsStyle" style="height:100%;width:100%">
-                    </div>
-                </div>
-                <div style="width:100%;height:90%;padding: 3%;" *ngIf='OverTimeTitle === "竣工验收备案"'>
-                    <div echarts [options]="OverTimebar3" class="echartsStyle" style="height:100%;width:100%">
-                    </div>
-                </div>
+                style='height:32%;background-image:url("./assets/images/big2/img_bg_yjlb.png");background-size: 100% 100%;padding-left:0.5%;padding-right:0.5%'>
+                <span style='    color: #fff;
+                font-size: 16px;
+                position: relative;
+                display: block;
+                height: 10px;
+                left: 15%;
+                top: -5%;
+                margin-bottom: 4%;'>累计办理情况（年度）</span>
+                <nz-table class='FireTable' nzSize="small" nzBordered='false' [nzData]="ScreenYearApplyData"
+                    nzIsPagination='true' nzShowPagination='false' class="ScreenYearApplyClass">
+                    <thead nz-thead>
+                        <tr>
+
+                            <th nz-th>
+                                <span>地市</span>
+                            </th>
+                            <th nz-th>
+                                <span>申报量</span>
+                            </th>
+                            <th nz-th>
+                                <span>办结量</span>
+                            </th>
+                            <th nz-th>
+                                <span>超时量</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody nz-tbody>
+                        <tr nz-tbody-tr *ngFor='let data of ScreenYearApplyData;let i = index;'>
+                            <td nz-td>{{data.cityName}}</td>
+                            <td nz-td>{{data.applyNumber}}</td>
+                            <td nz-td>{{data.completeNumber}}</td>
+                            <td nz-td>{{data.outTimeNumber}}</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
             </div>
             <div
                 style='width:100%;height:28%;background-image:url("./assets/images/big2/img_bg_sbtj.png");background-size: 100% 100%;'>
-                <span style='color: #00EDF8;font-size: 18px; position: relative;width: 200px;
-                display: block;height: 10px;left: 5%;top: 8%;'>各地市超时统计</span>
-                <div style='width:100%;height:92%;padding: 4%;' *ngIf='BarTitle === "消防设计审查"'>
-                    <div echarts [options]="bar2" class="echartsStyle" style="height:100%">
+                <span style='color: #00EDF8;font-size: 16px; position: relative;width: 200px;
+                display: block;height: 10px;left: 5%;top: 8%;'>各事项申报数量占比</span>
+                <div style='width:49%;height:100%;float: left;    padding-left: 3%;'>
+                    <div echarts [options]="pie1" class="echartsStyle" style="height:90%;width:90%">
                     </div>
                 </div>
-                <div style='width:100%;height:92%;padding: 3%;' *ngIf='BarTitle === "消防验收"'>
-                    <div echarts [options]="bar3" class="echartsStyle" style="height:100%">
-                    </div>
-                </div>
-                <div style='width:100%;height:92%;padding: 3%;' *ngIf='BarTitle === "竣工验收备案"'>
-                    <div echarts [options]="bar4" class="echartsStyle" style="height:100%">
+                <div style='width:49%;height:100%;float: left;    padding-left: 3%;'>
+                    <div echarts [options]="pie2" class="echartsStyle" style="height:90%;width:90%">
                     </div>
                 </div>
             </div>
         </div>
-        <div style='float: left;width:69%;height:100%'>
+        <div style='width:50%;float: left;height: 100%;'>
             <div
-                style="float:left;width:100%;height: 100%;background-image:url('./assets/images/big2/img_bg_dt.png');background-size: 100% 100%;">
+                style="float:left;width:100%;height: 97%;background-image:url('./assets/images/big2/img_bg_dt.png');background-size: 100% 100%;">
                 <span style='color: #fff;font-size: 18px;position: relative;
-                top: 2%;left: 3%;display: block;'>广西各地市申报情况</span>
+                    top: 2%;left: 3%;display: block;'>广西各地市申报情况</span>
                 <!-- <div style="background-image:url('./assets/images/big2/img_bg_tk.png');background-size: 100% 100%;height: 210px;
-                  width: 265px;position:absolute;top:-165px;left:-20px">
-                  <span style='font-size: 18px;margin:65px 0 5px 60px; display: block;color:#fff'>南宁市</span>
-                  <span style='color:#F6FF00;margin-left:60px;display: block;'>办理数：123</span>
-                  <span style='color:#F6FF00;margin-left:60px;display: block;'>一次性通过数：123</span>
-                  <span style='color:#F6FF00;margin-left:60px;display: block;'> 超时数：123</span>
-                  <span style='color:#F6FF00;margin-left:60px;display: block;'> 平均办理时长：123th</span>
-              </div> -->
-                <div id="echarts" style="display: block; " style="height:100%;width:100%;margin-left: -15%;">
+                      width: 265px;position:absolute;top:-165px;left:-20px">
+                      <span style='font-size: 18px;margin:65px 0 5px 60px; display: block;color:#fff'>南宁市</span>
+                      <span style='color:#F6FF00;margin-left:60px;display: block;'>办理数：123</span>
+                      <span style='color:#F6FF00;margin-left:60px;display: block;'>一次性通过数：123</span>
+                      <span style='color:#F6FF00;margin-left:60px;display: block;'> 超时数：123</span>
+                      <span style='color:#F6FF00;margin-left:60px;display: block;'> 平均办理时长：123th</span>
+                  </div> -->
+                <div id="echarts" style="display: block; " style="height:108%;width:110%;margin-left: -20%;margin-top: -5%;">
                 </div>
             </div>
 
-            <div style='width: 22%;height: 50%;position: absolute; right: 2%;bottom: 0px;'>
+            <div style='width: 17%;height: 50%;position: absolute;right: 25%;bottom: 15px;'>
                 <div
                     style="width:100%;height:30%;margin-bottom:3%;background-image:url('./assets/images/big2/img_bg_sc.png');background-size: 100% 100%;text-align: center;">
                     <div class='BigCensusDiv' style='color:#FFD001;'>
@@ -116,16 +137,15 @@
                         <span class='BigTag'>超时数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#D3FF3A;'>
-                        <span
-                            class='BigNum'>{{FireData1?.avgCompleteTimeNumber}}</span><span>天</span>
+                        <span class='BigNum'>{{FireData1?.avgCompleteTimeNumber}}</span><span>天</span>
                         <span class='BigTag'>平均办理时长</span>
                     </div>
                     <div style='height: 4px;
-                            background-color: #ffd001;
-                            width: 90%;
-                            position: relative;
-                            top: 70%;
-                            left: 5%;'></div>
+                                background-color: #ffd001;
+                                width: 90%;
+                                position: relative;
+                                top: 70%;
+                                left: 5%;'></div>
                     <span class='BigCensusTitle'>消防设计审查</span>
                 </div>
                 <div
@@ -143,16 +163,15 @@
                         <span class='BigTag'>超时数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#D3FF3A;'>
-                        <span
-                            class='BigNum'>{{FireData2?.avgCompleteTimeNumber}}</span><span>天</span>
+                        <span class='BigNum'>{{FireData2?.avgCompleteTimeNumber}}</span><span>天</span>
                         <span class='BigTag'>平均办理时长</span>
                     </div>
                     <div style='height: 4px;
-                                background-color: #ffd001;
-                                width: 90%;
-                                position: relative;
-                                top: 70%;
-                                left: 5%;'></div>
+                                    background-color: #ffd001;
+                                    width: 90%;
+                                    position: relative;
+                                    top: 70%;
+                                    left: 5%;'></div>
                     <div class='BigCensusTitle'>消防验收</div>
                 </div>
                 <div
@@ -170,130 +189,133 @@
                         <span class='BigTag'>超时数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#D3FF3A;'>
-                        <span
-                            class='BigNum'>{{FireData3?.avgCompleteTimeNumber}}</span><span>天</span>
+                        <span class='BigNum'>{{FireData3?.avgCompleteTimeNumber}}</span><span>天</span>
                         <span class='BigTag'>平均办理时长</span>
                     </div>
                     <div style='height: 4px;
-                                    background-color: #ffd001;
-                                    width: 90%;
-                                    position: relative;
-                                    top: 70%;
-                                    left: 5%;'></div>
+                                        background-color: #ffd001;
+                                        width: 90%;
+                                        position: relative;
+                                        top: 70%;
+                                        left: 5%;'></div>
                     <div class='BigCensusTitle'>消防验收备案</div>
                 </div>
             </div>
+
+        </div>
+        <div style='width:25%;float: left;height: 100%;'>
+            <div style='width:100%;height:30%;padding-left: 2%;'>
+                <div style='width:100%;height:50%'>
+                    <div style='width:100%;height: 30%;'>
+                        <span style='color:#fff'>累计注册账号人数</span>
+                    </div>
+                    <div style='width:85%;height: 90%;'>
+                        <div class='NumBerDiv'
+                            style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'
+                            *ngFor='let data of SignInData'>
+                            <span style='color:#F6FF00;font-size:40px'>{{data}}</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div style='width:100%;height:50%'>
+                    <div style='width:100%;height: 30%;'>
+                        <span style='color:#fff'>累计办结数量</span>
+                    </div>
+                    <div style='width:85%;height: 90%;'>
+                        <div class='NumBerDiv'
+                            style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'
+                            *ngFor='let data of GetThrough'>
+                            <span style='color:#00FFA2;font-size:40px'>{{data}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div
+                style='width:100%;height:20%;background-image:url("./assets/images/big2/img_bg_sbtj.png");background-size: 100% 100%;padding: 2%;padding-bottom: 4%;'>
+                <span style='color: #00EDF8;font-size: 18px; position: relative;width: 200px;
+                    display: block;height: 10px;left: 5%;top: 5%;'>满意度统计</span>
+                <div echarts [options]="option" class="echartsStyle" style="height:100%;width:100%">
+                </div>
+            </div>
+            <div
+                style='width:100%;height:20%;background-image:url("./assets/images/big2/img_bg_sbtj.png");background-size: 100% 100%;'>
+                <span style='color: #00EDF8;font-size: 18px; position: relative;width: 200px;
+                display: block;height: 10px;left: 5%;top: 8%;'>各事项申报数量占比</span>
+                <div style='width:49%;height:100%;float: left;    padding-left: 3%;'>
+                    <div echarts [options]="pie1" class="echartsStyle" style="height:90%;width:90%">
+                    </div>
+                </div>
+                <div style='width:49%;height:100%;float: left;    padding-left: 3%;'>
+                    <div echarts [options]="pie2" class="echartsStyle" style="height:90%;width:90%">
+                    </div>
+                </div>
+            </div> -->
+            <div
+                style='width:100%;height:69%;background-image:url("./assets/images/big2/img_bg_pm.png");background-size: 100% 100%;'>
+                <div style="width: 100%;height:10%;text-align: center;position: relative;top: 4%;">
+                    <span style='color:#FFFFFF;font-size: 20px;'>各地市业务申报量{{NewYear}}年度排名</span>
+                </div>
+
+
+                <div style='width: 42%;height: 35%;background-image: url(./assets/images/big2/img_pm.png);background-size: 100% 100%;
+                    position: relative;top: 13%;left: 30%;'>
+                    <div style='background-image: url(./assets/images/big2/img_bg_bjzb.png);
+                    background-size: 100% 100%;
+                    width: 43%;
+                    height: 20%;
+                    position: relative;
+                    left: 57%;
+                    top: -8%;text-align: center;
+                    font-size: 18px;
+                    padding-top: 2%;'>
+                        <span style='color:#fff'> {{rankingTop3List[0]?.name}}</span>
+                    </div>
+                    <div style='background-image: url(./assets/images/big2/img_bg_bjzb.png);
+                    background-size: 100% 100%;
+                    width: 43%;
+                    height: 20%;
+                    position: relative;
+                    left: -38%;
+                    top: -8%;    text-align: center;
+                    font-size: 18px;
+                    padding-top: 2%;'>
+                        <span style='color:#fff'> {{rankingTop3List[1]?.name}}</span>
+
+                    </div>
+                    <div style='background-image: url(./assets/images/big2/img_bg_bjzb.png);
+                    background-size: 100% 100%;
+                    width: 43%;
+                    height: 20%;
+                    position: relative;
+                    left: 93%;
+                    top: -8%;    text-align: center;
+                    font-size: 18px;
+                    padding-top: 2%;'>
+                        <span style='color:#fff'> {{rankingTop3List[2]?.name}}</span>
+                    </div>
+
+                </div>
+                <div style='    width: 100%;
+                height: 50%;
+                padding-right: 3%;
+                padding-left: 10%;
+                padding-top: 10%;'>
+                    <div style='width:100%;height:20%;margin-bottom: 5%;margin-top: 2%;'>
+                        <div class='rankingDiv' style='background-image: url(./assets/images/big2/img_bg_bjzb.png);'
+                            *ngFor='let data of rankingData; let i = index;'>
+                            <span style='color:#fff'>{{4+i}} {{data.name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div style="position: relative;height: 93%;float: left;margin-top: -5%;width: 25%;">
-        <div style='width:100%;height:20%;padding-left: 2%;'>
-            <div style='width:100%;height:50%'>
-                <div style='width:100%;height: 30%;'>
-                    <span style='color:#fff'>累计注册账号人数</span>
-                </div>
-                <div style='width:85%;height: 90%;'>
-                    <div class='NumBerDiv'
-                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'
-                        *ngFor='let data of SignInData'>
-                        <span style='color:#F6FF00;font-size:40px'>{{data}}</span>
-                    </div>
-                </div>
+    <!-- <div style="position: relative;height: 93%;float: left;margin-top: -5%;width: 25%;">
 
-            </div>
-            <div style='width:100%;height:50%'>
-                <div style='width:100%;height: 30%;'>
-                    <span style='color:#fff'>累计办结数量</span>
-                </div>
-                <div style='width:85%;height: 90%;'>
-                    <div class='NumBerDiv'
-                        style='background-image:url("./assets/images/big2/img_bg_number.png");background-size: 100% 100%;'
-                        *ngFor='let data of GetThrough'>
-                        <span style='color:#00FFA2;font-size:40px'>{{data}}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div
-            style='width:100%;height:20%;background-image:url("./assets/images/big2/img_bg_sbtj.png");background-size: 100% 100%;padding: 2%;padding-bottom: 4%;'>
-            <span style='color: #00EDF8;font-size: 18px; position: relative;width: 200px;
-                display: block;height: 10px;left: 5%;top: 5%;'>满意度统计</span>
-            <div echarts [options]="option" class="echartsStyle" style="height:100%;width:100%">
-            </div>
-        </div>
-        <div
-            style='width:100%;height:20%;background-image:url("./assets/images/big2/img_bg_sbtj.png");background-size: 100% 100%;'>
-            <span style='color: #00EDF8;font-size: 18px; position: relative;width: 200px;
-            display: block;height: 10px;left: 5%;top: 8%;'>各事项申报数量占比</span>
-            <div style='width:49%;height:100%;float: left;    padding-left: 3%;'>
-                <div echarts [options]="pie1" class="echartsStyle" style="height:90%;width:90%">
-                </div>
-            </div>
-            <div style='width:49%;height:100%;float: left;    padding-left: 3%;'>
-                <div echarts [options]="pie2" class="echartsStyle" style="height:90%;width:90%">
-                </div>
-            </div>
-        </div>
-        <div
-            style='width:100%;height:40%;background-image:url("./assets/images/big2/img_bg_pm.png");background-size: 100% 100%;'>
-            <div style="width: 100%;height:10%;text-align: center;position: relative;top: 2%;">
-                <span style='color:#FFFFFF;font-size: 20px;'>各地市业务申报量{{NewYear}}年度排名</span>
-            </div>
-
-
-            <div style='width: 42%;height: 35%;background-image: url(./assets/images/big2/img_pm.png);background-size: 100% 100%;
-                position: relative;top: 13%;left: 30%;'>
-                <div style='background-image: url(./assets/images/big2/img_bg_bjzb.png);
-                background-size: 100% 100%;
-                width: 41%;
-                height: 25%;
-                position: relative;
-                left: 57%;
-                top: -8%;text-align: center;
-                font-size: 18px;
-                padding-top: 2%;'>
-                    <span style='color:#fff'> {{rankingTop3List[0]?.name}}</span>
-                </div>
-                <div style='background-image: url(./assets/images/big2/img_bg_bjzb.png);
-                background-size: 100% 100%;
-                width: 41%;
-                height: 25%;
-                position: relative;
-                left: -38%;
-                top: -8%;    text-align: center;
-                font-size: 18px;
-                padding-top: 2%;'>
-                    <span style='color:#fff'> {{rankingTop3List[1]?.name}}</span>
-
-                </div>
-                <div style='background-image: url(./assets/images/big2/img_bg_bjzb.png);
-                background-size: 100% 100%;
-                width: 41%;
-                height: 25%;
-                position: relative;
-                left: 93%;
-                top: -8%;    text-align: center;
-                font-size: 18px;
-                padding-top: 2%;'>
-                    <span style='color:#fff'> {{rankingTop3List[2]?.name}}</span>
-                </div>
-
-            </div>
-            <div style='    width: 100%;
-            height: 50%;
-            padding-right: 3%;
-            padding-left: 10%;
-            padding-top: 10%;'>
-                <div style='width:100%;height:25%;margin-bottom: 5%;'>
-                    <div class='rankingDiv' style='background-image: url(./assets/images/big2/img_bg_bjzb.png);'
-                        *ngFor='let data of rankingData; let i = index;'>
-                        <span style='color:#fff'>{{4+i}} {{data.name}}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="position: relative;height: 23%;float: left;width: 75%;top: -23.5%;">
-        <div
+    </div> -->
+    <div style="height: 27%;width: 100%;">
+        <!-- <div
             style='float: left;width:27%;height:100%;background-image:url("./assets/images/big2/img_bg_ycxtgl.png");background-size: 100% 100%;padding-left:0.5%;padding-right:0.5%'>
             <span style='color: #00EDF8;
         font-size: 18px;
@@ -305,22 +327,22 @@
         top: -4%;'>一次性通过率</span>
             <div echarts [options]="option2" class="echartsStyle" style="height:100%;width:100%;top: -5%;">
             </div>
-        </div>
+        </div> -->
 
 
         <div
-            style='float: left;width:27%;height:100%;background-image:url("./assets/images/big2/img_bg_yjlb.png");background-size: 100% 100%;padding-left:0.5%;padding-right:0.5%'>
+            style='float: left;width:50%;height:100%;background-image:url("./assets/images/big2/warring.png");background-size: 100% 100%;padding-left:0.5%;padding-right:0.5%'>
             <span style='    color: #00EDF8;
             font-size: 18px;
             position: relative;
             width: 200px;
             display: block;
             height: 10px;
-            left: 15%;
+            left: 8%;
             top: -4%;
             margin-bottom: 4%;'>超时预警列表</span>
             <nz-table class='FireTable' nzSize="small" nzBordered='false' [nzData]="ScreenTimeoutList"
-                nzShowPagination='false' style='table-layout:fixed;'>
+                nzShowPagination='false' style='table-layout:fixed;' class="ScreenTimeoutClass">
                 <thead nz-thead>
                     <tr>
                         <!-- <th nz-th>
@@ -329,16 +351,16 @@
                         <!-- <th nz-th>
                             <span>地市</span>
                         </th> -->
-                        <th nz-th>
+                        <th nz-th style='width: 350px;'>
                             <span>工程名称</span>
                         </th>
-                        <th nz-th>
+                        <th nz-th style='width: 350px;'>
                             <span>建设单位</span>
                         </th>
-                        <th nz-th>
+                        <th nz-th style='min-width: 76px;'>
                             <span>当前处理人</span>
                         </th>
-                        <th nz-th>
+                        <th nz-th style='min-width: 82px;'>
                             <span>剩余审批时间</span>
                         </th>
                     </tr>
@@ -346,23 +368,23 @@
                 <tbody nz-tbody>
                     <tr nz-tbody-tr *ngFor='let data of ScreenTimeoutList;let i = index;'>
 
-                        <td nz-td style='max-width: 100px; '>
-                            <div style='max-height: 60px;
+                        <td nz-td>
+                            <div style='max-height: 25px;
                                 overflow: hidden;
                                 text-overflow: ellipsis;
                                 display: -webkit-box;
-                                -webkit-line-clamp: 2;
+                                -webkit-line-clamp: 1;
                                 -webkit-box-orient: vertical;'>
                                 {{data?.projectName}}
                             </div>
 
                         </td>
-                        <td nz-td style='max-width: 100px;'>
-                            <div style='max-height: 60px;
+                        <td nz-td>
+                            <div style='max-height: 25px;
                                 overflow: hidden;
                                 text-overflow: ellipsis;
                                 display: -webkit-box;
-                                -webkit-line-clamp: 2;
+                                -webkit-line-clamp: 1;
                                 -webkit-box-orient: vertical;'>
                                 {{data?.companyName}}
                             </div>
@@ -380,6 +402,40 @@
             </nz-table>
         </div>
         <div
+            style='float: left;width:25%;height:100%;background-image:url("./assets/images/big2/img_bg_sbtj.png");background-size: 100% 100%;padding-right:0.5%'>
+            <span style='color: #00EDF8;font-size: 18px; position: relative;width: 200px;
+        display: block;height: 10px;left: 5%;top: 8%;'>各地市申报统计</span>
+            <div style="width:100%;height:90%;padding: 3%;" *ngIf='OverTimeTitle === "消防设计审查"'>
+                <div echarts [options]="OverTimebar1" class="echartsStyle" style="height:100%;width:100%">
+                </div>
+            </div>
+            <div style="width:100%;height:90%;padding: 3%;" *ngIf='OverTimeTitle === "消防验收"'>
+                <div echarts [options]="OverTimebar2" class="echartsStyle" style="height:100%;width:100%">
+                </div>
+            </div>
+            <div style="width:100%;height:90%;padding: 3%;" *ngIf='OverTimeTitle === "竣工验收备案"'>
+                <div echarts [options]="OverTimebar3" class="echartsStyle" style="height:100%;width:100%">
+                </div>
+            </div>
+        </div>
+        <div
+            style='float: left;width:25%;height:100%;background-image:url("./assets/images/big2/img_bg_sbtj.png");background-size: 100% 100%;padding-right:0.5%'>
+            <span style='color: #00EDF8;font-size: 18px; position: relative;width: 200px;
+        display: block;height: 10px;left: 5%;top: 8%;'>各地市超时统计</span>
+            <div style='width:100%;height:92%;padding: 3%;' *ngIf='BarTitle === "消防设计审查"'>
+                <div echarts [options]="bar2" class="echartsStyle" style="height:100%">
+                </div>
+            </div>
+            <div style='width:100%;height:92%;padding: 3%;' *ngIf='BarTitle === "消防验收"'>
+                <div echarts [options]="bar3" class="echartsStyle" style="height:100%">
+                </div>
+            </div>
+            <div style='width:100%;height:92%;padding: 3%;' *ngIf='BarTitle === "竣工验收备案"'>
+                <div echarts [options]="bar4" class="echartsStyle" style="height:100%">
+                </div>
+            </div>
+        </div>
+        <!-- <div
             style='float: left;width:23%;height:100%;background-image:url("./assets/images/big2/img_bg_yjlb.png");background-size: 100% 100%;padding-left:0.5%;padding-right:0.5%'>
             <span style='    color: #00EDF8;
             font-size: 18px;
@@ -394,37 +450,27 @@
                 [(nzPageSize)]='pagesize' [(nzPageIndex)]='pageindex' nzShowPagination='false'>
                 <thead nz-thead>
                     <tr>
-                        <!-- <th nz-th>
-                            <span>序号</span>
-                        </th> -->
                         <th nz-th>
                             <span>企业名称 </span>
                         </th>
                         <th nz-th>
                             <span>企业类型</span>
                         </th>
-                        <!-- <th nz-th>
-                            <span>当前处理人</span>
-                        </th>
-                        <th nz-th>
-                            <span>剩余审批时间</span>
-                        </th> -->
                     </tr>
                 </thead>
                 <tbody nz-tbody>
                     <tr nz-tbody-tr *ngFor='let data of data;let i = index;'>
-                        <!-- <td nz-td>{{i+1}}</td> -->
-                        <!-- <td nz-td>{{data.name}}</td>
+                        <td nz-td>{{data.name}}</td>
                         <td nz-td>{{data.unit}}</td>
                         <td nz-td>{{data.people}}</td>
-                        <td nz-td>{{data.time}}</td> -->
-                        <!-- <td nz-td *ngIf='data.state == "合格"' style='color:#2EDB63'>{{data.state}}</td>
-                    <td nz-td *ngIf='data.state == "不合格"' style='color:red'>{{data.state}}</td> -->
+                        <td nz-td>{{data.time}}</td>
+                        <td nz-td *ngIf='data.state == "合格"' style='color:#2EDB63'>{{data.state}}</td>
+                    <td nz-td *ngIf='data.state == "不合格"' style='color:red'>{{data.state}}</td>
                     </tr>
                 </tbody>
             </nz-table>
-        </div>
-        <div
+        </div> -->
+        <!-- <div
             style='float: left;width:23%;height:100%;background-image:url("./assets/images/big2/img_bg_yjlb.png");background-size: 100% 100%;padding-left:0.5%;padding-right:0.5%'>
             <span style='    color: #00EDF8;
             font-size: 18px;
@@ -439,9 +485,7 @@
                 nzIsPagination='true' nzShowPagination='false'>
                 <thead nz-thead>
                     <tr>
-                        <!-- <th nz-th>
-                            <span>序号</span>
-                        </th> -->
+                      
                         <th nz-th>
                             <span>地市</span>
                         </th>
@@ -458,7 +502,6 @@
                 </thead>
                 <tbody nz-tbody>
                     <tr nz-tbody-tr *ngFor='let data of ScreenYearApplyData;let i = index;'>
-                        <!-- <td nz-td>{{i+1}}</td> -->
                         <td nz-td>{{data.cityName}}</td>
                         <td nz-td>{{data.applyNumber}}</td>
                         <td nz-td>{{data.completeNumber}}</td>
@@ -466,6 +509,6 @@
                     </tr>
                 </tbody>
             </nz-table>
-        </div>
+        </div> -->
     </div>
 </div>
