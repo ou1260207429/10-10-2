@@ -134,8 +134,8 @@
                 特殊建设工程</div>
             <div style="display: flex;flex-direction: column;">
                 <div *ngFor="let item of data.specialEngineering.listArr let index=index"
-                    style="overflow: hidden;width: 580px;padding: 5px 0;">
-                    <p class="specialTitle" style="text-align: left;">{{index+1}}、{{item.title}}</p>
+                    style="width: 580px;margin: 10px 0;">
+                    <p class="specialTitle" style="text-align: left;padding:0;margin-bottom: 10px;">{{index+1}}、{{item.title}}</p>
                     <span class="radio" *ngFor="let o of item.arr;let index =index;">
                         <input [id]="index" name="arr" type="radio" [checked]="data.specialEngineering.value==o.value"
                             disabled>
