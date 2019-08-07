@@ -715,40 +715,43 @@ export class AgencyDoneDetailsComponent implements OnInit {
   // }
   //驳回界面确定nodeAdvise
   subProducttype1(bo): void {
-    if (this.nodeAdvise == null || this.nodeAdvise == '') {
-      this.message.error("驳回意见必须填写！")
-      return
-    }
+    this.formDto.isNotCreateAcceptFile=1;
+    this.save(false);
 
-    this.tenantWorkFlowInstanceDto.backAuditedNode = {
-      nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
-      nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName,
-      details: this.nodeAdvise,
-    }
-    this._flowServices.tenant_NodeToNextNodeByNoPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
-      this.butNzLoading = false;
-      this.examineFormDto.isTransfer = this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType == 3 ? true : false
-      this.examineFormDto.isPass = false;
-      this.examineFormDto.handleUserList = [];
-      this.examineFormDto.currentNodeId = data.result.cur_Node_Id
-      this.examineFormDto.currentNodeName = data.result.cur_NodeName
-      this.examineFormDto.workFlow_Instance_Id = data.result.workFlow_Instance_Id
-      this.examineFormDto.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
-      data.result.auditorRecords.forEach(element => {
-        const flowNodeUser = new FlowNodeUser()
-        flowNodeUser.userFlowId = element.id
-        flowNodeUser.userCode = element.applyEID
-        flowNodeUser.userName = element.applyEName
-        this.examineFormDto.handleUserList.push(flowNodeUser)
-      });
+    // if (this.nodeAdvise == null || this.nodeAdvise == '') {
+    //   this.message.error("驳回意见必须填写！")
+    //   return
+    // }
 
-      this.RejectedExamine(this.examineFormDto);
-    }, error => {
-      this.message.info(error.error.error.message)
-      this.butNzLoading = false;
-    })
-    this.isAddProducttyepe1 = false;
-    this.serveResult();
+    // this.tenantWorkFlowInstanceDto.backAuditedNode = {
+    //   nodeId: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeId,
+    //   nodeName: this.tenantWorkFlowInstanceDto.nodeViewInfo.previousNodeName,
+    //   details: this.nodeAdvise,
+    // }
+    // this._flowServices.tenant_NodeToNextNodeByNoPass(this.tenantWorkFlowInstanceDto).subscribe((data: any) => {
+    //   this.butNzLoading = false;
+    //   this.examineFormDto.isTransfer = this.tenantWorkFlowInstanceDto.editWorkFlow_NodeAuditorRecordDto.applyType == 3 ? true : false
+    //   this.examineFormDto.isPass = false;
+    //   this.examineFormDto.handleUserList = [];
+    //   this.examineFormDto.currentNodeId = data.result.cur_Node_Id
+    //   this.examineFormDto.currentNodeName = data.result.cur_NodeName
+    //   this.examineFormDto.workFlow_Instance_Id = data.result.workFlow_Instance_Id
+    //   this.examineFormDto.workFlow_TemplateInfo_Id = data.result.workFlow_TemplateInfo_Id
+    //   data.result.auditorRecords.forEach(element => {
+    //     const flowNodeUser = new FlowNodeUser()
+    //     flowNodeUser.userFlowId = element.id
+    //     flowNodeUser.userCode = element.applyEID
+    //     flowNodeUser.userName = element.applyEName
+    //     this.examineFormDto.handleUserList.push(flowNodeUser)
+    //   });
+
+    //   this.RejectedExamine(this.examineFormDto);
+    // }, error => {
+    //   this.message.info(error.error.error.message)
+    //   this.butNzLoading = false;
+    // })
+    // this.isAddProducttyepe1 = false;
+    // this.serveResult();
   }
 
   //驳回提交

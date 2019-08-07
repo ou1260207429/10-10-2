@@ -1,10 +1,11 @@
-<div class="zt">
-  <div class="tietle"><span>建设工程消防验收审查申报表</span> </div>
+<nz-card>
+  <div class="zt">
 
-  <div class="main">
 
-    <form nz-form class="table" #validateForm="ngForm">
-    <div class="section">
+    <div class="main">
+
+      <form nz-form class="table" #validateForm="ngForm">
+        <!-- <div class="section">
       <div class="col colpadding">
         <p><span style="color:red">*</span>建设单位:</p>
       </div>
@@ -17,7 +18,6 @@
             <div class="vali_err" *ngIf="jsconstructionUnit.control.dirty&&jsconstructionUnit.control.errors||postData.jsconstructionUnit==''">
               必填
             </div>
-
         </nz-form-control>
       </div>
 
@@ -388,14 +388,14 @@
         <div style="border-bottom:1px solid #e2e2e2;">
           <p style="font-weight: 600;height: 80px;line-height: 80px"><span style="color:red">*</span>单体建筑名称</p>
         </div>
-        <div style="text-align: center;padding-top:10px;box-sizing: border-box;line-height: 70px"><input nz-input></div>
+        <div style="text-align: center;padding-top:10px;box-sizing: border-box;line-height: 70px;padding-left: 5px;padding-right: 5px;"><input nz-input></div>
       </div>
 
       <div style="text-align: center;width:14.99134%;border-right: 1px solid #e2e2e2;">
         <div style="border-bottom:1px solid #e2e2e2;">
           <p style="font-weight: 600;height: 80px;line-height: 80px"><span style="color:red">*</span>结构类型</p>
         </div>
-        <div style="text-align: center;padding-top:10px;box-sizing: border-box;line-height: 70px"><input nz-input></div>
+        <div style="text-align: center;padding-top:10px;box-sizing: border-box;line-height: 70px;padding-left: 5px;padding-right: 5px;"><input nz-input></div>
       </div>
 
       <div class="colpadding" style="text-align: center;width:14.155%;border-right: 1px solid #e2e2e2;">
@@ -423,11 +423,138 @@
         <p style="font-weight: 600;"><span style="color:red">*</span>操作</p>
       </div>
 
-    </div>
+    </div> -->
 
-  </form>
+        <div class="tr">
+          <div class="title">建设工程消防验收审查申报表</div>
+        </div>
+        <div class="tr">
+
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired nzNoColon>建设单位</nz-form-label>
+          </div>
+
+          <div class="td_r_li">
+            <nz-form-control nzHasFeedback>
+              <input nz-input type="text" name="jsconstructionUnit" #jsconstructionUnit="ngModel"
+                [(ngModel)]="postData.jsconstructionUnit" placeholder="请输入建设单位" required />
+
+              <div class="vali_err" *ngIf="jsconstructionUnit.control.dirty&&jsconstructionUnit.control.errors">
+                必填
+              </div>
+            </nz-form-control>
+          </div>
+
+        </div>
+
+        <div class="tr">
+            <div class="td_label_fixed">
+              <nz-form-label nzSize="large" name="buildOrg" nzRequired nzNoColon>工程名称</nz-form-label>
+            </div>
+            <div class="td_r_li">
+
+              <nz-form-control nzHasFeedback>
+                <input nz-input type="text" name="projectName" #projectName="ngModel" [(ngModel)]="postData.projectName"
+                  placeholder="请输入工程名称" required />
+                <div class="vali_err" *ngIf="projectName.control.dirty&&projectName.control.errors">
+                  必填
+                </div>
+
+              </nz-form-control>
+
+            </div>
+        </div>
+
+        <div class="tr">
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired nzNoColon>法定代表人/主要负责人</nz-form-label>
+          </div>
+
+          <div class="td">
+            <nz-form-control nzHasFeedback>
+              <input nz-input type="text" name="legalRepresentative" #legalRepresentative="ngModel"
+                [(ngModel)]="postData.legalRepresentative" placeholder="请输入法定代表人/主要负责人" required />
+              <div class="vali_err" *ngIf="legalRepresentative.control.dirty&&legalRepresentative.control.errors">
+                必填
+              </div>
+            </nz-form-control>
+          </div>
+
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired nzNoColon>联系电话</nz-form-label>
+          </div>
+
+          <div class="td_r_li">
+            <nz-form-control nzHasFeedback>
+              <input nz-input type="text" name="legalRepresentativeNo" #legalRepresentativeNo="ngModel"
+                [(ngModel)]="postData.legalRepresentativeNo" placeholder="请输法定代表人/主要负责人联系电话" required />
+              <div class="vali_err" *ngIf="legalRepresentativeNo.control.dirty&&legalRepresentativeNo.control.errors">
+                必填
+              </div>
+            </nz-form-control>
+          </div>
+
+        </div>
+
+        <div class="tr">
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired nzNoColon>联系人</nz-form-label>
+          </div>
+
+          <div class="td">
+            <nz-form-control nzHasFeedback>
+              <input nz-input type="text" name="contacts" #contacts="ngModel" [(ngModel)]="postData.contacts"
+                placeholder="请输入联系人" required />
+              <div class="vali_err" *ngIf="contacts.control.dirty&&contacts.control.errors">
+                必填
+              </div>
+            </nz-form-control>
+          </div>
+
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired nzNoColon>联系电话</nz-form-label>
+          </div>
+
+          <div class="td_r_li">
+            <nz-form-control nzHasFeedback>
+
+              <input nz-input type="text" name="contactsNumber" #contactsNumber="ngModel"
+                [(ngModel)]="postData.contactsNumber" placeholder="请输入联系电话" required />
+              <div class="vali_err" *ngIf="contactsNumber.control.dirty&&contactsNumber.control.errors">
+                必填
+              </div>
+            </nz-form-control>
+          </div>
+
+        </div>
+
+        <!-- <div class="tr">
+
+            <div class="td_label_fixed">
+              <nz-form-label nzSize="large" nzRequired nzNoColon>使用性质</nz-form-label>
+            </div>
+
+            <!-- <div class="td_r_li">
+                <nz-form-control nzHasFeedback>
+                    <nz-spin [nzSpinning]="!useNatureSelect"></nz-spin>
+                    <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="data.useNature" name="useNature" required
+                      *ngIf="useNatureSelect" nzShowSearch>
+                      <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.natureName"
+                        [nzValue]="option.natureCode">
+                      </nz-option>
+                    </nz-select>
+                    <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'designUnitDesignQualificationLevel',i)">
+                      必填
+                    </div>
+                  </nz-form-control>
+            </div> -->
+
+          </div> -->
+
+      </form>
+    </div>
   </div>
-</div>
+</nz-card>
 
 <!-- <page-header>
   <ng-template #action>

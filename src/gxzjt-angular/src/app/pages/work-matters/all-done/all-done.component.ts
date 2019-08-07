@@ -38,6 +38,12 @@ export class WorkMattersAllDoneComponent implements OnInit {
     isExpire: null,
     companyName: null,
     totalCount: null,
+    designOrg:'',
+    buildOrg:'',
+    supervisoryOrg:'',
+    drawingOrg:'',
+    testingOrg:'',
+    subcontractors:'',
   }
   pageConfig: STPage = {
     front: false,
@@ -134,6 +140,12 @@ export class WorkMattersAllDoneComponent implements OnInit {
       dateRange: [this.rangeTime],
       sbdateRange: [null],
       status: [null],
+      designOrg:[null],
+      buildOrg:[null],
+      supervisoryOrg:[null],
+      drawingOrg:[null],
+      testingOrg:[null],
+      subcontractors:[null],
     });
     this.GetHandlingMatters()
   }
@@ -161,6 +173,13 @@ export class WorkMattersAllDoneComponent implements OnInit {
       supervisorName: [null],
       detectionName: [null],
       drawName: [null],
+
+      designOrg:[null],
+      buildOrg:[null],
+      supervisoryOrg:[null],
+      drawingOrg:[null],
+      testingOrg:[null],
+      subcontractors:[null],
 
     });
     if (this.fliterForm.controls.sbdateRange.value) {
@@ -258,6 +277,36 @@ export class WorkMattersAllDoneComponent implements OnInit {
     } else {
       this.param.status = null
     }
+    if (this.fliterForm.controls.designOrg.value) {
+      this.param.designOrg = this.fliterForm.controls.designOrg.value;
+    } else {
+      this.param.designOrg = null
+    }
+    if (this.fliterForm.controls.buildOrg.value) {
+      this.param.buildOrg = this.fliterForm.controls.buildOrg.value;
+    } else {
+      this.param.buildOrg = null
+    }
+    if (this.fliterForm.controls.supervisoryOrg.value) {
+      this.param.supervisoryOrg = this.fliterForm.controls.supervisoryOrg.value;
+    } else {
+      this.param.supervisoryOrg = null
+    }
+    if (this.fliterForm.controls.drawingOrg.value) {
+      this.param.drawingOrg = this.fliterForm.controls.drawingOrg.value;
+    } else {
+      this.param.drawingOrg = null
+    }
+    if (this.fliterForm.controls.testingOrg.value) {
+      this.param.testingOrg = this.fliterForm.controls.testingOrg.value;
+    } else {
+      this.param.testingOrg = null
+    }
+    if (this.fliterForm.controls.subcontractors.value) {
+      this.param.subcontractors = this.fliterForm.controls.subcontractors.value;
+    } else {
+      this.param.subcontractors = null
+    }
     // this.param.flowPathType = Number(this.fliterForm.controls.proType.value);
     //   if (this.param.flowPathType == 0) {
     //     this.param.flowPathType = -1;
@@ -300,6 +349,13 @@ export class WorkMattersAllDoneComponent implements OnInit {
       timetype: this.fliterForm.controls.timetype.value,
       buildname: this.fliterForm.controls.buildname.value,
       status: this.fliterForm.controls.status.value,
+
+      designOrg:this.fliterForm.controls.designOrg.value,
+      buildOrg:this.fliterForm.controls.buildOrg.value,
+      supervisoryOrg:this.fliterForm.controls.supervisoryOrg.value,
+      drawingOrg:this.fliterForm.controls.drawingOrg.value,
+      testingOrg:this.fliterForm.controls.testingOrg.value,
+      subcontractors:this.fliterForm.controls.subcontractors.value,
 
     });
     this.countyarray = []
