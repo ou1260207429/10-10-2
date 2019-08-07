@@ -36,10 +36,8 @@ export class ProjectManageAddDesignComponent implements OnInit, AfterViewInit {
 
     this.areaData = getArea();
 
-    // resetFormControlStatus(this.validateForm.controls);
-    Object.keys(this.validateForm.controls).forEach(key => {
-      this.validateForm.controls[key].updateValueAndValidity({ onlySelf: true });
-    });
+    resetFormControlStatus(this.validateForm.controls);
+
   }
 
   add() {
