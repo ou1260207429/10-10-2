@@ -1,7 +1,7 @@
 <div class="printWrap" style="width:774px; margin: 0 auto;padding: 0 20px; ">
     <div *ngIf="data" class="formPrint" style="display: flex;">
         <div class="title">
-            建设工程消防设计审查申报表
+            建设工程竣工验收消防备案表
         </div>
         <div class="row">
             <div class="minTitle">建设单位:</div>
@@ -262,7 +262,7 @@
                         </span>
                     </div>
                 </div>
-                <div style="display: flex;width: 100%;border-top:  1px solid #e2e2e2;">
+                <div style="display: flex;width: 100%;border-top:  1px solid #e2e2e2;min-height: 40px;">
                     <div class="fontWeight minTitle" style="padding: 10px;">
                         储存物质名称
                     </div>
@@ -279,7 +279,7 @@
                         储存形式
                     </div>
                 </div>
-                <div style="display: flex;width: 100%;border-top:  1px solid #e2e2e2;min-height: 35px;">
+                <div style="display: flex;width: 100%;border-top:  1px solid #e2e2e2;min-height: 40px;">
                     <div class="fontWeight minTitle contantCenter">
                         {{item.name}}
                     </div>
@@ -298,7 +298,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" *ngFor="let item of data.yard;">
+        <div class="row" style="min-height: 40px;" *ngFor="let item of data.yard;">
             <div class="fontWeight borderRight minTitle">
                 堆 场
             </div>

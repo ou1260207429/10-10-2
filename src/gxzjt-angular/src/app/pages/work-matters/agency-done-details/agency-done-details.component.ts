@@ -115,7 +115,6 @@ export class AgencyDoneDetailsComponent implements OnInit {
   nodeAdvise: String;
 
   constructor(
-    private router: Router,
     private _eventEmiter: EventEmiter,
     public _appSessionService: AppSessionService,
     private _examineService: ExamineServiceServiceProxy,
@@ -135,14 +134,10 @@ export class AgencyDoneDetailsComponent implements OnInit {
     this.operationType = this._activatedRoute.snapshot.paramMap.get('operationType')
 
   }
-  printAddress: Object
   ngOnInit() {
     this.init();
   }
 
-  setAddress(e) {
-    this.printAddress = e;
-  }
   /**
    * 清除表单数据
    * */
@@ -153,23 +148,6 @@ export class AgencyDoneDetailsComponent implements OnInit {
       } else if (typeof (fieldForm[item]) == "object") {
         fieldForm[item] = [];
       }
-    }
-  }
-  /**
-   * 跳转打印页面并将打印信息放置在localStorage，以便打印页面获取打印信息
-   */
-  printFormData() {
-    let params = Object.assign(this.printAddress, this.formJson)
-    let result = JSON.stringify(params)
-    localStorage.setItem('jsonPrintForm', result);
-
-    if (this.formJson && this.flowPathType == 1) {
-      this.router.navigate([`/app/print-pages/FiewDesignDeclarePrintComponent`]);
-
-    } else if (this.formJson && this.flowPathType == 2) {
-      this.router.navigate([`/app/print-pages/AcceptanceManagementPrintComponent`]);
-    } else if (this.formJson && this.flowPathType == 3) {
-      this.router.navigate([`/app/print-pages/CompletedAcceptancePrintComponent`]);
     }
   }
 

@@ -21,7 +21,7 @@ export class BigScreenComponent {
     FireHeight = '';
     MiddleWidth = '';
     RightWidth = '';
-    SignInData = [0, 0, 0, 1, 0, 0, 8, 6];
+    SignInData = [];
     GetThrough = [];
     rankingData = [
     ]
@@ -105,6 +105,7 @@ export class BigScreenComponent {
         this.GetATimeByStatistics();
         this.post_GetFireDataSumList();
         this.Post_GetApplyRate();
+        this.Post_GetUserNum();
         // setInterval(() => {
         //     this.ScreenTimeoutChangePage();
         //     this.ScreenYearApplyChangePage();
@@ -117,9 +118,23 @@ export class BigScreenComponent {
             this.GetFireDataList();
             this.GetATimeByStatistics();
             this.post_GetFireDataSumList();
+            this.Post_GetUserNum();
         }, 10 * 60 * 1000)
     }
     // model = new DeclareRateQueryDto();
+    Post_GetUserNum(){
+        this.screenService.post_GetUserNum().subscribe((res:any)=>{
+            if(res.data!=null){
+                const aaa =JSON.stringify(res.data[0].userNum);
+                for (let i = 0; i < 8 - aaa.split("").length; i++) {
+                    this.SignInData.push(0);
+                }
+                aaa.split("").forEach(e => {
+                    this.SignInData.push(e);
+                });
+            }
+        });
+    }
     //申报统计
     Post_GetDeclareRate() {
         // this.model.processedStatus = 2;
@@ -254,16 +269,16 @@ export class BigScreenComponent {
             page: 1,
             sorting: "cityName",
             skipCount: 0,
-            maxResultCount: 5
+            maxResultCount: 4
         };
         model.page = this.ScreenYearApplyPage;
         this.screenService.post_GetScreenYearApplyNumber(model).subscribe(res => {
             this.ScreenYearApplyData = res.data;
-            if (res.total <= 5) {
-                if (res.total % 5 === 0) {
-                    this.ScreenTimeoutNumBer = res.total / 5;
+            if (res.total <= 4) {
+                if (res.total % 4 === 0) {
+                    this.ScreenTimeoutNumBer = res.total / 4;
                 } else {
-                    this.ScreenTimeoutNumBer = Math.ceil(res.total / 5);
+                    this.ScreenTimeoutNumBer = Math.ceil(res.total / 4);
                 }
             } else {
                 this.ScreenTimeoutNumBer = 0;
@@ -315,16 +330,16 @@ export class BigScreenComponent {
             page: 1,
             sorting: "projectName",
             skipCount: 0,
-            maxResultCount: 3
+            maxResultCount: 4
         };
         model.page = this.ScreenTimeoutPage;
         this.screenService.post_GetScreenTimeoutList(model).subscribe(res => {
             this.ScreenTimeoutList = res.data;
-            if (res.total <= 3) {
-                if (res.total % 3 === 0) {
-                    this.ScreenTimeoutNumBer = res.total / 3;
+            if (res.total <= 4) {
+                if (res.total % 4 === 0) {
+                    this.ScreenTimeoutNumBer = res.total / 4;
                 } else {
-                    this.ScreenTimeoutNumBer = Math.ceil(res.total / 3);
+                    this.ScreenTimeoutNumBer = Math.ceil(res.total / 4);
                 }
             } else {
                 this.ScreenTimeoutNumBer = 0;
@@ -1466,7 +1481,7 @@ export class BigScreenComponent {
                         <span style='color:#F6FF00;margin-left:60px;margin-bottom:5px;display: block;'>申报数：`+ params.data.value + `</span>
                         <span style='color:#F6FF00;margin-left:60px;margin-bottom:5px;display: block;'>一次性通过数：`+ params.data.aTimeByCountNumber + `</span> 
                         <span style='color:#F6FF00;margin-left:60px;margin-bottom:5px;display: block;'> 超时数：`+ params.data.timeoutCountNumber + `</span>
-                        <span style='color:#F6FF00;margin-left:60px;display: block;'> 平均办理时长：`+ params.data.avgCompleteTimeCountNumber + `</span>
+                        <span style='color:#F6FF00;margin-left:60px;display: block;'> 平均办理时长：`+ params.data.avgCompleteTimeCountNumber + `天</span>
                     </div>
                         `
                         // let retStr = `<div style="background-image:url('./assets/images/big2/img_bg_tk.png');background-size: 100% 100%;height:180px;width:250px;position:absolute;top:-100px">

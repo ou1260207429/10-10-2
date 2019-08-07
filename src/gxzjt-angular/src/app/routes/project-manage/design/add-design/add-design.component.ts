@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { getAddDeisnRepData } from '../../public/add-design-data';
@@ -11,7 +11,7 @@ import { getForsItemFormStatus, resetFormControlStatus } from '../../public/proj
   templateUrl: './add-design.component.html',
   styleUrls: ['../../public/public.less'],
 })
-export class ProjectManageAddDesignComponent implements OnInit {
+export class ProjectManageAddDesignComponent implements OnInit, AfterViewInit {
 
   noValidateForm = { standalone: true };//不校验数据需要加
 
@@ -36,24 +36,17 @@ export class ProjectManageAddDesignComponent implements OnInit {
 
     this.areaData = getArea();
 
-    resetFormControlStatus(this.validateForm);
-    // this.validateForm = this.fb.group({
-    //   jsconstructionUnit: [null, [Validators.required]],//建设单位
-    //   legalRepresentative: [null, [Validators.required]],//法定代表人/主要负责人
-    //   legalRepresentativeNo: [null, [Validators.required]],//法定代表人/主要负责人 联系电话
-    //   projectName: [null, [Validators.required]],//工程名称
-    //   contacts: [null, [Validators.required]],//联系人
-    //   contactsNumber: [null, [Validators.required]],//联系电话
-    //   engineeringCitycountyAndDistrict: [null, [Validators.required]],
-    //   engineeringId: [null, [Validators.required]],
-    //   engineeringNo: [null, [Validators.required]],
-    //   engineeringAddress: [null, [Validators.required]],
-    //   // planStartTime: [null, [Validators.required]],
-    //   // planEndTime: [null, [Validators.required]],
-    // });
+    resetFormControlStatus(this.validateForm.controls);
+
   }
 
   add() {
+
+  }
+
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
 
   }
 
