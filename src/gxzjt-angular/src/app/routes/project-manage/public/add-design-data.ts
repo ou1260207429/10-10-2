@@ -7,13 +7,13 @@ export function getAddDeisnRepData(): any {
         projectName: '',//工程名称
         contacts: '',//联系人
         contactsNumber: '',//联系电话
-        engineeringCitycountyAndDistrict: '',
+        engineeringCitycountyAndDistrict: '',//工程地址 省市县
         //2019.7.4 新增审批单位
         engineeringId: '',
-        engineeringNo: '',
-        engineeringAddress: '',
-        planStartTime: '',
-        planEndTime: '',
+        engineeringNo: '',//审批单位
+        engineeringAddress: '',//工程详细地址
+        planStartTime: '',//计划开工时间
+        planEndTime: '',//计划竣工时间
         projectCategoryId: '',
         design: [
             {

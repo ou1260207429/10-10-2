@@ -5,11 +5,12 @@
 </page-header>
 <nz-card>
 
-  <form nz-form class="table" [formGroup]="validateForm">
+  <form nz-form class="table" #validateForm="ngForm">
 
     <div class="tr">
       <div class="title">建设工程消防设计审查申报表</div>
     </div>
+
     <div class="tr">
       <div class="td_label_fixed">
         <nz-form-label nzSize="large" nzRequired nzNoColon>建设单位</nz-form-label>
@@ -17,10 +18,10 @@
       <div class="td_r_li">
 
         <nz-form-control nzHasFeedback>
-          <input nz-input type="text" formControlName="jsconstructionUnit" [(ngModel)]="postData.jsconstructionUnit"
-            placeholder="请输入建设单位"  required>
+          <input nz-input type="text" name="jsconstructionUnit" #jsconstructionUnit="ngModel"
+            [(ngModel)]="postData.jsconstructionUnit" placeholder="请输入建设单位" required />
 
-          <div class="vali_err" *ngIf="validateForm.get('jsconstructionUnit').hasError('required')">
+          <div class="vali_err" *ngIf="jsconstructionUnit.control.dirty&&jsconstructionUnit.control.errors">
             必填
           </div>
 
@@ -37,10 +38,9 @@
       <div class="td_r_li">
 
         <nz-form-control nzHasFeedback>
-          <input nz-input type="text" formControlName="projectName" [(ngModel)]="postData.projectName"
-            placeholder="请输入工程名称"  required>
-
-          <div class="vali_err" *ngIf="validateForm.get('projectName').hasError('required')">
+          <input nz-input type="text" name="projectName" #projectName="ngModel" [(ngModel)]="postData.projectName"
+            placeholder="请输入工程名称" required />
+          <div class="vali_err" *ngIf="projectName.control.dirty&&projectName.control.errors">
             必填
           </div>
 
@@ -56,9 +56,9 @@
 
       <div class="td">
         <nz-form-control nzHasFeedback>
-          <input nz-input type="text" formControlName="legalRepresentative" [(ngModel)]="postData.legalRepresentative"
-            placeholder="请输入法定代表人/主要负责人"  required>
-          <div class="vali_err" *ngIf="validateForm.get('legalRepresentative').hasError('required')">
+          <input nz-input type="text" name="legalRepresentative" #legalRepresentative="ngModel"
+            [(ngModel)]="postData.legalRepresentative" placeholder="请输入法定代表人/主要负责人" required />
+          <div class="vali_err" *ngIf="legalRepresentative.control.dirty&&legalRepresentative.control.errors">
             必填
           </div>
         </nz-form-control>
@@ -70,9 +70,9 @@
 
       <div class="td_r_li">
         <nz-form-control nzHasFeedback>
-          <input nz-input type="text" formControlName="legalRepresentative" [(ngModel)]="postData.legalRepresentative"
-            placeholder="请输入法定代表人/主要负责人的联系电话"  required>
-          <div class="vali_err" *ngIf="validateForm.get('legalRepresentative').hasError('required')">
+          <input nz-input type="text" name="legalRepresentativeNo" #legalRepresentativeNo="ngModel"
+            [(ngModel)]="postData.legalRepresentativeNo" placeholder="请输法定代表人/主要负责人联系电话" required />
+          <div class="vali_err" *ngIf="legalRepresentativeNo.control.dirty&&legalRepresentativeNo.control.errors">
             必填
           </div>
         </nz-form-control>
@@ -88,9 +88,9 @@
 
       <div class="td">
         <nz-form-control nzHasFeedback>
-          <input nz-input type="text" formControlName="legalRepresentative" [(ngModel)]="postData.contacts"
-            placeholder="请输入法定代表人/主要负责人"  required>
-          <div class="vali_err" *ngIf="validateForm.get('legalRepresentative').hasError('required')">
+          <input nz-input type="text" name="contacts" #contacts="ngModel" [(ngModel)]="postData.contacts"
+            placeholder="请输入联系人" required />
+          <div class="vali_err" *ngIf="contacts.control.dirty&&contacts.control.errors">
             必填
           </div>
         </nz-form-control>
@@ -102,9 +102,10 @@
 
       <div class="td_r_li">
         <nz-form-control nzHasFeedback>
-          <input nz-input type="text" formControlName="legalRepresentative" [(ngModel)]="postData.contactsNumber"
-            placeholder="请输入联系电话"  required>
-          <div class="vali_err" *ngIf="validateForm.get('legalRepresentative').hasError('required')">
+
+          <input nz-input type="text" name="contactsNumber" #contactsNumber="ngModel"
+            [(ngModel)]="postData.contactsNumber" placeholder="请输入联系电话" required />
+          <div class="vali_err" *ngIf="contactsNumber.control.dirty&&contactsNumber.control.errors">
             必填
           </div>
         </nz-form-control>
@@ -115,13 +116,21 @@
 
 
 
-    <div class="tr_btm_li">
+    <div class="tr_btm_nan">
       <div class="td_label_fixed">
         <nz-form-label nzSize="large" nzRequired nzNoColon>工程地址</nz-form-label>
       </div>
       <div class="td_r_li">
-        <nz-form-control>
-          <input nz-input name="email" nzHasFeedback>
+        <nz-form-control nzHasFeedback>
+
+          <nz-cascader nzPlaceHolder="请选择工程所在区县" nzSize="large" [nzChangeOnSelect]="true" [nzOptions]="areaData"
+            [(ngModel)]="postData.engineeringCitycountyAndDistrict" name="engineeringCitycountyAndDistrict"
+            (nzChange)="onChangeCitycountyAndDistrict($event)" #engineeringCitycountyAndDistrict="ngModel" required>
+          </nz-cascader>
+          <div class="vali_err"
+            *ngIf="engineeringCitycountyAndDistrict.control.dirty&&engineeringCitycountyAndDistrict.control.errors">
+            必填
+          </div>
         </nz-form-control>
       </div>
     </div>
@@ -131,8 +140,29 @@
 
       </div>
       <div class="td_r_li">
-        <nz-form-control>
-          <input nz-input name="email" nzHasFeedback>
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" name="engineeringAddress" #engineeringAddress="ngModel"
+            [(ngModel)]="postData.engineeringAddress" placeholder="请输入工程详细地址" required />
+          <div class="vali_err" *ngIf="engineeringAddress.control.dirty&&engineeringAddress.control.errors">
+            必填
+          </div>
+        </nz-form-control>
+      </div>
+    </div>
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large" nzRequired nzNoColon>审批单位</nz-form-label>
+      </div>
+      <div class="td_r_li">
+        <nz-form-control nzHasFeedback>
+
+          <input nz-input type="text" name="engineeringNo" #engineeringNo="ngModel" [(ngModel)]="postData.engineeringNo"
+            placeholder="请输入工程详细地址" required />
+          <div class="vali_err" *ngIf="engineeringNo.control.dirty&&engineeringNo.control.errors">
+            必填
+          </div>
+
         </nz-form-control>
       </div>
     </div>
@@ -140,6 +170,107 @@
 
 
 
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large" nzNoColon>计划开工日期</nz-form-label>
+      </div>
+
+      <div class="td">
+        <nz-date-picker [(ngModel)]="postData.planStartTime" nzFormat="yyyy/MM/dd" name="planStartTime">
+        </nz-date-picker>
+      </div>
+
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large" nzNoColon>计划竣工日期</nz-form-label>
+      </div>
+
+      <div class="td_r_li">
+        <nz-date-picker [(ngModel)]="postData.planEndTime" nzFormat="yyyy/MM/dd" name="planEndTime">
+        </nz-date-picker>
+      </div>
+
+    </div>
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">单位类别</nz-form-label>
+      </div>
+      <div class="td_for_org_sel_title">
+        <nz-form-label nzSize="large">单位名称</nz-form-label>
+      </div>
+      <div class="td_for_org_sel_title">
+        <nz-form-label nzSize="large">资质等级</nz-form-label>
+      </div>
+      <div class="td_for_org_sel_title">
+        <nz-form-label nzSize="large">联系人</nz-form-label>
+      </div>
+      <div class="td_for_org_sel_title">
+        <nz-form-label nzSize="large">联系电话</nz-form-label>
+      </div>
+      <div class="td_for_crl_title">
+        <nz-form-label nzSize="large">操作</nz-form-label>
+      </div>
+    </div>
+
+
+
+
+    <div class="tr_btm_nan" *ngFor="let item of postData.design;let i = index">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large" nzRequired nzNoColon>设计单位</nz-form-label>
+      </div>
+      <div class="td_for_org_sel">
+        <nz-form-control>
+          <nz-rj-selector-org [(ngModel)]="item.designUnit" placeHolder="请输入设计单位" ngDefaultControl
+            name="designUnitDesignDesignUnit{{i}}" #designUnitDesignDesignUnit{{i}}="ngModel" [required]="true"
+            nzHasFeedback>
+          </nz-rj-selector-org>
+          <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'designUnitDesignDesignUnit',i)">
+            必填
+          </div>
+        </nz-form-control>
+      </div>
+      <div class="td_for_org_sel">
+        <nz-form-control nzHasFeedback>
+          <nz-select type="text" [(ngModel)]="item.qualificationLevel" name="designUnitDesignQualificationLevel{{i}}"
+            #designUnitDesignQualificationLevel{{i}}="ngModel" placeholder="请输入资质等级" required>
+          </nz-select>
+          <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'designUnitDesignQualificationLevel',i)">
+            必填
+          </div>
+        </nz-form-control>
+      </div>
+      <div class="td_for_org_sel">
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" [(ngModel)]="item.legalRepresentative" name="designUnitLegalRepresentative{{i}}"
+            #designUnitLegalRepresentative{{i}}="ngModel" placeholder="请输入联系人" required />
+
+
+          <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'designUnitLegalRepresentative',i)">
+            必填
+          </div>
+
+        </nz-form-control>
+      </div>
+      <div class="td_for_org_sel">
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" [(ngModel)]="item.contacts" placeholder="联系电话" name="designUnitContacts{{i}}"
+            #designUnitContacts{{i}}="ngModel" required />
+          <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'designUnitContacts',i)">
+            必填
+          </div>
+        </nz-form-control>
+      </div>
+      <div class="td_for_crl">
+        <nz-form-label nzSize="large">操作</nz-form-label>
+      </div>
+    </div>
+
   </form>
+
+
+  <div class="title">
+    <button [disabled]="!validateForm.form.valid">提交</button>
+  </div>
 
 </nz-card>
