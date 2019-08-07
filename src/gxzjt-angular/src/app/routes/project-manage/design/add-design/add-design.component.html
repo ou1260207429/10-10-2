@@ -1,8 +1,3 @@
-<page-header>
-  <ng-template #action>
-    <button (click)="add()" nz-button nzType="primary">新建</button>
-  </ng-template>
-</page-header>
 <nz-card>
 
   <form nz-form class="table" #validateForm="ngForm">
@@ -13,7 +8,7 @@
 
     <div class="tr">
       <div class="td_label_fixed">
-        <nz-form-label nzSize="large" nzRequired nzNoColon>建设单位</nz-form-label>
+        <nz-form-label nzSize="large" nzRequired>建设单位</nz-form-label>
       </div>
       <div class="td_r_li">
 
@@ -33,7 +28,7 @@
 
     <div class="tr">
       <div class="td_label_fixed">
-        <nz-form-label nzSize="large" name="buildOrg" nzRequired nzNoColon>工程名称</nz-form-label>
+        <nz-form-label nzSize="large" name="buildOrg" nzRequired>工程名称</nz-form-label>
       </div>
       <div class="td_r_li">
 
@@ -51,7 +46,7 @@
 
     <div class="tr">
       <div class="td_label_fixed">
-        <nz-form-label nzSize="large" nzRequired nzNoColon>法定代表人/主要负责人</nz-form-label>
+        <nz-form-label nzSize="large" nzRequired>法定代表人/主要负责人</nz-form-label>
       </div>
 
       <div class="td">
@@ -65,7 +60,7 @@
       </div>
 
       <div class="td_label_fixed">
-        <nz-form-label nzSize="large" nzRequired nzNoColon>联系电话</nz-form-label>
+        <nz-form-label nzSize="large" nzRequired>联系电话</nz-form-label>
       </div>
 
       <div class="td_r_li">
@@ -83,7 +78,7 @@
 
     <div class="tr">
       <div class="td_label_fixed">
-        <nz-form-label nzSize="large" nzRequired nzNoColon>联系人</nz-form-label>
+        <nz-form-label nzSize="large" nzRequired>联系人</nz-form-label>
       </div>
 
       <div class="td">
@@ -97,7 +92,7 @@
       </div>
 
       <div class="td_label_fixed">
-        <nz-form-label nzSize="large" nzRequired nzNoColon>联系电话</nz-form-label>
+        <nz-form-label nzSize="large" nzRequired>联系电话</nz-form-label>
       </div>
 
       <div class="td_r_li">
@@ -118,7 +113,7 @@
 
     <div class="tr_btm_nan">
       <div class="td_label_fixed">
-        <nz-form-label nzSize="large" nzRequired nzNoColon>工程地址</nz-form-label>
+        <nz-form-label nzSize="large" nzRequired>工程地址</nz-form-label>
       </div>
       <div class="td_r_li">
         <nz-form-control nzHasFeedback>
@@ -152,7 +147,7 @@
 
     <div class="tr">
       <div class="td_label_fixed">
-        <nz-form-label nzSize="large" nzRequired nzNoColon>审批单位</nz-form-label>
+        <nz-form-label nzSize="large" nzRequired>审批单位</nz-form-label>
       </div>
       <div class="td_r_li">
         <nz-form-control nzHasFeedback>
@@ -172,7 +167,7 @@
 
     <div class="tr">
       <div class="td_label_fixed">
-        <nz-form-label nzSize="large" nzNoColon>计划开工日期</nz-form-label>
+        <nz-form-label nzSize="large">计划开工日期</nz-form-label>
       </div>
 
       <div class="td">
@@ -181,7 +176,7 @@
       </div>
 
       <div class="td_label_fixed">
-        <nz-form-label nzSize="large" nzNoColon>计划竣工日期</nz-form-label>
+        <nz-form-label nzSize="large">计划竣工日期</nz-form-label>
       </div>
 
       <div class="td_r_li">
@@ -193,22 +188,22 @@
 
     <div class="tr">
       <div class="td_label_fixed">
-        <nz-form-label nzSize="large">单位类别</nz-form-label>
+        <label nzSize="large">单位类别</label>
       </div>
       <div class="td_for_org_sel_title">
-        <nz-form-label nzSize="large">单位名称</nz-form-label>
+        <label nzSize="large">单位名称</label>
       </div>
       <div class="td_for_org_sel_title">
-        <nz-form-label nzSize="large">资质等级</nz-form-label>
+        <label nzSize="large">资质等级</label>
       </div>
       <div class="td_for_org_sel_title">
-        <nz-form-label nzSize="large">联系人</nz-form-label>
+        <label nzSize="large">联系人</label>
       </div>
       <div class="td_for_org_sel_title">
-        <nz-form-label nzSize="large">联系电话</nz-form-label>
+        <label nzSize="large">联系电话</label>
       </div>
       <div class="td_for_crl_title">
-        <nz-form-label nzSize="large">操作</nz-form-label>
+        <label nzSize="large">操作</label>
       </div>
     </div>
 
@@ -217,7 +212,7 @@
 
     <div class="tr_btm_nan" *ngFor="let item of postData.design;let i = index">
       <div class="td_label_fixed">
-        <nz-form-label nzSize="large" nzRequired nzNoColon>设计单位</nz-form-label>
+        <nz-form-label nzSize="large" nzRequired>设计单位</nz-form-label>
       </div>
       <div class="td_for_org_sel">
         <nz-form-control>
@@ -262,7 +257,20 @@
         </nz-form-control>
       </div>
       <div class="td_for_crl">
-        <nz-form-label nzSize="large">操作</nz-form-label>
+        <div class="tr_btm_nan">
+          <div class="td_r_li">
+
+            <button nz-button nzType="primary" nzSize="small">
+              <i nz-icon type="plus" nzTheme="outline"></i>
+            </button>
+          </div>
+          <div class="td_r_li">
+
+            <button nz-button nzType="default" nzSize="small">
+              <i nz-icon type="minus" style="color: gray"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 

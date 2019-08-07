@@ -1,4 +1,7 @@
 @border-color: #ddd;
+@title-bg:#f8f8f8;
+@label-color: #010101;
+
 
 .table {
   width: 100%;
@@ -34,7 +37,8 @@
   min-width: 80px;
   align-items: center;
   justify-content: stretch;
-
+  color: @label-color;
+  font-size: 16px;
 }
 
 
@@ -50,7 +54,9 @@
     overflow-wrap: break-word;
     word-wrap:break-word;
     word-break:break-all;
-    background: #eee;  
+    background: @title-bg;  
+    color: @label-color;
+    font-size: 16px;
 }
 
 
@@ -65,8 +71,8 @@
   overflow-wrap: break-word;
   word-wrap:break-word;
   word-break:break-all;
-  flex-grow:1;
-  width: 30%;
+
+  width: 25%;
 }
 .td_for_org_sel *{
   flex-grow:1;
@@ -83,9 +89,10 @@
   overflow-wrap: break-word;
   word-wrap:break-word;
   word-break:break-all;
-  width: 30%;
-  flex-grow:1;
-  background: #eee;  
+  width: 25%;
+
+  background: @title-bg;  
+  color: @label-color;
 }
 
 .td_for_crl{
@@ -98,7 +105,9 @@
   overflow-wrap: break-word;
   word-wrap:break-word;
   word-break:break-all;
-  width: 100px;
+  width: 160px;
+  font-size: 16px;
+  color: @label-color;
 }
 .td_for_crl_title{
   display: inline-flex;
@@ -110,8 +119,10 @@
   overflow-wrap: break-word;
   word-wrap:break-word;
   word-break:break-all;
-  width: 100px;
-  background: #eee;  
+  width: 160px;
+  background: @title-bg;  
+  font-size: 16px;
+  color: @label-color;
 }
 
 
