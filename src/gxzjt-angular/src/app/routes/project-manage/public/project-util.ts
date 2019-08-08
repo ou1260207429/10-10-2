@@ -35,3 +35,22 @@ export function resetFormControlStatus(controls: any) {
 
 
 }
+
+
+
+
+export function addEmptyElement(list) {
+    if (list && list instanceof Array) {
+        list.push({});
+    }
+
+}
+
+
+export function removeListElement(list, i) {
+
+    if (list && list instanceof Array) {
+        list.splice(i, 1);
+    }
+
+}
