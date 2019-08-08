@@ -448,21 +448,21 @@
         </div>
 
         <div class="tr">
-            <div class="td_label_fixed">
-              <nz-form-label nzSize="large" name="buildOrg" nzRequired nzNoColon>工程名称</nz-form-label>
-            </div>
-            <div class="td_r_li">
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" name="buildOrg" nzRequired nzNoColon>工程名称</nz-form-label>
+          </div>
+          <div class="td_r_li">
 
-              <nz-form-control nzHasFeedback>
-                <input nz-input type="text" name="projectName" #projectName="ngModel" [(ngModel)]="postData.projectName"
-                  placeholder="请输入工程名称" required />
-                <div class="vali_err" *ngIf="projectName.control.dirty&&projectName.control.errors">
-                  必填
-                </div>
+            <nz-form-control nzHasFeedback>
+              <input nz-input type="text" name="projectName" #projectName="ngModel" [(ngModel)]="postData.projectName"
+                placeholder="请输入工程名称" required />
+              <div class="vali_err" *ngIf="projectName.control.dirty&&projectName.control.errors">
+                必填
+              </div>
 
-              </nz-form-control>
+            </nz-form-control>
 
-            </div>
+          </div>
         </div>
 
         <div class="tr">
@@ -528,28 +528,46 @@
 
         </div>
 
-         <!-- <div class="tr">
+        <div class="tr">
 
-            <div class="td_label_fixed">
-              <nz-form-label nzSize="large" nzRequired nzNoColon>使用性质</nz-form-label>
-            </div>
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired nzNoColon>使用性质</nz-form-label>
+          </div>
 
-           <div class="td_r_li">
-                <nz-form-control nzHasFeedback>
-                    <nz-spin [nzSpinning]="!useNatureSelect"></nz-spin>
-                    <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="data.useNature" name="useNature" required
-                      *ngIf="useNatureSelect" nzShowSearch>
-                      <nz-option *ngFor="let option of useNatureSelect" [nzLabel]="option.natureName"
-                        [nzValue]="option.natureCode">
-                      </nz-option>
-                    </nz-select>
-                    <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'designUnitDesignQualificationLevel',i)">
-                      必填
-                    </div>
-                  </nz-form-control>
-            </div>
+          <div class="td_r_li">
+            <nz-form-control nzHasFeedback>
+              <nz-spin [nzSpinning]="usetyle.length==0"></nz-spin>
+              <nz-select [ngClass]="{pointer: type == 1}" [(ngModel)]="postData.useNature" name="useNature" required
+                nzShowSearch>
+                <nz-option *ngFor="let option of usetyle" [nzLabel]="option.natureName" [nzValue]="option.natureCode">
+                </nz-option>
+              </nz-select>
+              <div class="vali_err" *ngIf="postData.useNature==''||postData.useNature==null">
+                必填
+              </div>
+            </nz-form-control>
+          </div>
 
-          </div>  -->
+        </div>
+
+        <div class="tr_btm_nan">
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired>工程地址</nz-form-label>
+          </div>
+          <div class="td_r_li">
+            <nz-form-control nzHasFeedback>
+
+              <nz-cascader nzPlaceHolder="请选择工程所在区县" nzSize="large" [nzChangeOnSelect]="true" [nzOptions]="areaData"
+                [(ngModel)]="postData.engineeringCitycountyAndDistrict" name="engineeringCitycountyAndDistrict"
+                (nzChange)="onChangeCitycountyAndDistrict($event)" #engineeringCitycountyAndDistrict="ngModel" required>
+              </nz-cascader>
+              <div class="vali_err"
+                *ngIf="engineeringCitycountyAndDistrict.control.dirty&&engineeringCitycountyAndDistrict.control.errors">
+                必填
+              </div>
+            </nz-form-control>
+          </div>
+        </div>
 
       </form>
     </div>
