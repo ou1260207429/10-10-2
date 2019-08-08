@@ -35,7 +35,7 @@
 
     <div class="tr">
       <div class="td_label_fixed">
-        <nz-form-label nzSize="large" name="buildOrg" nzRequired>工程名称</nz-form-label>
+        <nz-form-label nzSize="large" nzRequired>工程名称</nz-form-label>
       </div>
       <div class="td_r_li">
 
@@ -238,8 +238,8 @@
       <div class="td_r_li">
         <nz-form-control>
 
-          <nz-radio-group [(ngModel)]="postData.projectCategoryId" name="engineprojectCategoryIderingNo"
-            #projectCategoryId="ngModel">
+          <nz-radio-group [(ngModel)]="postData.projectCategoryId" name="projectCategoryId" #projectCategoryId="ngModel"
+            required>
             <label nz-radio nzValue="1">新建</label>
             <label nz-radio nzValue="2">扩建</label>
 
@@ -298,16 +298,16 @@
         <label nzSize="large">单位类别</label>
       </div>
 
-      <div class="td_for_org_sel_title">
+      <div class="td_for_org_sel_title1">
         <label nzSize="large">单位名称</label>
       </div>
-      <div class="td_for_org_sel_title">
+      <div class="td_for_org_sel_title2">
         <label nzSize="large">资质等级</label>
       </div>
-      <div class="td_for_org_sel_title">
+      <div class="td_for_org_sel_title3">
         <label nzSize="large">联系人</label>
       </div>
-      <div class="td_for_org_sel_title">
+      <div class="td_for_org_sel_title4">
         <label nzSize="large">联系电话</label>
       </div>
       <div class="td_for_crl_title">
@@ -323,7 +323,7 @@
       <div class="td_label_fixed">
         <nz-form-label nzSize="large" nzRequired>设计单位</nz-form-label>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel1">
         <nz-form-control>
           <nz-rj-selector-org [(ngModel)]="item.designUnit" placeHolder="请输入设计单位" ngDefaultControl
             name="designUnitDesignDesignUnit{{i}}" #designUnitDesignDesignUnit{{i}}="ngModel" [required]="true"
@@ -334,7 +334,7 @@
           </div>
         </nz-form-control>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel2">
         <nz-form-control nzHasFeedback>
           <nz-select type="text" [(ngModel)]="item.qualificationLevel" name="designUnitDesignQualificationLevel{{i}}"
             #designUnitDesignQualificationLevel{{i}}="ngModel" placeholder="请输入资质等级" required>
@@ -344,7 +344,7 @@
           </div>
         </nz-form-control>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel3">
         <nz-form-control nzHasFeedback>
           <input nz-input type="text" [(ngModel)]="item.legalRepresentative" name="designUnitLegalRepresentative{{i}}"
             #designUnitLegalRepresentative{{i}}="ngModel" placeholder="请输入联系人" required />
@@ -356,7 +356,7 @@
 
         </nz-form-control>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel4">
         <nz-form-control nzHasFeedback>
           <input nz-input type="text" [(ngModel)]="item.contacts" placeholder="联系电话" name="designUnitContacts{{i}}"
             #designUnitContacts{{i}}="ngModel" required />
@@ -396,21 +396,21 @@
       <div class="td_label_fixed">
         <nz-form-label nzSize="large">施工单位</nz-form-label>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel1">
         <nz-form-control>
           <nz-rj-selector-org [(ngModel)]="item.designUnit" placeHolder="请输入施工单位" ngDefaultControl
             name="constructionUnitDesignDesignUnit{{i}}" #constructionUnitDesignDesignUnit{{i}}="ngModel" nzHasFeedback>
           </nz-rj-selector-org>
         </nz-form-control>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel2">
         <nz-form-control nzHasFeedback>
           <nz-select type="text" [(ngModel)]="item.qualificationLevel" name="constructionUnitQualificationLevel{{i}}"
             #constructionUnitQualificationLevel{{i}}="ngModel" placeholder="请输入资质等级">
           </nz-select>
         </nz-form-control>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel3">
         <nz-form-control nzHasFeedback>
           <input nz-input type="text" [(ngModel)]="item.legalRepresentative"
             name="constructionUnitLegalRepresentative{{i}}" #constructionUnitLegalRepresentative{{i}}="ngModel"
@@ -418,7 +418,7 @@
 
         </nz-form-control>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel4">
         <nz-form-control nzHasFeedback>
           <input nz-input type="text" [(ngModel)]="item.contacts" placeholder="联系电话"
             name="constructionUnitContacts{{i}}" #constructionUnitContacts{{i}}="ngModel" />
@@ -457,7 +457,7 @@
       <div class="td_label_fixed">
         <nz-form-label nzSize="large">监理单位</nz-form-label>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel1">
         <nz-form-control>
           <nz-rj-selector-org [(ngModel)]=" postData.constructionControlUnit.designUnit" placeHolder="请输入监理单位"
             ngDefaultControl name="constructionControlUnitDesignDesignUnit"
@@ -465,7 +465,7 @@
           </nz-rj-selector-org>
         </nz-form-control>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel2">
         <nz-form-control nzHasFeedback>
           <nz-select type="text" [(ngModel)]=" postData.constructionControlUnit.qualificationLevel"
             name="constructionControlUnitQualificationLevel" #constructionControlUnitQualificationLevel="ngModel"
@@ -473,7 +473,7 @@
           </nz-select>
         </nz-form-control>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel3">
         <nz-form-control nzHasFeedback>
           <input nz-input type="text" [(ngModel)]=" postData.constructionControlUnit.legalRepresentative"
             name="constructionControlUnitLegalRepresentative" #constructionControlUnitLegalRepresentative="ngModel"
@@ -481,7 +481,7 @@
 
         </nz-form-control>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel4">
         <nz-form-control nzHasFeedback>
           <input nz-input type="text" [(ngModel)]=" postData.constructionControlUnit.contacts" placeholder="联系电话"
             name="constructionControlUnitContacts" #constructionControlUnitContacts="ngModel" />
@@ -510,7 +510,7 @@
       <div class="td_label_fixed">
         <nz-form-label nzSize="large" nzRequired>审图单位</nz-form-label>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel1">
         <nz-form-control>
           <nz-rj-selector-org [(ngModel)]="postData.mappingUnit.mappingUnit" placeHolder="请输入审图单位" ngDefaultControl
             name="mappingUnitDesignmappingUnit" #mappingUnitDesignmappingUnit="ngModel" [required]="true" nzHasFeedback>
@@ -521,7 +521,7 @@
           </div>
         </nz-form-control>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel2">
         <nz-form-control nzHasFeedback>
           <nz-select type="text" [(ngModel)]="postData.mappingUnit.qualificationLevel"
             name="mappingUnitDesignQualificationLevel" #mappingUnitDesignQualificationLevel="ngModel"
@@ -533,7 +533,7 @@
           </div>
         </nz-form-control>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel3">
         <nz-form-control nzHasFeedback>
           <input nz-input type="text" [(ngModel)]="postData.mappingUnit.legalRepresentative"
             name="mappingUnitLegalRepresentative" #mappingUnitLegalRepresentative="ngModel" placeholder="请输入联系人"
@@ -547,7 +547,7 @@
 
         </nz-form-control>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel4">
         <nz-form-control nzHasFeedback>
           <input nz-input type="text" [(ngModel)]="postData.mappingUnit.contacts" placeholder="联系电话"
             name="mappingUnitContacts" #mappingUnitContacts="ngModel" required />
@@ -567,19 +567,76 @@
 
 
 
+    <div class="tr" *ngFor="let item of postData.mappingUnit.no;let i = index">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">审图编号</nz-form-label>
+      </div>
+      <div class="td">
+
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" name="mappingUnitNo{{i}}" #constructionPermitNumber="ngModel"
+            [(ngModel)]="item.noValue" placeholder="请输入审图编号  " />
+          <div class="vali_err"
+            *ngIf="(postData.mappingUnit.mainAdiseNo==''||postData.mappingUnit.mainAdiseNo==null)&&item.noValue==''">
+            主体消防验收意见书编号、审图编号，两者必填一个
+          </div>
+
+        </nz-form-control>
+
+      </div>
+      <div class="td_for_crl">
+        <div class="tr_btm_nan">
+          <div class="td_r_li">
+            <button nz-button nzType="primary" nzSize="small" (click)="addElement(postData.mappingUnit.no)">
+              <i nz-icon type="plus" nzTheme="outline"></i>
+            </button>
+          </div>
+          <div class="td_r_li" *ngIf="i!=0">
+            <button nz-button nzType="default" nzSize="small" (click)="delElement(postData.mappingUnit.no,i)">
+              <i nz-icon type="minus" style="color: gray"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
     <div class="tr">
       <div class="td_label_fixed">
-        <nz-form-label nzSize="large" name="buildOrg" nzRequired>主体消防验收意见书编号</nz-form-label>
+        <nz-form-label nzSize="large">主体消防验收意见书编号</nz-form-label>
       </div>
       <div class="td_r_li">
 
         <nz-form-control nzHasFeedback>
-          <input nz-input type="text" name="constructionPermitNumber" #constructionPermitNumber="ngModel"
-            [(ngModel)]="postData.constructionPermitNumber" placeholder="二次装修无施工许可证编号的请填写主体消防验收意见书编号" />
-          <div class="vali_err"
+          <input nz-input type="text" name="mappingUnitMainAdiseNo" #mappingUnitMainAdiseNo="ngModel"
+            [(ngModel)]="postData.mappingUnit.mainAdiseNo" placeholder="二次装修无施工许可证编号的请填写主体消防验收意见书编号" />
+          <!-- <div class="vali_err"
             *ngIf="(postData.constructionPermitNumber==''||postData.constructionPermitNumber==null)&&postData.mainAdiseNo==''">
             主体消防验收意见书编号、请输入施工许可证编号，两者必填一个
-          </div>
+          </div> -->
+
+        </nz-form-control>
+
+      </div>
+    </div>
+
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">建设工程规划许可证号</nz-form-label>
+      </div>
+      <div class="td_r_li">
+
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" name="licenseNumber" #licenseNumber="ngModel" [(ngModel)]="postData.licenseNumber"
+            placeholder="请输入建设工程规划许可证号" />
 
         </nz-form-control>
 
@@ -592,6 +649,47 @@
 
 
 
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed_usage">
+
+
+        <div class="td_usage">
+          <nz-form-label nzSize="large" nzRequired><br>使<br>用<br>性<br>质<br></nz-form-label>
+
+        </div>
+        <div class="td_r_li">
+          <nz-form-label nzSize="large">特殊建设工程</nz-form-label>
+
+        </div>
+
+      </div>
+      <div class="td_r_li">
+
+        <div class="tr_btm_nan">
+          <nz-form-control>
+
+            <nz-radio-group [(ngModel)]="postData.projectCategoryId" name="projectCategoryId"
+              #projectCategoryId="ngModel" required>
+
+              <div class="usage_radio_group_label">1、建筑总面积大于二万平方米:</div>
+              <label nz-radio nzValue="1001">体育场馆</label>
+              <label nz-radio nzValue="1002">公共展览馆</label>
+              <label nz-radio nzValue="1003">博物馆的展示厅</label>
+
+
+            </nz-radio-group>
+            <div class="vali_err" *ngIf="projectCategoryId.control.dirty&&projectCategoryId.control.errors">
+              必填
+            </div>
+
+          </nz-form-control>
+        </div>
+
+      </div>
+    </div>
 
 
 
