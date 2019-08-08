@@ -4,8 +4,8 @@
     <table class="tables" style="box-sizing: border-box;">
       <thead>
         <tr>
-          <td colspan='20' rowspan='1'>建设工程消防设计审查申报表<i style="cursor: pointer;;margin-left: 5px;" (click)="printFormData()" nz-icon
-              type="printer" nzTheme="outline"></i> </td>
+          <td colspan='20' rowspan='1'>建设工程消防设计审查申报表<i *ngIf="type==1" style="cursor: pointer;;margin-left: 5px;"
+              (click)="printFormData()" nz-icon type="printer" nzTheme="outline"></i> </td>
         </tr>
       </thead>
       <tbody>
