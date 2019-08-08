@@ -660,10 +660,14 @@
           <nz-form-label nzSize="large" nzRequired><br>使<br>用<br>性<br>质<br></nz-form-label>
 
         </div>
-        <div class="td_r_li">
+        <div class="td_r_li_usage">
           <nz-form-label nzSize="large">特殊建设工程</nz-form-label>
 
+          <span class="vali_err" *ngIf="projectUsageId.control.dirty&&projectUsageId.control.errors">
+            必填
+          </span>
         </div>
+
 
       </div>
       <div class="td_r_li">
@@ -671,24 +675,418 @@
         <div class="tr_btm_nan">
           <nz-form-control>
 
-            <nz-radio-group [(ngModel)]="postData.projectCategoryId" name="projectCategoryId"
-              #projectCategoryId="ngModel" required>
+            <nz-radio-group [(ngModel)]="postData.projectUsageId" name="projectUsageId" #projectUsageId="ngModel"
+              required>
 
-              <div class="usage_radio_group_label">1、建筑总面积大于二万平方米:</div>
-              <label nz-radio nzValue="1001">体育场馆</label>
-              <label nz-radio nzValue="1002">公共展览馆</label>
-              <label nz-radio nzValue="1003">博物馆的展示厅</label>
 
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">1.&nbsp;&nbsp;建筑总面积大于二万平方米：&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="1001">体育场馆</label>
+                <label nz-radio nzValue="1002">公共展览馆</label>
+                <label nz-radio nzValue="1003">博物馆的展示厅</label>
+                <label nz-radio nzValue="1004">建筑保温</label>
+                <label nz-radio nzValue="1005">改变用途</label>
+              </div>
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">2.&nbsp;&nbsp;建筑总面积大于一万五千平方米：&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="2001">民用机场航站楼</label>
+                <label nz-radio nzValue="2002">客运车站候车室</label>
+                <label nz-radio nzValue="2003">客运码头候船厅</label>
+              </div>
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">3.&nbsp;&nbsp;建筑总面积大于一万平方米：&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="3001">宾馆</label>
+                <label nz-radio nzValue="3002">饭店</label>
+                <label nz-radio nzValue="3003">商场</label>
+                <label nz-radio nzValue="3004">市场</label>
+              </div>
+
+
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">4.&nbsp;&nbsp;建筑总面积大于二千五百平方米：&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="4001">影剧院</label>
+                <label nz-radio nzValue="4002">公共图书馆的阅览室</label>
+                <label nz-radio nzValue="4003">营业性室内健身场馆</label>
+                <label nz-radio nzValue="4004">休闲场馆</label>
+                <label nz-radio nzValue="4005">医院的门诊楼</label>
+                <label nz-radio nzValue="4006">大学的教学楼</label>
+                <label nz-radio nzValue="4007">图书馆</label>
+                <label nz-radio nzValue="4008">食堂</label>
+                <label nz-radio nzValue="4009">劳动密集型企业的生产加工车间</label>
+                <label nz-radio nzValue="4010">寺庙</label>
+                <label nz-radio nzValue="4011">教堂</label>
+              </div>
+
+
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">5.&nbsp;&nbsp;建筑总面积大于一千平方米：&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="5001">托儿所</label>
+                <label nz-radio nzValue="5002">幼儿园的儿童用房</label>
+                <label nz-radio nzValue="5003">儿童游乐厅等室内儿童活动场所</label>
+                <label nz-radio nzValue="5004">养老院</label>
+                <label nz-radio nzValue="5005">福利院</label>
+                <label nz-radio nzValue="5006">医院</label>
+                <label nz-radio nzValue="5007">疗养院的病房楼</label>
+                <label nz-radio nzValue="5008">中小学校的教学楼</label>
+                <label nz-radio nzValue="5009">图书馆</label>
+                <label nz-radio nzValue="5010">食堂</label>
+                <label nz-radio nzValue="5011">学校的集体宿舍</label>
+                <label nz-radio nzValue="5012">劳动密集型企业的员工集体宿舍</label>
+              </div>
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">6.&nbsp;&nbsp;建筑总面积大于五百平方米：&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="6001">歌舞厅</label>
+                <label nz-radio nzValue="6002">录像厅</label>
+                <label nz-radio nzValue="6003">放映厅</label>
+                <label nz-radio nzValue="6004">卡拉OK厅</label>
+                <label nz-radio nzValue="6005">夜总会</label>
+                <label nz-radio nzValue="6006">游艺厅</label>
+                <label nz-radio nzValue="6007">桑拿浴室</label>
+                <label nz-radio nzValue="6008">网吧</label>
+                <label nz-radio nzValue="6009">酒吧</label>
+                <span class="usage_radio_group_label">具有娱乐功能的&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="6010">餐馆</label>
+                <label nz-radio nzValue="6011">茶馆</label>
+                <label nz-radio nzValue="6012">咖啡厅</label>
+              </div>
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">7.&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="7001">国家机关办公楼</label>
+                <label nz-radio nzValue="7002">电力调度楼</label>
+                <label nz-radio nzValue="7003">电信楼</label>
+                <label nz-radio nzValue="7004">邮政楼</label>
+                <label nz-radio nzValue="7005">防灾指挥调度楼</label>
+                <label nz-radio nzValue="7006">广播电视楼</label>
+                <label nz-radio nzValue="7007">档案楼</label>
+
+              </div>
+
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">8.&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="8001">单体建筑面积大于四万平方米或者建筑高度超过五十米的公共建筑</label>
+              </div>
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">9.&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="9001">国家标准规定的一类高层住宅建筑</label>
+              </div>
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">10.&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="10001">城市轨道交通</label>
+                <label nz-radio nzValue="10002">隧道工程</label>
+                <label nz-radio nzValue="10003">大型发电</label>
+                <label nz-radio nzValue="10004">变配电工程</label>
+              </div>
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">11.&nbsp;&nbsp;</span>
+                <span class="usage_radio_group_label">生产、储存、装卸易燃易爆危险物品的&nbsp;</span>
+                <label nz-radio nzValue="11001">工厂</label>
+                <label nz-radio nzValue="11002">仓库和</label>
+                <label nz-radio nzValue="11003">专用车站</label>
+                <label nz-radio nzValue="11004">码头，易燃易爆气体和液体的</label>
+                <label nz-radio nzValue="11005">充装站</label>
+                <label nz-radio nzValue="11006">供应站</label>
+                <label nz-radio nzValue="11007">调压站</label>
+              </div>
 
             </nz-radio-group>
-            <div class="vali_err" *ngIf="projectCategoryId.control.dirty&&projectCategoryId.control.errors">
-              必填
-            </div>
+
 
           </nz-form-control>
         </div>
 
       </div>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large" nzRequired>工程基本情况 </nz-form-label>
+      </div>
+
+
+      <div class="td_base_status">
+
+        <div class="tr">
+          <div class="td_base_status_title1">
+            <label nzSize="large">单体建筑名称</label>
+          </div>
+          <div class="td_base_status_title2">
+            <label nzSize="large">结构类型</label>
+          </div>
+          <div class="td_base_status_title2">
+            <label nzSize="large">耐火等级</label>
+          </div>
+
+          <div class="td_base_status_title1">
+            <div class="tr">
+              <div class="td_r_li_ctr">
+                <label nzSize="large">层数</label>
+              </div>
+            </div>
+            <div class="tr_btm_nan">
+              <div class="td_ctr">
+                <label nzSize="large">地上</label>
+              </div>
+              <div class="td_r_li_ctr">
+                <label nzSize="large">地下</label>
+              </div>
+            </div>
+          </div>
+          <div class="td_base_status_title2">
+            <label nzSize="large">建筑高度（m）</label>
+          </div>
+          <div class="td_base_status_title2">
+            <label nzSize="large">占地面积（m2）</label>
+          </div>
+          <div class="td_base_status_title1">
+
+            <div class="tr">
+              <div class="td_r_li_ctr">
+                <label nzSize="large">建筑面积（m2）</label>
+              </div>
+            </div>
+            <div class="tr_btm_nan">
+              <div class="td_ctr">
+                <label nzSize="large">地上</label>
+              </div>
+              <div class="td_r_li_ctr">
+                <label nzSize="large">地下</label>
+              </div>
+            </div>
+          </div>
+          <div class="td_for_crl_title">
+            <label nzSize="large">操作</label>
+          </div>
+        </div>
+
+        <div class="{{i+1==postData.basicInformation.length?'tr_btm_nan':'tr'}}"
+          *ngFor="let item of postData.basicInformation;let i = index">
+          <div class="td_base_status1">
+            <div class="td_r_li">
+              <input nz-input name="basicInformationLicenseNumber{{i}}" #basicInformationLicenseNumber{{i}}="ngModel"
+                [(ngModel)]="item.licenseNumber" placeholder="请输入单体建筑名称" required />
+            </div>
+            <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'basicInformationLicenseNumber',i)">
+              必填
+            </div>
+          </div>
+          <div class="td_base_status2">
+            <div class="td_r_li" style="width: 100%;">
+              <!-- 结构类型 -->
+              <nz-select [(ngModel)]="item.type" name="basicInformationType{{i}}" #basicInformationType{{i}}="ngModel"
+                required>
+              </nz-select>
+
+            </div>
+
+            <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'basicInformationType',i)">
+              必填
+            </div>
+          </div>
+          <div class="td_base_status2">
+            <div class="td_r_li" style="width: 100%;">
+              <nz-select [(ngModel)]="item.grade" name="basicInformationGrade{{i}}"
+                #basicInformationGrade{{i}}="ngModel" required>
+              </nz-select>
+            </div>
+            <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'basicInformationGrade',i)">
+              必填
+            </div>
+          </div>
+
+          <div class="td_base_status1">
+
+            <div class="tr_btm_nan" style="height: 100%;">
+              <div class="td_ctr_np">
+                <div class="td_r_li">
+                  <input nz-input type="text" name="basicInformationAboveGround{{i}}"
+                    #basicInformationAboveGround{{i}}="ngModel" [(ngModel)]="item.aboveGround" placeholder="请输入地上层数"
+                    required />
+                </div>
+                <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'basicInformationAboveGround',i)">
+                  必填
+                </div>
+              </div>
+              <div class="td_r_li_ctr_np">
+                <div class="td_r_li">
+                  <input nz-input type="text" name="basicInformationunderground{{i}}"
+                    #basicInformationunderground{{i}}="ngModel" [(ngModel)]="item.underground" placeholder="请输入地下层数"
+                    required />
+                </div>
+
+                <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'basicInformationunderground',i)">
+                  必填
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="td_base_status_title2">
+            <div class="td_r_li">
+              <input nz-input type="text" name="basicInformationHeight{{i}}" #basicInformationHeight{{i}}="ngModel"
+                [(ngModel)]="item.height" placeholder="请输入建筑高度" required />
+
+
+            </div>
+            <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'basicInformationHeight',i)">
+              必填
+            </div>
+          </div>
+          <div class="td_base_status_title2">
+            <div class="td_r_li">
+              <input nz-input type="text" name="basicInformationAreaCovered{{i}}"
+                #basicInformationAreaCovered{{i}}="ngModel" [(ngModel)]="item.areaCovered" placeholder="请输入占地面积"
+                required />
+
+            </div>
+            <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'basicInformationAreaCovered',i)">
+              必填
+            </div>
+          </div>
+          <div class="td_base_status_title1">
+            <div class="tr_btm_nan" style="height: 100%;">
+              <div class="td_ctr_np">
+                <div class="td_r_li">
+                  <input nz-input type="text" name="basicInformationJzmjaboveGround{{i}}"
+                    #basicInformationJzmjaboveGround{{i}}="ngModel" [(ngModel)]="item.jzmjaboveGround"
+                    placeholder="请输入地上建筑面积" required />
+
+                </div>
+                <div class="vali_err"
+                  *ngIf="checkFormForsItemData(validateForm.form,'basicInformationJzmjaboveGround',i)">
+                  必填
+                </div>
+              </div>
+              <div class="td_r_li_ctr_np">
+                <div class="td_r_li">
+                  <input nz-input type="text" name="basicInformationJzmjunderground{{i}}"
+                    #basicInformationJzmjunderground{{i}}="ngModel" [(ngModel)]="item.jzmjunderground"
+                    placeholder="请输入地下建筑面积" required />
+                </div>
+                <div class="vali_err"
+                  *ngIf="checkFormForsItemData(validateForm.form,'basicInformationJzmjunderground',i)">
+                  必填
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="td_for_crl_title">
+            <div class="tr_btm_nan">
+              <div class="td_r_li">
+
+                <button nz-button nzType="primary" nzSize="small" (click)="addElement(postData.basicInformation)">
+                  <i nz-icon type="plus" nzTheme="outline"></i>
+                </button>
+              </div>
+              <div class="td_r_li" *ngIf="i!=0">
+                <button nz-button nzType="default" nzSize="small" (click)="delElement(postData.basicInformation,i)">
+                  <i nz-icon type="minus" style="color: gray"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+    <div class="tr" *ngFor="let item of postData.storageTank;let i = index">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">储罐</nz-form-label>
+      </div>
+      <div class="td_r_li_np">
+        <div class="tr">
+
+          <div class="td">
+            <label nzSize="large">设置位置</label>
+          </div>
+          <div class="td">
+            <input nz-input placeholder="请输入储量" [(ngModel)]="item.reserves" name="yardreserves{{i}}" />
+          </div>
+          <div class="td">
+            <label nzSize="large">总容量（m3）</label>
+          </div>
+          <div class="td_r_li">
+            <input nz-input placeholder="请输入总容量（m3）" [(ngModel)]="item.totalCapacity"
+              name="storageTotalCapacity{{i}}" />
+          </div>
+
+        </div>
+
+        <div class="tr">
+
+          <div class="td">
+            <label nzSize="large">设置形式</label>
+          </div>
+          <div class="td_r_li">
+
+            <nz-radio-group [(ngModel)]="item.setupType" name="tanckSetupType{{i}}" #tanckSetupType{{i}}="ngModel">
+              <div>
+                浮顶罐（ <label nz-radio nzValue="1001">外</label>
+                <label nz-radio nzValue="1002">内</label>）
+                &nbsp;&nbsp;<label nz-radio nzValue="1003">固定顶罐</label>
+                &nbsp;&nbsp;<label nz-radio nzValue="1004">卧式罐</label>
+              </div>
+
+
+              <div>
+                球形罐（ <label nz-radio nzValue="2001">液体</label>
+                <label nz-radio nzValue="2002">气体</label>）
+
+                &nbsp;&nbsp;可燃气体储罐（ <label nz-radio nzValue="2003">干式</label>
+                <label nz-radio nzValue="2004">湿式</label>）
+                &nbsp;&nbsp;<label nz-radio nzValue="2004">其他</label>
+              </div>
+            </nz-radio-group>
+
+
+          </div>
+
+        </div>
+      </div>
+      <div class="td_for_crl">
+        <div class="tr_btm_nan">
+          <div class="td_r_li">
+
+            <button nz-button nzType="primary" nzSize="small" (click)="addElement(postData.storageTank)">
+              <i nz-icon type="plus" nzTheme="outline"></i>
+            </button>
+          </div>
+          <div class="td_r_li" *ngIf="i!=0">
+            <button nz-button nzType="default" nzSize="small" (click)="delElement(postData.storageTank,i)">
+              <i nz-icon type="minus" style="color: gray"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+
     </div>
 
 

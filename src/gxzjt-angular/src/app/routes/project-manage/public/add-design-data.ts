@@ -15,6 +15,7 @@ export function getAddDeisnRepData(): any {
         planStartTime: '',//计划开工时间
         planEndTime: '',//计划竣工时间
         projectCategoryId: '',
+        projectUsageId:'',//使用性质
         design: [   //设计单位
             {
                 designUnit: '',
