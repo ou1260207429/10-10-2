@@ -2019,6 +2019,69 @@ export class ExamineServiceServiceProxy {
 }
 
 @Injectable()
+export class FileCreateHelperServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    post_UpdateFile(): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/FileCreateHelper/Post_UpdateFile";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_UpdateFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_UpdateFile(<any>response_);
+                } catch (e) {
+                    return <Observable<string>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_UpdateFile(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(<any>null);
+    }
+}
+
+@Injectable()
 export class HomeServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -6957,6 +7020,57 @@ export class ScreenServiceServiceProxy {
         }
         return _observableOf<DataSourceResult>(<any>null);
     }
+
+    /**
+     * @return Success
+     */
+    post_GetUserNum(): Observable<DataSourceResult> {
+        let url_ = this.baseUrl + "/api/services/app/ScreenService/Post_GetUserNum";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPost_GetUserNum(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPost_GetUserNum(<any>response_);
+                } catch (e) {
+                    return <Observable<DataSourceResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DataSourceResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPost_GetUserNum(response: HttpResponseBase): Observable<DataSourceResult> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? DataSourceResult.fromJS(resultData200) : new DataSourceResult();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DataSourceResult>(<any>null);
+    }
 }
 
 @Injectable()
@@ -8981,6 +9095,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
     orgName: string | undefined;
     orgCode: string | undefined;
     fileCodeName: string | undefined;
+    isNotCreateAcceptFile: number | undefined;
 
     constructor(data?: IAcceptApplyFormDto) {
         if (data) {
@@ -9051,6 +9166,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
             this.orgName = data["orgName"];
             this.orgCode = data["orgCode"];
             this.fileCodeName = data["fileCodeName"];
+            this.isNotCreateAcceptFile = data["isNotCreateAcceptFile"];
         }
     }
 
@@ -9121,6 +9237,7 @@ export class AcceptApplyFormDto implements IAcceptApplyFormDto {
         data["orgName"] = this.orgName;
         data["orgCode"] = this.orgCode;
         data["fileCodeName"] = this.fileCodeName;
+        data["isNotCreateAcceptFile"] = this.isNotCreateAcceptFile;
         return data; 
     }
 
@@ -9175,6 +9292,7 @@ export interface IAcceptApplyFormDto {
     orgName: string | undefined;
     orgCode: string | undefined;
     fileCodeName: string | undefined;
+    isNotCreateAcceptFile: number | undefined;
 }
 
 export class FlowNodeUser implements IFlowNodeUser {
@@ -16222,8 +16340,7 @@ export interface IHandleLimitQueryDto {
 
 export class StatisticalQueryDto implements IStatisticalQueryDto {
     cityName: string | undefined;
-    startApplyTime: string | undefined;
-    endApplyTime: string | undefined;
+    unitName: string | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
@@ -16241,8 +16358,7 @@ export class StatisticalQueryDto implements IStatisticalQueryDto {
     init(data?: any) {
         if (data) {
             this.cityName = data["cityName"];
-            this.startApplyTime = data["startApplyTime"];
-            this.endApplyTime = data["endApplyTime"];
+            this.unitName = data["unitName"];
             this.page = data["page"];
             this.sorting = data["sorting"];
             this.skipCount = data["skipCount"];
@@ -16260,8 +16376,7 @@ export class StatisticalQueryDto implements IStatisticalQueryDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["cityName"] = this.cityName;
-        data["startApplyTime"] = this.startApplyTime;
-        data["endApplyTime"] = this.endApplyTime;
+        data["unitName"] = this.unitName;
         data["page"] = this.page;
         data["sorting"] = this.sorting;
         data["skipCount"] = this.skipCount;
@@ -16279,8 +16394,7 @@ export class StatisticalQueryDto implements IStatisticalQueryDto {
 
 export interface IStatisticalQueryDto {
     cityName: string | undefined;
-    startApplyTime: string | undefined;
-    endApplyTime: string | undefined;
+    unitName: string | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;

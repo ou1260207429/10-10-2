@@ -3,7 +3,12 @@ import { _HttpClient, ModalHelper } from '@delon/theme';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { getAddDeisnRepData } from '../../public/add-design-data';
 import { getArea } from '../../public/area-json';
-import { getForsItemFormStatus, resetFormControlStatus } from '../../public/project-util';
+import {
+  getForsItemFormStatus,
+  resetFormControlStatus,
+  addEmptyElement,
+  removeListElement
+} from '../../public/project-util';
 
 
 @Component({
@@ -61,4 +66,13 @@ export class ProjectManageAddDesignComponent implements OnInit, AfterViewInit {
     return getForsItemFormStatus(form, controlName, index);
   }
 
+
+
+  addElement(list) {
+    addEmptyElement(list);
+  }
+
+  delElement(list, i) {
+    removeListElement(list, i);
+  }
 }
