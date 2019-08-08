@@ -38,6 +38,8 @@ export class ProjectManageAddAcceptanceComponent implements OnInit {
   //存放使用性质对象数组
   usetyle=[];
 
+  engineeringList: any;//使用单位
+
 
   constructor(
     private http: _HttpClient,
@@ -99,5 +101,11 @@ export class ProjectManageAddAcceptanceComponent implements OnInit {
 
 
   }
+
+   /**
+   * 选择市县区
+   * @param v
+   */
+
 
 }

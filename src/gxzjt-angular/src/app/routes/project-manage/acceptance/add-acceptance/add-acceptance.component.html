@@ -571,6 +571,22 @@
 
         <div class="tr">
           <div class="td_label_fixed">
+
+          </div>
+          <div class="td_r_li">
+            <nz-form-control nzHasFeedback>
+              <input nz-input type="text" name="engineeringAddress" #engineeringAddress="ngModel"
+                [(ngModel)]="postData.engineeringAddress" placeholder="请输入工程详细地址" required />
+              <div class="vali_err" *ngIf="engineeringAddress.control.dirty&&engineeringAddress.control.errors">
+                必填
+              </div>
+            </nz-form-control>
+          </div>
+        </div>
+
+
+        <div class="tr">
+          <div class="td_label_fixed">
             <nz-form-label nzSize="large" nzRequired>审批单位</nz-form-label>
           </div>
           <div class="td_r_li">
@@ -585,6 +601,33 @@
             </nz-form-control>
           </div>
         </div>
+
+        <div class="tr">
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired>类别</nz-form-label>
+          </div>
+          <div class="td_r_li">
+            <nz-form-control>
+
+              <nz-radio-group [(ngModel)]="postData.projectCategoryId" name="engineprojectCategoryIderingNo"
+                #projectCategoryId="ngModel">
+                <label nz-radio nzValue="1">新建</label>
+                <label nz-radio nzValue="2">扩建</label>
+
+                &nbsp;&nbsp;&nbsp;&nbsp;改建&nbsp;&nbsp;(&nbsp;&nbsp;
+                <label nz-radio nzValue="3">装修</label>
+                <label nz-radio nzValue="4">建筑保温</label>
+                <label nz-radio nzValue="5">改变用途</label>
+                &nbsp;&nbsp;)
+              </nz-radio-group>
+              <div class="vali_err" *ngIf="projectCategoryId.control.dirty&&projectCategoryId.control.errors">
+                必填
+              </div>
+
+            </nz-form-control>
+          </div>
+        </div>
+
 
 
       </form>
