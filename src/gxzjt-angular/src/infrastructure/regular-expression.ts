@@ -166,9 +166,21 @@ export function timeTrans(src: any): string {
 
 export function formateTime(src: Date): string {
 
-  let _dif = src.getTimezoneOffset();//东八区-480
 
-  let time = src.getTime() - _dif * 60 * 1000;
+
+  let targetTimezone = -8;
+  // 当前时区与中时区时差，以min为维度
+  let _dif = src.getTimezoneOffset();
+  // 本地时区时间 + 时差  = 中时区时间
+  // 目标时区时间 + 时差 = 中时区时间
+  // 目标时区时间 = 本地时区时间 + 本地时区时差 - 目标时区时差
+  // let time = src.getTime() + _dif * 60 * 1000 - (targetTimezone * 60 * 60 * 1000);
+
+  let time = src.getTime() + (_dif - targetTimezone * 60) * 60 * 1000;
+
+  src = new Date(time);
+
+
 
   src = new Date(time);
 
@@ -237,13 +249,17 @@ export function dateTrans(src: any, yearSpace = "/", monthSpace = "/", daySpace 
 
 
 export function formateDate(src: Date, yearSpace = "/", monthSpace = "/", daySpace = ""): string {
-  // let targetTimezone = -8;
+  let targetTimezone = -8;
+  // 当前时区与中时区时差，以min为维度
+  let _dif = src.getTimezoneOffset();
+  // 本地时区时间 + 时差  = 中时区时间
+  // 目标时区时间 + 时差 = 中时区时间
+  // 目标时区时间 = 本地时区时间 + 本地时区时差 - 目标时区时差
+  // let time = src.getTime() + _dif * 60 * 1000 - (targetTimezone * 60 * 60 * 1000);
 
-  let _dif = src.getTimezoneOffset();//东八区-480
+  let time = src.getTime() + (_dif - targetTimezone * 60) * 60 * 1000;
 
-  let time = src.getTime() - _dif * 60 * 1000;
   src = new Date(time);
-
 
   var result = src.getFullYear()
     + yearSpace + format2Num(src.getMonth() + 1)
