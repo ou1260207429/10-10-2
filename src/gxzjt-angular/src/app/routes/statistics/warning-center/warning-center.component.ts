@@ -84,7 +84,7 @@ export class StatisticsWarningCenterComponent implements OnInit {
 
     { title: '申报时间', type: 'date', index: 'applyTime', width: '150px' },
     // { title: '流程结束时间', type: 'date', index: 'endTime' },
-    { title: '剩余审批时间', index: 'approvalRemainingTime', width: '60px' },
+    { title: '剩余审批时间(h)', index: 'approvalRemainingTime', width: '60px' },
 
   ];
 

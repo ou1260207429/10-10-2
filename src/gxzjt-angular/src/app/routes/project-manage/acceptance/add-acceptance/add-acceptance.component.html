@@ -569,6 +569,24 @@
           </div>
         </div>
 
+        <div class="tr">
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired>审批单位</nz-form-label>
+          </div>
+          <div class="td_r_li">
+            <nz-form-control nzHasFeedback>
+
+              <input nz-input type="text" name="engineeringNo" #engineeringNo="ngModel" [(ngModel)]="postData.engineeringNo"
+                placeholder="请输入工程详细地址" required />
+              <div class="vali_err" *ngIf="engineeringNo.control.dirty&&engineeringNo.control.errors">
+                必填
+              </div>
+
+            </nz-form-control>
+          </div>
+        </div>
+
+
       </form>
     </div>
   </div>

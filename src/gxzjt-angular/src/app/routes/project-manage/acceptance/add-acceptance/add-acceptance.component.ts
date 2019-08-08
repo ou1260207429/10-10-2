@@ -91,7 +91,7 @@ export class ProjectManageAddAcceptanceComponent implements OnInit {
         // this.refresh();
         if(res.result.natures.length!=0){
           this.usetyle=res.result.natures;
-          debugger
+
         }
 
       },
