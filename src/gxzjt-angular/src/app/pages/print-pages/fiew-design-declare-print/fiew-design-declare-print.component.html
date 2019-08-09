@@ -398,7 +398,7 @@
 </div>
 <div class="row">
     <div class="minTitle">消防设施</div>
-    <div style="width: 75%;padding:12px;text-align: left;">
+    <div style="width: 85%;padding:12px;text-align: left;">
         <span class="radio" *ngFor="let box of data.fireFightingFacilities;let index = index;">
             <input [id]="index+100" type="checkbox" [checked]="box.value" disabled>
             <label [for]="index+100"> {{box.label}}</label>
@@ -407,7 +407,7 @@
 </div>
 <div class="row">
     <div class="minTitle">同时提交材料</div>
-    <div style="width: 75%;padding:12px;text-align: left;">
+    <div style="width: 85%;padding:12px;text-align: left;">
         <div>
             <p> 1、建设工程消防设计审查申报表（纸质申报表的图片）</p>
             <div *ngFor="let item of data.fileList[0].array" class="files">
@@ -448,12 +448,12 @@
 </div>
 <div class="row" *ngIf="data.engineerinDescription">
     <div class="minTitle">工程简要说明</div>
-    <div style="width: 75%;padding:12px;text-align: left;">{{data.engineerinDescription}}
+    <div style="width: 85%;padding:12px;text-align: left;">{{data.engineerinDescription}}
     </div>
 </div>
 <div class="row" style="border-bottom:1px solid #e2e2e2;">
     <div class="minTitle">审图公司意见</div>
-    <div class="bottom" style="width: 75%;display: flex;flex-direction: column;padding:12px;">
+    <div class="bottom" style="width: 85%;display: flex;flex-direction: column;padding:12px;">
         <div class="cont">
             {{data.corporateOpinion.opinion}}
         </div>
