@@ -366,6 +366,34 @@ export class AppMenus {
       acl: [AppMenus.aclSys, AppMenus.aclOrg],
       link: "/app/statistics/warning-center",
     },
+    {
+      text: "统计分析",
+      icon: { type: "icon", value: "area-chart" },// 图标
+      acl: [AppMenus.aclOrg, AppMenus.orgManager],
+      children: [
+        // {
+        //   text: "预警中心",
+
+        //   link: "/app/statistics/warning-center",
+        // },
+        {
+          text: "项目申报情况",
+          link: "/app/statistics/pro-app-static",
+        },
+        {
+          text: "超时办理项目",
+          link: "/app/statistics/timeout-deal-with",
+        },
+        // {
+        //   text: "办理时限统计",
+        //   link: "/app/statistics/time-limt-deal",
+        // },
+        {
+          text: "单位项目办理统计",
+          link: "/app/statistics/unit-project-statis",
+        },
+      ]
+    },
 
     {
       text: "",

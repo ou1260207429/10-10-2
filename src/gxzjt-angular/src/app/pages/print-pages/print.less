@@ -1,10 +1,89 @@
-.formPrint {
-  outline: none;
+.row {
+  width: 1075px;
+  display: flex;
+  border-top: 1px solid #e2e2e2;
+  border-left: 1px solid #e2e2e2;
+  border-right: 1px solid #e2e2e2;
+  font: 500 14px Arial;
+  text-align: center;
+}
+
+.title {
+  text-align: center;
+  font-size: 27px;
+  padding:12px;
+  font: 900 18px Arial;
+  box-sizing: border-box;
+}
+
+.contantleft {
+  display: flex;
+  align-items: center;
+  padding:12px;
+  box-sizing: border-box;
+  word-break: break-all;
+}
+
+.contantCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding:12px;
+  box-sizing: border-box;
+  word-break: break-all;
+}
+
+.minTitle {
+  width: 130px;
+  font-weight: 600;
+  padding:12px;
+  border-right: 1px solid #e2e2e2;
   box-sizing: border-box;
   display: flex;
-  flex-direction: column;
-  background: #F4F9FF;
+  justify-content: center;
+  align-items: center;
 }
+
+
+
+.unit {
+  width: 400px;
+}
+
+.phone {
+  width: 129px;
+}
+
+.right {
+  width: 943px;
+}
+
+.minTitleFlow {
+  width: 130px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding:12px;
+  box-sizing: border-box;
+  word-break: break-all;
+}
+
+.breakPage {
+  page-break-after: always!important;
+  border-bottom: 1px solid #e2e2e2;
+}
+.bottomRow{
+  padding:12px;
+  .p{
+    font-size: 15px;
+  }
+}
+
+
+
+
+
+
 
 
 .radioChecked {
@@ -19,36 +98,25 @@
   padding-top: 10px;
 }
 
-.title {
-  text-align: center;
-  font-size: 27px;
-  padding: 10px;
-  border-top: 1px solid #e2e2e2;
-  border-left: 1px solid #e2e2e2;
-  border-right: 1px solid #e2e2e2;
-  font: 900 18px Arial;
-  box-sizing: border-box;
-}
-
 .padding1 {
   padding: 3px;
   box-sizing: border-box;
 }
 
 .padding2 {
-  padding: 10px;
+  padding:12px;
   box-sizing: border-box;
 }
 
 .onceWidth {
   width: 50px;
-  padding: 10px;
+  padding:12px;
   box-sizing: border-box;
 }
 
 .secondWidth {
   width: 682px;
-  padding: 10px;
+  padding:12px;
   box-sizing: border-box;
 }
 
@@ -60,7 +128,7 @@
 .tableTopTitle {
   text-align: center;
   font-size: 17px;
-  padding: 10px;
+  padding:12px;
   border-top: 1px solid #e2e2e2;
   border-left: 1px solid #e2e2e2;
   border-right: 1px solid #e2e2e2;
@@ -86,56 +154,13 @@ label {
   margin: -1px 5px;
 }
 
-.row {
-  display: flex;
-  border-top: 1px solid #e2e2e2;
-  border-left: 1px solid #e2e2e2;
-  border-right: 1px solid #e2e2e2;
-  font: 500 14px Arial;
-  box-sizing: border-box;
-}
-
-.contantleft {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  box-sizing: border-box;
-  word-break: break-all;
-}
-
-.contantCenter {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  box-sizing: border-box;
-  word-break: break-all;
-}
-
-.minTitle {
-  width: 121px;
-  font-weight: 600;
-  border-right: 1px solid #e2e2e2;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.unit {
-  width: 134px;
-}
-
-.value {
-  width: 121px;
-}
 
 .formPrint .row>div {
 
   box-sizing: border-box;
   //   border-right: 1px solid #e2e2e2;
   box-sizing: border-box;
-  padding: 10px;
+  padding:12px;
   word-wrap: break-word;
   //   margin-top: -1px;
   //   margin-left: -1px;
@@ -150,16 +175,7 @@ label {
   font-weight: 600;
 }
 
-.minTitleFlow {
-  width: 121px;
-  border-right: 1px solid #e2e2e2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  box-sizing: border-box;
-  word-break: break-all;
-}
+
 
 .tableTitle {
   width: 100px;
@@ -174,8 +190,8 @@ label {
 }
 
 .bottomContent {
-  width: 512px;
-  padding: 10px;
+  width: 772px;
+  padding:12px;
   display: flex;
   flex-direction: column;
 }
@@ -200,13 +216,11 @@ label {
     text-align: left;
     display: block;
   }
-
-  .value {
-    width: 210px;
-    text-align: left;
+  span{
     display: inline-block;
+    min-width: 50px;
+    text-align: left;
   }
-
 }
 
 .files {
