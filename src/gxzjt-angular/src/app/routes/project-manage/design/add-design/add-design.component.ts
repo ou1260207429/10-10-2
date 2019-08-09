@@ -14,7 +14,7 @@ import {
 @Component({
   selector: 'app-project-manage-add-design',
   templateUrl: './add-design.component.html',
-  styleUrls: ['./add-design.component.less'],
+  styleUrls: ['../../public/public.less'],
 })
 export class ProjectManageAddDesignComponent implements OnInit, AfterViewInit {
 
