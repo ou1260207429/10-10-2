@@ -33,7 +33,7 @@ export class FiewDesignDeclarePrintComponent implements OnInit {
       let num = Math.floor(ss);
 
       if (num > 0) {
-        if (rows[i].offsetTop - 1470 * num < 200) {
+        if (rows[i].offsetTop - 1470 * num < 100) {
           rows[i - 2].className = "breakPage row";
         }
       }
