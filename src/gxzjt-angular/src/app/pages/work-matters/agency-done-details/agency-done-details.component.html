@@ -1,10 +1,12 @@
 <nz-card>
-  <nz-tabset [(nzSelectedIndex)]="selectedIndex" [nzType]="'card'">
-    <div *ngFor="let tab of tabs">
-      <nz-tab [nzTitle]="tab.name">
-      </nz-tab>
-    </div>
-  </nz-tabset>
+  <div>
+    <nz-tabset [(nzSelectedIndex)]="selectedIndex" [nzType]="'card'">
+      <div *ngFor="let tab of tabs">
+        <nz-tab [nzTitle]="tab.name">
+        </nz-tab>
+      </div>
+    </nz-tabset>
+  </div>
   <div [ngClass]="{hide: selectedIndex != 0}">
 
     <!-- 表单JSON -->
