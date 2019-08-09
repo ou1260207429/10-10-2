@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { getAddDeisnRepData } from '../../public/add-design-data';
 import { getArea } from '../../public/area-json';
 import { getForsItemFormStatus, resetFormControlStatus } from '../../public/project-util';
+import { ProjectManageService} from '../../project-manage.service'
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-project-manage-add-acceptance',
@@ -27,21 +29,29 @@ export class ProjectManageAddAcceptanceComponent implements OnInit {
 
   useNatureSelect: any;//获取使用性质数组
 
+  //获取使用性质
+  getfolwmodel={
+    flowId: null,
+    flowType: 2,
+    projectId: null,
+  }
+  //存放使用性质对象数组
+  usetyle=[];
 
+  engineeringList: any;//使用单位
 
 
   constructor(
     private http: _HttpClient,
     private modal: ModalHelper,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private ProjectManageService:ProjectManageService,
+    private message: NzMessageService,) { }
 
   ngOnInit() {
     this.postData = getAddDeisnRepData();
-
-    this.useNatureSelect=this.postData.specialEngineering;
-    debugger
-
     this.areaData = getArea();
+    this.getPost_GetFlowFormData();
 
     resetFormControlStatus(this.validateForm);
     // this.validateForm = this.fb.group({
@@ -74,5 +84,28 @@ export class ProjectManageAddAcceptanceComponent implements OnInit {
   checkFormForsItemData(form: any, controlName: String, index) {
     return getForsItemFormStatus(form, controlName, index);
   }
+
+  getPost_GetFlowFormData(){
+
+    this.ProjectManageService.GetPost_GetFlowFormDataList(this.getfolwmodel).subscribe(
+      res => {
+        // this.message.success(res.message);
+        // this.refresh();
+        if(res.result.natures.length!=0){
+          this.usetyle=res.result.natures;
+
+        }
+
+      },
+    );
+
+
+  }
+
+   /**
+   * 选择市县区
+   * @param v
+   */
+
 
 }

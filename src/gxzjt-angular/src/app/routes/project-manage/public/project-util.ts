@@ -31,7 +31,7 @@ export function resetFormControlStatus(controls: any) {
             // this.validateForm.controls[key].updateValueAndValidity({ onlySelf: true, emitEvent: true });
         });
 
-    }, 200);
+    }, 20);
 
 
 }

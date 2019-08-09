@@ -1,0 +1,635 @@
+<nz-card>
+  <div class="zt">
+
+
+    <div class="main">
+
+      <form nz-form class="table" #validateForm="ngForm">
+        <!-- <div class="section">
+      <div class="col colpadding">
+        <p><span style="color:red">*</span>建设单位:</p>
+      </div>
+
+      <div class="col colpadding">
+        <nz-form-control nzHasFeedback>
+            <input nz-input type="text" name="jsconstructionUnit" #jsconstructionUnit="ngModel"
+              [(ngModel)]="postData.jsconstructionUnit" placeholder="请输入建设单位" required />
+
+            <div class="vali_err" *ngIf="jsconstructionUnit.control.dirty&&jsconstructionUnit.control.errors||postData.jsconstructionUnit==''">
+              必填
+            </div>
+        </nz-form-control>
+      </div>
+
+      <div class="col colpadding">
+        <p><span style="color:red">*</span>法定代表人/主要负责人:</p>
+      </div>
+
+      <div class="col colpadding">
+        <input nz-input>
+      </div>
+
+      <div class="col colpadding">
+        <p><span style="color:red">*</span>联系电话:</p>
+      </div>
+
+      <div class="col colpadding">
+        <input nz-input>
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <div class="col colpadding">
+        <p><span style="color:red">*</span>工程名:</p>
+      </div>
+
+      <div class="col colpadding">
+        <input nz-input>
+      </div>
+
+      <div class="col colpadding">
+        <p><span style="color:red">*</span>联系人:</p>
+      </div>
+
+      <div class="col colpadding">
+        <input nz-input>
+      </div>
+
+      <div class="col colpadding">
+        <p><span style="color:red">*</span>联系电话:</p>
+      </div>
+
+      <div class="col colpadding">
+        <input nz-input>
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <div class="colpadding" style="width:16.689%;border-right: 1px solid #e2e2e2;">
+        <p style="float: right; font-weight: 600;"><span style="color:red">*</span>使用性质:</p>
+      </div>
+
+      <div class="colpadding" style="width:83%">
+        <input nz-input>
+      </div>
+      <div>
+
+      </div>
+    </div>
+
+    <div class="section">
+
+      <div class="colpadding" style="width:16.689%;border-right: 1px solid #e2e2e2;">
+        <p style="float: right; font-weight: 600;"><span style="color:red">*</span>工程地址:</p>
+      </div>
+
+      <div class="colpadding" style="width:83%">
+        <input nz-input>
+      </div>
+      <div>
+
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <div class="colpadding" style="width:16.689%;border-right: 1px solid #e2e2e2;">
+        <p style="float: right; font-weight: 600;"><span style="color:red">*</span>审批单位:</p>
+      </div>
+
+      <div class="colpadding" style="width:83%">
+        <input nz-input>
+      </div>
+      <div>
+
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <div class="colpadding" style="width:16.689%;border-right: 1px solid #e2e2e2;">
+        <p style="float: right; font-weight: 600;"><span style="color:red">*</span>类别:</p>
+      </div>
+
+      <div class="colpadding" style="width:83%">
+        <input nz-input>
+      </div>
+      <div>
+
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <div class="colpadding" style="width:16.689%;border-right: 1px solid #e2e2e2;">
+        <p style="float: right; font-weight: 600;"><span style="color:red">*</span>《建设工程消防设计审查意见书》文号:</p>
+      </div>
+
+      <div class="colpadding" style="width: 33.31%">
+        <input nz-input>
+      </div>
+      <div>
+
+      </div>
+
+      <div class="colpadding" style="width:16.689%;border-right: 1px solid #e2e2e2;border-left: 1px solid #e2e2e2;">
+        <p style="float: right; font-weight: 600;"><span style="color:red"></span>审查日期:</p>
+      </div>
+
+      <div class="colpadding" style="width: 33.31%">
+        <input nz-input>
+      </div>
+      <div>
+
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <div class="colpadding" style="width:16.689%;border-right: 1px solid #e2e2e2;">
+        <p style="float: right; font-weight: 600;"><span style="color:red"></span>施工许可证编号:</p>
+      </div>
+
+      <div class="colpadding" style="width:83%">
+        <input nz-input>
+      </div>
+      <div>
+
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <div class="colpadding" style="width:16.689%;border-right: 1px solid #e2e2e2;">
+        <p style="float: right; font-weight: 600;"><span style="color:red"></span>主体消防验收意见书编号:</p>
+      </div>
+
+      <div class="colpadding" style="width:83%">
+        <input nz-input>
+      </div>
+      <div>
+
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <div class="colpadding" style="width:16.689%;border-right: 1px solid #e2e2e2;">
+        <p style="float: right; font-weight: 600;"><span style="color:red">*</span>检测报告编号:</p>
+      </div>
+
+      <div class="colpadding" style="width:83%">
+        <input nz-input>
+      </div>
+      <div>
+
+      </div>
+
+    </div>
+
+    <div class="section" style="background-color: #e0e0e075;">
+
+      <div class="colpadding" style="text-align: center;width:16.689%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red"></span>单位类别:</p>
+      </div>
+
+      <div class="colpadding" style="text-align: center;width:15%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red">*</span>单位名称:</p>
+      </div>
+
+      <div class="colpadding" style="text-align: center;width:28.31%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red">*</span>资质等级:</p>
+      </div>
+
+
+      <div class="colpadding" style="text-align: center;width:15%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red">*</span>法定代表人/主要负责人:</p>
+      </div>
+
+
+      <div class="colpadding" style="text-align: center;width:10%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red">*</span>联系人:</p>
+      </div>
+
+      <div class="colpadding" style="text-align: center;width:10%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red">*</span>联系电话:</p>
+      </div>
+
+      <div class="colpadding" style="text-align: center;width:5%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red">*</span>操作:</p>
+      </div>
+
+
+
+
+    </div>
+
+    <div class="section">
+
+      <div class="colpadding" style="text-align: center;width:16.689%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red">*</span>设计单位:</p>
+      </div>
+
+      <div class="colpadding" style="width:15%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+      <div class="colpadding" style="width:28.31%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+
+      <div class="colpadding" style="width:15%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+
+      <div class="colpadding" style="width:10%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+      <div class="colpadding" style="width:10%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+      <div class="colpadding" style="width:5%;border-right: 1px solid #e2e2e2;">
+        <a style="margin-right: 10px">增加</a>
+        <a>删除</a>
+      </div>
+
+
+
+
+    </div>
+
+    <div class="section">
+
+      <div class="colpadding" style="text-align: center;width:16.689%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red">*</span>施工单位:</p>
+      </div>
+
+      <div class="colpadding" style="width:15%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+      <div class="colpadding" style="width:28.31%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+
+      <div class="colpadding" style="width:15%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+
+      <div class="colpadding" style="width:10%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+      <div class="colpadding" style="width:10%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+      <div class="colpadding" style="width:5%;border-right: 1px solid #e2e2e2;">
+        <a style="margin-right: 10px">增加</a>
+        <a>删除</a>
+      </div>
+
+
+
+
+    </div>
+
+    <div class="section">
+
+      <div class="colpadding" style="text-align: center;width:16.689%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red"></span>监理单位:</p>
+      </div>
+
+      <div class="colpadding" style="width:15%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+      <div class="colpadding" style="width:28.31%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+
+      <div class="colpadding" style="width:15%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+
+      <div class="colpadding" style="width:10%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+      <div class="colpadding" style="width:10%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+      <div class="colpadding" style="text-align: center;width:5%;border-right: 1px solid #e2e2e2;">
+        <p>无</p>
+      </div>
+    </div>
+
+    <div class="section">
+
+      <div class="colpadding" style="text-align: center;width:16.689%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red">*</span>检测单位:</p>
+      </div>
+
+      <div class="colpadding" style="width:15%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+      <div class="colpadding" style="width:28.31%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+
+      <div class="colpadding" style="width:15%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+
+      <div class="colpadding" style="width:10%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+      <div class="colpadding" style="width:10%;border-right: 1px solid #e2e2e2;">
+        <input nz-input>
+      </div>
+
+      <div class="colpadding" style="text-align: center;width:5%;border-right: 1px solid #e2e2e2;">
+        <p>无</p>
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <div class="colpadding"
+        style="text-align: center;width:5%;border-right: 1px solid #e2e2e2;background-color: #d0e8fe;height:168px;">
+        <p style="font-weight: 600;color:#5a95e9"><span style="color:red">*</span>工程基本情况</p>
+      </div>
+
+      <div style="text-align: center;width:11.6756%;border-right: 1px solid #e2e2e2;">
+        <div style="border-bottom:1px solid #e2e2e2;">
+          <p style="font-weight: 600;height: 80px;line-height: 80px"><span style="color:red">*</span>单体建筑名称</p>
+        </div>
+        <div style="text-align: center;padding-top:10px;box-sizing: border-box;line-height: 70px;padding-left: 5px;padding-right: 5px;"><input nz-input></div>
+      </div>
+
+      <div style="text-align: center;width:14.99134%;border-right: 1px solid #e2e2e2;">
+        <div style="border-bottom:1px solid #e2e2e2;">
+          <p style="font-weight: 600;height: 80px;line-height: 80px"><span style="color:red">*</span>结构类型</p>
+        </div>
+        <div style="text-align: center;padding-top:10px;box-sizing: border-box;line-height: 70px;padding-left: 5px;padding-right: 5px;"><input nz-input></div>
+      </div>
+
+      <div class="colpadding" style="text-align: center;width:14.155%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red">*</span>结构类型</p>
+      </div>
+
+      <div class="colpadding" style="text-align: center;width:14.155%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red">*</span>层数</p>
+      </div>
+
+      <div class="colpadding" style="text-align: center;width:7.5%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red">*</span>建筑高度（m）:</p>
+      </div>
+
+      <div class="colpadding" style="text-align: center;width:7.5%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red">*</span>占地面积
+          （m2）</p>
+      </div>
+
+      <div class="colpadding" style="text-align: center;width:20%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red">*</span>建筑面积</p>
+      </div>
+
+      <div class="colpadding" style="text-align: center;width:5%;border-right: 1px solid #e2e2e2;">
+        <p style="font-weight: 600;"><span style="color:red">*</span>操作</p>
+      </div>
+
+    </div> -->
+
+        <div class="tr">
+          <div class="title">建设工程消防验收审查申报表</div>
+        </div>
+        <div class="tr">
+
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired nzNoColon>建设单位</nz-form-label>
+          </div>
+
+          <div class="td_r_li">
+            <nz-form-control nzHasFeedback>
+              <input nz-input type="text" name="jsconstructionUnit" #jsconstructionUnit="ngModel"
+                [(ngModel)]="postData.jsconstructionUnit" placeholder="请输入建设单位" required />
+
+              <div class="vali_err" *ngIf="jsconstructionUnit.control.dirty&&jsconstructionUnit.control.errors">
+                必填
+              </div>
+            </nz-form-control>
+          </div>
+
+        </div>
+
+        <div class="tr">
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" name="buildOrg" nzRequired nzNoColon>工程名称</nz-form-label>
+          </div>
+          <div class="td_r_li">
+
+            <nz-form-control nzHasFeedback>
+              <input nz-input type="text" name="projectName" #projectName="ngModel" [(ngModel)]="postData.projectName"
+                placeholder="请输入工程名称" required />
+              <div class="vali_err" *ngIf="projectName.control.dirty&&projectName.control.errors">
+                必填
+              </div>
+
+            </nz-form-control>
+
+          </div>
+        </div>
+
+        <div class="tr">
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired nzNoColon>法定代表人/主要负责人</nz-form-label>
+          </div>
+
+          <div class="td">
+            <nz-form-control nzHasFeedback>
+              <input nz-input type="text" name="legalRepresentative" #legalRepresentative="ngModel"
+                [(ngModel)]="postData.legalRepresentative" placeholder="请输入法定代表人/主要负责人" required />
+              <div class="vali_err" *ngIf="legalRepresentative.control.dirty&&legalRepresentative.control.errors">
+                必填
+              </div>
+            </nz-form-control>
+          </div>
+
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired nzNoColon>联系电话</nz-form-label>
+          </div>
+
+          <div class="td_r_li">
+            <nz-form-control nzHasFeedback>
+              <input nz-input type="text" name="legalRepresentativeNo" #legalRepresentativeNo="ngModel"
+                [(ngModel)]="postData.legalRepresentativeNo" placeholder="请输法定代表人/主要负责人联系电话" required />
+              <div class="vali_err" *ngIf="legalRepresentativeNo.control.dirty&&legalRepresentativeNo.control.errors">
+                必填
+              </div>
+            </nz-form-control>
+          </div>
+
+        </div>
+
+        <div class="tr">
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired nzNoColon>联系人</nz-form-label>
+          </div>
+
+          <div class="td">
+            <nz-form-control nzHasFeedback>
+              <input nz-input type="text" name="contacts" #contacts="ngModel" [(ngModel)]="postData.contacts"
+                placeholder="请输入联系人" required />
+              <div class="vali_err" *ngIf="contacts.control.dirty&&contacts.control.errors">
+                必填
+              </div>
+            </nz-form-control>
+          </div>
+
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired nzNoColon>联系电话</nz-form-label>
+          </div>
+
+          <div class="td_r_li">
+            <nz-form-control nzHasFeedback>
+
+              <input nz-input type="text" name="contactsNumber" #contactsNumber="ngModel"
+                [(ngModel)]="postData.contactsNumber" placeholder="请输入联系电话" required />
+              <div class="vali_err" *ngIf="contactsNumber.control.dirty&&contactsNumber.control.errors">
+                必填
+              </div>
+            </nz-form-control>
+          </div>
+
+        </div>
+
+        <div class="tr">
+
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired nzNoColon>使用性质</nz-form-label>
+          </div>
+
+          <div class="td_r_li">
+            <nz-form-control nzHasFeedback>
+              <nz-spin [nzSpinning]="usetyle.length==0"></nz-spin>
+              <nz-select [(ngModel)]="postData.useNature" name="useNature" required nzShowSearch>
+                <nz-option *ngFor="let option of usetyle" [nzLabel]="option.natureName" [nzValue]="option.natureCode">
+                </nz-option>
+              </nz-select>
+              <div class="vali_err" *ngIf="postData.useNature==''||postData.useNature==null">
+                必填
+              </div>
+            </nz-form-control>
+          </div>
+
+        </div>
+
+        <div class="tr_btm_nan">
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired>工程地址</nz-form-label>
+          </div>
+          <div class="td_r_li">
+            <nz-form-control nzHasFeedback>
+
+              <nz-cascader nzPlaceHolder="请选择工程所在区县" nzSize="large" [nzChangeOnSelect]="true" [nzOptions]="areaData"
+                [(ngModel)]="postData.engineeringCitycountyAndDistrict" name="engineeringCitycountyAndDistrict"
+                (nzChange)="onChangeCitycountyAndDistrict($event)" #engineeringCitycountyAndDistrict="ngModel" required>
+              </nz-cascader>
+              <div class="vali_err"
+                *ngIf="engineeringCitycountyAndDistrict.control.dirty&&engineeringCitycountyAndDistrict.control.errors">
+                必填
+              </div>
+            </nz-form-control>
+          </div>
+        </div>
+
+        <div class="tr">
+          <div class="td_label_fixed">
+
+          </div>
+          <div class="td_r_li">
+            <nz-form-control nzHasFeedback>
+              <input nz-input type="text" name="engineeringAddress" #engineeringAddress="ngModel"
+                [(ngModel)]="postData.engineeringAddress" placeholder="请输入工程详细地址" required />
+              <div class="vali_err" *ngIf="engineeringAddress.control.dirty&&engineeringAddress.control.errors">
+                必填
+              </div>
+            </nz-form-control>
+          </div>
+        </div>
+
+
+        <div class="tr">
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired>审批单位</nz-form-label>
+          </div>
+          <div class="td_r_li">
+            <nz-form-control nzHasFeedback>
+
+              <input nz-input type="text" name="engineeringNo" #engineeringNo="ngModel"
+                [(ngModel)]="postData.engineeringNo" placeholder="请输入工程详细地址" required />
+              <div class="vali_err" *ngIf="engineeringNo.control.dirty&&engineeringNo.control.errors">
+                必填
+              </div>
+
+            </nz-form-control>
+          </div>
+        </div>
+
+        <div class="tr">
+          <div class="td_label_fixed">
+            <nz-form-label nzSize="large" nzRequired>类别</nz-form-label>
+          </div>
+          <div class="td_r_li">
+            <nz-form-control>
+
+              <nz-radio-group [(ngModel)]="postData.projectCategoryId" name="engineprojectCategoryIderingNo"
+                #projectCategoryId="ngModel">
+                <label nz-radio nzValue="1">新建</label>
+                <label nz-radio nzValue="2">扩建</label>
+
+                &nbsp;&nbsp;&nbsp;&nbsp;改建&nbsp;&nbsp;(&nbsp;&nbsp;
+                <label nz-radio nzValue="3">装修</label>
+                <label nz-radio nzValue="4">建筑保温</label>
+                <label nz-radio nzValue="5">改变用途</label>
+                &nbsp;&nbsp;)
+              </nz-radio-group>
+              <div class="vali_err" *ngIf="projectCategoryId.control.dirty&&projectCategoryId.control.errors">
+                必填
+              </div>
+
+            </nz-form-control>
+          </div>
+        </div>
+
+
+
+      </form>
+    </div>
+  </div>
+</nz-card>
