@@ -75,4 +75,18 @@ export class ProjectManageAddDesignComponent implements OnInit, AfterViewInit {
   delElement(list, i) {
     removeListElement(list, i);
   }
+
+
+
+
+  onCheckDecorationSite(value: string[]): void {//装修部位勾选监听	
+
+  }
+
+
+  onCheckFireFightingFacilities(value: string[]) {//消防设施勾选监听
+
+  }
+
+
 }

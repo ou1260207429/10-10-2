@@ -1022,13 +1022,13 @@
       </div>
       <div class="td_r_li_np">
         <div class="tr">
-          <div class="td" style="max-width: 120px;">
+          <div class="td" style="max-width: 130px;">
             <label nzSize="large">设置位置</label>
           </div>
           <div class="td">
             <input nz-input placeholder="请输入储量" [(ngModel)]="item.reserves" name="storageTankReserves{{i}}" />
           </div>
-          <div class="td" style="max-width: 120px;">
+          <div class="td" style="max-width: 130px;">
             <label nzSize="large">总容量（m3）</label>
           </div>
           <div class="td_r_li">
@@ -1040,7 +1040,7 @@
 
         <div class="tr">
 
-          <div class="td" style="max-width: 120px;">
+          <div class="td" style="max-width: 130px;">
             <label nzSize="large">设置形式</label>
           </div>
           <div class="td_r_li">
@@ -1066,7 +1066,7 @@
         </div>
 
         <div class="tr_btm_nan">
-          <div class="td" style="max-width: 120px;">
+          <div class="td" style="max-width: 130px;">
             <label nzSize="large">储存形式</label>
           </div>
           <div class="td">
@@ -1077,7 +1077,7 @@
               <label nz-radio nzValue="1002">地下</label>
             </nz-radio-group>
           </div>
-          <div class="td" style="max-width: 120px;">
+          <div class="td" style="max-width: 130px;">
             <label nzSize="large">储存物质名称</label>
           </div>
           <div class="td_r_li">
@@ -1123,21 +1123,18 @@
       </div>
       <div class="tr_btm_nan">
 
-        <div class="td" style="max-width: 120px;">
+        <div class="td" style="max-width: 130px;">
           <label nzSize="large">设置位置</label>
         </div>
         <div class="td">
           <input nz-input placeholder="请输入储量" [(ngModel)]="item.reserves" name="storageyardReserves{{i}}" />
         </div>
-        <div class="td" style="max-width: 120px;">
+        <div class="td" style="max-width: 130px;">
           <label nzSize="large">储存物质名称</label>
         </div>
         <div class="td">
           <input nz-input placeholder="请输入储存物质名称" [(ngModel)]="item.name" name="storageYardName{{i}}" />
         </div>
-
-
-
       </div>
       <div class="td_for_crl">
         <div class="tr_btm_nan">
@@ -1157,6 +1154,175 @@
 
 
 
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">建筑保温</nz-form-label>
+      </div>
+      <div class="td_r_li_np">
+        <div class="tr">
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">材料类别</label>
+          </div>
+          <div class="td">
+            <nz-radio-group [(ngModel)]="postData.buildingThermalInsulation.type" name="buildingThermalInsulationType">
+              <label nz-radio nzValue="1001">A</label>
+              <label nz-radio nzValue="1002">B1</label>
+              <label nz-radio nzValue="1003">B2</label>
+            </nz-radio-group>
+          </div>
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">请输入保温层数</label>
+          </div>
+          <div class="td_r_li">
+            <input nz-input placeholder="请输入储存物质名称" [(ngModel)]="postData.buildingThermalInsulation.layerNumber"
+              name="buildingThermalInsulationType" />
+          </div>
+        </div>
+        <div class="tr_btm_nan">
+
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">使用性质</label>
+          </div>
+          <div class="td">
+            <input nz-input placeholder="请输入使用性质" [(ngModel)]="postData.buildingThermalInsulation.useNature"
+              name="buildingThermalUseNature" />
+          </div>
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">原有用途</label>
+          </div>
+          <div class="td_r_li">
+            <input nz-input placeholder="请输入原有用途" [(ngModel)]="postData.buildingThermalInsulation.originallyUsed"
+              name="buildingThermalOriginallyUsed" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">装修工程</nz-form-label>
+      </div>
+      <div class="td_r_li_np">
+        <div class="tr">
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">装修部位</label>
+          </div>
+          <div class="td">
+            <nz-checkbox-wrapper (nzOnChange)="onCheckDecorationSite($event)">
+
+              <label nz-checkbox nzValue="1001">顶棚</label>
+              <label nz-checkbox nzValue="1002">墙面</label>
+              <label nz-checkbox nzValue="1003">地面</label>
+              <label nz-checkbox nzValue="1004">固定家具</label>
+              <label nz-checkbox nzValue="1005">装饰织物</label>
+              <label nz-checkbox nzValue="1006">其他</label>
+
+
+
+            </nz-checkbox-wrapper>
+          </div>
+
+        </div>
+
+
+        <div class="tr">
+
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">装修面积（m2）</label>
+          </div>
+          <div class="td">
+            <input nz-input placeholder="请输入装修面积（m2）" [(ngModel)]="postData.decorationProject.decorationArea"
+              name="decorationProjectDecorationArea" />
+          </div>
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">装修层数</label>
+          </div>
+          <div class="td_r_li">
+            <input nz-input placeholder="请输入装修层数" [(ngModel)]="postData.decorationProject.decorationFloorNumber"
+              name="decorationProjectDecorationFloorNumber" />
+          </div>
+        </div>
+
+        <div class="tr_btm_nan">
+
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">使用性质</label>
+          </div>
+          <div class="td">
+            <input nz-input placeholder="请输入使用性质" [(ngModel)]="postData.decorationProject.useNature"
+              name="decorationProjectUseNature" />
+          </div>
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">原有用途</label>
+          </div>
+          <div class="td_r_li">
+            <input nz-input placeholder="请输入原有用途" [(ngModel)]="postData.decorationProject.originallyUsed"
+              name="decorationProjectOriginallyUsed" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large" nzRequired>消防设施</nz-form-label>
+      </div>
+      <div class="td_r_li">
+        <nz-form-control>
+          <nz-checkbox-wrapper (nzOnChange)="onCheckDecorationSite($event)">
+
+            <label nz-checkbox nzValue="1001">室内消火栓系统</label>
+            <label nz-checkbox nzValue="1002">室外消火栓系统</label>
+            <label nz-checkbox nzValue="1003">火灾自动报警系统</label>
+            <label nz-checkbox nzValue="1004">自动喷水灭火系统</label>
+            <label nz-checkbox nzValue="1005">气体灭火系统</label>
+            <label nz-checkbox nzValue="1006">泡沫灭火系统</label>
+            <label nz-checkbox nzValue="1007">其他灭火系统</label>
+            <label nz-checkbox nzValue="1008">疏散指示标志</label>
+            <label nz-checkbox nzValue="1009">消防应急照明</label>
+            <label nz-checkbox nzValue="1010">防烟排烟系统</label>
+            <label nz-checkbox nzValue="1011">消防电梯</label>
+            <label nz-checkbox nzValue="1012">灭火器</label>
+            <label nz-checkbox nzValue="1013">其他:</label>
+            <input style="max-width:100px;margin-top: 4px;" nz-input placeholder="请填写其他"
+              [(ngModel)]="postData.decorationProject.FireFightingFacilitiesOrther"
+              name="FireFightingFacilitiesOrther" />
+
+          </nz-checkbox-wrapper>
+
+          <div class="vali_err" *ngIf="projectCategoryId.control.dirty&&projectCategoryId.control.errors">
+            必填
+          </div>
+
+        </nz-form-control>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large" nzRequired>同时提交的材料</nz-form-label>
+      </div>
+      <div class="td_r_li">
+        
+      </div>
+    </div>
 
   </form>
 
