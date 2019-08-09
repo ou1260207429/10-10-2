@@ -537,8 +537,7 @@
           <div class="td_r_li">
             <nz-form-control nzHasFeedback>
               <nz-spin [nzSpinning]="usetyle.length==0"></nz-spin>
-              <nz-select  [(ngModel)]="postData.useNature" name="useNature" required
-                nzShowSearch>
+              <nz-select [(ngModel)]="postData.useNature" name="useNature" required nzShowSearch>
                 <nz-option *ngFor="let option of usetyle" [nzLabel]="option.natureName" [nzValue]="option.natureCode">
                 </nz-option>
               </nz-select>
@@ -592,8 +591,8 @@
           <div class="td_r_li">
             <nz-form-control nzHasFeedback>
 
-              <input nz-input type="text" name="engineeringNo" #engineeringNo="ngModel" [(ngModel)]="postData.engineeringNo"
-                placeholder="请输入工程详细地址" required />
+              <input nz-input type="text" name="engineeringNo" #engineeringNo="ngModel"
+                [(ngModel)]="postData.engineeringNo" placeholder="请输入工程详细地址" required />
               <div class="vali_err" *ngIf="engineeringNo.control.dirty&&engineeringNo.control.errors">
                 必填
               </div>
