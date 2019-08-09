@@ -1,162 +1,162 @@
 <div class="row contantCenter title">
-    建设工程竣工验收消防备案表<span (click)="print()">打印</span>
+    建设工程竣工验收消防备案表
 </div>
 <div class="row">
     <div class="minTitle">建设单位:</div>
-    <div class="unit borderRight contantCenter" style="width: 394px;">{{data.jsconstructionUnit}}</div>
-    <div class="minTitle" style="width:174px;">法定代表人/主要负责人:</div>
-    <div class="phone borderRight contantCenter" style="width: 118px;">
+    <div class=" borderRight contantCenter" style="width: 30%;">{{data.jsconstructionUnit}}</div>
+    <div class="minTitle" style="width:16.4%;">法定代表人/主要负责人:</div>
+    <div class=" borderRight contantCenter" style="width: 13%;">
         {{data.legalRepresentative}}
     </div>
-    <div class="minTitle">联系电话:</div>
-    <div class="contantCenter" style="width:127px;">{{data.legalRepresentativeNo}}</div>
+    <div class="minTitle" style="width: 12%;">联系电话:</div>
+    <div class="contantCenter phone">{{data.legalRepresentativeNo}}</div>
 </div>
 <div class="row">
     <div class="minTitle contantCenter">联系人:</div>
-    <div class="phone contantCenter borderRight">
+    <div class="phone contantCenter borderRight" style="width: 15%;">
         {{data.contacts}}
     </div>
     <div class="minTitle">联系电话:</div>
-    <div class="borderRight contantCenter" style="width:135px;">{{data.contactsNumber}}</div>
-    <div class="minTitle" style="width:174px;">工程名称:</div>
-    <div class="contantCenter" style="width:375px;">
+    <div class="borderRight contantCenter" style="width: 16.3%;">{{data.contactsNumber}}</div>
+    <div class="minTitle" style="width: 13%;">工程名称:</div>
+    <div class="contantCenter" style="width:25.7%;">
         {{data.projectName}}
     </div>
 </div>
 
 <div class="row">
     <div class="minTitle">施工许可证号:</div>
-    <div class="borderRight contantCenter" style="width:394px;">{{data.constructionPermitNumber}}</div>
-    <div class="minTitle" style="width:174px;">检测报告编号：</div>
-    <div class="contantCenter" style="width:375px;">
+    <div class="borderRight contantCenter" style="width:30%;">{{data.constructionPermitNumber}}</div>
+    <div class="minTitle" style="width:16.3%;">检测报告编号：</div>
+    <div class="contantCenter" style="width:38.8%;">
         {{data.testReportNumber}}
     </div>
 </div>
 <div class="row">
     <div class="minTitle">验收合格日期:</div>
-    <div class="borderRight contantCenter" style="width:394px;">{{data.planEndTime}}</div>
-    <div class="minTitle" style="width:174px;">使用性质：</div>
-    <div class="contantCenter" style="width:375px;">
+    <div class="borderRight contantCenter" style="width:30%;">{{data.planEndTime}}</div>
+    <div class="minTitle" style="width:16.3%;">使用性质：</div>
+    <div class="contantCenter" style="width:38.8%;">
         {{data.useNatureName}}
     </div>
 </div>
 
 <div class="row">
     <div class="minTitle">工程地址:</div>
-    <div class="contantleft" style="width: 943px;">{{data.address}}{{data.engineeringAddress}}</div>
+    <div class="contantleft right">{{data.address}}{{data.engineeringAddress}}</div>
 </div>
 <div class="row">
     <div class="minTitle">审批单位:</div>
-    <div class="contantleft" style="width: 943px;">{{data.examination}}</div>
+    <div class="contantleft right">{{data.examination}}</div>
 </div>
 <div class="row">
     <div class="minTitle">单位类别</div>
-    <div class="minTitle" style="width: 555px;">单位名称</div>
+    <div class="minTitle" style="width: 40%;">单位名称</div>
     <div class="minTitle">资质等级</div>
     <div class="minTitle">联系人</div>
-    <div class="minTitle" style="width:128px;border-right: none;">联系电话</div>
+    <div class="minTitle" style="border-right: none;">联系电话</div>
 </div>
 <div class="row" *ngFor="let item of data.design;">
     <div class="minTitle">设计单位</div>
-    <div class="minTitleFlow contantCenter borderRight" style="width: 555px;">{{item.designUnit}}</div>
+    <div class="minTitleFlow contantCenter borderRight" style="width: 40%;">{{item.designUnit}}</div>
     <div class="minTitleFlow contantCenter borderRight">{{item.qualificationLevel}}</div>
     <div class="minTitleFlow contantCenter borderRight">{{item.contacts}}</div>
-    <div class="minTitleFlow contantCenter" style="width:128px;border-right: none;">{{item.contactsNumber}}</div>
+    <div class="minTitleFlow contantCenter" style="border-right: none;">{{item.contactsNumber}}</div>
 </div>
 <div class="row" *ngFor="let item of data.constructionUnit;">
     <div class="minTitle">施工单位</div>
-    <div class="minTitleFlow contantCenter borderRight" style="width: 555px;">{{item.designUnit}}</div>
+    <div class="minTitleFlow contantCenter borderRight" style="width: 40%;">{{item.designUnit}}</div>
     <div class="minTitleFlow contantCenter borderRight">{{item.qualificationLevel}}</div>
     <div class="minTitleFlow contantCenter borderRight">{{item.contacts}}</div>
-    <div class="minTitleFlow contantCenter" style="width:128px;border-right: none;">{{item.contactsNumber}}</div>
+    <div class="minTitleFlow contantCenter" style="border-right: none;">{{item.contactsNumber}}</div>
 </div>
 <div class="row">
     <div class="minTitle">监理单位</div>
-    <div class="minTitleFlow contantCenter borderRight" style="width: 555px;">{{data.supervisoryUnit.name}}</div>
+    <div class="minTitleFlow contantCenter borderRight" style="width: 40%;">{{data.supervisoryUnit.name}}</div>
     <div class="minTitleFlow contantCenter borderRight">{{data.supervisoryUnit.qualificationLevel}}</div>
     <div class="minTitleFlow contantCenter borderRight">{{data.supervisoryUnit.contacts}}</div>
-    <div class="minTitleFlow contantCenter" style="width:128px;border-right: none;">
+    <div class="minTitleFlow contantCenter" style="border-right: none;">
         {{data.supervisoryUnit.contactsNumber}}</div>
 </div>
 <div class="row">
     <div class="minTitle">检测单位</div>
-    <div class="minTitleFlow contantCenter borderRight" style="width: 555px;">{{data.detectionUnit.name}}</div>
+    <div class="minTitleFlow contantCenter borderRight" style="width: 40%;">{{data.detectionUnit.name}}</div>
     <div class="minTitleFlow contantCenter borderRight">{{data.detectionUnit.qualificationLevel}}</div>
     <div class="minTitleFlow contantCenter borderRight">{{data.detectionUnit.contacts}}</div>
-    <div class="minTitleFlow contantCenter" style="width:128px;border-right: none;">
+    <div class="minTitleFlow contantCenter" style="border-right: none;">
         {{data.detectionUnit.contactsNumber}}</div>
 </div>
 
 
 <div class="row">
-    <div class=" minTitle contantCenter">
+    <div class="minTitle contantCenter">
         工程基本情况
     </div>
-    <div style="width: 943px;display: flex;flex-direction: column;padding: 0;">
-        <div style="width: 943px;display: flex;">
-            <div class="minTitle" style="width: 230px;">建筑物名称</div>
-            <div class="minTitle" style="width: 88px;
+    <div style="width: 85%;display: flex;flex-direction: column;padding: 0;">
+        <div style="width: 100%;display: flex;">
+            <div class="minTitle" style="width: 19%;">建筑物名称</div>
+            <div class="minTitle" style="width: 12%;
                     padding: 0 10px;
                     box-sizing: border-box;">结构类型</div>
-            <div class="minTitle contantCenter" style="width: 88px;
+            <div class="minTitle contantCenter" style="width: 8%;
                     padding:12px;
                     box-sizing: border-box;">耐火等级</div>
-            <div class="minTitle borderRight" style="text-align: center;width: 60px;padding:12px;">高度（m）</div>
+            <div class="minTitle borderRight" style="text-align: center;width: 8%;padding:12px;">高度（m）</div>
 
             <div class="minTitle"
-                style="display: flex;flex-direction: column;padding: 0;text-align: center;width: 200px;">
+                style="display: flex;flex-direction: column;padding: 0;text-align: center;width: 22%;">
                 <div style="border-bottom: 1px solid #e2e2e2;padding: 8px 0;box-sizing: border-box;width: 100%;">
                     层数
                 </div>
-                <div style="display: flex;">
-                    <div style="border-right: 1px solid #e2e2e2;padding: 10px 5px;width: 66px;box-sizing: border-box;">
+                <div style="display: flex;width: 100%;">
+                    <div style="border-right: 1px solid #e2e2e2;padding: 10px 5px;width: 33%;box-sizing: border-box;">
                         地上
                     </div>
 
                     <div
-                        style="border-right: 1px solid #e2e2e2;text-align: center;padding: 10px 5px;width: 66px;box-sizing: border-box;">
+                        style="border-right: 1px solid #e2e2e2;text-align: center;padding: 10px 5px;width: 33%;box-sizing: border-box;">
                         地下
                     </div>
-                    <div style="text-align: center;padding: 10px 5px;width: 50px;box-sizing: border-box;width: 66px;">
+                    <div style="text-align: center;padding: 10px 5px;width: 50px;box-sizing: border-box;width: 34%;">
                         总计
                     </div>
                 </div>
             </div>
             <div class="minTitle"
-                style="display: flex;flex-direction: column;padding: 0;text-align: center;width: 200px;">
+                style="display: flex;flex-direction: column;padding: 0;text-align: center;width: 22%;">
                 <div style="border-bottom: 1px solid #e2e2e2;padding: 8px 0;box-sizing: border-box;width: 100%;">
                     建筑面积（m<sup>2</sup>）</div>
-                <div style="display: flex;">
-                    <div style="border-right: 1px solid #e2e2e2;padding: 10px 5px;width: 66px;box-sizing: border-box;">
+                <div style="display: flex;width: 100%;">
+                    <div style="border-right: 1px solid #e2e2e2;padding: 10px 5px;width: 33%;box-sizing: border-box;">
                         地上
                     </div>
-                    <div style="border-right: 1px solid #e2e2e2;padding: 10px 5px;width: 66px;box-sizing: border-box;">
+                    <div style="border-right: 1px solid #e2e2e2;padding: 10px 5px;width: 33%;box-sizing: border-box;">
                         地下
                     </div>
-                    <div style="text-align: center;padding: 10px 5px;box-sizing: border-box;width: 66px;">
+                    <div style="text-align: center;padding: 10px 5px;box-sizing: border-box;width: 34%;">
                         总计
                     </div>
                 </div>
             </div>
-            <div class="minTitle" style="width: 80px;padding: 7px;border-right: none;">火灾危险性类别</div>
+            <div class="minTitle" style="width: 8.9%;padding: 7px;border-right: none;">火灾危险性类别</div>
         </div>
         <div class="specialLow" style="display: flex;border-top: 1px solid #e2e2e2;"
             *ngFor="let item of data.basicInformation;">
-            <div class="borderRight contantCenter" style="width:230px;">{{item.name}}</div>
-            <div class="borderRight contantCenter" style="width:88px;">{{item.type}}</div>
-            <div class="borderRight contantCenter" style="width: 88px;">{{item.grade}}</div>
-            <div class="borderRight contantCenter" style="width: 60px;">{{item.height}}</div>
-            <div class="borderRight contantCenter" style="width: 66px;">{{item.upGround}}</div>
-            <div class="borderRight contantCenter" style="width: 66px;">{{item.underGround}}</div>
-            <div class="borderRight contantCenter" style="width: 66px;">
+            <div class="borderRight contantCenter" style="width:19%;">{{item.name}}</div>
+            <div class="borderRight contantCenter" style="width:12%;">{{item.type}}</div>
+            <div class="borderRight contantCenter" style="width: 8%;">{{item.grade}}</div>
+            <div class="borderRight contantCenter" style="width: 8%;">{{item.height}}</div>
+            <div class="borderRight contantCenter" style="width: 7.2%;">{{item.upGround}}</div>
+            <div class="borderRight contantCenter" style="width: 7.2%;">{{item.underGround}}</div>
+            <div class="borderRight contantCenter" style="width: 7.6%;">
                 {{item.ground&&!item.upGround?item.ground:(item.upGround?+item.upGround:0)+(item.underGround?+item.underGround:0)}}
             </div>
-            <div class="borderRight contantCenter" style="width: 66px;">{{item.builtUpArea2}}</div>
-            <div class="borderRight contantCenter" style="width: 66px;">{{item.builtUnderArea}}</div>
-            <div class="borderRight contantCenter" style="width:  66px;">
+            <div class="borderRight contantCenter" style="width: 7.2%;">{{item.builtUpArea2}}</div>
+            <div class="borderRight contantCenter" style="width: 7.2%;">{{item.builtUnderArea}}</div>
+            <div class="borderRight contantCenter" style="width:  7.6%;">
                 {{item.builtUpArea&&!item.builtUpArea2?item.builtUpArea:(item.builtUpArea2?+item.builtUpArea2:0)+(item.builtUnderArea?+item.builtUnderArea:0)}}
             </div>
-            <div class="contantCenter" style="width: 80px;">{{item.fireHazard}}</div>
+            <div class="contantCenter" style="width: 8.9%;">{{item.fireHazard}}</div>
         </div>
     </div>
 </div>
@@ -165,20 +165,20 @@
     <div class="contantCenter minTitle borderRight">
         储 罐
     </div>
-    <div style="width: 943px;display: flex;flex-direction: column;padding: 0;">
+    <div style="width: 85%;display: flex;flex-direction: column;padding: 0;">
         <div style="display: flex;width: 100%;">
-            <div class="minTitle">
+            <div class="minTitle"  style="width: 16%;">
                 设置位置
             </div>
-            <div style="width: 813px;" class="contantleft">
+            <div style="width: 84%;" class="contantleft">
                 {{item.position}}
             </div>
         </div>
         <div style="display: flex;width: 100%;border-top:  1px solid #e2e2e2;">
-            <div class="minTitle">
+            <div class="minTitle" style="width: 16%;">
                 设置形式
             </div>
-            <div class="contantleft" style="width: 813px;">
+            <div class="contantleft" style="width: 84%;">
                 <span class="radio">
                     <input id="settingForm1" name="settingForm" type="radio" [checked]="item.settingForm=='内浮顶罐'"
                         disabled>
@@ -215,10 +215,10 @@
             </div>
         </div>
         <div style="display: flex;width: 100%;border-top:  1px solid #e2e2e2;">
-            <div class="minTitle">
+            <div class="minTitle" style="width: 16%;">
                 储物类别
             </div>
-            <div class="contantleft" style="width: 813px;">
+            <div class="contantleft" style="width: 84%;">
 
                 <span class="radio">
                     <input id="type1" name="type" type="radio" [checked]="item.type=='可燃液体'" disabled>
@@ -247,36 +247,36 @@
             </div>
         </div>
         <div style="display: flex;width: 100%;border-top:  1px solid #e2e2e2;min-height: 40px;">
-            <div class=" minTitle" style="padding:12px;">
+            <div class=" minTitle" style="padding:12px;width: 16%">
                 储存物质名称
             </div>
-            <div class=" minTitle" style="padding:12px;width: 203px;">
+            <div class=" minTitle" style="padding:12px;width: 21%;">
                 储罐材质
             </div>
-            <div class=" minTitle" style="padding:12px;width: 203px;">
+            <div class=" minTitle" style="padding:12px;width: 21%;">
                 储存工作压力
             </div>
-            <div class=" minTitle" style="padding:12px;width: 203px;">
+            <div class=" minTitle" style="padding:12px;width: 21%;">
                 储存温度
             </div>
-            <div class=" minTitle" style="padding:12px;width: 204px;border-right: none;">
+            <div class=" minTitle" style="padding:12px;width: 21%;border-right: none;">
                 储存形式
             </div>
         </div>
         <div style="display: flex;width: 100%;border-top:  1px solid #e2e2e2;min-height: 40px;">
-            <div class="borderRight contantCenter" style="padding:12px;width: 130px;">
+            <div class="borderRight contantCenter" style="padding:12px;width: 16%;">
                 {{item.name}}
             </div>
-            <div class=" borderRight contantCenter" style="padding:12px;width: 203px;">
+            <div class=" borderRight contantCenter" style="padding:12px;width: 21%;">
                 {{item.materialQuality}}
             </div>
-            <div class=" borderRight contantCenter" style="padding:12px;width: 203px;">
+            <div class=" borderRight contantCenter" style="padding:12px;width: 21%;">
                 {{item.pressure}}
             </div>
-            <div class=" borderRight contantCenter" style="padding:12px;width: 203px;">
+            <div class=" borderRight contantCenter" style="padding:12px;width: 21%;">
                 {{item.temperature}}
             </div>
-            <div class="  contantCenter" style="padding:12px;width: 204px;">
+            <div class="  contantCenter" style="padding:12px;width: 21%;">
                 {{item.form}}
             </div>
         </div>
@@ -289,13 +289,13 @@
     <div class="minTitle" style="padding:12px;">
         储存物质名称
     </div>
-    <div class="borderRight contantleft" style="width: 326px;">
+    <div class="borderRight contantleft" style="width: 34.3%;">
         {{item.name}}
     </div>
-    <div class="minTitle" style="padding:12px;width: 220px;">
+    <div class="minTitle" style="padding:12px;width: 17.8%;">
         储 量
     </div>
-    <div style="width: 267px;" class="contantCenter">
+    <div style="width: 17.8%;" class="contantCenter">
         {{item.reserves}}
     </div>
 </div>
@@ -303,7 +303,7 @@
     <div class="fontWeight borderRight minTitle">
         {{item.label}}
     </div>
-    <div style="width: 943px;padding:12px;" class="contantleft">
+    <div style="width: 85%;padding:12px;" class="contantleft">
         <span class="radio" *ngFor="let box of item.arr;let index = index;">
             <input [id]="300+index" name="arr" type="checkbox" [checked]="box.value" disabled>
             <label [for]="300+index">{{box.label}}</label>
@@ -313,38 +313,38 @@
 
 <div class="row">
     <div class="minTitle">室内装修工程</div>
-    <div style="display: flex;padding: 0;flex-direction: column;">
-        <div style="display: flex;padding: 0;">
-            <div class="fontWeight contantCenter borderRight" style="width: 100px;">
+    <div style="display: flex;padding: 0;flex-direction: column;width: 85%;">
+        <div style="display: flex;padding: 0;width: 100%;">
+            <div class="fontWeight contantCenter borderRight" style="width: 13%;">
                 装修部位
             </div>
-            <div style="padding:12px;width: 565px;" class="borderRight">
+            <div style="padding:12px;width: 61%;" class="borderRight">
                 <span class="radio" *ngFor="let box of  data.constructionProject.arr;let index = index;">
                     <input [id]="400+index" name="arr" type="checkbox" [checked]="box.value" disabled>
                     <label [for]="400+index">{{box.label}}</label>
                 </span>
             </div>
-            <div class="fontWeight contantCenter borderRight" style="width: 125px;">
+            <div class="fontWeight contantCenter borderRight" style="width: 13%;">
                 装修面积（㎡）
             </div>
-            <div class="contantCenter" style="width: 153px;">
+            <div class="contantCenter" style="width: 13%;">
                 {{data.constructionProject.decorationArea}}</div>
         </div>
-        <div style="display: flex;padding: 0;border-top: 1px solid #e2e2e2;">
-            <div class="fontWeight contantCenter borderRight" style="width: 100px;">
+        <div style="display: flex;padding: 0;border-top: 1px solid #e2e2e2;width: 100%;">
+            <div class="fontWeight contantCenter borderRight" style="width: 13%;">
                 装修层数
             </div>
-            <div class="contantCenter borderRight" style="width: 110px;">{{data.constructionProject.ground}}</div>
+            <div class="contantCenter borderRight" style="width: 13%;">{{data.constructionProject.ground}}</div>
 
-            <div class="fontWeight contantCenter borderRight" style="width: 100px;">
+            <div class="fontWeight contantCenter borderRight" style="width:  13%;">
                 使用性质
             </div>
-            <div class="contantleft" style="width: 255px;border-right: 1px solid #e2e2e2;">
+            <div class="contantleft" style="width: 24%;border-right: 1px solid #e2e2e2;">
                 {{data.constructionProject.useNature}}</div>
-            <div class="fontWeight contantCenter" style="width: 100px;border-right: 1px solid #e2e2e2;">
+            <div class="fontWeight contantCenter" style="width:  13%;border-right: 1px solid #e2e2e2;">
                 原有用途
             </div>
-            <div class="contantleft" style="width: 278px;">
+            <div class="contantleft" style="width: 24%;">
                 {{data.constructionProject.originallyUsed}}
             </div>
         </div>
@@ -352,13 +352,13 @@
 </div>
 <div class="row">
     <div class="minTitle">消防设施类别</div>
-    <div class="minTitle" style="width: 100px;">场所</div>
-    <div class="minTitle" style="width: 843px;border-right: none;">类型</div>
+    <div class="minTitle" style="width: 13%;">场所</div>
+    <div class="minTitle" style="width: 72%;border-right: none;">类型</div>
 </div>
 <div class="row" *ngFor="let item of data.fireControlLinkageEngineering;">
-    <div class="borderRight contantCenter" style="width: 130px;">{{item.label}}</div>
-    <div class="borderRight contantCenter" style="width: 100px;">{{item.input}}</div>
-    <div style="width: 843px;text-align: left;padding:12px;">
+    <div class="borderRight contantCenter" style="width: 15%;">{{item.label}}</div>
+    <div class="borderRight contantCenter" style="width: 13%;">{{item.input}}</div>
+    <div style="width: 72%;text-align: left;padding:12px;">
         <span *ngFor="let box of item.arr;">
             <p style="margin-top: 5px;"> {{box.label}}</p>
             <div *ngIf="box.type=='radio'">
@@ -382,9 +382,9 @@
     <div class="minTitle">
         竣工验收意见
     </div>
-    <div style="width: 943px;display: flex;flex-direction: column;padding: 0;">
-        <div style="border-bottom:1px solid #e2e2e2;display: flex;">
-            <div class="minTitle" style="width: 171px;"> 建设单位</div>
+    <div style="width: 85%;display: flex;flex-direction: column;padding: 0;">
+        <div style="border-bottom:1px solid #e2e2e2;display: flex;width: 100%;">
+            <div class="minTitle" style="width: 16%;"> 建设单位</div>
             <div class="bottomContent">
                 <div class="cont">
                     {{data.acceptanceOpinions.constructionUnit.opinion}}
@@ -400,8 +400,8 @@
             </div>
         </div>
         <div *ngFor="let item of data.acceptanceOpinions.designUnit;"
-            style="border-bottom:1px solid #e2e2e2;display: flex;">
-            <div class="minTitle" style="width: 171px;"> 设计单位</div>
+            style="border-bottom:1px solid #e2e2e2;display: flex;width: 100%;">
+            <div class="minTitle" style="width: 16%;"> 设计单位</div>
             <div class="bottomContent">
                 <div class="cont">
                     {{item.opinion}}
@@ -415,8 +415,8 @@
             </div>
         </div>
         <div *ngFor="let item of data.acceptanceOpinions.contractingUnit;"
-            style="border-bottom:1px solid #e2e2e2;display: flex;">
-            <div class="minTitle" style="width: 171px;"> 施工单位</div>
+            style="border-bottom:1px solid #e2e2e2;display: flex;width: 100%;">
+            <div class="minTitle" style="width: 16%;"> 施工单位</div>
             <div class="bottomContent">
                 <div class="cont">
                     {{item.opinion}}
@@ -429,8 +429,8 @@
                 </div>
             </div>
         </div>
-        <div style="border-bottom:1px solid #e2e2e2;display: flex;">
-            <div class="minTitle" style="width: 171px;"> 专业承包单位（如有）</div>
+        <div style="border-bottom:1px solid #e2e2e2;display: flex;width: 100%;">
+            <div class="minTitle" style="width: 16%;"> 专业承包单位（如有）</div>
             <div class="bottomContent">
                 <div class="cont">
                     {{data.acceptanceOpinions.professionalContractors.opinion}}
@@ -445,8 +445,8 @@
                 </div>
             </div>
         </div>
-        <div style="border-bottom:1px solid #e2e2e2;display: flex;">
-            <div class="minTitle" style="width: 171px;"> 工程监理单位</div>
+        <div style="border-bottom:1px solid #e2e2e2;display: flex;width: 100%;">
+            <div class="minTitle" style="width: 16%;"> 工程监理单位</div>
             <div class="bottomContent">
                 <div class="cont">
                     {{data.acceptanceOpinions.engineeringSupervisionUnit.opinion}}
@@ -461,8 +461,8 @@
                 </div>
             </div>
         </div>
-        <div style="border-bottom:1px solid #e2e2e2;display: flex;">
-            <div class="minTitle" style="width: 171px;"> 消防设施检测单位</div>
+        <div style="border-bottom:1px solid #e2e2e2;display: flex;width: 100%;">
+            <div class="minTitle" style="width: 16%;"> 消防设施检测单位</div>
             <div class="bottomContent">
                 <div class="cont">
                     {{data.acceptanceOpinions.fireInspectionUnit.opinion}}
@@ -485,16 +485,16 @@
 
 </div>
 <div class="row">
-    <div  class="minTitle">
+    <div class="minTitle">
         工程简要说明
     </div>
-    <div class="contantleft" style="width: 943px;">
+    <div class="contantleft" style="width: 85%;">
         {{data.engineerinDescription}}
     </div>
 </div>
 <div class="row" style="border-bottom: 1px solid #e2e2e2;padding-bottom: 0;">
     <div class="minTitle">同时提交材料</div>
-    <div style="width: 943px;text-align: left;padding:12px;" >
+    <div style="width: 85%;text-align: left;padding:12px;">
         <div>
             <p> 1、建设工程竣工验收消防备案表（纸质申报表的图片）</p>
             <div *ngFor="let item of data.fileList[0].array" class="files">
