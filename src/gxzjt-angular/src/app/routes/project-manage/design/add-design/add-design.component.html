@@ -1022,26 +1022,25 @@
       </div>
       <div class="td_r_li_np">
         <div class="tr">
-
-          <div class="td">
+          <div class="td" style="max-width: 120px;">
             <label nzSize="large">设置位置</label>
           </div>
           <div class="td">
-            <input nz-input placeholder="请输入储量" [(ngModel)]="item.reserves" name="yardreserves{{i}}" />
+            <input nz-input placeholder="请输入储量" [(ngModel)]="item.reserves" name="storageTankReserves{{i}}" />
           </div>
-          <div class="td">
+          <div class="td" style="max-width: 120px;">
             <label nzSize="large">总容量（m3）</label>
           </div>
           <div class="td_r_li">
             <input nz-input placeholder="请输入总容量（m3）" [(ngModel)]="item.totalCapacity"
-              name="storageTotalCapacity{{i}}" />
+              name="storageTankTotalCapacity{{i}}" />
           </div>
 
         </div>
 
         <div class="tr">
 
-          <div class="td">
+          <div class="td" style="max-width: 120px;">
             <label nzSize="large">设置形式</label>
           </div>
           <div class="td_r_li">
@@ -1054,7 +1053,6 @@
                 &nbsp;&nbsp;<label nz-radio nzValue="1004">卧式罐</label>
               </div>
 
-
               <div>
                 球形罐（ <label nz-radio nzValue="2001">液体</label>
                 <label nz-radio nzValue="2002">气体</label>）
@@ -1064,8 +1062,26 @@
                 &nbsp;&nbsp;<label nz-radio nzValue="2004">其他</label>
               </div>
             </nz-radio-group>
+          </div>
+        </div>
 
-
+        <div class="tr_btm_nan">
+          <div class="td" style="max-width: 120px;">
+            <label nzSize="large">储存形式</label>
+          </div>
+          <div class="td">
+            <nz-radio-group [(ngModel)]="item.storageForm" name="tanckSetupStorageForm{{i}}"
+              #tanckSetupType{{i}}="ngModel">
+              <label nz-radio nzValue="1001">地上</label>
+              <label nz-radio nzValue="1002">半地下</label>
+              <label nz-radio nzValue="1002">地下</label>
+            </nz-radio-group>
+          </div>
+          <div class="td" style="max-width: 120px;">
+            <label nzSize="large">储存物质名称</label>
+          </div>
+          <div class="td_r_li">
+            <input nz-input placeholder="请输入储存物质名称" [(ngModel)]="item.name" name="storageTotalName{{i}}" />
           </div>
 
         </div>
@@ -1085,8 +1101,58 @@
           </div>
         </div>
       </div>
+    </div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="tr" *ngFor="let item of postData.yard;let i = index">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">堆场</nz-form-label>
+      </div>
+      <div class="tr_btm_nan">
+
+        <div class="td" style="max-width: 120px;">
+          <label nzSize="large">设置位置</label>
+        </div>
+        <div class="td">
+          <input nz-input placeholder="请输入储量" [(ngModel)]="item.reserves" name="storageyardReserves{{i}}" />
+        </div>
+        <div class="td" style="max-width: 120px;">
+          <label nzSize="large">储存物质名称</label>
+        </div>
+        <div class="td">
+          <input nz-input placeholder="请输入储存物质名称" [(ngModel)]="item.name" name="storageYardName{{i}}" />
+        </div>
+
+
+
+      </div>
+      <div class="td_for_crl">
+        <div class="tr_btm_nan">
+          <div class="td_r_li">
+            <button nz-button nzType="primary" nzSize="small" (click)="addElement(postData.yard)">
+              <i nz-icon type="plus" nzTheme="outline"></i>
+            </button>
+          </div>
+          <div class="td_r_li" *ngIf="i!=0">
+            <button nz-button nzType="default" nzSize="small" (click)="delElement(postData.yard,i)">
+              <i nz-icon type="minus" style="color: gray"></i>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
 
