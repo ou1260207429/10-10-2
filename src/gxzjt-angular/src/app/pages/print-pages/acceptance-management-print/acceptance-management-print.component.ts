@@ -25,20 +25,18 @@ export class AcceptanceManagementPrintComponent implements OnInit {
   getToken() {
     return localStorage.getItem('jsonPrintForm');
   }
-
+  print(){
+    window.print()
+  }
   ngAfterViewInit() {
     let rows = this.el.nativeElement.querySelectorAll(".row");
     for (var i = 0; i < rows.length; i++) {
-      let ss = rows[i].offsetTop / 1568;
+      let ss = rows[i].offsetTop / 1470;
       let num = Math.floor(ss);
 
       if (num > 0) {
-        if (rows[i].offsetTop - 1568 * num < 120) {
+        if (rows[i].offsetTop - 1470 * num < 60) {
           rows[i - 2].className = "breakPage row";
-        }
-      }else{
-        if (1568 - rows[i].offsetTop < 50) {
-          rows[i - 1].className = "breakPage row";
         }
       }
     }
