@@ -1135,9 +1135,6 @@
         <div class="td">
           <input nz-input placeholder="请输入储存物质名称" [(ngModel)]="item.name" name="storageYardName{{i}}" />
         </div>
-
-
-
       </div>
       <div class="td_for_crl">
         <div class="tr_btm_nan">
@@ -1154,6 +1151,54 @@
         </div>
       </div>
     </div>
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">建筑保温</nz-form-label>
+      </div>
+      <div class="td_r_li_np">
+        <div class="tr">
+          <div class="td" style="max-width: 120px;">
+            <label nzSize="large">材料类别</label>
+          </div>
+          <div class="td">
+            <nz-radio-group [(ngModel)]="postData.buildingThermalInsulation.type" name="buildingThermalInsulationType">
+              <label nz-radio nzValue="1001">A</label>
+              <label nz-radio nzValue="1002">B1</label>
+              <label nz-radio nzValue="1003">B2</label>
+            </nz-radio-group>
+          </div>
+          <div class="td" style="max-width: 120px;">
+            <label nzSize="large">请输入保温层数</label>
+          </div>
+          <div class="td_r_li">
+            <input nz-input placeholder="请输入储存物质名称" [(ngModel)]="postData.buildingThermalInsulation.layerNumber"
+              name="buildingThermalInsulationType" />
+          </div>
+        </div>
+        <div class="tr_btm_nan">
+
+          <div class="td" style="max-width: 120px;">
+            <label nzSize="large">使用性质</label>
+          </div>
+          <div class="td">
+            <input nz-input placeholder="请输入使用性质" [(ngModel)]="postData.buildingThermalInsulation.useNature"
+              name="buildingThermalInsulationType" />
+          </div>
+          <div class="td" style="max-width: 120px;">
+            <label nzSize="large">原有用途</label>
+          </div>
+          <div class="td_r_li">
+            <input nz-input placeholder="请输入原有用途" [(ngModel)]="postData.buildingThermalInsulation.originallyUsed"
+              name="buildingThermalInsulationType" />
+          </div>
+        </div>
+      </div>
+    </div>
+
 
 
 
