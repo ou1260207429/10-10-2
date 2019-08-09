@@ -210,14 +210,35 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
       this.errorData[type] = false;
     }
 
-    if (value) {
-      this.errorData.fireFightingFacilities = false;
-    } else {
-      this.checkfireFightingFacilities(value);
-    }
+    // if (value) {
+    //   this.errorData.fireFightingFacilities = false;
+    // } else {
+    //   this.checkfireFightingFacilities(value);
+    // }
 
 
   }
+
+
+  hadfireFightingFacilities() {
+
+    // var checkCount = 0;
+    for (var i = 0; i < this.data.fireFightingFacilities.length; ++i) {
+
+      var element = this.data.fireFightingFacilities[i];
+
+      if (element.value) {
+        return true;
+      }
+
+    }
+    // if (checkCount == 0) {
+    //   return false;
+    // }
+    return false;
+  }
+
+
 
 
   checkfireFightingFacilities(selectValue) {
