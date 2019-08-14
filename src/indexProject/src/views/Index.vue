@@ -127,7 +127,10 @@
     <div class="row"></div>
 
     <div class="rightNav">
-      <div class="item">
+      <div @click="showVideo" class="item">
+            <span >播放视频</span>
+      </div>
+      <div class="item" style="border-top:1px solid #e7eaef">
         <el-tooltip placement="left" effect="light">
           <div class="propMsg call" slot="content">
             <p>电话号码：18607782223</p>
@@ -224,7 +227,6 @@ export default {
   computed: {},
 
   mounted() {
-    console.log(this.loginUrl);
     const that = this;
     that.getlawsList();
     that.getTableList();
@@ -238,6 +240,9 @@ export default {
   },
 
   methods: {
+    showVideo() {
+      this.$store.commit("increment", true);
+    },
     initHeight(obj) {
       let _this = this;
       let resHeight = app.clentHeight();
@@ -344,7 +349,7 @@ export default {
   right: 0;
   font-size: 14px;
   top: 140px;
-  z-index: 999999;
+  z-index: 99;
   background-color: #fff;
   padding: 30px 0px;
   box-sizing: border-box;
@@ -356,7 +361,7 @@ export default {
   .item {
     width: 100%;
     box-sizing: border-box;
-    padding: 70px 0;
+    padding: 35px 0;
     box-sizing: border-box;
     text-align: center;
     cursor: pointer;
