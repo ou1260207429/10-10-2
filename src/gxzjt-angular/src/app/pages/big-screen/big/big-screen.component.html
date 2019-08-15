@@ -18,15 +18,15 @@
                 style='width:100%;height: 43%;margin-top: -6%;background-image:url("./assets/images/big2/img_bg_bjqk.png");background-size: 100% 100%;'>
                 <div style='width:100%;height:10%;margin-left: 15%;padding-top: 1%;'>
                     <div style='float: left;width:25%;height:100%;text-align: center;'>
-                        <span style='color:#26BEFE;display: block;'>设计审查总数</span>
+                        <span style='color:#26BEFE;display: block;'>设计申报总数</span>
                         <span style='color:#0EF9B3;font-size:16px;display: block;'>{{statisticsNumberCount}}</span>
                     </div>
                     <div style='float: left;width:25%;height:100%;text-align: center;'>
-                        <span style='color:#26BEFE;display: block;'>消防验收总数</span>
+                        <span style='color:#26BEFE;display: block;'>验收申报总数</span>
                         <span style='color:#0EF9B3;font-size:16px;display: block;'>{{fireCompleteNumberCount}}</span>
                     </div>
                     <div style='float: left;width:30%;height:100%;text-align: center;'>
-                        <span style='color:#26BEFE;display: block;'>验收消防备案总数</span>
+                        <span style='color:#26BEFE;display: block;'>竣工申报总数</span>
                         <span style='color:#0EF9B3;font-size:16px;display: block;'>{{completeNumberCount}}</span>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                         <g2-gauge [title]="'办结占比'" height="130" [percent]="ApplyStatistics3" color="#01B4FF">
                         </g2-gauge>
                         <span style='color: #B8E6FF;font-size: 16px;position: relative;
-                            top: -5%;display: block;text-align: center;'>验收消防备案</span>
+                            top: -5%;display: block;text-align: center;'>竣工备案</span>
                     </div>
                 </div>
             </div>
@@ -126,11 +126,11 @@
                     style="width:100%;height:30%;margin-bottom:3%;background-image:url('./assets/images/big2/img_bg_sc.png');background-size: 100% 100%;text-align: center;">
                     <div class='BigCensusDiv' style='color:#FFD001;'>
                         <span class='BigNum'>{{FireData1?.completeNumber }}</span>
-                        <span class='BigTag'>办理数</span>
+                        <span class='BigTag'>申报数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#2EDB63;'>
                         <span class='BigNum'>{{FireData1?.aTimeByNumber}}</span>
-                        <span class='BigTag'>一次性通过数</span>
+                        <span class='BigTag'>受理数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#FF205F;'>
                         <span class='BigNum'>{{FireData1?.timeoutNumber}}</span>
@@ -152,11 +152,11 @@
                     style="width:100%;height:30%;margin-bottom:3%;background-image:url('./assets/images/big2/img_bg_sc.png');background-size: 100% 100%;text-align: center;">
                     <div class='BigCensusDiv' style='color:#FFD001;'>
                         <span class='BigNum'>{{FireData2?.completeNumber}}</span>
-                        <span class='BigTag'>办理数</span>
+                        <span class='BigTag'>申报数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#2EDB63;'>
                         <span class='BigNum'>{{FireData2?.aTimeByNumber}}</span>
-                        <span class='BigTag'>一次性通过数</span>
+                        <span class='BigTag'>受理数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#FF205F;'>
                         <span class='BigNum'>{{FireData2?.timeoutNumber}}</span>
@@ -178,11 +178,11 @@
                     style="width:100%;height:30%;background-image:url('./assets/images/big2/img_bg_sc.png');background-size: 100% 100%;text-align: center;">
                     <div class='BigCensusDiv' style='color:#FFD001;'>
                         <span class='BigNum'>{{FireData3?.completeNumber }}</span>
-                        <span class='BigTag'>办理数</span>
+                        <span class='BigTag'>申报数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#2EDB63;'>
                         <span class='BigNum'>{{FireData3?.aTimeByNumber}}</span>
-                        <span class='BigTag'>一次性通过数</span>
+                        <span class='BigTag'>受理数</span>
                     </div>
                     <div class='BigCensusDiv' style='color:#FF205F;'>
                         <span class='BigNum'>{{FireData3?.timeoutNumber}}</span>
