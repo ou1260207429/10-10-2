@@ -10,8 +10,11 @@ import {
   table
 } from './apiValue'
 var app = {
-
-  loginUrl(){
+  ApiUrl() {
+    let url = Vue.prototype.baseUrl
+    return url
+  },
+  loginUrl() {
     let url = Vue.prototype.loginUrl
     return url
   },
