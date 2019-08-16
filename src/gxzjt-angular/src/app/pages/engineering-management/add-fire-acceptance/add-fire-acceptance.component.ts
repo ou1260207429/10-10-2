@@ -394,7 +394,8 @@ export class AddFireAcceptanceComponent implements OnInit {
           frow_TemplateInfo_Data: {
             Area: this.data.engineeringNo[this.data.engineeringNo.length - 1]
           },
-          identify: 'xfys' + (this.data.FlowTemplateSuffix ? this.data.FlowTemplateSuffix : ""),
+          //identify: 'xfys' + (this.data.FlowTemplateSuffix ? this.data.FlowTemplateSuffix : ""),
+          identify: 'xfsj' + (this.data.FlowTemplateSuffix ? this.data.FlowTemplateSuffix : ""),
           editWorkFlow_NodeAuditorRecordDto: {
             applyEID: this._appSessionService.user.id,
             applyEName: this._appSessionService.user.eName,
