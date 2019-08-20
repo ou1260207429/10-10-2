@@ -155,7 +155,7 @@
                 <input nz-input placeholder="请输入施工许可证编号" [(ngModel)]="data.constructionPermitNumber"
                   name="constructionPermitNumber" />
                 <nz-form-explain
-                  *ngIf="(data.constructionPermitNumber==''||data.constructionPermitNumber==null)&&data.mainAdiseNo==''">
+                  *ngIf="(data.constructionPermitNumber==''||data.constructionPermitNumber==null) && (data.mainAdiseNo==null || data.mainAdiseNo=='')">
                   <span style="color: red;">主体消防验收意见书编号、请输入施工许可证编号，两者必填一个</span>
                 </nz-form-explain>
               </nz-form-control>
@@ -170,7 +170,7 @@
                 <input nz-input placeholder="二次装修无施工许可证编号的请填写主体消防验收意见书编号" [(ngModel)]="data.mainAdiseNo"
                   name="mainAdiseNo" />
                 <nz-form-explain
-                  *ngIf="(data.constructionPermitNumber==''||data.constructionPermitNumber==null)&&data.mainAdiseNo==''">
+                  *ngIf="(data.constructionPermitNumber==''||data.constructionPermitNumber==null) && (data.mainAdiseNo==null || data.mainAdiseNo=='')">
                   <span style="color: red;">主体消防验收意见书编号、请输入施工许可证编号，两者必填一个</span>
                 </nz-form-explain>
               </nz-form-control>
