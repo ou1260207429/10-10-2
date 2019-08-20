@@ -381,7 +381,9 @@ export class AddFireAcceptanceComponent implements OnInit {
       this.showError.projectCategoryId = false;
     }
 
-    if (!this.showError.projectCategoryId && this.form.valid) {
+    
+    if (!this.showError.projectCategoryId && this.form.valid 
+      && !((this.data.constructionPermitNumber=='' || this.data.constructionPermitNumber==null) && (this.data.mainAdiseNo==null || this.data.mainAdiseNo==''))) {
       if (!this.showError.projectCategoryId) {
 
         // for (let index = 0; index < this.data.fileList.length; index++) {
