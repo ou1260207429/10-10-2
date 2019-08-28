@@ -40,23 +40,34 @@ export class SystemHomeComponent implements OnInit {
       processedStatus: 2
     };
     model.startDateTime = (new Date().getFullYear() + '-01-01');
-    this.http.post( URLConfig.getInstance().SERVER_URL + 'api/services/app/ScreenService/Post_GetFireDataList', model).subscribe((res: any) => {
+    this.http.post(URLConfig.getInstance().SERVER_URL + 'api/services/app/ScreenService/Post_GetFireDataList', model).subscribe((res: any) => {
       let MapBackList = [];
       if (res.success) {
-        res.result.forEach(e => {
-          if(e.flowPathType === 3){
-            MapBackList = e.items;
-          }
-        });
-        MapBackList.forEach(e => {
-          this.MapList.push({
-            name: e.cityName,
-            value: e.completeCountNumber,
-            aTimeByCountNumber: e.aTimeByCountNumber,
-            avgCompleteTimeCountNumber: e.avgCompleteTimeCountNumber,
-            timeoutCountNumber: e.timeoutCountNumber
+        if (res.result!=null && res.result.data != null) {
+          res.result.data.forEach(e => {
+            //if (e.flowPathType === 3) {
+              MapBackList.push(e);
+            //}
+
+            this.MapList.push({
+              name: e.cityName,
+              value: e.completeNumber,
+              aTimeByCountNumber: e.aTimeByNumber,
+              avgCompleteTimeCountNumber: e.avgCompleteTimeNumber,
+              timeoutCountNumber: e.timeoutNumber
+            });
           });
-        });
+        }
+
+        // MapBackList.forEach(e => {debugger
+        //   this.MapList.push({
+        //     name: e.cityName,
+        //     value: e.completeCountNumber,
+        //     aTimeByCountNumber: e.aTimeByCountNumber,
+        //     avgCompleteTimeCountNumber: e.avgCompleteTimeCountNumber,
+        //     timeoutCountNumber: e.timeoutCountNumber
+        //   });
+        // });
 
       }
 
@@ -65,7 +76,7 @@ export class SystemHomeComponent implements OnInit {
   }
   map: any;
   myChart: any;
-  MapList:any = [];
+  MapList: any = [];
   EchartsMap() {
     this.http.get('assets/guangxi.json').subscribe((e) => {
       this.echarts.registerMap('广西壮族自治区', e);
@@ -91,7 +102,7 @@ export class SystemHomeComponent implements OnInit {
           trigger: 'item',
           backgroundColor: 'rgba(255,255,255,0)',
           formatter: function (params, ticket, callback) {
-              let retStr = `
+            let retStr = `
               <div style="background-image:url('./assets/images/big2/img_bg_tk.png');background-size: 100% 100%;height: 210px;
               width: 265px;position:absolute;top:-120px;left:-20px">
               <span style='font-size: 18px;margin:50px 0 5px 60px; display: block;color:#fff'>
@@ -99,14 +110,14 @@ export class SystemHomeComponent implements OnInit {
               <span style='color:#F6FF00;margin-left:60px;margin-bottom:5px;display: block;'>申报数：`+ params.data.value + `</span>
               <span style='color:#F6FF00;margin-left:60px;margin-bottom:5px;display: block;'>一次性通过数：`+ params.data.aTimeByCountNumber + `</span> 
               <span style='color:#F6FF00;margin-left:60px;margin-bottom:5px;display: block;'> 超时数：`+ params.data.timeoutCountNumber + `</span>
-              <span style='color:#F6FF00;margin-left:60px;display: block;'> 平均办理时长：`+ params.data.avgCompleteTimeCountNumber + `th</span>
+              <span style='color:#F6FF00;margin-left:60px;display: block;'> 平均办理时长：`+ params.data.avgCompleteTimeCountNumber + `天</span>
           </div>
               `
-              return retStr;
+            return retStr;
           },
           show: true,
           // position:[-50,0,0,0]
-      },
+        },
         series: [
           {
             type: 'map',

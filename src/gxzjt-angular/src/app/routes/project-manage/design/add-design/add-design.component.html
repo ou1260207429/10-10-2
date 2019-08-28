@@ -6,6 +6,10 @@
       <div class="title">建设工程消防设计审查申报表</div>
     </div>
 
+
+
+
+
     <div class="tr">
       <div class="td_label_fixed">
         <nz-form-label nzSize="large" nzRequired>建设单位</nz-form-label>
@@ -26,9 +30,12 @@
     </div>
 
 
+
+
+
     <div class="tr">
       <div class="td_label_fixed">
-        <nz-form-label nzSize="large" name="buildOrg" nzRequired>工程名称</nz-form-label>
+        <nz-form-label nzSize="large" nzRequired>工程名称</nz-form-label>
       </div>
       <div class="td_r_li">
 
@@ -43,6 +50,13 @@
 
       </div>
     </div>
+
+
+
+
+
+
+
 
     <div class="tr">
       <div class="td_label_fixed">
@@ -76,6 +90,13 @@
     </div>
 
 
+
+
+
+
+
+
+
     <div class="tr">
       <div class="td_label_fixed">
         <nz-form-label nzSize="large" nzRequired>联系人</nz-form-label>
@@ -107,6 +128,10 @@
       </div>
 
     </div>
+
+
+
+
 
 
 
@@ -145,6 +170,12 @@
       </div>
     </div>
 
+
+
+
+
+
+
     <div class="tr">
       <div class="td_label_fixed">
         <nz-form-label nzSize="large" nzRequired>审批单位</nz-form-label>
@@ -161,6 +192,13 @@
         </nz-form-control>
       </div>
     </div>
+
+
+
+
+
+
+
 
 
 
@@ -186,20 +224,90 @@
 
     </div>
 
+
+
+
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large" nzRequired>类别</nz-form-label>
+      </div>
+      <div class="td_r_li">
+        <nz-form-control>
+
+          <nz-radio-group [(ngModel)]="postData.projectCategoryId" name="projectCategoryId" #projectCategoryId="ngModel"
+            required>
+            <label nz-radio nzValue="1">新建</label>
+            <label nz-radio nzValue="2">扩建</label>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;改建&nbsp;&nbsp;(&nbsp;&nbsp;
+            <label nz-radio nzValue="3">装修</label>
+            <label nz-radio nzValue="4">建筑保温</label>
+            <label nz-radio nzValue="5">改变用途</label>
+            &nbsp;&nbsp;)
+          </nz-radio-group>
+          <div class="vali_err" *ngIf="projectCategoryId.control.dirty&&projectCategoryId.control.errors">
+            必填
+          </div>
+
+        </nz-form-control>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large" nzRequired>审批单位</nz-form-label>
+      </div>
+      <div class="td_r_li">
+        <nz-form-control nzHasFeedback>
+
+          <input nz-input type="text" name="engineeringNo" #engineeringNo="ngModel" [(ngModel)]="postData.engineeringNo"
+            placeholder="请输入工程详细地址" required />
+          <div class="vali_err" *ngIf="engineeringNo.control.dirty&&engineeringNo.control.errors">
+            必填
+          </div>
+
+        </nz-form-control>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
     <div class="tr">
       <div class="td_label_fixed">
         <label nzSize="large">单位类别</label>
       </div>
-      <div class="td_for_org_sel_title">
+
+      <div class="td_for_org_sel_title1">
         <label nzSize="large">单位名称</label>
       </div>
-      <div class="td_for_org_sel_title">
+      <div class="td_for_org_sel_title2">
         <label nzSize="large">资质等级</label>
       </div>
-      <div class="td_for_org_sel_title">
+      <div class="td_for_org_sel_title3">
         <label nzSize="large">联系人</label>
       </div>
-      <div class="td_for_org_sel_title">
+      <div class="td_for_org_sel_title4">
         <label nzSize="large">联系电话</label>
       </div>
       <div class="td_for_crl_title">
@@ -210,11 +318,12 @@
 
 
 
-    <div class="tr_btm_nan" *ngFor="let item of postData.design;let i = index">
+
+    <div class="tr" *ngFor="let item of postData.design;let i = index">
       <div class="td_label_fixed">
         <nz-form-label nzSize="large" nzRequired>设计单位</nz-form-label>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel1">
         <nz-form-control>
           <nz-rj-selector-org [(ngModel)]="item.designUnit" placeHolder="请输入设计单位" ngDefaultControl
             name="designUnitDesignDesignUnit{{i}}" #designUnitDesignDesignUnit{{i}}="ngModel" [required]="true"
@@ -225,7 +334,7 @@
           </div>
         </nz-form-control>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel2">
         <nz-form-control nzHasFeedback>
           <nz-select type="text" [(ngModel)]="item.qualificationLevel" name="designUnitDesignQualificationLevel{{i}}"
             #designUnitDesignQualificationLevel{{i}}="ngModel" placeholder="请输入资质等级" required>
@@ -235,7 +344,7 @@
           </div>
         </nz-form-control>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel3">
         <nz-form-control nzHasFeedback>
           <input nz-input type="text" [(ngModel)]="item.legalRepresentative" name="designUnitLegalRepresentative{{i}}"
             #designUnitLegalRepresentative{{i}}="ngModel" placeholder="请输入联系人" required />
@@ -247,7 +356,7 @@
 
         </nz-form-control>
       </div>
-      <div class="td_for_org_sel">
+      <div class="td_for_org_sel4">
         <nz-form-control nzHasFeedback>
           <input nz-input type="text" [(ngModel)]="item.contacts" placeholder="联系电话" name="designUnitContacts{{i}}"
             #designUnitContacts{{i}}="ngModel" required />
@@ -260,13 +369,12 @@
         <div class="tr_btm_nan">
           <div class="td_r_li">
 
-            <button nz-button nzType="primary" nzSize="small">
+            <button nz-button nzType="primary" nzSize="small" (click)="addElement(postData.design)">
               <i nz-icon type="plus" nzTheme="outline"></i>
             </button>
           </div>
-          <div class="td_r_li">
-
-            <button nz-button nzType="default" nzSize="small">
+          <div class="td_r_li" *ngIf="i!=0">
+            <button nz-button nzType="default" nzSize="small" (click)="delElement(postData.design,i)">
               <i nz-icon type="minus" style="color: gray"></i>
             </button>
           </div>
@@ -274,7 +382,953 @@
       </div>
     </div>
 
+
+
+
+
+
+
+
+
+
+
+    <div class="tr" *ngFor="let item of postData.constructionUnit;let i = index">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">施工单位</nz-form-label>
+      </div>
+      <div class="td_for_org_sel1">
+        <nz-form-control>
+          <nz-rj-selector-org [(ngModel)]="item.designUnit" placeHolder="请输入施工单位" ngDefaultControl
+            name="constructionUnitDesignDesignUnit{{i}}" #constructionUnitDesignDesignUnit{{i}}="ngModel" nzHasFeedback>
+          </nz-rj-selector-org>
+        </nz-form-control>
+      </div>
+      <div class="td_for_org_sel2">
+        <nz-form-control nzHasFeedback>
+          <nz-select type="text" [(ngModel)]="item.qualificationLevel" name="constructionUnitQualificationLevel{{i}}"
+            #constructionUnitQualificationLevel{{i}}="ngModel" placeholder="请输入资质等级">
+          </nz-select>
+        </nz-form-control>
+      </div>
+      <div class="td_for_org_sel3">
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" [(ngModel)]="item.legalRepresentative"
+            name="constructionUnitLegalRepresentative{{i}}" #constructionUnitLegalRepresentative{{i}}="ngModel"
+            placeholder="请输入联系人" />
+
+        </nz-form-control>
+      </div>
+      <div class="td_for_org_sel4">
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" [(ngModel)]="item.contacts" placeholder="联系电话"
+            name="constructionUnitContacts{{i}}" #constructionUnitContacts{{i}}="ngModel" />
+          <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'constructionUnitContacts',i)">
+            电话号码不正确
+          </div>
+        </nz-form-control>
+      </div>
+      <div class="td_for_crl">
+        <div class="tr_btm_nan">
+          <div class="td_r_li">
+
+            <button nz-button nzType="primary" nzSize="small" (click)="addElement(postData.constructionUnit)">
+              <i nz-icon type="plus" nzTheme="outline"></i>
+            </button>
+          </div>
+          <div class="td_r_li" *ngIf="i!=0">
+            <button nz-button nzType="default" nzSize="small" (click)="delElement(postData.constructionUnit,i)">
+              <i nz-icon type="minus" style="color: gray"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">监理单位</nz-form-label>
+      </div>
+      <div class="td_for_org_sel1">
+        <nz-form-control>
+          <nz-rj-selector-org [(ngModel)]=" postData.constructionControlUnit.designUnit" placeHolder="请输入监理单位"
+            ngDefaultControl name="constructionControlUnitDesignDesignUnit"
+            #constructionControlUnitDesignDesignUnit="ngModel" nzHasFeedback>
+          </nz-rj-selector-org>
+        </nz-form-control>
+      </div>
+      <div class="td_for_org_sel2">
+        <nz-form-control nzHasFeedback>
+          <nz-select type="text" [(ngModel)]=" postData.constructionControlUnit.qualificationLevel"
+            name="constructionControlUnitQualificationLevel" #constructionControlUnitQualificationLevel="ngModel"
+            placeholder="请输入资质等级">
+          </nz-select>
+        </nz-form-control>
+      </div>
+      <div class="td_for_org_sel3">
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" [(ngModel)]=" postData.constructionControlUnit.legalRepresentative"
+            name="constructionControlUnitLegalRepresentative" #constructionControlUnitLegalRepresentative="ngModel"
+            placeholder="请输入联系人" />
+
+        </nz-form-control>
+      </div>
+      <div class="td_for_org_sel4">
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" [(ngModel)]=" postData.constructionControlUnit.contacts" placeholder="联系电话"
+            name="constructionControlUnitContacts" #constructionControlUnitContacts="ngModel" />
+          <div class="vali_err"
+            *ngIf="constructionControlUnitContacts.control.dirty&&constructionControlUnitContacts.control.errors">
+            电话号码不正确
+          </div>
+        </nz-form-control>
+      </div>
+      <div class="td_for_crl">
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large" nzRequired>审图单位</nz-form-label>
+      </div>
+      <div class="td_for_org_sel1">
+        <nz-form-control>
+          <nz-rj-selector-org [(ngModel)]="postData.mappingUnit.mappingUnit" placeHolder="请输入审图单位" ngDefaultControl
+            name="mappingUnitDesignmappingUnit" #mappingUnitDesignmappingUnit="ngModel" [required]="true" nzHasFeedback>
+          </nz-rj-selector-org>
+          <div class="vali_err"
+            *ngIf="mappingUnitDesignmappingUnit.control.dirty&&mappingUnitDesignmappingUnit.control.errors">
+            必填
+          </div>
+        </nz-form-control>
+      </div>
+      <div class="td_for_org_sel2">
+        <nz-form-control nzHasFeedback>
+          <nz-select type="text" [(ngModel)]="postData.mappingUnit.qualificationLevel"
+            name="mappingUnitDesignQualificationLevel" #mappingUnitDesignQualificationLevel="ngModel"
+            placeholder="请输入资质等级" required>
+          </nz-select>
+          <div class="vali_err"
+            *ngIf="mappingUnitDesignQualificationLevel.control.dirty&&mappingUnitDesignQualificationLevel.control.errors">
+            必填
+          </div>
+        </nz-form-control>
+      </div>
+      <div class="td_for_org_sel3">
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" [(ngModel)]="postData.mappingUnit.legalRepresentative"
+            name="mappingUnitLegalRepresentative" #mappingUnitLegalRepresentative="ngModel" placeholder="请输入联系人"
+            required />
+
+
+          <div class="vali_err"
+            *ngIf="mappingUnitLegalRepresentative.control.dirty&&mappingUnitLegalRepresentative.control.errors">
+            必填
+          </div>
+
+        </nz-form-control>
+      </div>
+      <div class="td_for_org_sel4">
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" [(ngModel)]="postData.mappingUnit.contacts" placeholder="联系电话"
+            name="mappingUnitContacts" #mappingUnitContacts="ngModel" required />
+          <div class="vali_err" *ngIf="mappingUnitContacts.control.dirty&&mappingUnitContacts.control.errors">
+            必填
+          </div>
+        </nz-form-control>
+      </div>
+      <div class="td_for_crl">
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="tr" *ngFor="let item of postData.mappingUnit.no;let i = index">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">审图编号</nz-form-label>
+      </div>
+      <div class="td">
+
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" name="mappingUnitNo{{i}}" #constructionPermitNumber="ngModel"
+            [(ngModel)]="item.noValue" placeholder="请输入审图编号  " />
+          <div class="vali_err"
+            *ngIf="(postData.mappingUnit.mainAdiseNo==''||postData.mappingUnit.mainAdiseNo==null)&&item.noValue==''">
+            主体消防验收意见书编号、审图编号，两者必填一个
+          </div>
+
+        </nz-form-control>
+
+      </div>
+      <div class="td_for_crl">
+        <div class="tr_btm_nan">
+          <div class="td_r_li">
+            <button nz-button nzType="primary" nzSize="small" (click)="addElement(postData.mappingUnit.no)">
+              <i nz-icon type="plus" nzTheme="outline"></i>
+            </button>
+          </div>
+          <div class="td_r_li" *ngIf="i!=0">
+            <button nz-button nzType="default" nzSize="small" (click)="delElement(postData.mappingUnit.no,i)">
+              <i nz-icon type="minus" style="color: gray"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">主体消防验收意见书编号</nz-form-label>
+      </div>
+      <div class="td_r_li">
+
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" name="mappingUnitMainAdiseNo" #mappingUnitMainAdiseNo="ngModel"
+            [(ngModel)]="postData.mappingUnit.mainAdiseNo" placeholder="二次装修无施工许可证编号的请填写主体消防验收意见书编号" />
+          <!-- <div class="vali_err"
+            *ngIf="(postData.constructionPermitNumber==''||postData.constructionPermitNumber==null)&&postData.mainAdiseNo==''">
+            主体消防验收意见书编号、请输入施工许可证编号，两者必填一个
+          </div> -->
+
+        </nz-form-control>
+
+      </div>
+    </div>
+
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">建设工程规划许可证号</nz-form-label>
+      </div>
+      <div class="td_r_li">
+
+        <nz-form-control nzHasFeedback>
+          <input nz-input type="text" name="licenseNumber" #licenseNumber="ngModel" [(ngModel)]="postData.licenseNumber"
+            placeholder="请输入建设工程规划许可证号" />
+
+        </nz-form-control>
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed_usage">
+
+
+        <div class="td_usage">
+          <nz-form-label nzSize="large" nzRequired><br>使<br>用<br>性<br>质<br></nz-form-label>
+
+        </div>
+        <div class="td_r_li_usage">
+          <nz-form-label nzSize="large">特殊建设工程</nz-form-label>
+
+          <span class="vali_err" *ngIf="projectUsageId.control.dirty&&projectUsageId.control.errors">
+            必填
+          </span>
+        </div>
+
+
+      </div>
+      <div class="td_r_li">
+
+        <div class="tr_btm_nan">
+          <nz-form-control>
+
+            <nz-radio-group [(ngModel)]="postData.projectUsageId" name="projectUsageId" #projectUsageId="ngModel"
+              required>
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">1.&nbsp;&nbsp;建筑总面积大于二万平方米：&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="1001">体育场馆</label>
+                <label nz-radio nzValue="1002">公共展览馆</label>
+                <label nz-radio nzValue="1003">博物馆的展示厅</label>
+                <label nz-radio nzValue="1004">建筑保温</label>
+                <label nz-radio nzValue="1005">改变用途</label>
+              </div>
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">2.&nbsp;&nbsp;建筑总面积大于一万五千平方米：&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="2001">民用机场航站楼</label>
+                <label nz-radio nzValue="2002">客运车站候车室</label>
+                <label nz-radio nzValue="2003">客运码头候船厅</label>
+              </div>
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">3.&nbsp;&nbsp;建筑总面积大于一万平方米：&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="3001">宾馆</label>
+                <label nz-radio nzValue="3002">饭店</label>
+                <label nz-radio nzValue="3003">商场</label>
+                <label nz-radio nzValue="3004">市场</label>
+              </div>
+
+
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">4.&nbsp;&nbsp;建筑总面积大于二千五百平方米：&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="4001">影剧院</label>
+                <label nz-radio nzValue="4002">公共图书馆的阅览室</label>
+                <label nz-radio nzValue="4003">营业性室内健身场馆</label>
+                <label nz-radio nzValue="4004">休闲场馆</label>
+                <label nz-radio nzValue="4005">医院的门诊楼</label>
+                <label nz-radio nzValue="4006">大学的教学楼</label>
+                <label nz-radio nzValue="4007">图书馆</label>
+                <label nz-radio nzValue="4008">食堂</label>
+                <label nz-radio nzValue="4009">劳动密集型企业的生产加工车间</label>
+                <label nz-radio nzValue="4010">寺庙</label>
+                <label nz-radio nzValue="4011">教堂</label>
+              </div>
+
+
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">5.&nbsp;&nbsp;建筑总面积大于一千平方米：&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="5001">托儿所</label>
+                <label nz-radio nzValue="5002">幼儿园的儿童用房</label>
+                <label nz-radio nzValue="5003">儿童游乐厅等室内儿童活动场所</label>
+                <label nz-radio nzValue="5004">养老院</label>
+                <label nz-radio nzValue="5005">福利院</label>
+                <label nz-radio nzValue="5006">医院</label>
+                <label nz-radio nzValue="5007">疗养院的病房楼</label>
+                <label nz-radio nzValue="5008">中小学校的教学楼</label>
+                <label nz-radio nzValue="5009">图书馆</label>
+                <label nz-radio nzValue="5010">食堂</label>
+                <label nz-radio nzValue="5011">学校的集体宿舍</label>
+                <label nz-radio nzValue="5012">劳动密集型企业的员工集体宿舍</label>
+              </div>
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">6.&nbsp;&nbsp;建筑总面积大于五百平方米：&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="6001">歌舞厅</label>
+                <label nz-radio nzValue="6002">录像厅</label>
+                <label nz-radio nzValue="6003">放映厅</label>
+                <label nz-radio nzValue="6004">卡拉OK厅</label>
+                <label nz-radio nzValue="6005">夜总会</label>
+                <label nz-radio nzValue="6006">游艺厅</label>
+                <label nz-radio nzValue="6007">桑拿浴室</label>
+                <label nz-radio nzValue="6008">网吧</label>
+                <label nz-radio nzValue="6009">酒吧</label>
+                <span class="usage_radio_group_label">具有娱乐功能的&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="6010">餐馆</label>
+                <label nz-radio nzValue="6011">茶馆</label>
+                <label nz-radio nzValue="6012">咖啡厅</label>
+              </div>
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">7.&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="7001">国家机关办公楼</label>
+                <label nz-radio nzValue="7002">电力调度楼</label>
+                <label nz-radio nzValue="7003">电信楼</label>
+                <label nz-radio nzValue="7004">邮政楼</label>
+                <label nz-radio nzValue="7005">防灾指挥调度楼</label>
+                <label nz-radio nzValue="7006">广播电视楼</label>
+                <label nz-radio nzValue="7007">档案楼</label>
+
+              </div>
+
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">8.&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="8001">单体建筑面积大于四万平方米或者建筑高度超过五十米的公共建筑</label>
+              </div>
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">9.&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="9001">国家标准规定的一类高层住宅建筑</label>
+              </div>
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">10.&nbsp;&nbsp;</span>
+                <label nz-radio nzValue="10001">城市轨道交通</label>
+                <label nz-radio nzValue="10002">隧道工程</label>
+                <label nz-radio nzValue="10003">大型发电</label>
+                <label nz-radio nzValue="10004">变配电工程</label>
+              </div>
+
+
+              <div class="usage_radio_group_tr">
+                <span class="usage_radio_group_label">11.&nbsp;&nbsp;</span>
+                <span class="usage_radio_group_label">生产、储存、装卸易燃易爆危险物品的&nbsp;</span>
+                <label nz-radio nzValue="11001">工厂</label>
+                <label nz-radio nzValue="11002">仓库和</label>
+                <label nz-radio nzValue="11003">专用车站</label>
+                <label nz-radio nzValue="11004">码头，易燃易爆气体和液体的</label>
+                <label nz-radio nzValue="11005">充装站</label>
+                <label nz-radio nzValue="11006">供应站</label>
+                <label nz-radio nzValue="11007">调压站</label>
+              </div>
+
+            </nz-radio-group>
+
+
+          </nz-form-control>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large" nzRequired>工程基本情况 </nz-form-label>
+      </div>
+
+
+      <div class="td_base_status">
+
+        <div class="tr">
+          <div class="td_base_status_title1">
+            <label nzSize="large">单体建筑名称</label>
+          </div>
+          <div class="td_base_status_title2">
+            <label nzSize="large">结构类型</label>
+          </div>
+          <div class="td_base_status_title2">
+            <label nzSize="large">耐火等级</label>
+          </div>
+
+          <div class="td_base_status_title1">
+            <div class="tr">
+              <div class="td_r_li_ctr">
+                <label nzSize="large">层数</label>
+              </div>
+            </div>
+            <div class="tr_btm_nan">
+              <div class="td_ctr">
+                <label nzSize="large">地上</label>
+              </div>
+              <div class="td_r_li_ctr">
+                <label nzSize="large">地下</label>
+              </div>
+            </div>
+          </div>
+          <div class="td_base_status_title2">
+            <label nzSize="large">建筑高度（m）</label>
+          </div>
+          <div class="td_base_status_title2">
+            <label nzSize="large">占地面积（m2）</label>
+          </div>
+          <div class="td_base_status_title1">
+
+            <div class="tr">
+              <div class="td_r_li_ctr">
+                <label nzSize="large">建筑面积（m2）</label>
+              </div>
+            </div>
+            <div class="tr_btm_nan">
+              <div class="td_ctr">
+                <label nzSize="large">地上</label>
+              </div>
+              <div class="td_r_li_ctr">
+                <label nzSize="large">地下</label>
+              </div>
+            </div>
+          </div>
+          <div class="td_for_crl_title">
+            <label nzSize="large">操作</label>
+          </div>
+        </div>
+
+        <div class="{{i+1==postData.basicInformation.length?'tr_btm_nan':'tr'}}"
+          *ngFor="let item of postData.basicInformation;let i = index">
+          <div class="td_base_status1">
+            <div class="td_r_li">
+              <input nz-input name="basicInformationLicenseNumber{{i}}" #basicInformationLicenseNumber{{i}}="ngModel"
+                [(ngModel)]="item.licenseNumber" placeholder="请输入单体建筑名称" required />
+            </div>
+            <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'basicInformationLicenseNumber',i)">
+              必填
+            </div>
+          </div>
+          <div class="td_base_status2">
+            <div class="td_r_li" style="width: 100%;">
+              <!-- 结构类型 -->
+              <nz-select [(ngModel)]="item.type" name="basicInformationType{{i}}" #basicInformationType{{i}}="ngModel"
+                required>
+              </nz-select>
+
+            </div>
+
+            <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'basicInformationType',i)">
+              必填
+            </div>
+          </div>
+          <div class="td_base_status2">
+            <div class="td_r_li" style="width: 100%;">
+              <nz-select [(ngModel)]="item.grade" name="basicInformationGrade{{i}}"
+                #basicInformationGrade{{i}}="ngModel" required>
+              </nz-select>
+            </div>
+            <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'basicInformationGrade',i)">
+              必填
+            </div>
+          </div>
+
+          <div class="td_base_status1">
+
+            <div class="tr_btm_nan" style="height: 100%;">
+              <div class="td_ctr_np">
+                <div class="td_r_li">
+                  <input nz-input type="text" name="basicInformationAboveGround{{i}}"
+                    #basicInformationAboveGround{{i}}="ngModel" [(ngModel)]="item.aboveGround" placeholder="请输入地上层数"
+                    required />
+                </div>
+                <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'basicInformationAboveGround',i)">
+                  必填
+                </div>
+              </div>
+              <div class="td_r_li_ctr_np">
+                <div class="td_r_li">
+                  <input nz-input type="text" name="basicInformationunderground{{i}}"
+                    #basicInformationunderground{{i}}="ngModel" [(ngModel)]="item.underground" placeholder="请输入地下层数"
+                    required />
+                </div>
+
+                <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'basicInformationunderground',i)">
+                  必填
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="td_base_status_title2">
+            <div class="td_r_li">
+              <input nz-input type="text" name="basicInformationHeight{{i}}" #basicInformationHeight{{i}}="ngModel"
+                [(ngModel)]="item.height" placeholder="请输入建筑高度" required />
+
+
+            </div>
+            <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'basicInformationHeight',i)">
+              必填
+            </div>
+          </div>
+          <div class="td_base_status_title2">
+            <div class="td_r_li">
+              <input nz-input type="text" name="basicInformationAreaCovered{{i}}"
+                #basicInformationAreaCovered{{i}}="ngModel" [(ngModel)]="item.areaCovered" placeholder="请输入占地面积"
+                required />
+
+            </div>
+            <div class="vali_err" *ngIf="checkFormForsItemData(validateForm.form,'basicInformationAreaCovered',i)">
+              必填
+            </div>
+          </div>
+          <div class="td_base_status_title1">
+            <div class="tr_btm_nan" style="height: 100%;">
+              <div class="td_ctr_np">
+                <div class="td_r_li">
+                  <input nz-input type="text" name="basicInformationJzmjaboveGround{{i}}"
+                    #basicInformationJzmjaboveGround{{i}}="ngModel" [(ngModel)]="item.jzmjaboveGround"
+                    placeholder="请输入地上建筑面积" required />
+
+                </div>
+                <div class="vali_err"
+                  *ngIf="checkFormForsItemData(validateForm.form,'basicInformationJzmjaboveGround',i)">
+                  必填
+                </div>
+              </div>
+              <div class="td_r_li_ctr_np">
+                <div class="td_r_li">
+                  <input nz-input type="text" name="basicInformationJzmjunderground{{i}}"
+                    #basicInformationJzmjunderground{{i}}="ngModel" [(ngModel)]="item.jzmjunderground"
+                    placeholder="请输入地下建筑面积" required />
+                </div>
+                <div class="vali_err"
+                  *ngIf="checkFormForsItemData(validateForm.form,'basicInformationJzmjunderground',i)">
+                  必填
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="td_for_crl_title">
+            <div class="tr_btm_nan">
+              <div class="td_r_li">
+
+                <button nz-button nzType="primary" nzSize="small" (click)="addElement(postData.basicInformation)">
+                  <i nz-icon type="plus" nzTheme="outline"></i>
+                </button>
+              </div>
+              <div class="td_r_li" *ngIf="i!=0">
+                <button nz-button nzType="default" nzSize="small" (click)="delElement(postData.basicInformation,i)">
+                  <i nz-icon type="minus" style="color: gray"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+    <div class="tr" *ngFor="let item of postData.storageTank;let i = index">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">储罐</nz-form-label>
+      </div>
+      <div class="td_r_li_np">
+        <div class="tr">
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">设置位置</label>
+          </div>
+          <div class="td">
+            <input nz-input placeholder="请输入储量" [(ngModel)]="item.reserves" name="storageTankReserves{{i}}" />
+          </div>
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">总容量（m3）</label>
+          </div>
+          <div class="td_r_li">
+            <input nz-input placeholder="请输入总容量（m3）" [(ngModel)]="item.totalCapacity"
+              name="storageTankTotalCapacity{{i}}" />
+          </div>
+
+        </div>
+
+        <div class="tr">
+
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">设置形式</label>
+          </div>
+          <div class="td_r_li">
+
+            <nz-radio-group [(ngModel)]="item.setupType" name="tanckSetupType{{i}}" #tanckSetupType{{i}}="ngModel">
+              <div>
+                浮顶罐（ <label nz-radio nzValue="1001">外</label>
+                <label nz-radio nzValue="1002">内</label>）
+                &nbsp;&nbsp;<label nz-radio nzValue="1003">固定顶罐</label>
+                &nbsp;&nbsp;<label nz-radio nzValue="1004">卧式罐</label>
+              </div>
+
+              <div>
+                球形罐（ <label nz-radio nzValue="2001">液体</label>
+                <label nz-radio nzValue="2002">气体</label>）
+
+                &nbsp;&nbsp;可燃气体储罐（ <label nz-radio nzValue="2003">干式</label>
+                <label nz-radio nzValue="2004">湿式</label>）
+                &nbsp;&nbsp;<label nz-radio nzValue="2004">其他</label>
+              </div>
+            </nz-radio-group>
+          </div>
+        </div>
+
+        <div class="tr_btm_nan">
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">储存形式</label>
+          </div>
+          <div class="td">
+            <nz-radio-group [(ngModel)]="item.storageForm" name="tanckSetupStorageForm{{i}}"
+              #tanckSetupType{{i}}="ngModel">
+              <label nz-radio nzValue="1001">地上</label>
+              <label nz-radio nzValue="1002">半地下</label>
+              <label nz-radio nzValue="1002">地下</label>
+            </nz-radio-group>
+          </div>
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">储存物质名称</label>
+          </div>
+          <div class="td_r_li">
+            <input nz-input placeholder="请输入储存物质名称" [(ngModel)]="item.name" name="storageTotalName{{i}}" />
+          </div>
+
+        </div>
+      </div>
+      <div class="td_for_crl">
+        <div class="tr_btm_nan">
+          <div class="td_r_li">
+
+            <button nz-button nzType="primary" nzSize="small" (click)="addElement(postData.storageTank)">
+              <i nz-icon type="plus" nzTheme="outline"></i>
+            </button>
+          </div>
+          <div class="td_r_li" *ngIf="i!=0">
+            <button nz-button nzType="default" nzSize="small" (click)="delElement(postData.storageTank,i)">
+              <i nz-icon type="minus" style="color: gray"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="tr" *ngFor="let item of postData.yard;let i = index">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">堆场</nz-form-label>
+      </div>
+      <div class="tr_btm_nan">
+
+        <div class="td" style="max-width: 130px;">
+          <label nzSize="large">设置位置</label>
+        </div>
+        <div class="td">
+          <input nz-input placeholder="请输入储量" [(ngModel)]="item.reserves" name="storageyardReserves{{i}}" />
+        </div>
+        <div class="td" style="max-width: 130px;">
+          <label nzSize="large">储存物质名称</label>
+        </div>
+        <div class="td">
+          <input nz-input placeholder="请输入储存物质名称" [(ngModel)]="item.name" name="storageYardName{{i}}" />
+        </div>
+      </div>
+      <div class="td_for_crl">
+        <div class="tr_btm_nan">
+          <div class="td_r_li">
+            <button nz-button nzType="primary" nzSize="small" (click)="addElement(postData.yard)">
+              <i nz-icon type="plus" nzTheme="outline"></i>
+            </button>
+          </div>
+          <div class="td_r_li" *ngIf="i!=0">
+            <button nz-button nzType="default" nzSize="small" (click)="delElement(postData.yard,i)">
+              <i nz-icon type="minus" style="color: gray"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">建筑保温</nz-form-label>
+      </div>
+      <div class="td_r_li_np">
+        <div class="tr">
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">材料类别</label>
+          </div>
+          <div class="td">
+            <nz-radio-group [(ngModel)]="postData.buildingThermalInsulation.type" name="buildingThermalInsulationType">
+              <label nz-radio nzValue="1001">A</label>
+              <label nz-radio nzValue="1002">B1</label>
+              <label nz-radio nzValue="1003">B2</label>
+            </nz-radio-group>
+          </div>
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">请输入保温层数</label>
+          </div>
+          <div class="td_r_li">
+            <input nz-input placeholder="请输入储存物质名称" [(ngModel)]="postData.buildingThermalInsulation.layerNumber"
+              name="buildingThermalInsulationType" />
+          </div>
+        </div>
+        <div class="tr_btm_nan">
+
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">使用性质</label>
+          </div>
+          <div class="td">
+            <input nz-input placeholder="请输入使用性质" [(ngModel)]="postData.buildingThermalInsulation.useNature"
+              name="buildingThermalUseNature" />
+          </div>
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">原有用途</label>
+          </div>
+          <div class="td_r_li">
+            <input nz-input placeholder="请输入原有用途" [(ngModel)]="postData.buildingThermalInsulation.originallyUsed"
+              name="buildingThermalOriginallyUsed" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large">装修工程</nz-form-label>
+      </div>
+      <div class="td_r_li_np">
+        <div class="tr">
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">装修部位</label>
+          </div>
+          <div class="td">
+            <nz-checkbox-wrapper (nzOnChange)="onCheckDecorationSite($event)">
+
+              <label nz-checkbox nzValue="1001">顶棚</label>
+              <label nz-checkbox nzValue="1002">墙面</label>
+              <label nz-checkbox nzValue="1003">地面</label>
+              <label nz-checkbox nzValue="1004">固定家具</label>
+              <label nz-checkbox nzValue="1005">装饰织物</label>
+              <label nz-checkbox nzValue="1006">其他</label>
+
+
+
+            </nz-checkbox-wrapper>
+          </div>
+
+        </div>
+
+
+        <div class="tr">
+
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">装修面积（m2）</label>
+          </div>
+          <div class="td">
+            <input nz-input placeholder="请输入装修面积（m2）" [(ngModel)]="postData.decorationProject.decorationArea"
+              name="decorationProjectDecorationArea" />
+          </div>
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">装修层数</label>
+          </div>
+          <div class="td_r_li">
+            <input nz-input placeholder="请输入装修层数" [(ngModel)]="postData.decorationProject.decorationFloorNumber"
+              name="decorationProjectDecorationFloorNumber" />
+          </div>
+        </div>
+
+        <div class="tr_btm_nan">
+
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">使用性质</label>
+          </div>
+          <div class="td">
+            <input nz-input placeholder="请输入使用性质" [(ngModel)]="postData.decorationProject.useNature"
+              name="decorationProjectUseNature" />
+          </div>
+          <div class="td" style="max-width: 130px;">
+            <label nzSize="large">原有用途</label>
+          </div>
+          <div class="td_r_li">
+            <input nz-input placeholder="请输入原有用途" [(ngModel)]="postData.decorationProject.originallyUsed"
+              name="decorationProjectOriginallyUsed" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large" nzRequired>消防设施</nz-form-label>
+      </div>
+      <div class="td_r_li">
+        <nz-form-control>
+          <nz-checkbox-wrapper (nzOnChange)="onCheckDecorationSite($event)">
+
+            <label nz-checkbox nzValue="1001">室内消火栓系统</label>
+            <label nz-checkbox nzValue="1002">室外消火栓系统</label>
+            <label nz-checkbox nzValue="1003">火灾自动报警系统</label>
+            <label nz-checkbox nzValue="1004">自动喷水灭火系统</label>
+            <label nz-checkbox nzValue="1005">气体灭火系统</label>
+            <label nz-checkbox nzValue="1006">泡沫灭火系统</label>
+            <label nz-checkbox nzValue="1007">其他灭火系统</label>
+            <label nz-checkbox nzValue="1008">疏散指示标志</label>
+            <label nz-checkbox nzValue="1009">消防应急照明</label>
+            <label nz-checkbox nzValue="1010">防烟排烟系统</label>
+            <label nz-checkbox nzValue="1011">消防电梯</label>
+            <label nz-checkbox nzValue="1012">灭火器</label>
+            <label nz-checkbox nzValue="1013">其他:</label>
+            <input style="max-width:100px;margin-top: 4px;" nz-input placeholder="请填写其他"
+              [(ngModel)]="postData.decorationProject.FireFightingFacilitiesOrther"
+              name="FireFightingFacilitiesOrther" />
+
+          </nz-checkbox-wrapper>
+
+          <div class="vali_err" *ngIf="projectCategoryId.control.dirty&&projectCategoryId.control.errors">
+            必填
+          </div>
+
+        </nz-form-control>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="tr">
+      <div class="td_label_fixed">
+        <nz-form-label nzSize="large" nzRequired>同时提交的材料</nz-form-label>
+      </div>
+      <div class="td_r_li">
+        
+      </div>
+    </div>
+
   </form>
+
+
+
+
 
 
   <div class="title">

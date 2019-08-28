@@ -21,23 +21,36 @@ export function getForsItemFormStatus(form: any, controlName: String, index) {
  * @param form 
  */
 export function resetFormControlStatus(controls: any) {
-    console.log(controls)
-    controls.forEach(key => {
-        console.log(controls[key])
-        controls[key].dirty(true);
-        controls[key].errors(true);
-    });
-    // if (form.controls != null) {
-    // for (var i = 0; i < form.controls.length; ++i) {
-    //     form.controls[i].dirty = true;
-    //     form.controls[i].errors = true;
-    // }  Object.keys(obj).forEach(function (key) {
 
-    // for (var item in form.controls) {
-    //     console.log(form.controls[item])
-    //     form.controls[item].dirty = true;
-    //     form.controls[item].errors = true;
-    // }
-    // }
+    setTimeout(() => {
+        var keys = Object.keys(controls);
+        keys.forEach(key => {
+
+            // this.validateForm.controls[key].setErrors([{ "require": false }], { emitEvent: true });
+            controls[key].markAsDirty({ onlySelf: true });
+            // this.validateForm.controls[key].updateValueAndValidity({ onlySelf: true, emitEvent: true });
+        });
+
+    }, 20);
+
+
+}
+
+
+
+
+export function addEmptyElement(list) {
+    if (list && list instanceof Array) {
+        list.push({});
+    }
+
+}
+
+
+export function removeListElement(list, i) {
+
+    if (list && list instanceof Array) {
+        list.splice(i, 1);
+    }
 
 }

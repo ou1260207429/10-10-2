@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
 import axios from "axios"
 import "./assets/css/common.css"
 import "./assets/css/elementUi.css";
@@ -28,6 +29,7 @@ Vue.prototype.getConfigJson = function () {
     new Vue({
       el: '#app',
       router,
+      store,
       components: {
         App
       },

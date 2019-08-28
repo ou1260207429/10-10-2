@@ -639,6 +639,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
       frow_TemplateInfo_Data: {
         Area: this.data.engineeringNo[this.data.engineeringNo.length - 1]
       },
+      //identify: 'jgys' + (this.data.FlowTemplateSuffix ? this.data.FlowTemplateSuffix : ""),
       identify: 'xfsj' + (this.data.FlowTemplateSuffix ? this.data.FlowTemplateSuffix : ""),
       editWorkFlow_NodeAuditorRecordDto: {
         applyEID: this._appSessionService.user.id,
@@ -728,7 +729,7 @@ export class AddCompletedAcceptanceComponent implements OnInit {
         this.butNzLoading = false;
         this.isSelectModalOkLoading = false;
         this.isVisibleSelectModal = false;
-        this.message.error(this.data.projectName + '，提交出错');
+        // this.message.error(this.data.projectName + '，提交出错');
         // this._NzModalService.error({
         //   nzTitle: '操作失败',
         //   nzContent: this.data.projectName + '，提交出错'

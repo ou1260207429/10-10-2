@@ -15,7 +15,8 @@ export function getAddDeisnRepData(): any {
         planStartTime: '',//计划开工时间
         planEndTime: '',//计划竣工时间
         projectCategoryId: '',
-        design: [
+        projectUsageId: '',//使用性质
+        design: [   //设计单位
             {
                 designUnit: '',
                 qualificationLevel: '',
@@ -24,7 +25,7 @@ export function getAddDeisnRepData(): any {
                 contactsNumber: ''
             }
         ],
-        constructionUnit: [
+        constructionUnit: [  //施工单位
             {
                 designUnit: '',
                 qualificationLevel: '',
@@ -33,14 +34,14 @@ export function getAddDeisnRepData(): any {
                 contactsNumber: ''
             }
         ],
-        constructionControlUnit: {
+        constructionControlUnit: { //监理单位
             designUnit: '',
             qualificationLevel: '',
             legalRepresentative: '',
             contacts: '',
             contactsNumber: ''
         },
-        mappingUnit: {
+        mappingUnit: {    //审图单位
             designUnit: '',
             qualificationLevel: '',
             legalRepresentative: '',
@@ -72,7 +73,7 @@ export function getAddDeisnRepData(): any {
                 name: '',
             }
         ],
-        yard: [
+        yard: [      //堆场
             { reserves: '', name: '' }
         ],
         buildingThermalInsulation: {

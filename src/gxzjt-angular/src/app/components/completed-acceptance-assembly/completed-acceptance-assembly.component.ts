@@ -9,6 +9,7 @@ import { PublicServices } from 'services/public.services';
 import lodash from 'lodash';
 import { URLConfig } from "@shared/config/host";
 import { indexOfFileByName } from "@shared/utils/array";
+import { Router } from '@angular/router';
 /**
  * 竣工验收的表单模块
  * 建设工程竣工验收消防备案表
@@ -39,7 +40,6 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
 
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
-  @Output() private printOuter = new EventEmitter();
   printData = { address: '', examination: '', useNatureName: "" };
   //抽取号
   // decimationnumber: any;
@@ -68,7 +68,7 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
   //审批单位
   engineeringList: any;
   engineering: any;
-  constructor(private message: NzMessageService, public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) {
+  constructor(private router: Router, private message: NzMessageService, public _publicServices: PublicServices, public _homeServiceProxy: HomeServiceProxy, public publicModel: PublicModel, ) {
     // this.decimationnumber = [];
     // for (let index = 1; index < 101; index++) {
     //   this.decimationnumber.push({ label: index, value: index })
@@ -96,8 +96,17 @@ export class CompletedAcceptanceAssemblyComponent implements OnInit {
       }, 500)
     }
   }
-  ngAfterViewInit(): void {
-    this.printOuter.emit(this.printData);
+  /**
+  * 跳转打印页面并将打印信息放置在localStorage，以便打印页面获取打印信息
+  */
+  printFormData() {
+    let params = Object.assign(this.printData, this.data)
+    let result = JSON.stringify(params)
+    localStorage.setItem('jsonPrintForm', result);
+    if (this.data) {
+      this.router.navigate([`/app/print-pages/CompletedAcceptancePrintComponent`]);
+    }
+
   }
   /**
   * 获取工程地址中文

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-completed-acceptance-print',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['../print.less']
 })
 export class CompletedAcceptancePrintComponent implements OnInit {
-  constructor() {
+  constructor(private el: ElementRef) {
   }
   data: any;
 
@@ -16,6 +16,9 @@ export class CompletedAcceptancePrintComponent implements OnInit {
   ngOnDestroy(): void {
     localStorage.removeItem('jsonPrintForm');
   }
+  print(){
+    window.print();
+  }
   /**
    * 获取token的值
    * */
@@ -24,6 +27,17 @@ export class CompletedAcceptancePrintComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    let rows = this.el.nativeElement.querySelectorAll(".row");
+    for (var i = 0; i < rows.length; i++) {
+      let ss = rows[i].offsetTop / 1470;
+      let num = Math.floor(ss);
+
+      if (num > 0) {
+        if (rows[i].offsetTop - 1470 * num < 50) {
+          rows[i - 2].className = "breakPage row";
+        }
+      }
+    }
     window.print();
     history.go(-1);
   }

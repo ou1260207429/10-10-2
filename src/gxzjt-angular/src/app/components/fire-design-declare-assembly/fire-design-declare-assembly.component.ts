@@ -17,6 +17,7 @@ import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
 
 
 import { indexOfFileByName } from "@shared/utils/array";
+import { Router } from '@angular/router';
 
 
 /**
@@ -55,7 +56,6 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   @ViewChild('f') f: FormGroup;
   //向父组件发送数据
   @Output() private childOuter = new EventEmitter();
-  @Output() private printOuter = new EventEmitter();
   printData = { address: '', examination: '' };
   //判断上传的焦点
   uploadIndex: number = -1;
@@ -73,7 +73,7 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
   //审批单位
   engineeringList: any;
   engineering: any;
-  constructor(private message: NzMessageService,
+  constructor(private router: Router, private message: NzMessageService,
     private eventEmiter: EventEmiter,
     public _homeServiceProxy: HomeServiceProxy,
     public _publicServices: PublicServices,
@@ -110,11 +110,17 @@ export class FireDesignDeclareAssemblyComponent implements OnInit {
     }
 
   }
-  ngAfterViewInit(): void {
-    this.printOuter.emit(this.printData);
+  /**
+    * 跳转打印页面并将打印信息放置在localStorage，以便打印页面获取打印信息
+    */
+  printFormData() {
+    let params = Object.assign(this.printData, this.data)
+    let result = JSON.stringify(params)
+    localStorage.setItem('jsonPrintForm', result);
+    if (this.data) {
+      this.router.navigate([`/app/print-pages/FiewDesignDeclarePrintComponent`]);
+    }
   }
-
-
 
   /**
    * 选择市县区
