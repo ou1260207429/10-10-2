@@ -7,12 +7,12 @@
     <div class="unit borderRight contantleft">
         {{data.jsconstructionUnit}}
     </div>
-    <div class="minTitle" style="width: 175px;">法定代表人/主要负责人:</div>
-    <div class="phone borderRight contantleft">
+    <div class="minTitle" style="width: 16.4%;">法定代表人/主要负责人:</div>
+    <div class="phone borderRight contantCenter">
         {{data.legalRepresentative}}
     </div>
     <div class="minTitle" style="width: 110px;">联系电话:</div>
-    <div class="phone contantleft" style="width: 125px;">
+    <div class="phone contantCenter">
         {{data.legalRepresentativeNo}}
     </div>
 </div>
@@ -22,11 +22,11 @@
         {{data.projectName}}
     </div>
     <div class="minTitle" style="width: 175px;">联系人:</div>
-    <div class="phone borderRight contantleft">
+    <div class="phone borderRight contantCenter">
         {{data.contacts}}
     </div>
     <div class="minTitle" style="width: 110px;">联系电话:</div>
-    <div class="phone contantleft" style="width: 125px;">
+    <div class="phone contantCenter">
         {{data.contactsNumber}}
     </div>
 </div>
@@ -34,16 +34,16 @@
     <div class="minTitle">工程地址:</div>
     <div class="borderRight unit contantleft">{{data.address}}{{data.engineeringAddress}}</div>
     <div class="minTitle" style="width: 175px;"> 使用性质:</div>
-    <div class="phone contantleft" style="width: 368px;">{{data.useNatureName}}</div>
+    <div class="phone contantleft" style="width: 38%;">{{data.useNatureName}}</div>
 </div>
 <div class="row">
-    <div class="minTitle" style="width: 265px;">审批单位:</div>
-    <div class="contantleft" style="width: 808px;">{{data.examination}}</div>
+    <div class="minTitle">审批单位:</div>
+    <div class="contantleft right">{{data.examination}}</div>
 </div>
 
 <div class="row">
-    <div class="minTitle" style="width: 265px;">类别:</div>
-    <div style="width: 808px;" class="contantleft">
+    <div class="minTitle">类别:</div>
+    <div class="contantleft right">
         <span class="radio ">
             <input id="radio1" type="radio" name="Category" [checked]="data.projectCategoryId=='新建'" disabled>
             <label for="radio1">新建</label>
@@ -133,93 +133,93 @@
     <div class="minTitleFlow">{{data.detectionUnit.contactsNumber}}</div>
 </div>
 <div class="row">
-    <div class="minTitle">
+    <div style="width: 7%;" class="contantCenter fontWeight borderRight">
         工程基本情况
     </div>
-    <div style="width: 943px;display: flex;flex-direction: column;padding: 0;">
-        <div style="width: 943px;display: flex;">
-            <div class="minTitle" style="width: 180px;">单体建筑名称</div>
-            <div class="minTitle" style="width: 130px;
+    <div style="width: 1023px;display: flex;flex-direction: column;padding: 0;">
+        <div style="width: 1023px;display: flex;">
+            <div class="minTitle" style="width: 24%;">单体建筑名称</div>
+            <div class="minTitle" style="width: 14%;
                     padding: 0 10px;
                     box-sizing: border-box;">结构类型</div>
-            <div class="minTitle contantCenter" style="width: 99px;
+            <div class="minTitle contantCenter" style="width: 8%;
                     padding:12px;
                     box-sizing: border-box;">耐火等级</div>
             <div class="minTitle"
-                style="display: flex;flex-direction: column;padding: 0;text-align: center;width: 180px;">
-                <div style="border-bottom: 1px solid #e2e2e2;padding: 5px 0;box-sizing: border-box;width: 100%;">
+                style="display: flex;flex-direction: column;padding: 0;text-align: center;width: 19%;">
+                <div style="border-bottom: 1px solid #e2e2e2;padding: 20px 0;box-sizing: border-box;width: 100%;">
                     层数
                 </div>
-                <div style="display: flex;">
-                    <div style="border-right: 1px solid #e2e2e2;padding: 5px;width: 90px;box-sizing: border-box;">
+                <div style="display: flex;width: 100%;">
+                    <div style="border-right: 1px solid #e2e2e2;padding: 18px 5px;width: 50%;box-sizing: border-box;">
                         地上
                     </div>
 
                     <div
-                        style="border-right: 1px solid #e2e2e2;text-align: center;padding: 5px;width: 90px;box-sizing: border-box;">
+                        style="text-align: center;padding: 18px 5px;width: 50%;box-sizing: border-box;">
                         地下
                     </div>
                 </div>
             </div>
-            <div class="minTitle borderRight" style="text-align: center;width: 87px;padding:12px;">建筑高度（m）
+            <div class="minTitle borderRight" style="text-align: center;width: 8%;padding:12px;">建筑高度（m）
             </div>
             <div class="minTitle borderRight"
-                style="text-align: center;width: 87px;padding:12px;flex-direction: column;">
+                style="text-align: center;width: 8%;padding:12px;flex-direction: column;">
                 <div>占地面积 （m<sup>2</sup>）</div>
             </div>
             <div class="minTitle"
-                style="display: flex;flex-direction: column;padding: 0;text-align: center;width: 180px;border-right: none;">
-                <div style="border-bottom: 1px solid #e2e2e2;padding: 5px 0;box-sizing: border-box;width: 100%;">
+                style="display: flex;flex-direction: column;padding: 0;text-align: center;width: 19%;border-right: none;">
+                <div style="border-bottom: 1px solid #e2e2e2;padding: 20px 0;box-sizing: border-box;width: 100%;">
                     建筑面积（m<sup>2</sup>）</div>
-                <div style="display: flex;">
-                    <div style="border-right: 1px solid #e2e2e2;padding: 5px;width: 90px;box-sizing: border-box;">
+                <div style="display: flex;width: 100%;">
+                    <div style="border-right: 1px solid #e2e2e2;padding: 18px 5px;width: 50%;box-sizing: border-box;">
                         地上
                     </div>
-                    <div style="padding: 5px;width: 90px;box-sizing: border-box;">
+                    <div style="padding: 18px 5px;width: 50%;box-sizing: border-box;">
                         地下
                     </div>
                 </div>
             </div>
         </div>
-        <div class="specialLow" style="display: flex;border-top: 1px solid #e2e2e2;width: 943px;"
+        <div class="specialLow" style="display: flex;border-top: 1px solid #e2e2e2;width: 1023px;"
             *ngFor="let item of data.basicInformation;">
-            <div class="borderRight contantCenter" style="width:180px;">{{item.name}}</div>
-            <div class="borderRight contantCenter" style="width:130px;">{{item.type}}</div>
-            <div class="borderRight contantCenter" style="width: 99px;">{{item.grade}}</div>
-            <div class="borderRight contantCenter" style="width: 90px;padding: 0;">{{item.aboveGround}}</div>
-            <div class="borderRight contantCenter" style="width: 90px;;padding: 0;">{{item.underground}}</div>
-            <div class="borderRight contantCenter" style="width: 87px;">{{item.height}}</div>
-            <div class="borderRight contantCenter" style="width: 87px;">{{item.areaCovered}}</div>
-            <div class="borderRight contantCenter" style="width: 90px;padding: 0;">{{item.jzmjaboveGround}}
+            <div class="borderRight contantCenter" style="width:24%;">{{item.name}}</div>
+            <div class="borderRight contantCenter" style="width:14%;">{{item.type}}</div>
+            <div class="borderRight contantCenter" style="width: 8%;">{{item.grade}}</div>
+            <div class="borderRight contantCenter" style="width: 9.5%;padding: 0;">{{item.aboveGround}}</div>
+            <div class="borderRight contantCenter" style="width: 9.5%;;padding: 0;">{{item.underground}}</div>
+            <div class="borderRight contantCenter" style="width: 8%;">{{item.height}}</div>
+            <div class="borderRight contantCenter" style="width: 8%;">{{item.areaCovered}}</div>
+            <div class="borderRight contantCenter" style="width: 9.5%;padding: 0;">{{item.jzmjaboveGround}}
             </div>
-            <div class="contantCenter" style="width: 90px;;padding: 0;">{{item.jzmjunderground}}</div>
+            <div class="contantCenter" style="width: 9.5%;;padding: 0;">{{item.jzmjunderground}}</div>
         </div>
     </div>
 </div>
 <div class="row" *ngFor="let item of data.storageTank;">
-    <div class="minTitle">
+    <div style="width: 7%;" class="contantCenter fontWeight borderRight">
         储 罐
     </div>
 
-    <div style="width: 943px;display: flex;flex-direction: column;padding: 0;">
+    <div style="width: 93%;display: flex;flex-direction: column;padding: 0;">
         <div style="display: flex;width: 100%;">
             <div class="minTitle" style="padding:12px;">
                 设置位置
             </div>
-            <div style="width: 240px;padding:12px;" class="borderRight contantCenter">
+            <div style="width: 28.8%;padding:12px;" class="borderRight contantCenter">
                 {{item.position}}
             </div>
 
-            <div class="minTitle" style="padding:12px; width: 146px;">
+            <div class="minTitle" style="padding:12px; width: 15%;">
                 储存物质名称
             </div>
-            <div class="borderRight contantCenter" style="width: 180px;">
+            <div class="borderRight contantCenter" style="width: 15%;">
                 {{item.name}}
             </div>
-            <div class="minTitle" style="padding:12px;">
+            <div class="minTitle" style="padding:12px;" style="width: 16%;">
                 总容量（m3）
             </div>
-            <div class="contantCenter" style="width: 117px;">
+            <div class="contantCenter" style="width: 10.2%;">
                 {{item.totalCapacity}}
             </div>
         </div>
@@ -227,7 +227,7 @@
             <div class="minTitle" style="padding:12px;">
                 储存形式
             </div>
-            <div style="width: 240px;padding:12px;" class="borderRight contantCenter">
+            <div style="width: 28.8%;padding:12px;" class="borderRight contantCenter">
                 <span class="radio">
                     <input id="storageForm1" type="radio" name="storageForm" [checked]="item.storageForm=='地上'"
                         disabled>
@@ -244,10 +244,10 @@
                     <label for="storageForm3">地下</label>
                 </span>
             </div>
-            <div class="minTitle" style="padding:12px; width: 146px;">
+            <div class="minTitle" style="padding:12px; width: 15%;">
                 设置型式
             </div>
-            <div style="width: 427px;padding:12px;text-align: left;">
+            <div style="width: 41%;padding:12px;text-align: left;">
                 <label>浮顶罐(</label>
                 <span class="radio">
                     <input id="index1" name="setupType" type="radio" [checked]="item.setupType=='外'" disabled>
@@ -299,28 +299,28 @@
     </div>
 </div>
 <div class="row" *ngFor="let item of data.yard;">
-    <div class="minTitle">
+    <div style="width: 7%;" class="contantCenter fontWeight borderRight">
         堆 场
     </div>
-    <div class="minTitle" style="padding:12px;">
+    <div class="minTitle" style="padding:12px;width: 14%;">
         储存物质名称
     </div>
-    <div class="borderRight contantleft" style="width: 386px;">
+    <div class="borderRight contantleft" style="width: 37%;">
         {{item.name}}
     </div>
-    <div class="minTitle" style="padding:12px;width: 200px;">
+    <div class="minTitle" style="padding:12px;width: 21%;">
         储 量
     </div>
-    <div style="width: 227px;" class="contantCenter">
+    <div style="width: 20%;" class="contantCenter">
         {{item.reserves}}
     </div>
 </div>
 <div class="row">
-    <div class="minTitle">建筑保温</div>
-    <div class="borderRight minTitle" style="width: 130px;">
+    <div class="minTitle" style="width: 7%;">建筑保温</div>
+    <div class="borderRight minTitle" style="width: 14.5%;">
         材料类别
     </div>
-    <div class="contantleft borderRight" style="width: 155px;padding:12px;">
+    <div class="contantleft borderRight" style="width: 17%;padding:12px;">
         <span class="radio">
             <input id="A" type="radio" name="type" [checked]="data.buildingThermalInsulation.type=='A'" disabled>
             <label for="A">A</label>
@@ -335,57 +335,57 @@
         </span>
 
     </div>
-    <div class="minTitle" style="width: 100px;">
+    <div class="minTitle" style="width: 10%;">
         保温层数
     </div>
-    <div style="width: 105px;" class="contantCenter borderRight">{{data.buildingThermalInsulation.layerNumber}}</div>
-    <div class="borderRight minTitle" style="width: 100px;">
+    <div style="width: 7.6%;" class="contantCenter borderRight">{{data.buildingThermalInsulation.layerNumber}}</div>
+    <div class="borderRight minTitle" style="width: 12%;">
         使用性质
     </div>
-    <div class="contantCenter borderRight" style="width: 135px;;">
+    <div class="contantCenter borderRight" style="width: 12%;">
         {{data.buildingThermalInsulation.useNature}}</div>
-    <div class=" borderRight minTitle" style="width: 100px;">
+    <div class=" borderRight minTitle" style="width: 10%;">
         原有用途
     </div>
-    <div style="width: 118px;padding:12px;">
+    <div style="width: 12.4%;padding:12px;">
         {{data.buildingThermalInsulation.originallyUsed}}
     </div>
 
 </div>
 <div class="row">
     <div class="minTitle">装修工程</div>
-    <div style="display: flex;padding: 0;flex-direction: column;">
-        <div style="display: flex;padding: 0;border-bottom: 1px solid #e2e2e2;">
-            <div class="minTitle borderRight" style="width: 100px;">
+    <div style="display: flex;padding: 0;flex-direction: column;width: 85%;">
+        <div style="display: flex;padding: 0;border-bottom: 1px solid #e2e2e2;width: 100%;">
+            <div class="minTitle borderRight" style="width: 13%;">
                 装修部位
             </div>
-            <div class="borderRight contantleft" style="padding:12px;width: 575px;">
+            <div class="borderRight contantleft" style="padding:12px;width: 61%;">
                 <span class="radio" *ngFor="let box of data.decorationProject.decorationSite;let index = index">
                     <input [id]="20+index" name="decorationSite" type="checkbox" [checked]="box.value" disabled>
                     <label [for]="20+index"> {{box.label}}</label>
                 </span>
             </div>
-            <div class="minTitle borderRight" style="width: 100px;">
+            <div class="minTitle borderRight" style="width: 13%;">
                 装修面积（㎡）
             </div>
-            <div class="contantCenter" style="width: 168px;padding:12px;">
+            <div class="contantCenter" style="width: 13%;padding:12px;">
                 {{data.decorationProject.decorationArea}}</div>
         </div>
-        <div style="display: flex;padding: 0;">
-            <div class="minTitle contantCenter borderRight" style="width: 100px;">
+        <div style="display: flex;padding: 0;width: 100%;">
+            <div class="minTitle contantCenter borderRight" style="width: 13%;">
                 装修层数
             </div>
-            <div class="borderRight contantCenter" style="width: 110px;">
+            <div class="borderRight contantCenter" style="width: 10%;">
                 {{data.decorationProject.decorationFloorNumber}}</div>
-            <div class="minTitle contantCenter borderRight" style="width: 100px;padding:12px;">
+            <div class="minTitle contantCenter borderRight" style="width: 13%;padding:12px;">
                 使用性质
             </div>
-            <div class="borderRight contantCenter" style="width: 255px;padding:12px;">
+            <div class="borderRight contantCenter" style="width: 25%;padding:12px;">
                 {{data.decorationProject.useNature}}</div>
-            <div class="minTitle contantCenter borderRight" style="width: 100px;">
+            <div class="minTitle contantCenter borderRight" style="width: 13%;">
                 原有用途
             </div>
-            <div class="contantCenter" style="width: 278px;padding:12px;">
+            <div class="contantCenter" style="width: 26%;padding:12px;">
                 {{data.decorationProject.originallyUsed}}
             </div>
         </div>

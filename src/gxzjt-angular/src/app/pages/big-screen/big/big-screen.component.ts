@@ -123,6 +123,7 @@ export class BigScreenComponent {
     }
     // model = new DeclareRateQueryDto();
     Post_GetUserNum(){
+        this.SignInData = [];
         this.screenService.post_GetUserNum().subscribe((res:any)=>{
             if(res.data!=null){
                 const aaa =JSON.stringify(res.data[0].userNum);
@@ -1479,7 +1480,7 @@ export class BigScreenComponent {
                         <span style='font-size: 18px;margin:50px 0 5px 60px; display: block;color:#fff'>
                             `+ params.data.name + `</span>
                         <span style='color:#F6FF00;margin-left:60px;margin-bottom:5px;display: block;'>申报数：`+ params.data.value + `</span>
-                        <span style='color:#F6FF00;margin-left:60px;margin-bottom:5px;display: block;'>一次性通过数：`+ params.data.aTimeByCountNumber + `</span> 
+                        <span style='color:#F6FF00;margin-left:60px;margin-bottom:5px;display: block;'>受理数：`+ params.data.aTimeByCountNumber + `</span> 
                         <span style='color:#F6FF00;margin-left:60px;margin-bottom:5px;display: block;'> 超时数：`+ params.data.timeoutCountNumber + `</span>
                         <span style='color:#F6FF00;margin-left:60px;display: block;'> 平均办理时长：`+ params.data.avgCompleteTimeCountNumber + `天</span>
                     </div>

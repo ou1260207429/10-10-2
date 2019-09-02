@@ -381,7 +381,9 @@ export class AddFireAcceptanceComponent implements OnInit {
       this.showError.projectCategoryId = false;
     }
 
-    if (!this.showError.projectCategoryId && this.form.valid) {
+    
+    if (!this.showError.projectCategoryId && this.form.valid 
+      && !((this.data.constructionPermitNumber=='' || this.data.constructionPermitNumber==null) && (this.data.mainAdiseNo==null || this.data.mainAdiseNo==''))) {
       if (!this.showError.projectCategoryId) {
 
         // for (let index = 0; index < this.data.fileList.length; index++) {
@@ -394,6 +396,7 @@ export class AddFireAcceptanceComponent implements OnInit {
           frow_TemplateInfo_Data: {
             Area: this.data.engineeringNo[this.data.engineeringNo.length - 1]
           },
+          //identify: 'xfys' + (this.data.FlowTemplateSuffix ? this.data.FlowTemplateSuffix : ""),
           identify: 'xfsj' + (this.data.FlowTemplateSuffix ? this.data.FlowTemplateSuffix : ""),
           editWorkFlow_NodeAuditorRecordDto: {
             applyEID: this._appSessionService.user.id,
