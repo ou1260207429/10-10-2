@@ -16,6 +16,7 @@ import { StatisticsPositionPaperComponent } from './position-paper/position-pape
 import { UserRightService } from '../userright/userright.service';
 import { StatisticsService } from './statistics.service';
 import { UnitProjectStatisComponent } from './unit-project-statis/unit-project-statis.component';
+import { WeeklyStatisticsComponent } from './weekly-statistics/weekly-statistics';
 
 const COMPONENTS = [
   StatisticsWarningCenterComponent,
@@ -24,12 +25,15 @@ const COMPONENTS = [
   StatisticsTimeLimtDealComponent,
   UnitProjectStatisComponent,
   StatisticsAcceptCredentialsComponent,
-  StatisticsPositionPaperComponent];
+  StatisticsPositionPaperComponent,
+  WeeklyStatisticsComponent,
+];
 const COMPONENTS_NOROUNT = [
   StatisticsProAppStaticDetailComponent,
   StatisticsTimeLimtDealDetailComponent,
   StatisticsTimeoutDealDetailComponent,
   StatisticsWarningCenterDetailComponent,
+  WeeklyStatisticsComponent,
 ];
 
 @NgModule({

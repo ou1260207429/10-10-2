@@ -124,6 +124,10 @@ export class AppMenus {
           text: "单位项目办理统计",
           link: "/app/statistics/unit-project-statis",
         },
+        {
+          text: "周报数据统计",
+          link: "/app/statistics/weekly-statis",
+        },
       ]
     },
     {
@@ -391,6 +395,10 @@ export class AppMenus {
         {
           text: "单位项目办理统计",
           link: "/app/statistics/unit-project-statis",
+        },
+        {
+          text: "周报数据统计",
+          link: "/app/statistics/weekly-statis",
         },
       ]
     },

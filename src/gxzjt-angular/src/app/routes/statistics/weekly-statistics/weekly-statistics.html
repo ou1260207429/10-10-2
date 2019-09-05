@@ -1,0 +1,97 @@
+<nz-card>
+
+    <form nz-form class="ant-advanced-search-form">
+        <div nz-row class="search-form">
+            <div class="form-item-search">
+                <nz-form-item nzFlex>
+                    <nz-form-label nzFor="orgId">截止日期：</nz-form-label>
+                    <nz-form-control>
+                        <nz-date-picker name="endDate" [(ngModel)]="endDate" [nzAllowClear]="false"
+                            (ngModelChange)="onDateChange($event)" nzFormat="yyyy/MM/dd"></nz-date-picker>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="form-item-search btn-control">
+                <div class="search-btn-group">
+                    <button nz-button type="button" nzType="primary" (click)="search()">搜索</button>
+
+                    <button nz-button type="button" nzType="primary" (click)="exportExcel()">导出</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <div>
+        <nz-table #groupingTable [nzData]="reportData.cityList" nzBordered nzSize="middle" [nzFrontPagination]='isPage' [nzShowPagination]='isPage' [nzLoading]='isTableLoading'>
+            <thead>
+                <tr>
+                    <th rowspan="2" colspan="2" nzLeft="0px">此表填报数据截至{{endDateName}}</th>
+                    <th colspan="2">消防设计审查</th>
+                    <th colspan="2">消防验收</th>
+                    <th colspan="2" nzRight="0px">竣工验收备案</th>
+                </tr>
+                <tr>
+                    <th class="data-center">受理项目（项）</th>
+                    <th class="data-center">已办结项目（项）</th>
+                    <th class="data-center">受理项目（项）</th>
+                    <th class="data-center">已办结项目（项）</th>
+                    <th class="data-center">受理项目（项）</th>
+                    <th class="data-center">备案抽查项目（项）</th>
+                </tr>
+                <tr>
+                    <th class="data-center" style="min-width: 50px;">序号</th>
+                    <th class="data-center" style="min-width: 80px;">各地市住建局</th>
+                    <th class="data-center">{{startDateName}}至今受理消防设计审查申报项目数</th>
+                    <th class="data-center">{{startDateName}}至今消防设计审查申报办结项目数</th>
+                    <th class="data-center">{{startDateName}}至今受理消防验收申报项目数</th>
+                    <th class="data-center">{{startDateName}}至今消防验收办结项目数</th>
+                    <th class="data-center">{{startDateName}}至今受理竣工验收备案申报项目数</th>
+                    <th class="data-center">{{startDateName}}至今受理竣工验收备案申报项目数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of groupingTable.data; let i = index">
+                    <td class="data-center">{{i+1}}</td>
+                    <td >{{data.itemName}}</td>
+                    <td class="data-center" [ngStyle]="data.isChangeInvestigateAccept === 0 ? notUpdateInWeekStyle : null">{{data.investigateAcceptCount}}</td>
+                    <td class="data-center" [ngStyle]="data.isChangeInvestigateComplete === 0 ? notUpdateInWeekStyle : null">{{data.investigateCompleteCount}}</td>
+                    <td class="data-center" [ngStyle]="data.isChangeAcceptanceAccept === 0 ? notUpdateInWeekStyle : null">{{data.acceptanceAcceptCount}}</td>
+                    <td class="data-center" [ngStyle]="data.isChangeAcceptanceComplete === 0 ? notUpdateInWeekStyle : null">{{data.acceptanceCompleteCount}}</td>
+                    <td class="data-center" [ngStyle]="data.isChangePutOnRecordAccept === 0 ? notUpdateInWeekStyle : null">{{data.putOnRecordAcceptCount}}</td>
+                    <td class="data-center" [ngStyle]="data.isChangePutOnRecordAcceptAndSelected === 0 ? notUpdateInWeekStyle : null">{{data.putOnRecordAcceptAndSelectedCount}}</td>
+                </tr>
+
+                <tr style="background: #F1F1F1;">
+                    <td colspan="2" nzLeft="0px" style="background: #F1F1F1;font-weight: 700;text-align: right;">平台小计：</td>
+                    <td class="data-center">{{reportData.cityAmount.investigateAcceptCount}}</td>
+                    <td class="data-center">{{reportData.cityAmount.investigateCompleteCount}}</td>
+                    <td class="data-center">{{reportData.cityAmount.acceptanceAcceptCount}}</td>
+                    <td class="data-center">{{reportData.cityAmount.acceptanceCompleteCount}}</td>
+                    <td class="data-center">{{reportData.cityAmount.putOnRecordAcceptCount}}</td>
+                    <td class="data-center">{{reportData.cityAmount.putOnRecordAcceptAndSelectedCount}}</td>
+                </tr>
+                <tr style="background: #F1F1F1;" >
+                    <td colspan="2" nzLeft="0px" style="background: #F1F1F1;font-weight: 700;text-align: right;">合计：</td>
+                    <td class="data-center">{{reportData.amount.investigateAcceptCount}}</td>
+                    <td class="data-center">{{reportData.amount.investigateCompleteCount}}</td>
+                    <td class="data-center">{{reportData.amount.acceptanceAcceptCount}}</td>
+                    <td class="data-center">{{reportData.amount.acceptanceCompleteCount}}</td>
+                    <td class="data-center">{{reportData.amount.putOnRecordAcceptCount}}</td>
+                    <td class="data-center">{{reportData.amount.putOnRecordAcceptAndSelectedCount}}</td>
+                </tr>
+                <tr style="background: #F1F1F1;">
+                    <td colspan="2" nzLeft="0px" style="background: #F1F1F1;text-align: right;">本周新增项目：</td>
+                    <td class="data-center" style="font-weight: 700;">{{reportData.weeklyCityAmount.investigateAcceptCount}}</td>
+                    <td class="data-center" style="font-weight: 700;">{{reportData.weeklyCityAmount.investigateCompleteCount}}</td>
+                    <td class="data-center" style="font-weight: 700;">{{reportData.weeklyCityAmount.acceptanceAcceptCount}}</td>
+                    <td class="data-center" style="font-weight: 700;">{{reportData.weeklyCityAmount.acceptanceCompleteCount}}</td>
+                    <td class="data-center" style="font-weight: 700;">{{reportData.weeklyCityAmount.putOnRecordAcceptCount}}</td>
+                    <td class="data-center" style="font-weight: 700;">{{reportData.weeklyCityAmount.putOnRecordAcceptAndSelectedCount}}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+
+</nz-card>
