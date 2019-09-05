@@ -123,6 +123,7 @@ export class BigScreenComponent {
     }
     // model = new DeclareRateQueryDto();
     Post_GetUserNum(){
+        this.SignInData = [];
         this.screenService.post_GetUserNum().subscribe((res:any)=>{
             if(res.data!=null){
                 const aaa =JSON.stringify(res.data[0].userNum);
