@@ -80,7 +80,7 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
         // + `    三、提供图纸审查的技术服务机构和人员对出具的技术审查意见负责。\r\n`
         // + `    四、经此次审查的建设工程消防设计图纸如需变更，应当重新报送我单位审查。该工程竣工后，应当向我单位申报消防验收，验收合格后方可投入使用。\r\n`
         ;
-
+        
     }
 
 
