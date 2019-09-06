@@ -61,16 +61,16 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
       var dateStr = dateTrans(this.data.acceptTime, '年', '月', '日');
       // var dateStr = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + "日";
 
-      var descr = this.data.descr;
-      if (descr && descr.substring(descr.length - 1, descr.length) == "。") {
-        descr = descr.substring(0, descr.length - 1);
-      }
+      // var descr = this.data.descr;
+      // if (descr && descr.substring(descr.length - 1, descr.length) == "。") {
+      //   descr = descr.substring(0, descr.length - 1);
+      // }
 
 
       this.examineFormDto.content =
         `    你单位申请的` + this.data.projectName + `建设工程（受理凭证：` + this.data.acceptFileCode + `，`
         + dateStr + `收）消防设计文件收悉。该工程位于` + this.data.address + `。`
-        + descr + `。设计单位为` + this.examineFormDto.designOrg.companyName
+        + this.data.descr + `。设计单位为` + this.examineFormDto.designOrg.companyName
         + `，设计资质为建设工程` + this.examineFormDto.designOrg.qualifications
         + `。按照图纸审查机构（` + this.examineFormDto.drawingOrg.companyName
         + `）对该工程设计图纸的技术审查结论，我局提出以下意见：\r\n`
@@ -81,6 +81,7 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
         // + `    四、经此次审查的建设工程消防设计图纸如需变更，应当重新报送我单位审查。该工程竣工后，应当向我单位申报消防验收，验收合格后方可投入使用。\r\n`
         ;
         
+        this.examineFormDto.content=this.examineFormDto.content.replace(/。+/g, '。');
     }
 
 
