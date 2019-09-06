@@ -58,7 +58,7 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
     if (!this.examineFormDto.content && !this.examineFormDto.opinion) {
 
 
-      var dateStr = dateTrans(this.data.applyDateTime, '年', '月', '日');
+      var dateStr = dateTrans(this.data.acceptTime, '年', '月', '日');
       // var dateStr = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + "日";
 
       var descr = this.data.descr;
