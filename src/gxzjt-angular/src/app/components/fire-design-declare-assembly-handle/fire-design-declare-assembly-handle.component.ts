@@ -61,10 +61,10 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
       var dateStr = dateTrans(this.data.acceptTime, '年', '月', '日');
       // var dateStr = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + "日";
 
-      var descr = this.data.descr;
-      if (descr && descr.substring(descr.length - 1, descr.length) == "。") {
-        descr = descr.substring(0, descr.length - 1);
-      }
+      // var descr = this.data.descr;
+      // if (descr && descr.substring(descr.length - 1, descr.length) == "。") {
+      //   descr = descr.substring(0, descr.length - 1);
+      // }
 
 
       this.examineFormDto.content =
@@ -80,7 +80,8 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
         // + `    三、提供图纸审查的技术服务机构和人员对出具的技术审查意见负责。\r\n`
         // + `    四、经此次审查的建设工程消防设计图纸如需变更，应当重新报送我单位审查。该工程竣工后，应当向我单位申报消防验收，验收合格后方可投入使用。\r\n`
         ;
-
+        
+        this.examineFormDto.content=this.examineFormDto.content.replace(/。+/g, '。');
     }
 
 
