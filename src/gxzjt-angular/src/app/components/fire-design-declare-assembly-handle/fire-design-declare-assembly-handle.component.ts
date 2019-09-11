@@ -54,11 +54,11 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
 
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
-
+debugger
     if (!this.examineFormDto.content && !this.examineFormDto.opinion) {
 
 
-      var dateStr = dateTrans(this.data.acceptTime, '年', '月', '日');
+      var dateStr = dateTrans(this.examineFormDto.acceptTime, '年', '月', '日');
       // var dateStr = date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + "日";
 
       // var descr = this.data.descr;
