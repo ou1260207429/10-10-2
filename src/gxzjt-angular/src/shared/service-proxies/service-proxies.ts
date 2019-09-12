@@ -6146,6 +6146,130 @@ export class RegulationServiceProxy {
 }
 
 @Injectable()
+export class ReportStatistcalServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param weeklyReport4SearchDto (optional) 
+     * @return Success
+     */
+    weeklyReport(weeklyReport4SearchDto: WeeklyReport4SearchDto | null | undefined): Observable<WeeklyReportDto> {
+        let url_ = this.baseUrl + "/api/services/app/ReportStatistcal/WeeklyReport";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(weeklyReport4SearchDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processWeeklyReport(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processWeeklyReport(<any>response_);
+                } catch (e) {
+                    return <Observable<WeeklyReportDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<WeeklyReportDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processWeeklyReport(response: HttpResponseBase): Observable<WeeklyReportDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? WeeklyReportDto.fromJS(resultData200) : new WeeklyReportDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<WeeklyReportDto>(<any>null);
+    }
+
+    /**
+     * @param weeklyReport4SearchDto (optional) 
+     * @return Success
+     */
+    exportWeeklyReportUrl(weeklyReport4SearchDto: WeeklyReport4SearchDto | null | undefined): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/ReportStatistcal/ExportWeeklyReportUrl";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(weeklyReport4SearchDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processExportWeeklyReportUrl(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processExportWeeklyReportUrl(<any>response_);
+                } catch (e) {
+                    return <Observable<string>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processExportWeeklyReportUrl(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(<any>null);
+    }
+}
+
+@Injectable()
 export class RoleServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -9920,6 +10044,7 @@ export class ExamineFormDto implements IExamineFormDto {
     endDate: moment.Moment | undefined;
     content: string | undefined;
     fileCodeName: string | undefined;
+    acceptTime: moment.Moment | undefined;
 
     constructor(data?: IExamineFormDto) {
         if (data) {
@@ -9994,6 +10119,7 @@ export class ExamineFormDto implements IExamineFormDto {
             this.endDate = data["endDate"] ? moment(data["endDate"].toString()) : <any>undefined;
             this.content = data["content"];
             this.fileCodeName = data["fileCodeName"];
+            this.acceptTime = data["acceptTime"] ? moment(data["acceptTime"].toString()) : <any>undefined;
         }
     }
 
@@ -10068,6 +10194,7 @@ export class ExamineFormDto implements IExamineFormDto {
         data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
         data["content"] = this.content;
         data["fileCodeName"] = this.fileCodeName;
+        data["acceptTime"] = this.acceptTime ? this.acceptTime.toISOString() : <any>undefined;
         return data; 
     }
 
@@ -10130,6 +10257,7 @@ export interface IExamineFormDto {
     endDate: moment.Moment | undefined;
     content: string | undefined;
     fileCodeName: string | undefined;
+    acceptTime: moment.Moment | undefined;
 }
 
 export class ProjectAttachment implements IProjectAttachment {
@@ -11484,6 +11612,12 @@ export class PageSize implements IPageSize {
     flowPathType: string | undefined;
     startApplyTime: moment.Moment | undefined;
     endApplyTime: moment.Moment | undefined;
+    designOrg: string | undefined;
+    buildOrg: string | undefined;
+    supervisoryOrg: string | undefined;
+    drawingOrg: string | undefined;
+    testingOrg: string | undefined;
+    subcontractors: string | undefined;
 
     constructor(data?: IPageSize) {
         if (data) {
@@ -11515,6 +11649,12 @@ export class PageSize implements IPageSize {
             this.flowPathType = data["flowPathType"];
             this.startApplyTime = data["startApplyTime"] ? moment(data["startApplyTime"].toString()) : <any>undefined;
             this.endApplyTime = data["endApplyTime"] ? moment(data["endApplyTime"].toString()) : <any>undefined;
+            this.designOrg = data["designOrg"];
+            this.buildOrg = data["buildOrg"];
+            this.supervisoryOrg = data["supervisoryOrg"];
+            this.drawingOrg = data["drawingOrg"];
+            this.testingOrg = data["testingOrg"];
+            this.subcontractors = data["subcontractors"];
         }
     }
 
@@ -11546,6 +11686,12 @@ export class PageSize implements IPageSize {
         data["flowPathType"] = this.flowPathType;
         data["startApplyTime"] = this.startApplyTime ? this.startApplyTime.toISOString() : <any>undefined;
         data["endApplyTime"] = this.endApplyTime ? this.endApplyTime.toISOString() : <any>undefined;
+        data["designOrg"] = this.designOrg;
+        data["buildOrg"] = this.buildOrg;
+        data["supervisoryOrg"] = this.supervisoryOrg;
+        data["drawingOrg"] = this.drawingOrg;
+        data["testingOrg"] = this.testingOrg;
+        data["subcontractors"] = this.subcontractors;
         return data; 
     }
 
@@ -11577,6 +11723,12 @@ export interface IPageSize {
     flowPathType: string | undefined;
     startApplyTime: moment.Moment | undefined;
     endApplyTime: moment.Moment | undefined;
+    designOrg: string | undefined;
+    buildOrg: string | undefined;
+    supervisoryOrg: string | undefined;
+    drawingOrg: string | undefined;
+    testingOrg: string | undefined;
+    subcontractors: string | undefined;
 }
 
 export class PageModel implements IPageModel {
@@ -15106,6 +15258,227 @@ export interface IKeyValueDto {
     value: string | undefined;
 }
 
+export class WeeklyReport4SearchDto implements IWeeklyReport4SearchDto {
+    startTime: string | undefined;
+    endTime: string | undefined;
+    weekStartTime: string | undefined;
+    weekEndTime: string | undefined;
+
+    constructor(data?: IWeeklyReport4SearchDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.startTime = data["startTime"];
+            this.endTime = data["endTime"];
+            this.weekStartTime = data["weekStartTime"];
+            this.weekEndTime = data["weekEndTime"];
+        }
+    }
+
+    static fromJS(data: any): WeeklyReport4SearchDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new WeeklyReport4SearchDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["startTime"] = this.startTime;
+        data["endTime"] = this.endTime;
+        data["weekStartTime"] = this.weekStartTime;
+        data["weekEndTime"] = this.weekEndTime;
+        return data; 
+    }
+
+    clone(): WeeklyReport4SearchDto {
+        const json = this.toJSON();
+        let result = new WeeklyReport4SearchDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IWeeklyReport4SearchDto {
+    startTime: string | undefined;
+    endTime: string | undefined;
+    weekStartTime: string | undefined;
+    weekEndTime: string | undefined;
+}
+
+export class WeeklyReportDto implements IWeeklyReportDto {
+    cityList: WeeklyReportItemDto[] | undefined;
+    cityAmount: WeeklyReportItemDto | undefined;
+    weeklyCityAmount: WeeklyReportItemDto | undefined;
+    transitionalData4Week: WeeklyReportItemDto | undefined;
+    amount: WeeklyReportItemDto | undefined;
+
+    constructor(data?: IWeeklyReportDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["cityList"] && data["cityList"].constructor === Array) {
+                this.cityList = [];
+                for (let item of data["cityList"])
+                    this.cityList.push(WeeklyReportItemDto.fromJS(item));
+            }
+            this.cityAmount = data["cityAmount"] ? WeeklyReportItemDto.fromJS(data["cityAmount"]) : <any>undefined;
+            this.weeklyCityAmount = data["weeklyCityAmount"] ? WeeklyReportItemDto.fromJS(data["weeklyCityAmount"]) : <any>undefined;
+            this.transitionalData4Week = data["transitionalData4Week"] ? WeeklyReportItemDto.fromJS(data["transitionalData4Week"]) : <any>undefined;
+            this.amount = data["amount"] ? WeeklyReportItemDto.fromJS(data["amount"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): WeeklyReportDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new WeeklyReportDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.cityList && this.cityList.constructor === Array) {
+            data["cityList"] = [];
+            for (let item of this.cityList)
+                data["cityList"].push(item.toJSON());
+        }
+        data["cityAmount"] = this.cityAmount ? this.cityAmount.toJSON() : <any>undefined;
+        data["weeklyCityAmount"] = this.weeklyCityAmount ? this.weeklyCityAmount.toJSON() : <any>undefined;
+        data["transitionalData4Week"] = this.transitionalData4Week ? this.transitionalData4Week.toJSON() : <any>undefined;
+        data["amount"] = this.amount ? this.amount.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): WeeklyReportDto {
+        const json = this.toJSON();
+        let result = new WeeklyReportDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IWeeklyReportDto {
+    cityList: WeeklyReportItemDto[] | undefined;
+    cityAmount: WeeklyReportItemDto | undefined;
+    weeklyCityAmount: WeeklyReportItemDto | undefined;
+    transitionalData4Week: WeeklyReportItemDto | undefined;
+    amount: WeeklyReportItemDto | undefined;
+}
+
+export class WeeklyReportItemDto implements IWeeklyReportItemDto {
+    itemName: string | undefined;
+    investigateAcceptCount: number | undefined;
+    isChangeInvestigateAccept: number | undefined;
+    investigateCompleteCount: number | undefined;
+    isChangeInvestigateComplete: number | undefined;
+    acceptanceAcceptCount: number | undefined;
+    isChangeAcceptanceAccept: number | undefined;
+    acceptanceCompleteCount: number | undefined;
+    isChangeAcceptanceComplete: number | undefined;
+    putOnRecordApplyCount: number | undefined;
+    isChangePutOnRecordApply: number | undefined;
+    putOnRecordAcceptCount: number | undefined;
+    isChangePutOnRecordAccept: number | undefined;
+    putOnRecordAcceptAndSelectedCount: number | undefined;
+    isChangePutOnRecordAcceptAndSelected: number | undefined;
+
+    constructor(data?: IWeeklyReportItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.itemName = data["itemName"];
+            this.investigateAcceptCount = data["investigateAcceptCount"];
+            this.isChangeInvestigateAccept = data["isChangeInvestigateAccept"];
+            this.investigateCompleteCount = data["investigateCompleteCount"];
+            this.isChangeInvestigateComplete = data["isChangeInvestigateComplete"];
+            this.acceptanceAcceptCount = data["acceptanceAcceptCount"];
+            this.isChangeAcceptanceAccept = data["isChangeAcceptanceAccept"];
+            this.acceptanceCompleteCount = data["acceptanceCompleteCount"];
+            this.isChangeAcceptanceComplete = data["isChangeAcceptanceComplete"];
+            this.putOnRecordApplyCount = data["putOnRecordApplyCount"];
+            this.isChangePutOnRecordApply = data["isChangePutOnRecordApply"];
+            this.putOnRecordAcceptCount = data["putOnRecordAcceptCount"];
+            this.isChangePutOnRecordAccept = data["isChangePutOnRecordAccept"];
+            this.putOnRecordAcceptAndSelectedCount = data["putOnRecordAcceptAndSelectedCount"];
+            this.isChangePutOnRecordAcceptAndSelected = data["isChangePutOnRecordAcceptAndSelected"];
+        }
+    }
+
+    static fromJS(data: any): WeeklyReportItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new WeeklyReportItemDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["itemName"] = this.itemName;
+        data["investigateAcceptCount"] = this.investigateAcceptCount;
+        data["isChangeInvestigateAccept"] = this.isChangeInvestigateAccept;
+        data["investigateCompleteCount"] = this.investigateCompleteCount;
+        data["isChangeInvestigateComplete"] = this.isChangeInvestigateComplete;
+        data["acceptanceAcceptCount"] = this.acceptanceAcceptCount;
+        data["isChangeAcceptanceAccept"] = this.isChangeAcceptanceAccept;
+        data["acceptanceCompleteCount"] = this.acceptanceCompleteCount;
+        data["isChangeAcceptanceComplete"] = this.isChangeAcceptanceComplete;
+        data["putOnRecordApplyCount"] = this.putOnRecordApplyCount;
+        data["isChangePutOnRecordApply"] = this.isChangePutOnRecordApply;
+        data["putOnRecordAcceptCount"] = this.putOnRecordAcceptCount;
+        data["isChangePutOnRecordAccept"] = this.isChangePutOnRecordAccept;
+        data["putOnRecordAcceptAndSelectedCount"] = this.putOnRecordAcceptAndSelectedCount;
+        data["isChangePutOnRecordAcceptAndSelected"] = this.isChangePutOnRecordAcceptAndSelected;
+        return data; 
+    }
+
+    clone(): WeeklyReportItemDto {
+        const json = this.toJSON();
+        let result = new WeeklyReportItemDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IWeeklyReportItemDto {
+    itemName: string | undefined;
+    investigateAcceptCount: number | undefined;
+    isChangeInvestigateAccept: number | undefined;
+    investigateCompleteCount: number | undefined;
+    isChangeInvestigateComplete: number | undefined;
+    acceptanceAcceptCount: number | undefined;
+    isChangeAcceptanceAccept: number | undefined;
+    acceptanceCompleteCount: number | undefined;
+    isChangeAcceptanceComplete: number | undefined;
+    putOnRecordApplyCount: number | undefined;
+    isChangePutOnRecordApply: number | undefined;
+    putOnRecordAcceptCount: number | undefined;
+    isChangePutOnRecordAccept: number | undefined;
+    putOnRecordAcceptAndSelectedCount: number | undefined;
+    isChangePutOnRecordAcceptAndSelected: number | undefined;
+}
+
 export class CreateRoleDto implements ICreateRoleDto {
     name: string;
     displayName: string;
@@ -16341,6 +16714,8 @@ export interface IHandleLimitQueryDto {
 export class StatisticalQueryDto implements IStatisticalQueryDto {
     cityName: string | undefined;
     unitName: string | undefined;
+    startApplyTime: string | undefined;
+    endApplyTime: string | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
@@ -16359,6 +16734,8 @@ export class StatisticalQueryDto implements IStatisticalQueryDto {
         if (data) {
             this.cityName = data["cityName"];
             this.unitName = data["unitName"];
+            this.startApplyTime = data["startApplyTime"];
+            this.endApplyTime = data["endApplyTime"];
             this.page = data["page"];
             this.sorting = data["sorting"];
             this.skipCount = data["skipCount"];
@@ -16377,6 +16754,8 @@ export class StatisticalQueryDto implements IStatisticalQueryDto {
         data = typeof data === 'object' ? data : {};
         data["cityName"] = this.cityName;
         data["unitName"] = this.unitName;
+        data["startApplyTime"] = this.startApplyTime;
+        data["endApplyTime"] = this.endApplyTime;
         data["page"] = this.page;
         data["sorting"] = this.sorting;
         data["skipCount"] = this.skipCount;
@@ -16395,6 +16774,8 @@ export class StatisticalQueryDto implements IStatisticalQueryDto {
 export interface IStatisticalQueryDto {
     cityName: string | undefined;
     unitName: string | undefined;
+    startApplyTime: string | undefined;
+    endApplyTime: string | undefined;
     page: number | undefined;
     sorting: string | undefined;
     skipCount: number | undefined;
