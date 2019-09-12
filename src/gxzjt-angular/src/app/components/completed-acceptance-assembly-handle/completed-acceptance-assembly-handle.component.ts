@@ -81,6 +81,7 @@ export class CompletedAcceptanceAssemblyHandleComponent implements OnInit {
         // + `    你单位应当组织对上述问题进行整改，整改后向我单位申请复查。未经抽查合格，工程不得投入使用，已经使用的，应当自即日起停止使用。\n`
         // + `    如不服本通知书要求，可以在收到本意见书之日起六十日内向××市人民政府申请行政复议或者三个月内依法向××人民法院提起行政诉讼。\n`
         ;
+        this.examineFormDto.content=this.examineFormDto.content.replace(/。+/g, '。');
     }
 
   }

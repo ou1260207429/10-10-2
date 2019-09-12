@@ -87,6 +87,7 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
         // + `    以上问题请建设、施工单位落实整改，整改完毕后再申请复验。\n`
         // + `    如不服本决定，可以在收到本意见书之日起六十日内向××市人民政府申请行政复议或者三个月内依法向××人民法院提起行政诉讼。\n;`
         ;
+        this.examineFormDto.content=this.examineFormDto.content.replace(/。+/g, '。');
     }
   }
 
