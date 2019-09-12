@@ -57,7 +57,7 @@ export class CompletedAcceptanceAssemblyHandleComponent implements OnInit {
     }
 
 
-    var descr = this.data.descr;
+    // var descr = this.data.descr;
 
     // if (descr && descr.substring(descr.length - 2, descr.length) == "\n") {
     //   descr = descr.substring(0, descr.length - 2);

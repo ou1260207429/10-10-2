@@ -61,9 +61,9 @@ export class FireAcceptanceAssemblyHandleComponent implements OnInit {
       var dateStr = dateTrans(date, '年', '月', '日');
 
       var descr = this.examineFormDto.descr;
-      if (descr && descr.substring(descr.length - 1, descr.length) == "。") {
-        descr = descr.substring(0, descr.length - 1);
-      }
+      // if (descr && descr.substring(descr.length - 1, descr.length) == "。") {
+      //   descr = descr.substring(0, descr.length - 1);
+      // }
 
       this.examineFormDto.content =
         `    你单位报来`
