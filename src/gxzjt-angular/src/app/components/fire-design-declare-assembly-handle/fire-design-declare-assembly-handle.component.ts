@@ -54,7 +54,7 @@ export class FireDesignDeclareAssemblyHandleComponent implements OnInit {
 
     //向父组件发送数据   把表单对象传过去
     this.childOuter.emit(this.f);
-debugger
+
     if (!this.examineFormDto.content && !this.examineFormDto.opinion) {
 
 
