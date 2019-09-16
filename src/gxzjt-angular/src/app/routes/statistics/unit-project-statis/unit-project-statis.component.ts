@@ -111,9 +111,10 @@ export class UnitProjectStatisComponent implements OnInit {
     );
   }
   resetTime() {
-    var startTime = new Date();
-    startTime.setDate(startTime.getDate() - 7)
-    this.rangeTime = [startTime, new Date()];
+    // var startTime = new Date();
+    // startTime.setDate(startTime.getDate() - 7)
+    // this.rangeTime = [startTime, new Date()];
+    this.rangeTime=[];
   }
   change(v) {
     if (this.param.page == v) {
