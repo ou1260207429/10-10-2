@@ -52,14 +52,14 @@ export class WeeklyStatisticsComponent implements OnInit {
         if(searchData.endTime!=null && searchData.endTime!=''){
             var endDatetime=DateHelper.getDateTimeByStrV(searchData.endTime);
             var monday=DateHelper.getMondayByCurDate(endDatetime);
-            monday=DateHelper.addDate(monday, -1);
-            searchData.weekStartTime=DateHelper.getDateStrByV(monday)+" 12:00:00";
+            //monday=DateHelper.addDate(monday, -1);
+            searchData.weekStartTime=DateHelper.getDateStrByV(monday)+" 00:00:00";
 
             var sunday=DateHelper.getSundayByCurDate(endDatetime);
             if(this.endDate<sunday){
                 sunday=this.endDate;
             }
-            searchData.weekEndTime=DateHelper.getDateStrByV(sunday)+" 12:00:00";
+            searchData.weekEndTime=DateHelper.getDateStrByV(sunday)+" 23:59:59";
         }else{
             searchData.weekStartTime=null;
             searchData.weekEndTime=null;
