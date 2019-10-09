@@ -31,13 +31,13 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
 
   param = {
     natureName: '',
-    endApplyTime: "2019-07-31 23:59:59",
+    endApplyTime: '',
     flowPathType: 2,
     maxResultCount: 10,
     orgType: '-1',
     page: 1,
     sorting: "projectId desc",
-    startApplyTime: "2019-07-24 00:00:00",
+    startApplyTime: '',
     status: '-1',
     recordNumber: '',
     projectName: '',
@@ -301,9 +301,9 @@ export class FireAcceptanceComponent extends PublicFormComponent implements OnIn
   }
 
   resetTime() {
-    var startTime = new Date();
-    startTime.setDate(startTime.getDate() - 7)
-    this.rangeTime = [startTime, new Date()];
+    //var startTime = new Date();
+    //startTime.setDate(startTime.getDate() - 7)
+    this.rangeTime = [];
   }
   withdraw() {
     this.isAddProducttyepe1 = true;

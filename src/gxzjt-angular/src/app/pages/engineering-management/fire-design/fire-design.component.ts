@@ -36,13 +36,13 @@ import { NzModalService } from 'ng-zorro-antd';
 export class FireDesignComponent extends PublicFormComponent implements OnInit {
   // param = new FireAuditCompleteQueryDto();
   param = {
-    endApplyTime: "2019-07-31 23:59:59",
+    endApplyTime: "",
     flowPathType: 1,
     maxResultCount: 10,
     orgType: '-1',
     page: 1,
     sorting: "projectId desc",
-    startApplyTime: "2019-07-24 00:00:00",
+    startApplyTime: "",
     status: '-1',
     recordNumber: '',
     projectName: '',
@@ -308,9 +308,9 @@ export class FireDesignComponent extends PublicFormComponent implements OnInit {
     this.router.navigate([`/app/work-matters/agencyDoneDetailsComponent/${item.flowNo}/${item.id}/${item.flowPathType}/1`]);
   }
   resetTime() {
-    var startTime = new Date();
-    startTime.setDate(startTime.getDate() - 7)
-    this.rangeTime = [startTime, new Date()];
+    // var startTime = new Date();
+    // startTime.setDate(startTime.getDate() - 7)
+    this.rangeTime = [];
   }
 
   change(v) {

@@ -141,8 +141,8 @@ export class AlreadyDoneComponent
     this.searchParam.companyName = '';
     this.searchParam.pagedAndFilteredInputDto.sorting = 'projectId desc'
     this.searchParam.projectTypeStatu = null;
-    this.searchParam.applyTimeStart = this.rangeTime[0];
-    this.searchParam.applyTimeEnd = this.rangeTime[1];
+    // this.searchParam.applyTimeStart = this.rangeTime[0];
+    // this.searchParam.applyTimeEnd = this.rangeTime[1];
     this.searchParam.isExpire = null;
     this.searchParam.orgType = null;
     this.getList();
@@ -153,15 +153,24 @@ export class AlreadyDoneComponent
    * @param TemplateInfoListByClassIdEntity 参数
    */
   getList() {
-    if (this.rangeTime != null) {
-      // this.searchParam.applyTimeStart = this.rangeTime[0];
-      // this.searchParam.applyTimeEnd = this.rangeTime[1];
-      this.searchParam.applyTimeStart = this.rangeTime[0] ? dateTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
-      this.searchParam.applyTimeEnd = this.rangeTime[1] ? dateTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
+    // if (this.rangeTime != null) {
+    //   // this.searchParam.applyTimeStart = this.rangeTime[0];
+    //   // this.searchParam.applyTimeEnd = this.rangeTime[1];
+    //   this.searchParam.applyTimeStart = this.rangeTime[0] ? dateTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
+    //   this.searchParam.applyTimeEnd = this.rangeTime[1] ? dateTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
+    // } else {
+    //   this.searchParam.applyTimeStart = null;
+    //   this.searchParam.applyTimeEnd = null;
+    // }
+
+    if (this.rangeTime.length != 0) {
+      this.searchParam.applyTimeStart = dateTrans(this.rangeTime[0]) + " 00:00:00";
+      this.searchParam.applyTimeEnd = dateTrans(this.rangeTime[1]) + " 23:59:59";
     } else {
-      this.searchParam.applyTimeStart = null;
-      this.searchParam.applyTimeEnd = null;
+      this.searchParam.applyTimeStart = '';
+      this.searchParam.applyTimeEnd = '';
     }
+
     // this.workFlowedServiceProxy.processedWorkFlow_NodeAuditorRecord(this.searchParam).subscribe((data: any) => {
     //   this.formResultData = data
     // })

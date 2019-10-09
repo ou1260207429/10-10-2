@@ -151,13 +151,14 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.searchParam.pagedAndFilteredInputDto.sorting = 'applyTime desc'
     this.searchParam.projectTypeStatu = null;
     this.searchParam.isAlreadyDone = true
-    if (this.rangeTime != null) {
+    // if (this.rangeTime != null) {
 
-      // this.searchParam.applyTimeStart = this.rangeTime[0];
-      // this.searchParam.applyTimeEnd = this.rangeTime[1];
-      this.searchParam.applyTimeStart = this.rangeTime[0] ? dateTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
-      this.searchParam.applyTimeEnd = this.rangeTime[1] ? dateTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
-    }
+    //   // this.searchParam.applyTimeStart = this.rangeTime[0];
+    //   // this.searchParam.applyTimeEnd = this.rangeTime[1];
+    //   this.searchParam.applyTimeStart = this.rangeTime[0] ? dateTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
+    //   this.searchParam.applyTimeEnd = this.rangeTime[1] ? dateTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
+    // }
+    this.resetTime();
     this.getList();
   }
 
@@ -171,8 +172,8 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     this.searchParam.companyName = '';
     this.searchParam.pagedAndFilteredInputDto.sorting = 'projectId desc'
     this.searchParam.projectTypeStatu = null;
-    this.searchParam.applyTimeStart = this.rangeTime[0] ? dateTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
-    this.searchParam.applyTimeEnd = this.rangeTime[1] ? dateTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
+    // this.searchParam.applyTimeStart = this.rangeTime[0] ? dateTrans(this.rangeTime[0]) + " 00:00:00" : this.searchParam.applyTimeStart
+    // this.searchParam.applyTimeEnd = this.rangeTime[1] ? dateTrans(this.rangeTime[1]) + " 23:59:59" : this.searchParam.applyTimeEnd
     this.searchParam.isExpire = null;
     this.searchParam.orgType = null;
     this.getList();
@@ -187,6 +188,15 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     //   this.formResultData = data
     //   console.log(this.formResultData)
     // })
+
+    if (this.rangeTime.length != 0) {
+      this.searchParam.applyTimeStart = dateTrans(this.rangeTime[0]) + " 00:00:00";
+      this.searchParam.applyTimeEnd = dateTrans(this.rangeTime[1]) + " 23:59:59";
+    } else {
+      this.searchParam.applyTimeStart = '';
+      this.searchParam.applyTimeEnd = '';
+    }
+    
     this.WorkMattersService.PendingWorkFlow_NodeAuditorRecord(this.searchParam).subscribe(
       res => {
         this.formResultData = res.result;
@@ -313,9 +323,9 @@ export class AgencyDoneComponent extends PublicFormComponent implements OnInit {
     });
   }
   resetTime() {
-    var startTime = new Date();
-    startTime.setDate(startTime.getDate() - 30)
-    this.rangeTime = [startTime, new Date()];
+    // var startTime = new Date();
+    // startTime.setDate(startTime.getDate() - 30)
+    this.rangeTime = [];
   }
 
 }

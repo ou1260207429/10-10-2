@@ -80,8 +80,8 @@ export class PublicFormComponent {
     }
 
     resetTime() {
-        var startTime = new Date();
-        startTime.setDate(startTime.getDate() - 30)
-        this.rangeTime = [startTime, new Date()];
+        // var startTime = new Date();
+        // startTime.setDate(startTime.getDate() - 30)
+        this.rangeTime = [];
     }
 }

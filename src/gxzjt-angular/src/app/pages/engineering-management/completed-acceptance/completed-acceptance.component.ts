@@ -32,13 +32,13 @@ import { WindowsFill } from '@ant-design/icons-angular/icons/public_api';
 export class CompletedAcceptanceComponent extends PublicFormComponent implements OnInit {
 
   param = {
-    endApplyTime: "2019-07-31 23:59:59",
+    endApplyTime: "",
     flowPathType: 3,
     maxResultCount: 10,
     orgType: '-1',
     page: 1,
     sorting: "projectId desc",
-    startApplyTime: "2019-07-24 00:00:00",
+    startApplyTime: "",
     status:'-1',
     recordNumber: '',
     projectName:'',
@@ -309,9 +309,9 @@ export class CompletedAcceptanceComponent extends PublicFormComponent implements
     // this._publicModel.exportXlsx(this.columns,this.formResultData.data);
   }
   resetTime() {
-    var startTime = new Date();
-    startTime.setDate(startTime.getDate() - 7)
-    this.rangeTime = [startTime, new Date()];
+    // var startTime = new Date();
+    // startTime.setDate(startTime.getDate() - 7)
+    this.rangeTime = [];
   }
   withdraw() {
     this.isAddProducttyepe1 = true;
